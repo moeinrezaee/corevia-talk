@@ -567,10 +567,16 @@ export const MessageRow = React.memo(
       />
     ) : null;
 
+    const isOwnMessage =
+      !!currentPubkey &&
+      message.pubkey?.toLowerCase() === currentPubkey.toLowerCase();
+
     const actionBarNode = (
       <div
         className={cn(
-          "absolute end-2 top-1 z-10 sm:pointer-events-none",
+          "absolute top-1 z-10 sm:pointer-events-none",
+          // The action rail sits on the free side of the row.
+          isOwnMessage ? "end-2" : "start-2",
           actionBarPlacement === "floating"
             ? isContinuation
               ? "sm:-top-3 sm:-translate-y-1/2"
@@ -659,7 +665,11 @@ export const MessageRow = React.memo(
     const headerNode = isDisplayedAsContinuation ? null : (
       // pe reserves the measured action-rail footprint (0px until measured) so
       // header content ends before the rail's left edge in every rail state.
-      <MessageHeaderRow className="pe-[var(--message-action-rail-width,0px)]">
+      <MessageHeaderRow
+        className={
+          isOwnMessage ? "pe-[var(--message-action-rail-width,0px)]" : undefined
+        }
+      >
         {message.pubkey ? (
           <MessageAuthorWithIndicators
             authorName={message.author}
@@ -682,9 +692,6 @@ export const MessageRow = React.memo(
         />
       </MessageHeaderRow>
     );
-    const isOwnMessage =
-      !!currentPubkey &&
-      message.pubkey?.toLowerCase() === currentPubkey.toLowerCase();
     const bodyContainerClass = isDisplayedAsContinuation
       ? "mt-0"
       : bodyOffsetClass;
@@ -907,8 +914,9 @@ export const MessageRow = React.memo(
                 ? "mx-1 px-2"
                 : "px-2",
             "flex gap-2.5",
-            // Your own messages sit on the opposite side from everyone else's.
-            isOwnMessage && "flex-row-reverse",
+            // You sit on the reading-start side (right in Persian, left in English);
+            // everyone else sits on the opposite side.
+            !isOwnMessage && "flex-row-reverse",
             isDisplayedAsContinuation ? "items-center" : "items-start",
             hasActiveReminder ? "bg-blue-500/10" : "",
             highlighted
@@ -927,7 +935,7 @@ export const MessageRow = React.memo(
               <div
                 className={cn(
                   "flex min-w-0 flex-1 flex-col",
-                  isOwnMessage && "items-end",
+                  !isOwnMessage && "items-end",
                 )}
               >
                 {headerNode}
@@ -942,7 +950,7 @@ export const MessageRow = React.memo(
               <div
                 className={cn(
                   "flex min-w-0 flex-1 flex-col",
-                  isOwnMessage && "items-end",
+                  !isOwnMessage && "items-end",
                 )}
               >
                 {headerNode}

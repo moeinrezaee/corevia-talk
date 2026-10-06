@@ -83,6 +83,7 @@
       p,
       span,
       a,
+      button,
       label,
       legend,
       summary,
@@ -135,6 +136,35 @@
 
   /* ...and the mirror case: Persian-first text in the English UI stays left. */
   :root[dir="ltr"] [data-rtl-text] {
+    text-align: left;
+  }
+}
+
+@layer base {
+  /*
+   * Text boxes follow the UI direction, not what is typed: right-aligned in the
+   * Persian UI, left-aligned in the English one. `plaintext` keeps the order of
+   * mixed Persian + English runs correct inside the box. Utilities such as
+   * `text-center` still win because this sits in the base layer.
+   */
+  :root[dir="rtl"]
+    :is(input, textarea, select, [contenteditable="true"], .ProseMirror):not(
+      [type="checkbox"],
+      [type="radio"],
+      [type="range"],
+      [type="file"],
+      [type="color"]
+    ) {
+    text-align: right;
+  }
+  :root[dir="ltr"]
+    :is(input, textarea, select, [contenteditable="true"], .ProseMirror):not(
+      [type="checkbox"],
+      [type="radio"],
+      [type="range"],
+      [type="file"],
+      [type="color"]
+    ) {
     text-align: left;
   }
 }

@@ -97,7 +97,7 @@ export function MessageAuthorText({
   return (
     <Component
       className={cn(
-        "truncate text-message font-semibold leading-message-author tracking-normal",
+        "max-w-[min(100%,24rem)] truncate text-message font-semibold leading-message-author tracking-normal",
         hoverUnderline && "hover:underline",
         className,
       )}
@@ -129,10 +129,10 @@ export function MessageAuthorIdentity({
           pubkey={pubkey}
           role={role}
           botIdenticonValue={displayName}
-          triggerClassName="min-w-0 max-w-full"
+          triggerClassName="min-w-0 max-w-[min(100%,24rem)]"
         >
           <button
-            className="truncate rounded leading-message-author focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+            className="max-w-full truncate rounded leading-message-author focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
             type="button"
           >
             {children}

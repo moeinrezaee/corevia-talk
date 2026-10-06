@@ -17,7 +17,7 @@ void main() {
 
     expect(
       popupTheme.textStyle?.fontFamily,
-      isNull,
+      'Inter',
     ); // inherited from ThemeData.fontFamily
     expect(popupTheme.elevation, 8);
     expect(

@@ -24,6 +24,7 @@ import { recoverLocalStorageQuotaOnStartup } from "@/shared/lib/localStorageQuot
 import { startLocalStorageSweep } from "@/shared/lib/localStorageSweep";
 import { initializeConversationDensityPreference } from "@/shared/lib/conversationDensityPreference";
 import { initializeFontSizePreference } from "@/shared/lib/fontSizePreference";
+import { installAutoDirection } from "@/shared/i18n/autoDirection";
 import { installContentAlignment } from "@/shared/i18n/contentAlignment";
 import { installDomTranslator } from "@/shared/i18n/domTranslator";
 import {
@@ -145,6 +146,7 @@ async function bootstrap() {
   renderApp();
   const language = getLanguage();
   if (language === "fa") installDomTranslator();
+  installAutoDirection();
   installContentAlignment(isRtlLanguage(language));
 }
 

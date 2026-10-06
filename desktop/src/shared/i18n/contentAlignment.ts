@@ -12,10 +12,13 @@
  * default alignment are marked, and rtl.css aligns them with the UI:
  *   - `data-ltr-text`: English-first text in the Persian UI -> right edge.
  *   - `data-rtl-text`: Persian-first text in the English UI -> left edge.
- * Centered, explicitly aligned, code and form-control content is left alone.
+ * Chat content is the exception: each message block (and the composer) keeps
+ * the direction of its own text, Persian right and English left, in either UI
+ * language (see autoDirection.ts and rtl.css). Centered, explicitly aligned,
+ * code and form-control content is left alone too.
  */
 const SKIP =
-  "pre, code, .xterm, input, textarea, [contenteditable], .ProseMirror, [data-no-align]";
+  "pre, code, .xterm, input, textarea, [contenteditable], .ProseMirror, .message-markdown :is(p, li, blockquote, h1, h2, h3, h4, h5, h6, td, th), [data-no-align]";
 const LATIN_FIRST = /^[^\p{L}]*[A-Za-z]/u;
 const PERSIAN_FIRST = /^[^\p{L}]*[؀-ۿ]/u;
 

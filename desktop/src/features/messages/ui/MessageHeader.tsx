@@ -102,6 +102,7 @@ export function MessageAuthorText({
         className,
       )}
       data-testid="message-author"
+      dir="auto"
     >
       {children}
     </Component>

@@ -168,3 +168,17 @@
     text-align: left;
   }
 }
+
+@layer base {
+  /*
+   * The other person's messages sit opposite their avatar's side of the room,
+   * so their header is the mirror image of yours: the name is next to the
+   * avatar and the time/owner follow it away from the avatar. That reverses the
+   * order of the header pieces (and of the icon + label groups inside them)
+   * while each piece keeps its own reading direction.
+   */
+  .message-header-mirrored,
+  .message-header-mirrored .inline-flex {
+    flex-direction: row-reverse;
+  }
+}

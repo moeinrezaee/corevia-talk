@@ -669,7 +669,7 @@ export const MessageRow = React.memo(
         className={
           isOwnMessage
             ? "pe-[var(--message-action-rail-width,0px)]"
-            : "justify-end"
+            : "message-header-mirrored"
         }
       >
         {message.pubkey ? (

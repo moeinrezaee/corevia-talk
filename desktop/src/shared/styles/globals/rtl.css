@@ -182,3 +182,23 @@
     flex-direction: row-reverse;
   }
 }
+
+/*
+ * (Unlayered on purpose: it has to beat the utility layer.)
+ * Persian titles are drawn one weight step heavier than English: Peyda has no
+ * Medium, and its Regular looks light beside Latin Inter. Tracking tuned for
+ * Latin (tracking-tight and friends) breaks the joins between Persian
+ * letters, so it is reset to zero.
+ */
+:root[lang="fa"] :is(.font-medium) {
+  font-weight: 600;
+}
+:root[lang="fa"] :is(.font-semibold) {
+  font-weight: 700;
+}
+:root[lang="fa"] .font-bold {
+  font-weight: 800;
+}
+:root[lang="fa"] [class*="tracking-"] {
+  letter-spacing: 0;
+}

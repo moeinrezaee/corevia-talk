@@ -20,8 +20,8 @@ class _ConnectionSection extends ConsumerWidget {
       verticalPadding: Grid.twelve,
       children: [
         AppListRow(
-          title: 'Send identity to desktop',
-          subtitle: 'Scan a recovery code shown by Buzz Desktop',
+          title: tl('Send identity to desktop'),
+          subtitle: tl('Scan a recovery code shown by Buzz Desktop'),
           trailing: const _RowChevron(),
           onTap: () async {
             final pairing = ref.read(pairingProvider.notifier);
@@ -45,9 +45,9 @@ class _ConnectionSection extends ConsumerWidget {
               if (!resumed) {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
+                    SnackBar(
                       content: Text(
-                        'Buzz did not return to the foreground. Try again.',
+                        tl('Buzz did not return to the foreground. Try again.'),
                       ),
                     ),
                   );
@@ -107,10 +107,10 @@ class _IdentityRow extends StatelessWidget {
     // invalid identity is surfaced as unavailable and never copied.
     return Semantics(
       button: true,
-      label: 'Copy identity public key',
+      label: tl('Copy identity public key'),
       value: npub ?? 'Identity unavailable',
       child: AppListRow(
-        title: 'Copy public key (npub)',
+        title: tl('Copy public key (npub)'),
         trailing: Icon(
           LucideIcons.copy,
           size: 18,
@@ -122,7 +122,7 @@ class _IdentityRow extends StatelessWidget {
                 await copyToClipboard(
                   context,
                   npub,
-                  message: 'Public key (npub) copied',
+                  message: tl('Public key (npub) copied'),
                 );
                 await successHaptic();
               },

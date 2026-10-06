@@ -685,14 +685,14 @@ class _MessageList extends HookConsumerWidget {
             ),
             const SizedBox(height: Grid.xxs),
             Text(
-              'No messages yet',
+              tl('No messages yet'),
               style: context.textTheme.bodyLarge?.copyWith(
                 color: context.colors.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: Grid.half),
             Text(
-              'Be the first to say something!',
+              tl('Be the first to say something!'),
               style: context.textTheme.bodySmall?.copyWith(
                 color: context.colors.onSurfaceVariant,
               ),
@@ -776,12 +776,12 @@ class _MessageList extends HookConsumerWidget {
               itemBuilder: (context, index) {
                 // Loading indicator at the top (last index in reversed list).
                 if (index >= displayEntries.length) {
-                  return const Padding(
+                  return Padding(
                     padding: EdgeInsets.symmetric(vertical: Grid.xs),
                     child: Center(
                       child: BuzzLoadingIndicator(
                         size: 24,
-                        semanticLabel: 'Loading older messages',
+                        semanticLabel: tl('Loading older messages'),
                       ),
                     ),
                   );
@@ -909,7 +909,7 @@ class _MessageList extends HookConsumerWidget {
               child: IconButton.filled(
                 key: const ValueKey('channel-jump-to-oldest-unread'),
                 onPressed: scrollToOldestUnread,
-                tooltip: 'Jump to oldest unread message',
+                tooltip: tl('Jump to oldest unread message'),
                 style: IconButton.styleFrom(
                   backgroundColor: context.colors.primaryContainer,
                   foregroundColor: context.colors.onPrimaryContainer,

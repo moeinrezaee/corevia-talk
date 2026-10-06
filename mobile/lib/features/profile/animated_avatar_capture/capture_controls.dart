@@ -58,7 +58,7 @@ class _AnimatedRecordButton extends StatelessWidget {
                   key: const ValueKey('animated-avatar-record'),
                   icon: IosGlassNavigationIcon.shutter,
                   label: busy ? null : 'Record',
-                  semanticLabel: 'Record animated avatar',
+                  semanticLabel: tl('Record animated avatar'),
                   onPressed: busy ? null : onPressed,
                   width: busy ? 64 : constraints.maxWidth,
                   height: 64,
@@ -88,10 +88,10 @@ class _AnimatedRecordButton extends StatelessWidget {
                                 ),
                                 size: 24,
                                 color: context.colors.surface,
-                                semanticLabel: 'Capturing animated avatar',
+                                semanticLabel: tl('Capturing animated avatar'),
                               )
                             : Text(
-                                'Record',
+                                tl('Record'),
                                 key: const ValueKey(
                                   'animated-avatar-record-label',
                                 ),

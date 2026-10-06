@@ -117,9 +117,9 @@ class _EmptyFilterState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (unreadOnly) {
-      return const _EmptySurface(
+      return _EmptySurface(
         icon: LucideIcons.mailOpen,
-        message: 'No unread messages',
+        message: tl('No unread messages'),
         detail: 'Turn off the unread filter to see read messages.',
       );
     }
@@ -162,7 +162,7 @@ class _ErrorView extends StatelessWidget {
           ),
           const SizedBox(height: Grid.xxs),
           Text(
-            'Failed to load activity',
+            tl('Failed to load activity'),
             style: context.textTheme.bodyMedium?.copyWith(
               color: context.colors.onSurfaceVariant,
             ),
@@ -171,7 +171,7 @@ class _ErrorView extends StatelessWidget {
           FilledButton.icon(
             onPressed: () => unawaited(onRetry()),
             icon: const Icon(LucideIcons.refreshCcw, size: 16),
-            label: const Text('Retry'),
+            label: Text(tl('Retry')),
           ),
         ],
       ),

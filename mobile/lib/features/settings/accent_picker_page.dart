@@ -5,6 +5,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../shared/theme/theme.dart';
 import '../../shared/widgets/frosted_app_bar.dart';
 import '../../shared/widgets/frosted_scaffold.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Accent colors as a list of rows, matching the theme picker's shape. The
 /// swatches used to live inline on the settings page as a wrap of tappable
@@ -22,10 +23,10 @@ class AccentPickerPage extends ConsumerWidget {
 
     return FrostedScaffold(
       useUtilitySurfaceTheme: true,
-      appBar: const FrostedAppBar(
+      appBar: FrostedAppBar(
         centerTitle: true,
         nativeLargeTitle: true,
-        title: Text('Accent Color'),
+        title: Text(tl('Accent Color')),
       ),
       body: ListView(
         padding: EdgeInsets.only(

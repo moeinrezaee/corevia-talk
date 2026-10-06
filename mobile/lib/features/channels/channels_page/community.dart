@@ -39,19 +39,19 @@ class _CommunityMenuSheet extends StatelessWidget {
             if (appearancePageBuilder != null ||
                 (canInvite && invitePageBuilder != null))
               AppListCard(
-                label: 'Community settings',
+                label: tl('Community settings'),
                 children: [
                   if (canInvite && invitePageBuilder != null)
                     AppListRow(
                       icon: LucideIcons.userPlus,
-                      title: 'Invite',
+                      title: tl('Invite'),
                       trailing: const Icon(LucideIcons.chevronRight, size: 18),
                       onTap: () => openPage(invitePageBuilder!),
                     ),
                   if (appearancePageBuilder != null)
                     AppListRow(
                       icon: LucideIcons.sunMoon,
-                      title: 'Appearance',
+                      title: tl('Appearance'),
                       trailing: const Icon(LucideIcons.chevronRight, size: 18),
                       onTap: () => openPage(appearancePageBuilder!),
                     ),
@@ -62,7 +62,7 @@ class _CommunityMenuSheet extends StatelessWidget {
                 AppListRow(
                   key: const Key('community-menu-switch'),
                   icon: LucideIcons.arrowLeftRight,
-                  title: 'Switch Community',
+                  title: tl('Switch Community'),
                   trailing: const Icon(LucideIcons.chevronRight, size: 18),
                   onTap: openSwitcher,
                 ),
@@ -85,11 +85,11 @@ Future<void> _confirmRemoveCommunity(
   try {
     final confirmed = await showDestructiveConfirmation(
       context: context,
-      title: 'Remove community?',
+      title: tl('Remove community?'),
       message:
           'Are you sure you want to remove “${community.name}”? '
           'You can pair with it again later.',
-      confirmLabel: 'Remove',
+      confirmLabel: tl('Remove'),
     );
     if (!confirmed || !context.mounted) return;
     await ref
@@ -100,7 +100,7 @@ Future<void> _confirmRemoveCommunity(
     }
   } catch (e) {
     messenger.showSnackBar(
-      SnackBar(content: Text('Failed to remove community: $e')),
+      SnackBar(content: Text(tlt('Failed to remove community: {0}', [e]))),
     );
   }
 }
@@ -128,7 +128,7 @@ class _CommunityIndicator extends ConsumerWidget {
       behavior: HitTestBehavior.opaque,
       child: Semantics(
         button: true,
-        label: 'Community settings',
+        label: tl('Community settings'),
         child: Opacity(
           opacity: hidden ? 0 : 1,
           child: CommunityAvatar(

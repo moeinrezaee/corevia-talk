@@ -76,9 +76,9 @@ class SettingsPage extends HookConsumerWidget {
     return FrostedScaffold(
       useUtilitySurfaceTheme: true,
       appBar: FrostedAppBar(
-        nativeTitle: 'Settings',
+        nativeTitle: tl('Settings'),
         nativeLeading: IosNavigationAction(
-          label: 'Close settings',
+          label: tl('Close settings'),
           symbol: 'xmark',
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -89,7 +89,7 @@ class SettingsPage extends HookConsumerWidget {
             ? IosGlassNavigationButton(
                 key: const ValueKey('settings-ios-glass-close'),
                 icon: IosGlassNavigationIcon.close,
-                semanticLabel: 'Close settings',
+                semanticLabel: tl('Close settings'),
                 onPressed: () {
                   unawaited(HapticFeedback.lightImpact());
                   Navigator.of(context).pop();
@@ -100,7 +100,7 @@ class SettingsPage extends HookConsumerWidget {
                 width: Grid.xl,
                 height: Grid.xl,
                 child: IconButton(
-                  tooltip: 'Close settings',
+                  tooltip: tl('Close settings'),
                   onPressed: () {
                     unawaited(HapticFeedback.lightImpact());
                     Navigator.of(context).pop();

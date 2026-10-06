@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'observer_models.dart';
+import '../../../shared/i18n/app_language.dart';
 
 const _buzzReadTools = <String>{
   'get_messages',
@@ -258,7 +259,7 @@ List<PromptSection> _parsePromptSections(String text) {
       } else {
         final pre = preamble.join('\n').trim();
         if (pre.isNotEmpty) {
-          sections.add(PromptSection(title: 'Prompt', body: pre));
+          sections.add(PromptSection(title: tl('Prompt'), body: pre));
         }
       }
       currentTitle = header.group(1)!;
@@ -281,7 +282,7 @@ List<PromptSection> _parsePromptSections(String text) {
   } else {
     final pre = preamble.join('\n').trim();
     if (pre.isNotEmpty) {
-      sections.add(PromptSection(title: 'Prompt', body: pre));
+      sections.add(PromptSection(title: tl('Prompt'), body: pre));
     }
   }
 

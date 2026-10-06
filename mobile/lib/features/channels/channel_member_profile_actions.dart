@@ -11,6 +11,7 @@ import 'channel.dart';
 import 'channel_identity_names_provider.dart';
 import 'channel_management_provider.dart';
 import 'channels_provider.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Channel-scoped management rows embedded below a member's profile actions.
 class ChannelMemberProfileActions extends HookConsumerWidget {
@@ -96,16 +97,16 @@ class ChannelMemberProfileActions extends HookConsumerWidget {
           final confirmed = await showBuzzDialog<bool>(
             context: context,
             builder: (dialogContext) => AlertDialog(
-              title: const Text('Remove from channel?'),
-              content: Text('Remove $label from ${currentChannel.name}?'),
+              title: Text(tl('Remove from channel?')),
+              content: Text(tlt('Remove {0} from {1}?', [label, currentChannel.name])),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(dialogContext).pop(false),
-                  child: const Text('Cancel'),
+                  child: Text(tl('Cancel')),
                 ),
                 TextButton(
                   onPressed: () => Navigator.of(dialogContext).pop(true),
-                  child: const Text('Remove'),
+                  child: Text(tl('Remove')),
                 ),
               ],
             ),
@@ -145,7 +146,7 @@ class ChannelMemberProfileActions extends HookConsumerWidget {
               if (member.role != 'admin')
                 AppListRow(
                   icon: LucideIcons.shieldCheck,
-                  title: 'Make channel admin',
+                  title: tl('Make channel admin'),
                   onTap: busy.value ? null : () => perform(role: 'admin'),
                 ),
               if (member.role == 'admin' || member.role == 'guest')
@@ -159,7 +160,7 @@ class ChannelMemberProfileActions extends HookConsumerWidget {
             ],
             AppListRow(
               icon: LucideIcons.userMinus,
-              title: 'Remove from channel',
+              title: tl('Remove from channel'),
               titleColor: context.colors.error,
               onTap: busy.value ? null : () => perform(),
             ),
@@ -168,9 +169,9 @@ class ChannelMemberProfileActions extends HookConsumerWidget {
         if (busy.value)
           Semantics(
             liveRegion: true,
-            label: 'Updating channel member',
-            child: const ExcludeSemantics(
-              child: Center(child: Text('Updating…')),
+            label: tl('Updating channel member'),
+            child: ExcludeSemantics(
+              child: Center(child: Text(tl('Updating…'))),
             ),
           ),
         if (error.value != null)

@@ -26,6 +26,7 @@ import 'profile_avatar_editor.dart';
 import 'profile_avatar_draft.dart';
 import 'profile_provider.dart';
 import 'profile_text_editor.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Edits the current user's public profile metadata.
 class ProfileEditPage extends HookConsumerWidget {
@@ -133,8 +134,8 @@ class ProfileEditPage extends HookConsumerWidget {
                 return;
               }
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("We couldn't save this change. Try again."),
+                SnackBar(
+                  content: Text(tl("We couldn't save this change. Try again.")),
                 ),
               );
             },
@@ -300,14 +301,14 @@ class ProfileEditPage extends HookConsumerWidget {
                     ? IosGlassNavigationButton(
                         key: const ValueKey('avatar-editor-back'),
                         icon: IosGlassNavigationIcon.back,
-                        semanticLabel: 'Back to profile',
+                        semanticLabel: tl('Back to profile'),
                         onPressed: isClosingAvatar.value
                             ? null
                             : () => unawaited(closeAvatarEditor()),
                       )
                     : IconButton(
                         key: const ValueKey('avatar-editor-back'),
-                        tooltip: 'Back to profile',
+                        tooltip: tl('Back to profile'),
                         onPressed: isClosingAvatar.value
                             ? null
                             : () => unawaited(closeAvatarEditor()),
@@ -319,7 +320,7 @@ class ProfileEditPage extends HookConsumerWidget {
                   if (defaultTargetPlatform == TargetPlatform.iOS)
                     IosGlassNavigationAction(
                       key: const ValueKey('avatar-save'),
-                      label: 'Save',
+                      label: tl('Save'),
                       width: 72,
                       isBusy: isSavingAvatar.value,
                       onPressed:
@@ -337,7 +338,7 @@ class ProfileEditPage extends HookConsumerWidget {
                       padding: const EdgeInsets.only(right: Grid.xs),
                       child: _ProfileActionPill(
                         key: const ValueKey('avatar-save'),
-                        label: 'Save',
+                        label: tl('Save'),
                         isBusy: isSavingAvatar.value,
                         onTap:
                             canSaveAvatar &&
@@ -447,7 +448,7 @@ class ProfileEditPage extends HookConsumerWidget {
                     children: [
                       AppListRow(
                         key: const ValueKey('profile-display-name-row'),
-                        title: 'Display name',
+                        title: tl('Display name'),
                         subtitle: _fieldValue(profile?.displayName),
                         subtitleMaxLines: 1,
                         trailing: const _EditChevron(),
@@ -460,9 +461,9 @@ class ProfileEditPage extends HookConsumerWidget {
                                 );
                                 unawaited(
                                   editField(
-                                    title: 'Display name',
+                                    title: tl('Display name'),
                                     initialValue: profile?.displayName ?? '',
-                                    hintText: 'Display name',
+                                    hintText: tl('Display name'),
                                     onSave: bindProfileSaveToOpeningContext(
                                       container,
                                       container
@@ -475,7 +476,7 @@ class ProfileEditPage extends HookConsumerWidget {
                       ),
                       AppListRow(
                         key: const ValueKey('profile-description-row'),
-                        title: 'Profile description',
+                        title: tl('Profile description'),
                         subtitle: _fieldValue(profile?.about),
                         subtitleMaxLines: 3,
                         trailing: const _EditChevron(),
@@ -488,9 +489,9 @@ class ProfileEditPage extends HookConsumerWidget {
                                 );
                                 unawaited(
                                   editField(
-                                    title: 'Profile description',
+                                    title: tl('Profile description'),
                                     initialValue: profile?.about ?? '',
-                                    hintText: 'Profile description',
+                                    hintText: tl('Profile description'),
                                     multiline: true,
                                     onSave: bindProfileSaveToOpeningContext(
                                       container,
@@ -560,8 +561,8 @@ class _ProfilePhotoEditor extends ConsumerWidget {
         const SizedBox(height: Grid.twelve),
         _ProfileActionPill(
           key: const ValueKey('profile-edit-photo-pill'),
-          semanticLabel: 'Edit profile photo',
-          label: 'Edit Photo',
+          semanticLabel: tl('Edit profile photo'),
+          label: tl('Edit Photo'),
           onTap: onEditPhoto,
         ),
       ],
@@ -602,9 +603,9 @@ class _ProfileActionPill extends StatelessWidget {
             vertical: Grid.xxs,
           ),
           child: isBusy
-              ? const BuzzLoadingIndicator(
+              ? BuzzLoadingIndicator(
                   size: 18,
-                  semanticLabel: 'Saving profile photo',
+                  semanticLabel: tl('Saving profile photo'),
                 )
               : Text(
                   label,

@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'channel.dart';
 import 'channel_detail_page.dart';
 import 'channels_provider.dart';
+import '../../shared/i18n/app_language.dart';
 
 void openChannelLink({
   required BuildContext context,
@@ -25,7 +26,7 @@ void openChannelLink({
 
   if (targetChannel == null) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Channel could not be opened')),
+      SnackBar(content: Text(tl('Channel could not be opened'))),
     );
     return;
   }

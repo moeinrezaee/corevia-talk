@@ -94,7 +94,7 @@ class _AttachmentMenuLayout {
 
   factory _AttachmentMenuLayout.from(BuildContext context) {
     final textPainter = TextPainter(
-      text: TextSpan(text: 'Camera', style: context.textTheme.titleMedium),
+      text: TextSpan(text: tl('Camera'), style: context.textTheme.titleMedium),
       textDirection: Directionality.of(context),
       textScaler: MediaQuery.textScalerOf(context),
       maxLines: 1,
@@ -753,7 +753,7 @@ class _AttachmentStrip extends StatelessWidget {
                       child: IconButton(
                         onPressed: () =>
                             _runComposerAction(() => onRemove(attachment.id)),
-                        tooltip: 'Remove attachment',
+                        tooltip: tl('Remove attachment'),
                         visualDensity: VisualDensity.compact,
                         style: IconButton.styleFrom(
                           backgroundColor: context.colors.surface.withValues(

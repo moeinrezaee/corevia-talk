@@ -239,7 +239,7 @@ List<_PopoverMessageAction> _buildPopoverMessageActions({
       actions.add(
         _PopoverMessageAction(
           id: 'reply',
-          title: 'Reply',
+          title: tl('Reply'),
           icon: LucideIcons.messageSquareReply,
           group: _PopoverMessageActionGroup.primary,
           onSelected: () {
@@ -263,7 +263,7 @@ List<_PopoverMessageAction> _buildPopoverMessageActions({
     actions.add(
       _PopoverMessageAction(
         id: 'copyLink',
-        title: 'Copy link',
+        title: tl('Copy link'),
         icon: LucideIcons.link2,
         group: _PopoverMessageActionGroup.utility,
         onSelected: () {
@@ -271,7 +271,7 @@ List<_PopoverMessageAction> _buildPopoverMessageActions({
           copyToClipboard(
             context,
             messageLinkFor(message: message, channelId: channelId),
-            message: 'Message link copied',
+            message: tl('Message link copied'),
           );
         },
       ),
@@ -280,7 +280,7 @@ List<_PopoverMessageAction> _buildPopoverMessageActions({
       actions.add(
         _PopoverMessageAction(
           id: 'remind',
-          title: 'Remind me',
+          title: tl('Remind me'),
           icon: LucideIcons.clock,
           group: _PopoverMessageActionGroup.utility,
           onSelected: () {
@@ -355,7 +355,7 @@ List<_PopoverMessageAction> _buildPopoverMessageActions({
     actions.add(
       _PopoverMessageAction(
         id: 'copyText',
-        title: 'Copy text',
+        title: tl('Copy text'),
         icon: LucideIcons.copy,
         group: _PopoverMessageActionGroup.utility,
         onSelected: () =>
@@ -368,7 +368,7 @@ List<_PopoverMessageAction> _buildPopoverMessageActions({
     actions.add(
       _PopoverMessageAction(
         id: 'edit',
-        title: 'Edit message',
+        title: tl('Edit message'),
         icon: LucideIcons.pencil,
         group: _PopoverMessageActionGroup.primary,
         onSelected: () {
@@ -385,7 +385,7 @@ List<_PopoverMessageAction> _buildPopoverMessageActions({
     actions.add(
       _PopoverMessageAction(
         id: 'delete',
-        title: 'Delete message',
+        title: tl('Delete message'),
         icon: LucideIcons.trash2,
         group: _PopoverMessageActionGroup.destructive,
         destructive: true,

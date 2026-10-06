@@ -282,7 +282,7 @@ class _HuddleParticipantRoster extends ConsumerWidget {
     final listHeight = min(pubkeys.length * 64.0, maxListHeight);
 
     return Semantics(
-      label: '${pubkeys.length} more participants',
+      label: tlt('{0} more participants', [pubkeys.length]),
       container: true,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,

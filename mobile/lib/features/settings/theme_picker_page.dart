@@ -17,6 +17,7 @@ import '../../shared/widgets/ios_glass_navigation_action.dart';
 import '../../shared/widgets/ios_glass_navigation_button.dart';
 import '../../shared/widgets/page_indicator.dart';
 import 'theme_option_sheets.dart';
+import '../../shared/i18n/app_language.dart';
 
 part 'theme_picker_page/theme_home_preview.dart';
 part 'theme_picker_page/theme_preview_sheet.dart';

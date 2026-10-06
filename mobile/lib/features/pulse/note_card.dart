@@ -18,6 +18,7 @@ import '../profile/user_profile_sheet.dart';
 import 'compose_note_page.dart';
 import 'pulse_actions.dart';
 import 'pulse_models.dart';
+import '../../shared/i18n/app_language.dart';
 
 class NoteCard extends HookConsumerWidget {
   final UserNote note;
@@ -176,7 +177,7 @@ class NoteCard extends HookConsumerWidget {
                 if (note.replyParentId != null) ...[
                   const SizedBox(height: 2),
                   Text(
-                    'Replying to ${_replyTargetLabel(note, labels)}',
+                    tlt('Replying to {0}', [_replyTargetLabel(note, labels)]),
                     style: context.textTheme.labelSmall?.copyWith(
                       color: context.colors.onSurfaceVariant,
                     ),
@@ -232,7 +233,7 @@ class NoteCard extends HookConsumerWidget {
                         await copyToClipboard(
                           context,
                           _shareUri(note),
-                          message: 'Copied note URI',
+                          message: tl('Copied note URI'),
                         );
                       },
                     ),

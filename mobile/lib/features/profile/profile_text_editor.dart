@@ -11,6 +11,7 @@ import '../../shared/theme/theme.dart';
 import '../../shared/widgets/modal_presentation.dart';
 import 'ios_profile_text_editor.dart';
 import 'profile_provider.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Opens the current user's display-name editor from a profile action surface.
 Future<void> showProfileDisplayNameEditor(BuildContext context) async {
@@ -30,9 +31,9 @@ Future<void> showProfileDisplayNameEditor(BuildContext context) async {
   );
   await _showProfileTextEditor(
     context: context,
-    title: 'Display name',
+    title: tl('Display name'),
     initialValue: profile?.displayName ?? '',
-    hintText: 'Display name',
+    hintText: tl('Display name'),
     onSave: onSave,
   );
 }
@@ -55,9 +56,9 @@ Future<void> showProfileDescriptionEditor(BuildContext context) async {
   );
   await _showProfileTextEditor(
     context: context,
-    title: 'Profile description',
+    title: tl('Profile description'),
     initialValue: profile?.about ?? '',
-    hintText: 'Profile description',
+    hintText: tl('Profile description'),
     multiline: true,
     onSave: onSave,
   );
@@ -142,7 +143,7 @@ Future<void> _showProfileTextEditor({
 
 void _showSaveError(BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(content: Text("We couldn't save this change. Try again.")),
+    SnackBar(content: Text(tl("We couldn't save this change. Try again."))),
   );
 }
 

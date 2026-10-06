@@ -127,7 +127,7 @@ class _MessageImageCarousel extends HookConsumerWidget {
                   child: Semantics(
                     button: true,
                     excludeSemantics: true,
-                    label: 'Open ${item.semanticLabel}',
+                    label: tlt('Open {0}', [item.semanticLabel]),
                     child: GestureDetector(
                       key: ValueKey('message-media-carousel-item:${item.url}'),
                       onTap: () => openImageViewer(
@@ -164,13 +164,13 @@ class _MessageImageCarousel extends HookConsumerWidget {
                                   (context, child, frame, synchronous) =>
                                       frame != null || synchronous
                                       ? child
-                                      : const MediaLoadingPlaceholder(
-                                          label: 'Loading image',
+                                      : MediaLoadingPlaceholder(
+                                          label: tl('Loading image'),
                                         ),
                               errorBuilder: (_, _, _) =>
-                                  const _MediaPreviewFallback(
+                                  _MediaPreviewFallback(
                                     icon: LucideIcons.imageOff,
-                                    label: 'Image unavailable',
+                                    label: tl('Image unavailable'),
                                   ),
                             ),
                           ),

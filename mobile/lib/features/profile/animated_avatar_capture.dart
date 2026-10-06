@@ -24,6 +24,7 @@ import 'camera_disposal_barrier.dart';
 import 'avatar_editor_option_button.dart';
 import 'animated_avatar_orientation.dart';
 import 'profile_avatar_draft.dart';
+import '../../shared/i18n/app_language.dart';
 
 part 'animated_avatar_capture/review_controls.dart';
 part 'animated_avatar_capture/capture_controls.dart';
@@ -597,16 +598,16 @@ class AnimatedAvatarCapture extends HookConsumerWidget {
                             child: BuzzLoadingIndicator(
                               size: 44,
                               color: context.colors.onSurface,
-                              semanticLabel: 'Preparing animated avatar',
+                              semanticLabel: tl('Preparing animated avatar'),
                             ),
                           )
                         : active != null
                         ? _AspectCorrectCameraPreview(controller: active)
                         : Center(
                             child: isInitializing.value
-                                ? const BuzzLoadingIndicator(
+                                ? BuzzLoadingIndicator(
                                     color: Colors.white,
-                                    semanticLabel: 'Starting camera',
+                                    semanticLabel: tl('Starting camera'),
                                   )
                                 : const Icon(
                                     LucideIcons.cameraOff,

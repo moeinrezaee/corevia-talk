@@ -29,6 +29,7 @@ import 'emoji_avatar_tile.dart';
 import 'image_avatar_capture.dart';
 import 'profile_avatar_crop_page.dart';
 import 'profile_avatar_draft.dart';
+import '../../shared/i18n/app_language.dart';
 
 part 'profile_avatar_editor/emoji_avatar_picker.dart';
 
@@ -291,9 +292,9 @@ class ProfileAvatarEditor extends HookConsumerWidget {
                     color: context.colors.surface.withValues(alpha: 0.72),
                     shape: BoxShape.circle,
                   ),
-                  child: const Center(
+                  child: Center(
                     child: BuzzLoadingIndicator(
-                      semanticLabel: 'Preparing photo',
+                      semanticLabel: tl('Preparing photo'),
                     ),
                   ),
                 ),
@@ -705,7 +706,7 @@ class _ImageMode extends StatelessWidget {
                 key: const ValueKey('image-source-camera'),
                 icon: LucideIcons.camera,
                 iosIcon: IosGlassNavigationIcon.camera,
-                label: 'Camera',
+                label: tl('Camera'),
                 onTap: isPicking ? null : onCamera,
                 labelMaxWidth: 96,
               ),
@@ -716,7 +717,7 @@ class _ImageMode extends StatelessWidget {
                 key: const ValueKey('image-source-library'),
                 icon: LucideIcons.images,
                 iosIcon: IosGlassNavigationIcon.photoLibrary,
-                label: 'Photo Library',
+                label: tl('Photo Library'),
                 onTap: isPicking ? null : onLibrary,
                 labelMaxWidth: 104,
               ),

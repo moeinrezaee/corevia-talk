@@ -9,6 +9,7 @@ import 'package:image/image.dart' as image;
 
 import '../../shared/theme/theme.dart';
 import '../../shared/widgets/buzz_loading_indicator.dart';
+import '../../shared/i18n/app_language.dart';
 
 const _cropOutputSize = 512;
 
@@ -103,7 +104,7 @@ class ProfileAvatarCropPage extends HookWidget {
         centerTitle: true,
         titleSpacing: 0,
         title: Text(
-          'Position Photo',
+          tl('Position Photo'),
           maxLines: 1,
           style: context.textTheme.titleSmall?.copyWith(
             color: Colors.white,
@@ -116,7 +117,7 @@ class ProfileAvatarCropPage extends HookWidget {
           child: Align(
             alignment: Alignment.centerLeft,
             child: _CropHeaderButton(
-              label: 'Cancel',
+              label: tl('Cancel'),
               onPressed: isCropping.value ? null : () => Navigator.pop(context),
             ),
           ),
@@ -126,7 +127,7 @@ class ProfileAvatarCropPage extends HookWidget {
             padding: const EdgeInsets.only(right: Grid.gutter),
             child: _CropHeaderButton(
               key: const ValueKey('avatar-crop-use-photo'),
-              label: 'Save',
+              label: tl('Save'),
               loading: isCropping.value,
               onPressed:
                   isCropping.value ||
@@ -164,17 +165,17 @@ class ProfileAvatarCropPage extends HookWidget {
         ],
       ),
       body: loadError.value || dimensionsSnapshot.hasError
-          ? const Center(
+          ? Center(
               child: Text(
-                "We couldn't prepare that photo.",
+                tl("We couldn't prepare that photo."),
                 style: TextStyle(color: Colors.white),
               ),
             )
           : preparedBytes.value == null || dimensions == null
-          ? const Center(
+          ? Center(
               child: BuzzLoadingIndicator(
                 color: Colors.white,
-                semanticLabel: 'Preparing photo',
+                semanticLabel: tl('Preparing photo'),
               ),
             )
           : LayoutBuilder(
@@ -248,33 +249,33 @@ class ProfileAvatarCropPage extends HookWidget {
                         children: [
                           ClipRect(
                             child: Semantics(
-                              label: 'Photo crop',
+                              label: tl('Photo crop'),
                               value: '${(currentScale * 100).round()}% zoom',
                               customSemanticsActions: {
-                                const CustomSemanticsAction(
-                                  label: 'Move left',
+                                CustomSemanticsAction(
+                                  label: tl('Move left'),
                                 ): () =>
                                     movePhoto(const Offset(-24, 0)),
-                                const CustomSemanticsAction(
-                                  label: 'Move right',
+                                CustomSemanticsAction(
+                                  label: tl('Move right'),
                                 ): () =>
                                     movePhoto(const Offset(24, 0)),
-                                const CustomSemanticsAction(
-                                  label: 'Move up',
+                                CustomSemanticsAction(
+                                  label: tl('Move up'),
                                 ): () =>
                                     movePhoto(const Offset(0, -24)),
-                                const CustomSemanticsAction(
-                                  label: 'Move down',
+                                CustomSemanticsAction(
+                                  label: tl('Move down'),
                                 ): () =>
                                     movePhoto(const Offset(0, 24)),
                                 if (currentScale < 5)
-                                  const CustomSemanticsAction(
-                                    label: 'Zoom in',
+                                  CustomSemanticsAction(
+                                    label: tl('Zoom in'),
                                   ): () =>
                                       zoomPhoto(1.1),
                                 if (currentScale > 1)
-                                  const CustomSemanticsAction(
-                                    label: 'Zoom out',
+                                  CustomSemanticsAction(
+                                    label: tl('Zoom out'),
                                   ): () =>
                                       zoomPhoto(1 / 1.1),
                               },
@@ -324,9 +325,9 @@ class ProfileAvatarCropPage extends HookWidget {
                         maskBottom + Grid.twelve,
                         canvasHeight - 24,
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          'Move and scale',
+                          tl('Move and scale'),
                           style: TextStyle(color: Colors.white70),
                         ),
                       ),
@@ -368,10 +369,10 @@ class _CropHeaderButton extends StatelessWidget {
         ),
         onPressed: onPressed,
         child: loading
-            ? const BuzzLoadingIndicator(
+            ? BuzzLoadingIndicator(
                 size: 18,
                 color: Colors.white,
-                semanticLabel: 'Saving photo',
+                semanticLabel: tl('Saving photo'),
               )
             : Text(label, maxLines: 1, softWrap: false),
       ),

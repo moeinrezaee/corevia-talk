@@ -94,7 +94,7 @@ class _NestedThreadSummaryRow extends ConsumerWidget {
                       ),
                       TextSpan(
                         text:
-                            'last reply ${formatThreadSummaryLastReplyTime(lastReplyAt)}',
+                            tlt('last reply {0}', [formatThreadSummaryLastReplyTime(lastReplyAt)]),
                         style: replyPreviewTextStyle.copyWith(
                           color: context.colors.onSurfaceVariant,
                         ),

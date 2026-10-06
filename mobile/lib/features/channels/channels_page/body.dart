@@ -260,7 +260,7 @@ class _SliverChannelsList extends HookConsumerWidget {
             // Starred channels (exclusive — pinned above all sections).
             if (starredStreamChannels.isNotEmpty)
               _ChannelSection(
-                title: 'Starred',
+                title: tl('Starred'),
                 icon: LucideIcons.star,
                 showTopDivider: false,
                 expanded: starredExpanded.value,
@@ -302,8 +302,8 @@ class _SliverChannelsList extends HookConsumerWidget {
                   final name = await showBuzzDialog<String>(
                     context: context,
                     builder: (_) => _SectionNameDialog(
-                      title: 'Rename Section',
-                      confirmLabel: 'Rename',
+                      title: tl('Rename Section'),
+                      confirmLabel: tl('Rename'),
                       initialValue: section.name,
                     ),
                   );
@@ -317,19 +317,19 @@ class _SliverChannelsList extends HookConsumerWidget {
                   final confirmed = await showBuzzDialog<bool>(
                     context: context,
                     builder: (_) => AlertDialog(
-                      title: Text('Delete "${section.name}"?'),
-                      content: const Text(
-                        'Channels in this section will move back to the main list.',
+                      title: Text(tlt('Delete "{0}"?', [section.name])),
+                      content: Text(
+                        tl('Channels in this section will move back to the main list.'),
                       ),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(context, false),
-                          child: const Text('Cancel'),
+                          child: Text(tl('Cancel')),
                         ),
                         TextButton(
                           onPressed: () => Navigator.pop(context, true),
                           child: Text(
-                            'Delete',
+                            tl('Delete'),
                             style: TextStyle(color: context.colors.error),
                           ),
                         ),
@@ -371,7 +371,7 @@ class _SliverChannelsList extends HookConsumerWidget {
                 },
               ),
             _ChannelSection(
-              title: 'Channels',
+              title: tl('Channels'),
               icon: LucideIcons.hash,
               showTopDivider:
                   starredStreamChannels.isNotEmpty || userSections.isNotEmpty,
@@ -387,7 +387,7 @@ class _SliverChannelsList extends HookConsumerWidget {
               onSelectChannel: onSelectChannel,
             ),
             _ChannelSection(
-              title: 'DMs',
+              title: tl('DMs'),
               icon: LucideIcons.messagesSquare,
               showTopDivider: true,
               expanded: dmsExpanded.value,

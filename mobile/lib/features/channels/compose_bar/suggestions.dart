@@ -50,7 +50,7 @@ class _MentionSuggestions extends StatelessWidget {
                 dense: true,
                 visualDensity: VisualDensity.compact,
                 title: Text(
-                  'Could not search community people.',
+                  tl('Could not search community people.'),
                   style: context.textTheme.bodySmall?.copyWith(
                     color: context.colors.error,
                   ),
@@ -59,7 +59,7 @@ class _MentionSuggestions extends StatelessWidget {
                   onPressed: onRetry == null
                       ? null
                       : () => _runComposerAction(onRetry!),
-                  child: const Text('Retry'),
+                  child: Text(tl('Retry')),
                 ),
               );
             }

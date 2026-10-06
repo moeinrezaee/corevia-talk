@@ -176,7 +176,7 @@ class _CustomSectionHeader extends ConsumerWidget {
             Builder(
               builder: (buttonContext) => IconButton(
                 key: ValueKey('section-menu-${section.id}'),
-                tooltip: '${section.name} options',
+                tooltip: tlt('{0} options', [section.name]),
                 visualDensity: VisualDensity.compact,
                 icon: Icon(
                   LucideIcons.ellipsisVertical,
@@ -190,30 +190,30 @@ class _CustomSectionHeader extends ConsumerWidget {
                     alignment: AnchoredPopoverAlignment.end,
                     surfaceKey: ValueKey('section-popover-${section.id}'),
                     items: [
-                      const PopupMenuItem(
+                      PopupMenuItem(
                         value: 'rename',
                         padding: _sectionMenuItemPadding,
                         child: _SectionMenuItemContent(
                           icon: LucideIcons.pencil,
-                          label: 'Rename section',
+                          label: tl('Rename section'),
                         ),
                       ),
                       PopupMenuItem(
                         value: 'move_up',
                         enabled: !isFirst,
                         padding: _sectionMenuItemPadding,
-                        child: const _SectionMenuItemContent(
+                        child: _SectionMenuItemContent(
                           icon: LucideIcons.arrowUp,
-                          label: 'Move up',
+                          label: tl('Move up'),
                         ),
                       ),
                       PopupMenuItem(
                         value: 'move_down',
                         enabled: !isLast,
                         padding: _sectionMenuItemPadding,
-                        child: const _SectionMenuItemContent(
+                        child: _SectionMenuItemContent(
                           icon: LucideIcons.arrowDown,
-                          label: 'Move down',
+                          label: tl('Move down'),
                         ),
                       ),
                       ..._sortMenuItems(sortMode),
@@ -222,7 +222,7 @@ class _CustomSectionHeader extends ConsumerWidget {
                         padding: _sectionMenuItemPadding,
                         child: _SectionMenuItemContent(
                           icon: LucideIcons.trash2,
-                          label: 'Delete section',
+                          label: tl('Delete section'),
                           color: context.colors.error,
                         ),
                       ),
@@ -319,13 +319,13 @@ class _SectionNameDialog extends HookWidget {
       content: TextField(
         controller: controller,
         autofocus: true,
-        decoration: const InputDecoration(labelText: 'Name'),
+        decoration: InputDecoration(labelText: tl('Name')),
         onSubmitted: (_) => confirm(),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: Text(tl('Cancel')),
         ),
         TextButton(onPressed: confirm, child: Text(confirmLabel)),
       ],
@@ -360,12 +360,12 @@ List<PopupMenuEntry<String>> _sortMenuItems(
   if (showDivider) const PopupMenuDivider(),
   _sortMenuItem(
     value: _kSortRecentMenuValue,
-    label: 'Sort: Recent',
+    label: tl('Sort: Recent'),
     selected: current == ChannelSortMode.recent,
   ),
   _sortMenuItem(
     value: _kSortAlphaMenuValue,
-    label: 'Sort: A–Z',
+    label: tl('Sort: A–Z'),
     selected: current == ChannelSortMode.alpha,
   ),
 ];
@@ -473,7 +473,7 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: Grid.xs),
             Text(
-              'No conversations yet',
+              tl('No conversations yet'),
               style: context.textTheme.bodyLarge?.copyWith(
                 color: context.colors.onSurfaceVariant,
               ),
@@ -556,7 +556,7 @@ class _SectionHeader extends StatelessWidget {
               Builder(
                 builder: (buttonContext) => IconButton(
                   key: ValueKey('sort-menu-$label'),
-                  tooltip: '$label options',
+                  tooltip: tlt('{0} options', [label]),
                   visualDensity: VisualDensity.compact,
                   icon: Icon(
                     LucideIcons.ellipsisVertical,

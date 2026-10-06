@@ -24,7 +24,7 @@ class _NewBoundaryDivider extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: Grid.xxs),
             child: Text(
-              'New',
+              tl('New'),
               style: context.textTheme.labelSmall?.copyWith(
                 color: context.colors.error,
                 fontWeight: FontWeight.w600,
@@ -299,7 +299,7 @@ class _InboxRow extends HookConsumerWidget {
                                     ],
                                   ),
                                   const SizedBox(height: Grid.quarter),
-                                  // Contextual label: "Mentioned in #channel" etc.
+                                  // Contextual label: tl("Mentioned in #channel") etc.
                                   Row(
                                     children: [
                                       Flexible(
@@ -397,7 +397,7 @@ class _InboxRow extends HookConsumerWidget {
                 ),
                 ListTile(
                   leading: const Icon(LucideIcons.externalLink),
-                  title: const Text('Open conversation'),
+                  title: Text(tl('Open conversation')),
                   onTap: () {
                     Navigator.of(sheetContext).pop();
                     onTap();

@@ -36,6 +36,7 @@ import 'message_gallery.dart';
 import 'message_gallery_frame.dart';
 import 'message_media_geometry.dart';
 import 'voice_note_attachment.dart';
+import '../../shared/i18n/app_language.dart';
 
 part 'message_content/media_carousel.dart';
 part 'message_content/inline_components.dart';
@@ -545,7 +546,7 @@ class MessageContent extends HookConsumerWidget {
         } catch (_) {
           if (!context.mounted) return;
           ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-            const SnackBar(content: Text('Could not open attachment')),
+            SnackBar(content: Text(tl('Could not open attachment'))),
           );
         }
       },
@@ -619,10 +620,10 @@ class _MessageImagePreview extends HookConsumerWidget {
                 frameBuilder: (context, child, frame, synchronous) =>
                     frame != null || synchronous
                     ? child
-                    : const MediaLoadingPlaceholder(label: 'Loading image'),
+                    : MediaLoadingPlaceholder(label: tl('Loading image')),
                 errorBuilder: (_, _, _) => _MediaPreviewFallback(
                   icon: LucideIcons.imageOff,
-                  label: 'Image unavailable',
+                  label: tl('Image unavailable'),
                 ),
               ),
             ),
@@ -728,7 +729,7 @@ class _MessageCodeBlock extends HookWidget {
     final isCopied = useState(false);
 
     Future<void> handleCopy() async {
-      await copyToClipboard(context, code, message: 'Copied code to clipboard');
+      await copyToClipboard(context, code, message: tl('Copied code to clipboard'));
       if (!context.mounted) return;
       isCopied.value = true;
       Future.delayed(const Duration(seconds: 2), () {

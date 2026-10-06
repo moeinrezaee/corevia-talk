@@ -11,6 +11,7 @@ import 'frosted_scroll_under_scope.dart';
 import 'ios_glass_navigation_button.dart';
 import 'ios_glass_navigation_action.dart';
 import 'ios_navigation_bar.dart';
+import '../i18n/app_language.dart';
 export 'ios_navigation_bar.dart' show IosNavigationAction;
 
 /// Minimum height of the frosted app bar content area below the safe area.
@@ -356,7 +357,7 @@ class FrostedAppBar extends StatelessWidget {
             ? usesAutomaticIosGlassBackButton
                   ? IosGlassNavigationButton(
                       icon: IosGlassNavigationIcon.back,
-                      semanticLabel: 'Back',
+                      semanticLabel: tl('Back'),
                       onPressed: () => Navigator.of(context).maybePop(),
                       width: iosGlassChannelHeaderLeadingWidth,
                       buttonCenterX: iosGlassChannelHeaderButtonCenterX,
@@ -369,7 +370,7 @@ class FrostedAppBar extends StatelessWidget {
                         onPressed: () => Navigator.of(context).pop(),
                         color: effectiveIconColor,
                         icon: const Icon(LucideIcons.chevronLeft),
-                        tooltip: 'Back',
+                        tooltip: tl('Back'),
                       ),
                     )
             : null);

@@ -14,19 +14,19 @@ class _CreateChannelMenuOption<T> {
   });
 }
 
-const _createChannelTtlOptions = [
-  _CreateChannelMenuOption(label: '30 minutes', value: 30 * 60),
-  _CreateChannelMenuOption(label: '1 hour', value: 60 * 60),
-  _CreateChannelMenuOption(label: '6 hours', value: 6 * 60 * 60),
-  _CreateChannelMenuOption(label: '12 hours', value: 12 * 60 * 60),
-  _CreateChannelMenuOption(label: '1 day', value: 24 * 60 * 60),
-  _CreateChannelMenuOption(label: '3 days', value: 3 * 24 * 60 * 60),
+List<_CreateChannelMenuOption<int>> get _createChannelTtlOptions => [
+  _CreateChannelMenuOption(label: tl('30 minutes'), value: 30 * 60),
+  _CreateChannelMenuOption(label: tl('1 hour'), value: 60 * 60),
+  _CreateChannelMenuOption(label: tl('6 hours'), value: 6 * 60 * 60),
+  _CreateChannelMenuOption(label: tl('12 hours'), value: 12 * 60 * 60),
+  _CreateChannelMenuOption(label: tl('1 day'), value: 24 * 60 * 60),
+  _CreateChannelMenuOption(label: tl('3 days'), value: 3 * 24 * 60 * 60),
   _CreateChannelMenuOption(
-    label: '7 days',
+    label: tl('7 days'),
     value: _defaultCreateChannelTtlSeconds,
   ),
-  _CreateChannelMenuOption(label: '14 days', value: 14 * 24 * 60 * 60),
-  _CreateChannelMenuOption(label: '30 days', value: 30 * 24 * 60 * 60),
+  _CreateChannelMenuOption(label: tl('14 days'), value: 14 * 24 * 60 * 60),
+  _CreateChannelMenuOption(label: tl('30 days'), value: 30 * 24 * 60 * 60),
 ];
 
 class _CreateChannelSheet extends HookConsumerWidget {
@@ -91,7 +91,7 @@ class _CreateChannelSheet extends HookConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _CreateChannelFieldLabel(label: 'Name'),
+              _CreateChannelFieldLabel(label: tl('Name')),
               const SizedBox(height: Grid.xxs),
               _CreateChannelFieldShell(
                 child: TextField(
@@ -123,8 +123,8 @@ class _CreateChannelSheet extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: Grid.xs),
-              const _CreateChannelFieldLabel(
-                label: 'Description',
+              _CreateChannelFieldLabel(
+                label: tl('Description'),
                 optional: true,
               ),
               const SizedBox(height: Grid.xxs),
@@ -134,7 +134,7 @@ class _CreateChannelSheet extends HookConsumerWidget {
                   controller: descriptionController,
                   enabled: !isSubmitting.value,
                   decoration: InputDecoration(
-                    hintText: 'What this $kindLabel is for',
+                    hintText: tlt('What this {0} is for', [kindLabel]),
                     border: InputBorder.none,
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
@@ -156,17 +156,17 @@ class _CreateChannelSheet extends HookConsumerWidget {
               const SizedBox(height: Grid.sm),
               _CreateChannelRadioGroup<bool>(
                 enabled: !isSubmitting.value,
-                label: 'Channel type',
+                label: tl('Channel type'),
                 onSelected: (value) => temporary.value = value,
-                options: const [
+                options: [
                   _CreateChannelMenuOption(
                     key: Key('create-channel-type-ongoing'),
-                    label: 'Ongoing',
+                    label: tl('Ongoing'),
                     value: false,
                   ),
                   _CreateChannelMenuOption(
                     key: Key('create-channel-type-temporary'),
-                    label: 'Temporary',
+                    label: tl('Temporary'),
                     value: true,
                   ),
                 ],
@@ -177,7 +177,7 @@ class _CreateChannelSheet extends HookConsumerWidget {
                 _CreateChannelSettingMenu<int>(
                   controlKey: const Key('create-channel-ttl'),
                   enabled: !isSubmitting.value,
-                  label: 'Expires after',
+                  label: tl('Expires after'),
                   onSelected: (value) => ttlSeconds.value = value,
                   options: _createChannelTtlOptions,
                   value: ttlSeconds.value,
@@ -189,17 +189,17 @@ class _CreateChannelSheet extends HookConsumerWidget {
               const SizedBox(height: Grid.sm),
               _CreateChannelRadioGroup<String>(
                 enabled: !isSubmitting.value,
-                label: 'Visibility',
+                label: tl('Visibility'),
                 onSelected: (value) => visibility.value = value,
-                options: const [
+                options: [
                   _CreateChannelMenuOption(
                     key: Key('create-channel-visibility-public'),
-                    label: 'Public',
+                    label: tl('Public'),
                     value: 'open',
                   ),
                   _CreateChannelMenuOption(
                     key: Key('create-channel-visibility-private'),
-                    label: 'Private',
+                    label: tl('Private'),
                     value: 'private',
                   ),
                 ],
@@ -236,7 +236,7 @@ class _CreateChannelFieldLabel extends StatelessWidget {
           TextSpan(text: label),
           if (optional)
             TextSpan(
-              text: '  Optional',
+              text: tl('  Optional'),
               style: context.textTheme.labelSmall?.copyWith(
                 color: context.colors.onSurfaceVariant.withValues(alpha: 0.6),
                 fontWeight: FontWeight.w400,
@@ -583,7 +583,7 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                                     vertical: Grid.half,
                                   ),
                                   child: Text(
-                                    'To:',
+                                    tl('To:'),
                                     style: context.textTheme.bodyLarge
                                         ?.copyWith(fontWeight: FontWeight.w600),
                                   ),
@@ -632,7 +632,7 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                                             vertical: Grid.half,
                                           ),
                                       suffixIcon: isSubmitting.value
-                                          ? const Padding(
+                                          ? Padding(
                                               padding: EdgeInsets.all(
                                                 Grid.half,
                                               ),
@@ -641,7 +641,7 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                                                 child: BuzzLoadingIndicator(
                                                   size: 16,
                                                   semanticLabel:
-                                                      'Creating conversation',
+                                                      tl('Creating conversation'),
                                                 ),
                                               ),
                                             )
@@ -669,11 +669,11 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                 key: const Key('new-dm-results'),
                 builder: (context) {
                   if (selectedUsers.value.length >= 8) {
-                    return const SizedBox(
+                    return SizedBox(
                       height: 96,
                       child: Center(
                         child: Text(
-                          'DMs support up to nine people, including you.',
+                          tl('DMs support up to nine people, including you.'),
                         ),
                       ),
                     );
@@ -681,12 +681,12 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                   if (directoryAsync.isLoading &&
                           directoryAsync.asData == null ||
                       isSearchTransitionPending) {
-                    return const SizedBox(
+                    return SizedBox(
                       height: 280,
                       child: Center(
                         child: BuzzLoadingIndicator(
                           size: 44,
-                          semanticLabel: 'Loading people',
+                          semanticLabel: tl('Loading people'),
                         ),
                       ),
                     );
@@ -698,8 +698,8 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Text(
-                              'Could not load people from this relay.',
+                            Text(
+                              tl('Could not load people from this relay.'),
                             ),
                             const SizedBox(height: Grid.half),
                             TextButton(
@@ -714,7 +714,7 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                                   );
                                 }
                               },
-                              child: const Text('Retry'),
+                              child: Text(tl('Retry')),
                             ),
                           ],
                         ),
@@ -839,7 +839,7 @@ class _SelectedDmRecipientChip extends StatelessWidget {
             button: true,
             enabled: enabled,
             excludeSemantics: true,
-            label: 'Remove $label',
+            label: tlt('Remove {0}', [label]),
             child: InkWell(
               customBorder: const StadiumBorder(),
               onTap: enabled ? onDeleted : null,

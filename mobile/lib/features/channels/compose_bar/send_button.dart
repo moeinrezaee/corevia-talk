@@ -32,7 +32,7 @@ class _SendButton extends StatelessWidget {
             ? BuzzLoadingIndicator(
                 size: 18,
                 color: context.colors.onPrimary,
-                semanticLabel: 'Sending message',
+                semanticLabel: tl('Sending message'),
               )
             : Icon(
                 LucideIcons.arrowUp,

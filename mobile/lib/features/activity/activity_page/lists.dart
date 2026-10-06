@@ -22,17 +22,17 @@ class _RemindersList extends ConsumerWidget {
     ];
 
     if (remindersAsync.isLoading && reminders.isEmpty) {
-      return const Center(
+      return Center(
         child: BuzzLoadingIndicator(
           size: 44,
-          semanticLabel: 'Loading reminders',
+          semanticLabel: tl('Loading reminders'),
         ),
       );
     }
     if (reminders.isEmpty) {
-      return const _EmptySurface(
+      return _EmptySurface(
         icon: LucideIcons.clock,
-        message: 'No reminders',
+        message: tl('No reminders'),
         detail: 'Reminders you set will show up here.',
       );
     }
@@ -98,9 +98,9 @@ class _DraftsList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final names = ref.watch(identityNameSourcesProvider);
     if (drafts.isEmpty) {
-      return const _EmptySurface(
+      return _EmptySurface(
         icon: LucideIcons.filePen,
-        message: 'No drafts',
+        message: tl('No drafts'),
         detail: 'Unsent messages you start composing will show up here.',
       );
     }
@@ -134,7 +134,7 @@ class _DraftsList extends ConsumerWidget {
           ),
           trailing: IconButton(
             icon: const Icon(LucideIcons.trash2, size: 18),
-            tooltip: 'Delete draft',
+            tooltip: tl('Delete draft'),
             onPressed: () => onDelete(draft),
           ),
           onTap: () => onOpen(draft),

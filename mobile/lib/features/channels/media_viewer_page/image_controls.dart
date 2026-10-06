@@ -25,7 +25,7 @@ class _MediaViewerBottomControls extends StatelessWidget {
           _MediaViewerCircleButton(
             key: const ValueKey('message-media-image-viewer-reply-thread'),
             icon: LucideIcons.messageSquareReply,
-            tooltip: 'Reply in thread',
+            tooltip: tl('Reply in thread'),
             onPressed: onReply,
           ),
           const SizedBox(width: Grid.xxs),
@@ -37,7 +37,7 @@ class _MediaViewerBottomControls extends StatelessWidget {
                       key: const ValueKey(
                         'message-media-image-viewer-pagination',
                       ),
-                      semanticLabel: 'Image',
+                      semanticLabel: tl('Image'),
                       containerHeight: 48,
                       count: images.length,
                       selected: currentIndex,
@@ -51,7 +51,7 @@ class _MediaViewerBottomControls extends StatelessWidget {
           _MediaViewerCircleButton(
             key: const ValueKey('message-media-image-viewer-more-actions'),
             icon: LucideIcons.ellipsis,
-            tooltip: 'More image actions',
+            tooltip: tl('More image actions'),
             onPressed: onMore,
           ),
         ],

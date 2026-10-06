@@ -467,7 +467,7 @@ List<InlineSpan> _memberNameSpans(
   if (hiddenTargets.isNotEmpty) {
     final hiddenLabels = hiddenTargets.map(resolveLabel).toList();
     spans
-      ..add(const TextSpan(text: ', and '))
+      ..add(TextSpan(text: tl(', and ')))
       ..add(
         WidgetSpan(
           alignment: PlaceholderAlignment.baseline,
@@ -476,7 +476,7 @@ List<InlineSpan> _memberNameSpans(
             message: hiddenLabels.join('\n'),
             triggerMode: TooltipTriggerMode.tap,
             child: Text(
-              '${hiddenTargets.length} others',
+              tlt('{0} others', [hiddenTargets.length]),
               key: const Key('membership-overflow'),
               style: style?.copyWith(
                 decoration: TextDecoration.underline,
@@ -657,7 +657,7 @@ class _ThreadSummaryRow extends ConsumerWidget {
                       ),
                       TextSpan(
                         text:
-                            'last reply ${formatThreadSummaryLastReplyTime(lastReplyAt)}',
+                            tlt('last reply {0}', [formatThreadSummaryLastReplyTime(lastReplyAt)]),
                         style: replyPreviewTextStyle.copyWith(
                           color: context.colors.onSurfaceVariant,
                         ),

@@ -83,7 +83,7 @@ Future<bool> _showNativeMessageActions({
         copyToClipboard(
           context,
           messageLinkFor(message: message, channelId: channelId),
-          message: 'Message link copied',
+          message: tl('Message link copied'),
         );
       });
       if (ref.read(reminderServiceProvider) != null) {

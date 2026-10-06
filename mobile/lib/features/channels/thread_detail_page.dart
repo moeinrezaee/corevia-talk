@@ -49,6 +49,7 @@ import 'send_message_provider.dart';
 import 'small_avatar.dart';
 import 'sticky_date_header.dart';
 import 'timeline_message.dart';
+import '../../shared/i18n/app_language.dart';
 
 part 'thread_detail_page/nested_thread_summary_row.dart';
 part 'thread_detail_page/message_list.dart';
@@ -834,12 +835,12 @@ class ThreadDetailPage extends HookConsumerWidget {
       appBar: FrostedAppBar(
         alwaysFrosted: true,
         nativeViewSuppressed: messageActionBackdropActive,
-        nativeTitle: 'Thread',
+        nativeTitle: tl('Thread'),
         leading: usesNativeIosGlassBackButton
             ? IosGlassNavigationButton(
                 key: const ValueKey('thread-ios-glass-back'),
                 icon: IosGlassNavigationIcon.back,
-                semanticLabel: 'Back',
+                semanticLabel: tl('Back'),
                 onPressed: () => Navigator.of(context).maybePop(),
                 width: iosGlassChannelHeaderLeadingWidth,
                 buttonCenterX: iosGlassChannelHeaderButtonCenterX,
@@ -853,7 +854,7 @@ class ThreadDetailPage extends HookConsumerWidget {
                 ? iosGlassChannelHeaderTitleSpacing
                 : 0,
           ),
-          child: const Text('Thread', key: ValueKey('thread-app-bar-title')),
+          child: Text(tl('Thread'), key: ValueKey('thread-app-bar-title')),
         ),
         titleStyle: channelTitleTextStyle,
       ),
@@ -961,7 +962,7 @@ class ThreadDetailPage extends HookConsumerWidget {
                         focusNode: composerFocusNode,
                         onFocusRestorerChanged: (restoreFocus) =>
                             restoreComposerFocus.value = restoreFocus,
-                        hintText: 'Reply in thread\u2026',
+                        hintText: tl('Reply in thread\u2026'),
                         threadHeadId: threadHead.id,
                         rootId: effectiveRootId,
                         onFocusRequested: followThreadTailFromComposer,

@@ -8,6 +8,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'huddle_auth.dart';
 import 'huddle_wire.dart';
+import '../i18n/app_language.dart';
 
 typedef HuddleWebSocketFactory = WebSocketChannel Function(Uri uri);
 
@@ -187,9 +188,9 @@ final class HuddleTransport implements HuddleTransportClient {
   @override
   Future<void> connect() async {
     if (_disposed) {
-      throw const HuddleTransportError(
+      throw HuddleTransportError(
         code: HuddleTransportErrorCode.disposed,
-        message: 'Huddle transport has been disposed.',
+        message: tl('Huddle transport has been disposed.'),
       );
     }
     if (_state.phase != HuddleTransportPhase.idle &&
@@ -197,7 +198,7 @@ final class HuddleTransport implements HuddleTransportClient {
         _state.phase != HuddleTransportPhase.failed) {
       throw HuddleTransportError(
         code: HuddleTransportErrorCode.invalidState,
-        message: 'Cannot connect while transport is ${_state.phase.name}.',
+        message: tlt('Cannot connect while transport is {0}.', [_state.phase.name]),
       );
     }
 
@@ -233,9 +234,9 @@ final class HuddleTransport implements HuddleTransportClient {
       _channel = channel;
       await channel.ready.timeout(connectTimeout);
       if (!_isCurrent(generation)) {
-        throw const HuddleTransportError(
+        throw HuddleTransportError(
           code: HuddleTransportErrorCode.cancelled,
-          message: 'Huddle connection was superseded.',
+          message: tl('Huddle connection was superseded.'),
         );
       }
 
@@ -257,9 +258,9 @@ final class HuddleTransport implements HuddleTransportClient {
       );
       _handshakeTimer = Timer(handshakeTimeout, () {
         _fail(
-          const HuddleTransportError(
+          HuddleTransportError(
             code: HuddleTransportErrorCode.handshakeTimeout,
-            message: 'Timed out waiting for Huddle room admission.',
+            message: tl('Timed out waiting for Huddle room admission.'),
           ),
           generation,
         );
@@ -271,7 +272,7 @@ final class HuddleTransport implements HuddleTransportClient {
     } catch (error) {
       final failure = HuddleTransportError(
         code: HuddleTransportErrorCode.connectionFailed,
-        message: 'Unable to connect to the Huddle audio relay.',
+        message: tl('Unable to connect to the Huddle audio relay.'),
         cause: error,
       );
       _fail(failure, generation);
@@ -290,7 +291,7 @@ final class HuddleTransport implements HuddleTransportClient {
         _state.phase != HuddleTransportPhase.connected) {
       throw HuddleTransportError(
         code: HuddleTransportErrorCode.invalidState,
-        message: 'Cannot send audio while transport is ${_state.phase.name}.',
+        message: tlt('Cannot send audio while transport is {0}.', [_state.phase.name]),
       );
     }
 
@@ -299,7 +300,7 @@ final class HuddleTransport implements HuddleTransportClient {
     } catch (error) {
       throw HuddleTransportError(
         code: HuddleTransportErrorCode.sendFailed,
-        message: 'Unable to send Huddle audio.',
+        message: tl('Unable to send Huddle audio.'),
         cause: error,
       );
     }
@@ -319,9 +320,9 @@ final class HuddleTransport implements HuddleTransportClient {
     _handshakeTimer = null;
     if (_handshakeCompleter case final completer? when !completer.isCompleted) {
       completer.completeError(
-        const HuddleTransportError(
+        HuddleTransportError(
           code: HuddleTransportErrorCode.cancelled,
-          message: 'Huddle connection was closed.',
+          message: tl('Huddle connection was closed.'),
         ),
       );
     }
@@ -399,9 +400,9 @@ final class HuddleTransport implements HuddleTransportClient {
     final challenge = message['challenge'];
     if (challenge is! String || challenge.isEmpty) {
       _fail(
-        const HuddleTransportError(
+        HuddleTransportError(
           code: HuddleTransportErrorCode.protocolViolation,
-          message: 'Huddle auth challenge was missing.',
+          message: tl('Huddle auth challenge was missing.'),
         ),
         generation,
       );
@@ -426,7 +427,7 @@ final class HuddleTransport implements HuddleTransportClient {
       _fail(
         HuddleTransportError(
           code: HuddleTransportErrorCode.authenticationFailed,
-          message: 'Unable to sign Huddle authentication.',
+          message: tl('Unable to sign Huddle authentication.'),
           cause: error,
         ),
         generation,
@@ -733,9 +734,9 @@ final class HuddleTransport implements HuddleTransportClient {
       return;
     }
     _fail(
-      const HuddleTransportError(
+      HuddleTransportError(
         code: HuddleTransportErrorCode.protocolViolation,
-        message: 'Huddle roster revision gap; reconnecting for a fresh roster.',
+        message: tl('Huddle roster revision gap; reconnecting for a fresh roster.'),
       ),
       generation,
     );
@@ -878,7 +879,7 @@ final class HuddleTransport implements HuddleTransportClient {
     _fail(
       HuddleTransportError(
         code: HuddleTransportErrorCode.connectionFailed,
-        message: 'Huddle audio socket failed.',
+        message: tl('Huddle audio socket failed.'),
         cause: error,
       ),
       generation,
@@ -888,9 +889,9 @@ final class HuddleTransport implements HuddleTransportClient {
   void _handleSocketClosed(int generation) {
     if (_intentionalClose || !_isCurrent(generation)) return;
     _fail(
-      const HuddleTransportError(
+      HuddleTransportError(
         code: HuddleTransportErrorCode.socketClosed,
-        message: 'Huddle audio socket closed unexpectedly.',
+        message: tl('Huddle audio socket closed unexpectedly.'),
       ),
       generation,
     );

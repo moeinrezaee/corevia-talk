@@ -194,7 +194,7 @@ class _MessageActionSurfaceLayout {
   ) {
     final textPainter = TextPainter(
       text: TextSpan(
-        text: 'Message action',
+        text: tl('Message action'),
         style: context.textTheme.bodyLarge,
       ),
       textDirection: Directionality.of(context),

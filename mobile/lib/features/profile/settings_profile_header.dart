@@ -18,6 +18,7 @@ import '../../shared/widgets/progressive_animated_avatar.dart';
 import 'profile_provider.dart';
 import 'set_status_sheet.dart';
 import 'user_status_provider.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Profile avatar, display name, status, and presence shown above settings.
 class SettingsProfileHeader extends HookConsumerWidget {
@@ -250,7 +251,7 @@ class _PresencePill extends StatelessWidget {
     return Builder(
       builder: (buttonContext) => Semantics(
         button: true,
-        label: 'Presence: $label',
+        label: tlt('Presence: {0}', [label]),
         child: SizedBox(
           key: const ValueKey('settings-presence-target'),
           height: Grid.xl,

@@ -7,11 +7,13 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../shared/theme/theme.dart';
 import '../../shared/widgets/modal_presentation.dart';
+import '../../shared/i18n/app_language.dart';
 
-const appearanceModeOptions = <({ThemeMode mode, String label, IconData icon})>[
-  (mode: ThemeMode.light, label: 'Light', icon: LucideIcons.sun),
-  (mode: ThemeMode.dark, label: 'Dark', icon: LucideIcons.moon),
-  (mode: ThemeMode.system, label: 'System', icon: LucideIcons.sunMoon),
+/// Not const: the labels follow the active language.
+List<({ThemeMode mode, String label, IconData icon})> get appearanceModeOptions => [
+  (mode: ThemeMode.light, label: tl('Light'), icon: LucideIcons.sun),
+  (mode: ThemeMode.dark, label: tl('Dark'), icon: LucideIcons.moon),
+  (mode: ThemeMode.system, label: tl('System'), icon: LucideIcons.sunMoon),
 ];
 
 String appearanceModeLabel(ThemeMode mode) =>
@@ -23,7 +25,7 @@ Future<void> showAppearanceModePickerSheet({
   required ValueChanged<ThemeMode> onSelected,
 }) => showBuzzModalBottomSheet<void>(
   context: context,
-  title: 'Appearance',
+  title: tl('Appearance'),
   showDragHandle: true,
   builder: (_) =>
       _AppearanceModePicker(initialMode: selectedMode, onSelected: onSelected),
@@ -36,7 +38,7 @@ Future<void> showAccentColorPickerSheet({
   required ValueChanged<int> onSelected,
 }) => showBuzzModalBottomSheet<void>(
   context: context,
-  title: 'Accent color',
+  title: tl('Accent color'),
   showDragHandle: true,
   builder: (_) => _AccentColorPicker(
     colorScheme: colorScheme,
@@ -114,7 +116,7 @@ class _AppearanceModeOption extends StatelessWidget {
   Widget build(BuildContext context) => Semantics(
     button: true,
     selected: selected,
-    label: '${option.label} appearance',
+    label: tlt('{0} appearance', [option.label]),
     child: Container(
       key: ValueKey('appearance-mode-${option.mode.name}'),
       decoration: BoxDecoration(
@@ -236,7 +238,7 @@ class _AccentSheetOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Semantics(
-    label: '${accentColors[index].name} accent color',
+    label: tlt('{0} accent color', [accentColors[index].name]),
     button: true,
     selected: selected,
     child: InkResponse(

@@ -40,6 +40,7 @@ import 'inbox_item.dart';
 import 'inbox_local_state_provider.dart';
 import 'inbox_read_state.dart';
 import 'reminders_provider.dart';
+import '../../shared/i18n/app_language.dart';
 
 part 'activity_page/header_actions.dart';
 part 'activity_page/inbox_row.dart';
@@ -199,7 +200,7 @@ class ActivityPage extends HookConsumerWidget {
       final channelId = item.item.channelId;
       if (channelId == null) {
         ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-          const SnackBar(content: Text("This item isn't linked to a channel.")),
+          SnackBar(content: Text(tl("This item isn't linked to a channel."))),
         );
         return;
       }
@@ -237,7 +238,7 @@ class ActivityPage extends HookConsumerWidget {
           if (!isCurrentScope()) return;
           if (!context.mounted) return;
           ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-            SnackBar(content: Text('Could not reopen conversation: $error')),
+            SnackBar(content: Text(tlt('Could not reopen conversation: {0}', [error]))),
           );
           return;
         }
@@ -245,7 +246,7 @@ class ActivityPage extends HookConsumerWidget {
       if (channel == null) {
         if (!context.mounted) return;
         ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-          const SnackBar(content: Text('Channel not found in this workspace.')),
+          SnackBar(content: Text(tl('Channel not found in this workspace.'))),
         );
         return;
       }
@@ -278,8 +279,8 @@ class ActivityPage extends HookConsumerWidget {
       final channel = channelById[draft.channelId];
       if (channel == null) {
         ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-          const SnackBar(
-            content: Text('Channel for this draft is no longer available.'),
+          SnackBar(
+            content: Text(tl('Channel for this draft is no longer available.')),
           ),
         );
         return;
@@ -300,8 +301,8 @@ class ActivityPage extends HookConsumerWidget {
       final target = reminder.target;
       if (target == null) {
         ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-          const SnackBar(
-            content: Text("This reminder isn't linked to a message."),
+          SnackBar(
+            content: Text(tl("This reminder isn't linked to a message.")),
           ),
         );
         return;
@@ -309,8 +310,8 @@ class ActivityPage extends HookConsumerWidget {
       final channel = channelById[target.channelId];
       if (channel == null) {
         ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-          const SnackBar(
-            content: Text('Channel for this reminder is no longer available.'),
+          SnackBar(
+            content: Text(tl('Channel for this reminder is no longer available.')),
           ),
         );
         return;
@@ -421,11 +422,11 @@ class ActivityPage extends HookConsumerWidget {
     return FrostedScaffold(
       backgroundColor: context.colors.surface,
       appBar: FrostedAppBar(
-        nativeTitle: 'Activity',
+        nativeTitle: tl('Activity'),
         nativeLargeTitle: true,
         nativeActions: [
           IosNavigationAction(
-            label: 'Filter activity',
+            label: tl('Filter activity'),
             symbol: 'line.3.horizontal.decrease',
             children: [
               for (final entry in _filterLabels.entries)
@@ -437,16 +438,16 @@ class ActivityPage extends HookConsumerWidget {
             ],
           ),
           IosNavigationAction(
-            label: 'Activity options',
+            label: tl('Activity options'),
             symbol: 'ellipsis',
             children: [
               IosNavigationAction(
-                label: 'Unread only',
+                label: tl('Unread only'),
                 selected: unreadOnly.value,
                 onPressed: () => unreadOnly.value = !unreadOnly.value,
               ),
               IosNavigationAction(
-                label: 'Mark all as read',
+                label: tl('Mark all as read'),
                 onPressed: unreadVisibleCount == 0
                     ? null
                     : () {
@@ -462,7 +463,7 @@ class ActivityPage extends HookConsumerWidget {
         horizontalInset: Grid.gutter,
         showBottomDivider: true,
         bottomDividerOpacity: 0.07,
-        title: Text('Activity', style: headerTitleStyle),
+        title: Text(tl('Activity'), style: headerTitleStyle),
         titleStyle: headerTitleStyle,
         actions: [
           _ActivityActionsPill(

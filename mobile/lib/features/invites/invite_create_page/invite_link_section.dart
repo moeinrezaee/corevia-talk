@@ -58,7 +58,7 @@ class _InviteLinkSection extends HookConsumerWidget {
       } catch (_) {
         if (!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not share invite link')),
+          SnackBar(content: Text(tl('Could not share invite link'))),
         );
       }
     }
@@ -75,7 +75,7 @@ class _InviteLinkSection extends HookConsumerWidget {
                   builder: (buttonContext) => BuzzActionTile(
                     key: const Key('community-invite-share-link'),
                     icon: LucideIcons.share2,
-                    label: 'Share',
+                    label: tl('Share'),
                     isEnabled: invite.value != null,
                     onTap: () => share(buttonContext),
                   ),
@@ -86,12 +86,12 @@ class _InviteLinkSection extends HookConsumerWidget {
                 child: BuzzActionTile(
                   key: const Key('community-invite-copy-link'),
                   icon: LucideIcons.copy,
-                  label: 'Copy',
+                  label: tl('Copy'),
                   isEnabled: invite.value != null,
                   onTap: () => copyToClipboard(
                     context,
                     invite.value!.url,
-                    message: 'Invite link copied',
+                    message: tl('Invite link copied'),
                   ),
                 ),
               ),
@@ -112,7 +112,7 @@ class _InviteLinkSection extends HookConsumerWidget {
                     ),
                   ),
                 ),
-                TextButton(onPressed: generate, child: const Text('Retry')),
+                TextButton(onPressed: generate, child: Text(tl('Retry'))),
               ],
             ),
           ),
@@ -124,14 +124,14 @@ class _InviteLinkSection extends HookConsumerWidget {
           children: [
             AppListRow(
               key: const Key('community-invite-expiry-setting'),
-              title: 'Expires after',
+              title: tl('Expires after'),
               value: ttlLabel,
               trailing: const _InviteRowChevron(),
               onTap: isGenerating.value
                   ? null
                   : () => _showInviteOptionSheet<int>(
                       context: context,
-                      title: 'Expires after',
+                      title: tl('Expires after'),
                       value: ttlSeconds.value,
                       options: communityInviteTtlOptions,
                       onSelected: (value) => ttlSeconds.value = value,
@@ -139,14 +139,14 @@ class _InviteLinkSection extends HookConsumerWidget {
             ),
             AppListRow(
               key: const Key('community-invite-max-uses-setting'),
-              title: 'Limit number of uses',
+              title: tl('Limit number of uses'),
               value: maxUsesLabel,
               trailing: const _InviteRowChevron(),
               onTap: isGenerating.value
                   ? null
                   : () => _showInviteOptionSheet<int?>(
                       context: context,
-                      title: 'Limit number of uses',
+                      title: tl('Limit number of uses'),
                       value: maxUses.value,
                       options: communityInviteMaxUseOptions,
                       onSelected: (value) => maxUses.value = value,

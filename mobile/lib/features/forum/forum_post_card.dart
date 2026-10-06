@@ -15,6 +15,7 @@ import '../../shared/profile/user_cache_provider.dart';
 import '../profile/user_profile_sheet.dart';
 import '../../shared/profile/user_profile.dart';
 import 'forum_models.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Card displaying a forum post preview in the posts list.
 ///
@@ -234,7 +235,7 @@ class ForumPostCard extends HookConsumerWidget {
                     ),
                     const SizedBox(width: Grid.half),
                     Text(
-                      'last ${formatRelativeTime(summary.lastReplyAt!)}',
+                      tlt('last {0}', [formatRelativeTime(summary.lastReplyAt!)]),
                       style: context.textTheme.labelSmall?.copyWith(
                         color: context.colors.onSurfaceVariant,
                       ),
@@ -271,7 +272,7 @@ class ForumPostCard extends HookConsumerWidget {
               children: [
                 ListTile(
                   leading: const Icon(LucideIcons.copy),
-                  title: const Text('Copy text'),
+                  title: Text(tl('Copy text')),
                   onTap: () {
                     Navigator.of(sheetContext).pop();
                     Clipboard.setData(ClipboardData(text: post.content));
@@ -284,7 +285,7 @@ class ForumPostCard extends HookConsumerWidget {
                       color: sheetContext.colors.error,
                     ),
                     title: Text(
-                      'Delete post',
+                      tl('Delete post'),
                       style: TextStyle(color: sheetContext.colors.error),
                     ),
                     onTap: () {
@@ -304,12 +305,12 @@ class ForumPostCard extends HookConsumerWidget {
     showBuzzDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Delete post'),
-        content: const Text('This cannot be undone.'),
+        title: Text(tl('Delete post')),
+        content: Text(tl('This cannot be undone.')),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
-            child: const Text('Cancel'),
+            child: Text(tl('Cancel')),
           ),
           FilledButton(
             onPressed: () {
@@ -319,7 +320,7 @@ class ForumPostCard extends HookConsumerWidget {
             style: FilledButton.styleFrom(
               backgroundColor: dialogContext.colors.error,
             ),
-            child: const Text('Delete'),
+            child: Text(tl('Delete')),
           ),
         ],
       ),

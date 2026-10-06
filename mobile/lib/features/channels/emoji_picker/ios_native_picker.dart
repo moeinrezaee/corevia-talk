@@ -50,7 +50,7 @@ Future<void> _presentIosEmojiPicker({
           builder: (sheetContext) {
             loadingSheetContext = sheetContext;
             if (!loadingSheetBuilt.isCompleted) loadingSheetBuilt.complete();
-            return const SizedBox(
+            return SizedBox(
               key: Key('ios-emoji-picker-palette-loading'),
               height: 180,
               child: Center(
@@ -59,7 +59,7 @@ Future<void> _presentIosEmojiPicker({
                   children: [
                     CircularProgressIndicator(),
                     SizedBox(height: Grid.sm),
-                    Text('Loading emoji…'),
+                    Text(tl('Loading emoji…')),
                   ],
                 ),
               ),

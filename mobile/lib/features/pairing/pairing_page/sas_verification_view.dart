@@ -125,7 +125,7 @@ class _SasVerificationView extends HookConsumerWidget {
           ),
           const SizedBox(height: Grid.sm),
           Text(
-            'Protect your identity',
+            tl('Protect your identity'),
             textAlign: TextAlign.center,
             style: context.textTheme.headlineSmall?.copyWith(
               color: context._onboardingInk,
@@ -134,7 +134,7 @@ class _SasVerificationView extends HookConsumerWidget {
           ),
           const SizedBox(height: Grid.xxs),
           Text(
-            '$biometricLabel to confirm it’s you before sending your Buzz identity to another device.',
+            tlt('{0} to confirm it’s you before sending your Buzz identity to another device.', [biometricLabel]),
             textAlign: TextAlign.center,
             style: context.textTheme.bodyMedium?.copyWith(
               color: context._onboardingMutedInk,
@@ -147,10 +147,10 @@ class _SasVerificationView extends HookConsumerWidget {
             color: context._onboardingInk,
           ),
           const SizedBox(height: Grid.sm),
-          Text('Code confirmed', style: context.textTheme.headlineSmall),
+          Text(tl('Code confirmed'), style: context.textTheme.headlineSmall),
         ] else ...[
           Text(
-            'Enter pairing code',
+            tl('Enter pairing code'),
             textAlign: TextAlign.center,
             style: context.textTheme.headlineSmall?.copyWith(
               color: context._onboardingInk,
@@ -181,7 +181,7 @@ class _SasVerificationView extends HookConsumerWidget {
               child: Semantics(
                 liveRegion: true,
                 child: Text(
-                  'Check the desktop code and try again.',
+                  tl('Check the desktop code and try again.'),
                   textAlign: TextAlign.center,
                   style: context.textTheme.bodySmall?.copyWith(
                     color: context._onboardingInk,
@@ -211,11 +211,11 @@ class _SasVerificationView extends HookConsumerWidget {
               BuzzLoadingIndicator(
                 size: 24,
                 color: context._onboardingInk,
-                semanticLabel: 'Connecting',
+                semanticLabel: tl('Connecting'),
               ),
               const SizedBox(width: Grid.twelve),
               Text(
-                'Confirmed — waiting for desktop',
+                tl('Confirmed — waiting for desktop'),
                 style: context.textTheme.bodySmall?.copyWith(
                   color: context._onboardingMutedInk,
                 ),

@@ -17,6 +17,7 @@ import 'agent_activity/working_bots_provider.dart';
 import 'channel.dart';
 import 'channel_identity_names_provider.dart';
 import 'channel_management_provider.dart';
+import '../../shared/i18n/app_language.dart';
 
 class MembersSheet extends HookConsumerWidget {
   final Channel channel;
@@ -100,7 +101,7 @@ class MembersSheet extends HookConsumerWidget {
             children: [
               if (people.isNotEmpty)
                 SheetActionSection(
-                  label: 'People · ${people.length}',
+                  label: tlt('People · {0}', [people.length]),
                   dividerIndent: Grid.xs + 40 + Grid.xs,
                   children: [
                     for (final member in people)
@@ -122,7 +123,7 @@ class MembersSheet extends HookConsumerWidget {
                 ),
               if (bots.isNotEmpty)
                 SheetActionSection(
-                  label: 'Agents · ${bots.length}',
+                  label: tlt('Agents · {0}', [bots.length]),
                   dividerIndent: Grid.xs + 40 + Grid.xs,
                   children: [
                     for (final bot in bots)
@@ -147,7 +148,7 @@ class MembersSheet extends HookConsumerWidget {
               if (people.isEmpty && bots.isEmpty)
                 Center(
                   child: Text(
-                    'No members found.',
+                    tl('No members found.'),
                     style: context.textTheme.bodySmall?.copyWith(
                       color: context.colors.onSurfaceVariant,
                     ),
@@ -155,10 +156,10 @@ class MembersSheet extends HookConsumerWidget {
                 ),
             ],
           ),
-          loading: () => const Center(
+          loading: () => Center(
             child: BuzzLoadingIndicator(
               size: 44,
-              semanticLabel: 'Loading members',
+              semanticLabel: tl('Loading members'),
             ),
           ),
           error: (error, _) => Center(
@@ -239,11 +240,11 @@ class _MemberTile extends ConsumerWidget {
                 BuzzLoadingIndicator(
                   size: 14,
                   color: context.appColors.success,
-                  semanticLabel: 'Agent working',
+                  semanticLabel: tl('Agent working'),
                 ),
                 const SizedBox(width: Grid.half),
                 Text(
-                  'Working\u2026',
+                  tl('Working\u2026'),
                   style: context.textTheme.bodySmall?.copyWith(
                     color: context.appColors.success,
                     fontWeight: FontWeight.w600,
@@ -315,7 +316,7 @@ class _MemberTile extends ConsumerWidget {
                       size: 18,
                       color: context.colors.primary,
                     ),
-                    title: const Text('View activity'),
+                    title: Text(tl('View activity')),
                     onTap: () {
                       Navigator.of(sheetContext).pop();
                       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -353,7 +354,7 @@ class _MemberTile extends ConsumerWidget {
                       color: context.colors.error,
                     ),
                     title: Text(
-                      'Remove from channel',
+                      tl('Remove from channel'),
                       style: TextStyle(color: context.colors.error),
                     ),
                     onTap: () async {
@@ -361,17 +362,17 @@ class _MemberTile extends ConsumerWidget {
                       final confirmed = await showBuzzDialog<bool>(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title: const Text('Remove member'),
-                          content: Text('Remove $label from this channel?'),
+                          title: Text(tl('Remove member')),
+                          content: Text(tlt('Remove {0} from this channel?', [label])),
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.of(context).pop(false),
-                              child: const Text('Cancel'),
+                              child: Text(tl('Cancel')),
                             ),
                             TextButton(
                               onPressed: () => Navigator.of(context).pop(true),
                               child: Text(
-                                'Remove',
+                                tl('Remove'),
                                 style: TextStyle(color: context.colors.error),
                               ),
                             ),
@@ -415,7 +416,7 @@ class _RoleSelector extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Role',
+            tl('Role'),
             style: context.textTheme.labelMedium?.copyWith(
               color: context.colors.onSurfaceVariant,
             ),

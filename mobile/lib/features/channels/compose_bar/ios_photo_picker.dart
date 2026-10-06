@@ -104,7 +104,7 @@ class _IOSInlinePhotoPicker extends HookWidget {
       } catch (_) {
         if (context.mounted) {
           ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-            const SnackBar(content: Text('Unable to open your photo library.')),
+            SnackBar(content: Text(tl('Unable to open your photo library.'))),
           );
         }
       } finally {
@@ -141,7 +141,7 @@ class _IOSInlinePhotoPicker extends HookWidget {
               child: IosGlassNavigationButton(
                 key: const ValueKey('ios-inline-photo-picker-back'),
                 icon: IosGlassNavigationIcon.back,
-                semanticLabel: 'Back to attachment options',
+                semanticLabel: tl('Back to attachment options'),
                 onPressed: isProcessing.value
                     ? null
                     : () => _runComposerAction(onBack),
@@ -175,12 +175,12 @@ class _IOSInlinePhotoPicker extends HookWidget {
                   side: BorderSide(color: Colors.white.withValues(alpha: 0.28)),
                 ),
                 child: isPreparingSelection.value
-                    ? const SizedBox.square(
+                    ? SizedBox.square(
                         dimension: 20,
                         child: BuzzLoadingIndicator(
                           size: 20,
                           color: Colors.white,
-                          semanticLabel: 'Preparing selected photos',
+                          semanticLabel: tl('Preparing selected photos'),
                         ),
                       )
                     : Text(
@@ -193,13 +193,13 @@ class _IOSInlinePhotoPicker extends HookWidget {
             ),
           ),
           if (isProcessing.value)
-            const ColoredBox(
+            ColoredBox(
               color: Color.fromRGBO(0, 0, 0, 0.28),
               child: Center(
                 child: BuzzLoadingIndicator(
                   size: 44,
                   color: Colors.white,
-                  semanticLabel: 'Preparing selected photos',
+                  semanticLabel: tl('Preparing selected photos'),
                 ),
               ),
             ),
@@ -218,8 +218,8 @@ class _NativePhotoPickerLoading extends StatelessWidget {
       key: const ValueKey('ios-inline-photo-picker-loading'),
       height: _attachmentExpandedHeight,
       width: double.infinity,
-      child: const Center(
-        child: BuzzLoadingIndicator(size: 44, semanticLabel: 'Opening Photos'),
+      child: Center(
+        child: BuzzLoadingIndicator(size: 44, semanticLabel: tl('Opening Photos')),
       ),
     );
   }

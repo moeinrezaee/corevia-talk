@@ -17,6 +17,7 @@ import 'forum_models.dart';
 import 'forum_post_card.dart';
 import 'forum_provider.dart';
 import 'forum_thread_page.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Main forum view — replaces the old _ForumPlaceholder.
 ///
@@ -73,7 +74,7 @@ class ForumPostsView extends HookConsumerWidget {
                 ? FloatingActionButton(
                     heroTag: 'forum-fab',
                     onPressed: () => isComposing.value = true,
-                    tooltip: 'New post',
+                    tooltip: tl('New post'),
                     shape: const CircleBorder(),
                     child: const Icon(LucideIcons.plus),
                   )
@@ -83,17 +84,17 @@ class ForumPostsView extends HookConsumerWidget {
               skipLoadingOnRefresh: !postsAsync.hasError,
               loading: () => Padding(
                 padding: EdgeInsets.only(top: frostedAppBarHeight(context)),
-                child: const Center(
+                child: Center(
                   child: BuzzLoadingIndicator(
                     size: 44,
-                    semanticLabel: 'Loading posts',
+                    semanticLabel: tl('Loading posts'),
                   ),
                 ),
               ),
               error: (e, _) => Padding(
                 padding: EdgeInsets.only(top: frostedAppBarHeight(context)),
                 child: LoadErrorView(
-                  message: 'Failed to load posts',
+                  message: tl('Failed to load posts'),
                   onRetry: () => ref.invalidate(forumPostsProvider(channel.id)),
                 ),
               ),
@@ -149,14 +150,14 @@ class ForumPostsView extends HookConsumerWidget {
               child: IconButton(
                 onPressed: () => isComposing.value = false,
                 icon: const Icon(LucideIcons.x, size: 18),
-                tooltip: 'Dismiss',
+                tooltip: tl('Dismiss'),
                 visualDensity: VisualDensity.compact,
               ),
             ),
           ),
           ComposeBar(
             channelId: channel.id,
-            hintText: 'Write your post\u2026',
+            hintText: tl('Write your post\u2026'),
             onSend:
                 (
                   content,
@@ -213,7 +214,7 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: Grid.xxs),
             Text(
-              'No posts yet',
+              tl('No posts yet'),
               style: context.textTheme.bodyLarge?.copyWith(
                 color: context.colors.onSurfaceVariant,
               ),

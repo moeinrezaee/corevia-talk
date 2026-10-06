@@ -50,11 +50,12 @@ import 'shared/widgets/buzz_loading_indicator.dart';
 
 const _starterChannelNamespace = '3ce33bea-8f09-5f1b-9c85-8a7d2659e6b0';
 
-const _starterChannels = [
-  (slug: 'general', description: 'General conversation and community updates.'),
+/// A getter, not a constant: descriptions follow the active language.
+List<({String slug, String description})> get _starterChannels => [
+  (slug: 'general', description: tl('General conversation and community updates.')),
   (
     slug: 'welcome-everyone',
-    description: 'Say hi, ask a question, or share what brought you here.',
+    description: tl('Say hi, ask a question, or share what brought you here.'),
   ),
 ];
 
@@ -406,7 +407,7 @@ class App extends HookConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       navigatorObservers: [voiceNoteRouteObserver],
-      title: 'Buzz',
+      title: tl('Buzz'),
       theme: AppTheme.light(
         colorScheme: lightScheme,
         topSectionGradient: buzzLightGradient,
@@ -499,9 +500,9 @@ class _SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: BuzzLoadingIndicator(size: 56, semanticLabel: 'Starting Buzz'),
+        child: BuzzLoadingIndicator(size: 56, semanticLabel: tl('Starting Buzz')),
       ),
     );
   }

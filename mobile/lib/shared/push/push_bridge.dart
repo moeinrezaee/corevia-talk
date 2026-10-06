@@ -11,6 +11,7 @@ import '../deeplink/deep_link.dart';
 import '../relay/relay_provider.dart';
 import '../relay/app_lifecycle_provider.dart';
 import 'push_snapshot.dart';
+import '../i18n/app_language.dart';
 
 const _channel = MethodChannel('buzz/push');
 
@@ -352,7 +353,7 @@ void installBuzzPushMethodHandler() {
         final message = args is Map ? args['message'] : null;
         apnsRegistrationError.value = message is String && message.isNotEmpty
             ? message
-            : 'APNs registration failed';
+            : tl('APNs registration failed');
         debugPrint('APNs registration failed: ${apnsRegistrationError.value}');
         return null;
       case 'notificationOpened':

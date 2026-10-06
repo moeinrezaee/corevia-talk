@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Resolves bar width and spacing so a waveform occupies its full width.
 @visibleForTesting
@@ -85,7 +86,7 @@ class VoiceNoteWaveform extends StatelessWidget {
             onSeek?.call((progress.clamp(0.0, 1.0) + delta).clamp(0.0, 1.0));
 
         return Semantics(
-          label: 'Voice note waveform',
+          label: tl('Voice note waveform'),
           slider: onSeek != null,
           value: onSeek == null ? null : '${(progress * 100).round()} percent',
           increasedValue: onSeek == null

@@ -37,7 +37,7 @@ class _VideoViewerBottomControls extends StatelessWidget {
               child: _MediaViewerCircleButton(
                 key: const ValueKey('message-media-video-viewer-reply-thread'),
                 icon: LucideIcons.messageSquareReply,
-                tooltip: 'Reply in thread',
+                tooltip: tl('Reply in thread'),
                 onPressed: onReply,
               ),
             ),
@@ -90,9 +90,9 @@ class _VideoTransportBar extends HookConsumerWidget {
         if (context.mounted && isCurrent()) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text('Could not seek in this video.'),
+              content: Text(tl('Could not seek in this video.')),
               action: SnackBarAction(
-                label: 'Retry',
+                label: tl('Retry'),
                 onPressed: () {
                   if (!isCurrent()) return;
                   beginScrub(next);
@@ -203,7 +203,7 @@ class _VideoTransportBar extends HookConsumerWidget {
         '${speed.toString().replaceFirst(RegExp(r'\.0$'), '')}×';
     final speed = Tooltip(
       message:
-          'Playback speed: ${speedLabel(value.playbackSpeed)}. Tap for ${speedLabel(nextSpeed)}',
+          tlt('Playback speed: {0}. Tap for {1}', [speedLabel(value.playbackSpeed), speedLabel(nextSpeed)]),
       child: TextButton(
         key: const ValueKey('message-media-video-viewer-speed'),
         onPressed: () {
@@ -311,7 +311,7 @@ class _VideoTransportBar extends HookConsumerWidget {
                       'message-media-video-viewer-reply-thread',
                     ),
                     icon: LucideIcons.messageSquareReply,
-                    tooltip: 'Reply in thread',
+                    tooltip: tl('Reply in thread'),
                     onPressed: onReply,
                   ),
                 const Spacer(),

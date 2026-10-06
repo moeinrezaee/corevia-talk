@@ -59,7 +59,7 @@ class _ConversationAppBarTitle extends StatelessWidget {
                         LucideIcons.lock,
                         size: 14,
                         color: context.colors.onSurfaceVariant,
-                        semanticLabel: 'Private channel',
+                        semanticLabel: tl('Private channel'),
                       ),
                       const SizedBox(width: Grid.quarter),
                     ],

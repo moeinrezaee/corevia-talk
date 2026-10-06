@@ -19,6 +19,7 @@ import '../../shared/theme/theme.dart';
 import '../../shared/widgets/buzz_sheet_header.dart';
 import '../../shared/widgets/modal_presentation.dart';
 import 'recent_emoji_provider.dart';
+import '../../shared/i18n/app_language.dart';
 
 part 'emoji_picker/search_field.dart';
 part 'emoji_picker/category_rail.dart';
@@ -280,7 +281,7 @@ List<_EmojiSection> _buildSections({
     sections.add(
       _EmojiSection(
         id: 'frequent',
-        label: 'Frequently used',
+        label: tl('Frequently used'),
         icon: LucideIcons.clock,
         itemCount: recentTiles.length,
         itemBuilder: (context, index) => recentTiles[index],
@@ -307,7 +308,7 @@ List<_EmojiSection> _buildSections({
     sections.add(
       _EmojiSection(
         id: 'custom',
-        label: 'Custom',
+        label: tl('Custom'),
         icon: LucideIcons.sparkles,
         itemCount: customEmoji.length,
         itemBuilder: (context, index) {

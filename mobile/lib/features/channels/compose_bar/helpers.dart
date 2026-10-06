@@ -340,7 +340,7 @@ Future<_NonMemberMentionChoice?> _promptNonMemberMention(
   return showBuzzDialog<_NonMemberMentionChoice>(
     context: context,
     builder: (dialogContext) => AlertDialog(
-      title: const Text('Mention people outside this channel?'),
+      title: Text(tl('Mention people outside this channel?')),
       content: Text(
         canInvite
             ? '${names.join(', ')} $verb not in this channel. Invite them to '
@@ -360,7 +360,7 @@ Future<_NonMemberMentionChoice?> _promptNonMemberMention(
           TextButton(
             onPressed: () =>
                 Navigator.of(dialogContext).pop(_NonMemberMentionChoice.invite),
-            child: const Text('Invite'),
+            child: Text(tl('Invite')),
           ),
       ],
     ),
@@ -420,7 +420,7 @@ void _sendTypingIndicator(
 /// frame, so [messenger] must be resolved before the send's first `await`.
 void _reportSendCancelledByCommunitySwitch(ScaffoldMessengerState? messenger) {
   messenger?.showSnackBar(
-    const SnackBar(content: Text('Message not sent: the community changed')),
+    SnackBar(content: Text(tl('Message not sent: the community changed'))),
   );
 }
 

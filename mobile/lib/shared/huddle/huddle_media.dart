@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'huddle_wire.dart';
+import '../i18n/app_language.dart';
 
 const huddleMediaMethodChannelName = 'buzz/huddle_media';
 
@@ -292,9 +293,9 @@ final class MethodChannelHuddleMedia implements HuddleMedia {
         'getCapabilities',
       );
       if (result == null) {
-        throw const HuddleMediaError(
+        throw HuddleMediaError(
           code: HuddleMediaErrorCode.platformFailure,
-          message: 'Native Huddle media capabilities were missing.',
+          message: tl('Native Huddle media capabilities were missing.'),
         );
       }
       final capabilities = HuddleMediaCapabilities.fromMap(result);
@@ -373,14 +374,14 @@ final class MethodChannelHuddleMedia implements HuddleMedia {
         _state.phase != HuddleMediaPhase.stopped) {
       throw HuddleMediaError(
         code: HuddleMediaErrorCode.invalidState,
-        message: 'Cannot prepare media while it is ${_state.phase.name}.',
+        message: tlt('Cannot prepare media while it is {0}.', [_state.phase.name]),
       );
     }
     final capabilities = _capabilities ?? await discoverCapabilities();
     if (!capabilities.supportsAudioSession) {
-      throw const HuddleMediaError(
+      throw HuddleMediaError(
         code: HuddleMediaErrorCode.unavailable,
-        message: 'Native Huddle audio sessions are unavailable.',
+        message: tl('Native Huddle audio sessions are unavailable.'),
       );
     }
 
@@ -402,9 +403,9 @@ final class MethodChannelHuddleMedia implements HuddleMedia {
             'frameSamples': HuddleWireV2.frameSamples,
           });
       if (result?['audioSessionPrepared'] != true) {
-        throw const HuddleMediaError(
+        throw HuddleMediaError(
           code: HuddleMediaErrorCode.platformFailure,
-          message: 'Native Huddle audio session was not prepared.',
+          message: tl('Native Huddle audio session was not prepared.'),
         );
       }
       _emit(
@@ -438,14 +439,14 @@ final class MethodChannelHuddleMedia implements HuddleMedia {
     if (_state.phase != HuddleMediaPhase.prepared) {
       throw HuddleMediaError(
         code: HuddleMediaErrorCode.invalidState,
-        message: 'Cannot start media while it is ${_state.phase.name}.',
+        message: tlt('Cannot start media while it is {0}.', [_state.phase.name]),
       );
     }
     final capabilities = _capabilities;
     if (capabilities == null || !capabilities.supportsFullDuplexOpus) {
-      throw const HuddleMediaError(
+      throw HuddleMediaError(
         code: HuddleMediaErrorCode.unsupported,
-        message: 'Native full-duplex Opus media is not implemented yet.',
+        message: tl('Native full-duplex Opus media is not implemented yet.'),
       );
     }
 
@@ -473,7 +474,7 @@ final class MethodChannelHuddleMedia implements HuddleMedia {
     if (_state.phase != HuddleMediaPhase.active) {
       throw HuddleMediaError(
         code: HuddleMediaErrorCode.invalidState,
-        message: 'Cannot change mute while media is ${_state.phase.name}.',
+        message: tlt('Cannot change mute while media is {0}.', [_state.phase.name]),
       );
     }
     try {
@@ -502,7 +503,7 @@ final class MethodChannelHuddleMedia implements HuddleMedia {
       throw HuddleMediaError(
         code: HuddleMediaErrorCode.invalidState,
         message:
-            'Cannot change audio output while media is ${_state.phase.name}.',
+            tlt('Cannot change audio output while media is {0}.', [_state.phase.name]),
       );
     }
     try {
@@ -532,13 +533,13 @@ final class MethodChannelHuddleMedia implements HuddleMedia {
     if (_state.phase != HuddleMediaPhase.active) {
       throw HuddleMediaError(
         code: HuddleMediaErrorCode.invalidState,
-        message: 'Cannot play audio while media is ${_state.phase.name}.',
+        message: tlt('Cannot play audio while media is {0}.', [_state.phase.name]),
       );
     }
     if (_capabilities?.supportsOpusDecoding != true) {
-      throw const HuddleMediaError(
+      throw HuddleMediaError(
         code: HuddleMediaErrorCode.unsupported,
-        message: 'Native Opus playout is not implemented yet.',
+        message: tl('Native Opus playout is not implemented yet.'),
       );
     }
     try {
@@ -660,7 +661,7 @@ final class MethodChannelHuddleMedia implements HuddleMedia {
             code: HuddleMediaErrorCode.platformFailure,
             message: message is String && message.isNotEmpty
                 ? message
-                : 'Native Huddle audio failed.',
+                : tl('Native Huddle audio failed.'),
           ),
         );
       case 'interruptionChanged':
@@ -715,18 +716,18 @@ final class MethodChannelHuddleMedia implements HuddleMedia {
 
   void _reportMalformedNativeEvent() {
     _fail(
-      const HuddleMediaError(
+      HuddleMediaError(
         code: HuddleMediaErrorCode.malformedNativeEvent,
-        message: 'Native Huddle media emitted a malformed Opus frame.',
+        message: tl('Native Huddle media emitted a malformed Opus frame.'),
       ),
     );
   }
 
   void _ensureNotDisposed() {
     if (_disposed) {
-      throw const HuddleMediaError(
+      throw HuddleMediaError(
         code: HuddleMediaErrorCode.disposed,
-        message: 'Huddle media has been disposed.',
+        message: tl('Huddle media has been disposed.'),
       );
     }
   }

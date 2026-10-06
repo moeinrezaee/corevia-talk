@@ -7,6 +7,7 @@ import '../widgets/sheet_action_section.dart';
 import '../widgets/modal_presentation.dart';
 import 'reminder_service.dart';
 import 'reminder_time_presets.dart';
+import '../i18n/app_language.dart';
 
 /// Bottom sheet for "Remind me later": desktop-parity presets plus a native
 /// date/time picker, publishing the same author-private kind-30300 reminder
@@ -20,7 +21,7 @@ void showRemindMeLaterSheet({
   final messenger = ScaffoldMessenger.of(context);
   if (service == null) {
     messenger.showSnackBar(
-      const SnackBar(content: Text('Sign in to set reminders')),
+      SnackBar(content: Text(tl('Sign in to set reminders'))),
     );
     return;
   }
@@ -28,19 +29,19 @@ void showRemindMeLaterSheet({
   Future<void> submit(int notBefore) async {
     try {
       await service.createReminder(target: target, notBefore: notBefore);
-      messenger.showSnackBar(const SnackBar(content: Text('Reminder set')));
+      messenger.showSnackBar(SnackBar(content: Text(tl('Reminder set'))));
     } catch (error) {
       // Stable user-facing copy; the relay/crypto detail goes to the log.
       debugPrint('[RemindMeLater] createReminder failed: $error');
       messenger.showSnackBar(
-        const SnackBar(content: Text('Couldn’t set reminder. Try again.')),
+        SnackBar(content: Text(tl('Couldn’t set reminder. Try again.'))),
       );
     }
   }
 
   showBuzzModalBottomSheet<void>(
     context: context,
-    title: 'Remind me about this message',
+    title: tl('Remind me about this message'),
     showDragHandle: true,
     builder: (sheetContext) => SafeArea(
       child: IconTheme.merge(
@@ -74,7 +75,7 @@ void showRemindMeLaterSheet({
                   children: [
                     ListTile(
                       leading: const Icon(LucideIcons.calendarClock),
-                      title: const Text('Pick a date & time'),
+                      title: Text(tl('Pick a date & time')),
                       onTap: () async {
                         final navigator = Navigator.of(sheetContext);
                         final timestamp = await _pickCustomDateTime(context);
@@ -121,7 +122,7 @@ Future<int?> _pickCustomDateTime(BuildContext context) async {
   if (timestamp == null && context.mounted) {
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('Pick a time in the future')));
+    ).showSnackBar(SnackBar(content: Text(tl('Pick a time in the future'))));
   }
   return timestamp;
 }

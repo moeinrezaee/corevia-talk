@@ -10,6 +10,7 @@ import '../invites/invite_join_sheet.dart';
 import 'channel.dart';
 import 'channel_detail_page.dart';
 import 'channels_provider.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Routes pending `buzz://message` deep links into the channel view.
 ///
@@ -97,14 +98,14 @@ class _DeepLinkDispatcherState extends ConsumerState<DeepLinkDispatcher> {
       case DeepLinkCommunityPreparation.unavailable:
         ref.read(pendingDeepLinkProvider.notifier).consume();
         ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-          const SnackBar(
-            content: Text('Notification community is no longer available'),
+          SnackBar(
+            content: Text(tl('Notification community is no longer available')),
           ),
         );
       case DeepLinkCommunityPreparation.failed:
         ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-          const SnackBar(
-            content: Text('Could not open the notification community'),
+          SnackBar(
+            content: Text(tl('Could not open the notification community')),
           ),
         );
     }
@@ -131,7 +132,7 @@ class _DeepLinkDispatcherState extends ConsumerState<DeepLinkDispatcher> {
         'deep-link: channel $channelId not found in workspace; dropping link',
       );
       ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-        const SnackBar(content: Text('Channel not found in this workspace')),
+        SnackBar(content: Text(tl('Channel not found in this workspace'))),
       );
       return;
     }
@@ -196,16 +197,16 @@ class _DeepLinkDispatcherState extends ConsumerState<DeepLinkDispatcher> {
           }
         } else if (status == InviteJoinStatus.switchedExisting) {
           messenger?.showSnackBar(
-            const SnackBar(content: Text('Switched to this community')),
+            SnackBar(content: Text(tl('Switched to this community'))),
           );
         }
       } catch (error) {
         debugPrint('deep-link: failed to prepare invite: $error');
         if (navigatorContext.mounted) {
           messenger?.showSnackBar(
-            const SnackBar(
+            SnackBar(
               content: Text(
-                'Could not open this invite. Re-open the invite link to try again.',
+                tl('Could not open this invite. Re-open the invite link to try again.'),
               ),
             ),
           );

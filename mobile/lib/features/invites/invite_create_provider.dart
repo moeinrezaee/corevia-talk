@@ -10,6 +10,7 @@ import 'package:share_plus/share_plus.dart';
 import '../../shared/community/community_membership_provider.dart';
 import '../../shared/utils/string_utils.dart';
 import '../../shared/relay/relay.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// The default lifetime of a newly minted community invite link.
 const defaultCommunityInviteTtlSeconds = 3 * 24 * 60 * 60;
@@ -28,21 +29,21 @@ class CommunityInviteOption<T> {
 }
 
 /// Supported community invite-link lifetimes.
-const communityInviteTtlOptions = [
-  CommunityInviteOption(label: '1 day', value: 24 * 60 * 60),
-  CommunityInviteOption(label: '3 days', value: 3 * 24 * 60 * 60),
-  CommunityInviteOption(label: '7 days', value: 7 * 24 * 60 * 60),
-  CommunityInviteOption(label: '30 days', value: 30 * 24 * 60 * 60),
+List<CommunityInviteOption<int>> get communityInviteTtlOptions => [
+  CommunityInviteOption(label: tl('1 day'), value: 24 * 60 * 60),
+  CommunityInviteOption(label: tl('3 days'), value: 3 * 24 * 60 * 60),
+  CommunityInviteOption(label: tl('7 days'), value: 7 * 24 * 60 * 60),
+  CommunityInviteOption(label: tl('30 days'), value: 30 * 24 * 60 * 60),
 ];
 
 /// Supported usage limits for a community invite link.
-const communityInviteMaxUseOptions = <CommunityInviteOption<int?>>[
-  CommunityInviteOption(label: 'No limit', value: null),
-  CommunityInviteOption(label: '1 use', value: 1),
-  CommunityInviteOption(label: '3 uses', value: 3),
-  CommunityInviteOption(label: '5 uses', value: 5),
-  CommunityInviteOption(label: '10 uses', value: 10),
-  CommunityInviteOption(label: '25 uses', value: 25),
+List<CommunityInviteOption<int?>> get communityInviteMaxUseOptions => [
+  CommunityInviteOption(label: tl('No limit'), value: null),
+  CommunityInviteOption(label: tl('1 use'), value: 1),
+  CommunityInviteOption(label: tl('3 uses'), value: 3),
+  CommunityInviteOption(label: tl('5 uses'), value: 5),
+  CommunityInviteOption(label: tl('10 uses'), value: 10),
+  CommunityInviteOption(label: tl('25 uses'), value: 25),
 ];
 
 /// A community invite link minted by the active relay.

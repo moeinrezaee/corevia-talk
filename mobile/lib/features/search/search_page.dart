@@ -29,6 +29,7 @@ import '../../shared/profile/user_cache_provider.dart';
 import '../../shared/profile/user_profile.dart';
 import 'recent_searches_provider.dart';
 import 'search_provider.dart';
+import '../../shared/i18n/app_language.dart';
 
 part 'search_page/message_tile.dart';
 
@@ -53,7 +54,7 @@ const _searchActiveFieldRightInsetMin = 72.0;
 double _searchActiveFieldRightInset(BuildContext context) {
   final textPainter = TextPainter(
     text: TextSpan(
-      text: 'Cancel',
+      text: tl('Cancel'),
       style: filterChipTextStyle.copyWith(fontWeight: FontWeight.w500),
     ),
     textScaler: MediaQuery.textScalerOf(context),
@@ -253,7 +254,7 @@ class SearchPage extends HookConsumerWidget {
             curve: Curves.easeOutCubic,
             opacity: showSearchTitle.value ? 1 : 0,
             child: Text(
-              'Search',
+              tl('Search'),
               key: const ValueKey('search-header-title'),
               style: headerTitleStyle,
             ),
@@ -291,7 +292,7 @@ class SearchPage extends HookConsumerWidget {
                 ? Semantics(
                     key: const Key('search-cancel'),
                     button: true,
-                    label: 'Cancel search',
+                    label: tl('Cancel search'),
                     child: GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: () {
@@ -308,7 +309,7 @@ class SearchPage extends HookConsumerWidget {
                           ),
                           child: Center(
                             child: Text(
-                              'Cancel',
+                              tl('Cancel'),
                               style: filterChipTextStyle.copyWith(
                                 color: context.colors.primary,
                                 fontWeight: FontWeight.w500,
@@ -348,7 +349,7 @@ class SearchPage extends HookConsumerWidget {
                 child: BuzzSearchField(
                   controller: textController,
                   focusNode: focusNode,
-                  hintText: 'Search messages, channels, and people',
+                  hintText: tl('Search messages, channels, and people'),
                   iconColor: searchPrimaryColor,
                   inputColor: searchPrimaryColor,
                   placeholderColor: searchPlaceholderColor,
@@ -375,7 +376,7 @@ class SearchPage extends HookConsumerWidget {
                 height: searchControlHeight,
                 child: Semantics(
                   button: true,
-                  label: 'Cancel search',
+                  label: tl('Cancel search'),
                   child: GestureDetector(
                     key: const Key('search-ios-cancel'),
                     behavior: HitTestBehavior.opaque,
@@ -392,7 +393,7 @@ class SearchPage extends HookConsumerWidget {
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            'Cancel',
+                            tl('Cancel'),
                             style: filterChipTextStyle.copyWith(
                               color: context.colors.primary,
                               fontWeight: FontWeight.w500,
@@ -528,7 +529,7 @@ class _SearchBody extends ConsumerWidget {
               ),
               const SizedBox(height: Grid.xs),
               Text(
-                'Search messages, channels, and people',
+                tl('Search messages, channels, and people'),
                 textAlign: TextAlign.center,
                 style: context.textTheme.bodyMedium?.copyWith(
                   color: context.colors.onSurfaceVariant,
@@ -562,7 +563,7 @@ class _SearchBody extends ConsumerWidget {
         ),
         child: Center(
           child: Text(
-            "No results for '${state.query}'",
+            tlt("No results for '{0}'", [state.query]),
             style: context.textTheme.bodyMedium?.copyWith(
               color: context.colors.onSurfaceVariant,
             ),
@@ -597,12 +598,12 @@ class _SearchBody extends ConsumerWidget {
             onResultSelected: recordResultSelection,
           ),
         if (state.isLoading)
-          const Padding(
+          Padding(
             padding: EdgeInsets.all(Grid.sm),
             child: Center(
               child: BuzzLoadingIndicator(
                 size: 36,
-                semanticLabel: 'Loading more search results',
+                semanticLabel: tl('Loading more search results'),
               ),
             ),
           ),
@@ -644,7 +645,7 @@ class _RecentSearches extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Recent searches',
+                  tl('Recent searches'),
                   key: const Key('recent-searches-heading'),
                   style: activityContextTextStyle.copyWith(
                     color: context.colors.onSurfaceVariant,
@@ -655,7 +656,7 @@ class _RecentSearches extends StatelessWidget {
                 key: const Key('clear-recent-searches'),
                 onPressed: onClear,
                 child: Text(
-                  'Clear',
+                  tl('Clear'),
                   style: activityContextTextStyle.copyWith(
                     color: context.colors.primary,
                   ),
@@ -718,7 +719,7 @@ class _ChannelsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _SectionLabel(label: 'Channels'),
+        _SectionLabel(label: tl('Channels')),
         for (final channel in channels)
           ListTile(
             key: ValueKey('search-channel-row-${channel.id}'),
@@ -752,7 +753,7 @@ class _ChannelsSection extends StatelessWidget {
                       borderRadius: BorderRadius.circular(Radii.sm),
                     ),
                     child: Text(
-                      'Open',
+                      tl('Open'),
                       style: context.textTheme.labelSmall?.copyWith(
                         color: context.colors.primary,
                         fontWeight: FontWeight.w600,
@@ -795,7 +796,7 @@ class _PeopleSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _SectionLabel(label: 'People'),
+        _SectionLabel(label: tl('People')),
         for (final user in users)
           ListTile(
             key: ValueKey('search-person-row-${user.pubkey}'),
@@ -866,7 +867,7 @@ class _MessagesSection extends HookConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _SectionLabel(label: 'Messages'),
+        _SectionLabel(label: tl('Messages')),
         for (final hit in hits)
           _MessageTile(
             hit: hit,

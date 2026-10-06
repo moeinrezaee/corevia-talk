@@ -16,6 +16,7 @@ import '../../shared/theme/theme.dart';
 import '../../shared/widgets/buzz_loading_indicator.dart';
 import '../../shared/widgets/ios_glass_navigation_button.dart';
 import 'camera_disposal_barrier.dart';
+import '../../shared/i18n/app_language.dart';
 
 part 'image_avatar_capture/camera_preview.dart';
 part 'image_avatar_capture/morphing_camera_action.dart';
@@ -434,8 +435,8 @@ class ImageAvatarCapture extends HookConsumerWidget {
                             )
                           : Center(
                               child: isInitializing.value
-                                  ? const BuzzLoadingIndicator(
-                                      semanticLabel: 'Starting camera',
+                                  ? BuzzLoadingIndicator(
+                                      semanticLabel: tl('Starting camera'),
                                     )
                                   : const Icon(LucideIcons.cameraOff, size: 32),
                             ),

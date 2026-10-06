@@ -24,6 +24,7 @@ import '../channels/message_content.dart';
 import 'presence_cache_provider.dart';
 import '../../shared/profile/user_cache_provider.dart';
 import 'user_status_cache_provider.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Show a user profile bottom sheet for the given [pubkey].
 ///
@@ -339,7 +340,7 @@ void _showProfileCopyToast(BuildContext context) {
             children: [
               Icon(LucideIcons.check, size: 18, color: colors.onInverseSurface),
               const SizedBox(width: Grid.xxs),
-              Text('Public key copied', style: textStyle),
+              Text(tl('Public key copied'), style: textStyle),
             ],
           ),
         ),
@@ -379,7 +380,7 @@ class _ProfilePresenceChip extends StatelessWidget {
     };
 
     return Semantics(
-      label: 'Presence: $label',
+      label: tlt('Presence: {0}', [label]),
       excludeSemantics: true,
       child: SizedBox(
         height: Grid.xl,

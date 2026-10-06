@@ -463,7 +463,7 @@ void _openMobileHuddle({
   final nsec = config.nsec;
   if (nsec == null || nsec.isEmpty) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('A paired identity is required.')),
+      SnackBar(content: Text(tl('A paired identity is required.'))),
     );
     return;
   }
@@ -777,8 +777,8 @@ class _MobileHuddleCallPage extends ConsumerWidget {
                               .catchError((Object error) {
                                 if (!context.mounted) return;
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Reaction failed'),
+                                  SnackBar(
+                                    content: Text(tl('Reaction failed')),
                                   ),
                                 );
                               }),
@@ -828,7 +828,7 @@ class _HuddleCallHeader extends StatelessWidget {
         children: [
           IconButton(
             key: const ValueKey('huddle-minimize'),
-            tooltip: 'Minimize',
+            tooltip: tl('Minimize'),
             onPressed: () {
               unawaited(HapticFeedback.selectionClick());
               onMinimize();
@@ -838,7 +838,7 @@ class _HuddleCallHeader extends StatelessWidget {
           const Spacer(),
           _HuddleRoundControl(
             key: const ValueKey('huddle-leave'),
-            tooltip: 'Leave Huddle',
+            tooltip: tl('Leave Huddle'),
             icon: LucideIcons.phoneOff,
             foregroundColor: context.colors.error,
             backgroundColor: context.colors.surfaceContainerHighest,

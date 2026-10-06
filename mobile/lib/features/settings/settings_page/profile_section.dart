@@ -19,7 +19,7 @@ class _ProfileSection extends StatelessWidget {
     children: [
       AppListRow(
         key: const ValueKey('edit-profile-display-name'),
-        title: 'Display name',
+        title: tl('Display name'),
         trailing: const _RowChevron(),
         onTap: () {
           unawaited(HapticFeedback.selectionClick());
@@ -28,7 +28,7 @@ class _ProfileSection extends StatelessWidget {
       ),
       AppListRow(
         key: const ValueKey('edit-profile-description'),
-        title: 'Profile description',
+        title: tl('Profile description'),
         trailing: const _RowChevron(),
         onTap: () {
           unawaited(HapticFeedback.selectionClick());
@@ -37,7 +37,7 @@ class _ProfileSection extends StatelessWidget {
       ),
       AppListRow(
         key: const ValueKey('edit-profile-photo'),
-        title: 'Edit photo',
+        title: tl('Edit photo'),
         trailing: const _RowChevron(),
         onTap: () {
           unawaited(HapticFeedback.selectionClick());

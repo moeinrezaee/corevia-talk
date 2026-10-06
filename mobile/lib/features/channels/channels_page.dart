@@ -59,6 +59,7 @@ import '../../shared/read_state/deferred_read_state_update.dart';
 import '../../shared/read_state/read_state_provider.dart';
 import '../../shared/read_state/read_state_time.dart';
 import 'unread_badge/observed_unread_event.dart';
+import '../../shared/i18n/app_language.dart';
 
 part 'channels_page/body.dart';
 part 'channels_page/browse_channels_sheet.dart';
@@ -481,7 +482,7 @@ class ChannelsPage extends HookConsumerWidget {
         nativeTitle: communityName.isEmpty ? 'Community' : communityName,
         nativeLargeTitle: true,
         nativeLeading: IosNavigationAction(
-          label: 'Community settings',
+          label: tl('Community settings'),
           onAvatarBoundsChanged: (bounds) {
             final header = headerKey.currentContext?.findRenderObject();
             if (header is RenderBox) {
@@ -502,7 +503,7 @@ class ChannelsPage extends HookConsumerWidget {
         ),
         nativeActions: [
           IosNavigationAction(
-            label: 'Settings',
+            label: tl('Settings'),
             avatarIdentity: '${activeCommunity?.id}:${activeCommunity?.pubkey}',
             symbol: 'person.crop.circle',
             imageUrl: profile?.avatarUrl,

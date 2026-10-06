@@ -7,6 +7,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../shared/theme/theme.dart';
 import 'observer_models.dart';
+import '../../../shared/i18n/app_language.dart';
 
 /// Renders a single [TranscriptItem] in the agent activity transcript.
 class TranscriptItemWidget extends StatelessWidget {
@@ -221,7 +222,7 @@ class _MetadataItemWidget extends HookWidget {
                   const SizedBox(width: Grid.half),
                   Expanded(
                     child: Text(
-                      '${item.title} (${item.sections.length} sections)',
+                      tlt('{0} ({1} sections)', [item.title, item.sections.length]),
                       style: context.textTheme.labelMedium?.copyWith(
                         color: context.colors.onSurfaceVariant,
                         fontWeight: FontWeight.w600,
@@ -355,7 +356,7 @@ class _ToolItemWidget extends HookWidget {
                 child: Row(
                   children: [
                     Text(
-                      'Arguments',
+                      tl('Arguments'),
                       style: context.textTheme.labelSmall?.copyWith(
                         color: context.colors.onSurfaceVariant,
                       ),
@@ -384,7 +385,7 @@ class _ToolItemWidget extends HookWidget {
                 child: Row(
                   children: [
                     Text(
-                      'Result',
+                      tl('Result'),
                       style: context.textTheme.labelSmall?.copyWith(
                         color: item.isError
                             ? context.colors.error

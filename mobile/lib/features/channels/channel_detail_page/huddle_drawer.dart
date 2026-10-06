@@ -194,7 +194,7 @@ class _MobileHuddleDrawer extends ConsumerWidget {
         onTap: restoreFullScreen,
         child: Semantics(
           container: true,
-          label: 'Huddle controls',
+          label: tl('Huddle controls'),
           hint: 'Tap outside a control to open the Huddle',
           child: Center(
             child: Padding(
@@ -213,7 +213,7 @@ class _MobileHuddleDrawer extends ConsumerWidget {
                       children: [
                         _HuddleRoundControl(
                           key: const ValueKey('huddle-drawer-expand'),
-                          tooltip: 'Open Huddle',
+                          tooltip: tl('Open Huddle'),
                           showTooltip: false,
                           icon: LucideIcons.chevronUp,
                           foregroundColor: foreground,
@@ -267,7 +267,7 @@ class _MobileHuddleDrawer extends ConsumerWidget {
                     ),
                     _HuddleRoundControl(
                       key: const ValueKey('huddle-drawer-leave'),
-                      tooltip: 'Leave Huddle',
+                      tooltip: tl('Leave Huddle'),
                       showTooltip: false,
                       icon: LucideIcons.phoneOff,
                       foregroundColor: context.colors.error,

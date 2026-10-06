@@ -10,6 +10,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../shared/theme/theme.dart';
 import 'message_action_backdrop_state.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Shared channel/thread motion for an explicit return-to-latest action.
 const jumpToLatestScrollDuration = Duration(milliseconds: 220);
@@ -93,10 +94,10 @@ class JumpToLatestButton extends HookWidget {
 
     return Semantics(
       button: true,
-      label: 'Jump to latest message',
+      label: tl('Jump to latest message'),
       child: Tooltip(
         excludeFromSemantics: true,
-        message: 'Jump to latest message',
+        message: tl('Jump to latest message'),
         child: SizedBox.square(
           dimension: Grid.xl,
           child: ValueListenableBuilder<bool>(

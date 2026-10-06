@@ -201,7 +201,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
 
     Future<void> openMembers() => showBuzzModalBottomSheet<void>(
       context: context,
-      title: 'Members',
+      title: tl('Members'),
       isScrollControlled: true,
       showDragHandle: true,
       builder: (_) => MembersSheet(
@@ -215,7 +215,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
       final mediaQuery = MediaQuery.of(context);
       await showBuzzModalBottomSheet<bool>(
         context: context,
-        title: 'Add members',
+        title: tl('Add members'),
         isScrollControlled: true,
         showDragHandle: true,
         constraints: BoxConstraints(
@@ -235,7 +235,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
     Future<void> openManageChannel() async {
       final shouldClose = await showBuzzModalBottomSheet<bool>(
         context: context,
-        title: 'Manage channel',
+        title: tl('Manage channel'),
         isScrollControlled: true,
         showDragHandle: true,
         constraints: BoxConstraints(
@@ -276,7 +276,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
       } catch (_) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Couldn’t join channel. Try again.')),
+            SnackBar(content: Text(tl('Couldn’t join channel. Try again.'))),
           );
         }
       } finally {
@@ -297,7 +297,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
             ? IosGlassNavigationButton(
                 key: const ValueKey('channel-details-ios-glass-back'),
                 icon: IosGlassNavigationIcon.back,
-                semanticLabel: 'Back',
+                semanticLabel: tl('Back'),
                 onPressed: () => Navigator.of(context).maybePop(),
                 width: iosGlassChannelHeaderLeadingWidth,
                 buttonCenterX: iosGlassChannelHeaderButtonCenterX,
@@ -410,7 +410,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
                       child: BuzzActionTile(
                         key: const ValueKey('channel-details-edit-action'),
                         icon: LucideIcons.pencil,
-                        label: 'Edit',
+                        label: tl('Edit'),
                         isEnabled: canEdit,
                         onTap: openManageChannel,
                       ),
@@ -443,7 +443,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
                       ),
                     ),
                     title: Text(
-                      'Add members',
+                      tl('Add members'),
                       style: context.textTheme.bodyLarge,
                     ),
                     trailing: const _ChannelDetailsChevron(),
@@ -451,18 +451,18 @@ class ChannelDetailsPage extends HookConsumerWidget {
                     verticalPadding: Grid.xxs,
                   ),
                 if (membersAsync.isLoading && members.isEmpty)
-                  const AppListRow(
+                  AppListRow(
                     icon: LucideIcons.loaderCircle,
-                    title: 'Loading members…',
+                    title: tl('Loading members…'),
                     trailing: BuzzLoadingIndicator(
                       size: 20,
-                      semanticLabel: 'Loading members',
+                      semanticLabel: tl('Loading members'),
                     ),
                   )
                 else if (membersAsync.hasError && members.isEmpty)
-                  const AppListRow(
+                  AppListRow(
                     icon: LucideIcons.triangleAlert,
-                    title: 'Members unavailable',
+                    title: tl('Members unavailable'),
                   )
                 else ...[
                   for (final member in previewMembers)
@@ -483,7 +483,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
                       key: const ValueKey('channel-details-members-row'),
                       leading: const SizedBox.square(dimension: 40),
                       title: Text(
-                        'See all',
+                        tl('See all'),
                         style: context.textTheme.bodyLarge,
                       ),
                       trailing: const _ChannelDetailsChevron(),
@@ -499,7 +499,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
             children: [
               AppListRow(
                 icon: LucideIcons.folderInput,
-                title: 'Move to section…',
+                title: tl('Move to section…'),
                 trailing: const _ChannelDetailsChevron(),
                 onTap: () async {
                   await _showMoveSectionSheet(
@@ -512,23 +512,23 @@ class ChannelDetailsPage extends HookConsumerWidget {
               ),
               AppListRow(
                 icon: LucideIcons.copy,
-                title: 'Copy channel name',
+                title: tl('Copy channel name'),
                 onTap: () {
                   copyToClipboard(
                     context,
                     resolvedChannel.name,
-                    message: 'Channel name copied to clipboard',
+                    message: tl('Channel name copied to clipboard'),
                   );
                 },
               ),
               AppListRow(
                 icon: LucideIcons.hash,
-                title: 'Copy channel ID',
+                title: tl('Copy channel ID'),
                 onTap: () {
                   copyToClipboard(
                     context,
                     resolvedChannel.id,
-                    message: 'Channel ID copied to clipboard',
+                    message: tl('Channel ID copied to clipboard'),
                   );
                 },
               ),
@@ -556,44 +556,44 @@ class ChannelDetailsPage extends HookConsumerWidget {
                 if (resolvedChannel.isMember && !resolvedChannel.isArchived)
                   AppListRow(
                     icon: LucideIcons.logOut,
-                    title: 'Leave channel',
+                    title: tl('Leave channel'),
                     titleColor: context.colors.error,
                     onTap: () => _confirmAndRun(
                       context,
                       ref,
-                      title: 'Leave #${resolvedChannel.name}?',
-                      body: 'You’ll stop receiving messages from this channel.',
-                      confirmLabel: 'Leave',
+                      title: tlt('Leave #{0}?', [resolvedChannel.name]),
+                      body: tl('You’ll stop receiving messages from this channel.'),
+                      confirmLabel: tl('Leave'),
                       action: () => ref
                           .read(channelActionsProvider)
                           .leaveChannel(resolvedChannel.id),
                     ),
                   ),
                 if (lifecycleCapabilitiesLoading)
-                  const AppListRow(
+                  AppListRow(
                     icon: LucideIcons.loaderCircle,
-                    title: 'Loading channel actions…',
+                    title: tl('Loading channel actions…'),
                     trailing: BuzzLoadingIndicator(
                       size: 20,
-                      semanticLabel: 'Loading channel actions',
+                      semanticLabel: tl('Loading channel actions'),
                     ),
                   )
                 else if (lifecycleCapabilitiesUnavailable)
-                  const AppListRow(
+                  AppListRow(
                     icon: LucideIcons.triangleAlert,
-                    title: 'Channel actions unavailable',
+                    title: tl('Channel actions unavailable'),
                   )
                 else ...[
                   if (canArchive)
                     AppListRow(
                       icon: LucideIcons.archive,
-                      title: 'Archive channel',
+                      title: tl('Archive channel'),
                       onTap: () => _confirmAndRun(
                         context,
                         ref,
-                        title: 'Archive #${resolvedChannel.name}?',
-                        body: 'The channel will become read-only.',
-                        confirmLabel: 'Archive',
+                        title: tlt('Archive #{0}?', [resolvedChannel.name]),
+                        body: tl('The channel will become read-only.'),
+                        confirmLabel: tl('Archive'),
                         action: () => ref
                             .read(channelActionsProvider)
                             .archiveChannel(resolvedChannel.id),
@@ -602,13 +602,13 @@ class ChannelDetailsPage extends HookConsumerWidget {
                   if (canUnarchive)
                     AppListRow(
                       icon: LucideIcons.archiveRestore,
-                      title: 'Unarchive channel',
+                      title: tl('Unarchive channel'),
                       onTap: () => _confirmAndRun(
                         context,
                         ref,
-                        title: 'Unarchive #${resolvedChannel.name}?',
-                        body: 'The channel will become active again.',
-                        confirmLabel: 'Unarchive',
+                        title: tlt('Unarchive #{0}?', [resolvedChannel.name]),
+                        body: tl('The channel will become active again.'),
+                        confirmLabel: tl('Unarchive'),
                         action: () => ref
                             .read(channelActionsProvider)
                             .unarchiveChannel(resolvedChannel.id),
@@ -617,15 +617,15 @@ class ChannelDetailsPage extends HookConsumerWidget {
                   if (canDelete)
                     AppListRow(
                       icon: LucideIcons.trash2,
-                      title: 'Delete channel',
+                      title: tl('Delete channel'),
                       titleColor: context.colors.error,
                       onTap: () => _confirmAndRun(
                         context,
                         ref,
-                        title: 'Delete #${resolvedChannel.name}?',
+                        title: tlt('Delete #{0}?', [resolvedChannel.name]),
                         body:
-                            'This permanently deletes the channel and cannot be undone.',
-                        confirmLabel: 'Delete',
+                            tl('This permanently deletes the channel and cannot be undone.'),
+                        confirmLabel: tl('Delete'),
                         action: () => ref
                             .read(channelActionsProvider)
                             .deleteChannel(resolvedChannel.id),

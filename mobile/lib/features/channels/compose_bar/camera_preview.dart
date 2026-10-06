@@ -207,10 +207,10 @@ class _CameraPlaceholder extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(Grid.sm),
           child: isInitializing
-              ? const BuzzLoadingIndicator(
+              ? BuzzLoadingIndicator(
                   size: 44,
                   color: Colors.white,
-                  semanticLabel: 'Starting camera',
+                  semanticLabel: tl('Starting camera'),
                 )
               : Column(
                   mainAxisSize: MainAxisSize.min,
@@ -250,7 +250,7 @@ class _CameraCaptureButton extends StatelessWidget {
 
     return Semantics(
       button: true,
-      label: 'Take photo',
+      label: tl('Take photo'),
       child: GestureDetector(
         onTap: isPressed ? null : () => _runComposerAction(onTap),
         child: AnimatedScale(
@@ -290,7 +290,7 @@ class _CameraCloseButton extends StatelessWidget {
     if (Theme.of(context).platform == TargetPlatform.iOS) {
       return IosGlassNavigationButton(
         icon: IosGlassNavigationIcon.back,
-        semanticLabel: 'Back to attachment options',
+        semanticLabel: tl('Back to attachment options'),
         onPressed: () => _runComposerAction(onTap),
         width: emphasized ? _cameraBackSize : 40,
         height: emphasized ? _cameraBackSize : 40,
@@ -301,7 +301,7 @@ class _CameraCloseButton extends StatelessWidget {
       dimension: emphasized ? _cameraBackSize : 36,
       child: IconButton(
         onPressed: () => _runComposerAction(onTap),
-        tooltip: 'Back to attachment options',
+        tooltip: tl('Back to attachment options'),
         padding: EdgeInsets.zero,
         style: IconButton.styleFrom(
           backgroundColor: Colors.black.withValues(

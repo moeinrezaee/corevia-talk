@@ -566,7 +566,7 @@ class _ComposerAgentMentionChip extends StatelessWidget {
     final fontSize = style.fontSize ?? 16;
 
     return Semantics(
-      label: 'Agent mention: $label',
+      label: tlt('Agent mention: {0}', [label]),
       excludeSemantics: true,
       child: Container(
         key: const ValueKey('composer-agent-mention-chip'),

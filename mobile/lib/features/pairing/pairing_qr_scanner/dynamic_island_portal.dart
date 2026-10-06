@@ -169,7 +169,7 @@ class _DynamicIslandQrScannerPortal extends HookWidget {
                                     opacity: promptOpacity,
                                     child: Center(
                                       child: Text(
-                                        'Scan a QR code',
+                                        tl('Scan a QR code'),
                                         style: context.textTheme.bodyMedium
                                             ?.copyWith(
                                               color: Colors.white,

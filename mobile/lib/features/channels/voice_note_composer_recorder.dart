@@ -11,6 +11,7 @@ import '../../shared/relay/app_lifecycle_provider.dart';
 import '../../shared/theme/theme.dart';
 import 'voice_note_recording.dart';
 import 'voice_note_waveform.dart';
+import '../../shared/i18n/app_language.dart';
 
 class _VoiceNoteRouteAware extends RouteAware {
   _VoiceNoteRouteAware(this.onCovered);
@@ -138,7 +139,7 @@ class VoiceNoteComposerRecorder extends HookConsumerWidget {
       children: [
         _RecorderButton(
           key: const ValueKey('voice-note-recorder-close'),
-          tooltip: 'Discard voice note',
+          tooltip: tl('Discard voice note'),
           icon: LucideIcons.x,
           foreground: context.colors.onSurfaceVariant,
           background: context.colors.surface,
@@ -212,7 +213,7 @@ class VoiceNoteComposerRecorder extends HookConsumerWidget {
         const SizedBox(width: Grid.half),
         _RecorderButton(
           key: const ValueKey('voice-note-recorder-stop'),
-          tooltip: 'Stop recording',
+          tooltip: tl('Stop recording'),
           icon: LucideIcons.square,
           foreground: Colors.white,
           background: context.colors.error,

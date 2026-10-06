@@ -16,6 +16,7 @@ import '../../shared/profile/user_cache_provider.dart';
 import 'note_card.dart';
 import 'pulse_actions.dart';
 import 'pulse_models.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Full-screen page for composing a new note or replying to one.
 ///
@@ -83,7 +84,7 @@ class ComposeNotePage extends HookConsumerWidget {
         ],
         leading: TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: Text(tl('Cancel')),
         ),
         actions: [
           Padding(
@@ -198,7 +199,7 @@ class _ReplyContext extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Replying to $displayName',
+            tlt('Replying to {0}', [displayName]),
             style: context.textTheme.labelMedium?.copyWith(
               color: context.colors.onSurfaceVariant,
             ),

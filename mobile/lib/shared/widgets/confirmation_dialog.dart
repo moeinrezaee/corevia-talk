@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 import '../theme/theme.dart';
 import 'modal_presentation.dart';
+import '../i18n/app_language.dart';
 
 /// Confirms a destructive action using a UIKit alert on iOS.
 /// Returns true only when the person explicitly chooses the destructive action.
@@ -33,7 +34,7 @@ Future<bool> showDestructiveConfirmation({
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(false),
-              child: const Text('Cancel'),
+              child: Text(tl('Cancel')),
             ),
             FilledButton(
               onPressed: () => Navigator.of(dialogContext).pop(true),

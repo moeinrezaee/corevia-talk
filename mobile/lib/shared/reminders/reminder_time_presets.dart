@@ -4,6 +4,8 @@
 /// same "always strictly in the future" guarantee.
 library;
 
+import '../i18n/app_language.dart';
+
 class ReminderTimePreset {
   final String label;
   final int Function() getTimestamp;
@@ -38,23 +40,23 @@ int daysUntilNextMonday(DateTime now) {
 
 final List<ReminderTimePreset> reminderTimePresets = [
   ReminderTimePreset(
-    label: 'In 30 minutes',
+    label: tl('In 30 minutes'),
     getTimestamp: () => _nowSeconds() + 30 * 60,
   ),
   ReminderTimePreset(
-    label: 'In 1 hour',
+    label: tl('In 1 hour'),
     getTimestamp: () => _nowSeconds() + 60 * 60,
   ),
   ReminderTimePreset(
-    label: 'In 3 hours',
+    label: tl('In 3 hours'),
     getTimestamp: () => _nowSeconds() + 3 * 60 * 60,
   ),
   ReminderTimePreset(
-    label: 'Tomorrow at 9am',
+    label: tl('Tomorrow at 9am'),
     getTimestamp: () => nextDayAt9am(1),
   ),
   ReminderTimePreset(
-    label: 'Next Monday at 9am',
+    label: tl('Next Monday at 9am'),
     getTimestamp: () => nextDayAt9am(daysUntilNextMonday(DateTime.now())),
   ),
 ];

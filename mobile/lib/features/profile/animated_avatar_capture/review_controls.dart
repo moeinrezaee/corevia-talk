@@ -15,22 +15,22 @@ class _RepositionablePreviewSemantics extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Semantics(
-    label: 'Avatar position',
+    label: tl('Avatar position'),
     value:
         '${(offset.dx * 100).round()} horizontal, '
         '${(offset.dy * 100).round()} vertical',
     customSemanticsActions: {
       if (offset.dx > -1)
-        const CustomSemanticsAction(label: 'Move left'): () =>
+        CustomSemanticsAction(label: tl('Move left')): () =>
             onMove(const Offset(-0.1, 0)),
       if (offset.dx < 1)
-        const CustomSemanticsAction(label: 'Move right'): () =>
+        CustomSemanticsAction(label: tl('Move right')): () =>
             onMove(const Offset(0.1, 0)),
       if (offset.dy > -1)
-        const CustomSemanticsAction(label: 'Move up'): () =>
+        CustomSemanticsAction(label: tl('Move up')): () =>
             onMove(const Offset(0, -0.1)),
       if (offset.dy < 1)
-        const CustomSemanticsAction(label: 'Move down'): () =>
+        CustomSemanticsAction(label: tl('Move down')): () =>
             onMove(const Offset(0, 0.1)),
     },
     child: ExcludeSemantics(child: child),
@@ -56,7 +56,7 @@ class _AnimatedReviewNav extends StatelessWidget {
         child: AvatarEditorOptionButton(
           icon: LucideIcons.userRound,
           iosIcon: IosGlassNavigationIcon.person,
-          label: 'You',
+          label: tl('You'),
           selected: selected == _AnimatedReviewSection.person,
           onTap: () => onSelected(_AnimatedReviewSection.person),
         ),
@@ -66,7 +66,7 @@ class _AnimatedReviewNav extends StatelessWidget {
         child: AvatarEditorOptionButton(
           icon: LucideIcons.palette,
           iosIcon: IosGlassNavigationIcon.palette,
-          label: 'Background',
+          label: tl('Background'),
           selected: selected == _AnimatedReviewSection.color,
           onTap: () => onSelected(_AnimatedReviewSection.color),
         ),
@@ -76,7 +76,7 @@ class _AnimatedReviewNav extends StatelessWidget {
         child: AvatarEditorOptionButton(
           icon: LucideIcons.galleryThumbnails,
           iosIcon: IosGlassNavigationIcon.frame,
-          label: 'Frame',
+          label: tl('Frame'),
           selected: selected == _AnimatedReviewSection.poster,
           onTap: () => onSelected(_AnimatedReviewSection.poster),
         ),
@@ -88,7 +88,7 @@ class _AnimatedReviewNav extends StatelessWidget {
         child: AvatarEditorOptionButton(
           icon: LucideIcons.camera,
           iosIcon: IosGlassNavigationIcon.camera,
-          label: 'Retake',
+          label: tl('Retake'),
           selected: false,
           onTap: onRetake,
         ),
@@ -154,7 +154,7 @@ class _AnimatedFramingControl extends HookWidget {
         ),
         const SizedBox(height: Grid.xxs),
         Text(
-          'Drag the preview to reposition',
+          tl('Drag the preview to reposition'),
           style: context.textTheme.bodySmall,
         ),
       ],
@@ -195,7 +195,7 @@ class _DesktopStyleFramingSlider extends HookWidget {
         .toDouble();
     return Semantics(
       slider: true,
-      label: 'Avatar size',
+      label: tl('Avatar size'),
       value: '${(value * 100).round()}%',
       increasedValue: value < _max
           ? '${((value + 0.05).clamp(_min, _max) * 100).round()}%'
@@ -339,7 +339,7 @@ class _AnimatedFrameControl extends HookWidget {
                   : selectedIndex / (frames.length - 1);
               return Semantics(
                 slider: true,
-                label: 'Choose still frame',
+                label: tl('Choose still frame'),
                 value: '${selectedIndex + 1} of ${frames.length}',
                 increasedValue: selectedIndex < frames.length - 1
                     ? '${selectedIndex + 2} of ${frames.length}'
@@ -416,7 +416,7 @@ class _AnimatedFrameControl extends HookWidget {
           ),
         ),
         const SizedBox(height: Grid.xxs),
-        Text('Choose the still frame', style: context.textTheme.bodySmall),
+        Text(tl('Choose the still frame'), style: context.textTheme.bodySmall),
       ],
     );
   }

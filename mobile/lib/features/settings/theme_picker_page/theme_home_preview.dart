@@ -43,14 +43,14 @@ class _ThemeHomePreview extends StatelessWidget {
             _PreviewDeviceFrame(
               key: const ValueKey('theme-home-device-preview'),
               theme: previewTheme,
-              semanticLabel: 'Home preview',
+              semanticLabel: tl('Home preview'),
               child: const _FigmaHomeScreen(),
             ),
             const SizedBox(width: 96),
             _PreviewDeviceFrame(
               key: const ValueKey('theme-chat-device-preview'),
               theme: previewTheme,
-              semanticLabel: 'Chat preview',
+              semanticLabel: tl('Chat preview'),
               child: const _FigmaChatScreen(),
             ),
           ],

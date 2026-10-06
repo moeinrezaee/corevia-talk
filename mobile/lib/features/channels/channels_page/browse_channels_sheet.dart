@@ -55,7 +55,7 @@ class _BrowseChannelsSheet extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Join an open channel to add it to your conversations.',
+                    tl('Join an open channel to add it to your conversations.'),
                     style: context.textTheme.bodyMedium?.copyWith(
                       color: context.colors.onSurfaceVariant,
                     ),
@@ -79,7 +79,7 @@ class _BrowseChannelsSheet extends HookConsumerWidget {
                   child: Column(
                     children: [
                       Text(
-                        'Couldn’t load open channels.',
+                        tl('Couldn’t load open channels.'),
                         textAlign: TextAlign.center,
                         style: context.textTheme.bodyMedium?.copyWith(
                           color: context.colors.onSurfaceVariant,
@@ -91,7 +91,7 @@ class _BrowseChannelsSheet extends HookConsumerWidget {
                         onPressed: () => unawaited(
                           ref.read(channelsProvider.notifier).retryDirectory(),
                         ),
-                        child: const Text('Try again'),
+                        child: Text(tl('Try again')),
                       ),
                     ],
                   ),
@@ -102,7 +102,7 @@ class _BrowseChannelsSheet extends HookConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: Grid.sm),
                   child: Text(
-                    'No open channels available to join.',
+                    tl('No open channels available to join.'),
                     textAlign: TextAlign.center,
                     style: context.textTheme.bodyMedium?.copyWith(
                       color: context.colors.onSurfaceVariant,

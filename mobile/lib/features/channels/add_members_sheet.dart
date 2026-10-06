@@ -11,6 +11,7 @@ import '../../shared/widgets/avatar_image.dart';
 import '../../shared/widgets/buzz_loading_indicator.dart';
 import '../../shared/identity_names/identity_names_provider.dart';
 import 'channel_management_provider.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Searchable multi-select used to add people or agents to a channel.
 class AddChannelMembersSheet extends HookConsumerWidget {
@@ -153,8 +154,8 @@ class AddChannelMembersSheet extends HookConsumerWidget {
                 enableSuggestions: false,
                 enabled: !isSubmitting.value,
                 onChanged: (value) => query.value = value,
-                decoration: const InputDecoration(
-                  hintText: 'Search for people or agents',
+                decoration: InputDecoration(
+                  hintText: tl('Search for people or agents'),
                   prefixIcon: Icon(LucideIcons.search),
                 ),
               ),
@@ -246,15 +247,15 @@ class AddChannelMembersSheet extends HookConsumerWidget {
                             );
                           },
                         ),
-                  loading: () => const Center(
+                  loading: () => Center(
                     child: BuzzLoadingIndicator(
                       size: 44,
-                      semanticLabel: 'Loading people and agents',
+                      semanticLabel: tl('Loading people and agents'),
                     ),
                   ),
                   error: (error, _) => Center(
                     child: Text(
-                      'Couldn’t load people or agents. Try again.',
+                      tl('Couldn’t load people or agents. Try again.'),
                       style: context.textTheme.bodyMedium?.copyWith(
                         color: context.colors.error,
                       ),

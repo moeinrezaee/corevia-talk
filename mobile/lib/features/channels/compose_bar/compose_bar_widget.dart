@@ -572,11 +572,11 @@ class ComposeBar extends HookConsumerWidget {
         // Nothing was sent and the draft is untouched, so Retry sends it again.
         messenger?.showSnackBar(
           SnackBar(
-            content: const Text(
-              'Message not sent: could not check who is in this channel',
+            content: Text(
+              tl('Message not sent: could not check who is in this channel'),
             ),
             action: SnackBarAction(
-              label: 'Retry',
+              label: tl('Retry'),
               onPressed: () => unawaited(send()),
             ),
           ),
@@ -794,7 +794,7 @@ class ComposeBar extends HookConsumerWidget {
           items: [
             if (clipboardHasImage.value)
               IOSSystemContextMenuItemCustom(
-                title: 'Paste Image',
+                title: tl('Paste Image'),
                 onPressed: pasteClipboardImage,
               ),
             ...SystemContextMenu.getDefaultItems(editableTextState),
@@ -808,7 +808,7 @@ class ComposeBar extends HookConsumerWidget {
         buttonItems.insert(
           0,
           ContextMenuButtonItem(
-            label: 'Paste Image',
+            label: tl('Paste Image'),
             onPressed: pasteClipboardImage,
           ),
         );

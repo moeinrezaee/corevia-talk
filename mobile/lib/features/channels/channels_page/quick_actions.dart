@@ -200,10 +200,10 @@ class _MorphingQuickActionsButton extends HookWidget {
                                           ((1 - _kMorphScale) *
                                               surfaceProgress),
                                       child: Tooltip(
-                                        message: 'Create or start conversation',
+                                        message: tl('Create or start conversation'),
                                         child: Semantics(
                                           button: true,
-                                          label: 'Create or start conversation',
+                                          label: tl('Create or start conversation'),
                                           expanded: open,
                                           child: InkWell(
                                             customBorder: const CircleBorder(),
@@ -296,21 +296,21 @@ class _QuickActionsMenu extends StatelessWidget {
         children: [
           _QuickActionItem(
             icon: LucideIcons.hash,
-            title: 'Create channel',
+            title: tl('Create channel'),
             key: const Key('quick-action-create-channel-card'),
             onTap: () => onSelected(_QuickAction.createChannel),
           ),
           const SizedBox(height: Grid.xxs),
           _QuickActionItem(
             icon: LucideIcons.messagesSquare,
-            title: 'New direct message',
+            title: tl('New direct message'),
             key: const Key('quick-action-new-dm-card'),
             onTap: () => onSelected(_QuickAction.newDm),
           ),
           const SizedBox(height: Grid.xxs),
           _QuickActionItem(
             icon: LucideIcons.compass,
-            title: 'Browse channels',
+            title: tl('Browse channels'),
             key: const Key('quick-action-browse-channels-card'),
             onTap: () => onSelected(_QuickAction.browseChannels),
           ),

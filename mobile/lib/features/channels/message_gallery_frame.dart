@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../shared/theme/theme.dart';
 import '../../shared/widgets/skeleton.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Shared carousel viewport height for real media and loading placeholders.
 const messageMediaCarouselHeight = 220.0;
@@ -22,7 +23,7 @@ class MessageGalleryFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final label = Text(
-      '$count images',
+      tlt('{0} images', [count]),
       key: ValueKey(
         loading
             ? 'message-skeleton-carousel-count'

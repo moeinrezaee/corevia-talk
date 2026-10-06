@@ -78,6 +78,7 @@ import 'sticky_date_header.dart';
 import 'thread_detail_page.dart';
 import 'thread_replies_provider.dart';
 import 'timeline_message.dart';
+import '../../shared/i18n/app_language.dart';
 
 part 'channel_detail_page/message_list.dart';
 part 'channel_detail_page/system_rows.dart';
@@ -737,7 +738,7 @@ class ChannelDetailPage extends HookConsumerWidget {
                               ),
                             ),
                             child: LoadErrorView(
-                              message: 'Failed to load messages',
+                              message: tl('Failed to load messages'),
                               onRetry: () => ref.invalidate(
                                 channelMessagesProvider(channel.id),
                               ),

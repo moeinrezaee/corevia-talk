@@ -57,7 +57,7 @@ class _HuddleCallControls extends StatelessWidget {
           const SizedBox(width: Grid.sm),
           _HuddleRoundControl(
             key: const ValueKey('huddle-emoji-reactions'),
-            tooltip: 'Emoji reactions',
+            tooltip: tl('Emoji reactions'),
             icon: LucideIcons.smilePlus,
             foregroundColor: context.colors.onSurface,
             backgroundColor: context.colors.surfaceContainerHighest,

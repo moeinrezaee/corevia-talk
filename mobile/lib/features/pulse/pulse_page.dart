@@ -16,6 +16,7 @@ import 'compose_note_page.dart';
 import 'note_card.dart';
 import 'pulse_models.dart';
 import 'pulse_provider.dart';
+import '../../shared/i18n/app_language.dart';
 
 enum PulseTab { everyone, following, liked, agents, mine }
 
@@ -61,13 +62,13 @@ class PulsePage extends HookConsumerWidget {
       key: isIos ? ValueKey(active.value) : null,
       nativePinnedBody: true,
       resizeToAvoidBottomInset: true,
-      appBar: const FrostedAppBar(nativeLargeTitle: true, title: Text('Pulse')),
+      appBar: FrostedAppBar(nativeLargeTitle: true, title: Text(tl('Pulse'))),
       floatingActionButton: FloatingActionButton(
         heroTag: 'pulse-compose-fab',
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute<void>(builder: (_) => const ComposeNotePage()),
         ),
-        tooltip: 'New note',
+        tooltip: tl('New note'),
         shape: const CircleBorder(),
         child: const Icon(LucideIcons.plus),
       ),
@@ -77,30 +78,30 @@ class PulsePage extends HookConsumerWidget {
           FilterChipBar<PulseTab>(
             selected: active.value,
             onSelected: (tab) => active.value = tab,
-            items: const [
+            items: [
               FilterChipItem(
                 id: PulseTab.everyone,
-                label: 'Everyone',
+                label: tl('Everyone'),
                 icon: LucideIcons.radio,
               ),
               FilterChipItem(
                 id: PulseTab.following,
-                label: 'Following',
+                label: tl('Following'),
                 icon: LucideIcons.users,
               ),
               FilterChipItem(
                 id: PulseTab.liked,
-                label: 'Liked',
+                label: tl('Liked'),
                 icon: LucideIcons.heart,
               ),
               FilterChipItem(
                 id: PulseTab.agents,
-                label: 'Agents',
+                label: tl('Agents'),
                 icon: LucideIcons.bot,
               ),
               FilterChipItem(
                 id: PulseTab.mine,
-                label: 'Mine',
+                label: tl('Mine'),
                 icon: LucideIcons.user,
               ),
             ],
@@ -166,7 +167,7 @@ class _PulseBody extends ConsumerWidget {
       error: (_, _) => _MessageListShell(
         child: _EmptyState(
           icon: LucideIcons.circleAlert,
-          message: 'Could not load Pulse. Pull to try again.',
+          message: tl('Could not load Pulse. Pull to try again.'),
         ),
       ),
       data: (notes) {

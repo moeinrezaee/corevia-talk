@@ -99,10 +99,10 @@ class _MessageVideoPreview extends HookConsumerWidget {
                     frameBuilder: (context, child, frame, synchronous) =>
                         frame != null || synchronous
                         ? child
-                        : const MediaLoadingPlaceholder(label: 'Loading video'),
-                    errorBuilder: (_, _, _) => const _MediaPreviewFallback(
+                        : MediaLoadingPlaceholder(label: tl('Loading video')),
+                    errorBuilder: (_, _, _) => _MediaPreviewFallback(
                       icon: LucideIcons.video,
-                      label: 'Video preview unavailable',
+                      label: tl('Video preview unavailable'),
                     ),
                   )
                 else
@@ -111,14 +111,14 @@ class _MessageVideoPreview extends HookConsumerWidget {
                     builder: (context, snapshot) {
                       final frame = snapshot.data;
                       if (snapshot.connectionState != ConnectionState.done) {
-                        return const MediaLoadingPlaceholder(
-                          label: 'Loading video',
+                        return MediaLoadingPlaceholder(
+                          label: tl('Loading video'),
                         );
                       }
                       if (frame == null) {
-                        return const _MediaPreviewFallback(
+                        return _MediaPreviewFallback(
                           icon: LucideIcons.video,
-                          label: 'Video attachment',
+                          label: tl('Video attachment'),
                         );
                       }
                       return ColoredBox(
@@ -154,7 +154,7 @@ class _MessageVideoPreview extends HookConsumerWidget {
                   right: Grid.xxs,
                   bottom: Grid.xxs,
                   child: Text(
-                    'Video',
+                    tl('Video'),
                     style: context.textTheme.labelSmall?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,

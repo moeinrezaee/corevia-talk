@@ -21,6 +21,7 @@ import '../../shared/widgets/page_indicator.dart';
 import '../../shared/widgets/ios_glass_navigation_button.dart';
 import '../../shared/widgets/ios_navigation_bar.dart';
 import 'media_viewer_hero.dart';
+import '../../shared/i18n/app_language.dart';
 
 export 'media_viewer_hero.dart';
 
@@ -552,8 +553,8 @@ class MediaImageViewerPage extends HookConsumerWidget {
                                           fit: BoxFit.contain,
                                           semanticLabel: image.semanticLabel,
                                           errorBuilder: (_, _, _) =>
-                                              const _MediaLoadFailure(
-                                                message: 'Failed to load image',
+                                              _MediaLoadFailure(
+                                                message: tl('Failed to load image'),
                                                 icon: LucideIcons.imageOff,
                                               ),
                                         ),
@@ -614,10 +615,10 @@ class MediaImageViewerPage extends HookConsumerWidget {
                   child: Theme(
                     data: ThemeData.dark(),
                     child: IosNavigationBar(
-                      title: 'Photo',
+                      title: tl('Photo'),
                       actions: [
                         IosNavigationAction(
-                          label: 'Close image viewer',
+                          label: tl('Close image viewer'),
                           symbol: 'xmark',
                           onPressed: () => unawaited(dismiss()),
                         ),
@@ -635,7 +636,7 @@ class MediaImageViewerPage extends HookConsumerWidget {
                   child: SafeArea(
                     child: _MediaViewerCloseButton(
                       key: const ValueKey('message-media-image-viewer-close'),
-                      tooltip: 'Close image viewer',
+                      tooltip: tl('Close image viewer'),
                       onPressed: () => unawaited(dismiss()),
                     ),
                   ),

@@ -26,6 +26,7 @@ import 'emoji_picker.dart';
 import 'recent_emoji_provider.dart';
 import 'message_long_press_region.dart';
 import 'timeline_message.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Pill geometry, ported from desktop's `REACTION_PILL_BASE_CLASSES` in
 /// `desktop/src/features/messages/ui/MessageReactions.tsx`: a fully-rounded
@@ -303,7 +304,7 @@ class _AddReactionPill extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: 'Add reaction',
+      label: tl('Add reaction'),
       child: GestureDetector(
         key: const ValueKey('add-reaction-pill'),
         onTap: onTap,
@@ -377,7 +378,7 @@ Future<void> showReactionDetailSheet({
   }
   showBuzzModalBottomSheet<void>(
     context: context,
-    title: 'Reactions',
+    title: tl('Reactions'),
     isScrollControlled: true,
     showDragHandle: true,
     builder: (sheetContext) => _ReactionDetailSheet(
@@ -449,7 +450,7 @@ class _AndroidReactionDetailSheet extends HookConsumerWidget {
               tabs: [
                 Tab(
                   key: const ValueKey('reaction-filter-all'),
-                  text: 'All $total',
+                  text: tlt('All {0}', [total]),
                 ),
                 for (final reaction in reactions)
                   Tab(
@@ -568,7 +569,7 @@ class _ReactionDetailSheet extends HookConsumerWidget {
                     padding: const EdgeInsets.only(right: Grid.half),
                     child: ChoiceChip(
                       key: const ValueKey('reaction-filter-all'),
-                      label: Text('All $total'),
+                      label: Text(tlt('All {0}', [total])),
                       selected: selectedEmoji.value == null,
                       onSelected: (_) => selectedEmoji.value = null,
                     ),

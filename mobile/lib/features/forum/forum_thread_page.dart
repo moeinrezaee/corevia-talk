@@ -24,6 +24,7 @@ import '../../shared/profile/user_profile.dart';
 import '../profile/user_profile_sheet.dart';
 import 'forum_models.dart';
 import 'forum_provider.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Full-screen page showing a forum post and its replies.
 class ForumThreadPage extends HookConsumerWidget {
@@ -83,13 +84,13 @@ class ForumThreadPage extends HookConsumerWidget {
 
     return FrostedScaffold(
       appBar: FrostedAppBar(
-        title: const Text('Thread'),
+        title: Text(tl('Thread')),
         actions: [
           if (isOwnPost)
             IconButton(
               onPressed: () =>
                   _showPostActions(context, ref, threadAsync.value!),
-              tooltip: 'Post actions',
+              tooltip: tl('Post actions'),
               icon: const Icon(LucideIcons.ellipsis),
             ),
         ],
@@ -99,17 +100,17 @@ class ForumThreadPage extends HookConsumerWidget {
         skipLoadingOnRefresh: !threadAsync.hasError,
         loading: () => Padding(
           padding: EdgeInsets.only(top: frostedAppBarHeight(context)),
-          child: const Center(
+          child: Center(
             child: BuzzLoadingIndicator(
               size: 44,
-              semanticLabel: 'Loading thread',
+              semanticLabel: tl('Loading thread'),
             ),
           ),
         ),
         error: (e, _) => Padding(
           padding: EdgeInsets.only(top: frostedAppBarHeight(context)),
           child: LoadErrorView(
-            message: 'Failed to load thread',
+            message: tl('Failed to load thread'),
             onRetry: () => ref.invalidate(
               forumThreadProvider((channelId: channelId, eventId: postEventId)),
             ),
@@ -148,7 +149,7 @@ class ForumThreadPage extends HookConsumerWidget {
               children: [
                 ListTile(
                   leading: const Icon(LucideIcons.copy),
-                  title: const Text('Copy text'),
+                  title: Text(tl('Copy text')),
                   onTap: () {
                     Navigator.of(sheetContext).pop();
                     Clipboard.setData(ClipboardData(text: thread.post.content));
@@ -160,7 +161,7 @@ class ForumThreadPage extends HookConsumerWidget {
                     color: sheetContext.colors.error,
                   ),
                   title: Text(
-                    'Delete post',
+                    tl('Delete post'),
                     style: TextStyle(color: sheetContext.colors.error),
                   ),
                   onTap: () {
@@ -180,12 +181,12 @@ class ForumThreadPage extends HookConsumerWidget {
     showBuzzDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Delete post'),
-        content: const Text('This cannot be undone.'),
+        title: Text(tl('Delete post')),
+        content: Text(tl('This cannot be undone.')),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
-            child: const Text('Cancel'),
+            child: Text(tl('Cancel')),
           ),
           FilledButton(
             onPressed: () async {
@@ -202,7 +203,7 @@ class ForumThreadPage extends HookConsumerWidget {
             style: FilledButton.styleFrom(
               backgroundColor: dialogContext.colors.error,
             ),
-            child: const Text('Delete'),
+            child: Text(tl('Delete')),
           ),
         ],
       ),
@@ -295,7 +296,7 @@ class _ThreadContent extends HookConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.all(Grid.sm),
                   child: Text(
-                    'No replies yet. Be the first to respond.',
+                    tl('No replies yet. Be the first to respond.'),
                     style: context.textTheme.bodyMedium?.copyWith(
                       color: context.colors.onSurfaceVariant,
                     ),
@@ -318,7 +319,7 @@ class _ThreadContent extends HookConsumerWidget {
         if (isMember && !isArchived)
           ComposeBar(
             channelId: channelId,
-            hintText: 'Reply to this post\u2026',
+            hintText: tl('Reply to this post\u2026'),
             onSend:
                 (
                   content,
@@ -609,7 +610,7 @@ class _ReplyRow extends ConsumerWidget {
               children: [
                 ListTile(
                   leading: const Icon(LucideIcons.copy),
-                  title: const Text('Copy text'),
+                  title: Text(tl('Copy text')),
                   onTap: () {
                     Navigator.of(sheetContext).pop();
                     Clipboard.setData(ClipboardData(text: reply.content));
@@ -622,7 +623,7 @@ class _ReplyRow extends ConsumerWidget {
                       color: sheetContext.colors.error,
                     ),
                     title: Text(
-                      'Delete reply',
+                      tl('Delete reply'),
                       style: TextStyle(color: sheetContext.colors.error),
                     ),
                     onTap: () {
@@ -642,12 +643,12 @@ class _ReplyRow extends ConsumerWidget {
     showBuzzDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Delete reply'),
-        content: const Text('This cannot be undone.'),
+        title: Text(tl('Delete reply')),
+        content: Text(tl('This cannot be undone.')),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
-            child: const Text('Cancel'),
+            child: Text(tl('Cancel')),
           ),
           FilledButton(
             onPressed: () async {
@@ -662,7 +663,7 @@ class _ReplyRow extends ConsumerWidget {
             style: FilledButton.styleFrom(
               backgroundColor: dialogContext.colors.error,
             ),
-            child: const Text('Delete'),
+            child: Text(tl('Delete')),
           ),
         ],
       ),

@@ -7,6 +7,7 @@ import '../../shared/widgets/buzz_loading_indicator.dart';
 import '../../shared/widgets/modal_presentation.dart';
 import '../pairing/pairing_page.dart';
 import 'invite_join_provider.dart';
+import '../../shared/i18n/app_language.dart';
 
 Future<bool?> showInviteJoinSheet(BuildContext context) {
   return showBuzzModalBottomSheet<bool>(
@@ -80,7 +81,7 @@ class InviteJoinSheet extends ConsumerWidget {
             ),
             const SizedBox(height: Grid.xxs),
             Text(
-              'Check the relay host before you join:',
+              tl('Check the relay host before you join:'),
               style: context.textTheme.bodyMedium?.copyWith(
                 color: context.colors.onSurfaceVariant,
               ),
@@ -106,7 +107,7 @@ class InviteJoinSheet extends ConsumerWidget {
             if (derivedName != null && derivedName != host) ...[
               const SizedBox(height: Grid.xxs),
               Text(
-                'Display name: $derivedName',
+                tlt('Display name: {0}', [derivedName]),
                 style: context.textTheme.bodySmall?.copyWith(
                   color: context.colors.onSurfaceVariant,
                 ),
@@ -115,7 +116,7 @@ class InviteJoinSheet extends ConsumerWidget {
             const SizedBox(height: Grid.sm),
             if (isStarterSetupRecovery) ...[
               Text(
-                'Your membership is ready, but starter channels still need to be set up. You can safely retry without claiming the invite again.',
+                tl('Your membership is ready, but starter channels still need to be set up. You can safely retry without claiming the invite again.'),
                 style: context.textTheme.bodyMedium?.copyWith(
                   color: context.colors.onSurfaceVariant,
                 ),
@@ -123,7 +124,7 @@ class InviteJoinSheet extends ConsumerWidget {
               const SizedBox(height: Grid.sm),
             ],
             Text(
-              'This phone is the only copy of this identity. If you lose it before pairing or backing up, you’ll lose access as this member.',
+              tl('This phone is the only copy of this identity. If you lose it before pairing or backing up, you’ll lose access as this member.'),
               style: context.textTheme.bodyMedium?.copyWith(
                 color: context.colors.onSurfaceVariant,
               ),
@@ -146,7 +147,7 @@ class InviteJoinSheet extends ConsumerWidget {
                     onPressed: isClaiming
                         ? null
                         : () => Navigator.of(context).pop(),
-                    child: const Text('Cancel'),
+                    child: Text(tl('Cancel')),
                   ),
                 ),
                 const SizedBox(width: Grid.sm),
@@ -213,7 +214,7 @@ class _InviteJoinSuccess extends StatelessWidget {
             ),
             const SizedBox(height: Grid.xs),
             Text(
-              'This phone is the only copy of this identity. If you lose it before pairing or backing up, you’ll lose access as this member.',
+              tl('This phone is the only copy of this identity. If you lose it before pairing or backing up, you’ll lose access as this member.'),
               style: context.textTheme.bodyMedium?.copyWith(
                 color: context.colors.onSurfaceVariant,
               ),
@@ -229,7 +230,7 @@ class _InviteJoinSuccess extends StatelessWidget {
                 );
               },
               icon: const Icon(LucideIcons.scanLine),
-              label: const Text('Back it up now'),
+              label: Text(tl('Back it up now')),
             ),
             const SizedBox(height: Grid.xs),
             TextButton(

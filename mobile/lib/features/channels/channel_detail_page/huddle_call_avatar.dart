@@ -236,7 +236,7 @@ class _HuddleCallAvatar extends HookConsumerWidget {
                                   dotSize: 6 * scale,
                                   gap: 4 * scale,
                                   semanticLabel:
-                                      '$label is preparing a response',
+                                      tlt('{0} is preparing a response', [label]),
                                 ),
                               )
                             : AvatarImage(

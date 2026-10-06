@@ -59,7 +59,7 @@ class _PairingWelcomeView extends StatelessWidget {
                         ),
                         const SizedBox(height: Grid.xxs),
                         Text(
-                          'Your people, your agents, your projects —\nall in one place.',
+                          tl('Your people, your agents, your projects —\nall in one place.'),
                           textAlign: TextAlign.center,
                           style: context.textTheme.bodyLarge?.copyWith(
                             color: context._onboardingInk,
@@ -71,7 +71,7 @@ class _PairingWelcomeView extends StatelessWidget {
                 ),
                 const SizedBox(height: Grid.md),
                 Text(
-                  'Scan the QR code from your desktop app\nor paste a pairing code to connect.',
+                  tl('Scan the QR code from your desktop app\nor paste a pairing code to connect.'),
                   textAlign: TextAlign.center,
                   style: context.textTheme.bodyMedium?.copyWith(
                     color: context._onboardingMutedInk,
@@ -94,10 +94,10 @@ class _PairingWelcomeView extends StatelessWidget {
                                   child: BuzzLoadingIndicator(
                                     size: 20,
                                     color: context._onboardingInk,
-                                    semanticLabel: 'Opening scanner',
+                                    semanticLabel: tl('Opening scanner'),
                                   ),
                                 )
-                              : const Text('Scan a QR code'),
+                              : Text(tl('Scan a QR code')),
                         ),
                         const SizedBox(height: Grid.xxs),
                         TextButton(
@@ -185,10 +185,10 @@ class _PairingWelcomeView extends StatelessWidget {
                                                 child: BuzzLoadingIndicator(
                                                   size: 20,
                                                   color: context._onboardingInk,
-                                                  semanticLabel: 'Connecting',
+                                                  semanticLabel: tl('Connecting'),
                                                 ),
                                               )
-                                            : const Text('Connect'),
+                                            : Text(tl('Connect')),
                                       ),
                                     ),
                                   ],

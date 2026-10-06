@@ -74,8 +74,8 @@ class _PairingCodeEntry extends HookConsumerWidget {
                   return limited;
                 }),
               ],
-              decoration: const InputDecoration(
-                labelText: 'Desktop code, six digits',
+              decoration: InputDecoration(
+                labelText: tl('Desktop code, six digits'),
                 border: InputBorder.none,
               ),
               onChanged: onChanged,

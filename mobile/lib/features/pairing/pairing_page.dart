@@ -20,6 +20,7 @@ import '../../shared/widgets/ios_glass_navigation_button.dart';
 import 'pairing_page/onboarding_wordmark.dart';
 import 'pairing_provider.dart';
 import 'pairing_qr_scanner.dart';
+import '../../shared/i18n/app_language.dart';
 
 part 'pairing_page/onboarding_background.dart';
 part 'pairing_page/onboarding_colors.dart';
@@ -74,7 +75,7 @@ class PairingPage extends HookConsumerWidget {
         if (identityRecoveryOnly &&
             Uri.tryParse(code)?.queryParameters['mode'] != 'recover') {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Scan a desktop recovery code.')),
+            SnackBar(content: Text(tl('Scan a desktop recovery code.'))),
           );
           return;
         }
@@ -118,7 +119,7 @@ class PairingPage extends HookConsumerWidget {
                         iconColor: context._onboardingInk,
 
                         title: identityRecoveryOnly
-                            ? const Text('Send to Desktop')
+                            ? Text(tl('Send to Desktop'))
                             : null,
                       ),
                     ],
@@ -140,7 +141,7 @@ class PairingPage extends HookConsumerWidget {
                           child: IosGlassNavigationButton(
                             key: const ValueKey('pairing-ios-glass-back'),
                             icon: IosGlassNavigationIcon.back,
-                            semanticLabel: 'Back',
+                            semanticLabel: tl('Back'),
                             onPressed: () => Navigator.of(context).maybePop(),
                             width: iosGlassChannelHeaderLeadingWidth,
                             buttonCenterX: iosGlassChannelHeaderButtonCenterX,
@@ -149,12 +150,12 @@ class PairingPage extends HookConsumerWidget {
                         )
                       : IconButton(
                           icon: const Icon(LucideIcons.arrowLeft),
-                          tooltip: 'Back',
+                          tooltip: tl('Back'),
                           onPressed: () => Navigator.of(context).pop(),
                         ),
                   title: identityRecoveryOnly
                       ? Text(
-                          'Send to Desktop',
+                          tl('Send to Desktop'),
                           style: context.textTheme.titleMedium?.copyWith(
                             color: context._onboardingInk,
                           ),

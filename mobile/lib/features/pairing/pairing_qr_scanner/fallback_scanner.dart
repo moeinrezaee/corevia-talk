@@ -106,7 +106,7 @@ class FallbackPairingQrScanner extends HookWidget {
                   Positioned.fill(
                     child: Semantics(
                       button: true,
-                      label: 'Close QR scanner',
+                      label: tl('Close QR scanner'),
                       child: GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onTap: closeScanner,
@@ -143,7 +143,7 @@ class FallbackPairingQrScanner extends HookWidget {
                         height: viewport.height,
                         child: Semantics(
                           button: true,
-                          label: 'Close QR scanner',
+                          label: tl('Close QR scanner'),
                           child: GestureDetector(
                             behavior: HitTestBehavior.opaque,
                             onTap: closeScanner,
@@ -227,7 +227,7 @@ class _FallbackQrScannerViewfinder extends StatelessWidget {
               child: Transform.translate(
                 offset: Offset(0, (size / 2) + Grid.md),
                 child: Text(
-                  'Scan a QR code',
+                  tl('Scan a QR code'),
                   style: context.textTheme.bodyMedium?.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,

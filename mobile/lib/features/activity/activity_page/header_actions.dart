@@ -161,7 +161,7 @@ class _InboxOptionsButton extends StatelessWidget {
     return Builder(
       builder: (buttonContext) => IconButton(
         key: const ValueKey('activity-options-menu'),
-        tooltip: 'Activity options',
+        tooltip: tl('Activity options'),
         color: navigationPrimaryForeground(context),
         padding: const EdgeInsets.symmetric(horizontal: Grid.xxs),
         constraints: const BoxConstraints.tightFor(
@@ -197,7 +197,7 @@ class _InboxOptionsButton extends StatelessWidget {
                 enabled: unreadCount > 0,
                 child: Row(
                   children: [
-                    const Expanded(child: Text('Mark all as read')),
+                    Expanded(child: Text(tl('Mark all as read'))),
                     if (unreadCount > 0)
                       Text(
                         '$unreadCount',

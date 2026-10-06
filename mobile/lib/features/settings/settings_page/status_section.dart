@@ -15,7 +15,7 @@ class _StatusSection extends ConsumerWidget {
       children: [
         AppListRow(
           key: const ValueKey('settings-set-status'),
-          title: 'Set status',
+          title: tl('Set status'),
           trailing: const _RowChevron(),
           onTap: () {
             unawaited(HapticFeedback.selectionClick());

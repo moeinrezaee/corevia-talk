@@ -20,13 +20,13 @@ const _railHeight = 36.0;
 
 const _emojiSkinTonePrefsKey = 'buzz.emoji-picker.skin-tone.v1';
 
-const _skinTones = [
-  (label: 'Default', color: Color(0xFFFFC93A)),
-  (label: 'Light', color: Color(0xFFFFDAB7)),
-  (label: 'Medium-light', color: Color(0xFFE7B98F)),
-  (label: 'Medium', color: Color(0xFFC88C61)),
-  (label: 'Medium-dark', color: Color(0xFFA46134)),
-  (label: 'Dark', color: Color(0xFF5D4437)),
+List<({String label, Color color})> get _skinTones => [
+  (label: tl('Default'), color: Color(0xFFFFC93A)),
+  (label: tl('Light'), color: Color(0xFFFFDAB7)),
+  (label: tl('Medium-light'), color: Color(0xFFE7B98F)),
+  (label: tl('Medium'), color: Color(0xFFC88C61)),
+  (label: tl('Medium-dark'), color: Color(0xFFA46134)),
+  (label: tl('Dark'), color: Color(0xFF5D4437)),
 ];
 
 int _validSkinTone(int? value) =>
@@ -95,7 +95,7 @@ class _SkinToneSelector extends StatelessWidget {
     return PopupMenuButton<int>(
       key: const ValueKey('emoji-skin-tone-selector'),
       initialValue: value,
-      tooltip: 'Skin tone',
+      tooltip: tl('Skin tone'),
       position: PopupMenuPosition.under,
       onSelected: onChanged,
       itemBuilder: (context) => [
@@ -123,7 +123,7 @@ class _SkinToneSelector extends StatelessWidget {
       ],
       child: Semantics(
         button: true,
-        label: 'Skin tone',
+        label: tl('Skin tone'),
         child: Center(
           child: _SkinToneDot(
             key: const ValueKey('emoji-skin-tone-dot-selected'),

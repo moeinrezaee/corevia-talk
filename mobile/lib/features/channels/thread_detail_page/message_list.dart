@@ -113,10 +113,10 @@ class _ThreadMessageList extends StatelessWidget {
                 if (index == headIndex) {
                   if (headIsDeleted) {
                     return trackActiveScrollPosition(
-                      const Padding(
+                      Padding(
                         key: ValueKey('thread-message-deleted'),
                         padding: EdgeInsets.only(bottom: Grid.xs),
-                        child: Text('This message was deleted'),
+                        child: Text(tl('This message was deleted')),
                       ),
                     );
                   }
@@ -171,7 +171,7 @@ class _ThreadMessageList extends StatelessWidget {
                                   IconButton(
                                     key: const ValueKey('thread-replies-retry'),
                                     onPressed: onRetryReplies,
-                                    tooltip: 'Retry',
+                                    tooltip: tl('Retry'),
                                     icon: const Icon(
                                       LucideIcons.refreshCcw,
                                       size: 16,

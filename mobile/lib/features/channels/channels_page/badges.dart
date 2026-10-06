@@ -59,7 +59,7 @@ class _ErrorView extends StatelessWidget {
             ),
             const SizedBox(height: Grid.xs),
             Text(
-              'Could not load channels',
+              tl('Could not load channels'),
               style: context.textTheme.titleMedium,
             ),
             const SizedBox(height: Grid.xxs),
@@ -76,7 +76,7 @@ class _ErrorView extends StatelessWidget {
             FilledButton.icon(
               onPressed: onRetry,
               icon: const Icon(LucideIcons.refreshCw),
-              label: const Text('Retry'),
+              label: Text(tl('Retry')),
             ),
           ],
         ),

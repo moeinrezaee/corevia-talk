@@ -1,13 +1,13 @@
 part of '../profile_avatar_editor.dart';
 
 const _emojiPreviewGlyphSize = _previewSize * 258 / 512;
-const _skinTones = [
-  (label: 'Default', color: Color(0xFFFFC93A)),
-  (label: 'Light', color: Color(0xFFFFDAB7)),
-  (label: 'Medium-light', color: Color(0xFFE7B98F)),
-  (label: 'Medium', color: Color(0xFFC88C61)),
-  (label: 'Medium-dark', color: Color(0xFFA46134)),
-  (label: 'Dark', color: Color(0xFF5D4437)),
+List<({String label, Color color})> get _skinTones => [
+  (label: tl('Default'), color: Color(0xFFFFC93A)),
+  (label: tl('Light'), color: Color(0xFFFFDAB7)),
+  (label: tl('Medium-light'), color: Color(0xFFE7B98F)),
+  (label: tl('Medium'), color: Color(0xFFC88C61)),
+  (label: tl('Medium-dark'), color: Color(0xFFA46134)),
+  (label: tl('Dark'), color: Color(0xFF5D4437)),
 ];
 
 enum _EmojiEditorSection { background, emoji }
@@ -105,7 +105,7 @@ class _EmojiMode extends HookConsumerWidget {
                                     controller: searchController,
                                     textInputAction: TextInputAction.search,
                                     decoration: InputDecoration(
-                                      hintText: 'Search emoji',
+                                      hintText: tl('Search emoji'),
                                       filled: true,
                                       fillColor: context
                                           .colors
@@ -139,7 +139,7 @@ class _EmojiMode extends HookConsumerWidget {
                                       suffixIcon: searchController.text.isEmpty
                                           ? null
                                           : IconButton(
-                                              tooltip: 'Clear search',
+                                              tooltip: tl('Clear search'),
                                               onPressed: searchController.clear,
                                               icon: const Icon(
                                                 LucideIcons.x,
@@ -165,7 +165,7 @@ class _EmojiMode extends HookConsumerWidget {
                                   : visibleEmoji.isEmpty
                                   ? Center(
                                       child: Text(
-                                        'No emoji found',
+                                        tl('No emoji found'),
                                         style: context.textTheme.bodyMedium
                                             ?.copyWith(
                                               color: context
@@ -229,7 +229,7 @@ class _EmojiMode extends HookConsumerWidget {
                         key: const ValueKey('emoji-editor-background'),
                         icon: LucideIcons.palette,
                         iosIcon: IosGlassNavigationIcon.palette,
-                        label: 'Background',
+                        label: tl('Background'),
                         selected:
                             activeSection == _EmojiEditorSection.background,
                         onTap: () =>
@@ -243,7 +243,7 @@ class _EmojiMode extends HookConsumerWidget {
                         key: const ValueKey('emoji-editor-emoji'),
                         icon: LucideIcons.smile,
                         iosIcon: IosGlassNavigationIcon.emoji,
-                        label: 'Emoji',
+                        label: tl('Emoji'),
                         selected: activeSection == _EmojiEditorSection.emoji,
                         onTap: () =>
                             onSectionChanged(_EmojiEditorSection.emoji),
@@ -326,7 +326,7 @@ class _AvatarSkinToneSelector extends StatelessWidget {
     return PopupMenuButton<int>(
       key: const ValueKey('emoji-avatar-skin-tone'),
       initialValue: value,
-      tooltip: 'Skin tone',
+      tooltip: tl('Skin tone'),
       position: PopupMenuPosition.under,
       onSelected: onChanged,
       itemBuilder: (context) => [

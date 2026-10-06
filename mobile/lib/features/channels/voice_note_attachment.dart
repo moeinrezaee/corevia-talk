@@ -14,6 +14,7 @@ import '../../shared/widgets/skeleton.dart';
 import 'voice_note_play_pause_icon.dart';
 import 'voice_note_recording.dart';
 import 'voice_note_waveform.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Displays a recorded or remote voice note with playback controls.
 class VoiceNoteAttachment extends HookConsumerWidget {
@@ -263,7 +264,7 @@ class VoiceNoteAttachment extends HookConsumerWidget {
               dimension: 40,
               child: IconButton(
                 key: const ValueKey('composer-voice-note-remove'),
-                tooltip: 'Remove voice note',
+                tooltip: tl('Remove voice note'),
                 onPressed: onRemove,
                 style: IconButton.styleFrom(
                   minimumSize: const Size.square(40),
@@ -294,11 +295,11 @@ class _VoiceNotePlaybackRateButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Semantics(
     button: true,
-    label: 'Playback speed ${formatVoiceNotePlaybackRate(rate)}',
+    label: tlt('Playback speed {0}', [formatVoiceNotePlaybackRate(rate)]),
     hint:
         'Double tap to change to ${formatVoiceNotePlaybackRate(nextVoiceNotePlaybackRate(rate))}.',
     child: Tooltip(
-      message: 'Playback speed',
+      message: tl('Playback speed'),
       child: Material(
         color: context.colors.primary,
         borderRadius: BorderRadius.circular(Radii.full),

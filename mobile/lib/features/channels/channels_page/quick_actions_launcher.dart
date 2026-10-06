@@ -87,7 +87,7 @@ class ChannelQuickActionsLauncher extends HookConsumerWidget {
         case _QuickAction.createChannel:
           final created = await showBuzzModalBottomSheet<Channel>(
             context: context,
-            title: 'Create a new channel',
+            title: tl('Create a new channel'),
             constraints: _quickActionSheetConstraints(context),
             isScrollControlled: true,
             showDragHandle: true,
@@ -99,7 +99,7 @@ class ChannelQuickActionsLauncher extends HookConsumerWidget {
         case _QuickAction.newDm:
           final opened = await showBuzzModalBottomSheet<Channel>(
             context: context,
-            title: 'New message',
+            title: tl('New message'),
             constraints: _quickActionSheetConstraints(context),
             isScrollControlled: true,
             showDragHandle: true,
@@ -112,7 +112,7 @@ class ChannelQuickActionsLauncher extends HookConsumerWidget {
         case _QuickAction.browseChannels:
           await showBuzzModalBottomSheet<void>(
             context: context,
-            title: 'Browse channels',
+            title: tl('Browse channels'),
             constraints: _quickActionSheetConstraints(context),
             isScrollControlled: true,
             showDragHandle: true,
@@ -129,7 +129,7 @@ class ChannelQuickActionsLauncher extends HookConsumerWidget {
           Positioned.fill(
             child: Semantics(
               button: true,
-              label: 'Close quick actions',
+              label: tl('Close quick actions'),
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () => quickActionsOpen.value = false,

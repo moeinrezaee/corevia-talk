@@ -43,6 +43,7 @@ import 'thread_detail_page.dart';
 import 'thread_follows/thread_follows_provider.dart';
 import 'timeline_message.dart';
 import 'unread_badge/is_high_priority_event.dart';
+import '../../shared/i18n/app_language.dart';
 
 part 'message_actions/reaction_popover.dart';
 part 'message_actions/quick_reaction_row.dart';
@@ -206,7 +207,7 @@ Future<void> showMessageActions({
                         // Export: take the content out of the conversation.
                         ListTile(
                           leading: const Icon(LucideIcons.copy),
-                          title: const Text('Copy text'),
+                          title: Text(tl('Copy text')),
                           onTap: () {
                             Navigator.of(sheetContext).pop();
                             // Copy to clipboard
@@ -222,7 +223,7 @@ Future<void> showMessageActions({
                       children: [
                         ListTile(
                           leading: const Icon(LucideIcons.pencil),
-                          title: const Text('Edit message'),
+                          title: Text(tl('Edit message')),
                           onTap: () {
                             Navigator.of(sheetContext).pop();
                             _showEditSheet(
@@ -239,7 +240,7 @@ Future<void> showMessageActions({
                             color: sheetContext.colors.error,
                           ),
                           title: Text(
-                            'Delete message',
+                            tl('Delete message'),
                             style: TextStyle(color: sheetContext.colors.error),
                           ),
                           onTap: () {
@@ -278,7 +279,7 @@ void showImageActions({
     context: context,
     isScrollControlled: true,
     showDragHandle: true,
-    title: 'Image',
+    title: tl('Image'),
     builder: (sheetContext) => SafeArea(
       child: SingleChildScrollView(
         child: IconTheme.merge(
@@ -297,7 +298,7 @@ void showImageActions({
                   children: [
                     ListTile(
                       leading: const Icon(LucideIcons.download),
-                      title: const Text('Save image'),
+                      title: Text(tl('Save image')),
                       onTap: () {
                         Navigator.of(sheetContext).pop();
                         unawaited(_saveImage(context, ref, imageUrl));
@@ -305,7 +306,7 @@ void showImageActions({
                     ),
                     ListTile(
                       leading: const Icon(LucideIcons.share2),
-                      title: const Text('Share image'),
+                      title: Text(tl('Share image')),
                       onTap: () {
                         final renderBox =
                             context.findRenderObject() as RenderBox?;
@@ -326,13 +327,13 @@ void showImageActions({
                     ),
                     ListTile(
                       leading: const Icon(LucideIcons.link2),
-                      title: const Text('Copy image link'),
+                      title: Text(tl('Copy image link')),
                       onTap: () {
                         Navigator.of(sheetContext).pop();
                         copyToClipboard(
                           context,
                           imageUrl,
-                          message: 'Image link copied',
+                          message: tl('Image link copied'),
                         );
                       },
                     ),
@@ -347,7 +348,7 @@ void showImageActions({
                           color: sheetContext.colors.error,
                         ),
                         title: Text(
-                          'Delete message',
+                          tl('Delete message'),
                           style: TextStyle(color: sheetContext.colors.error),
                         ),
                         onTap: () {
@@ -459,11 +460,11 @@ Future<void> _saveImage(
     final image = await _downloadImage(ref, imageUrl);
     await PhotoManager.editor.saveImage(image.bytes, filename: image.filename);
     messenger?.showSnackBar(
-      const SnackBar(content: Text('Image saved to Photos')),
+      SnackBar(content: Text(tl('Image saved to Photos'))),
     );
   } catch (_) {
     messenger?.showSnackBar(
-      const SnackBar(content: Text('Could not save image')),
+      SnackBar(content: Text(tl('Could not save image'))),
     );
   }
 }
@@ -487,7 +488,7 @@ Future<void> _shareImage(
     );
   } catch (_) {
     messenger?.showSnackBar(
-      const SnackBar(content: Text('Could not share image')),
+      SnackBar(content: Text(tl('Could not share image'))),
     );
   }
 }
@@ -651,7 +652,7 @@ class _FastActionsRow extends ConsumerWidget {
       if (messages != null)
         _FastActionTile(
           icon: LucideIcons.messageSquareReply,
-          label: 'Reply',
+          label: tl('Reply'),
           onTap: () {
             Navigator.of(context).pop();
             Navigator.of(pageContext).push(
@@ -670,20 +671,20 @@ class _FastActionsRow extends ConsumerWidget {
         ),
       _FastActionTile(
         icon: LucideIcons.link2,
-        label: 'Copy link',
+        label: tl('Copy link'),
         onTap: () {
           Navigator.of(context).pop();
           copyToClipboard(
             pageContext,
             messageLinkFor(message: message, channelId: channelId),
-            message: 'Message link copied',
+            message: tl('Message link copied'),
           );
         },
       ),
       if (canRemind)
         _FastActionTile(
           icon: LucideIcons.clock,
-          label: 'Remind me',
+          label: tl('Remind me'),
           onTap: () {
             final rootContext = Navigator.of(
               context,
@@ -903,7 +904,7 @@ void _showEditSheet({
             autofocus: true,
             minLines: 1,
             maxLines: 5,
-            decoration: const InputDecoration(hintText: 'Edit message'),
+            decoration: InputDecoration(hintText: tl('Edit message')),
           ),
           const SizedBox(height: Grid.xxs),
           Row(
@@ -911,7 +912,7 @@ void _showEditSheet({
             children: [
               TextButton(
                 onPressed: () => Navigator.of(sheetContext).pop(),
-                child: const Text('Cancel'),
+                child: Text(tl('Cancel')),
               ),
               const SizedBox(width: Grid.half),
               FilledButton(
@@ -934,7 +935,7 @@ void _showEditSheet({
                       );
                   Navigator.of(sheetContext).pop();
                 },
-                child: const Text('Save'),
+                child: Text(tl('Save')),
               ),
             ],
           ),
@@ -954,12 +955,12 @@ void _confirmDelete({
   showBuzzDialog<void>(
     context: context,
     builder: (dialogContext) => AlertDialog(
-      title: const Text('Delete message'),
-      content: const Text('This cannot be undone.'),
+      title: Text(tl('Delete message')),
+      content: Text(tl('This cannot be undone.')),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(dialogContext).pop(),
-          child: const Text('Cancel'),
+          child: Text(tl('Cancel')),
         ),
         FilledButton(
           onPressed: () async {
@@ -972,14 +973,14 @@ void _confirmDelete({
               onDeleted?.call();
             } catch (error) {
               messenger.showSnackBar(
-                SnackBar(content: Text('Failed to delete message: $error')),
+                SnackBar(content: Text(tlt('Failed to delete message: {0}', [error]))),
               );
             }
           },
           style: FilledButton.styleFrom(
             backgroundColor: dialogContext.colors.error,
           ),
-          child: const Text('Delete'),
+          child: Text(tl('Delete')),
         ),
       ],
     ),

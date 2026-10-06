@@ -6,6 +6,7 @@ import '../../shared/theme/theme.dart';
 import '../../shared/widgets/buzz_loading_indicator.dart';
 import 'channel.dart';
 import 'channel_management_provider.dart';
+import '../../shared/i18n/app_language.dart';
 
 class ManageChannelSheet extends HookConsumerWidget {
   const ManageChannelSheet({
@@ -117,7 +118,7 @@ class ManageChannelSheet extends HookConsumerWidget {
               outlineKey: const ValueKey('manage-channel-name-outline'),
               controller: nameController,
               enabled: canEditDetails && !isSavingDetails.value,
-              hintText: 'Channel name',
+              hintText: tl('Channel name'),
               textInputAction: TextInputAction.next,
             ),
             const SizedBox(height: Grid.xs),
@@ -126,7 +127,7 @@ class ManageChannelSheet extends HookConsumerWidget {
               outlineKey: const ValueKey('manage-channel-description-outline'),
               controller: descriptionController,
               enabled: canEditDetails && !isSavingDetails.value,
-              hintText: 'Description',
+              hintText: tl('Description'),
               minLines: 2,
               maxLines: 4,
               textInputAction: TextInputAction.newline,
@@ -134,7 +135,7 @@ class ManageChannelSheet extends HookConsumerWidget {
             if (canonicalName.isEmpty) ...[
               const SizedBox(height: Grid.half),
               Text(
-                'Channel name is required.',
+                tl('Channel name is required.'),
                 style: context.textTheme.bodySmall?.copyWith(
                   color: context.colors.error,
                 ),
@@ -151,7 +152,7 @@ class ManageChannelSheet extends HookConsumerWidget {
             ),
             const SizedBox(height: Grid.sm),
             _ManageChannelSection(
-              label: 'Canvas',
+              label: tl('Canvas'),
               child: canvasAsync.when(
                 data: (canvas) {
                   if (isEditingCanvas.value) {
@@ -163,8 +164,8 @@ class ManageChannelSheet extends HookConsumerWidget {
                           controller: canvasController,
                           maxLines: 8,
                           minLines: 6,
-                          decoration: const InputDecoration(
-                            hintText: 'Write your canvas content in Markdown…',
+                          decoration: InputDecoration(
+                            hintText: tl('Write your canvas content in Markdown…'),
                           ),
                         ),
                         const SizedBox(height: Grid.xxs),
@@ -179,7 +180,7 @@ class ManageChannelSheet extends HookConsumerWidget {
                                       canvasController.text =
                                           canvas.content ?? '';
                                     },
-                              child: const Text('Cancel'),
+                              child: Text(tl('Cancel')),
                             ),
                             const SizedBox(width: Grid.half),
                             FilledButton(
@@ -226,14 +227,14 @@ class ManageChannelSheet extends HookConsumerWidget {
                     ],
                   );
                 },
-                loading: () => const Center(
+                loading: () => Center(
                   child: BuzzLoadingIndicator(
                     size: 40,
-                    semanticLabel: 'Loading channel canvas',
+                    semanticLabel: tl('Loading channel canvas'),
                   ),
                 ),
                 error: (error, _) => Text(
-                  'Couldn’t load the channel canvas.',
+                  tl('Couldn’t load the channel canvas.'),
                   style: context.textTheme.bodySmall?.copyWith(
                     color: context.colors.error,
                   ),

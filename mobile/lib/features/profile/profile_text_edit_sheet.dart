@@ -8,6 +8,7 @@ import '../../shared/theme/theme.dart';
 import '../../shared/widgets/buzz_sheet_header.dart';
 import '../../shared/widgets/ios_glass_navigation_button.dart';
 import 'profile_provider.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Flutter fallback sheet for editing one profile text field.
 class ProfileTextEditSheet extends HookWidget {
@@ -72,7 +73,7 @@ class ProfileTextEditSheet extends HookWidget {
         ? IosGlassNavigationButton(
             key: const ValueKey('profile-field-close'),
             icon: IosGlassNavigationIcon.close,
-            semanticLabel: 'Close sheet',
+            semanticLabel: tl('Close sheet'),
             onPressed: isSaving.value
                 ? null
                 : () => Navigator.of(context).pop(),
@@ -84,7 +85,7 @@ class ProfileTextEditSheet extends HookWidget {
             dimension: 44,
             child: IconButton(
               key: const ValueKey('profile-field-close'),
-              tooltip: 'Close sheet',
+              tooltip: tl('Close sheet'),
               onPressed: isSaving.value
                   ? null
                   : () => Navigator.of(context).pop(),

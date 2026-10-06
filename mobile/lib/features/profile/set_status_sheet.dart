@@ -17,16 +17,17 @@ import '../../shared/widgets/modal_presentation.dart';
 import '../channels/emoji_picker.dart';
 import 'user_status.dart';
 import 'user_status_provider.dart';
+import '../../shared/i18n/app_language.dart';
 
 const _emojiWellSize = 48.0;
 const _emojiGlyphSize = 28.0;
 
-const _statusPresets = [
-  (text: 'In a meeting', emoji: '\u{1F5E3}\u{FE0F}'),
-  (text: 'Commuting', emoji: '\u{1F68C}'),
-  (text: 'Out sick', emoji: '\u{1F912}'),
-  (text: 'Vacationing', emoji: '\u{1F3D6}\u{FE0F}'),
-  (text: 'Working remotely', emoji: '\u{1F3E0}'),
+List<({String text, String emoji})> get _statusPresets => [
+  (text: tl('In a meeting'), emoji: '\u{1F5E3}\u{FE0F}'),
+  (text: tl('Commuting'), emoji: '\u{1F68C}'),
+  (text: tl('Out sick'), emoji: '\u{1F912}'),
+  (text: tl('Vacationing'), emoji: '\u{1F3D6}\u{FE0F}'),
+  (text: tl('Working remotely'), emoji: '\u{1F3E0}'),
 ];
 
 enum _StatusDuration {
@@ -141,7 +142,7 @@ class _SetStatusSheet extends HookConsumerWidget {
       dimension: 44,
       child: IconButton(
         key: const ValueKey('save-status-button'),
-        tooltip: 'Save status',
+        tooltip: tl('Save status'),
         onPressed: hasContent && !isSaving.value ? handleSave : null,
         style: IconButton.styleFrom(
           padding: EdgeInsets.zero,
@@ -161,7 +162,7 @@ class _SetStatusSheet extends HookConsumerWidget {
     return SafeArea(
       top: false,
       child: BuzzTitledSheetLayout(
-        title: 'Set a status',
+        title: tl('Set a status'),
         showDragHandle: true,
         leading: headerAction,
         child: SingleChildScrollView(
@@ -194,11 +195,11 @@ class _SetStatusSheet extends HookConsumerWidget {
                 ),
               ),
               AppListCard(
-                label: 'Duration',
+                label: tl('Duration'),
                 children: [
                   AppListRow(
                     icon: LucideIcons.clock3,
-                    title: 'Duration',
+                    title: tl('Duration'),
                     value: duration.value.label,
                     trailing: const Icon(LucideIcons.chevronDown, size: 18),
                     onTap: chooseDuration,
@@ -206,14 +207,14 @@ class _SetStatusSheet extends HookConsumerWidget {
                   if (duration.value == _StatusDuration.custom)
                     AppListRow(
                       icon: LucideIcons.calendarClock,
-                      title: 'Until',
+                      title: tl('Until'),
                       value: _formatUntil(customUntil.value),
                       onTap: pickCustomUntil,
                     ),
                 ],
               ),
               AppListCard(
-                label: 'Quick statuses',
+                label: tl('Quick statuses'),
                 children: [
                   for (final preset in _statusPresets)
                     AppListRowRaw(
@@ -242,7 +243,7 @@ class _SetStatusSheet extends HookConsumerWidget {
                   children: [
                     AppListRow(
                       icon: LucideIcons.trash2,
-                      title: 'Clear status',
+                      title: tl('Clear status'),
                       titleColor: context.colors.error,
                       onTap: isSaving.value ? null : handleClear,
                     ),
@@ -292,7 +293,7 @@ class _StatusInput extends ConsumerWidget {
               children: [
                 Semantics(
                   button: true,
-                  label: 'Choose a status emoji',
+                  label: tl('Choose a status emoji'),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(Radii.container),
                     onTap: enabled ? onChooseEmoji : null,
@@ -307,7 +308,7 @@ class _StatusInput extends ConsumerWidget {
                       dimension: Grid.sm,
                       child: IconButton(
                         onPressed: enabled ? onRemoveEmoji : null,
-                        tooltip: 'Remove status emoji',
+                        tooltip: tl('Remove status emoji'),
                         visualDensity: VisualDensity.compact,
                         style: IconButton.styleFrom(
                           backgroundColor: context.colors.surface,
@@ -334,7 +335,7 @@ class _StatusInput extends ConsumerWidget {
               autofocus: false,
               style: context.textTheme.bodyLarge,
               decoration: InputDecoration(
-                hintText: 'What\u2019s your status?',
+                hintText: tl('What\u2019s your status?'),
                 hintStyle: context.textTheme.bodyLarge?.copyWith(
                   color: context.colors.onSurfaceVariant,
                 ),
@@ -384,7 +385,7 @@ class _StatusEmojiPreview extends ConsumerWidget {
         }
       }
     }
-    return Text(emoji, style: const TextStyle(fontSize: _emojiGlyphSize));
+    return Text(emoji, style: TextStyle(fontSize: _emojiGlyphSize));
   }
 }
 
@@ -394,7 +395,7 @@ Future<_StatusDuration?> _showStatusDurationSheet(
 }) {
   return showBuzzModalBottomSheet<_StatusDuration>(
     context: context,
-    title: 'Duration',
+    title: tl('Duration'),
     isScrollControlled: true,
     showDragHandle: true,
     builder: (sheetContext) => SingleChildScrollView(
@@ -444,7 +445,7 @@ Future<DateTime?> _showNativeDateTimePicker(
                     child: TextButton(
                       onPressed: () =>
                           Navigator.of(pickerContext).pop(selected),
-                      child: const Text('Done'),
+                      child: Text(tl('Done')),
                     ),
                   ),
                   Expanded(

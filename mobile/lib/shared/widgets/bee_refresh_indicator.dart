@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../theme/theme.dart';
 import 'flapping_bee.dart';
+import '../i18n/app_language.dart';
 
 /// Replaces the standard pull-to-refresh spinner with Buzz's loading bee.
 ///
@@ -335,7 +336,7 @@ class BeeRefreshIndicator extends HookConsumerWidget {
         RefreshIndicator.noSpinner(
           onRefresh: onRefresh,
           onStatusChange: updateStatus,
-          semanticsLabel: 'Pull to refresh',
+          semanticsLabel: tl('Pull to refresh'),
           child: NotificationListener<ScrollNotification>(
             onNotification: trackPull,
             child: Listener(

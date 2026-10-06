@@ -36,7 +36,7 @@ class _EmojiSearchField extends StatelessWidget {
           textInputAction: TextInputAction.search,
           style: searchInputTextStyle.copyWith(color: colors.onSurface),
           decoration: InputDecoration(
-            hintText: 'Search emoji',
+            hintText: tl('Search emoji'),
             hintStyle: searchInputTextStyle.copyWith(
               color: colors.onSurfaceVariant,
             ),
@@ -62,7 +62,7 @@ class _EmojiSearchField extends StatelessWidget {
                     color: colors.onSurfaceVariant,
                   ),
                   visualDensity: VisualDensity.compact,
-                  tooltip: 'Clear search',
+                  tooltip: tl('Clear search'),
                 );
               },
             ),

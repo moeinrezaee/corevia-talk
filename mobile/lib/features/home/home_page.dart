@@ -15,6 +15,7 @@ import '../../shared/widgets/mobile_tab_footer_backdrop.dart';
 import '../activity/activity_page.dart';
 import '../channels/channels_page.dart';
 import '../search/search_page.dart';
+import '../../shared/i18n/app_language.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({
@@ -51,23 +52,23 @@ class HomePage extends HookConsumerWidget {
     milliseconds: 240,
   );
   static const Curve _tabContentTransitionCurve = Cubic(0.22, 1, 0.36, 1);
-  static const double _tabContentTransitionDistance = 24;
+  static final double _tabContentTransitionDistance = 24;
 
-  static const _destinations = [
+  static final _destinations = [
     _HomeDestination(
       icon: LucideIcons.house300,
       selectedIcon: LucideIcons.house500,
-      label: 'Home',
+      label: tl('Home'),
     ),
     _HomeDestination(
       icon: LucideIcons.inbox300,
       selectedIcon: LucideIcons.inbox500,
-      label: 'Activity',
+      label: tl('Activity'),
     ),
     _HomeDestination(
       icon: LucideIcons.search300,
       selectedIcon: LucideIcons.search500,
-      label: 'Search',
+      label: tl('Search'),
     ),
   ];
 

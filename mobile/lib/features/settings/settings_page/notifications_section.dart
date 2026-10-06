@@ -52,13 +52,13 @@ class _NotificationsSection extends ConsumerWidget {
           };
 
     return AppListCard(
-      label: 'Notifications',
+      label: tl('Notifications'),
       verticalPadding: Grid.twelve,
       children: [
         AppListRow(
           key: const ValueKey('push-notifications-enabled'),
           icon: LucideIcons.bell,
-          title: 'Push notifications',
+          title: tl('Push notifications'),
           subtitle: subtitle,
           subtitleStyle: showSettingsRecovery
               ? context.textTheme.bodySmall?.copyWith(
@@ -90,7 +90,7 @@ class _NotificationsSection extends ConsumerWidget {
           AppListRow(
             key: const ValueKey('push-notifications-open-settings'),
             icon: LucideIcons.settings,
-            title: 'Open iOS Notification Settings',
+            title: tl('Open iOS Notification Settings'),
             onTap: () => unawaited(
               ref.read(buzzPushNotificationSettingsOpenerProvider)(),
             ),

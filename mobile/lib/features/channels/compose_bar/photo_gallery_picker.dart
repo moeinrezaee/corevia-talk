@@ -103,27 +103,27 @@ class _RecentPhotoGalleryPicker extends HookConsumerWidget {
 
     Widget buildGalleryBody() {
       if (recentSnapshot.connectionState != ConnectionState.done) {
-        return const Center(
+        return Center(
           child: BuzzLoadingIndicator(
             size: 44,
-            semanticLabel: 'Loading recent photos',
+            semanticLabel: tl('Loading recent photos'),
           ),
         );
       }
       if (recentSnapshot.hasError) {
-        return const _PhotoGalleryMessage(
+        return _PhotoGalleryMessage(
           icon: LucideIcons.images,
-          title: 'Recent photos aren’t available',
-          message: 'Use All photos to choose with the system photo picker.',
+          title: tl('Recent photos aren’t available'),
+          message: tl('Use All photos to choose with the system photo picker.'),
         );
       }
 
       final photos = recentSnapshot.data ?? const <RecentPhoto>[];
       if (photos.isEmpty) {
-        return const _PhotoGalleryMessage(
+        return _PhotoGalleryMessage(
           icon: LucideIcons.images,
-          title: 'No recent photos',
-          message: 'Use All photos to browse your photo library.',
+          title: tl('No recent photos'),
+          message: tl('Use All photos to browse your photo library.'),
         );
       }
       return GridView.builder(
@@ -164,7 +164,7 @@ class _RecentPhotoGalleryPicker extends HookConsumerWidget {
                   IosGlassNavigationButton(
                     key: const ValueKey('photo-gallery-back'),
                     icon: IosGlassNavigationIcon.back,
-                    semanticLabel: 'Back to attachment options',
+                    semanticLabel: tl('Back to attachment options'),
                     onPressed: isResolving.value
                         ? null
                         : () => _runComposerAction(onBack),
@@ -177,14 +177,14 @@ class _RecentPhotoGalleryPicker extends HookConsumerWidget {
                     onPressed: isResolving.value
                         ? null
                         : () => _runComposerAction(onBack),
-                    tooltip: 'Back to attachment options',
+                    tooltip: tl('Back to attachment options'),
                     visualDensity: VisualDensity.compact,
                     icon: const Icon(LucideIcons.arrowLeft, size: 20),
                   ),
                 const SizedBox(width: Grid.quarter),
                 Expanded(
                   child: Text(
-                    'Recent photos',
+                    tl('Recent photos'),
                     style: context.textTheme.titleSmall?.copyWith(
                       color: context.colors.onSurface,
                       fontWeight: FontWeight.w600,
@@ -195,7 +195,7 @@ class _RecentPhotoGalleryPicker extends HookConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.only(right: Grid.half),
                     child: Text(
-                      '$selectedCount selected',
+                      tlt('{0} selected', [selectedCount]),
                       style: context.textTheme.labelMedium?.copyWith(
                         color: context.colors.onSurfaceVariant,
                       ),
@@ -243,7 +243,7 @@ class _RecentPhotoGalleryPicker extends HookConsumerWidget {
                         ? BuzzLoadingIndicator(
                             size: 22,
                             color: context.colors.primary,
-                            semanticLabel: 'Opening all photos',
+                            semanticLabel: tl('Opening all photos'),
                           )
                         : const Icon(LucideIcons.images, size: 18),
                     label: Text(actionLabel),
@@ -256,10 +256,10 @@ class _RecentPhotoGalleryPicker extends HookConsumerWidget {
                             () => unawaited(choosePhotos()),
                           ),
                     icon: isResolving.value
-                        ? const BuzzLoadingIndicator(
+                        ? BuzzLoadingIndicator(
                             size: 22,
                             color: Colors.white,
-                            semanticLabel: 'Preparing selected photos',
+                            semanticLabel: tl('Preparing selected photos'),
                           )
                         : const Icon(LucideIcons.plus, size: 18),
                     label: Text(actionLabel),

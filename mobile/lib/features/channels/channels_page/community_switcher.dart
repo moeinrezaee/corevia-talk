@@ -260,7 +260,7 @@ class _CommunitySwitcherPage extends HookConsumerWidget {
             child: IosNavigationBar(
               title: '',
               leading: IosNavigationAction(
-                label: 'Close community switcher',
+                label: tl('Close community switcher'),
                 symbol: 'xmark',
                 onPressed: () => Navigator.of(context).pop(),
               ),
@@ -277,7 +277,7 @@ class _CommunitySwitcherPage extends HookConsumerWidget {
             child: Row(
               children: [
                 IconButton(
-                  tooltip: 'Close community switcher',
+                  tooltip: tl('Close community switcher'),
                   onPressed: () => Navigator.of(context).pop(),
                   icon: const Icon(LucideIcons.x),
                 ),
@@ -303,7 +303,7 @@ class _CommunitySwitcherPage extends HookConsumerWidget {
           child: Column(
             children: [
               Text(
-                'Switch Community',
+                tl('Switch Community'),
                 key: const Key('community-switcher-title'),
                 textAlign: TextAlign.center,
                 style: context.textTheme.titleLarge?.copyWith(
@@ -323,13 +323,13 @@ class _CommunitySwitcherPage extends HookConsumerWidget {
                   ),
                 ),
               communitiesAsync.when(
-                loading: () => const Center(
+                loading: () => Center(
                   child: BuzzLoadingIndicator(
                     size: 40,
-                    semanticLabel: 'Loading communities',
+                    semanticLabel: tl('Loading communities'),
                   ),
                 ),
-                error: (e, _) => Text('Error loading communities: $e'),
+                error: (e, _) => Text(tlt('Error loading communities: {0}', [e])),
                 data: (communities) => _CommunityGrid(
                   children: [
                     for (final community in communities)
@@ -435,7 +435,7 @@ class _CommunitySwitcherPage extends HookConsumerWidget {
                           key: const Key('community-switch-loading'),
                           size: 18,
                           color: context.colors.onSecondaryContainer,
-                          semanticLabel: 'Loading ${selected.community.name}',
+                          semanticLabel: tlt('Loading {0}', [selected.community.name]),
                         ),
                       ),
                     ),
@@ -684,7 +684,7 @@ class _CommunityGridAdd extends StatelessWidget {
           ),
           const SizedBox(height: Grid.xs),
           Text(
-            'Add Community',
+            tl('Add Community'),
             textAlign: TextAlign.center,
             style: context.textTheme.bodyLarge?.copyWith(
               fontWeight: FontWeight.w500,

@@ -35,6 +35,7 @@ import 'members_sheet.dart';
 import '../../shared/profile/user_cache_provider.dart';
 import '../../shared/read_state/read_state_provider.dart';
 import '../../shared/read_state/read_state_time.dart';
+import '../../shared/i18n/app_language.dart';
 
 part 'channel_details_page.dart';
 
@@ -185,7 +186,7 @@ class ChannelActionsSheet extends HookConsumerWidget {
                   if (!channel.isDm)
                     ListTile(
                       leading: const Icon(LucideIcons.folderInput),
-                      title: const Text('Move to section…'),
+                      title: Text(tl('Move to section…')),
                       onTap: () async {
                         final pageContext = Navigator.of(
                           context,
@@ -216,12 +217,12 @@ class ChannelActionsSheet extends HookConsumerWidget {
                   if (!channel.isDm)
                     ListTile(
                       leading: const Icon(LucideIcons.settings),
-                      title: const Text('Manage channel'),
+                      title: Text(tl('Manage channel')),
                       onTap: () async {
                         final shouldClose =
                             await showBuzzModalBottomSheet<bool>(
                               context: context,
-                              title: 'Manage channel',
+                              title: tl('Manage channel'),
                               isScrollControlled: true,
                               showDragHandle: true,
                               constraints: BoxConstraints(
@@ -249,25 +250,25 @@ class ChannelActionsSheet extends HookConsumerWidget {
                 children: [
                   ListTile(
                     leading: const Icon(LucideIcons.copy),
-                    title: const Text('Copy channel name'),
+                    title: Text(tl('Copy channel name')),
                     onTap: () {
                       close();
                       copyToClipboard(
                         context,
                         currentChannel.name,
-                        message: 'Channel name copied to clipboard',
+                        message: tl('Channel name copied to clipboard'),
                       );
                     },
                   ),
                   ListTile(
                     leading: const Icon(LucideIcons.hash),
-                    title: const Text('Copy channel ID'),
+                    title: Text(tl('Copy channel ID')),
                     onTap: () {
                       close();
                       copyToClipboard(
                         context,
                         channel.id,
-                        message: 'Channel ID copied to clipboard',
+                        message: tl('Channel ID copied to clipboard'),
                       );
                     },
                   ),
@@ -279,46 +280,46 @@ class ChannelActionsSheet extends HookConsumerWidget {
                     if (channel.isMember && !channel.isArchived)
                       _ActionTile(
                         icon: LucideIcons.logOut,
-                        label: 'Leave channel',
+                        label: tl('Leave channel'),
                         destructive: true,
                         onTap: () => _confirmAndRun(
                           context,
                           ref,
-                          title: 'Leave #${currentChannel.name}?',
+                          title: tlt('Leave #{0}?', [currentChannel.name]),
                           body:
-                              'You’ll stop receiving messages from this channel.',
-                          confirmLabel: 'Leave',
+                              tl('You’ll stop receiving messages from this channel.'),
+                          confirmLabel: tl('Leave'),
                           action: () => ref
                               .read(channelActionsProvider)
                               .leaveChannel(channel.id),
                         ),
                       ),
                     if (lifecycleCapabilitiesLoading)
-                      const ListTile(
+                      ListTile(
                         enabled: false,
                         leading: BuzzLoadingIndicator(
                           size: 20,
-                          semanticLabel: 'Loading channel actions',
+                          semanticLabel: tl('Loading channel actions'),
                         ),
-                        title: Text('Loading channel actions…'),
+                        title: Text(tl('Loading channel actions…')),
                       )
                     else if (lifecycleCapabilitiesUnavailable)
-                      const ListTile(
+                      ListTile(
                         enabled: false,
                         leading: Icon(LucideIcons.triangleAlert),
-                        title: Text('Channel actions unavailable'),
+                        title: Text(tl('Channel actions unavailable')),
                       )
                     else ...[
                       if (canArchive)
                         _ActionTile(
                           icon: LucideIcons.archive,
-                          label: 'Archive channel',
+                          label: tl('Archive channel'),
                           onTap: () => _confirmAndRun(
                             context,
                             ref,
-                            title: 'Archive #${currentChannel.name}?',
-                            body: 'The channel will become read-only.',
-                            confirmLabel: 'Archive',
+                            title: tlt('Archive #{0}?', [currentChannel.name]),
+                            body: tl('The channel will become read-only.'),
+                            confirmLabel: tl('Archive'),
                             action: () => ref
                                 .read(channelActionsProvider)
                                 .archiveChannel(channel.id),
@@ -327,13 +328,13 @@ class ChannelActionsSheet extends HookConsumerWidget {
                       if (canUnarchive)
                         _ActionTile(
                           icon: LucideIcons.archiveRestore,
-                          label: 'Unarchive channel',
+                          label: tl('Unarchive channel'),
                           onTap: () => _confirmAndRun(
                             context,
                             ref,
-                            title: 'Unarchive #${currentChannel.name}?',
-                            body: 'The channel will become active again.',
-                            confirmLabel: 'Unarchive',
+                            title: tlt('Unarchive #{0}?', [currentChannel.name]),
+                            body: tl('The channel will become active again.'),
+                            confirmLabel: tl('Unarchive'),
                             action: () => ref
                                 .read(channelActionsProvider)
                                 .unarchiveChannel(channel.id),
@@ -342,15 +343,15 @@ class ChannelActionsSheet extends HookConsumerWidget {
                       if (canDelete)
                         _ActionTile(
                           icon: LucideIcons.trash2,
-                          label: 'Delete channel',
+                          label: tl('Delete channel'),
                           destructive: true,
                           onTap: () => _confirmAndRun(
                             context,
                             ref,
-                            title: 'Delete #${currentChannel.name}?',
+                            title: tlt('Delete #{0}?', [currentChannel.name]),
                             body:
-                                'This permanently deletes the channel and cannot be undone.',
-                            confirmLabel: 'Delete',
+                                tl('This permanently deletes the channel and cannot be undone.'),
+                            confirmLabel: tl('Delete'),
                             action: () => ref
                                 .read(channelActionsProvider)
                                 .deleteChannel(channel.id),
@@ -495,7 +496,7 @@ Future<void> _confirmAndRun(
       actions: [
         TextButton(
           onPressed: () => Navigator.of(dialogContext).pop(false),
-          child: const Text('Cancel'),
+          child: Text(tl('Cancel')),
         ),
         FilledButton(
           onPressed: () => Navigator.of(dialogContext).pop(true),
@@ -513,7 +514,7 @@ Future<void> _confirmAndRun(
     ScaffoldMessenger.of(pageContext).showSnackBar(
       SnackBar(
         content: Text(
-          'Couldn’t ${confirmLabel.toLowerCase()} channel. Try again.',
+          tlt('Couldn’t {0} channel. Try again.', [confirmLabel.toLowerCase()]),
         ),
       ),
     );
@@ -562,7 +563,7 @@ Future<void> _showMoveSectionSheet(
                 ),
               ListTile(
                 leading: const Icon(LucideIcons.folderPlus),
-                title: const Text('New section…'),
+                title: Text(tl('New section…')),
                 onTap: () async {
                   Navigator.of(sheetContext).pop();
                   final name = await _showSectionNameDialog(context);
@@ -583,7 +584,7 @@ Future<void> _showMoveSectionSheet(
               if (sectionId != null)
                 ListTile(
                   leading: const Icon(LucideIcons.folderMinus),
-                  title: const Text('Remove from section'),
+                  title: Text(tl('Remove from section')),
                   onTap: () {
                     Navigator.of(sheetContext).pop();
                     ref
@@ -604,17 +605,17 @@ Future<String?> _showSectionNameDialog(BuildContext context) async {
   final result = await showBuzzDialog<String>(
     context: context,
     builder: (dialogContext) => AlertDialog(
-      title: const Text('New Section'),
+      title: Text(tl('New Section')),
       content: TextField(controller: controller, autofocus: true),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(dialogContext).pop(),
-          child: const Text('Cancel'),
+          child: Text(tl('Cancel')),
         ),
         FilledButton(
           onPressed: () =>
               Navigator.of(dialogContext).pop(controller.text.trim()),
-          child: const Text('Create'),
+          child: Text(tl('Create')),
         ),
       ],
     ),

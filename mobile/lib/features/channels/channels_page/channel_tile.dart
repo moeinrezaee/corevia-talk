@@ -109,7 +109,7 @@ class _ChannelTile extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(Radii.sm),
                   ),
                   child: Text(
-                    'Open',
+                    tl('Open'),
                     style: context.textTheme.labelSmall?.copyWith(
                       color: context.colors.primary,
                       fontWeight: FontWeight.w600,

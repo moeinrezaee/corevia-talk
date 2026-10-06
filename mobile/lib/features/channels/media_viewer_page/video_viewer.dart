@@ -339,8 +339,8 @@ class MediaVideoViewerPage extends HookConsumerWidget {
                         future: initializeFuture.value,
                         builder: (context, snapshot) {
                           if (error.value != null || snapshot.hasError) {
-                            return const _MediaLoadFailure(
-                              message: 'Failed to load video',
+                            return _MediaLoadFailure(
+                              message: tl('Failed to load video'),
                               icon: LucideIcons.videoOff,
                             );
                           }
@@ -377,10 +377,10 @@ class MediaVideoViewerPage extends HookConsumerWidget {
                 child: Theme(
                   data: ThemeData.dark(),
                   child: IosNavigationBar(
-                    title: 'Video',
+                    title: tl('Video'),
                     actions: [
                       IosNavigationAction(
-                        label: 'Close video viewer',
+                        label: tl('Close video viewer'),
                         symbol: 'xmark',
                         onPressed: () => Navigator.of(context).maybePop(),
                       ),
@@ -399,7 +399,7 @@ class MediaVideoViewerPage extends HookConsumerWidget {
                 child: SafeArea(
                   child: _MediaViewerCloseButton(
                     key: const ValueKey('message-media-video-viewer-close'),
-                    tooltip: 'Close video viewer',
+                    tooltip: tl('Close video viewer'),
                     onPressed: () => Navigator.of(context).maybePop(),
                   ),
                 ),
@@ -466,11 +466,11 @@ class _VideoLoadingPoster extends StatelessWidget {
           else
             _videoPlaceholder(context),
           const ColoredBox(color: Color.fromRGBO(0, 0, 0, 0.24)),
-          const Center(
+          Center(
             child: BuzzLoadingIndicator(
               size: 44,
               color: Colors.white,
-              semanticLabel: 'Loading video',
+              semanticLabel: tl('Loading video'),
             ),
           ),
         ],

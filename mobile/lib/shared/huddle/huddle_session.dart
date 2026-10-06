@@ -9,6 +9,7 @@ import 'huddle_auth.dart';
 import 'huddle_media.dart';
 import 'huddle_transport.dart';
 import 'huddle_wire.dart';
+import '../i18n/app_language.dart';
 
 enum HuddleSessionPhase {
   idle,
@@ -274,9 +275,9 @@ final class HuddleSessionNotifier extends Notifier<HuddleSessionState> {
       final capabilities = await media.discoverCapabilities();
       _ensureCurrent(generation);
       if (!capabilities.supportsFullDuplexOpus) {
-        throw const HuddleMediaError(
+        throw HuddleMediaError(
           code: HuddleMediaErrorCode.unsupported,
-          message: 'Full-duplex mobile Huddle audio is unavailable here.',
+          message: tl('Full-duplex mobile Huddle audio is unavailable here.'),
         );
       }
 
@@ -284,9 +285,9 @@ final class HuddleSessionNotifier extends Notifier<HuddleSessionState> {
       final permission = await media.requestMicrophonePermission();
       _ensureCurrent(generation);
       if (permission != HuddleMicrophonePermission.granted) {
-        throw const HuddleMediaError(
+        throw HuddleMediaError(
           code: HuddleMediaErrorCode.permissionDenied,
-          message: 'Microphone permission is required to join a Huddle.',
+          message: tl('Microphone permission is required to join a Huddle.'),
         );
       }
 
@@ -755,9 +756,9 @@ final class HuddleSessionNotifier extends Notifier<HuddleSessionState> {
 
   void _ensureCurrent(int generation) {
     if (!_isCurrent(generation)) {
-      throw const HuddleTransportError(
+      throw HuddleTransportError(
         code: HuddleTransportErrorCode.cancelled,
-        message: 'Huddle join was cancelled.',
+        message: tl('Huddle join was cancelled.'),
       );
     }
   }

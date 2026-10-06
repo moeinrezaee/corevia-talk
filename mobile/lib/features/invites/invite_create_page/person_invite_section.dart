@@ -74,7 +74,7 @@ class _PersonInviteSection extends HookConsumerWidget {
         searchController.clear();
         ref.invalidate(communityMembershipProvider);
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Invited to the community')),
+          SnackBar(content: Text(tl('Invited to the community'))),
         );
       } catch (error) {
         if (context.mounted) {
@@ -105,7 +105,7 @@ class _PersonInviteSection extends HookConsumerWidget {
               fieldKey: const Key('community-invite-search'),
               controller: searchController,
               focusNode: searchFocusNode,
-              hintText: 'Search npub',
+              hintText: tl('Search npub'),
               iconColor: navigationPrimaryForeground(context),
               inputColor: navigationPrimaryForeground(context),
               placeholderColor: navigationSecondaryForeground(context),
@@ -189,16 +189,16 @@ class _InviteeResolutionCard extends StatelessWidget {
         children: [
           AppListRowRaw(
             key: Key('community-invite-resolving-$pubkey'),
-            leading: const SizedBox.square(
+            leading: SizedBox.square(
               dimension: 40,
               child: Center(
                 child: BuzzLoadingIndicator(
                   size: 20,
-                  semanticLabel: 'Resolving profile',
+                  semanticLabel: tl('Resolving profile'),
                 ),
               ),
             ),
-            title: const Text('Resolving profile'),
+            title: Text(tl('Resolving profile')),
             subtitle: Text(shortPubkey(pubkey)),
           ),
         ],
@@ -207,11 +207,11 @@ class _InviteeResolutionCard extends StatelessWidget {
         children: [
           AppListRow(
             key: Key('community-invite-resolution-error-$pubkey'),
-            title: 'Could not resolve profile',
+            title: tl('Could not resolve profile'),
             subtitle: shortPubkey(pubkey),
             trailing: TextButton(
               onPressed: onRetry,
-              child: const Text('Retry'),
+              child: Text(tl('Retry')),
             ),
           ),
         ],
@@ -222,7 +222,7 @@ class _InviteeResolutionCard extends StatelessWidget {
             children: [
               AppListRow(
                 key: Key('community-invite-unresolved-$pubkey'),
-                title: 'Invalid npub',
+                title: tl('Invalid npub'),
                 subtitle: shortPubkey(pubkey),
               ),
             ],
@@ -239,17 +239,17 @@ class _InviteeResolutionCard extends StatelessWidget {
                 key: const Key('community-invite-submit'),
                 onPressed: isSubmitting ? null : () => onInvite(invitee),
                 child: isSubmitting
-                    ? const BuzzLoadingIndicator(
+                    ? BuzzLoadingIndicator(
                         size: 16,
-                        semanticLabel: 'Inviting person',
+                        semanticLabel: tl('Inviting person'),
                       )
-                    : const Text('Invite'),
+                    : Text(tl('Invite')),
               ),
             ),
             if (role == CommunityMemberRole.owner)
               AppListRow(
                 key: const Key('community-invite-role'),
-                title: 'Role',
+                title: tl('Role'),
                 value: switch (selectedRole) {
                   CommunityMemberRole.member => 'Member',
                   CommunityMemberRole.admin => 'Admin',
@@ -260,15 +260,15 @@ class _InviteeResolutionCard extends StatelessWidget {
                     ? null
                     : () => _showInviteOptionSheet<CommunityMemberRole>(
                         context: context,
-                        title: 'Role',
+                        title: tl('Role'),
                         value: selectedRole,
-                        options: const [
+                        options: [
                           CommunityInviteOption(
-                            label: 'Member',
+                            label: tl('Member'),
                             value: CommunityMemberRole.member,
                           ),
                           CommunityInviteOption(
-                            label: 'Admin',
+                            label: tl('Admin'),
                             value: CommunityMemberRole.admin,
                           ),
                         ],

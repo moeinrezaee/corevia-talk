@@ -10,6 +10,7 @@ import '../channel_identity_names_provider.dart';
 import 'observer_models.dart';
 import 'observer_subscription.dart';
 import 'transcript_item_widget.dart';
+import '../../../shared/i18n/app_language.dart';
 
 /// Full-screen modal bottom sheet showing the live agent activity transcript.
 class AgentActivitySheet extends HookConsumerWidget {
@@ -103,7 +104,7 @@ class AgentActivitySheet extends HookConsumerWidget {
                   ),
                   const SizedBox(height: Grid.half),
                   Text(
-                    'Showing live activity from this point.',
+                    tl('Showing live activity from this point.'),
                     style: context.textTheme.bodySmall?.copyWith(
                       color: context.colors.onSurfaceVariant,
                     ),
@@ -174,7 +175,7 @@ class _EmptyState extends StatelessWidget {
     if (connection == ObserverConnectionState.idle) {
       return Center(
         child: Text(
-          'Not connected',
+          tl('Not connected'),
           style: context.textTheme.bodySmall?.copyWith(
             color: context.colors.onSurfaceVariant,
           ),
@@ -190,11 +191,11 @@ class _EmptyState extends StatelessWidget {
           BuzzLoadingIndicator(
             size: 28,
             color: context.colors.onSurfaceVariant,
-            semanticLabel: 'Waiting for agent activity',
+            semanticLabel: tl('Waiting for agent activity'),
           ),
           const SizedBox(height: Grid.xxs),
           Text(
-            'Waiting for activity\u2026',
+            tl('Waiting for activity\u2026'),
             style: context.textTheme.bodySmall?.copyWith(
               color: context.colors.onSurfaceVariant,
             ),

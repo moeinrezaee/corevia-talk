@@ -20,6 +20,7 @@ import 'relay_provider.dart';
 import 'relay_rate_limit_gate.dart';
 import 'relay_session_types.dart';
 import 'relay_socket.dart';
+import '../i18n/app_language.dart';
 
 export 'relay_session_types.dart';
 
@@ -855,7 +856,7 @@ class RelaySessionNotifier extends Notifier<SessionState> {
       }
       if (!pending.completer.isCompleted) {
         pending.completer.completeError(
-          Exception(message.isNotEmpty ? message : 'Event rejected'),
+          Exception(message.isNotEmpty ? message : tl('Event rejected')),
         );
       }
     }

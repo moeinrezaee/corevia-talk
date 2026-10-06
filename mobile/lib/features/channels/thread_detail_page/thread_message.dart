@@ -43,9 +43,19 @@ class _ThreadMessage extends HookConsumerWidget {
         ref.watch(userCacheProvider.select((cache) => cache[pk])) ??
         ref.read(userCacheProvider.notifier).get(pk);
     final displayName = watchChannelIdentityLabel(ref, channelId, pk);
+    final ownerPubkey = profile?.ownerPubkey?.toLowerCase();
+    final ownerProfile = ownerPubkey == null
+        ? null
+        : ref.watch(userCacheProvider.select((cache) => cache[ownerPubkey]));
     final isAgent =
         ref.watch(agentMentionPubkeysProvider(channelId)).contains(pk) ||
         profile?.ownerPubkey != null;
+    final roleLine = messageRoleLine(
+      isAgent: isAgent,
+      ownerPubkey: ownerPubkey,
+      ownerProfile: ownerProfile,
+      currentPubkey: currentPubkey,
+    );
     final canManageMessage =
         currentPubkey?.toLowerCase() == pk ||
         (profile?.ownerPubkey != null &&
@@ -203,6 +213,8 @@ class _ThreadMessage extends HookConsumerWidget {
                                               ? FlexFit.loose
                                               : FlexFit.tight,
                                           child: MessageAuthorMeta(
+                                            roleLine: roleLine,
+                                            mirrored: atEnd,
                                             displayName: displayName,
                                             username: messageUsernameLabel(
                                               profile,

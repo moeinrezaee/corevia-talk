@@ -1,3 +1,4 @@
+import '../../../shared/i18n/app_language.dart';
 import '../../../shared/mentions/agent_identity_provider.dart';
 import '../../../shared/profile/user_profile.dart';
 import '../../../shared/utils/string_utils.dart';
@@ -37,6 +38,23 @@ String? formatOwnerLabel(
   final handle = profile?.nip05Handle?.trim();
   if (handle != null && handle.isNotEmpty) return handle;
   return shortPubkey(ownerPubkey);
+}
+
+/// The line under an agent's name in a message header: who manages it, or a
+/// note that the owner is unknown. Null for people.
+String? messageRoleLine({
+  required bool isAgent,
+  required String? ownerPubkey,
+  required UserProfile? ownerProfile,
+  required String? currentPubkey,
+}) {
+  if (!isAgent) return null;
+  final label = formatOwnerLabel(ownerPubkey, currentPubkey, {
+    if (ownerPubkey != null && ownerProfile != null)
+      ownerPubkey.toLowerCase(): ownerProfile,
+  });
+  if (label == null) return tl('Agent; owner unavailable');
+  return tlt('Agent managed by {0}', [label == 'you' ? tl('you') : label]);
 }
 
 /// Assemble the full mention candidate list: channel members first-class,

@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:gpt_markdown/custom_widgets/indent_widget.dart';
 import 'package:gpt_markdown/custom_widgets/unordered_ordered_list.dart';
 import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -1097,8 +1096,9 @@ const kMessageBubbleRadius = 18.0;
 /// The tighter corner on the avatar (start) side of a message bubble.
 const kMessageBubbleTightRadius = 6.0;
 
-/// Block quote whose bar sits on the UI start side (right in Persian mode),
-/// not on the side the quoted text's own direction would pick.
+/// Block quote as a distinct, almost square box: a faint onSurface tint, a bar
+/// on the UI start side (never the side the quoted text's direction picks) and
+/// no other borders.
 Widget _uiBlockQuote(
   BuildContext context,
   Widget content,
@@ -1106,30 +1106,45 @@ Widget _uiBlockQuote(
   TextDirection uiDirection,
 ) {
   final resolved = style.resolve(Theme.of(context).colorScheme);
-  Widget child = content;
-  final padding = resolved.padding;
-  if (padding != null) child = Padding(padding: padding, child: child);
-  child = BlockQuoteWidget(
-    color: resolved.barColor ?? context.colors.onSurfaceVariant,
-    direction: uiDirection,
-    width: resolved.barWidth ?? 3,
-    child: child,
-  );
-  final background = resolved.backgroundColor;
-  if (background != null) {
-    final radius = resolved.barRadius;
-    child = DecoratedBox(
+  final box = ClipRRect(
+    borderRadius: BorderRadius.circular(kQuoteRadius),
+    child: DecoratedBox(
       decoration: BoxDecoration(
-        color: background,
-        borderRadius: radius == null ? null : BorderRadius.all(radius),
+        color: context.colors.onSurface.withValues(alpha: 0.08),
       ),
-      child: child,
-    );
-  }
-  final margin = resolved.margin;
-  if (margin != null) child = Padding(padding: margin, child: child);
-  return Directionality(textDirection: uiDirection, child: child);
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          border: BorderDirectional(
+            start: BorderSide(
+              color: resolved.barColor ?? context.colors.onSurfaceVariant,
+              width: resolved.barWidth ?? 3,
+            ),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(
+            Grid.twelve,
+            Grid.xxs,
+            Grid.twelve,
+            Grid.xxs,
+          ),
+          child: content,
+        ),
+      ),
+    ),
+  );
+  return Directionality(
+    key: const ValueKey('message-quote'),
+    textDirection: uiDirection,
+    child: Padding(
+      padding: resolved.margin ?? const EdgeInsets.symmetric(vertical: 2),
+      child: box,
+    ),
+  );
 }
+
+/// Corner radius of a block quote box (almost square).
+const kQuoteRadius = 4.0;
 
 /// Bullet list item with the marker on the UI start side.
 Widget _uiBulletItem(

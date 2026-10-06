@@ -327,7 +327,10 @@ class _FloatingTabBar extends StatelessWidget {
         .toInt();
     final selectedAlignment = destinationCount <= 1
         ? Alignment.center
-        : Alignment(-1 + (2 * safeSelectedIndex / (destinationCount - 1)), 0);
+        : AlignmentDirectional(
+            -1 + (2 * safeSelectedIndex / (destinationCount - 1)),
+            0,
+          );
 
     final destinationWidth = _floatingTabDestinationWidth(
       MediaQuery.sizeOf(context).width,

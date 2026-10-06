@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../i18n/text_direction.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../theme/theme.dart';
@@ -137,7 +138,7 @@ class BuzzSearchField extends StatelessWidget {
                 ),
                 style: searchInputTextStyle.copyWith(color: inputColor),
                 textAlignVertical: TextAlignVertical.center,
-                textAlign: TextAlign.start,
+                textAlign: uiStartTextAlign(context),
                 textInputAction: textInputAction,
                 onTap: onTap,
                 onChanged: onChanged,

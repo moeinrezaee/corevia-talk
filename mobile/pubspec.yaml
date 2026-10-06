@@ -84,18 +84,27 @@ flutter:
         - asset: assets/fonts/InterVariable-Italic.ttf
           style: italic
     # Persian interface font (Peyda FaNum): its digits are drawn as Persian
-    # numerals. There is no Light/Medium file, so those weights use the nearest.
+    # numerals. Persian titles read one step heavier than English ones, so the
+    # numeric weights are shifted: w500 -> SemiBold, w600 -> Bold,
+    # w700 -> ExtraBold, w800/w900 -> Black (w400 stays Regular). The same file
+    # is declared once per weight it serves.
     - family: PeydaFaNum
       fonts:
         - asset: assets/fonts/PeydaFaNum-ExtraLight.ttf
+          weight: 100
+        - asset: assets/fonts/PeydaFaNum-ExtraLight.ttf
           weight: 200
+        - asset: assets/fonts/PeydaFaNum-ExtraLight.ttf
+          weight: 300
         - asset: assets/fonts/PeydaFaNum-Regular.ttf
           weight: 400
         - asset: assets/fonts/PeydaFaNum-SemiBold.ttf
-          weight: 600
+          weight: 500
         - asset: assets/fonts/PeydaFaNum-Bold.ttf
-          weight: 700
+          weight: 600
         - asset: assets/fonts/PeydaFaNum-ExtraBold.ttf
+          weight: 700
+        - asset: assets/fonts/PeydaFaNum-Black.ttf
           weight: 800
         - asset: assets/fonts/PeydaFaNum-Black.ttf
           weight: 900

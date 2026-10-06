@@ -4,7 +4,6 @@ import 'package:buzz/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gpt_markdown/custom_widgets/indent_widget.dart';
 import 'package:gpt_markdown/custom_widgets/unordered_ordered_list.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -131,19 +130,43 @@ void main() {
     });
   }
 
-  testWidgets('block quote bars follow the UI direction, not the script', (
+  testWidgets('block quotes are a faint almost-square box with a start bar', (
     tester,
   ) async {
-    await _pump(tester, AppLanguage.fa, '> quoted english text');
-    expect(
-      tester.widget<BlockQuoteWidget>(find.byType(BlockQuoteWidget)).direction,
-      TextDirection.rtl,
-    );
-    await _pump(tester, AppLanguage.en, '> نقل قول فارسی');
-    expect(
-      tester.widget<BlockQuoteWidget>(find.byType(BlockQuoteWidget)).direction,
-      TextDirection.ltr,
-    );
+    for (final (language, quoted) in [
+      (AppLanguage.fa, '> quoted english text'),
+      (AppLanguage.en, '> نقل قول فارسی'),
+    ]) {
+      await _pump(tester, language, quoted);
+      final quote = find.byKey(const ValueKey('message-quote'));
+      expect(quote, findsOneWidget);
+      // Almost square corners.
+      final clip = tester.widget<ClipRRect>(
+        find.descendant(of: quote, matching: find.byType(ClipRRect)),
+      );
+      expect(clip.borderRadius, BorderRadius.circular(4));
+      // Faint onSurface tint, and the bar is a start-side-only border.
+      final boxes = tester
+          .widgetList<DecoratedBox>(
+            find.descendant(of: quote, matching: find.byType(DecoratedBox)),
+          )
+          .map((b) => b.decoration)
+          .whereType<BoxDecoration>()
+          .toList();
+      expect(boxes.any((d) => d.color != null), isTrue);
+      final barBox = boxes.firstWhere((d) => d.border != null);
+      final border = barBox.border! as BorderDirectional;
+      expect(border.start.width, greaterThan(0));
+      expect(border.end, BorderSide.none);
+      expect(border.top, BorderSide.none);
+      expect(border.bottom, BorderSide.none);
+      // BorderDirectional.start resolves against the UI direction, so the
+      // bar sits on the UI start side: right in Persian, left in English.
+      expect(
+        tester.widget<Directionality>(quote).textDirection,
+        language == AppLanguage.fa ? TextDirection.rtl : TextDirection.ltr,
+      );
+    }
   });
 
   testWidgets('bubble hugs short text and rounds mirrored corners', (

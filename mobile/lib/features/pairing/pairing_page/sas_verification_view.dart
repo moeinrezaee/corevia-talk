@@ -160,7 +160,7 @@ class _SasVerificationView extends HookConsumerWidget {
             style: context.textTheme.headlineSmall?.copyWith(
               color: context._onboardingInk,
               fontWeight: FontWeight.w600,
-              letterSpacing: -0.4,
+              letterSpacing: activeLanguage.isRtl ? 0 : -0.4,
             ),
           ),
           const SizedBox(height: Grid.md),

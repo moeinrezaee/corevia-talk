@@ -5,6 +5,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show RenderParagraph;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -779,6 +780,7 @@ void main() {
     testWidgets('aligns typed text by UI mode and orders runs by script', (
       tester,
     ) async {
+      var hintOnRight = false;
       Future<TextField> typed(Locale locale, String text) async {
         setActiveLanguage(
           locale.languageCode == 'fa' ? AppLanguage.fa : AppLanguage.en,
@@ -799,6 +801,23 @@ void main() {
         await tester.tap(find.text(tl('Message\u2026')));
         await tester.pump();
         await tester.pump();
+        // The placeholder follows the UI mode too (right in Persian, left in
+        // English), before anything is typed.
+        final paragraph = tester.renderObject<RenderParagraph>(
+          find.text(tl('Message\u2026')),
+        );
+        final glyphs = paragraph
+            .getBoxesForSelection(
+              TextSelection(
+                baseOffset: 0,
+                extentOffset: paragraph.text.toPlainText().length,
+              ),
+            )
+            .map((b) => b.toRect())
+            .reduce((a, b) => a.expandToInclude(b))
+            .shift(paragraph.localToGlobal(Offset.zero));
+        final field = tester.getRect(find.byType(TextField));
+        hintOnRight = (field.right - glyphs.right) < (glyphs.left - field.left);
         await tester.enterText(find.byType(TextField), text);
         await tester.pump();
         return tester.widget<TextField>(find.byType(TextField));
@@ -806,10 +825,12 @@ void main() {
 
       addTearDown(() => setActiveLanguage(AppLanguage.en));
       final english = await typed(const Locale('fa', 'IR'), 'hello team');
+      expect(hintOnRight, isTrue, reason: 'Persian UI hint sits on the right');
       expect(english.textAlign, TextAlign.right);
       expect(english.textDirection, TextDirection.ltr);
 
       final persian = await typed(const Locale('en'), 'سلام تیم');
+      expect(hintOnRight, isFalse, reason: 'English UI hint sits on the left');
       expect(persian.textAlign, TextAlign.left);
       expect(persian.textDirection, TextDirection.rtl);
     });

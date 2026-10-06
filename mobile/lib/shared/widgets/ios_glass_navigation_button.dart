@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../i18n/text_direction.dart';
 import 'package:flutter/rendering.dart' show PlatformViewHitTestBehavior;
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -226,46 +227,49 @@ class IosGlassNavigationButton extends HookWidget {
                               fontWeight: FontWeight.w600,
                             ),
                           )
-                        : Icon(
-                            switch (icon) {
-                              IosGlassNavigationIcon.more => Icons.more_horiz,
-                              IosGlassNavigationIcon.reply => Icons.reply,
-                              IosGlassNavigationIcon.back =>
-                                Icons.arrow_back_ios_new_rounded,
-                              IosGlassNavigationIcon.close =>
-                                Icons.close_rounded,
-                              IosGlassNavigationIcon.camera =>
-                                Icons.camera_alt_rounded,
-                              IosGlassNavigationIcon.photoLibrary =>
-                                Icons.photo_library_rounded,
-                              IosGlassNavigationIcon.palette =>
-                                Icons.palette_rounded,
-                              IosGlassNavigationIcon.droplet =>
-                                Icons.water_drop_rounded,
-                              IosGlassNavigationIcon.emoji =>
-                                Icons.emoji_emotions_rounded,
-                              IosGlassNavigationIcon.person =>
-                                Icons.person_rounded,
-                              IosGlassNavigationIcon.frame =>
-                                Icons.photo_size_select_actual_rounded,
-                              IosGlassNavigationIcon.rotateCamera =>
-                                Icons.cameraswitch_rounded,
-                              IosGlassNavigationIcon.shutter => Icons.circle,
-                              IosGlassNavigationIcon.colorSwatch =>
-                                Icons.circle,
-                              IosGlassNavigationIcon.sun =>
-                                Icons.light_mode_rounded,
-                              IosGlassNavigationIcon.moon =>
-                                Icons.dark_mode_rounded,
-                              IosGlassNavigationIcon.systemAppearance =>
-                                Icons.brightness_auto_rounded,
-                            },
-                            size: icon == IosGlassNavigationIcon.shutter
-                                ? controlSize * 0.72
-                                : 22,
-                            color: icon == IosGlassNavigationIcon.colorSwatch
-                                ? swatchColor
-                                : effectiveForeground,
+                        : _directionalIcon(
+                            icon,
+                            Icon(
+                              switch (icon) {
+                                IosGlassNavigationIcon.more => Icons.more_horiz,
+                                IosGlassNavigationIcon.reply => Icons.reply,
+                                IosGlassNavigationIcon.back =>
+                                  Icons.arrow_back_ios_new_rounded,
+                                IosGlassNavigationIcon.close =>
+                                  Icons.close_rounded,
+                                IosGlassNavigationIcon.camera =>
+                                  Icons.camera_alt_rounded,
+                                IosGlassNavigationIcon.photoLibrary =>
+                                  Icons.photo_library_rounded,
+                                IosGlassNavigationIcon.palette =>
+                                  Icons.palette_rounded,
+                                IosGlassNavigationIcon.droplet =>
+                                  Icons.water_drop_rounded,
+                                IosGlassNavigationIcon.emoji =>
+                                  Icons.emoji_emotions_rounded,
+                                IosGlassNavigationIcon.person =>
+                                  Icons.person_rounded,
+                                IosGlassNavigationIcon.frame =>
+                                  Icons.photo_size_select_actual_rounded,
+                                IosGlassNavigationIcon.rotateCamera =>
+                                  Icons.cameraswitch_rounded,
+                                IosGlassNavigationIcon.shutter => Icons.circle,
+                                IosGlassNavigationIcon.colorSwatch =>
+                                  Icons.circle,
+                                IosGlassNavigationIcon.sun =>
+                                  Icons.light_mode_rounded,
+                                IosGlassNavigationIcon.moon =>
+                                  Icons.dark_mode_rounded,
+                                IosGlassNavigationIcon.systemAppearance =>
+                                  Icons.brightness_auto_rounded,
+                              },
+                              size: icon == IosGlassNavigationIcon.shutter
+                                  ? controlSize * 0.72
+                                  : 22,
+                              color: icon == IosGlassNavigationIcon.colorSwatch
+                                  ? swatchColor
+                                  : effectiveForeground,
+                            ),
                           ),
                   ),
                 ),
@@ -319,3 +323,9 @@ class IosGlassNavigationButton extends HookWidget {
     );
   }
 }
+
+// Arrows that point along the reading direction mirror in RTL layouts.
+Widget _directionalIcon(IosGlassNavigationIcon icon, Widget child) =>
+    icon == IosGlassNavigationIcon.back || icon == IosGlassNavigationIcon.reply
+    ? BidiFlip(child: child)
+    : child;

@@ -31,6 +31,14 @@ class MessageAuthorMeta extends StatelessWidget {
   /// Optional key assigned to the timestamp text.
   final Key? timestampKey;
 
+  /// Optional second line under the name (agent owner, persona).
+  final String? roleLine;
+
+  /// The author sits on the UI end side (avatar there): the header is the
+  /// mirror image of the own one, with the name next to the avatar and the
+  /// other items ordered away from it.
+  final bool mirrored;
+
   /// Base text style for [displayName], with [nameColor] applied.
   final TextStyle nameStyle;
 
@@ -52,6 +60,8 @@ class MessageAuthorMeta extends StatelessWidget {
     this.displayNameKey,
     this.usernameKey,
     this.timestampKey,
+    this.roleLine,
+    this.mirrored = false,
     this.nameStyle = messageUsernameTextStyle,
     this.metadataStyle = messageMetadataTextStyle,
     this.timestampStyle = messageTimestampTextStyle,
@@ -81,39 +91,71 @@ class MessageAuthorMeta extends StatelessWidget {
       authorName = GestureDetector(onTap: onAuthorTap, child: authorName);
     }
 
+    final role = roleLine?.trim();
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final metadataMaxWidth = constraints.hasBoundedWidth
             ? constraints.maxWidth / (showUsername ? 3 : 2)
             : double.infinity;
+        // The name may use up to 80% of the room.
+        final nameMaxWidth = constraints.hasBoundedWidth
+            ? constraints.maxWidth * 0.8
+            : double.infinity;
 
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Flexible(child: authorName),
-            if (showUsername) ...[
-              const SizedBox(width: Grid.half),
-              ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: metadataMaxWidth),
-                child: Text(
-                  normalizedUsername,
-                  key: usernameKey,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: resolvedMetadataStyle,
-                ),
-              ),
-            ],
-            const SizedBox(width: Grid.xxs),
+        final items = <Widget>[
+          Flexible(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: nameMaxWidth),
+              child: authorName,
+            ),
+          ),
+          if (showUsername) ...[
+            const SizedBox(width: Grid.half),
             ConstrainedBox(
               constraints: BoxConstraints(maxWidth: metadataMaxWidth),
               child: Text(
-                timestamp,
-                key: timestampKey,
+                normalizedUsername,
+                key: usernameKey,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: resolvedTimestampStyle,
+                style: resolvedMetadataStyle,
               ),
+            ),
+          ],
+          const SizedBox(width: Grid.xxs),
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: metadataMaxWidth),
+            child: Text(
+              timestamp,
+              key: timestampKey,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: resolvedTimestampStyle,
+            ),
+          ),
+        ];
+        final header = Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          // Mirrored headers list the items from the avatar outwards, which
+          // is the reverse of the reading order on the end side.
+          children: mirrored ? items.reversed.toList() : items,
+        );
+        if (role == null || role.isEmpty) return header;
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: mirrored
+              ? CrossAxisAlignment.end
+              : CrossAxisAlignment.start,
+          children: [
+            header,
+            Text(
+              role,
+              key: ValueKey('${displayNameKey ?? 'message'}-role-line'),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: resolvedMetadataStyle,
             ),
           ],
         );

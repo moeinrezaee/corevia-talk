@@ -92,6 +92,7 @@ class AppTheme {
     // be applied here rather than only through ThemeData.fontFamily.
     final textTheme = base.textTheme.apply(
       fontFamily: activeLanguage.fontFamily,
+      fontFamilyFallback: activeLanguage.fontFamilyFallback,
     );
     return ThemeData(
       useMaterial3: true,
@@ -101,6 +102,7 @@ class AppTheme {
       extensions: [appColors],
       // Every text style inherits this family: Inter, or Peyda FaNum in Persian.
       fontFamily: activeLanguage.fontFamily,
+      fontFamilyFallback: activeLanguage.fontFamilyFallback,
       textTheme: textTheme,
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
@@ -250,7 +252,8 @@ class AppTheme {
           color: scheme.onSurface,
           fontSize: 18,
           fontWeight: FontWeight.w600,
-          letterSpacing: -0.3,
+          // Negative tracking breaks Persian letter joins.
+          letterSpacing: activeLanguage.isRtl ? 0 : -0.3,
         ),
         contentTextStyle: textTheme.bodyMedium?.copyWith(
           color: scheme.onSurfaceVariant,

@@ -30,6 +30,12 @@ enum AppLanguage {
 
   /// Font family used for all interface text.
   String get fontFamily => this == AppLanguage.fa ? 'PeydaFaNum' : 'Inter';
+
+  /// Fonts tried when [fontFamily] lacks a glyph. In English, Persian typed
+  /// into messages and names still draws in Peyda FaNum while Latin text and
+  /// ASCII digits stay in Inter.
+  List<String>? get fontFamilyFallback =>
+      this == AppLanguage.fa ? null : const ['PeydaFaNum'];
 }
 
 AppLanguage _active = AppLanguage.en;

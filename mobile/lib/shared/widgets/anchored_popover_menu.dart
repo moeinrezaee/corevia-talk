@@ -69,6 +69,16 @@ Future<T?> showAnchoredPopover<T>({
   );
   final overlayRect = Offset.zero & overlayRenderObject.size;
   final mediaQuery = MediaQuery.of(context);
+  // `start` / `end` follow the reading direction, so they swap in RTL layouts.
+  final isRtl = Directionality.of(context) == TextDirection.rtl;
+  if (isRtl) {
+    alignment = switch (alignment) {
+      AnchoredPopoverAlignment.start => AnchoredPopoverAlignment.end,
+      AnchoredPopoverAlignment.end => AnchoredPopoverAlignment.start,
+      AnchoredPopoverAlignment.center => AnchoredPopoverAlignment.center,
+    };
+    offset = Offset(-offset.dx, offset.dy);
+  }
 
   return navigator.push<T>(
     _AnchoredPopoverRoute<T>(

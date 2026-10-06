@@ -329,11 +329,11 @@ class SearchPage extends HookConsumerWidget {
         bottom: Stack(
           clipBehavior: Clip.none,
           children: [
-            AnimatedPositioned(
+            AnimatedPositionedDirectional(
               duration: reduceMotion ? Duration.zero : _searchFieldMoveDuration,
               curve: Curves.easeInOutCubic,
-              left: Grid.gutter,
-              right: isSearchEditing.value
+              start: Grid.gutter,
+              end: isSearchEditing.value
                   ? searchActiveFieldRightInset
                   : Grid.gutter,
               top: isSearchEditing.value

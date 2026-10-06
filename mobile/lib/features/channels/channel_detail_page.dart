@@ -16,6 +16,7 @@ import '../../shared/huddle/huddle.dart';
 import '../../shared/identity_names/identity_names.dart';
 import '../../shared/identity_names/identity_names_provider.dart';
 import '../../shared/mentions/agent_identity_provider.dart';
+import 'mentions/mention_candidates.dart';
 import '../../shared/relay/relay.dart';
 import '../../shared/theme/theme.dart';
 import '../../shared/widgets/avatar_image.dart';

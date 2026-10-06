@@ -5,6 +5,7 @@
 library;
 
 import '../i18n/app_language.dart';
+import '../i18n/persian_date.dart';
 
 class ReminderTimePreset {
   final String label;
@@ -20,6 +21,21 @@ int _nowSeconds() => DateTime.now().millisecondsSinceEpoch ~/ 1000;
 /// always in the future.
 int nextDayAt9am(int dayOffset, {DateTime? now}) {
   final current = now ?? DateTime.now();
+  if (usesPersianCalendar) {
+    // Persian UI: "9am" is Asia/Tehran wall-clock time, whatever the device
+    // time zone is.
+    final tehran = toTehranTime(current);
+    var target = DateTime.utc(
+      tehran.year,
+      tehran.month,
+      tehran.day + dayOffset,
+      9,
+    );
+    if (!target.isAfter(tehran)) {
+      target = DateTime.utc(target.year, target.month, target.day + 1, 9);
+    }
+    return target.subtract(tehranUtcOffset).millisecondsSinceEpoch ~/ 1000;
+  }
   var target = DateTime(
     current.year,
     current.month,
@@ -34,6 +50,7 @@ int nextDayAt9am(int dayOffset, {DateTime? now}) {
 
 /// Days until next Monday (1-7), matching the desktop preset semantics.
 int daysUntilNextMonday(DateTime now) {
+  if (usesPersianCalendar) now = toTehranTime(now);
   final days = (DateTime.monday - now.weekday) % 7;
   return days == 0 ? 7 : days;
 }
@@ -65,8 +82,24 @@ final List<ReminderTimePreset> reminderTimePresets = [
 /// null when the instant is not strictly in the future — the shared guard for
 /// the custom picker so a past time never fires immediately.
 int? combineCustomDateTime(DateTime date, int hour, int minute) {
-  final target = DateTime(date.year, date.month, date.day, hour, minute);
-  final timestamp = target.millisecondsSinceEpoch ~/ 1000;
+  // Persian UI: the picked wall-clock time is Asia/Tehran time.
+  final timestamp = usesPersianCalendar
+      ? DateTime.utc(
+              date.year,
+              date.month,
+              date.day,
+              hour,
+              minute,
+            ).subtract(tehranUtcOffset).millisecondsSinceEpoch ~/
+            1000
+      : DateTime(
+              date.year,
+              date.month,
+              date.day,
+              hour,
+              minute,
+            ).millisecondsSinceEpoch ~/
+            1000;
   if (timestamp <= _nowSeconds()) return null;
   return timestamp;
 }

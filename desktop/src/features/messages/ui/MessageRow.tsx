@@ -667,7 +667,9 @@ export const MessageRow = React.memo(
       // header content ends before the rail's left edge in every rail state.
       <MessageHeaderRow
         className={
-          isOwnMessage ? "pe-[var(--message-action-rail-width,0px)]" : undefined
+          isOwnMessage
+            ? "pe-[var(--message-action-rail-width,0px)]"
+            : "justify-end"
         }
       >
         {message.pubkey ? (

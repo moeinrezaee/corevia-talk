@@ -17,7 +17,7 @@ export function MessageHeaderRow({
   return (
     <div
       className={cn(
-        "flex min-w-0 flex-wrap items-baseline gap-x-1.5 gap-y-0 leading-message-author",
+        "@container flex w-full min-w-0 flex-wrap items-baseline gap-x-1.5 gap-y-0 leading-message-author",
         className,
       )}
       data-testid="message-header"
@@ -97,7 +97,7 @@ export function MessageAuthorText({
   return (
     <Component
       className={cn(
-        "max-w-[min(100%,24rem)] truncate text-message font-semibold leading-message-author tracking-normal",
+        "max-w-[80cqw] truncate text-message font-semibold leading-message-author tracking-normal",
         hoverUnderline && "hover:underline",
         className,
       )}
@@ -129,10 +129,10 @@ export function MessageAuthorIdentity({
           pubkey={pubkey}
           role={role}
           botIdenticonValue={displayName}
-          triggerClassName="min-w-0 max-w-[min(100%,24rem)]"
+          triggerClassName="min-w-0 max-w-[80cqw]"
         >
           <button
-            className="max-w-full truncate rounded leading-message-author focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+            className="max-w-[80cqw] truncate rounded leading-message-author focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
             type="button"
           >
             {children}

@@ -1401,7 +1401,7 @@ export function createMarkdownComponents(
     },
     a: MarkdownAnchor,
     blockquote: ({ children }) => (
-      <blockquote className="border-s-2 border-border ps-4 italic text-muted-foreground [&>*:first-child]:mt-0 [&>*+*]:mt-2">
+      <blockquote className="rounded-xl bg-foreground/[0.08] px-3 py-2 italic text-muted-foreground [&>*:first-child]:mt-0 [&>*+*]:mt-2">
         {children}
       </blockquote>
     ),

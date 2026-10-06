@@ -1136,10 +1136,8 @@ Widget _uiBlockQuote(
   return Directionality(
     key: const ValueKey('message-quote'),
     textDirection: uiDirection,
-    child: Padding(
-      padding: resolved.margin ?? const EdgeInsets.symmetric(vertical: 2),
-      child: box,
-    ),
+    // Full width of the bubble, so its inset matches the bubble's padding.
+    child: SizedBox(width: double.infinity, child: box),
   );
 }
 

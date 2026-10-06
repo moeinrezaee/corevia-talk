@@ -134,7 +134,7 @@ class _MessageBubble extends HookConsumerWidget {
     }
 
     return Padding(
-      padding: EdgeInsets.only(top: showAuthor ? Grid.xs : 0),
+      padding: EdgeInsets.only(top: showAuthor ? Grid.gutter : Grid.half),
       child: Material(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(Radii.md),

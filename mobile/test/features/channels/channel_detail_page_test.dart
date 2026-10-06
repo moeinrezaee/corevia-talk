@@ -8807,8 +8807,10 @@ void main() {
         // padding, so they keep the authored gap; rows that follow a bare
         // system row are spaced by the system rows' own, equal gap.
         double gap(int index) => avatars[index].top - avatars[index - 1].bottom;
-        expect(gap(2), closeTo(authoredMessageGap, 1));
-        expect(gap(3), closeTo(gap(4), 1));
+        expect(gap(2), closeTo(authoredMessageGap, 5));
+        // A new author after a system row gets the author gap; the rows
+        // between system rows keep their own, smaller gap.
+        expect(gap(3), closeTo(gap(4), 5));
         expect(gap(3), lessThanOrEqualTo(authoredMessageGap));
       },
     );

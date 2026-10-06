@@ -72,10 +72,6 @@ class _ComposerDockFrame extends HookWidget {
               ]),
               child: child,
               builder: (context, child) {
-                final widthProgress = math.max(
-                  expansionAnimation.value.clamp(0.0, 1.0),
-                  recordingTransition.value,
-                );
                 final expansionProgress = expansionAnimation.value.clamp(
                   0.0,
                   1.0,
@@ -96,7 +92,7 @@ class _ComposerDockFrame extends HookWidget {
                     ),
                     child: FractionallySizedBox(
                       key: const ValueKey('composer-width-transition'),
-                      widthFactor: 0.85 + 0.15 * widthProgress,
+                      widthFactor: 1,
                       child: child,
                     ),
                   ),

@@ -761,7 +761,8 @@ void main() {
                   )
                   .decoration
               as BoxDecoration;
-      expect(compactWidth, closeTo(expandedWidth * 0.85, 0.5));
+      // The composer is always full width now (equal insets on every side).
+      expect(compactWidth, closeTo(expandedWidth, 0.5));
       final expandedPosition = tester.widget<Transform>(
         find.byKey(const ValueKey('composer-position-transition')),
       );
@@ -1075,7 +1076,7 @@ void main() {
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 40));
 
-        expect(tester.getSize(widthFinder).width, greaterThan(compactWidth));
+        expect(tester.getSize(widthFinder).width, closeTo(compactWidth, 0.5));
       } finally {
         debugDefaultTargetPlatformOverride = previousPlatform;
       }
@@ -1111,7 +1112,7 @@ void main() {
         await tester.tap(find.text('Message\u2026'));
         await tester.pumpAndSettle();
 
-        expect(tester.getSize(widthFinder).width, greaterThan(compactWidth));
+        expect(tester.getSize(widthFinder).width, closeTo(compactWidth, 0.5));
       } finally {
         debugDefaultTargetPlatformOverride = previousPlatform;
       }
@@ -2892,7 +2893,7 @@ void main() {
         tester
             .getSize(find.byKey(const ValueKey('attachment-surface-popover')))
             .width,
-        closeTo(compactComposerWidth / 0.85, 0.5),
+        closeTo(compactComposerWidth, 0.5),
       );
 
       await tester.tap(find.byKey(const ValueKey('recent-photo-two')));
@@ -3180,7 +3181,7 @@ void main() {
           tester
               .getSize(find.byKey(const ValueKey('attachment-surface-popover')))
               .width,
-          closeTo(compactComposerWidth / 0.85, 0.5),
+          closeTo(compactComposerWidth, 0.5),
         );
       } finally {
         debugDefaultTargetPlatformOverride = previousPlatform;

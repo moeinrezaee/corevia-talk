@@ -22,6 +22,37 @@ import type {
   ReportDetail as ReportDetailData,
 } from "./types";
 import { useResource } from "./useResource";
+import { type Language, setLanguage } from "./i18n/languagePreference";
+import { useLanguage } from "./i18n/languagePreference";
+import { tl } from "./i18n/tl";
+
+function LanguageSwitch() {
+  const language = useLanguage();
+  const choose = (next: Language) => {
+    if (next === language) return;
+    setLanguage(next);
+    // Strings resolve when modules and components evaluate; reload re-renders all.
+    location.reload();
+  };
+  return (
+    <div className="language-switch" role="group" aria-label={tl("Language")}>
+      <button
+        type="button"
+        aria-pressed={language === "en"}
+        onClick={() => choose("en")}
+      >
+        English
+      </button>
+      <button
+        type="button"
+        aria-pressed={language === "fa"}
+        onClick={() => choose("fa")}
+      >
+        فارسی
+      </button>
+    </div>
+  );
+}
 
 function usePath() {
   const [path, setPath] = useState(location.pathname);
@@ -76,16 +107,16 @@ function StateView<T>({
   children: (data: T) => ReactNode;
 }) {
   if (resource.loading && !resource.data)
-    return <div className="state">Loading…</div>;
+    return <div className="state">{tl("Loading…")}</div>;
   if (resource.error && !resource.data) {
     const forbidden =
       resource.error instanceof ApiFailure && resource.error.status === 403;
     return (
       <div className="state error" role="alert">
-        <h2>{forbidden ? "Access denied" : "Could not load data"}</h2>
+        <h2>{forbidden ? tl("Access denied") : tl("Could not load data")}</h2>
         <p>{resource.error.message}</p>
         <button type="button" onClick={resource.refetch}>
-          Retry
+          {tl("Retry")}
         </button>
       </div>
     );
@@ -101,8 +132,8 @@ function Reports({ authMode }: { authMode: AuthMode }) {
   return (
     <Page
       eyebrow="Moderation"
-      title="Open reports"
-      description="Review reports across every Buzz community."
+      title={tl("Open reports")}
+      description={tl("Review reports across every Buzz community.")}
     >
       <StateView resource={resource}>
         {(reports) =>
@@ -126,7 +157,7 @@ function Reports({ authMode }: { authMode: AuthMode }) {
                       </code>
                     </div>
                     <div className="record-date">
-                      <span>Submitted</span>
+                      <span>{tl("Submitted")}</span>
                       <time>{date(report.createdAt)}</time>
                     </div>
                     <ArrowIcon />
@@ -151,8 +182,8 @@ function ReportDetail({ id, authMode }: { id: string; authMode: AuthMode }) {
   return (
     <Page
       eyebrow="Moderation"
-      title="Report detail"
-      description="The full report as submitted to the relay."
+      title={tl("Report detail")}
+      description={tl("The full report as submitted to the relay.")}
       back="/reports"
     >
       <StateView resource={resource}>
@@ -168,47 +199,48 @@ function ReportDetail({ id, authMode }: { id: string; authMode: AuthMode }) {
               </div>
             </div>
             <dl>
-              <dt>Status</dt>
+              <dt>{tl("Status")}</dt>
               <dd>
                 <span className="status">{report.status}</span>
               </dd>
-              <dt>Reporter</dt>
+              <dt>{tl("Reporter")}</dt>
               <dd>
                 <code>{report.reporterPubkey}</code>
               </dd>
-              <dt>Target</dt>
+              <dt>{tl("Target")}</dt>
               <dd>
                 <code>{report.target}</code>
               </dd>
               {report.targetKind === "event" ? (
                 <>
-                  <dt>Message</dt>
+                  <dt>{tl("Message")}</dt>
                   <dd>
                     {report.message ? (
                       <div className="reported-message">
                         {report.message.deletedAt ? (
-                          <span className="status">Deleted</span>
+                          <span className="status">{tl("Deleted")}</span>
                         ) : null}
                         <p>{report.message.content}</p>
                         <div className="reported-message-meta">
-                          <span>Author</span>
+                          <span>{tl("Author")}</span>
                           <code>{report.message.authorPubkey}</code>
-                          <span>Created</span>
+                          <span>{tl("Created")}</span>
                           <time>{date(report.message.createdAt)}</time>
                         </div>
                       </div>
                     ) : (
                       <p className="message-unavailable">
-                        Message content is unavailable. It may have expired or
-                        been removed from event storage.
+                        {tl(
+                          "Message content is unavailable. It may have expired or been removed from event storage.",
+                        )}
                       </p>
                     )}
                   </dd>
                 </>
               ) : null}
-              <dt>Note</dt>
+              <dt>{tl("Note")}</dt>
               <dd className="sensitive">
-                {report.note ?? "No note provided."}
+                {report.note ?? tl("No note provided.")}
               </dd>
             </dl>
           </article>
@@ -245,8 +277,8 @@ function FeedbackList({ authMode }: { authMode: AuthMode }) {
   return (
     <Page
       eyebrow="Product"
-      title="Feedback"
-      description="Recent product feedback from across Buzz."
+      title={tl("Feedback")}
+      description={tl("Recent product feedback from across Buzz.")}
     >
       <StateView resource={resource}>
         {(items) => {
@@ -264,24 +296,24 @@ function FeedbackList({ authMode }: { authMode: AuthMode }) {
                 <>
                   <div className="feedback-filters">
                     <label className="search-field">
-                      <span>Search feedback</span>
+                      <span>{tl("Search feedback")}</span>
                       <div>
                         <SearchIcon />
                         <input
                           type="search"
-                          placeholder="Search feedback"
+                          placeholder={tl("Search feedback")}
                           value={query}
                           onChange={(event) => setQuery(event.target.value)}
                         />
                       </div>
                     </label>
                     <label>
-                      <span>Community</span>
+                      <span>{tl("Community")}</span>
                       <select
                         value={community}
                         onChange={(event) => setCommunity(event.target.value)}
                       >
-                        <option value="all">All communities</option>
+                        <option value="all">{tl("All communities")}</option>
                         {communities.map((host) => (
                           <option key={host} value={host}>
                             {host}
@@ -290,34 +322,35 @@ function FeedbackList({ authMode }: { authMode: AuthMode }) {
                       </select>
                     </label>
                     <label>
-                      <span>Received</span>
+                      <span>{tl("Received")}</span>
                       <select
                         value={timeRange}
                         onChange={(event) => setTimeRange(event.target.value)}
                       >
-                        <option value="all">Any time</option>
-                        <option value="day">Last 24 hours</option>
-                        <option value="week">Last 7 days</option>
-                        <option value="month">Last 30 days</option>
+                        <option value="all">{tl("Any time")}</option>
+                        <option value="day">{tl("Last 24 hours")}</option>
+                        <option value="week">{tl("Last 7 days")}</option>
+                        <option value="month">{tl("Last 30 days")}</option>
                       </select>
                     </label>
                     <label>
-                      <span>Status</span>
+                      <span>{tl("Status")}</span>
                       <select
                         value={statusFilter}
                         onChange={(event) =>
                           setStatusFilter(event.target.value)
                         }
                       >
-                        <option value="all">Any status</option>
-                        <option value="new">New</option>
-                        <option value="reviewed">Reviewed</option>
-                        <option value="archived">Archived</option>
+                        <option value="all">{tl("Any status")}</option>
+                        <option value="new">{tl("New")}</option>
+                        <option value="reviewed">{tl("Reviewed")}</option>
+                        <option value="archived">{tl("Archived")}</option>
                       </select>
                     </label>
                   </div>
                   <p className="result-count" aria-live="polite">
-                    {filtered.length} of {items.length} submissions
+                    {filtered.length} {tl("of")} {items.length}{" "}
+                    {tl("submissions")}
                   </p>
                   {filtered.length ? (
                     <div className="cards">
@@ -350,7 +383,7 @@ function FeedbackList({ authMode }: { authMode: AuthMode }) {
                             onApplied={applyStatus}
                           />
                           <div className="record-date">
-                            <span>Received</span>
+                            <span>{tl("Received")}</span>
                             <time>{date(item.receivedAt)}</time>
                           </div>
                           <Link
@@ -358,7 +391,8 @@ function FeedbackList({ authMode }: { authMode: AuthMode }) {
                             className="record-open-link"
                           >
                             <span className="visually-hidden">
-                              Open feedback from {hostLabel(item.communityHost)}
+                              {tl("Open feedback from")}{" "}
+                              {hostLabel(item.communityHost)}
                             </span>
                             <ArrowIcon />
                           </Link>
@@ -366,7 +400,7 @@ function FeedbackList({ authMode }: { authMode: AuthMode }) {
                       ))}
                     </div>
                   ) : (
-                    <div className="state">No matching feedback.</div>
+                    <div className="state">{tl("No matching feedback.")}</div>
                   )}
                 </>
               )}
@@ -438,7 +472,7 @@ function FeedbackStatusControl({
 
   return (
     <label className="feedback-status">
-      <span className="visually-hidden">Status</span>
+      <span className="visually-hidden">{tl("Status")}</span>
       <select value={status} onChange={onChange} disabled={pending}>
         {STATUS_OPTIONS.map((option) => (
           <option key={option} value={option}>
@@ -448,7 +482,7 @@ function FeedbackStatusControl({
       </select>
       {error ? (
         <span className="status-error" role="alert">
-          Update failed
+          {tl("Update failed")}
         </span>
       ) : null}
     </label>
@@ -459,7 +493,11 @@ function FeedbackStatusControl({
 /// explicit provenance-unavailable marker rather than an empty slot.
 function Provenance({ host }: { host: string | null }) {
   if (host) return host;
-  return <span className="provenance-unavailable">Community unavailable</span>;
+  return (
+    <span className="provenance-unavailable">
+      {tl("Community unavailable")}
+    </span>
+  );
 }
 
 function hostLabel(host: string | null): string {
@@ -527,8 +565,8 @@ function FeedbackDetailView({
   return (
     <Page
       eyebrow="Product"
-      title="Feedback detail"
-      description="The complete feedback submission and its source."
+      title={tl("Feedback detail")}
+      description={tl("The complete feedback submission and its source.")}
       back="/feedback"
       backLabel="Back to feedback"
     >
@@ -559,11 +597,11 @@ function FeedbackDetailView({
                 </div>
               </div>
               <dl>
-                <dt>Feedback</dt>
+                <dt>{tl("Feedback")}</dt>
                 <dd className="sensitive feedback-body">{body}</dd>
                 {attachments.length ? (
                   <>
-                    <dt>Attachments</dt>
+                    <dt>{tl("Attachments")}</dt>
                     <dd className="attachments">
                       {attachments.map((attachment) => (
                         <Attachment
@@ -575,17 +613,17 @@ function FeedbackDetailView({
                     </dd>
                   </>
                 ) : null}
-                <dt>Submitted by</dt>
+                <dt>{tl("Submitted by")}</dt>
                 <dd>
                   <code>{feedback.submitterPubkey}</code>
                 </dd>
-                <dt>Event</dt>
+                <dt>{tl("Event")}</dt>
                 <dd>
                   <code>{feedback.eventId}</code>
                 </dd>
-                <dt>Created</dt>
+                <dt>{tl("Created")}</dt>
                 <dd>{date(feedback.eventCreatedAt)}</dd>
-                <dt>Received</dt>
+                <dt>{tl("Received")}</dt>
                 <dd>{date(feedback.receivedAt)}</dd>
               </dl>
             </article>
@@ -802,7 +840,7 @@ function Page({
       <header className="page-title">
         {back ? (
           <Link href={back} className="back-link">
-            <ArrowIcon /> {backLabel ?? "Back to reports"}
+            <ArrowIcon /> {backLabel ?? tl("Back to reports")}
           </Link>
         ) : null}
         <p>{eyebrow}</p>
@@ -815,7 +853,7 @@ function Page({
 }
 
 function Empty() {
-  return <div className="state">No records.</div>;
+  return <div className="state">{tl("No records.")}</div>;
 }
 
 function short(value: string) {
@@ -869,7 +907,7 @@ function CategoryTag({ category }: { category?: string }) {
   return (
     <span className="tag">
       <CategoryIcon category={category} />
-      {category ? (labels[category] ?? category) : "Uncategorized"}
+      {category ? (labels[category] ?? category) : tl("Uncategorized")}
     </span>
   );
 }
@@ -940,26 +978,28 @@ function Nip07Screen() {
   return (
     <div className="app">
       <div className="state auth-prompt">
-        <h2>Nostr extension required</h2>
+        <h2>{tl("Nostr extension required")}</h2>
         <p>
-          This relay uses NIP-98 HTTP Auth. Install a NIP-07 browser extension
-          such as{" "}
+          {tl(
+            "This relay uses NIP-98 HTTP Auth. Install a NIP-07 browser extension such as",
+          )}{" "}
           <a
             href="https://github.com/fiatjaf/nos2x"
             target="_blank"
             rel="noreferrer"
           >
-            nos2x
+            {tl("nos2x")}
           </a>{" "}
-          or{" "}
+          {tl("or")}{" "}
           <a href="https://getalby.com" target="_blank" rel="noreferrer">
-            Alby
+            {tl("Alby")}
           </a>
-          , then reload this page. Your Nostr key will be used to sign each
-          request.
+          {tl(
+            ", then reload this page. Your Nostr key will be used to sign each request.",
+          )}
         </p>
         <button type="button" onClick={() => location.reload()}>
-          Reload
+          {tl("Reload")}
         </button>
       </div>
     </div>
@@ -1009,17 +1049,18 @@ export function App() {
             <BuzzMark />
           </span>
           <span>
-            Buzz <b>Admin</b>
+            {tl("Buzz")} <b>{tl("Admin")}</b>
           </span>
         </Link>
         <nav>
           <Link href="/reports" className="nav-link" activeWhenNested>
-            <ReportIcon /> Reports
+            <ReportIcon /> {tl("Reports")}
           </Link>
           <Link href="/feedback" className="nav-link" activeWhenNested>
-            <FeedbackIcon /> Feedback
+            <FeedbackIcon /> {tl("Feedback")}
           </Link>
         </nav>
+        <LanguageSwitch />
       </header>
       <main>{content}</main>
     </div>

@@ -1,0 +1,66 @@
+/*
+ * Persian (right-to-left) support for the admin console. <html lang dir> is set
+ * by i18n/languagePreference.ts; flex rows mirror on their own, so this file
+ * covers the Persian font and the places where Persian and English mix.
+ */
+:root[lang="fa"] {
+  --font-ui:
+    "Peyda FaNum", "Helvetica Neue", Helvetica, Arial, ui-sans-serif, system-ui,
+    sans-serif;
+}
+
+/* Code, keys and URLs stay left-to-right inside a right-to-left page. */
+:root[dir="rtl"] :is(pre, code, kbd) {
+  direction: ltr;
+  unicode-bidi: plaintext;
+  text-align: left;
+}
+
+/* Text blocks resolve their direction from their own first strong character,
+   so an English sentence keeps its punctuation at its end. */
+:is(p, h1, h2, h3, h4, h5, h6, li, td, th, label, dd, dt, summary) {
+  unicode-bidi: plaintext;
+}
+
+:root[dir="rtl"] [data-ltr-text] {
+  text-align: right;
+}
+
+:root[dir="ltr"] [data-rtl-text] {
+  text-align: left;
+}
+
+/* Directional glyphs mirror with the layout. */
+:root[dir="rtl"] [data-rtl-flip] {
+  transform: scaleX(-1);
+}
+
+.language-switch {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  background: rgb(35 30 30 / 8%);
+}
+
+.language-switch button {
+  padding: 0.35rem 0.8rem;
+  color: inherit;
+  background: transparent;
+  font-size: 0.85rem;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: white;
+  background: #231e1e;
+}
+
+/* Chevrons: the list-row arrow points left in right-to-left, and the "back"
+   arrow (already rotated to point backwards) points right. */
+:root[dir="rtl"] .arrow-icon {
+  transform: scaleX(-1);
+}
+
+:root[dir="rtl"] .back-link .arrow-icon {
+  transform: rotate(180deg) scaleX(-1);
+}

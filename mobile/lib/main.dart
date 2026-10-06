@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'app.dart';
 import 'features/age_gate/age_signal_push_bootstrap.dart';
 import 'features/invites/invite_join_provider.dart';
+import 'shared/i18n/app_language.dart';
 import 'shared/push/push_bridge.dart';
 import 'shared/relay/relay_closed_policy.dart';
 import 'shared/theme/theme_provider.dart';
@@ -18,6 +19,7 @@ Future<void> runBuzzApp(Widget app) async {
 
   // Pre-load preferences so the first frame uses the saved theme/accent.
   final prefs = await SharedPreferences.getInstance();
+  setActiveLanguage(readStoredLanguage(prefs));
 
   runApp(buildRootProviderScope(prefs: prefs, child: app));
 }

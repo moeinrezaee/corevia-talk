@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../i18n/app_language.dart';
 import 'package:flutter/services.dart';
 
 import 'app_colors.dart';
@@ -93,7 +94,8 @@ class AppTheme {
       splashFactory: NoSplash.splashFactory,
       scaffoldBackgroundColor: scheme.surface,
       extensions: [appColors],
-      fontFamily: 'Inter',
+      // Every text style inherits this family: Inter, or Peyda FaNum in Persian.
+      fontFamily: activeLanguage.fontFamily,
       textTheme: textTheme,
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,

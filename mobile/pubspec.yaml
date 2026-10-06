@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   cupertino_icons: ^1.0.8
   # Grapheme-cluster segmentation, for deciding whether a message body is
   # nothing but emoji. Already present transitively via the Flutter SDK;
@@ -81,6 +83,22 @@ flutter:
         - asset: assets/fonts/InterVariable.ttf
         - asset: assets/fonts/InterVariable-Italic.ttf
           style: italic
+    # Persian interface font (Peyda FaNum): its digits are drawn as Persian
+    # numerals. There is no Light/Medium file, so those weights use the nearest.
+    - family: PeydaFaNum
+      fonts:
+        - asset: assets/fonts/PeydaFaNum-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/PeydaFaNum-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/PeydaFaNum-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/PeydaFaNum-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/PeydaFaNum-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/PeydaFaNum-Black.ttf
+          weight: 900
     - family: GeistMono
       fonts:
         - asset: assets/fonts/GeistMono-Variable.ttf

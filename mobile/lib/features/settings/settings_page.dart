@@ -11,6 +11,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../shared/auth/auth.dart';
 import '../../shared/clipboard_utils.dart';
+import '../../shared/i18n/app_language.dart';
 import '../../shared/success_haptic.dart';
 import '../../shared/push/push_bridge.dart';
 import '../../shared/push/push_relay_capability_provider.dart';
@@ -29,6 +30,7 @@ part 'settings_page/profile_section.dart';
 part 'settings_page/status_section.dart';
 part 'settings_page/connection_section.dart';
 part 'settings_page/notifications_section.dart';
+part 'settings_page/language_section.dart';
 
 Widget _emptyProfileEditPage(BuildContext context) => const SizedBox.shrink();
 
@@ -123,6 +125,7 @@ class SettingsPage extends HookConsumerWidget {
                   onEditDisplayName: onEditDisplayName,
                   onEditProfileDescription: onEditProfileDescription,
                 ),
+                const _LanguageSection(),
                 const _NotificationsSection(),
                 _ConnectionSection(
                   identityRecoveryPageBuilder: identityRecoveryPageBuilder,

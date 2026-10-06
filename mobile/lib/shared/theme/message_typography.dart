@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'grid.dart';
 
-const _fontFamily = 'Inter';
 
 /// Avatar size for full channel and thread messages.
 const messageAvatarSize = 42.0;
@@ -18,7 +17,6 @@ const messageAvatarContentGap = Grid.twelve;
 
 /// Primary message copy: 15sp regular on a 20sp line height.
 const messageBodyTextStyle = TextStyle(
-  fontFamily: _fontFamily,
   fontSize: 15,
   fontWeight: FontWeight.w400,
   height: 20 / 15,
@@ -27,7 +25,6 @@ const messageBodyTextStyle = TextStyle(
 
 /// Message author names: 15sp semibold on a 17sp line height.
 const messageUsernameTextStyle = TextStyle(
-  fontFamily: _fontFamily,
   fontSize: 15,
   fontWeight: FontWeight.w600,
   height: 17 / 15,
@@ -36,7 +33,6 @@ const messageUsernameTextStyle = TextStyle(
 
 /// Secondary author metadata: 15sp regular on a tight 17sp line height.
 const messageMetadataTextStyle = TextStyle(
-  fontFamily: _fontFamily,
   fontSize: 15,
   fontWeight: FontWeight.w400,
   height: 17 / 15,
@@ -45,7 +41,6 @@ const messageMetadataTextStyle = TextStyle(
 
 /// Message timestamps: 13.1sp regular, one step below 15sp author names.
 const messageTimestampTextStyle = TextStyle(
-  fontFamily: _fontFamily,
   fontSize: 13.1,
   fontWeight: FontWeight.w400,
   height: 17 / 13.1,
@@ -54,7 +49,6 @@ const messageTimestampTextStyle = TextStyle(
 
 /// Compact reply previews: 13.1sp regular on a 17sp line height.
 const replyPreviewTextStyle = TextStyle(
-  fontFamily: _fontFamily,
   fontSize: 13.1,
   fontWeight: FontWeight.w400,
   height: 17 / 13.1,
@@ -63,7 +57,6 @@ const replyPreviewTextStyle = TextStyle(
 
 /// Reaction counts: 13.1sp medium on a 17sp line height.
 const reactionCountTextStyle = TextStyle(
-  fontFamily: _fontFamily,
   fontSize: 13.1,
   fontWeight: FontWeight.w500,
   height: 17 / 13.1,
@@ -72,7 +65,6 @@ const reactionCountTextStyle = TextStyle(
 
 /// Channel and thread titles: 20sp bold on a 24sp line height.
 const channelTitleTextStyle = TextStyle(
-  fontFamily: _fontFamily,
   fontSize: 20,
   fontWeight: FontWeight.w700,
   height: 24 / 20,
@@ -84,7 +76,6 @@ const contentListTitleTextStyle = messageUsernameTextStyle;
 
 /// Secondary copy in compact content lists.
 const contentListBodyTextStyle = TextStyle(
-  fontFamily: _fontFamily,
   fontSize: 13.1,
   fontWeight: FontWeight.w400,
   height: 17 / 13.1,
@@ -96,7 +87,6 @@ const contentListTimestampTextStyle = messageMetadataTextStyle;
 
 /// Filter chip labels use a tighter 15sp Inter treatment.
 const filterChipTextStyle = TextStyle(
-  fontFamily: _fontFamily,
   fontSize: 15,
   fontWeight: FontWeight.w400,
   height: 1,
@@ -108,7 +98,6 @@ const searchInputTextStyle = messageBodyTextStyle;
 
 /// System message actor names: 15sp semibold on a 17sp line height.
 const systemMessageHeadingTextStyle = TextStyle(
-  fontFamily: _fontFamily,
   fontSize: 15,
   fontWeight: FontWeight.w600,
   height: 17 / 15,
@@ -117,7 +106,6 @@ const systemMessageHeadingTextStyle = TextStyle(
 
 /// System message copy: 15sp regular on a 20sp line height.
 const systemMessageBodyTextStyle = TextStyle(
-  fontFamily: _fontFamily,
   fontSize: 15,
   fontWeight: FontWeight.w400,
   height: 20 / 15,
@@ -132,7 +120,6 @@ const activityTimestampTextStyle = messageTimestampTextStyle;
 
 /// Activity context labels: 13.1sp medium on a 17sp line height.
 const activityContextTextStyle = TextStyle(
-  fontFamily: _fontFamily,
   fontSize: 13.1,
   fontWeight: FontWeight.w500,
   height: 17 / 13.1,

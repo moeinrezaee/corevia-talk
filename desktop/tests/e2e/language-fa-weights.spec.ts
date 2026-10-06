@@ -12,7 +12,7 @@ test("Persian font resolves each weight to a shipped Peyda file", async ({
   await page.goto("/", { waitUntil: "domcontentloaded" });
   const loaded = await page.evaluate(async () => {
     const out: Record<string, boolean> = {};
-    for (const w of [200, 400, 500, 600, 700, 800, 900, 950]) {
+    for (const w of [200, 300, 400, 500, 600, 700, 800, 900, 950]) {
       const faces = await document.fonts.load(
         `${w} 16px "Peyda FaNum"`,
         "۱۲۳ ا",

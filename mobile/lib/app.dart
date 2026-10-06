@@ -5,6 +5,7 @@ import 'shared/community/community_loading_surface.dart';
 
 import 'package:app_badge_plus/app_badge_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -39,6 +40,7 @@ import 'features/settings/theme_picker_page.dart';
 import 'shared/auth/auth.dart';
 import 'shared/deeplink/pending_deep_link_provider.dart';
 import 'shared/emoji/emoji_burst.dart';
+import 'shared/i18n/app_language.dart';
 import 'shared/push/push_subscription_provider.dart';
 import 'shared/push/push_relay_capability_provider.dart';
 import 'shared/relay/relay.dart';
@@ -316,6 +318,7 @@ class App extends HookConsumerWidget {
       communityTheme.accent,
     );
     final schemeName = communityTheme.theme;
+    final language = ref.watch(languageProvider);
     final authState = ref.watch(authProvider);
     final pairedCommunity = ref.watch(pairedCommunityLandingProvider);
 
@@ -391,7 +394,17 @@ class App extends HookConsumerWidget {
     }
 
     return MaterialApp(
+      // Strings resolve when widgets build, so a language change rebuilds the
+      // whole app tree instead of leaving cached subtrees in the old language.
+      key: ValueKey(language),
       navigatorKey: _mobileRootNavigatorKey,
+      locale: language.locale,
+      supportedLocales: [for (final l in AppLanguage.values) l.locale],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       navigatorObservers: [voiceNoteRouteObserver],
       title: 'Buzz',
       theme: AppTheme.light(

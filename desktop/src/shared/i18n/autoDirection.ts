@@ -11,12 +11,16 @@
 // their own `dir`, so marking a list item or a quoted paragraph as well would
 // leave its quote/list container resolving to the UI direction. Nested blocks
 // inherit the container's direction instead.
-const BLOCKS = "p, ul, ol, blockquote, h1, h2, h3, h4, h5, h6, table";
+const BLOCKS = "p, h1, h2, h3, h4, h5, h6, table";
+// Lists and quotes follow the UI direction (markers and bars stay on the UI
+// start side, like the text alignment); only their text runs are ordered per
+// item (rtl.css), so they are not marked and nothing inside them is.
+const UI_ALIGNED = "li, blockquote";
 const SCOPE = ".message-markdown";
 
 function isTopLevel(element: Element): boolean {
   const scope = element.closest(SCOPE);
-  if (!scope) return false;
+  if (!scope || element.closest(UI_ALIGNED)) return false;
   const container = element.parentElement?.closest(BLOCKS);
   return !container || !scope.contains(container);
 }

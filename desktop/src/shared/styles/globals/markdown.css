@@ -388,3 +388,20 @@
 .dark .code-line-diff-remove {
   background-color: hsl(0 60% 50% / 0.12);
 }
+
+/*
+ * Message bubble: each message body is a rounded box that is only as wide as
+ * its text (up to a readable maximum). The tint is a low-alpha wash of the
+ * foreground colour, so it stays in harmony with the light, dark and system
+ * themes without needing its own palette. The corner on the avatar side is
+ * tighter, and logical radii make it mirror in the right-to-left layout.
+ */
+[data-testid="message-body"]
+  .message-markdown:not(.message-markdown .message-markdown) {
+  width: fit-content;
+  max-width: min(100%, 44rem);
+  padding: 0.5rem 0.875rem;
+  border-radius: 1.125rem;
+  border-start-start-radius: 0.375rem;
+  background-color: color-mix(in srgb, currentColor 6%, transparent);
+}

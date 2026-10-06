@@ -32,25 +32,27 @@
 
 @layer base {
   /*
-   * Chat content takes the direction of its own text in either UI language:
-   * Persian/Arabic blocks run right to left and align right, English blocks
-   * run left to right and align left, and mixed text is ordered by the Unicode
-   * bidi algorithm. Rendered messages get dir="auto" (autoDirection.ts, which
-   * also puts list markers on the correct side); the composer is managed by
-   * the editor, so it uses plaintext resolution, which aligns the same way.
+   * Chat text sits on the UI's side of its bubble in either language: the
+   * English UI aligns every message left and the Persian UI aligns every
+   * message right, whatever script the message is written in. Only the order of
+   * the runs inside a line follows the message itself (`plaintext` /
+   * dir="auto" from autoDirection.ts), so mixed Persian + English text keeps
+   * its punctuation and word order correct. Lists and quotes take the UI
+   * direction, which keeps markers and quote bars on the same side as the text.
    */
   :is(.message-markdown, .ProseMirror)
     :is(p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th) {
     unicode-bidi: plaintext;
-    text-align: start;
   }
-
-  /* Items and quoted paragraphs follow their list or quote (dir="auto" is set
-     on that container), not their own first letter, so a list stays aligned
-     with its markers even when one item is in the other script. */
-  .message-markdown :is(li, blockquote p) {
-    unicode-bidi: normal;
-    text-align: match-parent;
+  :root[dir="ltr"]
+    :is(.message-markdown, .ProseMirror)
+    :is(p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th) {
+    text-align: left;
+  }
+  :root[dir="rtl"]
+    :is(.message-markdown, .ProseMirror)
+    :is(p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th) {
+    text-align: right;
   }
 
   :is(input, textarea):not([type="checkbox"], [type="radio"]) {

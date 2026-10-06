@@ -529,9 +529,9 @@ class AnimatedAvatarCapture extends HookConsumerWidget {
                 ),
               ),
             ),
-            Positioned(
-              left: 0,
-              right: 0,
+            PositionedDirectional(
+              start: 0,
+              end: 0,
               bottom: 0,
               height: _animatedReviewRailHeight,
               child: _AnimatedReviewNav(
@@ -546,9 +546,9 @@ class AnimatedAvatarCapture extends HookConsumerWidget {
               ),
             ),
             if (error.value != null)
-              Positioned(
-                left: 0,
-                right: 0,
+              PositionedDirectional(
+                start: 0,
+                end: 0,
                 bottom: _animatedReviewRailHeight + Grid.xs,
                 child: _ErrorText(error.value!),
               ),

@@ -157,10 +157,10 @@ class SettingsProfileHeader extends HookConsumerWidget {
             GestureDetector(
               onTap: openStatusSheet,
               child: Padding(
-                padding: const EdgeInsets.only(
+                padding: const EdgeInsetsDirectional.only(
                   top: Grid.quarter,
-                  left: Grid.gutter,
-                  right: Grid.gutter,
+                  start: Grid.gutter,
+                  end: Grid.gutter,
                   bottom: Grid.half,
                 ),
                 child: Text.rich(

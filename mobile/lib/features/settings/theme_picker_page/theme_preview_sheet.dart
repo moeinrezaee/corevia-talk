@@ -161,7 +161,7 @@ class _ThemePreviewExperience extends HookConsumerWidget {
             top: false,
             minimum: const EdgeInsets.only(bottom: Grid.xs),
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(
+              padding: const EdgeInsetsDirectional.fromSTEB(
                 Grid.gutter,
                 Grid.twelve,
                 Grid.gutter,
@@ -281,7 +281,12 @@ class _ThemePreviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.fromLTRB(Grid.gutter, Grid.xxs, Grid.gutter, 0),
+    padding: const EdgeInsetsDirectional.fromSTEB(
+      Grid.gutter,
+      Grid.xxs,
+      Grid.gutter,
+      0,
+    ),
     child: DecoratedBox(
       key: ValueKey('theme-preview-page-${theme.name}'),
       decoration: BoxDecoration(
@@ -327,9 +332,9 @@ class _ThemePreviewPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                left: Grid.xs,
-                right: Grid.xs,
+              PositionedDirectional(
+                start: Grid.xs,
+                end: Grid.xs,
                 bottom: titleBottom,
                 child: Transform.translate(
                   key: ValueKey('theme-preview-name-motion-${theme.name}'),

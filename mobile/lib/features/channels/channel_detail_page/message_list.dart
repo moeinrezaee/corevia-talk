@@ -881,9 +881,9 @@ class _MessageList extends HookConsumerWidget {
           ),
         ),
         if (!showUnreadNavigation)
-          Positioned(
-            left: 0,
-            right: 0,
+          PositionedDirectional(
+            start: 0,
+            end: 0,
             top:
                 frostedAppBarHeight(
                   context,
@@ -896,9 +896,9 @@ class _MessageList extends HookConsumerWidget {
             ),
           ),
         if (showUnreadNavigation)
-          Positioned(
-            left: 0,
-            right: 0,
+          PositionedDirectional(
+            start: 0,
+            end: 0,
             top:
                 frostedAppBarHeight(
                   context,
@@ -919,9 +919,9 @@ class _MessageList extends HookConsumerWidget {
             ),
           )
         else
-          Positioned(
-            left: 0,
-            right: 0,
+          PositionedDirectional(
+            start: 0,
+            end: 0,
             bottom: navigationBottomInset + Grid.xs,
             child: Center(
               child: JumpToLatestSwitcher(

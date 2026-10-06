@@ -133,7 +133,7 @@ class _MorphingQuickActionsButton extends HookWidget {
                     children: [
                       Positioned.fill(
                         child: OverflowBox(
-                          alignment: Alignment.bottomRight,
+                          alignment: AlignmentDirectional.bottomEnd,
                           minWidth: openWidth,
                           maxWidth: openWidth,
                           minHeight: _kMorphOpenHeight,
@@ -155,7 +155,7 @@ class _MorphingQuickActionsButton extends HookWidget {
                                       0,
                                     ),
                                     child: Transform.scale(
-                                      alignment: Alignment.bottomRight,
+                                      alignment: AlignmentDirectional.bottomEnd,
                                       scale:
                                           _kMorphScale +
                                           ((1 - _kMorphScale) *
@@ -171,8 +171,8 @@ class _MorphingQuickActionsButton extends HookWidget {
                           ),
                         ),
                       ),
-                      Positioned(
-                        right: 0,
+                      PositionedDirectional(
+                        end: 0,
                         bottom: 0,
                         width: _kMorphClosedSize,
                         height: _kMorphClosedSize,

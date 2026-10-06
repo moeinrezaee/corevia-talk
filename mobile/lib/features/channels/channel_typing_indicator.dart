@@ -54,9 +54,9 @@ class ChannelTypingIndicator extends ConsumerWidget {
     final avatarCount = visibleEntries.length;
 
     return Padding(
-      padding: const EdgeInsets.only(
-        left: Grid.twelve,
-        right: Grid.twelve,
+      padding: const EdgeInsetsDirectional.only(
+        start: Grid.twelve,
+        end: Grid.twelve,
         bottom: Grid.xxs,
       ),
       child: Container(
@@ -82,8 +82,8 @@ class ChannelTypingIndicator extends ConsumerWidget {
               child: Stack(
                 children: [
                   for (var i = 0; i < avatarCount; i++)
-                    Positioned(
-                      left: i * 14.0,
+                    PositionedDirectional(
+                      start: i * 14.0,
                       child: SmallAvatar(
                         pubkey: visibleEntries[i].pubkey,
                         userCache: userCache,

@@ -41,7 +41,7 @@ class _BrowseChannelsSheet extends HookConsumerWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(
+        padding: const EdgeInsetsDirectional.fromSTEB(
           Grid.gutter,
           0,
           Grid.gutter,
@@ -179,7 +179,7 @@ class _JoinableChannelTile extends HookConsumerWidget {
         ),
         if (actionError.value case final error?)
           Align(
-            alignment: Alignment.centerLeft,
+            alignment: AlignmentDirectional.centerStart,
             child: Text(
               error,
               key: Key('browse-channel-error-${channel.id}'),

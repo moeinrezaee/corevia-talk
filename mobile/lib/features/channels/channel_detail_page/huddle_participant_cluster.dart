@@ -211,8 +211,8 @@ class _HuddleAnimatedParticipant extends StatelessWidget {
     final frameInset = (frameSize - slot.avatarDiameter) / 2;
     final targetOffset = Offset(slot.left - frameInset, slot.top - frameInset);
 
-    return Positioned(
-      left: 0,
+    return PositionedDirectional(
+      start: 0,
       top: 0,
       width: frameSize,
       height: frameSize + _huddleParticipantLabelSpace,
@@ -275,8 +275,8 @@ class _HuddleParticipantOverflow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      left: slot.left,
+    return PositionedDirectional(
+      start: slot.left,
       top: slot.top,
       width: slot.avatarDiameter,
       height: slot.avatarDiameter,

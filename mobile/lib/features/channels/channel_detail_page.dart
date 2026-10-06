@@ -683,7 +683,7 @@ class ChannelDetailPage extends HookConsumerWidget {
                           if (showConnectionSkeleton.value &&
                               ref.watch(forumPostsProvider(channel.id)).value ==
                                   null)
-                            Positioned(
+                            PositionedDirectional(
                               top:
                                   frostedAppBarHeight(
                                     context,
@@ -691,8 +691,8 @@ class ChannelDetailPage extends HookConsumerWidget {
                                         appBarTitleContentHeight,
                                   ) +
                                   Grid.xs,
-                              left: Grid.gutter,
-                              right: Grid.gutter,
+                              start: Grid.gutter,
+                              end: Grid.gutter,
                               bottom: 0,
                               child: _ForumConnectionSkeleton(
                                 status: sessionStatus,

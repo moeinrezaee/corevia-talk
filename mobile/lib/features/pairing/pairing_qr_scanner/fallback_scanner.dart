@@ -136,10 +136,10 @@ class FallbackPairingQrScanner extends HookWidget {
                       final radius =
                           _fallbackScannerSheetCornerRadius * progress;
 
-                      return Positioned(
+                      return PositionedDirectional(
                         top: offset,
-                        left: 0,
-                        right: 0,
+                        start: 0,
+                        end: 0,
                         height: viewport.height,
                         child: Semantics(
                           button: true,

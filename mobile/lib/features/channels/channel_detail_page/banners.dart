@@ -9,9 +9,9 @@ class _ReadOnlyNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.only(
-        left: Grid.gutter,
-        right: Grid.gutter,
+      padding: EdgeInsetsDirectional.only(
+        start: Grid.gutter,
+        end: Grid.gutter,
         top: Grid.xxs,
         bottom: MediaQuery.viewPaddingOf(context).bottom + Grid.xxs,
       ),
@@ -69,7 +69,7 @@ class _MessageTimelineSkeleton extends StatelessWidget {
       cacheExtent: 0,
       reverse: true,
       physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.fromLTRB(
+      padding: EdgeInsetsDirectional.fromSTEB(
         Grid.gutter,
         frostedAppBarHeight(
               context,

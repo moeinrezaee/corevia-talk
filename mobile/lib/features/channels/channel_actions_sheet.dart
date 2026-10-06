@@ -36,6 +36,7 @@ import '../../shared/profile/user_cache_provider.dart';
 import '../../shared/read_state/read_state_provider.dart';
 import '../../shared/read_state/read_state_time.dart';
 import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/text_direction.dart';
 
 part 'channel_details_page.dart';
 
@@ -130,7 +131,7 @@ class ChannelActionsSheet extends HookConsumerWidget {
       child: IconTheme.merge(
         data: const IconThemeData(size: 22),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(
+          padding: const EdgeInsetsDirectional.fromSTEB(
             Grid.gutter,
             0,
             Grid.gutter,
@@ -542,7 +543,7 @@ Future<void> _showMoveSectionSheet(
       child: IconTheme.merge(
         data: const IconThemeData(size: 22),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(
+          padding: const EdgeInsetsDirectional.fromSTEB(
             Grid.gutter,
             0,
             Grid.gutter,

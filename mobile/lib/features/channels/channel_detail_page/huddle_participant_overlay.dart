@@ -300,7 +300,7 @@ class _HuddleParticipantRoster extends ConsumerWidget {
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 360),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(
+                padding: const EdgeInsetsDirectional.fromSTEB(
                   Grid.gutter,
                   Grid.xs,
                   Grid.gutter,

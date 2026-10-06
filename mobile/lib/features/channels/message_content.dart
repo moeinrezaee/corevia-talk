@@ -37,6 +37,7 @@ import 'message_gallery_frame.dart';
 import 'message_media_geometry.dart';
 import 'voice_note_attachment.dart';
 import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/text_direction.dart';
 
 part 'message_content/media_carousel.dart';
 part 'message_content/inline_components.dart';
@@ -315,40 +316,44 @@ class MessageContent extends HookConsumerWidget {
       onChannelTap: resolvedChannelTap,
     );
 
-    final markdown = KeyedSubtree(
-      key: ValueKey(
-        '$finalContent\u0000$mentionPresentationKey\u0000$channelPresentationKey',
-      ),
-      child: GptMarkdown(
-        finalContent,
-        style: style,
-        followLinkColor: false,
-        // normalizeBareLinks() already turns bare URLs into Markdown links;
-        // gpt_markdown 1.2.0 autolinks by default, so both would run.
-        autolink: false,
-        codeBuilder: (context, name, code, closed) =>
-            _MessageCodeBlock(name: name, code: code),
-        linkBuilder: (context, linkText, url, linkStyle) => _buildLink(
-          context,
-          ref,
-          linkText,
-          url,
-          imetaByUrl[url],
-          linkStyle,
-          style,
-          resolvedChannelTap,
-          resolvedChannelNames,
+    final contentDirection = detectTextDirection(finalContent);
+    final markdown = _ContentDirection(
+      direction: contentDirection,
+      child: KeyedSubtree(
+        key: ValueKey(
+          '$finalContent\u0000$mentionPresentationKey\u0000$channelPresentationKey',
         ),
-        imageBuilder: (context, imageUrl, _, _) => _buildMedia(
-          context,
-          imageUrl,
-          imetaByUrl[imageUrl],
-          onReply: onMediaReply == null ? null : mediaReply,
-          onMore: onMediaMore == null ? null : mediaMore,
+        child: GptMarkdown(
+          finalContent,
+          style: style,
+          followLinkColor: false,
+          // normalizeBareLinks() already turns bare URLs into Markdown links;
+          // gpt_markdown 1.2.0 autolinks by default, so both would run.
+          autolink: false,
+          codeBuilder: (context, name, code, closed) =>
+              _MessageCodeBlock(name: name, code: code),
+          linkBuilder: (context, linkText, url, linkStyle) => _buildLink(
+            context,
+            ref,
+            linkText,
+            url,
+            imetaByUrl[url],
+            linkStyle,
+            style,
+            resolvedChannelTap,
+            resolvedChannelNames,
+          ),
+          imageBuilder: (context, imageUrl, _, _) => _buildMedia(
+            context,
+            imageUrl,
+            imetaByUrl[imageUrl],
+            onReply: onMediaReply == null ? null : mediaReply,
+            onMore: onMediaMore == null ? null : mediaMore,
+          ),
+          textAlign: textAlign,
+          maxLines: maxLines,
+          inlineComponents: inlineComponents,
         ),
-        textAlign: textAlign,
-        maxLines: maxLines,
-        inlineComponents: inlineComponents,
       ),
     );
     if (trailingGallery == null) return markdown;
@@ -769,8 +774,8 @@ class _MessageCodeBlock extends HookWidget {
         children: [
           if (name.isNotEmpty)
             Padding(
-              padding: const EdgeInsets.only(
-                left: Grid.twelve,
+              padding: const EdgeInsetsDirectional.only(
+                start: Grid.twelve,
                 top: Grid.half + Grid.quarter,
               ),
               child: Text(
@@ -783,7 +788,7 @@ class _MessageCodeBlock extends HookWidget {
           Stack(
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(
+                padding: EdgeInsetsDirectional.fromSTEB(
                   Grid.twelve,
                   name.isEmpty ? Grid.half + Grid.quarter : Grid.quarter,
                   44,
@@ -797,9 +802,9 @@ class _MessageCodeBlock extends HookWidget {
                   ),
                 ),
               ),
-              Positioned(
+              PositionedDirectional(
                 top: 0,
-                right: Grid.quarter,
+                end: Grid.quarter,
                 child: SizedBox(
                   width: 28,
                   height: 28,
@@ -927,7 +932,7 @@ class _MentionPill extends StatelessWidget {
     final fontSize = style.fontSize ?? 16;
 
     return Container(
-      padding: const EdgeInsets.fromLTRB(
+      padding: const EdgeInsetsDirectional.fromSTEB(
         Grid.half,
         Grid.quarter + 1,
         Grid.half,
@@ -963,3 +968,23 @@ class _MentionPill extends StatelessWidget {
 }
 
 String _markdownMentionName(String name) => name.replaceAll(' ', '\u00A0');
+
+/// Gives a message the direction of its own text, whatever the UI direction:
+/// Persian/Arabic messages run right to left and sit on the right, English
+/// ones left to right on the left, and mixed text is ordered by the bidi
+/// algorithm. The box spans the available width so `start` is that edge.
+class _ContentDirection extends StatelessWidget {
+  const _ContentDirection({required this.direction, required this.child});
+
+  final TextDirection? direction;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    if (direction == null) return child;
+    return SizedBox(
+      width: double.infinity,
+      child: Directionality(textDirection: direction!, child: child),
+    );
+  }
+}

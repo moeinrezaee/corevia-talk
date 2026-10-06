@@ -29,10 +29,10 @@ class BuzzSheetHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
+      padding: const EdgeInsetsDirectional.only(
         top: Grid.xxs,
-        left: Grid.gutter,
-        right: Grid.gutter,
+        start: Grid.gutter,
+        end: Grid.gutter,
         bottom: Grid.xs,
       ),
       child: SizedBox(
@@ -42,9 +42,9 @@ class BuzzSheetHeader extends StatelessWidget {
           children: [
             if (showDragHandle) const _SheetDragHandle(),
             if (title case final title?)
-              Positioned(
-                left: 64,
-                right: 64,
+              PositionedDirectional(
+                start: 64,
+                end: 64,
                 bottom: 0,
                 height: 44,
                 child: Center(
@@ -61,11 +61,14 @@ class BuzzSheetHeader extends StatelessWidget {
                 ),
               ),
             Align(
-              alignment: Alignment.bottomRight,
+              alignment: AlignmentDirectional.bottomEnd,
               child: trailing ?? const _SheetCloseButton(),
             ),
             if (leading case final leading?)
-              Align(alignment: Alignment.bottomLeft, child: leading),
+              Align(
+                alignment: AlignmentDirectional.bottomStart,
+                child: leading,
+              ),
           ],
         ),
       ),

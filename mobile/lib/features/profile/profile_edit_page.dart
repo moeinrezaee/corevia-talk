@@ -27,6 +27,7 @@ import 'profile_avatar_draft.dart';
 import 'profile_provider.dart';
 import 'profile_text_editor.dart';
 import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/text_direction.dart';
 
 /// Edits the current user's public profile metadata.
 class ProfileEditPage extends HookConsumerWidget {
@@ -312,7 +313,9 @@ class ProfileEditPage extends HookConsumerWidget {
                         onPressed: isClosingAvatar.value
                             ? null
                             : () => unawaited(closeAvatarEditor()),
-                        icon: const Icon(LucideIcons.arrowLeft),
+                        icon: const BidiFlip(
+                          child: Icon(LucideIcons.arrowLeft),
+                        ),
                       )
               : null,
           actions: isEditingAvatar.value
@@ -335,7 +338,7 @@ class ProfileEditPage extends HookConsumerWidget {
                     )
                   else
                     Padding(
-                      padding: const EdgeInsets.only(right: Grid.xs),
+                      padding: const EdgeInsetsDirectional.only(end: Grid.xs),
                       child: _ProfileActionPill(
                         key: const ValueKey('avatar-save'),
                         label: tl('Save'),
@@ -405,9 +408,9 @@ class ProfileEditPage extends HookConsumerWidget {
                     ),
                   ),
                   if (!profileHydrated || avatarSaveError.value != null)
-                    Positioned(
-                      left: Grid.gutter,
-                      right: Grid.gutter,
+                    PositionedDirectional(
+                      start: Grid.gutter,
+                      end: Grid.gutter,
                       bottom: Grid.xl,
                       child: Semantics(
                         liveRegion: true,
@@ -626,10 +629,12 @@ class _EditChevron extends StatelessWidget {
   const _EditChevron();
 
   @override
-  Widget build(BuildContext context) => Icon(
-    LucideIcons.chevronRight,
-    size: 18,
-    color: context.colors.onSurfaceVariant,
+  Widget build(BuildContext context) => BidiFlip(
+    child: Icon(
+      LucideIcons.chevronRight,
+      size: 18,
+      color: context.colors.onSurfaceVariant,
+    ),
   );
 }
 
@@ -673,7 +678,7 @@ class _ProfileTextEditSheet extends HookWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: EdgeInsets.fromLTRB(
+        padding: EdgeInsetsDirectional.fromSTEB(
           Grid.gutter,
           Grid.xxs,
           Grid.gutter,

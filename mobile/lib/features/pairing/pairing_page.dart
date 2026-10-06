@@ -21,6 +21,7 @@ import 'pairing_page/onboarding_wordmark.dart';
 import 'pairing_provider.dart';
 import 'pairing_qr_scanner.dart';
 import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/text_direction.dart';
 
 part 'pairing_page/onboarding_background.dart';
 part 'pairing_page/onboarding_colors.dart';
@@ -137,7 +138,9 @@ class PairingPage extends HookConsumerWidget {
                       : null,
                   leading: Theme.of(context).platform == TargetPlatform.iOS
                       ? Padding(
-                          padding: const EdgeInsets.only(left: Grid.quarter),
+                          padding: const EdgeInsetsDirectional.only(
+                            start: Grid.quarter,
+                          ),
                           child: IosGlassNavigationButton(
                             key: const ValueKey('pairing-ios-glass-back'),
                             icon: IosGlassNavigationIcon.back,
@@ -149,7 +152,9 @@ class PairingPage extends HookConsumerWidget {
                           ),
                         )
                       : IconButton(
-                          icon: const Icon(LucideIcons.arrowLeft),
+                          icon: const BidiFlip(
+                            child: Icon(LucideIcons.arrowLeft),
+                          ),
                           tooltip: tl('Back'),
                           onPressed: () => Navigator.of(context).pop(),
                         ),

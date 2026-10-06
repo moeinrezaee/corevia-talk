@@ -849,8 +849,8 @@ class ThreadDetailPage extends HookConsumerWidget {
             : null,
         iconColor: context.colors.primary,
         title: Padding(
-          padding: EdgeInsets.only(
-            left: usesNativeIosGlassBackButton
+          padding: EdgeInsetsDirectional.only(
+            start: usesNativeIosGlassBackButton
                 ? iosGlassChannelHeaderTitleSpacing
                 : 0,
           ),
@@ -934,9 +934,9 @@ class ThreadDetailPage extends HookConsumerWidget {
             ],
           ),
           if (threadViewportVisible)
-            Positioned(
-              left: 0,
-              right: 0,
+            PositionedDirectional(
+              start: 0,
+              end: 0,
               top: frostedAppBarHeight(context) + Grid.twelve,
               child: StickyDateHeader(
                 key: const ValueKey('thread-sticky-date-header'),
@@ -986,9 +986,9 @@ class ThreadDetailPage extends HookConsumerWidget {
                 ),
               ),
             ),
-          Positioned(
-            left: 0,
-            right: 0,
+          PositionedDirectional(
+            start: 0,
+            end: 0,
             bottom: navigationBottomInset + Grid.xs,
             child: Center(
               child: JumpToLatestSwitcher(

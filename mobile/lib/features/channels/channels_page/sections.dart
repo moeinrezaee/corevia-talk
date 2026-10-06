@@ -125,7 +125,7 @@ class _CustomSectionHeader extends ConsumerWidget {
       onTap: onToggle,
       behavior: HitTestBehavior.opaque,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(
+        padding: const EdgeInsetsDirectional.fromSTEB(
           Grid.gutter,
           _kSectionHeaderVerticalPadding,
           Grid.gutter,
@@ -136,7 +136,7 @@ class _CustomSectionHeader extends ConsumerWidget {
             SizedBox(
               width: _kChannelLeadingWidth,
               child: Align(
-                alignment: Alignment.centerLeft,
+                alignment: AlignmentDirectional.centerStart,
                 child: icon == null || icon.isEmpty
                     ? Icon(
                         LucideIcons.folder,
@@ -422,9 +422,9 @@ class _ChannelSection extends StatelessWidget {
             children: [
               if (channels.isEmpty)
                 Padding(
-                  padding: const EdgeInsets.only(
-                    left: _kChannelLabelInset,
-                    right: _kChannelSectionInset,
+                  padding: const EdgeInsetsDirectional.only(
+                    start: _kChannelLabelInset,
+                    end: _kChannelSectionInset,
                     top: Grid.half,
                     bottom: Grid.half,
                   ),
@@ -528,7 +528,7 @@ class _SectionHeader extends StatelessWidget {
       onTap: onToggle,
       behavior: HitTestBehavior.opaque,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(
+        padding: const EdgeInsetsDirectional.fromSTEB(
           Grid.gutter,
           _kSectionHeaderVerticalPadding,
           Grid.gutter,
@@ -539,7 +539,7 @@ class _SectionHeader extends StatelessWidget {
             SizedBox(
               width: _kChannelLeadingWidth,
               child: Align(
-                alignment: Alignment.centerLeft,
+                alignment: AlignmentDirectional.centerStart,
                 child: Icon(icon, size: _kChannelIconSize, color: sectionColor),
               ),
             ),

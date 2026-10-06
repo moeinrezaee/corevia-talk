@@ -45,14 +45,18 @@ class _CommunityMenuSheet extends StatelessWidget {
                     AppListRow(
                       icon: LucideIcons.userPlus,
                       title: tl('Invite'),
-                      trailing: const Icon(LucideIcons.chevronRight, size: 18),
+                      trailing: const BidiFlip(
+                        child: Icon(LucideIcons.chevronRight, size: 18),
+                      ),
                       onTap: () => openPage(invitePageBuilder!),
                     ),
                   if (appearancePageBuilder != null)
                     AppListRow(
                       icon: LucideIcons.sunMoon,
                       title: tl('Appearance'),
-                      trailing: const Icon(LucideIcons.chevronRight, size: 18),
+                      trailing: const BidiFlip(
+                        child: Icon(LucideIcons.chevronRight, size: 18),
+                      ),
                       onTap: () => openPage(appearancePageBuilder!),
                     ),
                 ],
@@ -63,7 +67,9 @@ class _CommunityMenuSheet extends StatelessWidget {
                   key: const Key('community-menu-switch'),
                   icon: LucideIcons.arrowLeftRight,
                   title: tl('Switch Community'),
-                  trailing: const Icon(LucideIcons.chevronRight, size: 18),
+                  trailing: const BidiFlip(
+                    child: Icon(LucideIcons.chevronRight, size: 18),
+                  ),
                   onTap: openSwitcher,
                 ),
               ],
@@ -157,9 +163,9 @@ class _CommunityHeaderTitle extends ConsumerWidget {
       onTap: onTap,
       child: SizedBox.expand(
         child: Align(
-          alignment: Alignment.centerLeft,
+          alignment: AlignmentDirectional.centerStart,
           child: Padding(
-            padding: const EdgeInsets.only(left: Grid.xxs),
+            padding: const EdgeInsetsDirectional.only(start: Grid.xxs),
             child: Text(
               title == null || title.isEmpty ? 'Community' : title,
               maxLines: 1,

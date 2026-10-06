@@ -295,7 +295,7 @@ class _SectionHeaderDelegate extends SliverPersistentHeaderDelegate {
   ) {
     return Container(
       color: context.colors.surface,
-      alignment: Alignment.centerLeft,
+      alignment: AlignmentDirectional.centerStart,
       padding: const EdgeInsets.symmetric(horizontal: Grid.gutter),
       child: Text(label, style: _sectionLabelStyle(context)),
     );
@@ -317,7 +317,7 @@ class _SectionHeader extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Container(
         height: _sectionHeaderExtent,
-        alignment: Alignment.centerLeft,
+        alignment: AlignmentDirectional.centerStart,
         padding: const EdgeInsets.symmetric(horizontal: Grid.gutter),
         child: Text(label, style: _sectionLabelStyle(context)),
       ),

@@ -78,7 +78,7 @@ class _CreateChannelSheet extends HookConsumerWidget {
     }
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(
+      padding: EdgeInsetsDirectional.fromSTEB(
         Grid.gutter,
         0,
         Grid.gutter,
@@ -527,7 +527,7 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
     }
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(
+      padding: EdgeInsetsDirectional.fromSTEB(
         Grid.gutter,
         0,
         Grid.gutter,
@@ -843,9 +843,9 @@ class _SelectedDmRecipientChip extends StatelessWidget {
               customBorder: const StadiumBorder(),
               onTap: enabled ? onDeleted : null,
               child: Padding(
-                padding: const EdgeInsets.only(
-                  left: Grid.half,
-                  right: Grid.twelve,
+                padding: const EdgeInsetsDirectional.only(
+                  start: Grid.half,
+                  end: Grid.twelve,
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,

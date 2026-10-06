@@ -30,6 +30,7 @@ import '../../shared/profile/user_profile.dart';
 import 'recent_searches_provider.dart';
 import 'search_provider.dart';
 import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/text_direction.dart';
 
 part 'search_page/message_tile.dart';
 
@@ -369,9 +370,9 @@ class SearchPage extends HookConsumerWidget {
               ),
             ),
             if (nativeIos && isSearchEditing.value)
-              Positioned(
+              PositionedDirectional(
                 top: activeFieldTop,
-                right: Grid.gutter,
+                end: Grid.gutter,
                 width: searchActiveFieldRightInset - Grid.gutter - Grid.xxs,
                 height: searchControlHeight,
                 child: Semantics(
@@ -387,11 +388,11 @@ class SearchPage extends HookConsumerWidget {
                       focusNode.unfocus();
                     },
                     child: Align(
-                      alignment: Alignment.topRight,
+                      alignment: AlignmentDirectional.topEnd,
                       child: SizedBox(
                         height: compactSearchFieldHeight,
                         child: Align(
-                          alignment: Alignment.centerRight,
+                          alignment: AlignmentDirectional.centerEnd,
                           child: Text(
                             tl('Cancel'),
                             style: filterChipTextStyle.copyWith(
@@ -635,7 +636,7 @@ class _RecentSearches extends StatelessWidget {
       ),
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(
+          padding: const EdgeInsetsDirectional.fromSTEB(
             Grid.gutter,
             Grid.xs,
             Grid.xxs,
@@ -692,10 +693,12 @@ class _RecentSearches extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Icon(
-                      LucideIcons.chevronRight,
-                      size: 16,
-                      color: context.colors.onSurfaceVariant,
+                    BidiFlip(
+                      child: Icon(
+                        LucideIcons.chevronRight,
+                        size: 16,
+                        color: context.colors.onSurfaceVariant,
+                      ),
                     ),
                   ],
                 ),

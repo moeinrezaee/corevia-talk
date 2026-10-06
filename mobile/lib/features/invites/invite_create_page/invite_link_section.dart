@@ -199,7 +199,7 @@ class _InviteOptionSheet<T> extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(
+            padding: const EdgeInsetsDirectional.fromSTEB(
               Grid.gutter,
               0,
               Grid.gutter,
@@ -242,10 +242,12 @@ class _InviteRowChevron extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(
-      LucideIcons.chevronRight,
-      size: 18,
-      color: context.colors.onSurfaceVariant,
+    return BidiFlip(
+      child: Icon(
+        LucideIcons.chevronRight,
+        size: 18,
+        color: context.colors.onSurfaceVariant,
+      ),
     );
   }
 }

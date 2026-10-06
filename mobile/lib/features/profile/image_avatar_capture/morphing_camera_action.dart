@@ -105,10 +105,10 @@ class _MorphingCameraAction extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        Positioned(
+        PositionedDirectional(
           key: controlKey,
-          left: 0,
-          right: 0,
+          start: 0,
+          end: 0,
           top: (_cameraControlRailHeight - _cameraControlSize) / 2,
           height: _cameraControlSize,
           child: Transform.translate(
@@ -117,9 +117,9 @@ class _MorphingCameraAction extends StatelessWidget {
           ),
         ),
         if (transitionLabel != null)
-          Positioned(
-            left: 0,
-            right: 0,
+          PositionedDirectional(
+            start: 0,
+            end: 0,
             top: _cameraControlRailHeight - 20,
             height: 20,
             child: Opacity(

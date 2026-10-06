@@ -3955,8 +3955,8 @@ void main() {
       );
       expect(
         summaryPadding.padding,
-        const EdgeInsets.only(
-          left: messageAvatarSize + messageAvatarContentGap,
+        const EdgeInsetsDirectional.only(
+          start: messageAvatarSize + messageAvatarContentGap,
           top: Grid.half,
           bottom: Grid.xs,
         ),

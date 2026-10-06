@@ -133,8 +133,8 @@ class _MessageReactionPopover extends HookWidget {
         final maxTop = math.max(safeTop, safeBottom - _reactionTrayMaxHeight);
         final top = proposedTop.clamp(safeTop, maxTop).toDouble();
         final trayScaleAlignment = showAbove
-            ? Alignment.bottomLeft
-            : Alignment.topLeft;
+            ? AlignmentDirectional.bottomStart
+            : AlignmentDirectional.topStart;
         final trayWidth = math.min(
           _reactionTrayMaxWidth,
           constraints.maxWidth - (Grid.xxs * 2),
@@ -178,9 +178,9 @@ class _MessageReactionPopover extends HookWidget {
                 onTap: () => select(null),
               ),
             ),
-            Positioned(
+            PositionedDirectional(
               top: top,
-              left: left,
+              start: left,
               width: trayWidth + _reactionTraySpringAllowance,
               height: _reactionTrayMaxHeight,
               child: _AnimatedReactionTray(
@@ -264,7 +264,7 @@ class _AnimatedReactionTray extends StatelessWidget {
             alignment: scaleAlignment,
             scale: lerpDouble(0.95, 1, appearance)!,
             child: Align(
-              alignment: Alignment.centerLeft,
+              alignment: AlignmentDirectional.centerStart,
               child: SizedBox(
                 width: width,
                 height: _reactionTrayMaxHeight,
@@ -277,7 +277,7 @@ class _AnimatedReactionTray extends StatelessWidget {
                   shape: const StadiumBorder(),
                   clipBehavior: Clip.antiAlias,
                   child: OverflowBox(
-                    alignment: Alignment.centerLeft,
+                    alignment: AlignmentDirectional.centerStart,
                     minWidth: trayWidth,
                     maxWidth: trayWidth,
                     minHeight: _reactionTrayMaxHeight,

@@ -166,9 +166,9 @@ class _FigmaHomeScreen extends ConsumerWidget {
         decoration: BoxDecoration(gradient: backgroundGradient),
         child: Stack(
           children: [
-            Positioned(
+            PositionedDirectional(
               key: const ValueKey('theme-preview-community-identity'),
-              left: 12,
+              start: 12,
               top: 38,
               child: Row(
                 children: [
@@ -207,8 +207,8 @@ class _FigmaHomeScreen extends ConsumerWidget {
               ),
             ),
             for (var index = 0; index < _rowTops.length; index++)
-              Positioned(
-                left: index % 4 == 0 ? 22 : 38,
+              PositionedDirectional(
+                start: index % 4 == 0 ? 22 : 38,
                 top: _rowTops[index],
                 child: _PreviewChannelSkeletonRow(
                   key: index % 4 == 0
@@ -348,10 +348,10 @@ class _FigmaChatScreen extends StatelessWidget {
             authorWidth: 76,
             bodyWidths: const [206, 148],
           ),
-          Positioned(
+          PositionedDirectional(
             key: const ValueKey('theme-chat-composer-preview'),
-            left: 16,
-            right: 16,
+            start: 16,
+            end: 16,
             bottom: 30,
             height: 52,
             child: DecoratedBox(
@@ -409,9 +409,9 @@ class _PreviewTimelineMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = context.colors;
-    return Positioned(
-      left: 18,
-      right: 18,
+    return PositionedDirectional(
+      start: 18,
+      end: 18,
       top: top,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -489,8 +489,8 @@ class _PreviewPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      left: left,
+    return PositionedDirectional(
+      start: left,
       top: top,
       width: width,
       height: height,

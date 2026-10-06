@@ -112,10 +112,10 @@ class ForumPostsView extends HookConsumerWidget {
                     await ref.read(forumPostsProvider(channel.id).future);
                   },
                   child: ListView.separated(
-                    padding: EdgeInsets.only(
+                    padding: EdgeInsetsDirectional.only(
                       top: frostedAppBarHeight(context),
-                      left: Grid.gutter,
-                      right: Grid.gutter,
+                      start: Grid.gutter,
+                      end: Grid.gutter,
                       bottom: Grid.xs,
                     ),
                     itemCount: posts.length,
@@ -144,9 +144,9 @@ class ForumPostsView extends HookConsumerWidget {
         ),
         if (isComposing.value) ...[
           Align(
-            alignment: Alignment.centerRight,
+            alignment: AlignmentDirectional.centerEnd,
             child: Padding(
-              padding: const EdgeInsets.only(right: Grid.xxs),
+              padding: const EdgeInsetsDirectional.only(end: Grid.xxs),
               child: IconButton(
                 onPressed: () => isComposing.value = false,
                 icon: const Icon(LucideIcons.x, size: 18),

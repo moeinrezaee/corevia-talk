@@ -102,7 +102,7 @@ class ManageChannelSheet extends HookConsumerWidget {
     }
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(
+      padding: EdgeInsetsDirectional.fromSTEB(
         Grid.gutter,
         0,
         Grid.gutter,
@@ -143,7 +143,7 @@ class ManageChannelSheet extends HookConsumerWidget {
             ],
             const SizedBox(height: Grid.xs),
             Align(
-              alignment: Alignment.centerRight,
+              alignment: AlignmentDirectional.centerEnd,
               child: FilledButton(
                 key: const ValueKey('manage-channel-save-details'),
                 onPressed: canSaveDetails ? saveDetails : null,
@@ -216,7 +216,7 @@ class ManageChannelSheet extends HookConsumerWidget {
                       ),
                       const SizedBox(height: Grid.xxs),
                       Align(
-                        alignment: Alignment.centerRight,
+                        alignment: AlignmentDirectional.centerEnd,
                         child: FilledButton.tonal(
                           onPressed: canEditCanvas
                               ? () => isEditingCanvas.value = true
@@ -334,7 +334,10 @@ class _ManageChannelSection extends StatelessWidget {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Padding(
-        padding: const EdgeInsets.only(left: Grid.half, bottom: Grid.xxs),
+        padding: const EdgeInsetsDirectional.only(
+          start: Grid.half,
+          bottom: Grid.xxs,
+        ),
         child: Text(
           label,
           style: context.textTheme.labelMedium?.copyWith(

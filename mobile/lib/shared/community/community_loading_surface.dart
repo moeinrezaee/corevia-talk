@@ -20,10 +20,10 @@ class CommunityLoadingSurface extends StatelessWidget {
           Center(
             child: CommunityAvatar(name: name, relayUrl: relayUrl, size: 132),
           ),
-        Positioned(
+        PositionedDirectional(
           top: MediaQuery.sizeOf(context).height / 2 + 66 + Grid.md,
-          left: 0,
-          right: 0,
+          start: 0,
+          end: 0,
           child: Center(
             child: BuzzLoadingIndicator(
               size: 18,

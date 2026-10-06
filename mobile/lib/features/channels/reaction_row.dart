@@ -566,7 +566,7 @@ class _ReactionDetailSheet extends HookConsumerWidget {
               child: Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(right: Grid.half),
+                    padding: const EdgeInsetsDirectional.only(end: Grid.half),
                     child: ChoiceChip(
                       key: const ValueKey('reaction-filter-all'),
                       label: Text(tlt('All {0}', [total])),
@@ -576,7 +576,7 @@ class _ReactionDetailSheet extends HookConsumerWidget {
                   ),
                   for (final reaction in reactions)
                     Padding(
-                      padding: const EdgeInsets.only(right: Grid.half),
+                      padding: const EdgeInsetsDirectional.only(end: Grid.half),
                       child: ChoiceChip(
                         key: ValueKey('reaction-filter-${reaction.emoji}'),
                         tooltip: dataset.displayName(reaction.emoji),
@@ -600,9 +600,9 @@ class _ReactionDetailSheet extends HookConsumerWidget {
           Flexible(
             child: ListView.builder(
               shrinkWrap: true,
-              padding: EdgeInsets.only(
-                left: Grid.gutter,
-                right: Grid.gutter,
+              padding: EdgeInsetsDirectional.only(
+                start: Grid.gutter,
+                end: Grid.gutter,
                 top: Grid.xxs,
                 bottom: MediaQuery.viewPaddingOf(context).bottom + Grid.half,
               ),

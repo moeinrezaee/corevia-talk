@@ -36,8 +36,10 @@ EphemeralChannelDisplay? ephemeralChannelDisplay(
     return EphemeralChannelDisplay(
       detailLabel: ttlSeconds == null ? null : formatCompactTtl(ttlSeconds),
       tooltipLabel: ttlSeconds == null
-          ? 'Ephemeral channel. Cleans up automatically after inactivity.'
-          : 'Ephemeral channel. Cleans up after ${formatVerboseTtl(ttlSeconds)} of inactivity.',
+          ? tl('Ephemeral channel. Cleans up automatically after inactivity.')
+          : tlt('Ephemeral channel. Cleans up after {0} of inactivity.', [
+              formatVerboseTtl(ttlSeconds),
+            ]),
     );
   }
 
@@ -47,8 +49,8 @@ EphemeralChannelDisplay? ephemeralChannelDisplay(
 
   return EphemeralChannelDisplay(
     detailLabel: compactRemaining,
-    tooltipLabel: compactRemaining == 'Cleanup due'
-        ? 'Ephemeral channel. Cleanup is due now.'
+    tooltipLabel: compactRemaining == tl('Cleanup due')
+        ? tl('Ephemeral channel. Cleanup is due now.')
         : tlt('Ephemeral channel. Cleans up {0}. Scheduled for {1}.', [
             verboseRemaining,
             absoluteDeadlineLabel,
@@ -58,29 +60,33 @@ EphemeralChannelDisplay? ephemeralChannelDisplay(
 
 String formatCompactRemaining(int remainingSeconds) {
   if (remainingSeconds <= 0) return tl('Cleanup due');
-  if (remainingSeconds <= 60) return '1m left';
+  if (remainingSeconds <= 60) return tlt('{0}m left', ['1']);
   if (remainingSeconds < 60 * 60) {
-    return '${math.max(1, (remainingSeconds / 60).ceil())}m left';
+    return tlt('{0}m left', ['${math.max(1, (remainingSeconds / 60).ceil())}']);
   }
   if (remainingSeconds < 60 * 60 * 24) {
-    return '${math.max(1, (remainingSeconds / (60 * 60)).ceil())}h left';
+    return tlt('{0}h left', [
+      '${math.max(1, (remainingSeconds / (60 * 60)).ceil())}',
+    ]);
   }
-  return '${math.max(1, (remainingSeconds / (60 * 60 * 24)).ceil())}d left';
+  return tlt('{0}d left', [
+    '${math.max(1, (remainingSeconds / (60 * 60 * 24)).ceil())}',
+  ]);
 }
 
 String formatVerboseRemaining(int remainingSeconds) {
-  if (remainingSeconds <= 0) return 'now';
-  if (remainingSeconds <= 60) return 'in 1 minute';
+  if (remainingSeconds <= 0) return tl('now');
+  if (remainingSeconds <= 60) return tl('in 1 minute');
   if (remainingSeconds < 60 * 60) {
     final minutes = math.max(1, (remainingSeconds / 60).ceil());
-    return 'in $minutes minute${minutes == 1 ? '' : 's'}';
+    return tlt(minutes == 1 ? 'in {0} minute' : 'in {0} minutes', ['$minutes']);
   }
   if (remainingSeconds < 60 * 60 * 24) {
     final hours = math.max(1, (remainingSeconds / (60 * 60)).ceil());
-    return 'in $hours hour${hours == 1 ? '' : 's'}';
+    return tlt(hours == 1 ? 'in {0} hour' : 'in {0} hours', ['$hours']);
   }
   final days = math.max(1, (remainingSeconds / (60 * 60 * 24)).ceil());
-  return 'in $days day${days == 1 ? '' : 's'}';
+  return tlt(days == 1 ? 'in {0} day' : 'in {0} days', ['$days']);
 }
 
 String formatCompactTtl(int ttlSeconds) {

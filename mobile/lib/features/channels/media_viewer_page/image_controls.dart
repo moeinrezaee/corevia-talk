@@ -18,7 +18,12 @@ class _MediaViewerBottomControls extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(Grid.sm, Grid.xxs, Grid.sm, 0),
+      padding: const EdgeInsetsDirectional.fromSTEB(
+        Grid.sm,
+        Grid.xxs,
+        Grid.sm,
+        0,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

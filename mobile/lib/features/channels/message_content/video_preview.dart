@@ -149,9 +149,9 @@ class _MessageVideoPreview extends HookConsumerWidget {
                     ),
                   ),
                 ),
-                Positioned(
-                  left: Grid.xxs,
-                  right: Grid.xxs,
+                PositionedDirectional(
+                  start: Grid.xxs,
+                  end: Grid.xxs,
                   bottom: Grid.xxs,
                   child: Text(
                     tl('Video'),

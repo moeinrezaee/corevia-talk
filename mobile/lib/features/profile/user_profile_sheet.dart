@@ -167,7 +167,7 @@ class UserProfileSheet extends HookConsumerWidget {
         children: [
           Flexible(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(
+              padding: EdgeInsetsDirectional.fromSTEB(
                 Grid.gutter,
                 0,
                 Grid.gutter,
@@ -196,9 +196,9 @@ class UserProfileSheet extends HookConsumerWidget {
                               ),
                             ),
                           ),
-                          Positioned(
-                            left: 0,
-                            right: 0,
+                          PositionedDirectional(
+                            start: 0,
+                            end: 0,
                             bottom: -(Grid.xl / 2),
                             child: _ProfilePresenceChip(presence: presence),
                           ),
@@ -234,10 +234,10 @@ class UserProfileSheet extends HookConsumerWidget {
                       SizedBox(
                         width: double.infinity,
                         child: Padding(
-                          padding: const EdgeInsets.only(
+                          padding: const EdgeInsetsDirectional.only(
                             top: Grid.xxs,
-                            left: Grid.gutter,
-                            right: Grid.gutter,
+                            start: Grid.gutter,
+                            end: Grid.gutter,
                             bottom: Grid.xxs,
                           ),
                           child: MessageContent(
@@ -326,9 +326,9 @@ void _showProfileCopyToast(BuildContext context) {
   );
   late final OverlayEntry entry;
   entry = OverlayEntry(
-    builder: (overlayContext) => Positioned(
-      left: Grid.gutter,
-      right: Grid.gutter,
+    builder: (overlayContext) => PositionedDirectional(
+      start: Grid.gutter,
+      end: Grid.gutter,
       bottom: MediaQuery.viewPaddingOf(overlayContext).bottom + Grid.xs,
       child: Material(
         color: colors.inverseSurface,

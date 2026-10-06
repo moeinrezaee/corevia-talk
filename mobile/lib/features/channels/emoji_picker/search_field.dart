@@ -12,7 +12,7 @@ class _EmojiSearchField extends StatelessWidget {
 
   const _EmojiSearchField({
     required this.controller,
-    this.padding = const EdgeInsets.fromLTRB(
+    this.padding = const EdgeInsetsDirectional.fromSTEB(
       Grid.gutter,
       0,
       Grid.gutter,

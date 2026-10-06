@@ -385,9 +385,9 @@ class ImageAvatarCapture extends HookConsumerWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Positioned(
-            left: 0,
-            right: 0,
+          PositionedDirectional(
+            start: 0,
+            end: 0,
             top: 0,
             height: imageAvatarCameraPreviewSize,
             child: Center(
@@ -446,9 +446,9 @@ class ImageAvatarCapture extends HookConsumerWidget {
               ),
             ),
           ),
-          Positioned(
-            left: 0,
-            right: 0,
+          PositionedDirectional(
+            start: 0,
+            end: 0,
             bottom: 0,
             height: _cameraControlRailHeight,
             child: TweenAnimationBuilder<double>(
@@ -611,9 +611,9 @@ class ImageAvatarCapture extends HookConsumerWidget {
             ),
           ),
           if (error.value != null)
-            Positioned(
-              left: 0,
-              right: 0,
+            PositionedDirectional(
+              start: 0,
+              end: 0,
               bottom: _cameraControlRailHeight + Grid.xs,
               child: Semantics(
                 liveRegion: true,

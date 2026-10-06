@@ -179,7 +179,9 @@ class _RecentPhotoGalleryPicker extends HookConsumerWidget {
                         : () => _runComposerAction(onBack),
                     tooltip: tl('Back to attachment options'),
                     visualDensity: VisualDensity.compact,
-                    icon: const Icon(LucideIcons.arrowLeft, size: 20),
+                    icon: const BidiFlip(
+                      child: Icon(LucideIcons.arrowLeft, size: 20),
+                    ),
                   ),
                 const SizedBox(width: Grid.quarter),
                 Expanded(
@@ -193,7 +195,7 @@ class _RecentPhotoGalleryPicker extends HookConsumerWidget {
                 ),
                 if (selectedCount > 0)
                   Padding(
-                    padding: const EdgeInsets.only(right: Grid.half),
+                    padding: const EdgeInsetsDirectional.only(end: Grid.half),
                     child: Text(
                       tlt('{0} selected', [selectedCount]),
                       style: context.textTheme.labelMedium?.copyWith(

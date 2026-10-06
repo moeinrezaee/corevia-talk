@@ -189,7 +189,7 @@ class _PulseBody extends ConsumerWidget {
         if (tab == PulseTab.agents) {
           final groups = groupAgentNotes(notes);
           return ListView.separated(
-            padding: const EdgeInsets.fromLTRB(
+            padding: const EdgeInsetsDirectional.fromSTEB(
               Grid.gutter,
               Grid.xxs,
               Grid.gutter,
@@ -206,7 +206,7 @@ class _PulseBody extends ConsumerWidget {
           );
         }
         return ListView.separated(
-          padding: const EdgeInsets.fromLTRB(
+          padding: const EdgeInsetsDirectional.fromSTEB(
             Grid.gutter,
             Grid.xxs,
             Grid.gutter,
@@ -306,7 +306,7 @@ class _TimelineSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: const EdgeInsets.fromLTRB(
+      padding: const EdgeInsetsDirectional.fromSTEB(
         Grid.gutter,
         Grid.xxs,
         Grid.gutter,

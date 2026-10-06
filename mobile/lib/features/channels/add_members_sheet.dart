@@ -132,7 +132,7 @@ class AddChannelMembersSheet extends HookConsumerWidget {
     }
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(
+      padding: EdgeInsetsDirectional.fromSTEB(
         Grid.gutter,
         0,
         Grid.gutter,
@@ -162,7 +162,7 @@ class AddChannelMembersSheet extends HookConsumerWidget {
               if (selectedUsers.value.isNotEmpty) ...[
                 const SizedBox(height: Grid.xxs),
                 Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: AlignmentDirectional.centerStart,
                   child: Wrap(
                     spacing: Grid.half,
                     runSpacing: Grid.half,

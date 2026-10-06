@@ -50,6 +50,7 @@ import 'voice_note_attachment.dart';
 import 'voice_note_composer_recorder.dart';
 import 'voice_note_recording.dart';
 import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/text_direction.dart';
 
 part 'compose_bar/helpers.dart';
 part 'compose_bar/agent_mention_labels.dart';

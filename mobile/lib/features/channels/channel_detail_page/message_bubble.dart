@@ -315,8 +315,8 @@ class _MessageBubble extends HookConsumerWidget {
                 ),
                 if (message.reactions.isNotEmpty)
                   Padding(
-                    padding: const EdgeInsets.only(
-                      left: messageAvatarSize + messageAvatarContentGap,
+                    padding: const EdgeInsetsDirectional.only(
+                      start: messageAvatarSize + messageAvatarContentGap,
                     ),
                     child: ReactionRow(
                       messageId: message.id,

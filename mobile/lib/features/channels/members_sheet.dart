@@ -89,7 +89,7 @@ class MembersSheet extends HookConsumerWidget {
 
     return Padding(
       key: const ValueKey('members-sheet-content-padding'),
-      padding: EdgeInsets.fromLTRB(Grid.gutter, 0, Grid.gutter, 0),
+      padding: EdgeInsetsDirectional.fromSTEB(Grid.gutter, 0, Grid.gutter, 0),
       child: ConstrainedBox(
         key: const ValueKey('members-sheet-viewport'),
         constraints: BoxConstraints(maxHeight: 400 + bottomClearance),

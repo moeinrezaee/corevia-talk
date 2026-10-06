@@ -163,7 +163,7 @@ Future<void> showMessageActions({
           ),
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(
+              padding: const EdgeInsetsDirectional.fromSTEB(
                 Grid.gutter,
                 0,
                 Grid.gutter,
@@ -285,7 +285,7 @@ void showImageActions({
         child: IconTheme.merge(
           data: const IconThemeData(size: 22),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(
+            padding: const EdgeInsetsDirectional.fromSTEB(
               Grid.gutter,
               0,
               Grid.gutter,
@@ -890,7 +890,7 @@ void _showEditSheet({
     isScrollControlled: true,
     showDragHandle: true,
     builder: (sheetContext) => Padding(
-      padding: EdgeInsets.fromLTRB(
+      padding: EdgeInsetsDirectional.fromSTEB(
         Grid.gutter,
         0,
         Grid.gutter,

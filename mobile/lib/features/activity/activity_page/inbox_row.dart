@@ -375,7 +375,7 @@ class _InboxRow extends HookConsumerWidget {
       context: context,
       builder: (sheetContext) => SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(
+          padding: const EdgeInsetsDirectional.fromSTEB(
             Grid.gutter,
             0,
             Grid.gutter,

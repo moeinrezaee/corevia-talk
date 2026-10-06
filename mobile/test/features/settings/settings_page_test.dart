@@ -232,6 +232,10 @@ void main() {
       find.text('Enabled in Buzz, but disabled in iOS Settings'),
       findsOneWidget,
     );
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('push-notifications-open-settings')),
+    );
+    await tester.pump();
     await tester.tap(
       find.byKey(const ValueKey('push-notifications-open-settings')),
     );

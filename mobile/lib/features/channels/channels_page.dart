@@ -60,6 +60,7 @@ import '../../shared/read_state/read_state_provider.dart';
 import '../../shared/read_state/read_state_time.dart';
 import 'unread_badge/observed_unread_event.dart';
 import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/text_direction.dart';
 
 part 'channels_page/body.dart';
 part 'channels_page/browse_channels_sheet.dart';

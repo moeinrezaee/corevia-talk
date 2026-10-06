@@ -25,6 +25,7 @@ import '../../shared/widgets/frosted_app_bar.dart';
 import '../../shared/widgets/frosted_scaffold.dart';
 import '../../shared/widgets/ios_glass_navigation_button.dart';
 import '../../shared/widgets/immediate_page_route.dart';
+import '../../shared/i18n/text_direction.dart';
 
 part 'settings_page/profile_section.dart';
 part 'settings_page/status_section.dart';
@@ -175,10 +176,12 @@ class _RowChevron extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(
-      LucideIcons.chevronRight,
-      size: 18,
-      color: context.colors.onSurfaceVariant,
+    return BidiFlip(
+      child: Icon(
+        LucideIcons.chevronRight,
+        size: 18,
+        color: context.colors.onSurfaceVariant,
+      ),
     );
   }
 }

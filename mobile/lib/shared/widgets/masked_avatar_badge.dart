@@ -342,8 +342,8 @@ class MaskedAvatarBadge extends StatelessWidget {
             clipper: AvatarBadgeMaskClipper(geometry: geometry),
             child: SizedBox.square(dimension: size, child: avatar),
           ),
-          Positioned(
-            left: center.dx - badgeSize / 2,
+          PositionedDirectional(
+            start: center.dx - badgeSize / 2,
             top: center.dy - badgeSize / 2,
             width: badgeSize,
             height: badgeSize,

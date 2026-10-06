@@ -187,7 +187,7 @@ class _ProfileTextEditSheet extends HookWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: EdgeInsets.fromLTRB(
+        padding: EdgeInsetsDirectional.fromSTEB(
           Grid.gutter,
           Grid.xxs,
           Grid.gutter,

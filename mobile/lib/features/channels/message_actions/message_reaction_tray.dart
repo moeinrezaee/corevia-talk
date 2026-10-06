@@ -25,7 +25,7 @@ class _MessageReactionTray extends StatelessWidget {
       trayKey: const ValueKey('message-action-reaction-tray'),
       animation: animation,
       trayWidth: trayWidth,
-      scaleAlignment: Alignment.bottomLeft,
+      scaleAlignment: AlignmentDirectional.bottomStart,
       message: message,
       pageContext: pageContext,
       pageRef: pageRef,

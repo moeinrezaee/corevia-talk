@@ -554,10 +554,10 @@ void main() {
             (widget) =>
                 widget is Padding &&
                 widget.padding ==
-                    const EdgeInsets.only(
+                    const EdgeInsetsDirectional.only(
                       top: Grid.xxs,
-                      left: Grid.gutter,
-                      right: Grid.gutter,
+                      start: Grid.gutter,
+                      end: Grid.gutter,
                       bottom: Grid.xs,
                     ),
           ),

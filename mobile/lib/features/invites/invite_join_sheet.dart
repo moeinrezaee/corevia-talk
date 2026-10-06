@@ -66,7 +66,12 @@ class InviteJoinSheet extends ConsumerWidget {
 
     return SafeArea(
       child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(Grid.sm, 0, Grid.sm, Grid.sm),
+        padding: const EdgeInsetsDirectional.fromSTEB(
+          Grid.sm,
+          0,
+          Grid.sm,
+          Grid.sm,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -201,7 +206,12 @@ class _InviteJoinSuccess extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(Grid.sm, 0, Grid.sm, Grid.sm),
+        padding: const EdgeInsetsDirectional.fromSTEB(
+          Grid.sm,
+          0,
+          Grid.sm,
+          Grid.sm,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,

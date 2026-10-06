@@ -709,7 +709,7 @@ class _MessageActionsPopover extends HookWidget {
                       return Transform.translate(
                         offset: translation,
                         child: Transform(
-                          alignment: Alignment.topLeft,
+                          alignment: AlignmentDirectional.topStart,
                           transform: Matrix4.diagonal3Values(scaleX, scaleY, 1),
                           child: child,
                         ),
@@ -718,8 +718,8 @@ class _MessageActionsPopover extends HookWidget {
                   ),
                 ),
               if (showReactionTray)
-                Positioned(
-                  left: trayRect.left,
+                PositionedDirectional(
+                  start: trayRect.left,
                   top: trayRect.top,
                   width: trayHostWidth,
                   height: trayRect.height,
@@ -761,7 +761,7 @@ class _MessageActionsPopover extends HookWidget {
                       return fadedChild;
                     }
                     return Transform.scale(
-                      alignment: Alignment.topLeft,
+                      alignment: AlignmentDirectional.topStart,
                       scale: ui.lerpDouble(0.96, 1, appearance)!,
                       child: fadedChild,
                     );

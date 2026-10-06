@@ -47,10 +47,10 @@ class _ComposerDockFrame extends HookWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        Positioned(
+        PositionedDirectional(
           key: const ValueKey('composer-footer-gradient'),
-          left: 0,
-          right: 0,
+          start: 0,
+          end: 0,
           bottom: 0,
           height: backdropHeight,
           child: IgnorePointer(
@@ -58,9 +58,9 @@ class _ComposerDockFrame extends HookWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(
-            left: Grid.twelve,
-            right: Grid.twelve,
+          padding: EdgeInsetsDirectional.only(
+            start: Grid.twelve,
+            end: Grid.twelve,
             bottom: MediaQuery.viewPaddingOf(context).bottom + Grid.xxs,
           ),
           child: Align(
@@ -165,10 +165,10 @@ class _ComposerOverlayPortal extends StatelessWidget {
             return Stack(
               children: [
                 if (surface != _AttachmentSurface.closed)
-                  Positioned(
-                    left: 0,
+                  PositionedDirectional(
+                    start: 0,
                     top: 0,
-                    right: 0,
+                    end: 0,
                     height: composerOrigin.dy,
                     child: ExcludeSemantics(
                       child: GestureDetector(

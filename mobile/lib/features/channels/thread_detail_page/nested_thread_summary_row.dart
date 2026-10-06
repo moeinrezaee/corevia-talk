@@ -42,8 +42,8 @@ class _NestedThreadSummaryRow extends ConsumerWidget {
       },
       child: Padding(
         key: ValueKey('nested-thread-summary-${replyMessage.id}'),
-        padding: const EdgeInsets.only(
-          left: messageAvatarSize + messageAvatarContentGap,
+        padding: const EdgeInsetsDirectional.only(
+          start: messageAvatarSize + messageAvatarContentGap,
           top: Grid.half,
           bottom: Grid.xs,
         ),
@@ -59,8 +59,8 @@ class _NestedThreadSummaryRow extends ConsumerWidget {
               child: Stack(
                 children: [
                   for (var i = 0; i < summary.participantPubkeys.length; i++)
-                    Positioned(
-                      left: i * 20.0,
+                    PositionedDirectional(
+                      start: i * 20.0,
                       child: SmallAvatar(
                         pubkey: summary.participantPubkeys[i],
                         userCache: userCache,

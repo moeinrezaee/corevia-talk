@@ -573,7 +573,7 @@ class _ComposerAgentMentionChip extends StatelessWidget {
       excludeSemantics: true,
       child: Container(
         key: const ValueKey('composer-agent-mention-chip'),
-        padding: const EdgeInsets.fromLTRB(
+        padding: const EdgeInsetsDirectional.fromSTEB(
           Grid.half,
           Grid.quarter + 1,
           Grid.half,

@@ -63,7 +63,7 @@ class _AppearanceModePicker extends HookWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(
+        padding: const EdgeInsetsDirectional.fromSTEB(
           Grid.gutter,
           Grid.xxs,
           Grid.gutter,
@@ -150,9 +150,9 @@ class _AppearanceModeOption extends StatelessWidget {
                       : context.colors.onSurface,
                 ),
               ),
-              Positioned(
-                left: Grid.xxs,
-                right: Grid.xxs,
+              PositionedDirectional(
+                start: Grid.xxs,
+                end: Grid.xxs,
                 bottom: Grid.xxs,
                 child: Text(
                   option.label,
@@ -191,7 +191,7 @@ class _AccentColorPicker extends HookWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(
+        padding: const EdgeInsetsDirectional.fromSTEB(
           Grid.gutter,
           Grid.xxs,
           Grid.gutter,

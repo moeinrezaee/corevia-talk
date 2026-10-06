@@ -20,6 +20,7 @@ import '../../shared/widgets/frosted_scaffold.dart';
 import '../../shared/widgets/modal_presentation.dart';
 import 'invite_create_provider.dart';
 import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/text_direction.dart';
 
 part 'invite_create_page/invite_link_section.dart';
 part 'invite_create_page/person_invite_section.dart';
@@ -65,7 +66,7 @@ class _CommunityInviteBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.fromLTRB(
+      padding: EdgeInsetsDirectional.fromSTEB(
         0,
         frostedAppBarHeight(context, nativeLargeTitle: true) + Grid.xs,
         0,

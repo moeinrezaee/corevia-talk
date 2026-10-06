@@ -182,8 +182,8 @@ class IosGlassNavigationButton extends HookWidget {
             child: Stack(
               key: const ValueKey('ios-glass-navigation-flutter-fallback'),
               children: [
-                Positioned(
-                  left: resolvedButtonCenterX - controlSize / 2,
+                PositionedDirectional(
+                  start: resolvedButtonCenterX - controlSize / 2,
                   top: (height - controlSize) / 2,
                   width: controlSize,
                   height: controlSize,

@@ -605,10 +605,10 @@ class MediaImageViewerPage extends HookConsumerWidget {
               ),
             ),
             if (defaultTargetPlatform == TargetPlatform.iOS)
-              Positioned(
+              PositionedDirectional(
                 top: 0,
-                left: 0,
-                right: 0,
+                start: 0,
+                end: 0,
                 height:
                     MediaQuery.paddingOf(context).top +
                     IosNavigationMetrics.of(context).compactHeight,

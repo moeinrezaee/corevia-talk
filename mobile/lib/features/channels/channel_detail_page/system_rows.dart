@@ -178,8 +178,8 @@ class _SystemMessageRow extends HookConsumerWidget {
                 ),
               if (reactions.isNotEmpty)
                 Padding(
-                  padding: EdgeInsets.only(
-                    left:
+                  padding: EdgeInsetsDirectional.only(
+                    start:
                         (usesMessageStyleLayout ? messageAvatarSize : 36) +
                         (usesMessageStyleLayout
                             ? messageAvatarContentGap
@@ -519,8 +519,8 @@ Widget _systemEventAvatar(
               userCache: userCache,
             ),
           ),
-          Positioned(
-            left: 12,
+          PositionedDirectional(
+            start: 12,
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () => showUserProfileSheet(
@@ -607,8 +607,8 @@ class _ThreadSummaryRow extends ConsumerWidget {
       },
       child: Padding(
         key: ValueKey('thread-summary-${message.id}'),
-        padding: const EdgeInsets.only(
-          left: messageAvatarSize + messageAvatarContentGap,
+        padding: const EdgeInsetsDirectional.only(
+          start: messageAvatarSize + messageAvatarContentGap,
           top: Grid.half,
           bottom: Grid.xs,
         ),
@@ -622,8 +622,8 @@ class _ThreadSummaryRow extends ConsumerWidget {
               child: Stack(
                 children: [
                   for (var i = 0; i < summary.participantPubkeys.length; i++)
-                    Positioned(
-                      left: i * 20.0,
+                    PositionedDirectional(
+                      start: i * 20.0,
                       child: SmallAvatar(
                         pubkey: summary.participantPubkeys[i],
                         userCache: userCache,

@@ -457,9 +457,9 @@ class ProfileAvatarEditor extends HookConsumerWidget {
           key: const ValueKey('avatar-editor-content'),
           clipBehavior: Clip.none,
           children: [
-            Positioned(
-              left: Grid.gutter,
-              right: Grid.gutter,
+            PositionedDirectional(
+              start: Grid.gutter,
+              end: Grid.gutter,
               top: topPadding,
               child: FadeTransition(
                 opacity: curvedEntrance,
@@ -545,10 +545,10 @@ class ProfileAvatarEditor extends HookConsumerWidget {
                 !reduceMotion &&
                 modeTransitionProgress < 1 &&
                 retainedPreview.value != null)
-              Positioned(
+              PositionedDirectional(
                 key: const ValueKey('avatar-mode-retained-preview'),
-                left: Grid.gutter,
-                right: Grid.gutter,
+                start: Grid.gutter,
+                end: Grid.gutter,
                 top:
                     retainedPreviewTop.value +
                     (basePreviewTop - retainedPreviewTop.value) *
@@ -562,9 +562,9 @@ class ProfileAvatarEditor extends HookConsumerWidget {
                 ),
               ),
             if (error.value != null)
-              Positioned(
-                left: Grid.gutter,
-                right: Grid.gutter,
+              PositionedDirectional(
+                start: Grid.gutter,
+                end: Grid.gutter,
                 bottom: _editorControlsBottom + _editorRailHeight,
                 child: Semantics(
                   liveRegion: true,

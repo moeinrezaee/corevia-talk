@@ -291,7 +291,7 @@ class _CommunitySwitcherPage extends HookConsumerWidget {
             ),
           );
     final body = SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(
+      padding: const EdgeInsetsDirectional.fromSTEB(
         Grid.gutter,
         Grid.xs,
         Grid.gutter,
@@ -377,7 +377,12 @@ class _CommunitySwitcherPage extends HookConsumerWidget {
                   // Paint the native bar last, as in FrostedScaffold. Painting
                   // Flutter content after a UIKit view can hide that content
                   // during this route's opacity/scale composition on iOS.
-                  Positioned(top: 0, left: 0, right: 0, child: header),
+                  PositionedDirectional(
+                    top: 0,
+                    start: 0,
+                    end: 0,
+                    child: header,
+                  ),
                 ],
               )
             : Column(
@@ -426,10 +431,10 @@ class _CommunitySwitcherPage extends HookConsumerWidget {
                   ),
                 ),
                 if (selected != null && controller.value == 0)
-                  Positioned(
+                  PositionedDirectional(
                     top: center.dy + _communityCenteredAvatarSize / 2 + Grid.md,
-                    left: 0,
-                    right: 0,
+                    start: 0,
+                    end: 0,
                     child: Center(
                       child: RepaintBoundary(
                         child: BuzzLoadingIndicator(
@@ -516,8 +521,8 @@ class _CommunityFlyingAvatar extends StatelessWidget {
       centerProgress,
     )!;
     final size = lerpDouble(centeredSize, destination.width, t)!;
-    return Positioned(
-      left: 0,
+    return PositionedDirectional(
+      start: 0,
       top: 0,
       width: _communityGridAvatarSize,
       height: _communityGridAvatarSize,
@@ -628,8 +633,8 @@ class _CommunityGridTile extends HookWidget {
                       ),
                     ),
                   ),
-                  Positioned(
-                    right: -Grid.twelve,
+                  PositionedDirectional(
+                    end: -Grid.twelve,
                     bottom: -Grid.twelve,
                     child: _CommunityGridAction(
                       community: community,

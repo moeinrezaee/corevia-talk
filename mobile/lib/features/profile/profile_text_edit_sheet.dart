@@ -112,7 +112,7 @@ class ProfileTextEditSheet extends HookWidget {
               top: false,
               child: SingleChildScrollView(
                 key: const ValueKey('profile-field-scroll-view'),
-                padding: EdgeInsets.fromLTRB(
+                padding: EdgeInsetsDirectional.fromSTEB(
                   Grid.gutter,
                   Grid.xxs,
                   Grid.gutter,

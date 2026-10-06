@@ -19,7 +19,12 @@ class _VideoViewerBottomControls extends StatelessWidget {
         ? controller
         : null;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(Grid.xs, Grid.xxs, Grid.xs, Grid.xxs),
+      padding: const EdgeInsetsDirectional.fromSTEB(
+        Grid.xs,
+        Grid.xxs,
+        Grid.xs,
+        Grid.xxs,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

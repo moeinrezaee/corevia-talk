@@ -19,9 +19,9 @@ class ConcentricSheetSurface extends HookWidget {
     this.color,
     this.backdropColor,
     this.corners = ConcentricSurfaceCorners.all,
-    this.padding = const EdgeInsets.only(
-      left: Grid.xxs,
-      right: Grid.xxs,
+    this.padding = const EdgeInsetsDirectional.only(
+      start: Grid.xxs,
+      end: Grid.xxs,
       bottom: Grid.xxs,
     ),
     this.providesSheetSurface = true,

@@ -519,9 +519,9 @@ class _FloatingTabDestination extends StatelessWidget {
                       ),
                     ),
                     if (showUnreadBadge)
-                      Positioned(
+                      PositionedDirectional(
                         top: 0,
-                        right: 0,
+                        end: 0,
                         child: AnimatedScale(
                           key: const ValueKey('activity-tab-unread-dot-scale'),
                           scale: selected ? 0 : 1,

@@ -43,7 +43,7 @@ class MessageGalleryFrame extends StatelessWidget {
           if (loading)
             ExcludeSemantics(
               child: Stack(
-                alignment: Alignment.centerLeft,
+                alignment: AlignmentDirectional.centerStart,
                 children: [
                   Opacity(opacity: 0, child: label),
                   const SkeletonBar(width: 48, height: 10),

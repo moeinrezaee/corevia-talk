@@ -15,7 +15,7 @@ void main() {
     final shape = popupTheme.shape! as RoundedRectangleBorder;
     final side = shape.side;
 
-    expect(popupTheme.textStyle?.fontFamily, 'Inter');
+    expect(popupTheme.textStyle?.fontFamily, isNull); // inherited from ThemeData.fontFamily
     expect(popupTheme.elevation, 8);
     expect(
       popupTheme.shadowColor,

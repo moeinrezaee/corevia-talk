@@ -12,6 +12,7 @@ import 'ios_glass_navigation_button.dart';
 import 'ios_glass_navigation_action.dart';
 import 'ios_navigation_bar.dart';
 import '../i18n/app_language.dart';
+import '../i18n/text_direction.dart';
 export 'ios_navigation_bar.dart' show IosNavigationAction;
 
 /// Minimum height of the frosted app bar content area below the safe area.
@@ -270,10 +271,10 @@ class FrostedAppBar extends StatelessWidget {
           height: barHeight + bottomHeight,
           child: Stack(
             children: [
-              Positioned(
+              PositionedDirectional(
                 top: 0,
-                left: 0,
-                right: 0,
+                start: 0,
+                end: 0,
                 height: barHeight,
                 child: IosNavigationBar(
                   onReadyChanged: onNativeReadyChanged,
@@ -369,7 +370,9 @@ class FrostedAppBar extends StatelessWidget {
                       child: IconButton(
                         onPressed: () => Navigator.of(context).pop(),
                         color: effectiveIconColor,
-                        icon: const Icon(LucideIcons.chevronLeft),
+                        icon: const BidiFlip(
+                          child: Icon(LucideIcons.chevronLeft),
+                        ),
                         tooltip: tl('Back'),
                       ),
                     )
@@ -393,15 +396,15 @@ class FrostedAppBar extends StatelessWidget {
                     child: centerTitle
                         ? title!
                         : Padding(
-                            padding: EdgeInsets.only(
-                              left: effectiveLeading != null
+                            padding: EdgeInsetsDirectional.only(
+                              start: effectiveLeading != null
                                   ? usesAutomaticIosGlassBackButton
                                         ? iosGlassChannelHeaderTitleSpacing
                                         : 0
                                   : horizontalInset < Grid.gutter
                                   ? Grid.gutter - horizontalInset
                                   : 0,
-                              right:
+                              end:
                                   actions.isEmpty &&
                                       horizontalInset < Grid.gutter
                                   ? Grid.gutter - horizontalInset
@@ -423,11 +426,16 @@ class FrostedAppBar extends StatelessWidget {
             height: barContentHeight + bottomHeight,
             child: Stack(
               children: [
-                Positioned(top: 0, left: 0, right: 0, child: titleRow),
-                Positioned(
+                PositionedDirectional(
+                  top: 0,
+                  start: 0,
+                  end: 0,
+                  child: titleRow,
+                ),
+                PositionedDirectional(
                   top: barContentHeight - bottomOverlap,
-                  left: 0,
-                  right: 0,
+                  start: 0,
+                  end: 0,
                   height: bottomHeight + bottomOverlap,
                   child: bottom!,
                 ),
@@ -486,7 +494,7 @@ class FrostedAppBar extends StatelessWidget {
           : background,
     );
 
-    return Positioned(top: 0, left: 0, right: 0, child: child);
+    return PositionedDirectional(top: 0, start: 0, end: 0, child: child);
   }
 }
 

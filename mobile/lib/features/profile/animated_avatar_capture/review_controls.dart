@@ -229,11 +229,11 @@ class _DesktopStyleFramingSlider extends HookWidget {
                   update(details.localPosition.dx, constraints.maxWidth),
               child: Stack(
                 clipBehavior: Clip.none,
-                alignment: Alignment.centerLeft,
+                alignment: AlignmentDirectional.centerStart,
                 children: [
-                  Positioned(
-                    left: 0,
-                    right: 0,
+                  PositionedDirectional(
+                    start: 0,
+                    end: 0,
                     top: 0,
                     bottom: 0,
                     child: DecoratedBox(
@@ -248,8 +248,8 @@ class _DesktopStyleFramingSlider extends HookWidget {
                       ),
                     ),
                   ),
-                  Positioned(
-                    left: 0,
+                  PositionedDirectional(
+                    start: 0,
                     top: 0,
                     bottom: 0,
                     width: handleX,
@@ -261,8 +261,8 @@ class _DesktopStyleFramingSlider extends HookWidget {
                     ),
                   ),
                   for (var index = 1; index < 8; index++)
-                    Positioned(
-                      left: constraints.maxWidth * index / 8 - 2,
+                    PositionedDirectional(
+                      start: constraints.maxWidth * index / 8 - 2,
                       child: Container(
                         width: 4,
                         height: 4,
@@ -274,8 +274,8 @@ class _DesktopStyleFramingSlider extends HookWidget {
                         ),
                       ),
                     ),
-                  Positioned(
-                    left: handleX - 1.5,
+                  PositionedDirectional(
+                    start: handleX - 1.5,
                     top: 0,
                     bottom: 0,
                     child: Container(

@@ -330,8 +330,8 @@ class _HuddleJoinSurface extends ConsumerWidget {
           };
 
     return Padding(
-      padding: const EdgeInsets.only(
-        left: messageAvatarSize + messageAvatarContentGap,
+      padding: const EdgeInsetsDirectional.only(
+        start: messageAvatarSize + messageAvatarContentGap,
         top: Grid.xxs,
       ),
       child: Container(
@@ -686,7 +686,7 @@ class _MobileHuddleCallPage extends ConsumerWidget {
         backgroundColor: context.colors.surface,
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(
+            padding: const EdgeInsetsDirectional.fromSTEB(
               Grid.gutter,
               Grid.xxs,
               Grid.gutter,

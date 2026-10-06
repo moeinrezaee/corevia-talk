@@ -139,7 +139,7 @@ class ForumThreadPage extends HookConsumerWidget {
         child: IconTheme.merge(
           data: const IconThemeData(size: 22),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(
+            padding: const EdgeInsetsDirectional.fromSTEB(
               Grid.gutter,
               0,
               Grid.gutter,
@@ -566,7 +566,10 @@ class _ReplyRow extends ConsumerWidget {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 32, top: Grid.half),
+            padding: const EdgeInsetsDirectional.only(
+              start: 32,
+              top: Grid.half,
+            ),
             child: MessageContent(
               content: reply.content,
               mentionNames: mentionNames,
@@ -600,7 +603,7 @@ class _ReplyRow extends ConsumerWidget {
         child: IconTheme.merge(
           data: const IconThemeData(size: 22),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(
+            padding: const EdgeInsetsDirectional.fromSTEB(
               Grid.gutter,
               0,
               Grid.gutter,

@@ -370,7 +370,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
           ),
           Padding(
             key: const ValueKey('channel-details-actions'),
-            padding: const EdgeInsets.fromLTRB(
+            padding: const EdgeInsetsDirectional.fromSTEB(
               Grid.gutter,
               _channelDetailsSectionPadding,
               Grid.gutter,
@@ -660,7 +660,7 @@ class _ChannelDetailsHero extends StatelessWidget {
   Widget build(BuildContext context) {
     final description = channel.description.trim();
     return Padding(
-      padding: const EdgeInsets.fromLTRB(
+      padding: const EdgeInsetsDirectional.fromSTEB(
         Grid.gutter,
         Grid.xs,
         Grid.gutter,
@@ -800,9 +800,11 @@ class _ChannelDetailsChevron extends StatelessWidget {
   const _ChannelDetailsChevron();
 
   @override
-  Widget build(BuildContext context) => Icon(
-    LucideIcons.chevronRight,
-    size: 18,
-    color: context.colors.onSurfaceVariant,
+  Widget build(BuildContext context) => BidiFlip(
+    child: Icon(
+      LucideIcons.chevronRight,
+      size: 18,
+      color: context.colors.onSurfaceVariant,
+    ),
   );
 }

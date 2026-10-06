@@ -264,7 +264,7 @@ class ForumPostCard extends HookConsumerWidget {
         child: IconTheme.merge(
           data: const IconThemeData(size: 22),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(
+            padding: const EdgeInsetsDirectional.fromSTEB(
               Grid.gutter,
               0,
               Grid.gutter,

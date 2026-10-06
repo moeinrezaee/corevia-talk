@@ -49,7 +49,7 @@ class _RemindersList extends ConsumerWidget {
           final due = reminder.isDue(now);
           final title = reminder.note?.trim().isNotEmpty == true
               ? reminder.note!.trim()
-              : reminder.target?.preview ?? 'Reminder';
+              : reminder.target?.preview ?? tl('Reminder');
           return ListTile(
             key: ValueKey('reminder-row-${reminder.id}'),
             leading: Icon(
@@ -63,7 +63,7 @@ class _RemindersList extends ConsumerWidget {
             subtitle: reminder.notBefore != null
                 ? Text(
                     due
-                        ? 'Due now'
+                        ? tl('Due now')
                         : tlt('Due {0}', [
                             _inboxTimestamp(reminder.notBefore!),
                           ]),
@@ -115,7 +115,7 @@ class _DraftsList extends ConsumerWidget {
         final draft = drafts[index];
         final channel = channelById[draft.channelId];
         final destination = channel == null
-            ? 'Unavailable channel'
+            ? tl('Unavailable channel')
             : channel.isDm
             ? resolveDmChannelDisplayLabel(
                 channel,
@@ -132,7 +132,9 @@ class _DraftsList extends ConsumerWidget {
           ),
           title: Text(draft.text, maxLines: 2, overflow: TextOverflow.ellipsis),
           subtitle: Text(
-            draft.threadHeadId != null ? 'Thread in $destination' : destination,
+            draft.threadHeadId != null
+                ? tlt('Thread in {0}', [destination])
+                : destination,
           ),
           trailing: IconButton(
             icon: const Icon(LucideIcons.trash2, size: 18),
@@ -179,7 +181,7 @@ String _inboxTimestamp(int unixSeconds, {DateTime? now}) {
     final minute = date.minute.toString().padLeft(2, '0');
     return '$hour:$minute ${date.hour < 12 ? 'AM' : 'PM'}';
   }
-  if (dayDiff == 1) return 'Yesterday';
+  if (dayDiff == 1) return tl('Yesterday');
 
   const months = [
     'Jan',

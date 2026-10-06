@@ -218,6 +218,7 @@ const Map<String, String> faMessages = {
   'Done': 'انجام شد',
   'Drafts': 'پیش‌نویس‌ها',
   'Drag the preview to reposition': 'برای جابه‌جایی، پیش‌نمایش را بکشید',
+  'Due now': 'موعد رسیده',
   'Due {0}': 'موعد {0}',
   'Duration': 'مدت',
   'Edit': 'ویرایش',
@@ -231,8 +232,14 @@ const Map<String, String> faMessages = {
       'در Buzz فعال است؛ وضعیت مجوز iOS در دسترس نیست',
   'Ended': 'پایان یافت',
   'Enter pairing code': 'کد جفت‌سازی را وارد کنید',
+  'Ephemeral channel. Cleans up after {0} of inactivity.':
+      'کانال موقت. پس از {0} عدم فعالیت پاک می‌شود.',
+  'Ephemeral channel. Cleans up automatically after inactivity.':
+      'کانال موقت. پس از عدم فعالیت به‌طور خودکار پاک می‌شود.',
   'Ephemeral channel. Cleans up {0}. Scheduled for {1}.':
       'کانال موقت. {0} پاک‌سازی می‌شود. زمان‌بندی‌شده برای {1}.',
+  'Ephemeral channel. Cleanup is due now.':
+      'کانال موقت. زمان پاک‌سازی فرا رسیده است.',
   'Error loading communities: {0}': 'خطا در بارگذاری انجمن‌ها: {0}',
   'Event rejected': 'رویداد رد شد',
   'Everyone': 'همه',
@@ -508,6 +515,7 @@ const Map<String, String> faMessages = {
   'Record animated avatar': 'ضبط آواتار متحرک',
   'Remind me': 'یادآوری کن',
   'Remind me about this message': 'دربارهٔ این پیام یادآوری کن',
+  'Reminder': 'یادآور',
   'Reminder set': 'یادآور تنظیم شد',
   'Reminders': 'یادآورها',
   'Reminders you set will show up here.':
@@ -632,10 +640,12 @@ const Map<String, String> faMessages = {
   'This reminder isn\'t linked to a message.':
       'این یادآور به هیچ پیامی وصل نیست.',
   'Thread': 'رشته',
+  'Thread in {0}': 'رشته در {0}',
   'Threads': 'رشته‌ها',
   'Timed out waiting for Huddle room admission.':
       'زمان انتظار برای پذیرش در اتاق گفتگوی صوتی تمام شد.',
   'To:': 'به:',
+  'Today': 'امروز',
   'Tomorrow at 9am': 'فردا ساعت ۹ صبح',
   'Travel & Places': 'سفر و مکان‌ها',
   'Try again': 'تلاش دوباره',
@@ -654,6 +664,7 @@ const Map<String, String> faMessages = {
   'Unarchive': 'خروج از بایگانی',
   'Unarchive #{0}?': '#{0} از بایگانی خارج شود؟',
   'Unarchive channel': 'خروج کانال از بایگانی',
+  'Unavailable channel': 'کانال در دسترس نیست',
   'Unfollow thread': 'لغو دنبال کردن رشته',
   'Unknown': 'ناشناخته',
   'Unknown identity': 'هویت ناشناخته',
@@ -697,6 +708,7 @@ const Map<String, String> faMessages = {
   'Write your canvas content in Markdown…':
       'محتوای بوم خود را با Markdown بنویسید…',
   'Write your post…': 'پست خود را بنویسید…',
+  'Yesterday': 'دیروز',
   'You': 'شما',
   'You must be 18 or older to use Buzz under Buzz\'s Terms.':
       'برای استفاده از Buzz طبق شرایط Buzz باید ۱۸ سال یا بیشتر داشته باشید.',
@@ -709,8 +721,10 @@ const Map<String, String> faMessages = {
       'دیگر پیام‌های این کانال را دریافت نمی‌کنید.',
   'Zoom in': 'بزرگ‌نمایی',
   'Zoom out': 'کوچک‌نمایی',
+  'in 1 minute': '۱ دقیقه دیگر',
   'last reply {0}': 'آخرین پاسخ {0}',
   'last {0}': 'آخرین {0}',
+  'now': 'اکنون',
   '{0} ({1} sections)': '{0} ({1} بخش)',
   '{0} accent color': 'رنگ تأکیدی {0}',
   '{0} and {1} are typing…': '{0} و {1} در حال تایپ هستند…',
@@ -725,4 +739,7 @@ const Map<String, String> faMessages = {
   '{0} selected': '{0} انتخاب‌شده',
   '{0} to confirm it’s you before sending your Buzz identity to another device.':
       'پیش از ارسال هویت Buzz به دستگاه دیگر، با {0} تأیید کنید که خودتان هستید.',
+  '{0}d left': '{0} روز مانده',
+  '{0}h left': '{0} ساعت مانده',
+  '{0}m left': '{0} دقیقه مانده',
 };

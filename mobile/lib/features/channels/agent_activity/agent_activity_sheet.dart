@@ -126,7 +126,7 @@ class AgentActivitySheet extends HookConsumerWidget {
                     )
                   : ListView.builder(
                       controller: sheetScrollController,
-                      padding: EdgeInsets.fromLTRB(
+                      padding: EdgeInsetsDirectional.fromSTEB(
                         Grid.gutter,
                         Grid.xxs,
                         Grid.gutter,

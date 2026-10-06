@@ -225,7 +225,7 @@ class _EmptyState extends StatelessWidget {
                   ? 'This forum is archived.'
                   : isMember
                   ? 'Start a discussion by creating the first post.'
-                  : 'Join this forum to create posts.',
+                  : tl('Join this forum to create posts.'),
               style: context.textTheme.bodySmall?.copyWith(
                 color: context.colors.onSurfaceVariant,
               ),

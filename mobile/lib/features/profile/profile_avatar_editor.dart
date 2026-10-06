@@ -635,9 +635,9 @@ class _AvatarModeControl extends StatelessWidget {
                     Expanded(
                       child: Semantics(
                         label: switch (mode) {
-                          ProfileAvatarMode.image => 'Image',
-                          ProfileAvatarMode.emoji => 'Emoji',
-                          ProfileAvatarMode.animated => 'Animated',
+                          ProfileAvatarMode.image => tl('Image'),
+                          ProfileAvatarMode.emoji => tl('Emoji'),
+                          ProfileAvatarMode.animated => tl('Animated'),
                         },
                         button: true,
                         selected: mode == selected,
@@ -652,9 +652,11 @@ class _AvatarModeControl extends StatelessWidget {
                               child: Center(
                                 child: Text(
                                   switch (mode) {
-                                    ProfileAvatarMode.image => 'Image',
-                                    ProfileAvatarMode.emoji => 'Emoji',
-                                    ProfileAvatarMode.animated => 'Animated',
+                                    ProfileAvatarMode.image => tl('Image'),
+                                    ProfileAvatarMode.emoji => tl('Emoji'),
+                                    ProfileAvatarMode.animated => tl(
+                                      'Animated',
+                                    ),
                                   },
                                   style: context.textTheme.labelLarge?.copyWith(
                                     fontWeight: mode == selected

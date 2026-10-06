@@ -479,7 +479,7 @@ class ChannelsPage extends HookConsumerWidget {
       appBar: FrostedAppBar(
         key: headerKey,
         onNativeReadyChanged: (ready) => nativeHeaderReady.value = ready,
-        nativeTitle: communityName.isEmpty ? 'Community' : communityName,
+        nativeTitle: communityName.isEmpty ? tl('Community') : communityName,
         nativeLargeTitle: true,
         nativeLeading: IosNavigationAction(
           label: tl('Community settings'),

@@ -73,9 +73,9 @@ class _PersonInviteSection extends HookConsumerWidget {
         candidatePubkey.value = null;
         searchController.clear();
         ref.invalidate(communityMembershipProvider);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(tl('Invited to the community'))),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(tl('Invited to the community'))));
       } catch (error) {
         if (context.mounted) {
           submitError.value = _inviteErrorMessage(error);
@@ -209,10 +209,7 @@ class _InviteeResolutionCard extends StatelessWidget {
             key: Key('community-invite-resolution-error-$pubkey'),
             title: tl('Could not resolve profile'),
             subtitle: shortPubkey(pubkey),
-            trailing: TextButton(
-              onPressed: onRetry,
-              child: Text(tl('Retry')),
-            ),
+            trailing: TextButton(onPressed: onRetry, child: Text(tl('Retry'))),
           ),
         ],
       ),
@@ -251,9 +248,9 @@ class _InviteeResolutionCard extends StatelessWidget {
                 key: const Key('community-invite-role'),
                 title: tl('Role'),
                 value: switch (selectedRole) {
-                  CommunityMemberRole.member => 'Member',
-                  CommunityMemberRole.admin => 'Admin',
-                  CommunityMemberRole.owner => 'Owner',
+                  CommunityMemberRole.member => tl('Member'),
+                  CommunityMemberRole.admin => tl('Admin'),
+                  CommunityMemberRole.owner => tl('Owner'),
                 },
                 trailing: const _InviteRowChevron(),
                 onTap: isSubmitting

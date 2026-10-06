@@ -15,6 +15,7 @@ import '../../shared/relay/relay.dart';
 import '../../shared/security/sensitive_action_authorizer.dart';
 import 'pairing_crypto.dart';
 import 'pairing_socket.dart';
+import '../../shared/i18n/app_language.dart';
 
 part 'pairing_provider_helpers.dart';
 part 'pairing_state.dart';
@@ -303,7 +304,7 @@ class PairingNotifier extends Notifier<PairingState> {
     _cleanup();
     state = PairingState(
       status: PairingStatus.error,
-      errorMessage: 'SAS code mismatch — pairing cancelled for security.',
+      errorMessage: tl('SAS code mismatch — pairing cancelled for security.'),
     );
   }
 
@@ -440,9 +441,9 @@ class PairingNotifier extends Notifier<PairingState> {
         if (state.status != PairingStatus.success &&
             state.status != PairingStatus.error) {
           _cleanup();
-          state = const PairingState(
+          state = PairingState(
             status: PairingStatus.error,
-            errorMessage: 'Pairing session timed out.',
+            errorMessage: tl('Pairing session timed out.'),
           );
         }
       });
@@ -451,7 +452,7 @@ class PairingNotifier extends Notifier<PairingState> {
       _cleanup();
       state = PairingState(
         status: PairingStatus.error,
-        errorMessage: 'Invalid pairing code: ${e.message}',
+        errorMessage: tlt('Invalid pairing code: {0}', [e.message]),
       );
     } catch (e) {
       if (generation != _pairingGeneration) return;
@@ -672,9 +673,9 @@ class PairingNotifier extends Notifier<PairingState> {
     final payload = msg['payload'] as String?;
     if (payload == null) {
       _cleanup();
-      state = const PairingState(
+      state = PairingState(
         status: PairingStatus.error,
-        errorMessage: 'Received empty payload from source.',
+        errorMessage: tl('Received empty payload from source.'),
       );
       return;
     }
@@ -697,9 +698,9 @@ class PairingNotifier extends Notifier<PairingState> {
     }
     if (msg['success'] != true) {
       _cleanup();
-      state = const PairingState(
+      state = PairingState(
         status: PairingStatus.error,
-        errorMessage: 'Desktop could not store the identity.',
+        errorMessage: tl('Desktop could not store the identity.'),
       );
       return;
     }
@@ -712,7 +713,7 @@ class PairingNotifier extends Notifier<PairingState> {
     _cleanup();
     state = PairingState(
       status: PairingStatus.error,
-      errorMessage: 'Source device aborted pairing: $reason',
+      errorMessage: tlt('Source device aborted pairing: {0}', [reason]),
     );
   }
 
@@ -781,7 +782,7 @@ class PairingNotifier extends Notifier<PairingState> {
       _cleanup();
       state = PairingState(
         status: PairingStatus.error,
-        errorMessage: 'Failed to import credentials: $e',
+        errorMessage: tlt('Failed to import credentials: {0}', [e]),
       );
     }
   }
@@ -852,7 +853,7 @@ class PairingNotifier extends Notifier<PairingState> {
     _cleanup();
     state = PairingState(
       status: PairingStatus.error,
-      errorMessage: 'Lost connection to pairing relay.',
+      errorMessage: tl('Lost connection to pairing relay.'),
     );
   }
 
@@ -881,7 +882,7 @@ class PairingNotifier extends Notifier<PairingState> {
       if (generation != _pairingGeneration) return;
       state = PairingState(
         status: PairingStatus.error,
-        errorMessage: 'Invalid pairing code: ${e.message}',
+        errorMessage: tlt('Invalid pairing code: {0}', [e.message]),
       );
     } on RelayException catch (e) {
       if (generation != _pairingGeneration) return;

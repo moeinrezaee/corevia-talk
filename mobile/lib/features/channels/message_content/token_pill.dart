@@ -40,7 +40,7 @@ class _ChannelLinkMd extends InlineMd {
       interactive: opensChannel,
       semanticLabel: opensChannel
           ? 'Open channel $channelName'
-          : 'Channel $channelName',
+          : tlt('Channel {0}', [channelName]),
       text: channelName,
       textStyle: config.style?.copyWith(fontWeight: FontWeight.w500),
     );

@@ -468,10 +468,13 @@ class MessageContent extends HookConsumerWidget {
             ? repository
             : '$repository · ${eventId!.substring(0, 8)}',
         semanticLabel: switch (type) {
-          'repo' => 'Repository $repository',
+          'repo' => tlt('Repository {0}', [repository]),
           'pr' =>
             'Pull request ${eventId!.substring(0, 8)} in repository $repository',
-          _ => 'Issue ${eventId!.substring(0, 8)} in repository $repository',
+          _ => tlt('Issue {0} in repository {1}', [
+            eventId!.substring(0, 8),
+            repository,
+          ]),
         },
         interactive: false,
       ),
@@ -729,7 +732,11 @@ class _MessageCodeBlock extends HookWidget {
     final isCopied = useState(false);
 
     Future<void> handleCopy() async {
-      await copyToClipboard(context, code, message: tl('Copied code to clipboard'));
+      await copyToClipboard(
+        context,
+        code,
+        message: tl('Copied code to clipboard'),
+      );
       if (!context.mounted) return;
       isCopied.value = true;
       Future.delayed(const Duration(seconds: 2), () {

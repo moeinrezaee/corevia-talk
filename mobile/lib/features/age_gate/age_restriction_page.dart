@@ -35,7 +35,9 @@ class AgeRestrictionPage extends StatelessWidget {
                   ),
                   const SizedBox(height: Grid.sm),
                   Text(
-                    tl("You must be 18 or older to use Buzz under Buzz's Terms."),
+                    tl(
+                      "You must be 18 or older to use Buzz under Buzz's Terms.",
+                    ),
                     textAlign: TextAlign.center,
                     style: context.textTheme.bodyLarge?.copyWith(
                       color: context.colors.onSurfaceVariant,

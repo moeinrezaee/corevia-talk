@@ -165,9 +165,9 @@ class _ForumConnectionSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final semanticsLabel = switch (status) {
-      SessionStatus.connecting => 'Connecting',
-      SessionStatus.reconnecting => 'Reconnecting',
-      SessionStatus.connected || SessionStatus.disconnected => 'Loading',
+      SessionStatus.connecting => tl('Connecting'),
+      SessionStatus.reconnecting => tl('Reconnecting'),
+      SessionStatus.connected || SessionStatus.disconnected => tl('Loading'),
     };
     return Semantics(
       key: const Key('forum-connection-skeleton'),

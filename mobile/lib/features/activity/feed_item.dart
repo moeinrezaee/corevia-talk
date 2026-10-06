@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import '../../shared/i18n/app_language.dart';
 
 @immutable
 class FeedItem {
@@ -56,27 +57,27 @@ class FeedItem {
   String get headline {
     switch (kind) {
       case 45001:
-        return 'Forum post';
+        return tl('Forum post');
       case 45003:
-        return 'Forum reply';
+        return tl('Forum reply');
       case 46010:
-        return 'Approval requested';
+        return tl('Approval requested');
       case 43001:
-        return 'Job requested';
+        return tl('Job requested');
       case 43002:
-        return 'Job accepted';
+        return tl('Job accepted');
       case 43003:
-        return 'Progress update';
+        return tl('Progress update');
       case 43004:
-        return 'Job result';
+        return tl('Job result');
       case 43005:
-        return 'Job cancelled';
+        return tl('Job cancelled');
       case 43006:
-        return 'Job failed';
+        return tl('Job failed');
       default:
         if (category == 'mention') return 'Mention';
         if (category == 'agent_activity') return 'Agent update';
-        return 'Channel update';
+        return tl('Channel update');
     }
   }
 
@@ -85,7 +86,7 @@ class FeedItem {
     final trimmed = content.trim();
     if (trimmed.isNotEmpty) return trimmed;
     if (kind == 46010) return 'A workflow is waiting for approval.';
-    return 'No additional details.';
+    return tl('No additional details.');
   }
 }
 

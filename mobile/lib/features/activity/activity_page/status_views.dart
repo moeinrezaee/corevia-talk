@@ -120,7 +120,7 @@ class _EmptyFilterState extends StatelessWidget {
       return _EmptySurface(
         icon: LucideIcons.mailOpen,
         message: tl('No unread messages'),
-        detail: 'Turn off the unread filter to see read messages.',
+        detail: tl('Turn off the unread filter to see read messages.'),
       );
     }
     final (icon, message) = switch (filter) {

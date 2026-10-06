@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../../shared/relay/relay.dart';
+import '../../shared/i18n/persian_date.dart';
 
 /// A top-level forum post with an optional thread summary.
 @immutable
@@ -237,6 +238,15 @@ String formatRelativeTime(int timestamp) {
   final now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
   final diff = now - timestamp;
 
+  if (usesPersianCalendar) {
+    if (diff < 60) return 'همین الان';
+    if (diff < 3600) return toPersianDigits('${diff ~/ 60} دقیقه پیش');
+    if (diff < 86400) return toPersianDigits('${diff ~/ 3600} ساعت پیش');
+    if (diff < 604800) return toPersianDigits('${diff ~/ 86400} روز پیش');
+    return persianNumericDate(
+      DateTime.fromMillisecondsSinceEpoch(timestamp * 1000, isUtc: true),
+    );
+  }
   if (diff < 60) return 'just now';
   if (diff < 3600) return '${diff ~/ 60}m ago';
   if (diff < 86400) return '${diff ~/ 3600}h ago';

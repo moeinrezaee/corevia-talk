@@ -147,7 +147,9 @@ class ManageChannelSheet extends HookConsumerWidget {
               child: FilledButton(
                 key: const ValueKey('manage-channel-save-details'),
                 onPressed: canSaveDetails ? saveDetails : null,
-                child: Text(isSavingDetails.value ? 'Saving…' : 'Save changes'),
+                child: Text(
+                  isSavingDetails.value ? 'Saving…' : tl('Save changes'),
+                ),
               ),
             ),
             const SizedBox(height: Grid.sm),
@@ -165,7 +167,9 @@ class ManageChannelSheet extends HookConsumerWidget {
                           maxLines: 8,
                           minLines: 6,
                           decoration: InputDecoration(
-                            hintText: tl('Write your canvas content in Markdown…'),
+                            hintText: tl(
+                              'Write your canvas content in Markdown…',
+                            ),
                           ),
                         ),
                         const SizedBox(height: Grid.xxs),
@@ -190,7 +194,7 @@ class ManageChannelSheet extends HookConsumerWidget {
                               child: Text(
                                 isSavingCanvas.value
                                     ? 'Saving…'
-                                    : 'Save canvas',
+                                    : tl('Save canvas'),
                               ),
                             ),
                           ],
@@ -205,7 +209,7 @@ class ManageChannelSheet extends HookConsumerWidget {
                       Text(
                         canvas.content?.trim().isNotEmpty == true
                             ? canvas.content!
-                            : 'No canvas set for this channel.',
+                            : tl('No canvas set for this channel.'),
                         style: context.textTheme.bodyMedium?.copyWith(
                           color: context.colors.onSurfaceVariant,
                         ),
@@ -220,7 +224,7 @@ class ManageChannelSheet extends HookConsumerWidget {
                           child: Text(
                             canvas.content?.trim().isNotEmpty == true
                                 ? 'Edit canvas'
-                                : 'Create canvas',
+                                : tl('Create canvas'),
                           ),
                         ),
                       ),

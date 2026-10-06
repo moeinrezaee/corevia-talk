@@ -179,7 +179,7 @@ class _InboxRow extends HookConsumerWidget {
                       color: actionColor,
                       foregroundColor: contrastForeground(actionColor),
                       icon: isDone ? LucideIcons.mail : LucideIcons.mailOpen,
-                      label: isDone ? 'Mark unread' : 'Mark as read',
+                      label: isDone ? tl('Mark unread') : tl('Mark as read'),
                       onTap: toggleReadState,
                     ),
                   ),
@@ -389,7 +389,7 @@ class _InboxRow extends HookConsumerWidget {
                   leading: Icon(
                     isDone ? LucideIcons.mail : LucideIcons.mailOpen,
                   ),
-                  title: Text(isDone ? 'Mark unread' : 'Mark as read'),
+                  title: Text(isDone ? tl('Mark unread') : tl('Mark as read')),
                   onTap: () {
                     Navigator.of(sheetContext).pop();
                     isDone ? onMarkUnread() : onMarkRead();

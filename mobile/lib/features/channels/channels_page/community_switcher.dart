@@ -266,7 +266,7 @@ class _CommunitySwitcherPage extends HookConsumerWidget {
               ),
               actions: [
                 IosNavigationAction(
-                  label: isEditing.value ? 'Done' : 'Edit',
+                  label: isEditing.value ? tl('Done') : tl('Edit'),
                   onPressed: () => isEditing.value = !isEditing.value,
                 ),
               ],
@@ -285,7 +285,7 @@ class _CommunitySwitcherPage extends HookConsumerWidget {
                 TextButton(
                   key: const Key('community-switcher-edit'),
                   onPressed: () => isEditing.value = !isEditing.value,
-                  child: Text(isEditing.value ? 'Done' : 'Edit'),
+                  child: Text(isEditing.value ? tl('Done') : tl('Edit')),
                 ),
               ],
             ),
@@ -329,7 +329,8 @@ class _CommunitySwitcherPage extends HookConsumerWidget {
                     semanticLabel: tl('Loading communities'),
                   ),
                 ),
-                error: (e, _) => Text(tlt('Error loading communities: {0}', [e])),
+                error: (e, _) =>
+                    Text(tlt('Error loading communities: {0}', [e])),
                 data: (communities) => _CommunityGrid(
                   children: [
                     for (final community in communities)
@@ -435,7 +436,9 @@ class _CommunitySwitcherPage extends HookConsumerWidget {
                           key: const Key('community-switch-loading'),
                           size: 18,
                           color: context.colors.onSecondaryContainer,
-                          semanticLabel: tlt('Loading {0}', [selected.community.name]),
+                          semanticLabel: tlt('Loading {0}', [
+                            selected.community.name,
+                          ]),
                         ),
                       ),
                     ),

@@ -189,7 +189,7 @@ class _VideoTransportBar extends HookConsumerWidget {
           unawaited(controller.play());
         }
       },
-      tooltip: value.isPlaying ? 'Pause video' : 'Play video',
+      tooltip: value.isPlaying ? tl('Pause video') : tl('Play video'),
       icon: Icon(
         value.isPlaying ? LucideIcons.pause : LucideIcons.play,
         color: Colors.white,
@@ -202,8 +202,10 @@ class _VideoTransportBar extends HookConsumerWidget {
     String speedLabel(double speed) =>
         '${speed.toString().replaceFirst(RegExp(r'\.0$'), '')}×';
     final speed = Tooltip(
-      message:
-          tlt('Playback speed: {0}. Tap for {1}', [speedLabel(value.playbackSpeed), speedLabel(nextSpeed)]),
+      message: tlt('Playback speed: {0}. Tap for {1}', [
+        speedLabel(value.playbackSpeed),
+        speedLabel(nextSpeed),
+      ]),
       child: TextButton(
         key: const ValueKey('message-media-video-viewer-speed'),
         onPressed: () {

@@ -39,7 +39,7 @@ class TappableFlappingBee extends HookConsumerWidget {
     return Semantics(
       button: true,
       label: tl('Buzz bee'),
-      hint: 'Tap to make its wings flutter',
+      hint: tl('Tap to make its wings flutter'),
       onTap: flutterWings,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,

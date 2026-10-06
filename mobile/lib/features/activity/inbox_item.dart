@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 
 import 'feed_item.dart';
+import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/persian_date.dart';
 
 /// Inbox filters, mirroring desktop's `InboxFilter` in
 /// `desktop/src/features/home/lib/inbox.ts`.
@@ -141,7 +143,7 @@ class InboxItem {
 }) {
   if (isDm) {
     return (
-      text: senderLabel.isNotEmpty ? 'DM from $senderLabel' : 'DM',
+      text: senderLabel.isNotEmpty ? tlt('DM from {0}', [senderLabel]) : 'DM',
       channelLabel: null,
     );
   }
@@ -246,6 +248,7 @@ List<InboxItem> buildInboxItems(
 /// Today / Yesterday / weekday (within 7 days) / short date.
 String inboxDayLabel(int unixSeconds, {DateTime? now}) {
   final current = now ?? DateTime.now();
+  if (usesPersianCalendar) return _persianInboxDayLabel(unixSeconds, current);
   final date = DateTime.fromMillisecondsSinceEpoch(unixSeconds * 1000);
   final today = DateTime(current.year, current.month, current.day);
   final day = DateTime(date.year, date.month, date.day);
@@ -281,4 +284,27 @@ String inboxDayLabel(int unixSeconds, {DateTime? now}) {
   ];
   final label = '${months[date.month - 1]} ${date.day}';
   return date.year == current.year ? label : '$label, ${date.year}';
+}
+
+/// Persian-calendar bucket label in Tehran time: امروز / دیروز / weekday /
+/// "۱۴ مهر" (with the year once it differs from the current one).
+String _persianInboxDayLabel(int unixSeconds, DateTime current) {
+  final instant = DateTime.fromMillisecondsSinceEpoch(
+    unixSeconds * 1000,
+    isUtc: true,
+  );
+  final date = toTehranTime(instant);
+  final now = toTehranTime(current);
+  final dayDiff = DateTime(
+    now.year,
+    now.month,
+    now.day,
+  ).difference(DateTime(date.year, date.month, date.day)).inDays;
+  if (dayDiff == 0) return tl('Today');
+  if (dayDiff == 1) return tl('Yesterday');
+  if (dayDiff < 7 && dayDiff > 0) return persianWeekdayName(date);
+  final sameYear =
+      gregorianToJalali(date.year, date.month, date.day).year ==
+      gregorianToJalali(now.year, now.month, now.day).year;
+  return persianMonthDay(instant, withYear: !sameYear);
 }

@@ -57,7 +57,7 @@ class _AnimatedRecordButton extends StatelessWidget {
               ? IosGlassNavigationButton(
                   key: const ValueKey('animated-avatar-record'),
                   icon: IosGlassNavigationIcon.shutter,
-                  label: busy ? null : 'Record',
+                  label: busy ? null : tl('Record'),
                   semanticLabel: tl('Record animated avatar'),
                   onPressed: busy ? null : onPressed,
                   width: busy ? 64 : constraints.maxWidth,

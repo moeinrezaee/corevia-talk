@@ -1,8 +1,9 @@
 import 'package:nostr/nostr.dart' as nostr;
+import '../i18n/app_language.dart';
 
 /// Neutral label rendered when an identity string cannot be read as a Nostr
 /// public key — malformed identities never leak truncated raw hex into the UI.
-const String unknownIdentityLabel = 'Unknown identity';
+String get unknownIdentityLabel => tl('Unknown identity');
 
 final RegExp _hexPubkeyPattern = RegExp(r'^[0-9a-fA-F]{64}$');
 

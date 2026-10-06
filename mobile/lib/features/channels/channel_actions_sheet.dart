@@ -205,7 +205,9 @@ class ChannelActionsSheet extends HookConsumerWidget {
                     leading: Icon(
                       isMuted ? LucideIcons.bell : LucideIcons.bellOff,
                     ),
-                    title: Text(isMuted ? 'Unmute channel' : 'Mute channel'),
+                    title: Text(
+                      isMuted ? tl('Unmute channel') : tl('Mute channel'),
+                    ),
                     onTap: () {
                       close();
                       final notifier = ref.read(channelMutesProvider.notifier);
@@ -286,8 +288,9 @@ class ChannelActionsSheet extends HookConsumerWidget {
                           context,
                           ref,
                           title: tlt('Leave #{0}?', [currentChannel.name]),
-                          body:
-                              tl('You’ll stop receiving messages from this channel.'),
+                          body: tl(
+                            'You’ll stop receiving messages from this channel.',
+                          ),
                           confirmLabel: tl('Leave'),
                           action: () => ref
                               .read(channelActionsProvider)
@@ -332,7 +335,9 @@ class ChannelActionsSheet extends HookConsumerWidget {
                           onTap: () => _confirmAndRun(
                             context,
                             ref,
-                            title: tlt('Unarchive #{0}?', [currentChannel.name]),
+                            title: tlt('Unarchive #{0}?', [
+                              currentChannel.name,
+                            ]),
                             body: tl('The channel will become active again.'),
                             confirmLabel: tl('Unarchive'),
                             action: () => ref
@@ -349,8 +354,9 @@ class ChannelActionsSheet extends HookConsumerWidget {
                             context,
                             ref,
                             title: tlt('Delete #{0}?', [currentChannel.name]),
-                            body:
-                                tl('This permanently deletes the channel and cannot be undone.'),
+                            body: tl(
+                              'This permanently deletes the channel and cannot be undone.',
+                            ),
                             confirmLabel: tl('Delete'),
                             action: () => ref
                                 .read(channelActionsProvider)
@@ -387,7 +393,7 @@ class _ChannelQuickActionsRow extends StatelessWidget {
       Expanded(
         child: _ChannelQuickAction(
           icon: isStarred ? LucideIcons.starOff : LucideIcons.star,
-          label: isStarred ? 'Unstar' : 'Star',
+          label: isStarred ? tl('Unstar') : tl('Star'),
           onTap: onToggleStar,
         ),
       ),
@@ -395,7 +401,7 @@ class _ChannelQuickActionsRow extends StatelessWidget {
       Expanded(
         child: _ChannelQuickAction(
           icon: isUnread ? LucideIcons.checkCheck : LucideIcons.circleDot,
-          label: isUnread ? 'Mark Read' : 'Mark Unread',
+          label: isUnread ? tl('Mark Read') : tl('Mark Unread'),
           onTap: onToggleRead,
         ),
       ),

@@ -244,12 +244,12 @@ class _PulseBody extends ConsumerWidget {
   }
 
   String _emptyMessage(PulseTab tab) => switch (tab) {
-    PulseTab.everyone => 'No notes yet. Be the first pulse.',
-    PulseTab.following => 'Follow people to build your Pulse timeline.',
-    PulseTab.liked => 'Heart notes to save them here.',
+    PulseTab.everyone => tl('No notes yet. Be the first pulse.'),
+    PulseTab.following => tl('Follow people to build your Pulse timeline.'),
+    PulseTab.liked => tl('Heart notes to save them here.'),
     PulseTab.agents =>
       'No agent notes yet. Agents post here when they publish.',
-    PulseTab.mine => 'Your notes will show up here.',
+    PulseTab.mine => tl('Your notes will show up here.'),
   };
 }
 

@@ -206,7 +206,9 @@ class _DeepLinkDispatcherState extends ConsumerState<DeepLinkDispatcher> {
           messenger?.showSnackBar(
             SnackBar(
               content: Text(
-                tl('Could not open this invite. Re-open the invite link to try again.'),
+                tl(
+                  'Could not open this invite. Re-open the invite link to try again.',
+                ),
               ),
             ),
           );

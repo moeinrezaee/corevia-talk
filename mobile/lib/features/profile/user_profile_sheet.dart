@@ -278,9 +278,11 @@ class UserProfileSheet extends HookConsumerWidget {
                                   : LucideIcons.messageSquare,
                               label: isOpeningDirectMessage.value
                                   ? 'Opening…'
-                                  : 'Message',
+                                  : tl('Message'),
                               isLoading: isOpeningDirectMessage.value,
-                              loadingSemanticLabel: 'Opening direct message',
+                              loadingSemanticLabel: tl(
+                                'Opening direct message',
+                              ),
                               onTap: openDirectMessage,
                             ),
                           ),
@@ -291,7 +293,9 @@ class UserProfileSheet extends HookConsumerWidget {
                             icon: copied.value
                                 ? LucideIcons.check
                                 : LucideIcons.key,
-                            label: copied.value ? 'Copied' : 'Copy public key',
+                            label: copied.value
+                                ? tl('Copied')
+                                : tl('Copy public key'),
                             isEnabled: npub != null,
                             onTap: copyPublicKey,
                           ),
@@ -373,10 +377,10 @@ class _ProfilePresenceChip extends StatelessWidget {
       _ => context.colors.onSurfaceVariant,
     };
     final label = switch (effectivePresence) {
-      'online' => 'Online',
-      'away' => 'Away',
-      'offline' => 'Offline',
-      _ => 'Unknown',
+      'online' => tl('Online'),
+      'away' => tl('Away'),
+      'offline' => tl('Offline'),
+      _ => tl('Unknown'),
     };
 
     return Semantics(

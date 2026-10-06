@@ -166,7 +166,7 @@ Future<bool> _showMessageActionsPopover({
     String? selectedActionId;
     final dialogRoute = RawDialogRoute<String>(
       barrierDismissible: true,
-      barrierLabel: 'Dismiss message actions',
+      barrierLabel: tl('Dismiss message actions'),
       barrierColor: Colors.transparent,
       transitionDuration: reduceMotion
           ? Duration.zero
@@ -313,7 +313,7 @@ List<_PopoverMessageAction> _buildPopoverMessageActions({
       actions.add(
         _PopoverMessageAction(
           id: unread ? 'markRead' : 'markUnread',
-          title: unread ? 'Mark read' : 'Mark unread',
+          title: unread ? tl('Mark read') : tl('Mark unread'),
           icon: unread ? LucideIcons.mailCheck : LucideIcons.mailOpen,
           group: _PopoverMessageActionGroup.primary,
           onSelected: () {
@@ -339,7 +339,7 @@ List<_PopoverMessageAction> _buildPopoverMessageActions({
     actions.add(
       _PopoverMessageAction(
         id: following ? 'unfollowThread' : 'followThread',
-        title: following ? 'Unfollow thread' : 'Follow thread',
+        title: following ? tl('Unfollow thread') : tl('Follow thread'),
         icon: following ? LucideIcons.bellOff : LucideIcons.bellRing,
         group: _PopoverMessageActionGroup.utility,
         onSelected: () {

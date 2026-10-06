@@ -566,7 +566,7 @@ class _MarkReadUnreadTile extends ConsumerWidget {
 
     return ListTile(
       leading: Icon(unread ? LucideIcons.mailCheck : LucideIcons.mailOpen),
-      title: Text(unread ? 'Mark read' : 'Mark unread'),
+      title: Text(unread ? tl('Mark read') : tl('Mark unread')),
       onTap: () {
         Navigator.of(context).pop();
         final notifier = ref.read(readStateProvider.notifier);
@@ -607,7 +607,7 @@ class _FollowThreadTile extends ConsumerWidget {
 
     return ListTile(
       leading: Icon(following ? LucideIcons.bellOff : LucideIcons.bellRing),
-      title: Text(following ? 'Unfollow thread' : 'Follow thread'),
+      title: Text(following ? tl('Unfollow thread') : tl('Follow thread')),
       onTap: () {
         Navigator.of(context).pop();
         final notifier = ref.read(threadFollowsProvider.notifier);
@@ -973,7 +973,9 @@ void _confirmDelete({
               onDeleted?.call();
             } catch (error) {
               messenger.showSnackBar(
-                SnackBar(content: Text(tlt('Failed to delete message: {0}', [error]))),
+                SnackBar(
+                  content: Text(tlt('Failed to delete message: {0}', [error])),
+                ),
               );
             }
           },

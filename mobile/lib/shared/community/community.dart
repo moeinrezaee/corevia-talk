@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:uuid/uuid.dart';
 
 import '../push/push_subscription.dart';
+import '../i18n/app_language.dart';
 
 const _uuid = Uuid();
 const _sentinel = Object();
@@ -168,7 +169,7 @@ class Community {
       if (parts.length > 2) return parts.first;
       return host;
     } catch (_) {
-      return 'Community';
+      return tl('Community');
     }
   }
 }

@@ -252,7 +252,7 @@ final dmDirectoryPreviewUsers = List<DirectoryUser>.unmodifiable([
     avatarUrl: _mockEmojiAvatar('🌱', '#A6DA95'),
     nip05Handle: 'jordan@demo.buzz',
   ),
-  const DirectoryUser(
+  DirectoryUser(
     pubkey: '3333333333333333333333333333333333333333333333333333333333333333',
     displayName: 'Priya Shah',
     nip05Handle: 'priya@demo.buzz',
@@ -263,7 +263,7 @@ final dmDirectoryPreviewUsers = List<DirectoryUser>.unmodifiable([
     avatarUrl: _mockEmojiAvatar('💻', '#C6A0F6'),
     nip05Handle: 'theo@demo.buzz',
   ),
-  const DirectoryUser(
+  DirectoryUser(
     pubkey: '5555555555555555555555555555555555555555555555555555555555555555',
     displayName: 'Sam Rivera',
     nip05Handle: 'sam@demo.buzz',

@@ -9,6 +9,7 @@ import '../../shared/deeplink/deep_link.dart';
 import '../../shared/relay/relay_provider.dart';
 import '../../shared/relay/relay_session.dart';
 import '../../shared/relay/relay_validation.dart';
+import '../../shared/i18n/app_language.dart';
 
 final inviteJoinHttpClientProvider = Provider<http.Client>((ref) {
   final client = http.Client();
@@ -436,19 +437,23 @@ String _friendlyInviteError(Object error) {
   final message = error.toString();
   if (message.contains('invite_expired')) return 'This invite has expired.';
   if (message.contains('invite_exhausted')) {
-    return 'This invite has reached its use limit. Ask for a new invite.';
+    return tl('This invite has reached its use limit. Ask for a new invite.');
   }
   if (message.contains('invite_invalid')) return 'This invite is not valid.';
   if (message.contains('join_policy_required')) {
-    return 'This invite approval has expired. Re-open the invite link to try again.';
+    return tl(
+      'This invite approval has expired. Re-open the invite link to try again.',
+    );
   }
   if (message.contains('SocketException') ||
       message.contains('Connection refused') ||
       message.contains('Network is unreachable') ||
       message.contains('No route to host')) {
-    return 'Could not reach the relay. Check your connection and try again.';
+    return tl(
+      'Could not reach the relay. Check your connection and try again.',
+    );
   }
-  return 'Could not join this community: $message';
+  return tlt('Could not join this community: {0}', [message]);
 }
 
 String _friendlyStarterSetupError(Object error) {
@@ -457,7 +462,9 @@ String _friendlyStarterSetupError(Object error) {
       message.contains('Connection refused') ||
       message.contains('Network is unreachable') ||
       message.contains('No route to host')) {
-    return 'Starter channels could not reach the relay. Check your connection and retry setup.';
+    return tl(
+      'Starter channels could not reach the relay. Check your connection and retry setup.',
+    );
   }
-  return 'Starter channels could not be set up. Retry setup to try again.';
+  return tl('Starter channels could not be set up. Retry setup to try again.');
 }

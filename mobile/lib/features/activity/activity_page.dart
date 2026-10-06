@@ -41,6 +41,7 @@ import 'inbox_local_state_provider.dart';
 import 'inbox_read_state.dart';
 import 'reminders_provider.dart';
 import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/persian_date.dart';
 
 part 'activity_page/header_actions.dart';
 part 'activity_page/inbox_row.dart';
@@ -238,7 +239,9 @@ class ActivityPage extends HookConsumerWidget {
           if (!isCurrentScope()) return;
           if (!context.mounted) return;
           ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-            SnackBar(content: Text(tlt('Could not reopen conversation: {0}', [error]))),
+            SnackBar(
+              content: Text(tlt('Could not reopen conversation: {0}', [error])),
+            ),
           );
           return;
         }
@@ -311,7 +314,9 @@ class ActivityPage extends HookConsumerWidget {
       if (channel == null) {
         ScaffoldMessenger.maybeOf(context)?.showSnackBar(
           SnackBar(
-            content: Text(tl('Channel for this reminder is no longer available.')),
+            content: Text(
+              tl('Channel for this reminder is no longer available.'),
+            ),
           ),
         );
         return;

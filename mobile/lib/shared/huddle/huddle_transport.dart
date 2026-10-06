@@ -198,7 +198,9 @@ final class HuddleTransport implements HuddleTransportClient {
         _state.phase != HuddleTransportPhase.failed) {
       throw HuddleTransportError(
         code: HuddleTransportErrorCode.invalidState,
-        message: tlt('Cannot connect while transport is {0}.', [_state.phase.name]),
+        message: tlt('Cannot connect while transport is {0}.', [
+          _state.phase.name,
+        ]),
       );
     }
 
@@ -291,7 +293,9 @@ final class HuddleTransport implements HuddleTransportClient {
         _state.phase != HuddleTransportPhase.connected) {
       throw HuddleTransportError(
         code: HuddleTransportErrorCode.invalidState,
-        message: tlt('Cannot send audio while transport is {0}.', [_state.phase.name]),
+        message: tlt('Cannot send audio while transport is {0}.', [
+          _state.phase.name,
+        ]),
       );
     }
 
@@ -736,7 +740,9 @@ final class HuddleTransport implements HuddleTransportClient {
     _fail(
       HuddleTransportError(
         code: HuddleTransportErrorCode.protocolViolation,
-        message: tl('Huddle roster revision gap; reconnecting for a fresh roster.'),
+        message: tl(
+          'Huddle roster revision gap; reconnecting for a fresh roster.',
+        ),
       ),
       generation,
     );

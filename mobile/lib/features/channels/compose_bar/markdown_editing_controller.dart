@@ -414,10 +414,13 @@ class _MarkdownEditingController extends TextEditingController {
             ? repository
             : '$repository · ${eventId!.substring(0, 8)}',
         switch (type) {
-          'repo' => 'Repository $repository',
+          'repo' => tlt('Repository {0}', [repository]),
           'pr' =>
             'Pull request ${eventId!.substring(0, 8)} in repository $repository',
-          _ => 'Issue ${eventId!.substring(0, 8)} in repository $repository',
+          _ => tlt('Issue {0} in repository {1}', [
+            eventId!.substring(0, 8),
+            repository,
+          ]),
         },
       ),
       _ => null,

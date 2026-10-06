@@ -59,7 +59,7 @@ class _ThreadMessageList extends StatelessWidget {
     if (!relayReplyState.hasValue && replies.isEmpty) {
       return relayReplyState.isLoading
           ? 'Loading replies…'
-          : 'Couldn’t load replies';
+          : tl('Couldn’t load replies');
     }
     final count =
         '${replies.length} ${replies.length == 1 ? 'reply' : 'replies'}';

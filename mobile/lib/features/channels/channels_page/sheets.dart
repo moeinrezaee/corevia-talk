@@ -622,7 +622,7 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                                     decoration: InputDecoration(
                                       hintText: hasSelectedUsers
                                           ? null
-                                          : 'Search for a person',
+                                          : tl('Search for a person'),
                                       border: InputBorder.none,
                                       enabledBorder: InputBorder.none,
                                       focusedBorder: InputBorder.none,
@@ -640,8 +640,9 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                                                 dimension: 16,
                                                 child: BuzzLoadingIndicator(
                                                   size: 16,
-                                                  semanticLabel:
-                                                      tl('Creating conversation'),
+                                                  semanticLabel: tl(
+                                                    'Creating conversation',
+                                                  ),
                                                 ),
                                               ),
                                             )
@@ -698,9 +699,7 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                              tl('Could not load people from this relay.'),
-                            ),
+                            Text(tl('Could not load people from this relay.')),
                             const SizedBox(height: Grid.half),
                             TextButton(
                               onPressed: () {
@@ -728,7 +727,7 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                         child: Text(
                           normalizedQuery.isEmpty
                               ? 'No people or agents available to message.'
-                              : 'No matching users.',
+                              : tl('No matching users.'),
                         ),
                       ),
                     );

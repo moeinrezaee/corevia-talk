@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import 'message_media.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Image metadata shared by carousel rendering and loading projection.
 @immutable
@@ -55,7 +56,7 @@ TrailingImageGallery? extractTrailingImageGallery(
             imeta?.alt ??
             (markdownLabel?.isNotEmpty == true
                 ? markdownLabel!
-                : 'Message image'),
+                : tl('Message image')),
         aspectRatio: imeta?.aspectRatio,
       ),
     );

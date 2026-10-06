@@ -11,7 +11,7 @@ void _showHuddleParticipantSpotlight({
 }) {
   _showHuddleParticipantOverlay(
     context: context,
-    barrierLabel: 'Dismiss participant',
+    barrierLabel: tl('Dismiss participant'),
     childBuilder: (dialogContext) => _HuddleParticipantSpotlight(
       ephemeralChannelId: ephemeralChannelId,
       pubkey: pubkey,
@@ -27,7 +27,7 @@ void _showHuddleParticipantRoster({
 }) {
   _showHuddleParticipantOverlay(
     context: context,
-    barrierLabel: 'Dismiss participant list',
+    barrierLabel: tl('Dismiss participant list'),
     childBuilder: (_) =>
         _HuddleParticipantRoster(ephemeralChannelId: ephemeralChannelId),
   );
@@ -179,7 +179,7 @@ class _HuddleParticipantSpotlight extends ConsumerWidget {
 
     return Semantics(
       label: active ? '$label, speaking' : label,
-      hint: 'Tap to close participant',
+      hint: tl('Tap to close participant'),
       button: true,
       excludeSemantics: true,
       child: GestureDetector(

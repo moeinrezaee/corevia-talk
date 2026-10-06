@@ -290,7 +290,7 @@ class _HuddleParticipantOverflow extends StatelessWidget {
         ),
         child: Semantics(
           label: tlt('{0} more participants', [count]),
-          hint: 'Tap to show participant list',
+          hint: tl('Tap to show participant list'),
           button: true,
           onTap: onTap,
           child: ExcludeSemantics(

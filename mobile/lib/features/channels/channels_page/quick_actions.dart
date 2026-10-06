@@ -200,10 +200,14 @@ class _MorphingQuickActionsButton extends HookWidget {
                                           ((1 - _kMorphScale) *
                                               surfaceProgress),
                                       child: Tooltip(
-                                        message: tl('Create or start conversation'),
+                                        message: tl(
+                                          'Create or start conversation',
+                                        ),
                                         child: Semantics(
                                           button: true,
-                                          label: tl('Create or start conversation'),
+                                          label: tl(
+                                            'Create or start conversation',
+                                          ),
                                           expanded: open,
                                           child: InkWell(
                                             customBorder: const CircleBorder(),

@@ -7,6 +7,7 @@ import '../../shared/profile/user_cache_provider.dart';
 import 'channel_identity_names_provider.dart';
 import 'channel_typing_provider.dart';
 import 'small_avatar.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Composer-adjacent status for people currently typing in a channel or thread.
 class ChannelTypingIndicator extends ConsumerWidget {
@@ -45,9 +46,9 @@ class ChannelTypingIndicator extends ConsumerWidget {
       for (final entry in entries) labels[entry.pubkey.toLowerCase()]!,
     ];
     final text = switch (names.length) {
-      1 => '${names[0]} is typing…',
-      2 => '${names[0]} and ${names[1]} are typing…',
-      _ => '${names[0]} and ${names.length - 1} others are typing…',
+      1 => tlt('{0} is typing…', [names[0]]),
+      2 => tlt('{0} and {1} are typing…', [names[0], names[1]]),
+      _ => tlt('{0} and {1} others are typing…', [names[0], names.length - 1]),
     };
     final visibleEntries = entries.take(3).toList();
     final avatarCount = visibleEntries.length;

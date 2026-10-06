@@ -71,14 +71,14 @@ class ComposeNotePage extends HookConsumerWidget {
     return FrostedScaffold(
       resizeToAvoidBottomInset: true,
       appBar: FrostedAppBar(
-        nativeTitle: _isReply ? 'Reply' : 'New note',
+        nativeTitle: _isReply ? tl('Reply') : tl('New note'),
         nativeActions: [
           IosNavigationAction(
             label: isSending.value
                 ? 'Sending…'
                 : _isReply
                 ? 'Reply'
-                : 'Post',
+                : tl('Post'),
             onPressed: hasText && !isSending.value ? submit : null,
           ),
         ],
@@ -104,10 +104,10 @@ class ComposeNotePage extends HookConsumerWidget {
                         size: 16,
                         semanticLabel: _isReply
                             ? 'Sending reply'
-                            : 'Publishing post',
+                            : tl('Publishing post'),
                       ),
                     )
-                  : Text(_isReply ? 'Reply' : 'Post'),
+                  : Text(_isReply ? tl('Reply') : tl('Post')),
             ),
           ),
         ],
@@ -150,7 +150,7 @@ class ComposeNotePage extends HookConsumerWidget {
                         decoration: InputDecoration(
                           hintText: _isReply
                               ? 'Post your reply'
-                              : 'What’s on your mind?',
+                              : tl('What’s on your mind?'),
                           border: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,

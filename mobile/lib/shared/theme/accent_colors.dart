@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../i18n/app_language.dart';
 
 /// Accent colors matching the desktop Buzz app.
 class AccentColor {
@@ -17,34 +18,34 @@ class AccentColor {
   });
 }
 
-const accentColors = [
+List<AccentColor> get accentColors => [
   AccentColor(
-    name: 'Neutral',
+    name: tl('Neutral'),
     light: Color(0xFF000000),
     dark: Color(0xFFE1E4E8),
     wireValue: 'neutral',
     useThemeForegroundInDark: true,
   ),
   AccentColor(
-    name: 'Blue',
+    name: tl('Blue'),
     light: Color(0xFF3B82F6),
     dark: Color(0xFF60A5FA),
     wireValue: '#3b82f6',
   ),
   AccentColor(
-    name: 'Cyan',
+    name: tl('Cyan'),
     light: Color(0xFF06B6D4),
     dark: Color(0xFF22D3EE),
     wireValue: '#06b6d4',
   ),
   AccentColor(
-    name: 'Green',
+    name: tl('Green'),
     light: Color(0xFF22C55E),
     dark: Color(0xFF4ADE80),
     wireValue: '#22c55e',
   ),
   AccentColor(
-    name: 'Orange',
+    name: tl('Orange'),
     light: Color(0xFFF97316),
     dark: Color(0xFFFB923C),
     wireValue: '#f97316',
@@ -56,25 +57,25 @@ const accentColors = [
     wireValue: '#ef4444',
   ),
   AccentColor(
-    name: 'Pink',
+    name: tl('Pink'),
     light: Color(0xFFEC4899),
     dark: Color(0xFFF472B6),
     wireValue: '#ec4899',
   ),
   AccentColor(
-    name: 'Lilac',
+    name: tl('Lilac'),
     light: Color(0xFFC0A2F1),
     dark: Color(0xFFC0A2F1),
     wireValue: '#c0a2f1',
   ),
   AccentColor(
-    name: 'Purple',
+    name: tl('Purple'),
     light: Color(0xFFA855F7),
     dark: Color(0xFFC084FC),
     wireValue: '#a855f7',
   ),
   AccentColor(
-    name: 'Indigo',
+    name: tl('Indigo'),
     light: Color(0xFF6366F1),
     dark: Color(0xFF818CF8),
     wireValue: '#6366f1',

@@ -136,7 +136,7 @@ class VoiceNoteAttachment extends HookConsumerWidget {
         ? 'Retry voice note'
         : state.isPlaying
         ? 'Pause voice note'
-        : 'Play voice note';
+        : tl('Play voice note');
 
     return Container(
       key: ValueKey('voice-note-attachment:$source'),

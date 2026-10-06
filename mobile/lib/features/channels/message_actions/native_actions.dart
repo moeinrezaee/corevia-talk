@@ -110,26 +110,31 @@ Future<bool> _showNativeMessageActions({
           channelId: channelId,
           message: message,
         );
-        action('read', unread ? 'Mark read' : 'Mark unread', 'envelope', () {
-          final notifier = ref.read(readStateProvider.notifier);
-          if (unread) {
-            notifier.markContextRead(
-              msgContextKey(message.id),
-              message.createdAt,
-            );
-          } else {
-            notifier.markContextUnread(
-              msgContextKey(message.id),
-              channelId: channelId,
-            );
-          }
-        });
+        action(
+          'read',
+          unread ? tl('Mark read') : tl('Mark unread'),
+          'envelope',
+          () {
+            final notifier = ref.read(readStateProvider.notifier);
+            if (unread) {
+              notifier.markContextRead(
+                msgContextKey(message.id),
+                message.createdAt,
+              );
+            } else {
+              notifier.markContextUnread(
+                msgContextKey(message.id),
+                channelId: channelId,
+              );
+            }
+          },
+        );
       }
       final rootId = message.rootId ?? message.id;
       final following = ref.read(threadFollowsProvider).isFollowing(rootId);
       action(
         'follow',
-        following ? 'Unfollow thread' : 'Follow thread',
+        following ? tl('Unfollow thread') : tl('Follow thread'),
         following ? 'bell.slash' : 'bell',
         () {
           final notifier = ref.read(threadFollowsProvider.notifier);

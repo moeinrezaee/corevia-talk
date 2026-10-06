@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'grid.dart';
 
-
 /// Avatar size for full channel and thread messages.
 const messageAvatarSize = 42.0;
 

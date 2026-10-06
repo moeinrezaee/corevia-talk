@@ -554,7 +554,9 @@ class MediaImageViewerPage extends HookConsumerWidget {
                                           semanticLabel: image.semanticLabel,
                                           errorBuilder: (_, _, _) =>
                                               _MediaLoadFailure(
-                                                message: tl('Failed to load image'),
+                                                message: tl(
+                                                  'Failed to load image',
+                                                ),
                                                 icon: LucideIcons.imageOff,
                                               ),
                                         ),

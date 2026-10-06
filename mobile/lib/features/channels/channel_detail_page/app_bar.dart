@@ -39,7 +39,7 @@ class _ConversationAppBarTitle extends StatelessWidget {
       child: Tooltip(
         message: channel.isDm
             ? 'Open conversation details'
-            : 'Open channel settings',
+            : tl('Open channel settings'),
         child: InkWell(
           key: ValueKey('$prefix-header-settings-trigger'),
           borderRadius: BorderRadius.circular(Radii.md),
@@ -166,10 +166,10 @@ class _ConversationAppBarTitle extends StatelessWidget {
   }
 
   final presenceLabel = switch (presence) {
-    'online' => 'Online',
-    'away' => 'Away',
-    'offline' => 'Offline',
-    _ => 'Unknown',
+    'online' => tl('Online'),
+    'away' => tl('Away'),
+    'offline' => tl('Offline'),
+    _ => tl('Unknown'),
   };
 
   return (

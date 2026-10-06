@@ -374,7 +374,9 @@ final class MethodChannelHuddleMedia implements HuddleMedia {
         _state.phase != HuddleMediaPhase.stopped) {
       throw HuddleMediaError(
         code: HuddleMediaErrorCode.invalidState,
-        message: tlt('Cannot prepare media while it is {0}.', [_state.phase.name]),
+        message: tlt('Cannot prepare media while it is {0}.', [
+          _state.phase.name,
+        ]),
       );
     }
     final capabilities = _capabilities ?? await discoverCapabilities();
@@ -439,7 +441,9 @@ final class MethodChannelHuddleMedia implements HuddleMedia {
     if (_state.phase != HuddleMediaPhase.prepared) {
       throw HuddleMediaError(
         code: HuddleMediaErrorCode.invalidState,
-        message: tlt('Cannot start media while it is {0}.', [_state.phase.name]),
+        message: tlt('Cannot start media while it is {0}.', [
+          _state.phase.name,
+        ]),
       );
     }
     final capabilities = _capabilities;
@@ -474,7 +478,9 @@ final class MethodChannelHuddleMedia implements HuddleMedia {
     if (_state.phase != HuddleMediaPhase.active) {
       throw HuddleMediaError(
         code: HuddleMediaErrorCode.invalidState,
-        message: tlt('Cannot change mute while media is {0}.', [_state.phase.name]),
+        message: tlt('Cannot change mute while media is {0}.', [
+          _state.phase.name,
+        ]),
       );
     }
     try {
@@ -502,8 +508,9 @@ final class MethodChannelHuddleMedia implements HuddleMedia {
     if (_state.phase != HuddleMediaPhase.active) {
       throw HuddleMediaError(
         code: HuddleMediaErrorCode.invalidState,
-        message:
-            tlt('Cannot change audio output while media is {0}.', [_state.phase.name]),
+        message: tlt('Cannot change audio output while media is {0}.', [
+          _state.phase.name,
+        ]),
       );
     }
     try {
@@ -533,7 +540,9 @@ final class MethodChannelHuddleMedia implements HuddleMedia {
     if (_state.phase != HuddleMediaPhase.active) {
       throw HuddleMediaError(
         code: HuddleMediaErrorCode.invalidState,
-        message: tlt('Cannot play audio while media is {0}.', [_state.phase.name]),
+        message: tlt('Cannot play audio while media is {0}.', [
+          _state.phase.name,
+        ]),
       );
     }
     if (_capabilities?.supportsOpusDecoding != true) {

@@ -97,7 +97,7 @@ class _MessageTile extends ConsumerWidget {
                       ? 'Direct message'
                       : hasChannelName
                       ? 'Message in'
-                      : 'Message',
+                      : tl('Message'),
                   style: activityContextTextStyle.copyWith(
                     color: context.colors.onSurfaceVariant,
                   ),

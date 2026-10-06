@@ -390,7 +390,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
                             ? context.colors.primary
                             : context.colors.onSurface,
                       ),
-                      label: isStarred ? 'Unstar' : 'Star',
+                      label: isStarred ? tl('Unstar') : tl('Star'),
                       onTap: toggleStar,
                     ),
                   ),
@@ -400,7 +400,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
                       key: const ValueKey('channel-details-mute-action'),
                       icon: isMuted ? LucideIcons.bell : LucideIcons.bellOff,
                       iconColor: isMuted ? context.colors.primary : null,
-                      label: isMuted ? 'Unmute' : 'Mute',
+                      label: isMuted ? tl('Unmute') : tl('Mute'),
                       onTap: toggleMute,
                     ),
                   ),
@@ -550,7 +550,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
                     icon: LucideIcons.logIn,
                     title: isJoining.value
                         ? 'Joining channel…'
-                        : 'Join channel',
+                        : tl('Join channel'),
                     onTap: isJoining.value ? null : joinChannel,
                   ),
                 if (resolvedChannel.isMember && !resolvedChannel.isArchived)
@@ -562,7 +562,9 @@ class ChannelDetailsPage extends HookConsumerWidget {
                       context,
                       ref,
                       title: tlt('Leave #{0}?', [resolvedChannel.name]),
-                      body: tl('You’ll stop receiving messages from this channel.'),
+                      body: tl(
+                        'You’ll stop receiving messages from this channel.',
+                      ),
                       confirmLabel: tl('Leave'),
                       action: () => ref
                           .read(channelActionsProvider)
@@ -623,8 +625,9 @@ class ChannelDetailsPage extends HookConsumerWidget {
                         context,
                         ref,
                         title: tlt('Delete #{0}?', [resolvedChannel.name]),
-                        body:
-                            tl('This permanently deletes the channel and cannot be undone.'),
+                        body: tl(
+                          'This permanently deletes the channel and cannot be undone.',
+                        ),
                         confirmLabel: tl('Delete'),
                         action: () => ref
                             .read(channelActionsProvider)
@@ -783,7 +786,7 @@ class _ChannelMemberPreviewRow extends StatelessWidget {
 
 String _channelMemberRoleLabel(String role) {
   if (role == 'bot') return 'Agent';
-  if (role.isEmpty) return 'Member';
+  if (role.isEmpty) return tl('Member');
   return '${role[0].toUpperCase()}${role.substring(1)}';
 }
 

@@ -275,7 +275,7 @@ class ProfileEditPage extends HookConsumerWidget {
         ? avatarDraft.value
         : null;
     final avatarHandoff = ref.watch(profileAvatarHandoffProvider);
-    final pageTitle = isEditingAvatar.value ? 'Edit Photo' : 'Profile';
+    final pageTitle = isEditingAvatar.value ? tl('Edit Photo') : tl('Profile');
 
     return PopScope(
       canPop: !isEditingAvatar.value,
@@ -415,7 +415,7 @@ class ProfileEditPage extends HookConsumerWidget {
                           avatarSaveError.value ??
                               (profileAsync.hasError
                                   ? "We couldn't load your profile. Go back and try again."
-                                  : 'Loading your profile…'),
+                                  : tl('Loading your profile…')),
                           textAlign: TextAlign.center,
                           style: context.textTheme.bodyMedium?.copyWith(
                             color:
@@ -514,7 +514,7 @@ class ProfileEditPage extends HookConsumerWidget {
 
 String _fieldValue(String? value) {
   final trimmed = value?.trim() ?? '';
-  return trimmed.isEmpty ? 'Not set' : trimmed;
+  return trimmed.isEmpty ? tl('Not set') : trimmed;
 }
 
 class _ProfilePhotoEditor extends ConsumerWidget {
@@ -710,7 +710,7 @@ class _ProfileTextEditSheet extends HookWidget {
             FilledButton(
               key: const ValueKey('profile-field-save'),
               onPressed: hasChanges && !isSaving.value ? save : null,
-              child: Text(isSaving.value ? 'Saving…' : 'Save'),
+              child: Text(isSaving.value ? 'Saving…' : tl('Save')),
             ),
           ],
         ),

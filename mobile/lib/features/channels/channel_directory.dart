@@ -90,7 +90,7 @@ Future<List<NostrEvent>> _fetchChannelMemberships(
   tags: {
     '#p': [pubkey],
   },
-  operation: 'Channel memberships',
+  operation: tl('Channel memberships'),
   ensureCurrent: ensureCurrent,
 );
 
@@ -100,7 +100,7 @@ Future<List<NostrEvent>> _fetchChannelDirectoryMetas(
 }) => _fetchPaginatedChannelEvents(
   session,
   kind: 39000,
-  operation: 'Channel directory',
+  operation: tl('Channel directory'),
   ensureCurrent: ensureCurrent,
 );
 

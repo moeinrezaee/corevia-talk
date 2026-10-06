@@ -52,7 +52,10 @@ const _starterChannelNamespace = '3ce33bea-8f09-5f1b-9c85-8a7d2659e6b0';
 
 /// A getter, not a constant: descriptions follow the active language.
 List<({String slug, String description})> get _starterChannels => [
-  (slug: 'general', description: tl('General conversation and community updates.')),
+  (
+    slug: 'general',
+    description: tl('General conversation and community updates.'),
+  ),
   (
     slug: 'welcome-everyone',
     description: tl('Say hi, ask a question, or share what brought you here.'),
@@ -502,7 +505,10 @@ class _SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: BuzzLoadingIndicator(size: 56, semanticLabel: tl('Starting Buzz')),
+        child: BuzzLoadingIndicator(
+          size: 56,
+          semanticLabel: tl('Starting Buzz'),
+        ),
       ),
     );
   }

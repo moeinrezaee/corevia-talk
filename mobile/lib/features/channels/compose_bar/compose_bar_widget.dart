@@ -155,7 +155,9 @@ class ComposeBar extends HookConsumerWidget {
     }, [appView, focusNode, voiceNote.isPreparing]);
     final resolvedHint =
         hintText ??
-        (channelName.isNotEmpty ? 'Message #$channelName' : 'Message\u2026');
+        (channelName.isNotEmpty
+            ? tlt('Message #{0}', [channelName])
+            : 'Message\u2026');
     useEffect(
       () {
         final target =
@@ -827,7 +829,7 @@ class ComposeBar extends HookConsumerWidget {
       }
 
       queueAttachment(
-        XFile.fromData(bytes, name: 'Pasted image'),
+        XFile.fromData(bytes, name: tl('Pasted image')),
         _PendingAttachmentKind.image,
       );
     }
@@ -904,7 +906,7 @@ class ComposeBar extends HookConsumerWidget {
                     .read(mediaUploadServiceProvider)
                     .pickGalleryImages();
                 queueImages(photos);
-              }, errorMessage: 'Unable to open your photo library.'),
+              }, errorMessage: tl('Unable to open your photo library.')),
               onVideo: () => chooseAttachment(() {
                 final service = ref.read(mediaUploadServiceProvider);
                 return pickThenQueue(

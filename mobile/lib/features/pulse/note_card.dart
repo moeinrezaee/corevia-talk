@@ -19,6 +19,7 @@ import 'compose_note_page.dart';
 import 'pulse_actions.dart';
 import 'pulse_models.dart';
 import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/persian_date.dart';
 
 class NoteCard extends HookConsumerWidget {
   final UserNote note;
@@ -283,7 +284,7 @@ class _FollowButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Grid.half, vertical: 2),
         child: Text(
-          isFollowing ? 'Following' : 'Follow',
+          isFollowing ? tl('Following') : tl('Follow'),
           style: context.textTheme.labelSmall?.copyWith(
             color: context.colors.primary,
             fontWeight: FontWeight.w700,
@@ -365,6 +366,13 @@ String _replyTargetLabel(UserNote note, IdentityNames names) {
 String formatPulseRelativeTime(int createdAt) {
   final date = DateTime.fromMillisecondsSinceEpoch(createdAt * 1000);
   final diff = DateTime.now().difference(date);
+  if (usesPersianCalendar) {
+    if (diff.inMinutes < 1) return 'همین الان';
+    if (diff.inHours < 1) return toPersianDigits('${diff.inMinutes} دقیقه');
+    if (diff.inDays < 1) return toPersianDigits('${diff.inHours} ساعت');
+    if (diff.inDays < 7) return toPersianDigits('${diff.inDays} روز');
+    return persianMonthDay(date);
+  }
   if (diff.inMinutes < 1) return 'just now';
   if (diff.inHours < 1) return '${diff.inMinutes}m';
   if (diff.inDays < 1) return '${diff.inHours}h';

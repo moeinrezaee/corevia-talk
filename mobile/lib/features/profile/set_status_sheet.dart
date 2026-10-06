@@ -18,6 +18,7 @@ import '../channels/emoji_picker.dart';
 import 'user_status.dart';
 import 'user_status_provider.dart';
 import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/persian_date.dart';
 
 const _emojiWellSize = 48.0;
 const _emojiGlyphSize = 28.0;
@@ -490,5 +491,10 @@ Future<DateTime?> _showNativeDateTimePicker(
   return selected.isBefore(minimum) ? minimum : selected;
 }
 
-String _formatUntil(DateTime value) =>
-    DateFormat('EEE, MMM d \u00B7 h:mm a').format(value);
+String _formatUntil(DateTime value) {
+  if (usesPersianCalendar) {
+    return '${persianWeekdayName(toTehranTime(value))}، '
+        '${persianMonthDay(value)} \u00B7 ${persianTime(value)}';
+  }
+  return DateFormat('EEE, MMM d \u00B7 h:mm a').format(value);
+}

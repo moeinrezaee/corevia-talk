@@ -1,6 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
+import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/persian_date.dart';
+
 // Re-export shortPubkey so existing callers continue to compile.
 export '../../shared/utils/string_utils.dart' show shortPubkey;
 
@@ -42,6 +45,7 @@ String formatDayHeading(int unixSeconds, {@visibleForTesting DateTime? now}) {
     isUtc: true,
   ).toLocal();
   now ??= DateTime.now();
+  if (usesPersianCalendar) return _formatPersianDayHeading(date, now);
   final dayDiff = _calendarDaysBetween(now, date);
 
   if (dayDiff == 0) return 'Today';
@@ -57,6 +61,32 @@ String formatDayHeading(int unixSeconds, {@visibleForTesting DateTime? now}) {
       ? _weekdayMonthDayFormat.format(date)
       : _monthDayYearFormat.format(date);
 }
+
+/// The Persian-calendar day label, in Tehran time: "امروز", "دیروز", a weekday,
+/// "شنبه، ۱۴ مهر", or "۱۴ مهر ۱۴۰۴".
+String _formatPersianDayHeading(DateTime date, DateTime now) {
+  final day = toTehranTime(date);
+  final today = toTehranTime(now);
+  final dayDiff = _calendarDaysBetween(
+    DateTime(today.year, today.month, today.day),
+    DateTime(day.year, day.month, day.day),
+  );
+  if (dayDiff == 0) return tl('Today');
+  if (dayDiff == 1) return tl('Yesterday');
+  if (dayDiff > 1 && dayDiff < _weekdayBandDays) {
+    return persianWeekdayName(day);
+  }
+  final sameYear =
+      gregorianToJalali(day.year, day.month, day.day).year ==
+      gregorianToJalali(today.year, today.month, today.day).year;
+  return sameYear
+      ? '${persianWeekdayName(day)}، ${persianMonthDay(date)}'
+      : persianMonthDay(date, withYear: true);
+}
+
+/// "۵ دقیقه پیش" style relative text in Persian digits.
+String _persianAgo(int value, String unit) =>
+    toPersianDigits('$value $unit پیش');
 
 /// Whole calendar days from [date] to [now], in local time. Rounded rather than
 /// truncated so a DST transition — a 23- or 25-hour day — still counts as one.
@@ -76,6 +106,11 @@ bool isSameDay(int a, int b) {
     b * 1000,
     isUtc: true,
   ).toLocal();
+  if (usesPersianCalendar) {
+    final a = toTehranTime(dtA);
+    final b = toTehranTime(dtB);
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
   return dtA.year == dtB.year && dtA.month == dtB.month && dtA.day == dtB.day;
 }
 
@@ -88,6 +123,14 @@ String relativeTime(int unixSeconds) {
     isUtc: true,
   ).toLocal();
   final diff = now.difference(time);
+
+  if (usesPersianCalendar) {
+    if (diff.inMinutes < 1) return 'همین الان';
+    if (diff.inMinutes < 60) return _persianAgo(diff.inMinutes, 'دقیقه');
+    if (diff.inHours < 24) return _persianAgo(diff.inHours, 'ساعت');
+    if (diff.inDays < 7) return _persianAgo(diff.inDays, 'روز');
+    return persianNumericDate(time);
+  }
 
   if (diff.inMinutes < 1) return 'just now';
   if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
@@ -105,6 +148,14 @@ String formatThreadSummaryLastReplyTime(
   nowSeconds ??= DateTime.now().millisecondsSinceEpoch ~/ 1000;
   var diff = nowSeconds - unixSeconds;
   if (diff < 0) diff = 0;
+
+  if (usesPersianCalendar) {
+    if (diff < 60) return 'همین الان';
+    if (diff < 3600) return _persianAgo(diff ~/ 60, 'دقیقه');
+    if (diff < 86400) return _persianAgo(diff ~/ 3600, 'ساعت');
+    if (diff < 604800) return _persianAgo(diff ~/ 86400, 'روز');
+    return 'در ${persianMonthDay(DateTime.fromMillisecondsSinceEpoch(unixSeconds * 1000, isUtc: true))}';
+  }
 
   if (diff < 60) return 'just now';
   if (diff < 3600) return _formatAgo(diff ~/ 60, 'minute');
@@ -134,5 +185,6 @@ String formatMessageTime(int unixSeconds) {
     unixSeconds * 1000,
     isUtc: true,
   ).toLocal();
+  if (usesPersianCalendar) return persianTime(date);
   return _messageTimeFormat.format(date);
 }

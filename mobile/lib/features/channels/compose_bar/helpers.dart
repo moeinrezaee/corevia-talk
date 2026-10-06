@@ -354,7 +354,7 @@ Future<_NonMemberMentionChoice?> _promptNonMemberMention(
           onPressed: () => Navigator.of(
             dialogContext,
           ).pop(_NonMemberMentionChoice.sendWithoutInviting),
-          child: Text(canInvite ? 'Do nothing' : 'Send anyway'),
+          child: Text(canInvite ? tl('Do nothing') : tl('Send anyway')),
         ),
         if (canInvite)
           TextButton(

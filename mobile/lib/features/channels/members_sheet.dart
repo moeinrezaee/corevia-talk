@@ -180,7 +180,7 @@ const _changeableRoles = ['admin', 'member', 'guest'];
 
 String _roleLabel(String role) {
   if (role == 'bot') return 'Agent';
-  if (role.isEmpty) return 'Member';
+  if (role.isEmpty) return tl('Member');
   return '${role[0].toUpperCase()}${role.substring(1)}';
 }
 
@@ -363,7 +363,9 @@ class _MemberTile extends ConsumerWidget {
                         context: context,
                         builder: (context) => AlertDialog(
                           title: Text(tl('Remove member')),
-                          content: Text(tlt('Remove {0} from this channel?', [label])),
+                          content: Text(
+                            tlt('Remove {0} from this channel?', [label]),
+                          ),
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.of(context).pop(false),

@@ -189,7 +189,7 @@ class AddChannelMembersSheet extends HookConsumerWidget {
                           child: Text(
                             normalizedQuery.isEmpty
                                 ? 'Everyone available is already in this channel.'
-                                : 'No matching people or agents.',
+                                : tl('No matching people or agents.'),
                             textAlign: TextAlign.center,
                           ),
                         )
@@ -286,7 +286,7 @@ class AddChannelMembersSheet extends HookConsumerWidget {
                         ? 'Adding…'
                         : selectedUsers.value.length == 1
                         ? 'Add member'
-                        : 'Add ${selectedUsers.value.length} members',
+                        : tlt('Add {0} members', [selectedUsers.value.length]),
                   ),
                 ),
               ),

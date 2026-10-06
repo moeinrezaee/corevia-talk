@@ -87,7 +87,7 @@ class _RecentPhotoGalleryPicker extends HookConsumerWidget {
         if (context.mounted) {
           actionError.value = selection.value.isEmpty
               ? 'Unable to open your photo library.'
-              : 'Unable to prepare the selected photos.';
+              : tl('Unable to prepare the selected photos.');
         }
       } finally {
         if (context.mounted) isResolving.value = false;
@@ -99,7 +99,7 @@ class _RecentPhotoGalleryPicker extends HookConsumerWidget {
         ? 'All photos'
         : selectedCount == 1
         ? 'Add 1 photo'
-        : 'Add $selectedCount photos';
+        : tlt('Add {0} photos', [selectedCount]);
 
     Widget buildGalleryBody() {
       if (recentSnapshot.connectionState != ConnectionState.done) {
@@ -292,7 +292,7 @@ class _RecentPhotoTile extends StatelessWidget {
       selected: isSelected,
       label: isSelected
           ? 'Photo ${selectionIndex + 1} selected'
-          : 'Select photo',
+          : tl('Select photo'),
       child: GestureDetector(
         key: ValueKey('recent-photo-${photo.id}'),
         behavior: HitTestBehavior.opaque,

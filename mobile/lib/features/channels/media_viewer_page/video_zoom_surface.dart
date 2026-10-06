@@ -89,7 +89,9 @@ class _VideoZoomSurface extends HookWidget {
 
     return Semantics(
       button: true,
-      label: controlsVisible ? 'Hide video controls' : 'Show video controls',
+      label: controlsVisible
+          ? tl('Hide video controls')
+          : tl('Show video controls'),
       onTap: onTap,
       child: GestureDetector(
         excludeFromSemantics: true,

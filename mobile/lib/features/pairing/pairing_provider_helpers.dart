@@ -16,7 +16,9 @@ String _friendlyErrorMessage(Object error) {
   }
   if (error is StateError ||
       message.contains('Null check operator used on a null value')) {
-    return 'Pairing stopped because of an internal error. Please try again.';
+    return tl(
+      'Pairing stopped because of an internal error. Please try again.',
+    );
   }
   if (message.contains('HandshakeException') ||
       message.contains('CERTIFICATE_VERIFY_FAILED')) {

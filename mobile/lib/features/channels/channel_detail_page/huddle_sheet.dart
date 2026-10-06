@@ -272,7 +272,7 @@ IosNavigationAction _huddleNavigationAction(
         ? 'Leave your current Huddle first'
         : activeStart != null || isCurrentParent
         ? 'Open Huddle'
-        : 'Start Huddle',
+        : tl('Start Huddle'),
   );
 }
 
@@ -320,13 +320,13 @@ class _HuddleJoinSurface extends ConsumerWidget {
     final label = unavailable
         ? 'Start new'
         : switch ((isThisSession, session.phase, ended || stale)) {
-            (true, HuddleSessionPhase.connected, _) => 'Open',
-            (true, HuddleSessionPhase.interrupted, _) => 'Open',
-            (true, HuddleSessionPhase.reconnecting, _) => 'Reconnecting',
-            (true, HuddleSessionPhase.failed, _) => 'Retry',
-            (true, _, _) => 'Joining',
-            (_, _, true) => 'Ended',
-            _ => 'Join',
+            (true, HuddleSessionPhase.connected, _) => tl('Open'),
+            (true, HuddleSessionPhase.interrupted, _) => tl('Open'),
+            (true, HuddleSessionPhase.reconnecting, _) => tl('Reconnecting'),
+            (true, HuddleSessionPhase.failed, _) => tl('Retry'),
+            (true, _, _) => tl('Joining'),
+            (_, _, true) => tl('Ended'),
+            _ => tl('Join'),
           };
 
     return Padding(
@@ -358,7 +358,7 @@ class _HuddleJoinSurface extends ConsumerWidget {
                   Text(
                     ended || stale || unavailable
                         ? 'Huddle ended'
-                        : 'Huddle in progress',
+                        : tl('Huddle in progress'),
                     style: context.textTheme.labelLarge?.copyWith(
                       color: context.colors.onSurface,
                       fontWeight: FontWeight.w600,
@@ -367,7 +367,7 @@ class _HuddleJoinSurface extends ConsumerWidget {
                   Text(
                     isThisSession && session.isConnected
                         ? '${session.participantCount} connected'
-                        : 'Foreground voice Huddle',
+                        : tl('Foreground voice Huddle'),
                     style: context.textTheme.bodySmall?.copyWith(
                       color: context.colors.onSurfaceVariant,
                     ),
@@ -804,9 +804,9 @@ String _huddleReactionSenderName({
   final displayName = profile?.displayName?.trim();
   if (displayName?.isNotEmpty == true) return displayName!;
   if (localPubkey?.isNotEmpty == true) {
-    return 'Participant ${shortPubkey(localPubkey!)}';
+    return tlt('Participant {0}', [shortPubkey(localPubkey!)]);
   }
-  return 'Someone';
+  return tl('Someone');
 }
 
 class _HuddleCallHeader extends StatelessWidget {

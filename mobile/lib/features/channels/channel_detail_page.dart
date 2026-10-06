@@ -718,9 +718,9 @@ class ChannelDetailPage extends HookConsumerWidget {
                           'channel-detail-connection-skeleton',
                         ),
                         loadingLabel: switch (sessionStatus) {
-                          SessionStatus.connecting => 'Connecting',
-                          SessionStatus.reconnecting => 'Reconnecting',
-                          _ => 'Loading',
+                          SessionStatus.connecting => tl('Connecting'),
+                          SessionStatus.reconnecting => tl('Reconnecting'),
+                          _ => tl('Loading'),
                         },
                         skeletonPadding: EdgeInsets.only(
                           bottom: showsComposer ? composerDockHeight.value : 0,

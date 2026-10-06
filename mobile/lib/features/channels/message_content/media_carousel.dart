@@ -167,11 +167,10 @@ class _MessageImageCarousel extends HookConsumerWidget {
                                       : MediaLoadingPlaceholder(
                                           label: tl('Loading image'),
                                         ),
-                              errorBuilder: (_, _, _) =>
-                                  _MediaPreviewFallback(
-                                    icon: LucideIcons.imageOff,
-                                    label: tl('Image unavailable'),
-                                  ),
+                              errorBuilder: (_, _, _) => _MediaPreviewFallback(
+                                icon: LucideIcons.imageOff,
+                                label: tl('Image unavailable'),
+                              ),
                             ),
                           ),
                         ),

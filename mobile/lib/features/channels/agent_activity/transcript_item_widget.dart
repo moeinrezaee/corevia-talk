@@ -38,7 +38,7 @@ class _MessageItemWidget extends StatelessWidget {
     final badgeColor = isAssistant
         ? context.colors.primary
         : context.colors.onSurfaceVariant;
-    final badgeLabel = isAssistant ? 'Assistant' : 'User';
+    final badgeLabel = isAssistant ? tl('Assistant') : tl('User');
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: Grid.half),
@@ -222,7 +222,10 @@ class _MetadataItemWidget extends HookWidget {
                   const SizedBox(width: Grid.half),
                   Expanded(
                     child: Text(
-                      tlt('{0} ({1} sections)', [item.title, item.sections.length]),
+                      tlt('{0} ({1} sections)', [
+                        item.title,
+                        item.sections.length,
+                      ]),
                       style: context.textTheme.labelMedium?.copyWith(
                         color: context.colors.onSurfaceVariant,
                         fontWeight: FontWeight.w600,

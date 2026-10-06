@@ -345,9 +345,9 @@ class _PresencePill extends StatelessWidget {
 }
 
 String _presenceLabel(String presence) => switch (presence) {
-  'online' => 'Online',
-  'away' => 'Away',
-  _ => 'Offline',
+  'online' => tl('Online'),
+  'away' => tl('Away'),
+  _ => tl('Offline'),
 };
 
 Color _presenceColor(BuildContext context, String presence) =>

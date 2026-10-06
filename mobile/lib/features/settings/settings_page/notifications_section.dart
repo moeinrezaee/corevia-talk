@@ -48,7 +48,7 @@ class _NotificationsSection extends ConsumerWidget {
               'Receive message notifications from this community',
             null when authorization.isLoading =>
               'Checking iOS notification permission',
-            null => 'Enabled in Buzz; iOS permission status unavailable',
+            null => tl('Enabled in Buzz; iOS permission status unavailable'),
           };
 
     return AppListCard(

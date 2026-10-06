@@ -219,7 +219,10 @@ class _NativePhotoPickerLoading extends StatelessWidget {
       height: _attachmentExpandedHeight,
       width: double.infinity,
       child: Center(
-        child: BuzzLoadingIndicator(size: 44, semanticLabel: tl('Opening Photos')),
+        child: BuzzLoadingIndicator(
+          size: 44,
+          semanticLabel: tl('Opening Photos'),
+        ),
       ),
     );
   }

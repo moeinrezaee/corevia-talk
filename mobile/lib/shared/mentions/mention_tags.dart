@@ -5,6 +5,8 @@
 /// `mention` tag is display metadata for an addressed agent, not a reference.
 library;
 
+import '../i18n/app_language.dart';
+
 /// The most keys in one list.
 const maxMentionTagKeys = 32;
 
@@ -22,9 +24,11 @@ class MentionTagException implements Exception {
 
   @override
   String toString() => switch (error) {
-    MentionTagError.notMember => 'A mentioned person is not in this channel',
-    MentionTagError.invalid => 'A mention has an invalid key',
-    MentionTagError.tooMany => 'A message can mention at most 32 people',
+    MentionTagError.notMember => tl(
+      'A mentioned person is not in this channel',
+    ),
+    MentionTagError.invalid => tl('A mention has an invalid key'),
+    MentionTagError.tooMany => tl('A message can mention at most 32 people'),
   };
 }
 

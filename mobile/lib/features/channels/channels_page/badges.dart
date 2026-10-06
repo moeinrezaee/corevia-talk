@@ -31,17 +31,17 @@ class _ErrorView extends StatelessWidget {
   static String _userMessage(Object error) {
     if (error is RelayException) {
       if (error.statusCode == 401) {
-        return 'Not authorized. Check your API token.';
+        return tl('Not authorized. Check your API token.');
       }
       if (error.statusCode == 403) {
-        return 'Access denied.';
+        return tl('Access denied.');
       }
-      return 'Server error (${error.statusCode}). Try again later.';
+      return tlt('Server error ({0}). Try again later.', [error.statusCode]);
     }
     if (error is SocketException) {
-      return 'Could not reach the relay server.';
+      return tl('Could not reach the relay server.');
     }
-    return 'Something went wrong. Check your connection.';
+    return tl('Something went wrong. Check your connection.');
   }
 
   @override

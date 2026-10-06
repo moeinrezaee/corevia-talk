@@ -152,7 +152,7 @@ class ProfileTextEditSheet extends HookWidget {
                     FilledButton(
                       key: const ValueKey('profile-field-save'),
                       onPressed: hasChanges && !isSaving.value ? save : null,
-                      child: Text(isSaving.value ? 'Saving…' : 'Save'),
+                      child: Text(isSaving.value ? 'Saving…' : tl('Save')),
                     ),
                   ],
                 ),

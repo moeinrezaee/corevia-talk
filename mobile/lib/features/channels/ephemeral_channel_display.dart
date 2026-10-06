@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 
 import 'channel.dart';
+import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/persian_date.dart';
 
 class EphemeralChannelDisplay {
   final String? detailLabel;
@@ -47,12 +49,15 @@ EphemeralChannelDisplay? ephemeralChannelDisplay(
     detailLabel: compactRemaining,
     tooltipLabel: compactRemaining == 'Cleanup due'
         ? 'Ephemeral channel. Cleanup is due now.'
-        : 'Ephemeral channel. Cleans up $verboseRemaining. Scheduled for $absoluteDeadlineLabel.',
+        : tlt('Ephemeral channel. Cleans up {0}. Scheduled for {1}.', [
+            verboseRemaining,
+            absoluteDeadlineLabel,
+          ]),
   );
 }
 
 String formatCompactRemaining(int remainingSeconds) {
-  if (remainingSeconds <= 0) return 'Cleanup due';
+  if (remainingSeconds <= 0) return tl('Cleanup due');
   if (remainingSeconds <= 60) return '1m left';
   if (remainingSeconds < 60 * 60) {
     return '${math.max(1, (remainingSeconds / 60).ceil())}m left';
@@ -90,6 +95,7 @@ String formatCompactTtl(int ttlSeconds) {
 }
 
 String formatVerboseTtl(int ttlSeconds) {
+  if (usesPersianCalendar) return _persianVerboseTtl(ttlSeconds);
   if (ttlSeconds < 60) {
     final seconds = math.max(1, ttlSeconds);
     return '$seconds second${seconds == 1 ? '' : 's'}';
@@ -107,6 +113,9 @@ String formatVerboseTtl(int ttlSeconds) {
 }
 
 String formatAbsoluteDeadline(DateTime deadline) {
+  if (usesPersianCalendar) {
+    return '${persianMonthDay(deadline)}، ${persianTime(deadline)}';
+  }
   const months = [
     'Jan',
     'Feb',
@@ -126,4 +135,21 @@ String formatAbsoluteDeadline(DateTime deadline) {
   final minute = local.minute.toString().padLeft(2, '0');
   final period = local.hour < 12 ? 'AM' : 'PM';
   return '${months[local.month - 1]} ${local.day}, $hour12:$minute $period';
+}
+
+String _persianVerboseTtl(int ttlSeconds) {
+  if (ttlSeconds < 60) {
+    return toPersianDigits('${math.max(1, ttlSeconds)} ثانیه');
+  }
+  if (ttlSeconds < 60 * 60) {
+    return toPersianDigits('${math.max(1, (ttlSeconds / 60).ceil())} دقیقه');
+  }
+  if (ttlSeconds < 60 * 60 * 24) {
+    return toPersianDigits(
+      '${math.max(1, (ttlSeconds / (60 * 60)).ceil())} ساعت',
+    );
+  }
+  return toPersianDigits(
+    '${math.max(1, (ttlSeconds / (60 * 60 * 24)).ceil())} روز',
+  );
 }

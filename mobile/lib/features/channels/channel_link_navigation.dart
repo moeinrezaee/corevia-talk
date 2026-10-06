@@ -25,9 +25,9 @@ void openChannelLink({
   }
 
   if (targetChannel == null) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(tl('Channel could not be opened'))),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(tl('Channel could not be opened'))));
     return;
   }
 

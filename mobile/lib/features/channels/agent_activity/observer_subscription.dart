@@ -8,6 +8,7 @@ import '../../../shared/crypto/nip44.dart';
 import '../../../shared/relay/relay.dart';
 import 'observer_models.dart';
 import 'transcript_builder.dart';
+import '../../../shared/i18n/app_language.dart';
 
 /// Maximum observer events to keep per agent.
 const _maxObserverEvents = 800;
@@ -338,7 +339,7 @@ class ObserverRelayNotifier extends Notifier<ObserverRelayState> {
     if (error is FormatException) {
       return error.message;
     }
-    return 'Observer subscription failed: $error';
+    return tlt('Observer subscription failed: {0}', [error]);
   }
 
   static int _compareObserverFrames(ObserverFrame a, ObserverFrame b) {

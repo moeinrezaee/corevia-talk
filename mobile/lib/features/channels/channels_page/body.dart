@@ -79,9 +79,9 @@ class _ChannelsBody extends StatelessWidget {
       loading: loading,
       loadingSemanticsKey: const Key('channels-connection-skeleton'),
       loadingLabel: switch (sessionStatus) {
-        SessionStatus.connecting => 'Connecting',
-        SessionStatus.reconnecting => 'Reconnecting',
-        _ => 'Loading',
+        SessionStatus.connecting => tl('Connecting'),
+        SessionStatus.reconnecting => tl('Reconnecting'),
+        _ => tl('Loading'),
       },
       shimmerEnabled: sessionStatus != SessionStatus.disconnected,
       skeleton: _ChannelsSkeleton(
@@ -319,7 +319,9 @@ class _SliverChannelsList extends HookConsumerWidget {
                     builder: (_) => AlertDialog(
                       title: Text(tlt('Delete "{0}"?', [section.name])),
                       content: Text(
-                        tl('Channels in this section will move back to the main list.'),
+                        tl(
+                          'Channels in this section will move back to the main list.',
+                        ),
                       ),
                       actions: [
                         TextButton(
@@ -381,7 +383,7 @@ class _SliverChannelsList extends HookConsumerWidget {
               unreadChannelIds: unreadChannelIds,
               mutedChannelIds: mutedChannelIds,
               currentPubkey: currentPubkey,
-              emptyLabel: 'No stream channels yet',
+              emptyLabel: tl('No stream channels yet'),
               sortMode: sortState.sortModeFor('channels'),
               onSortModeChange: (mode) => setSortMode('channels', mode),
               onSelectChannel: onSelectChannel,
@@ -396,7 +398,7 @@ class _SliverChannelsList extends HookConsumerWidget {
               unreadChannelIds: unreadChannelIds,
               mutedChannelIds: mutedChannelIds,
               currentPubkey: currentPubkey,
-              emptyLabel: 'No direct messages yet',
+              emptyLabel: tl('No direct messages yet'),
               sortMode: sortState.sortModeFor('dms'),
               onSortModeChange: (mode) => setSortMode('dms', mode),
               onSelectChannel: onSelectChannel,

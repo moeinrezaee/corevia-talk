@@ -40,7 +40,9 @@ Future<void> _sendTextOnlyDraft({
     if (context.mounted && draftRevision.value != submittedDraftRevision) {
       messenger?.showSnackBar(
         SnackBar(
-          content: Text(tl('Not sent: the message changed while adding people.')),
+          content: Text(
+            tl('Not sent: the message changed while adding people.'),
+          ),
         ),
       );
       return;

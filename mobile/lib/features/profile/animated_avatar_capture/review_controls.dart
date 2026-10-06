@@ -135,7 +135,9 @@ class _AnimatedFramingControl extends HookWidget {
               ),
               child: IconButton(
                 key: const ValueKey('animated-avatar-outline'),
-                tooltip: outline ? 'Turn outline off' : 'Turn outline on',
+                tooltip: outline
+                    ? tl('Turn outline off')
+                    : tl('Turn outline on'),
                 onPressed: () {
                   unawaited(HapticFeedback.selectionClick());
                   onOutlineChanged(!outline);

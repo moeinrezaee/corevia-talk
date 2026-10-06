@@ -214,7 +214,7 @@ _parsePromptText(String text) {
     return (
       sections: <PromptSection>[],
       userText: text.trim(),
-      userTitle: 'Prompt',
+      userTitle: tl('Prompt'),
     );
   }
 
@@ -235,7 +235,7 @@ _parsePromptText(String text) {
     userText: eventContent,
     userTitle: eventKind != null && eventKind.isNotEmpty
         ? _titleCase(eventKind)
-        : 'Buzz event',
+        : tl('Buzz event'),
   );
 }
 
@@ -380,7 +380,7 @@ String _describeTurnStarted(dynamic payload) {
       return 'Triggered by ${stringIds.map(_shorten).join(', ')}.';
     }
   }
-  return 'Heartbeat or internal turn.';
+  return tl('Heartbeat or internal turn.');
 }
 
 String _describeSessionResolved(dynamic payload) {
@@ -388,7 +388,7 @@ String _describeSessionResolved(dynamic payload) {
   final sessionId = _asString(record['sessionId']);
   final isNewSession = record['isNewSession'] == true;
   if (sessionId == null) return 'Using existing ACP session.';
-  return '${isNewSession ? 'Created' : 'Using'} session ${_shorten(sessionId)}.';
+  return '${isNewSession ? tl('Created') : 'Using'} session ${_shorten(sessionId)}.';
 }
 
 String _safeJsonEncode(dynamic value) {

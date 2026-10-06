@@ -235,7 +235,9 @@ class ForumPostCard extends HookConsumerWidget {
                     ),
                     const SizedBox(width: Grid.half),
                     Text(
-                      tlt('last {0}', [formatRelativeTime(summary.lastReplyAt!)]),
+                      tlt('last {0}', [
+                        formatRelativeTime(summary.lastReplyAt!),
+                      ]),
                       style: context.textTheme.labelSmall?.copyWith(
                         color: context.colors.onSurfaceVariant,
                       ),

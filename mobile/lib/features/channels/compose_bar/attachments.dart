@@ -14,7 +14,7 @@ bool _rejectsNonVoiceAttachment(
   }
   uploadError.value = voiceNote.recorder != null || voiceNote.isPreparing
       ? 'Finish or discard the voice note before attaching a file.'
-      : 'A voice note must be the only attachment.';
+      : tl('A voice note must be the only attachment.');
   return true;
 }
 
@@ -476,10 +476,10 @@ class _AttachmentTrigger extends StatelessWidget {
         child: IconButton(
           tooltip: switch (surface) {
             _AttachmentSurface.closed =>
-              formattingOpen ? 'Close formatting' : 'Add attachment',
-            _AttachmentSurface.menu => 'Close attachments',
+              formattingOpen ? tl('Close formatting') : tl('Add attachment'),
+            _AttachmentSurface.menu => tl('Close attachments'),
             _AttachmentSurface.camera ||
-            _AttachmentSurface.photos => 'Back to attachment options',
+            _AttachmentSurface.photos => tl('Back to attachment options'),
           },
           onPressed: () => _runComposerAction(() => onTap(context)),
           padding: EdgeInsets.zero,

@@ -134,7 +134,10 @@ class _SasVerificationView extends HookConsumerWidget {
           ),
           const SizedBox(height: Grid.xxs),
           Text(
-            tlt('{0} to confirm it’s you before sending your Buzz identity to another device.', [biometricLabel]),
+            tlt(
+              '{0} to confirm it’s you before sending your Buzz identity to another device.',
+              [biometricLabel],
+            ),
             textAlign: TextAlign.center,
             style: context.textTheme.bodyMedium?.copyWith(
               color: context._onboardingMutedInk,
@@ -233,7 +236,9 @@ class _SasVerificationView extends HookConsumerWidget {
                     style: context._onboardingButtonStyle,
                     onPressed: () =>
                         confirm(protection: showProtection ? true : null),
-                    child: Text(showProtection ? biometricLabel : 'Try again'),
+                    child: Text(
+                      showProtection ? biometricLabel : tl('Try again'),
+                    ),
                   ),
                   const SizedBox(height: Grid.xxs),
                 ],
@@ -246,7 +251,7 @@ class _SasVerificationView extends HookConsumerWidget {
                   onPressed: showProtection
                       ? () => confirm(protection: false)
                       : onDeny,
-                  child: Text(showProtection ? 'Skip' : 'Cancel'),
+                  child: Text(showProtection ? tl('Skip') : tl('Cancel')),
                 ),
               ],
             ),

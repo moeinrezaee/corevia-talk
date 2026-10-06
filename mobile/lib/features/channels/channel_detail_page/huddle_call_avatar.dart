@@ -235,8 +235,10 @@ class _HuddleCallAvatar extends HookConsumerWidget {
                                   color: context.colors.onPrimaryContainer,
                                   dotSize: 6 * scale,
                                   gap: 4 * scale,
-                                  semanticLabel:
-                                      tlt('{0} is preparing a response', [label]),
+                                  semanticLabel: tlt(
+                                    '{0} is preparing a response',
+                                    [label],
+                                  ),
                                 ),
                               )
                             : AvatarImage(

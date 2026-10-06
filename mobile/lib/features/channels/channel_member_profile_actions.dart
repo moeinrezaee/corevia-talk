@@ -98,7 +98,9 @@ class ChannelMemberProfileActions extends HookConsumerWidget {
             context: context,
             builder: (dialogContext) => AlertDialog(
               title: Text(tl('Remove from channel?')),
-              content: Text(tlt('Remove {0} from {1}?', [label, currentChannel.name])),
+              content: Text(
+                tlt('Remove {0} from {1}?', [label, currentChannel.name]),
+              ),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(dialogContext).pop(false),
@@ -129,7 +131,7 @@ class ChannelMemberProfileActions extends HookConsumerWidget {
         if (context.mounted) {
           error.value = role == null
               ? 'Could not remove this person. Please try again.'
-              : 'Could not change this role. Please try again.';
+              : tl('Could not change this role. Please try again.');
         }
       } finally {
         if (context.mounted) busy.value = false;
@@ -154,7 +156,7 @@ class ChannelMemberProfileActions extends HookConsumerWidget {
                   icon: LucideIcons.user,
                   title: member.role == 'guest'
                       ? 'Make member'
-                      : 'Change to member',
+                      : tl('Change to member'),
                   onTap: busy.value ? null : () => perform(role: 'member'),
                 ),
             ],

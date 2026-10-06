@@ -59,7 +59,9 @@ class _PairingWelcomeView extends StatelessWidget {
                         ),
                         const SizedBox(height: Grid.xxs),
                         Text(
-                          tl('Your people, your agents, your projects —\nall in one place.'),
+                          tl(
+                            'Your people, your agents, your projects —\nall in one place.',
+                          ),
                           textAlign: TextAlign.center,
                           style: context.textTheme.bodyLarge?.copyWith(
                             color: context._onboardingInk,
@@ -71,7 +73,9 @@ class _PairingWelcomeView extends StatelessWidget {
                 ),
                 const SizedBox(height: Grid.md),
                 Text(
-                  tl('Scan the QR code from your desktop app\nor paste a pairing code to connect.'),
+                  tl(
+                    'Scan the QR code from your desktop app\nor paste a pairing code to connect.',
+                  ),
                   textAlign: TextAlign.center,
                   style: context.textTheme.bodyMedium?.copyWith(
                     color: context._onboardingMutedInk,
@@ -106,7 +110,7 @@ class _PairingWelcomeView extends StatelessWidget {
                           child: Text(
                             pairingCodeExpanded
                                 ? 'Hide pairing code'
-                                : 'Use pairing code',
+                                : tl('Use pairing code'),
                           ),
                         ),
                         AnimatedSwitcher(
@@ -185,7 +189,9 @@ class _PairingWelcomeView extends StatelessWidget {
                                                 child: BuzzLoadingIndicator(
                                                   size: 20,
                                                   color: context._onboardingInk,
-                                                  semanticLabel: tl('Connecting'),
+                                                  semanticLabel: tl(
+                                                    'Connecting',
+                                                  ),
                                                 ),
                                               )
                                             : Text(tl('Connect')),

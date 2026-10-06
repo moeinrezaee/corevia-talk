@@ -21,7 +21,7 @@ Future<bool> showDestructiveConfirmation({
           'title': title,
           'message': message,
           'confirmLabel': confirmLabel,
-          'cancelLabel': 'Cancel',
+          'cancelLabel': tl('Cancel'),
           'dark': context.theme.brightness == Brightness.dark,
         }) ==
         true;

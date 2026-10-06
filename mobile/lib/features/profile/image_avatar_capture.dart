@@ -517,7 +517,7 @@ class ImageAvatarCapture extends HookConsumerWidget {
                                   ? 'Camera'
                                   : captured == null
                                   ? 'Close camera'
-                                  : 'Retry',
+                                  : tl('Retry'),
                               onTap:
                                   isFlipping.value ||
                                       isCapturing.value ||
@@ -592,7 +592,7 @@ class ImageAvatarCapture extends HookConsumerWidget {
                                   ? 'Photo Library'
                                   : captured == null
                                   ? 'Flip camera'
-                                  : 'Use Photo',
+                                  : tl('Use Photo'),
                               onTap: isClosing.value
                                   ? null
                                   : captured != null

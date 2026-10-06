@@ -10,7 +10,8 @@ import '../../shared/widgets/modal_presentation.dart';
 import '../../shared/i18n/app_language.dart';
 
 /// Not const: the labels follow the active language.
-List<({ThemeMode mode, String label, IconData icon})> get appearanceModeOptions => [
+List<({ThemeMode mode, String label, IconData icon})>
+get appearanceModeOptions => [
   (mode: ThemeMode.light, label: tl('Light'), icon: LucideIcons.sun),
   (mode: ThemeMode.dark, label: tl('Dark'), icon: LucideIcons.moon),
   (mode: ThemeMode.system, label: tl('System'), icon: LucideIcons.sunMoon),

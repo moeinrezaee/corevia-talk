@@ -33,7 +33,7 @@ class _RemindersList extends ConsumerWidget {
       return _EmptySurface(
         icon: LucideIcons.clock,
         message: tl('No reminders'),
-        detail: 'Reminders you set will show up here.',
+        detail: tl('Reminders you set will show up here.'),
       );
     }
 
@@ -64,7 +64,9 @@ class _RemindersList extends ConsumerWidget {
                 ? Text(
                     due
                         ? 'Due now'
-                        : 'Due ${_inboxTimestamp(reminder.notBefore!)}',
+                        : tlt('Due {0}', [
+                            _inboxTimestamp(reminder.notBefore!),
+                          ]),
                   )
                 : null,
             onTap: () => onOpen(reminder),
@@ -101,7 +103,7 @@ class _DraftsList extends ConsumerWidget {
       return _EmptySurface(
         icon: LucideIcons.filePen,
         message: tl('No drafts'),
-        detail: 'Unsent messages you start composing will show up here.',
+        detail: tl('Unsent messages you start composing will show up here.'),
       );
     }
 
@@ -148,6 +150,25 @@ class _DraftsList extends ConsumerWidget {
 /// time today, "Yesterday", short date this year, dated otherwise.
 String _inboxTimestamp(int unixSeconds, {DateTime? now}) {
   final current = now ?? DateTime.now();
+  if (usesPersianCalendar) {
+    final instant = DateTime.fromMillisecondsSinceEpoch(
+      unixSeconds * 1000,
+      isUtc: true,
+    );
+    final date = toTehranTime(instant);
+    final today = toTehranTime(current);
+    final dayDiff = DateTime(
+      today.year,
+      today.month,
+      today.day,
+    ).difference(DateTime(date.year, date.month, date.day)).inDays;
+    if (dayDiff == 0) return persianTime(instant);
+    if (dayDiff == 1) return tl('Yesterday');
+    final sameYear =
+        gregorianToJalali(date.year, date.month, date.day).year ==
+        gregorianToJalali(today.year, today.month, today.day).year;
+    return persianMonthDay(instant, withYear: !sameYear);
+  }
   final date = DateTime.fromMillisecondsSinceEpoch(unixSeconds * 1000);
   final today = DateTime(current.year, current.month, current.day);
   final day = DateTime(date.year, date.month, date.day);

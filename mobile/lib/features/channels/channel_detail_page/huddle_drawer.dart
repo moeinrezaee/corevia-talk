@@ -195,7 +195,7 @@ class _MobileHuddleDrawer extends ConsumerWidget {
         child: Semantics(
           container: true,
           label: tl('Huddle controls'),
-          hint: 'Tap outside a control to open the Huddle',
+          hint: tl('Tap outside a control to open the Huddle'),
           child: Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: Grid.gutter),
@@ -226,7 +226,7 @@ class _MobileHuddleDrawer extends ConsumerWidget {
                           key: const ValueKey('huddle-drawer-speaker-toggle'),
                           tooltip: session.isSpeakerEnabled
                               ? 'Use earpiece'
-                              : 'Use speaker',
+                              : tl('Use speaker'),
                           showTooltip: false,
                           icon: LucideIcons.volume2,
                           foregroundColor: session.isSpeakerEnabled
@@ -246,7 +246,7 @@ class _MobileHuddleDrawer extends ConsumerWidget {
                         const SizedBox(width: Grid.twelve),
                         _HuddleRoundControl(
                           key: const ValueKey('huddle-drawer-mute-toggle'),
-                          tooltip: session.isMuted ? 'Unmute' : 'Mute',
+                          tooltip: session.isMuted ? tl('Unmute') : tl('Mute'),
                           showTooltip: false,
                           icon: session.isMuted
                               ? LucideIcons.micOff

@@ -641,7 +641,7 @@ class AnimatedAvatarCapture extends HookConsumerWidget {
               ? 'Recording…'
               : isPreparingFrames.value
               ? 'Cutting you out of the background…'
-              : 'Line up your shot.',
+              : tl('Line up your shot.'),
           textAlign: TextAlign.center,
           style: context.textTheme.bodyMedium?.copyWith(
             color: context.colors.onSurfaceVariant,

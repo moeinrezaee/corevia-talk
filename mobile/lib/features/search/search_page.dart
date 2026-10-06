@@ -234,7 +234,7 @@ class SearchPage extends HookConsumerWidget {
       // above the keyboard.
       resizeToAvoidBottomInset: false,
       appBar: FrostedAppBar(
-        nativeTitle: isSearchEditing.value ? '' : 'Search',
+        nativeTitle: isSearchEditing.value ? '' : tl('Search'),
         nativeLayoutDuration: reduceMotion
             ? Duration.zero
             : _searchFieldMoveDuration,
@@ -885,8 +885,8 @@ class _MessagesSection extends HookConsumerWidget {
 extension on _SearchFilter {
   String get label => switch (this) {
     _SearchFilter.all => 'All',
-    _SearchFilter.messages => 'Messages',
-    _SearchFilter.channels => 'Channels',
-    _SearchFilter.people => 'People',
+    _SearchFilter.messages => tl('Messages'),
+    _SearchFilter.channels => tl('Channels'),
+    _SearchFilter.people => tl('People'),
   };
 }

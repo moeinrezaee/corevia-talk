@@ -1,14 +1,14 @@
 part of '../activity_page.dart';
 
-const _filterLabels = <InboxFilter, String>{
+Map<InboxFilter, String> get _filterLabels => <InboxFilter, String>{
   InboxFilter.all: 'All',
-  InboxFilter.mention: 'Mentions',
-  InboxFilter.thread: 'Threads',
-  InboxFilter.needsAction: 'Needs Action',
-  InboxFilter.activity: 'Activity',
-  InboxFilter.agentActivity: 'Agents',
-  InboxFilter.reminders: 'Reminders',
-  InboxFilter.drafts: 'Drafts',
+  InboxFilter.mention: tl('Mentions'),
+  InboxFilter.thread: tl('Threads'),
+  InboxFilter.needsAction: tl('Needs Action'),
+  InboxFilter.activity: tl('Activity'),
+  InboxFilter.agentActivity: tl('Agents'),
+  InboxFilter.reminders: tl('Reminders'),
+  InboxFilter.drafts: tl('Drafts'),
 };
 
 class _ActivityActionsPill extends StatelessWidget {
@@ -181,7 +181,9 @@ class _InboxOptionsButton extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(unreadOnly ? 'Show all' : 'Show unread'),
+                      child: Text(
+                        unreadOnly ? tl('Show all') : tl('Show unread'),
+                      ),
                     ),
                     if (unreadOnly)
                       Icon(

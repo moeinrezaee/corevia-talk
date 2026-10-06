@@ -5,6 +5,7 @@ import 'package:nostr/nostr.dart' as nostr;
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../shared/relay/nostr_models.dart';
+import '../../shared/i18n/app_language.dart';
 
 const _desktopPairingAuthChallengeGrace = Duration(seconds: 3);
 const _pairingAuthOkTimeout = Duration(seconds: 8);
@@ -242,7 +243,7 @@ class PairingSocket {
       } else {
         final message = data.length > 3
             ? data[3] as String
-            : 'Auth rejected by relay';
+            : tl('Auth rejected by relay');
         _failAuth(PairingAuthException(message));
       }
       return;

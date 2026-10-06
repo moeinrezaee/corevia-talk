@@ -49,11 +49,11 @@ class InviteJoinSheet extends ConsumerWidget {
       isStarterSetupRecovery,
       state.status,
     )) {
-      (true, true, _) => 'Finishing setup…',
+      (true, true, _) => tl('Finishing setup…'),
       (true, false, _) => 'Joining…',
-      (false, true, InviteJoinStatus.error) => 'Retry setup',
-      (false, true, _) => 'Finish setting up',
-      _ => 'Join',
+      (false, true, InviteJoinStatus.error) => tl('Retry setup'),
+      (false, true, _) => tl('Finish setting up'),
+      _ => tl('Join'),
     };
 
     if (state.status == InviteJoinStatus.success) {
@@ -76,7 +76,7 @@ class InviteJoinSheet extends ConsumerWidget {
             Text(
               isStarterSetupRecovery
                   ? 'Finish setting up'
-                  : 'Join this Buzz community?',
+                  : tl('Join this Buzz community?'),
               style: context.textTheme.titleLarge,
             ),
             const SizedBox(height: Grid.xxs),
@@ -116,7 +116,9 @@ class InviteJoinSheet extends ConsumerWidget {
             const SizedBox(height: Grid.sm),
             if (isStarterSetupRecovery) ...[
               Text(
-                tl('Your membership is ready, but starter channels still need to be set up. You can safely retry without claiming the invite again.'),
+                tl(
+                  'Your membership is ready, but starter channels still need to be set up. You can safely retry without claiming the invite again.',
+                ),
                 style: context.textTheme.bodyMedium?.copyWith(
                   color: context.colors.onSurfaceVariant,
                 ),
@@ -124,7 +126,9 @@ class InviteJoinSheet extends ConsumerWidget {
               const SizedBox(height: Grid.sm),
             ],
             Text(
-              tl('This phone is the only copy of this identity. If you lose it before pairing or backing up, you’ll lose access as this member.'),
+              tl(
+                'This phone is the only copy of this identity. If you lose it before pairing or backing up, you’ll lose access as this member.',
+              ),
               style: context.textTheme.bodyMedium?.copyWith(
                 color: context.colors.onSurfaceVariant,
               ),
@@ -166,7 +170,7 @@ class InviteJoinSheet extends ConsumerWidget {
                               size: 16,
                               semanticLabel: isStarterSetupRecovery
                                   ? 'Finishing setup'
-                                  : 'Joining community',
+                                  : tl('Joining community'),
                             ),
                           )
                         : const Icon(LucideIcons.check),
@@ -214,7 +218,9 @@ class _InviteJoinSuccess extends StatelessWidget {
             ),
             const SizedBox(height: Grid.xs),
             Text(
-              tl('This phone is the only copy of this identity. If you lose it before pairing or backing up, you’ll lose access as this member.'),
+              tl(
+                'This phone is the only copy of this identity. If you lose it before pairing or backing up, you’ll lose access as this member.',
+              ),
               style: context.textTheme.bodyMedium?.copyWith(
                 color: context.colors.onSurfaceVariant,
               ),
@@ -236,7 +242,9 @@ class _InviteJoinSuccess extends StatelessWidget {
             TextButton(
               onPressed: () => Navigator.of(context).pop(hasFocusChannel),
               child: Text(
-                hasFocusChannel ? 'Continue to #welcome-everyone' : 'Not now',
+                hasFocusChannel
+                    ? tl('Continue to #welcome-everyone')
+                    : tl('Not now'),
               ),
             ),
           ],

@@ -42,3 +42,8 @@ stays untouched: left-to-right, Latin digits, Gregorian dates, local time zone.
 14. Header: name next to the avatar, then time; the role line (agent owner,
     persona) sits under the name; the other person's header is the mirror image
     of yours. Names may use up to 80% of the room width.
+
+## Process
+Every change requested for one client applies to **all** clients (desktop,
+mobile, admin-web, web) wherever the surface exists. Update this document when a
+rule changes, then apply it everywhere and check each client visually.

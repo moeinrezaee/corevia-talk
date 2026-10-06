@@ -28,6 +28,7 @@ export const FA_PART_1: Record<string, string> = {
   ", along with": "، به همراه",
   ", and": "، و",
   ", and ": "، و ",
+  ", ": "، ",
   ", and you’re not a member. Join the channel or ask":
     "، و شما عضو نیستید. به کانال بپیوندید یا درخواست کنید از",
   ", but {0} member{1} failed to publish {2}.":

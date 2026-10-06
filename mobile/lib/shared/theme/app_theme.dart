@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'app_colors.dart';
 import 'color_scheme.dart';
 import 'grid.dart';
-import 'text_theme.dart';
+import 'text_theme.dart' as base;
 
 /// Border radius constants matching desktop shadcn "New York" style.
 /// Desktop uses --radius: 0.625rem (10px) as base:
@@ -88,6 +88,11 @@ class AppTheme {
     required Brightness statusBarIconBrightness,
     required Brightness statusBarBrightness,
   }) {
+    // Component themes below copy these styles directly, so the family has to
+    // be applied here rather than only through ThemeData.fontFamily.
+    final textTheme = base.textTheme.apply(
+      fontFamily: activeLanguage.fontFamily,
+    );
     return ThemeData(
       useMaterial3: true,
       colorScheme: scheme,

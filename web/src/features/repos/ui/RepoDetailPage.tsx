@@ -30,6 +30,7 @@ import { RepoRefsSection } from "./RepoRefsSection";
 import { RepoTreeSection } from "./RepoTreeSection";
 import { RepoCommitsSection } from "./RepoCommitsSection";
 import { RepoReadmeSection } from "./RepoReadmeSection";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 function CopyableUrl({ url }: { url: string }) {
   const [copied, setCopied] = useState(false);
@@ -38,10 +39,10 @@ function CopyableUrl({ url }: { url: string }) {
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
-      toast.success("Copied to clipboard");
+      toast.success(tl("Copied to clipboard"));
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      toast.error("Failed to copy to clipboard");
+      toast.error(tl("Failed to copy to clipboard"));
     }
   }
 
@@ -54,7 +55,7 @@ function CopyableUrl({ url }: { url: string }) {
         type="button"
         onClick={handleCopy}
         className="shrink-0 text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white"
-        aria-label="Copy clone URL"
+        aria-label={tl("Copy clone URL")}
       >
         {copied ? (
           <Check className="h-4 w-4 text-green-500" />
@@ -93,7 +94,7 @@ function BackToRepositories({
   const content = (
     <>
       <ArrowLeft className="h-4 w-4" />
-      Back to repositories
+      {tl("Back to repositories")}
     </>
   );
 
@@ -144,7 +145,7 @@ function RepoTabs({
               : "text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white"
           }`}
         >
-          Code
+          {tl("Code")}
         </button>
         <button
           type="button"
@@ -155,7 +156,7 @@ function RepoTabs({
               : "text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white"
           }`}
         >
-          Commits
+          {tl("Commits")}
         </button>
       </div>
 
@@ -234,7 +235,7 @@ export function RepoDetailPage() {
 
   useEffect(() => {
     if (error) {
-      toast.error("Failed to load repository", {
+      toast.error(tl("Failed to load repository"), {
         description: error.message,
       });
     }
@@ -250,11 +251,12 @@ export function RepoDetailPage() {
           <div className="mt-12 text-center">
             <BookMarked className="mx-auto h-10 w-10 text-black/50 dark:text-white/50" />
             <h1 className="mt-4 text-xl font-semibold text-black dark:text-white">
-              Repository not found
+              {tl("Repository not found")}
             </h1>
             <p className="mt-1 text-sm text-black/60 dark:text-white/60">
-              This repository may have been removed or doesn't exist on this
-              relay.
+              {tl(
+                "This repository may have been removed or doesn't exist on this relay.",
+              )}
             </p>
           </div>
         </div>
@@ -286,7 +288,7 @@ export function RepoDetailPage() {
               variant="outline"
               className="border-black/15 text-black/60 dark:border-white/15 dark:text-white/60"
             >
-              Public
+              {tl("Public")}
             </Badge>
           </div>
           {repo.description && (
@@ -295,7 +297,7 @@ export function RepoDetailPage() {
             </p>
           )}
           <p className="mt-2 text-xs text-black/50 dark:text-white/50">
-            Updated {relativeTime(repo.createdAt)}
+            {tlt("Updated {0}", [relativeTime(repo.createdAt)])}
           </p>
         </div>
 
@@ -305,10 +307,11 @@ export function RepoDetailPage() {
         {/* Clone/browse error banner */}
         {browseError && (
           <div className="mt-6 rounded-md border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive">
-            Failed to load repository contents:{" "}
-            {browseError instanceof Error
-              ? browseError.message
-              : String(browseError)}
+            {tlt("Failed to load repository contents: {0}", [
+              browseError instanceof Error
+                ? browseError.message
+                : String(browseError),
+            ])}
           </div>
         )}
 
@@ -328,7 +331,7 @@ export function RepoDetailPage() {
         {repo.cloneUrls.length > 0 && (
           <div className="mt-8">
             <h2 className="mb-3 text-sm font-semibold text-black dark:text-white">
-              Clone
+              {tl("Clone")}
             </h2>
             <div className="space-y-2">
               {repo.cloneUrls.map((url) => (
@@ -359,7 +362,7 @@ export function RepoDetailPage() {
               >
                 <a href={safe} target="_blank" rel="noopener noreferrer">
                   <ExternalLink className="h-4 w-4" />
-                  View on web
+                  {tl("View on web")}
                 </a>
               </Button>
             </div>
@@ -376,7 +379,7 @@ export function RepoDetailPage() {
             >
               <a href={`/channels/${repo.channelId}`}>
                 <MessageSquare className="h-4 w-4" />
-                View channel
+                {tl("View channel")}
               </a>
             </Button>
           </div>
@@ -384,7 +387,7 @@ export function RepoDetailPage() {
       </div>
 
       {/* Sidebar */}
-      <aside className="hidden w-72 shrink-0 border-l border-black/10 pl-8 dark:border-white/10 lg:block">
+      <aside className="hidden w-72 shrink-0 border-s border-black/10 ps-8 dark:border-white/10 lg:block">
         <div className="space-y-6">
           {/* Open in Buzz */}
           <ConnectButton className="w-full" />
@@ -393,7 +396,7 @@ export function RepoDetailPage() {
           <div>
             <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-black dark:text-white">
               <Users className="h-4 w-4" />
-              People
+              {tl("People")}
             </h3>
             <div className="flex flex-wrap gap-2">
               <PubkeyAvatar pubkey={repo.owner} />

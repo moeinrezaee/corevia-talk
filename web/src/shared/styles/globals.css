@@ -1,7 +1,13 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "./fonts-fa.css";
+@import "./rtl.css";
 @plugin "@tailwindcss/typography";
 @config "../../../tailwind.config.js";
+
+/* `dark:` follows the theme toggle (the `.dark` class on <html>), not just the
+   OS preference, so light, dark and system stay in step. */
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   :root {
@@ -95,6 +101,6 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: "Inter Variable", Inter, "Avenir Next", "Segoe UI", sans-serif;
+    font-family: var(--buzz-font-sans);
   }
 }

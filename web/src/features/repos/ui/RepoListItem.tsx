@@ -3,9 +3,10 @@ import { Link } from "@tanstack/react-router";
 
 import { Badge } from "@/shared/ui/badge";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
-import { relativeTime } from "@/shared/lib/relative-time";
+import { formatDateTime, relativeTime } from "@/shared/lib/relative-time";
 import { truncatePubkey } from "@/shared/lib/pubkey";
 import type { Repo } from "../use-repos";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export function RepoListItem({
   repo,
@@ -29,9 +30,9 @@ export function RepoListItem({
         </Link>
         <Badge
           variant="outline"
-          className="ml-1 border-black/15 text-black/60 dark:border-white/15 dark:text-white/60"
+          className="ms-1 border-black/15 text-black/60 dark:border-white/15 dark:text-white/60"
         >
-          Public
+          {tl("Public")}
         </Badge>
       </div>
 
@@ -52,7 +53,9 @@ export function RepoListItem({
           </TooltipTrigger>
           <TooltipContent>{repo.owner}</TooltipContent>
         </Tooltip>
-        <span>Updated {relativeTime(repo.createdAt)}</span>
+        <span title={formatDateTime(repo.createdAt)}>
+          {tlt("Updated {0}", [relativeTime(repo.createdAt)])}
+        </span>
       </div>
     </div>
   );

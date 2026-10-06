@@ -1,0 +1,186 @@
+/*
+ * Right-to-left (Persian) support. The language preference sets `dir="rtl"` and
+ * `lang="fa"` on <html> (shared/i18n/languagePreference.ts); flex and grid
+ * layouts mirror on their own and components use logical utilities (ms/me/ps/pe,
+ * text-start, border-s), so this file covers what does not follow `dir`
+ * automatically: fonts, mixed-script text, text boxes, selects, quotes, icons.
+ */
+@layer base {
+  :root {
+    /* Persian typed in the English UI is still drawn in Peyda (Arabic-script
+       fallback, see fonts-fa.css); Latin text and ASCII digits stay in Inter. */
+    --buzz-font-sans:
+      "Inter Variable", Inter, "Peyda Script", "Avenir Next", "Segoe UI",
+      sans-serif;
+  }
+
+  /* Peyda FaNum goes first so digits come out as Persian numerals; Inter still
+     covers Latin glyphs Peyda lacks. */
+  :root[lang="fa"] {
+    --buzz-font-sans:
+      "Peyda FaNum", "Inter Variable", Inter, "Avenir Next", "Segoe UI",
+      sans-serif;
+  }
+
+  /* Code and URLs stay left-to-right inside a right-to-left interface. */
+  :root[dir="rtl"] pre,
+  :root[dir="rtl"] code,
+  :root[dir="rtl"] kbd {
+    direction: ltr;
+    unicode-bidi: plaintext;
+    text-align: left;
+  }
+
+  /* Directional glyphs mirror with the layout. */
+  :root[dir="rtl"] [data-rtl-flip],
+  :root[dir="rtl"]
+    :is(
+      .lucide-chevron-left,
+      .lucide-chevron-right,
+      .lucide-arrow-left,
+      .lucide-arrow-right,
+      .lucide-corner-down-left,
+      .lucide-corner-down-right
+    ) {
+    transform: scaleX(-1);
+  }
+
+  /*
+   * English phrases inside the Persian UI (repository names, commit titles)
+   * must order their own punctuation correctly: a trailing "." belongs at the
+   * right end of an English sentence, not at the left edge of an RTL line.
+   * `plaintext` leaves flex/grid direction (icon order) alone, unlike dir=auto.
+   */
+  :root[dir="rtl"]
+    :is(p, span, a, button, label, li, td, th, h1, h2, h3, h4, h5, h6) {
+    unicode-bidi: plaintext;
+  }
+
+  /* Rendered markdown (README, file viewer, policies): the text aligns with the
+     UI, not with the language of the text; only the run order inside a line
+     follows the text. Lists and quotes take the UI direction. */
+  .message-markdown :is(p, h1, h2, h3, h4, h5, h6, td, th) {
+    unicode-bidi: plaintext;
+  }
+  /* List items and quotes keep the UI direction: with `plaintext` they would
+     resolve to the direction of their first letter and move their marker or
+     quote bar to the wrong side. */
+  .message-markdown :is(li, blockquote) {
+    unicode-bidi: normal;
+  }
+  :root[dir="ltr"]
+    .message-markdown
+    :is(p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th) {
+    text-align: left;
+  }
+  :root[dir="rtl"]
+    .message-markdown
+    :is(p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th) {
+    text-align: right;
+  }
+
+  /* Text-aligned blocks that content-alignment.ts marked (see that file). */
+  :root[dir="rtl"] [data-ltr-text] {
+    text-align: right;
+  }
+  :root[dir="ltr"] [data-rtl-text] {
+    text-align: left;
+  }
+
+  /*
+   * Text boxes (and their placeholders) follow the UI direction, not what is
+   * typed: right-aligned in the Persian UI, left-aligned in the English one.
+   * `plaintext` keeps the order of mixed Persian + English runs correct inside
+   * the box. Utilities such as `text-center` still win from this layer.
+   */
+  :is(input, textarea):not([type="checkbox"], [type="radio"]) {
+    unicode-bidi: plaintext;
+  }
+  :root[dir="rtl"]
+    :is(input, textarea, select, [contenteditable="true"]):not(
+      [type="checkbox"],
+      [type="radio"],
+      [type="range"],
+      [type="file"],
+      [type="color"]
+    ) {
+    text-align: right;
+  }
+  :root[dir="ltr"]
+    :is(input, textarea, select, [contenteditable="true"]):not(
+      [type="checkbox"],
+      [type="radio"],
+      [type="range"],
+      [type="file"],
+      [type="color"]
+    ) {
+    text-align: left;
+  }
+}
+
+/*
+ * Select boxes: native arrow removed, a custom chevron sits on the end side.
+ * The label is 0.75rem from the start edge and the chevron 0.75rem from the
+ * end edge, so both sides look the same in either direction.
+ */
+.select-field {
+  appearance: none;
+  padding-inline-start: 0.75rem;
+  padding-inline-end: 2.25rem;
+  background-repeat: no-repeat;
+  background-size: 1rem 1rem;
+  background-position: right 0.75rem center;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-opacity='.55' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
+:root[dir="rtl"] .select-field {
+  background-position: left 0.75rem center;
+}
+.dark .select-field {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-opacity='.6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
+
+/*
+ * Block quotes: a distinct box with almost square corners and the quote bar on
+ * the start side. (Unlayered so it beats the typography plugin.)
+ */
+.message-markdown blockquote {
+  margin-block: 1em;
+  padding: 0.5em 1em;
+  border-inline-start: 3px solid currentcolor;
+  border-start-start-radius: 2px;
+  border-end-start-radius: 2px;
+  border-start-end-radius: 2px;
+  border-end-end-radius: 2px;
+  background: rgb(0 0 0 / 5%);
+  font-style: normal;
+}
+.dark .message-markdown blockquote {
+  background: rgb(255 255 255 / 8%);
+}
+.message-markdown blockquote p::before,
+.message-markdown blockquote p::after {
+  content: none;
+}
+
+/*
+ * (Unlayered on purpose: it has to beat the utility layer.)
+ * Persian titles are drawn one weight step heavier than English: Peyda has no
+ * Medium and its Regular looks light beside Latin Inter. Tracking tuned for
+ * Latin (tracking-tight and friends) breaks the joins between Persian letters,
+ * so it is reset to zero.
+ */
+:root[lang="fa"] .font-medium {
+  font-weight: 600;
+}
+:root[lang="fa"] .font-semibold {
+  font-weight: 700;
+}
+:root[lang="fa"] .font-bold {
+  font-weight: 800;
+}
+:root[lang="fa"] [class*="tracking-"] {
+  letter-spacing: 0;
+}
+:root[lang="fa"] :is(h1, h2, h3) {
+  letter-spacing: 0;
+}

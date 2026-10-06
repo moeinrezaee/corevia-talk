@@ -1,0 +1,144 @@
+/*
+ * Peyda FaNum: the Persian interface font. "FaNum" builds draw Latin digits as
+ * Persian digits, so numbers read in Persian wherever this font is active
+ * (`lang="fa"` only; see rtl.css).
+ *
+ * Seven files ship (ExtraLight, Regular, SemiBold, Bold, ExtraBold, Black,
+ * ExtraBlack), so each CSS weight maps to the nearest shipped file instead of
+ * being left to the browser's fallback or faux bolding:
+ *   100-200 ExtraLight  300-500 Regular  600 SemiBold  700 Bold
+ *   800 ExtraBold  900 Black  950+ ExtraBlack
+ * There are no Light or Medium files, so 300 and 500 use Regular.
+ */
+@font-face {
+  font-family: "Peyda FaNum";
+  font-weight: 100 200;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/peyda/PeydaFaNumWeb-ExtraLight.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Peyda FaNum";
+  font-weight: 300 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/peyda/PeydaFaNumWeb-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Peyda FaNum";
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/peyda/PeydaFaNumWeb-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Peyda FaNum";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/peyda/PeydaFaNumWeb-Bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Peyda FaNum";
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/peyda/PeydaFaNumWeb-ExtraBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Peyda FaNum";
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/peyda/PeydaFaNumWeb-Black.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Peyda FaNum";
+  font-weight: 950 1000;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/peyda/PeydaFaNumWeb-ExtraBlack.woff2") format("woff2");
+}
+
+/*
+ * "Peyda Script": the same files limited to Arabic-script code points, so
+ * Persian typed in the English UI (messages, composer, names) is drawn in
+ * Peyda FaNum while Latin text and ASCII digits stay in Inter. It is the
+ * fallback entry in the English font stack (theme.css).
+ */
+
+@font-face {
+  font-family: "Peyda Script";
+  font-weight: 100 200;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+200C-200D;
+  src: url("../fonts/peyda/PeydaFaNumWeb-ExtraLight.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Peyda Script";
+  font-weight: 300 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+200C-200D;
+  src: url("../fonts/peyda/PeydaFaNumWeb-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Peyda Script";
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+200C-200D;
+  src: url("../fonts/peyda/PeydaFaNumWeb-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Peyda Script";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+200C-200D;
+  src: url("../fonts/peyda/PeydaFaNumWeb-Bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Peyda Script";
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+200C-200D;
+  src: url("../fonts/peyda/PeydaFaNumWeb-ExtraBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Peyda Script";
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+200C-200D;
+  src: url("../fonts/peyda/PeydaFaNumWeb-Black.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Peyda Script";
+  font-weight: 950 1000;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+200C-200D;
+  src: url("../fonts/peyda/PeydaFaNumWeb-ExtraBlack.woff2") format("woff2");
+}

@@ -2,6 +2,7 @@ import { GitBranch, Hash, Tag } from "lucide-react";
 
 import { Badge } from "@/shared/ui/badge";
 import type { RepoRefs } from "../use-repo-refs";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export function RepoRefsSection({
   refs,
@@ -25,7 +26,7 @@ export function RepoRefsSection({
                   variant="secondary"
                   className="bg-black/5 text-black dark:bg-white/10 dark:text-white"
                 >
-                  <GitBranch className="mr-1 h-4 w-4" />
+                  <GitBranch className="me-1 h-4 w-4" />
                   {refs.head.ref}
                 </Badge>
                 {refs.head.sha && (
@@ -33,7 +34,7 @@ export function RepoRefsSection({
                     variant="outline"
                     className="border-black/15 font-mono text-xs text-black/60 dark:border-white/15 dark:text-white/60"
                   >
-                    <Hash className="mr-0.5 h-4 w-4" />
+                    <Hash className="me-0.5 h-4 w-4" />
                     {refs.head.sha.slice(0, 7)}
                   </Badge>
                 )}
@@ -43,18 +44,21 @@ export function RepoRefsSection({
           )}
           <span className="flex items-center gap-1">
             <GitBranch className="h-4 w-4" />
-            {refs.branches.length}{" "}
-            {refs.branches.length === 1 ? "branch" : "branches"}
+            {refs.branches.length === 1
+              ? tl("1 branch")
+              : tlt("{0} branches", [refs.branches.length])}
           </span>
           <span className="text-black/30 dark:text-white/30">&middot;</span>
           <span className="flex items-center gap-1">
             <Tag className="h-4 w-4" />
-            {refs.tags.length} {refs.tags.length === 1 ? "tag" : "tags"}
+            {refs.tags.length === 1
+              ? tl("1 tag")
+              : tlt("{0} tags", [refs.tags.length])}
           </span>
         </div>
       ) : (
         <p className="text-sm text-black/60 dark:text-white/60">
-          No commits yet
+          {tl("No commits yet")}
         </p>
       )}
     </div>

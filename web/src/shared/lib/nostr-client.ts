@@ -10,6 +10,7 @@ import {
   type SignedNostrEvent,
   signNostrEvent,
 } from "@/shared/lib/nostr-signer";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export interface NostrFilter {
   ids?: string[];
@@ -48,7 +49,11 @@ export function queryEvents(
       if (!settled) {
         settled = true;
         ws.close();
-        reject(new Error(`Relay query timed out after ${QUERY_TIMEOUT_MS}ms`));
+        reject(
+          new Error(
+            tlt("Relay query timed out after {0}ms", [QUERY_TIMEOUT_MS]),
+          ),
+        );
       }
     }, QUERY_TIMEOUT_MS);
 
@@ -108,7 +113,7 @@ export function queryEvents(
             reject(
               error instanceof Error
                 ? error
-                : new Error("Failed to sign relay authentication."),
+                : new Error(tl("Failed to sign relay authentication.")),
             );
           }
         }
@@ -125,7 +130,7 @@ export function queryEvents(
             new Error(
               typeof data[3] === "string"
                 ? data[3]
-                : "Relay authentication failed.",
+                : tl("Relay authentication failed."),
             ),
           );
         }
@@ -148,7 +153,7 @@ export function queryEvents(
           const reason =
             typeof data[2] === "string"
               ? data[2]
-              : "subscription closed by relay";
+              : tl("subscription closed by relay");
           reject(new Error(reason));
         }
       } else if (type === "NOTICE") {
@@ -160,7 +165,7 @@ export function queryEvents(
       if (!settled) {
         settled = true;
         cleanup();
-        reject(new Error("WebSocket connection failed"));
+        reject(new Error(tl("WebSocket connection failed")));
       }
     });
 

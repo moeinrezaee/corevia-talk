@@ -1,3 +1,5 @@
+import { tl, tlt } from "@/shared/i18n/tl";
+
 /** Format a Unix timestamp (seconds) as a human-readable relative time string. */
 export function relativeTime(unix: number): string {
   const diff = Date.now() - unix * 1000;
@@ -8,11 +10,30 @@ export function relativeTime(unix: number): string {
 
   if (days > 30) {
     const months = Math.floor(days / 30);
-    return months === 1 ? "1 month ago" : `${months} months ago`;
+    return months === 1 ? tl("1 month ago") : tlt("{0} months ago", [months]);
   }
-  if (days > 0) return days === 1 ? "1 day ago" : `${days} days ago`;
-  if (hours > 0) return hours === 1 ? "1 hour ago" : `${hours} hours ago`;
-  if (minutes > 0)
-    return minutes === 1 ? "1 minute ago" : `${minutes} minutes ago`;
-  return "just now";
+  if (days > 0) {
+    return days === 1 ? tl("1 day ago") : tlt("{0} days ago", [days]);
+  }
+  if (hours > 0) {
+    return hours === 1 ? tl("1 hour ago") : tlt("{0} hours ago", [hours]);
+  }
+  if (minutes > 0) {
+    return minutes === 1
+      ? tl("1 minute ago")
+      : tlt("{0} minutes ago", [minutes]);
+  }
+  return tl("just now");
+}
+
+/**
+ * Full date and time for a Unix timestamp (seconds), shown as a tooltip next to
+ * the relative time. In the Persian UI the Intl proxy makes this Jalali in
+ * Tehran time (see shared/i18n/persianDates.ts); English stays Gregorian.
+ */
+export function formatDateTime(unix: number): string {
+  return new Date(unix * 1000).toLocaleString("en-US", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
 }

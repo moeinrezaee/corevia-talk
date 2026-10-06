@@ -3,6 +3,7 @@ import {
   generateSecretKey,
   getPublicKey,
 } from "nostr-tools/pure";
+import { tl } from "@/shared/i18n/tl";
 
 export type UnsignedNostrEvent = {
   kind: number;
@@ -30,7 +31,7 @@ declare global {
 
 export class Nip07UnavailableError extends Error {
   constructor() {
-    super("A NIP-07 browser extension is required to join in the browser.");
+    super(tl("A NIP-07 browser extension is required to join in the browser."));
     this.name = "Nip07UnavailableError";
   }
 }
@@ -88,7 +89,9 @@ export async function signNostrEvent(
       typeof signed.id !== "string" ||
       typeof signed.sig !== "string"
     ) {
-      throw new Error("The NIP-07 extension returned an invalid signed event.");
+      throw new Error(
+        tl("The NIP-07 extension returned an invalid signed event."),
+      );
     }
     return signed;
   }
@@ -100,7 +103,7 @@ export async function signNostrEvent(
   const secretKey = getEphemeralSecretKey();
   const signed = finalizeEvent(unsigned, secretKey);
   if (signed.pubkey !== getPublicKey(secretKey)) {
-    throw new Error("Failed to create the ephemeral browser identity.");
+    throw new Error(tl("Failed to create the ephemeral browser identity."));
   }
   return signed;
 }

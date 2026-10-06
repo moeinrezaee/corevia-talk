@@ -14,6 +14,8 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 import { InviteJoinPolicyNotice } from "./InviteJoinPolicyNotice";
+import { tl } from "@/shared/i18n/tl";
+import { tlNodes } from "@/shared/i18n/tlNodes";
 
 type JoinPolicy = {
   terms_markdown?: string;
@@ -27,13 +29,15 @@ type PolicyDocument = { title: string; markdown: string };
 /** Convert relay invite sentinels into user-facing recovery guidance. */
 function inviteClaimErrorMessage(message: string): string {
   if (message.includes("invite_exhausted")) {
-    return "This invite has reached its use limit. Ask for a new invite.";
+    return tl("This invite has reached its use limit. Ask for a new invite.");
   }
   if (message.includes("invite_expired")) {
-    return "This invite has expired. Ask for a new invite.";
+    return tl("This invite has expired. Ask for a new invite.");
   }
   if (message.includes("invite_invalid")) {
-    return "This invite is invalid. Check the link or ask for a new invite.";
+    return tl(
+      "This invite is invalid. Check the link or ask for a new invite.",
+    );
   }
   return message;
 }
@@ -125,7 +129,9 @@ export function InvitePage({ code }: { code: string }) {
       window.location.assign("/");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "Could not claim this invite.";
+        error instanceof Error
+          ? error.message
+          : tl("Could not claim this invite.");
       setBrowserJoinError(inviteClaimErrorMessage(message));
     } finally {
       setJoiningBrowser(false);
@@ -200,7 +206,7 @@ export function InvitePage({ code }: { code: string }) {
             <img alt="Buzz" className="h-full w-full" src={buzzAppIcon} />
           </div>
           <h1 className="mt-4 text-2xl font-semibold tracking-tight text-black">
-            You&apos;re invited to
+            {tl("You're invited to")}
           </h1>
           <p className="mt-9 font-mono text-lg text-black/70">{host}</p>
 
@@ -232,7 +238,7 @@ export function InvitePage({ code }: { code: string }) {
                 disabled={disabled}
                 onClick={joinInBrowser}
               >
-                {joiningBrowser ? "Joining…" : "Join in browser"}
+                {joiningBrowser ? tl("Joining…") : tl("Join in browser")}
               </Button>
             ) : null}
             {policy === null ? (
@@ -247,7 +253,7 @@ export function InvitePage({ code }: { code: string }) {
                 <a
                   href={`buzz://join?relay=${encodeURIComponent(relay)}&code=${encodeURIComponent(code)}`}
                 >
-                  Accept invite in Buzz
+                  {tl("Accept invite in Buzz")}
                 </a>
               </Button>
             ) : (
@@ -260,7 +266,7 @@ export function InvitePage({ code }: { code: string }) {
                 disabled={disabled}
                 onClick={openInvite}
               >
-                Accept invite in Buzz
+                {tl("Accept invite in Buzz")}
               </Button>
             )}
             {browserJoinError ? (
@@ -271,11 +277,11 @@ export function InvitePage({ code }: { code: string }) {
           </div>
         </div>
         <p className="flex h-[3.125rem] items-center justify-center rounded-2xl bg-white text-sm text-black/60">
-          Don&apos;t have the app?{" "}
+          {tl("Don't have the app?")}{" "}
           <a
             aria-expanded={needsMacChoice ? showMacChoice : undefined}
             aria-haspopup={needsMacChoice ? "dialog" : undefined}
-            className="ml-1 font-medium text-black underline-offset-4 hover:text-black/70 hover:underline focus-visible:underline"
+            className="ms-1 font-medium text-black underline-offset-4 hover:text-black/70 hover:underline focus-visible:underline"
             href={downloadUrl}
             ref={downloadTriggerRef}
             rel="noreferrer"
@@ -286,7 +292,7 @@ export function InvitePage({ code }: { code: string }) {
               setShowMacChoice(true);
             }}
           >
-            Download it now
+            {tl("Download it now")}
           </a>
           <span aria-hidden="true" className="mx-1.5 text-black/30">
             ·
@@ -297,16 +303,16 @@ export function InvitePage({ code }: { code: string }) {
             rel="noreferrer"
             target="_blank"
           >
-            Browse releases
+            {tl("Browse releases")}
           </a>
         </p>
       </div>
 
       {showMacChoice && (
         <div
-          aria-label="Which Mac do you have?"
+          aria-label={tl("Which Mac do you have?")}
           aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 text-left"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 text-start"
           role="dialog"
           onMouseDown={(event) => {
             if (event.currentTarget === event.target) closeMacChoice();
@@ -316,14 +322,14 @@ export function InvitePage({ code }: { code: string }) {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <h2 className="text-2xl font-semibold tracking-tight">
-                  Which Mac do you have?
+                  {tl("Which Mac do you have?")}
                 </h2>
                 <p className="mt-2 text-sm text-black/60">
-                  Choose based on when your Mac was released.
+                  {tl("Choose based on when your Mac was released.")}
                 </p>
               </div>
               <button
-                aria-label="Close"
+                aria-label={tl("Close")}
                 className="text-2xl leading-none text-black/60 hover:text-black"
                 type="button"
                 onClick={closeMacChoice}
@@ -343,9 +349,11 @@ export function InvitePage({ code }: { code: string }) {
                   })
                 }
               >
-                <strong className="block text-lg">Newer Mac</strong>
+                <strong className="block text-lg">{tl("Newer Mac")}</strong>
                 <span className="mt-1 block text-sm">
-                  2021 or later, or a late-2020 Mac with an Apple M1 chip
+                  {tl(
+                    "2021 or later, or a late-2020 Mac with an Apple M1 chip",
+                  )}
                 </span>
               </a>
               <a
@@ -359,16 +367,20 @@ export function InvitePage({ code }: { code: string }) {
                   })
                 }
               >
-                <strong className="block text-lg">Older Mac</strong>
+                <strong className="block text-lg">{tl("Older Mac")}</strong>
                 <span className="mt-1 block text-sm">
-                  2019 or earlier, or a 2020 Mac with an Intel processor
+                  {tl("2019 or earlier, or a 2020 Mac with an Intel processor")}
                 </span>
               </a>
             </div>
             <p className="mt-5 text-sm leading-5">
-              <strong>Not sure?</strong> Open the Apple menu and choose{" "}
-              <strong>About This Mac</strong>. “Chip: Apple M…” means Newer Mac.
-              “Processor: Intel” means Older Mac.
+              {tlNodes(
+                "{0} Open the Apple menu and choose {1}. “Chip: Apple M…” means Newer Mac. “Processor: Intel” means Older Mac.",
+                [
+                  <strong key="unsure">{tl("Not sure?")}</strong>,
+                  <strong key="about">{tl("About This Mac")}</strong>,
+                ],
+              )}
             </p>
           </div>
         </div>
@@ -378,7 +390,7 @@ export function InvitePage({ code }: { code: string }) {
         <div
           aria-label={document.title}
           aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 text-left"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 text-start"
           role="dialog"
           onMouseDown={(event) => {
             if (event.currentTarget === event.target) setDocument(null);
@@ -388,7 +400,7 @@ export function InvitePage({ code }: { code: string }) {
             <div className="mb-6 flex items-start justify-between gap-4">
               <h2 className="text-xl font-semibold">{document.title}</h2>
               <button
-                aria-label="Close"
+                aria-label={tl("Close")}
                 className="text-2xl leading-none text-black/60 hover:text-black"
                 type="button"
                 onClick={() => setDocument(null)}
@@ -396,7 +408,7 @@ export function InvitePage({ code }: { code: string }) {
                 ×
               </button>
             </div>
-            <div className="prose prose-sm max-w-none">
+            <div className="message-markdown prose prose-sm max-w-none">
               <Markdown remarkPlugins={[remarkGfm]}>
                 {document.markdown}
               </Markdown>

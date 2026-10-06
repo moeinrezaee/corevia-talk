@@ -1,4 +1,6 @@
 import * as React from "react";
+import { tlNodes } from "@/shared/i18n/tlNodes";
+import { tl } from "@/shared/i18n/tl";
 
 type InviteJoinPolicy = {
   terms_markdown?: string;
@@ -32,7 +34,7 @@ function PolicyCheckbox({
         type="checkbox"
       />
       <label
-        className="flex cursor-pointer items-start gap-3 rounded-sm text-left text-xs leading-5 text-black/60 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-black"
+        className="flex cursor-pointer items-start gap-3 rounded-sm text-start text-xs leading-5 text-black/60 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-black"
         htmlFor={id}
       >
         <span
@@ -98,62 +100,65 @@ export function InviteJoinPolicyNotice({
 
   return (
     <div
-      className="w-full space-y-3 rounded-xl border border-black/10 bg-black/[0.03] p-4 text-left"
+      className="w-full space-y-3 rounded-xl border border-black/10 bg-black/[0.03] p-4 text-start"
       data-testid="invite-join-policy-notice"
     >
       {policy.age_attestation_required ? (
         <PolicyCheckbox
-          accessibleLabel="I am 18 years of age or older."
+          accessibleLabel={tl("I am 18 years of age or older.")}
           checked={ageConfirmed}
           onCheckedChange={onAgeConfirmedChange}
         >
-          I am 18 years of age or older.
+          {tl("I am 18 years of age or older.")}
         </PolicyCheckbox>
       ) : null}
 
       {policy.terms_markdown || policy.privacy_markdown ? (
         <PolicyCheckbox
-          accessibleLabel="I agree to the Buzz Terms of Service and Privacy Policy."
+          accessibleLabel={tl(
+            "I agree to the Buzz Terms of Service and Privacy Policy.",
+          )}
           checked={agreementConfirmed}
           onCheckedChange={onAgreementConfirmedChange}
         >
-          I agree to the Buzz{" "}
-          {policy.terms_markdown ? (
-            <button
-              className="text-black no-underline underline-offset-4 hover:text-black/70 hover:underline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-black"
-              type="button"
-              onClick={(event) =>
-                stopLabelActivation(
-                  event,
-                  "Terms of Service",
-                  policy.terms_markdown ?? "",
-                )
-              }
-            >
-              Terms of Service
-            </button>
-          ) : (
-            "Terms of Service"
-          )}{" "}
-          and{" "}
-          {policy.privacy_markdown ? (
-            <button
-              className="text-black no-underline underline-offset-4 hover:text-black/70 hover:underline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-black"
-              type="button"
-              onClick={(event) =>
-                stopLabelActivation(
-                  event,
-                  "Privacy Policy",
-                  policy.privacy_markdown ?? "",
-                )
-              }
-            >
-              Privacy Policy
-            </button>
-          ) : (
-            "Privacy Policy"
-          )}
-          .
+          {tlNodes("I agree to the Buzz {0} and {1}.", [
+            policy.terms_markdown ? (
+              <button
+                key="terms"
+                className="text-black no-underline underline-offset-4 hover:text-black/70 hover:underline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-black"
+                type="button"
+                onClick={(event) =>
+                  stopLabelActivation(
+                    event,
+                    tl("Terms of Service"),
+                    policy.terms_markdown ?? "",
+                  )
+                }
+              >
+                {tl("Terms of Service")}
+              </button>
+            ) : (
+              tl("Terms of Service")
+            ),
+            policy.privacy_markdown ? (
+              <button
+                key="privacy"
+                className="text-black no-underline underline-offset-4 hover:text-black/70 hover:underline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-black"
+                type="button"
+                onClick={(event) =>
+                  stopLabelActivation(
+                    event,
+                    tl("Privacy Policy"),
+                    policy.privacy_markdown ?? "",
+                  )
+                }
+              >
+                {tl("Privacy Policy")}
+              </button>
+            ) : (
+              tl("Privacy Policy")
+            ),
+          ])}
         </PolicyCheckbox>
       ) : null}
     </div>

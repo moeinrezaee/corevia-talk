@@ -19,6 +19,7 @@ import type { BlobView } from "../git-client";
 import { useGitBlob, useGitHtmlDoc } from "../use-git-browse";
 import { useRepoContext } from "../use-repo-context";
 import { getMockBlob } from "../mock-repos";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 function formatBytes(n: number): string {
   if (n < 1024) return `${n} B`;
@@ -70,15 +71,15 @@ function CopyTextButton({ content }: { content: string }) {
         try {
           await navigator.clipboard.writeText(content);
           setCopied(true);
-          toast.success("Copied to clipboard");
+          toast.success(tl("Copied to clipboard"));
           setTimeout(() => setCopied(false), 2000);
         } catch {
-          toast.error("Failed to copy to clipboard");
+          toast.error(tl("Failed to copy to clipboard"));
         }
       }}
     >
       {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-      <span className="ml-2">Copy</span>
+      <span className="ms-2">{tl("Copy")}</span>
     </Button>
   );
 }
@@ -103,7 +104,7 @@ function DownloadButton({
     >
       <a href={url} download={filename}>
         <Download className="h-4 w-4" />
-        <span className="ml-2">Download</span>
+        <span className="ms-2">{tl("Download")}</span>
       </a>
     </Button>
   );
@@ -159,7 +160,7 @@ const RUN_SANDBOX = "allow-scripts";
 function HtmlRunView({ doc }: { doc: string }) {
   return (
     <iframe
-      title="Repository page (sandboxed)"
+      title={tl("Repository page (sandboxed)")}
       srcDoc={doc}
       sandbox={RUN_SANDBOX}
       className="h-[80vh] w-full rounded-lg border border-black/10 bg-white dark:border-white/10"
@@ -181,7 +182,7 @@ function ViewerBody({
       return <TextView content={view.content} />;
     case "markdown":
       return (
-        <div className="prose prose-sm dark:prose-invert max-w-none rounded-lg border border-black/10 bg-white/50 p-4 dark:border-white/10 dark:bg-white/5">
+        <div className="message-markdown prose prose-sm dark:prose-invert max-w-none rounded-lg border border-black/10 bg-white/50 p-4 dark:border-white/10 dark:bg-white/5">
           <Markdown remarkPlugins={[remarkGfm]}>{view.content}</Markdown>
         </div>
       );
@@ -204,16 +205,18 @@ function ViewerBody({
     case "binary":
       return (
         <div className="rounded-lg border border-black/10 bg-white/50 p-6 text-sm text-black/60 dark:border-white/10 dark:bg-white/5 dark:text-white/60">
-          Binary file — {formatBytes(view.sizeBytes)}. Use the Download button
-          above to save it.
+          {tlt("Binary file — {0}. Use the Download button above to save it.", [
+            formatBytes(view.sizeBytes),
+          ])}
         </div>
       );
     case "too-large":
       return (
         <div className="rounded-lg border border-black/10 bg-white/50 p-6 text-sm text-black/60 dark:border-white/10 dark:bg-white/5 dark:text-white/60">
-          File is {formatBytes(view.sizeBytes)}, over the{" "}
-          {formatBytes(view.limitBytes)} preview limit. Use the Download button
-          above to save it.
+          {tlt(
+            "File is {0}, over the {1} preview limit. Use the Download button above to save it.",
+            [formatBytes(view.sizeBytes), formatBytes(view.limitBytes)],
+          )}
         </div>
       );
   }
@@ -264,7 +267,7 @@ export function RepoBlobPage() {
       <div className="flex-1 bg-[#F3F3F3] px-4 py-8 text-black dark:bg-[#171717] dark:text-white">
         <BackLink repoId={repoId} preview={showMockBlob} />
         <p className="mt-4 text-sm text-destructive">
-          Failed to load repository: {ctxError.message}
+          {tlt("Failed to load repository: {0}", [ctxError.message])}
         </p>
       </div>
     );
@@ -277,7 +280,7 @@ export function RepoBlobPage() {
       <div className="mt-4 flex flex-wrap items-center gap-3">
         <FileText className="h-4 w-4 text-black/50 dark:text-white/50" />
         <h1 className="min-w-0 truncate font-mono text-sm">{filepath}</h1>
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ms-auto flex items-center gap-2">
           {view &&
             (view.kind === "text" ||
               view.kind === "markdown" ||
@@ -292,7 +295,9 @@ export function RepoBlobPage() {
               onClick={() => setRunning((r) => !r)}
             >
               <Play className="h-4 w-4" />
-              <span className="ml-2">{running ? "Show source" : "Run"}</span>
+              <span className="ms-2">
+                {running ? tl("Show source") : tl("Run")}
+              </span>
             </Button>
           )}
           {view &&
@@ -317,7 +322,7 @@ export function RepoBlobPage() {
           <div className="h-32 animate-pulse rounded-lg bg-black/10 dark:bg-white/10" />
         ) : error ? (
           <p className="text-sm text-destructive">
-            Failed to load file: {(error as Error).message}
+            {tlt("Failed to load file: {0}", [(error as Error).message])}
           </p>
         ) : view ? (
           <ViewerBody
@@ -340,7 +345,7 @@ function BackLink({ repoId, preview }: { repoId: string; preview: boolean }) {
       className="inline-flex items-center gap-1 text-sm text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white"
     >
       <ArrowLeft className="h-4 w-4" />
-      Back to repository
+      {tl("Back to repository")}
     </Link>
   );
 }

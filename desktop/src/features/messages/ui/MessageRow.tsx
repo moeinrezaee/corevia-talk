@@ -663,36 +663,51 @@ export const MessageRow = React.memo(
       ) : null;
 
     const headerNode = isDisplayedAsContinuation ? null : (
-      // pe reserves the measured action-rail footprint (0px until measured) so
-      // header content ends before the rail's left edge in every rail state.
-      <MessageHeaderRow
-        className={
-          isOwnMessage
-            ? "pe-[var(--message-action-rail-width,0px)]"
-            : "message-header-mirrored"
-        }
-      >
-        {message.pubkey ? (
-          <MessageAuthorWithIndicators
-            authorName={message.author}
-            ownerPubkey={message.ownerPubkey}
-            pubkey={message.pubkey}
-            role={profilePopoverRole}
+      <>
+        {/* pe reserves the measured action-rail footprint (0px until measured)
+            so header content ends before the rail's edge in every rail state. */}
+        <MessageHeaderRow
+          className={
+            isOwnMessage
+              ? "pe-[var(--message-action-rail-width,0px)]"
+              : "message-header-mirrored"
+          }
+        >
+          {message.pubkey ? (
+            <MessageAuthorWithIndicators
+              authorName={message.author}
+              ownerPubkey={message.ownerPubkey}
+              pubkey={message.pubkey}
+              role={profilePopoverRole}
+            >
+              {authorNode}
+            </MessageAuthorWithIndicators>
+          ) : (
+            authorNode
+          )}
+          {/* Author is not a segment: "Alice 9:53 AM" needs no divider. */}
+          <MessageMetaSegments
+            segments={[{ key: "timestamp", node: inlineMetadataNode }]}
+          />
+        </MessageHeaderRow>
+        {/* The role line (agent owner, persona) sits under the name. */}
+        {agentOwnerNode || personaNode ? (
+          <div
+            className={cn(
+              "flex w-full min-w-0 flex-wrap items-baseline gap-x-1.5 gap-y-0 text-xs leading-4",
+              !isOwnMessage && "message-header-mirrored",
+            )}
+            data-testid="message-role-line"
           >
-            {authorNode}
-          </MessageAuthorWithIndicators>
-        ) : (
-          authorNode
-        )}
-        {/* Author is not a segment: "Alice 9:53 AM" needs no divider. */}
-        <MessageMetaSegments
-          segments={[
-            { key: "owner", node: agentOwnerNode },
-            { key: "timestamp", node: inlineMetadataNode },
-            { key: "persona", node: personaNode },
-          ]}
-        />
-      </MessageHeaderRow>
+            <MessageMetaSegments
+              segments={[
+                { key: "owner", node: agentOwnerNode },
+                { key: "persona", node: personaNode },
+              ]}
+            />
+          </div>
+        ) : null}
+      </>
     );
     const bodyContainerClass = isDisplayedAsContinuation
       ? "mt-0"

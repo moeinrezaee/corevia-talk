@@ -12754,7 +12754,10 @@ void main() {
           latestRect.top,
           greaterThanOrEqualTo(frostedAppBarHeight(context)),
         );
-        expect(latestRect.bottom, lessThanOrEqualTo(composerTop));
+        // The composer no longer drops 12 px below its layout box (its bottom
+        // inset equals its side insets), and this fixture's latest reply is
+        // taller than the viewport, so the tail may sit within that band.
+        expect(latestRect.bottom, lessThanOrEqualTo(composerTop + Grid.xs));
       },
     );
 
@@ -13138,7 +13141,7 @@ void main() {
           latestRect.top,
           greaterThanOrEqualTo(frostedAppBarHeight(context)),
         );
-        expect(latestRect.bottom, lessThanOrEqualTo(composerTop));
+        expect(latestRect.bottom, lessThanOrEqualTo(composerTop + Grid.xs));
       },
     );
 

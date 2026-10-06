@@ -744,10 +744,9 @@ void main() {
       final compactPosition = tester.widget<Transform>(
         find.byKey(const ValueKey('composer-position-transition')),
       );
-      expect(
-        compactPosition.transform.getTranslation().y,
-        Grid.twelve + Grid.quarter,
-      );
+      // The composer no longer drops below its layout box: its bottom inset
+      // matches its side insets.
+      expect(compactPosition.transform.getTranslation().y, 0);
 
       await _expandComposer(tester);
 
@@ -2208,10 +2207,7 @@ void main() {
           final closingKeyboardPosition = tester.widget<Transform>(
             find.byKey(const ValueKey('composer-position-transition')),
           );
-          expect(
-            closingKeyboardPosition.transform.getTranslation().y,
-            greaterThan(0),
-          );
+          expect(closingKeyboardPosition.transform.getTranslation().y, 0);
           expect(
             closingKeyboardPosition.transform.getTranslation().y,
             lessThan(Grid.twelve + Grid.quarter),
@@ -5149,10 +5145,7 @@ void main() {
       final recordingPosition = tester.widget<Transform>(
         find.byKey(const ValueKey('composer-position-transition')),
       );
-      expect(
-        recordingPosition.transform.getTranslation().y,
-        Grid.twelve + Grid.quarter,
-      );
+      expect(recordingPosition.transform.getTranslation().y, 0);
       final composerDecoration =
           tester
                   .widget<Container>(

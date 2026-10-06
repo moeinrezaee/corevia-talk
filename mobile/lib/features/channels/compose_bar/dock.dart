@@ -61,7 +61,10 @@ class _ComposerDockFrame extends HookWidget {
           padding: EdgeInsetsDirectional.only(
             start: Grid.twelve,
             end: Grid.twelve,
-            bottom: MediaQuery.viewPaddingOf(context).bottom + Grid.xxs,
+            bottom: math.max(
+              MediaQuery.viewPaddingOf(context).bottom,
+              Grid.twelve,
+            ),
           ),
           child: Align(
             alignment: Alignment.bottomCenter,
@@ -79,10 +82,7 @@ class _ComposerDockFrame extends HookWidget {
                 final compactPositionProgress = 1 - expansionProgress;
                 return Transform.translate(
                   key: const ValueKey('composer-position-transition'),
-                  offset: Offset(
-                    0,
-                    compactVerticalOffset * compactPositionProgress,
-                  ),
+                  offset: Offset(0, 0),
                   child: Padding(
                     key: const ValueKey('composer-recording-outer-gutter'),
                     padding: EdgeInsets.symmetric(

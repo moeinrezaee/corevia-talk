@@ -60,6 +60,7 @@ import { shouldShowTranscriptRowTimestamp } from "./agentSessionTranscriptPresen
 import { formatTranscriptTimestampTitle } from "./agentSessionUtils";
 import { hasFileEditLineDiff } from "./FileEditDiffView";
 import { UserMessageBubble } from "./activityRenderClasses/UserMessageBubble";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const TRANSCRIPT_ACP_SOURCE_STORAGE_KEY = "buzz:show-transcript-acp-source";
 
@@ -217,7 +218,9 @@ export function AgentSessionTranscriptList({
           ) : (
             <>
               <Radio className="mx-auto h-4 w-4 text-muted-foreground" />
-              <p className="mt-3 text-sm font-medium">No ACP activity yet</p>
+              <p className="mt-3 text-sm font-medium">
+                {tl("No ACP activity yet")}
+              </p>
               <p className="mt-1 text-sm text-muted-foreground">
                 {emptyDescription}
               </p>
@@ -236,7 +239,7 @@ export function AgentSessionTranscriptList({
       ref={autoTail ? scrollContainerRef : undefined}
     >
       <div
-        aria-label="Live ACP transcript"
+        aria-label={tl("Live ACP transcript")}
         aria-live="polite"
         className={cn(
           "flex w-full flex-col",
@@ -342,7 +345,7 @@ function TranscriptAcpSourceBadge({ source }: { source: string }) {
     <span
       className="mb-1 inline-flex max-w-full rounded border border-amber-500/25 bg-amber-500/10 px-1.5 py-0.5 font-mono text-xs leading-none text-amber-800 dark:text-amber-200"
       data-testid="transcript-acp-source"
-      title={`ACP wire source: ${source}`}
+      title={tlt("ACP wire source: {0}", [source])}
     >
       {source}
     </span>
@@ -529,7 +532,7 @@ function SameKindSummaryItem({
         <ActivityRowContent
           className={cn(
             "flex flex-col",
-            expandsToToolItems || childSegments ? "gap-0.5" : "gap-1 pl-5",
+            expandsToToolItems || childSegments ? "gap-0.5" : "gap-1 ps-5",
           )}
         >
           {childSegments
@@ -748,8 +751,8 @@ function PromptContextDialog({
     <Dialog onOpenChange={onOpenChange} open={open}>
       <DialogContent className="max-w-xl overflow-hidden p-0">
         <div className="flex min-w-0 max-h-[85vh] flex-col">
-          <DialogHeader className="px-6 pb-3 pt-5 pr-14">
-            <DialogTitle>Prompt context</DialogTitle>
+          <DialogHeader className="px-6 pb-3 pt-5 pe-14">
+            <DialogTitle>{tl("Prompt context")}</DialogTitle>
             {setupText ? (
               <div className="flex items-center gap-1.5">
                 <CheckCheck className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
@@ -810,13 +813,15 @@ function TurnSetupFooter({
     >
       {showContext ? (
         <Toggle
-          aria-label={`${contextOpen ? "Hide" : "Show"} prompt context`}
+          aria-label={tlt("{0} prompt context", [
+            contextOpen ? "Hide" : "Show",
+          ])}
           className="data-[state=on]:bg-primary/10 data-[state=on]:text-primary dark:data-[state=on]:bg-primary/15"
           data-testid="transcript-prompt-context-toggle"
           onPressedChange={onContextOpenChange}
           pressed={contextOpen}
           size="xs"
-          title={tooltipText || "Show prompt context"}
+          title={tooltipText || tl("Show prompt context")}
           variant="ghost"
         >
           <CheckCheck aria-hidden="true" />

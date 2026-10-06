@@ -15,21 +15,22 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { Input } from "@/shared/ui/input";
 import { Spinner } from "@/shared/ui/spinner";
+import { tl } from "@/shared/i18n/tl";
 
 const TTL_OPTIONS: { label: string; value: number }[] = [
-  { label: "1 day", value: 24 * 60 * 60 },
-  { label: "3 days", value: 3 * 24 * 60 * 60 },
-  { label: "7 days", value: 7 * 24 * 60 * 60 },
-  { label: "30 days", value: 30 * 24 * 60 * 60 },
+  { label: tl("1 day"), value: 24 * 60 * 60 },
+  { label: tl("3 days"), value: 3 * 24 * 60 * 60 },
+  { label: tl("7 days"), value: 7 * 24 * 60 * 60 },
+  { label: tl("30 days"), value: 30 * 24 * 60 * 60 },
 ];
 
 const MAX_USE_OPTIONS: { label: string; value: number | null }[] = [
-  { label: "No limit", value: null },
-  { label: "1 use", value: 1 },
-  { label: "3 uses", value: 3 },
-  { label: "5 uses", value: 5 },
-  { label: "10 uses", value: 10 },
-  { label: "25 uses", value: 25 },
+  { label: tl("No limit"), value: null },
+  { label: tl("1 use"), value: 1 },
+  { label: tl("3 uses"), value: 3 },
+  { label: tl("5 uses"), value: 5 },
+  { label: tl("10 uses"), value: 10 },
+  { label: tl("25 uses"), value: 25 },
 ];
 
 export const DEFAULT_INVITE_TTL_SECS = TTL_OPTIONS[1].value;
@@ -120,7 +121,7 @@ export function InviteLinkSection({
       }
       if (generationRequestId.current === requestId) {
         setGenerationStatus("failed");
-        toast.error("Couldn’t create an invite link.");
+        toast.error(tl("Couldn’t create an invite link."));
       }
     }
   }, [inviteSettingsKey, maxUses, ttlSecs]);
@@ -143,10 +144,10 @@ export function InviteLinkSection({
     try {
       await writeTextToClipboard(inviteUrl);
       setCopyStatus("copied");
-      toast.success("Invite link copied");
+      toast.success(tl("Invite link copied"));
     } catch {
       setCopyStatus("idle");
-      toast.error("Couldn’t copy the invite link. Try again.");
+      toast.error(tl("Couldn’t copy the invite link. Try again."));
     }
   }
 
@@ -154,14 +155,14 @@ export function InviteLinkSection({
     <section data-testid="community-invite-link-section">
       <div className="relative">
         <Input
-          aria-label="Community invite link"
-          className="h-11 pr-28 text-transparent caret-transparent selection:bg-transparent"
+          aria-label={tl("Community invite link")}
+          className="h-11 pe-28 text-transparent caret-transparent selection:bg-transparent"
           data-testid="invite-link-url"
           disabled={isGenerating}
           placeholder={
             hasGenerationFailed
-              ? "Couldn’t create invite link"
-              : "Creating invite link…"
+              ? tl("Couldn’t create invite link")
+              : tl("Creating invite link…")
           }
           readOnly
           value={inviteUrl}
@@ -169,14 +170,14 @@ export function InviteLinkSection({
         {inviteUrl ? (
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute inset-y-0 left-3 right-28 flex items-center truncate text-sm text-muted-foreground"
+            className="pointer-events-none absolute inset-y-0 start-3 end-28 flex items-center truncate text-sm text-muted-foreground"
             data-testid="invite-link-preview"
           >
             {inviteUrl}
           </span>
         ) : null}
         <motion.div
-          className="absolute right-1 top-1"
+          className="absolute end-1 top-1"
           animate={{ width: copyButtonWidth }}
           initial={false}
           transition={copyButtonTransition}
@@ -207,11 +208,11 @@ export function InviteLinkSection({
 
       <div className="mt-3 space-y-3">
         <div className="flex items-center justify-between gap-4">
-          <span className="text-sm font-medium">Expires after</span>
+          <span className="text-sm font-medium">{tl("Expires after")}</span>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                aria-label="Choose invite expiry"
+                aria-label={tl("Choose invite expiry")}
                 className="h-8 shrink-0 gap-1.5 px-2 text-sm text-muted-foreground"
                 data-testid="invite-link-ttl-trigger"
                 disabled={isGenerating || copyStatus === "copying"}
@@ -242,11 +243,13 @@ export function InviteLinkSection({
           </DropdownMenu>
         </div>
         <div className="flex items-center justify-between gap-4">
-          <span className="text-sm font-medium">Limit number of uses</span>
+          <span className="text-sm font-medium">
+            {tl("Limit number of uses")}
+          </span>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                aria-label="Choose maximum invite uses"
+                aria-label={tl("Choose maximum invite uses")}
                 className="h-8 shrink-0 gap-1.5 px-2 text-sm text-muted-foreground"
                 data-testid="invite-link-max-uses-trigger"
                 disabled={isGenerating || copyStatus === "copying"}

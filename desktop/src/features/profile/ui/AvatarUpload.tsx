@@ -6,6 +6,7 @@ import { ProfileAvatar } from "@/features/profile/ui/ProfileAvatar";
 import { useAvatarUpload } from "@/features/profile/useAvatarUpload";
 import { Input } from "@/shared/ui/input";
 import { Spinner } from "@/shared/ui/spinner";
+import { tl } from "@/shared/i18n/tl";
 
 type AvatarUploadProps = {
   avatarUrl: string;
@@ -74,7 +75,7 @@ export function AvatarUpload({
 
   return (
     <div className="space-y-4">
-      <p className="text-sm font-medium">Add a profile photo</p>
+      <p className="text-sm font-medium">{tl("Add a profile photo")}</p>
       <div className="flex items-center gap-4">
         <div className="relative h-20 w-20 shrink-0">
           <MaskedAvatarBadgeFrame
@@ -100,10 +101,10 @@ export function AvatarUpload({
           </MaskedAvatarBadgeFrame>
           {showClear && onClear ? (
             <button
-              className="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full border border-background bg-destructive text-destructive-foreground shadow-xs transition-colors hover:bg-destructive/80"
+              className="absolute -end-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full border border-background bg-destructive text-destructive-foreground shadow-xs transition-colors hover:bg-destructive/80"
               data-testid={`${testIdPrefix}-clear`}
               onClick={onClear}
-              title="Remove photo"
+              title={tl("Remove photo")}
               type="button"
             >
               <X className="h-4 w-4" />
@@ -148,12 +149,12 @@ export function AvatarUpload({
           )}
           <span className="text-xs text-muted-foreground">
             {isUploading ? (
-              "Uploading..."
+              tl("Uploading...")
             ) : (
               <>
-                Drop an image or{" "}
+                {tl("Drop an image or")}{" "}
                 <span className="font-medium text-foreground underline underline-offset-2">
-                  browse
+                  {tl("browse")}
                 </span>
               </>
             )}
@@ -176,12 +177,12 @@ export function AvatarUpload({
 
       <div className="space-y-1.5">
         <label className="text-sm font-medium" htmlFor={`${testIdPrefix}-url`}>
-          Avatar URL
+          {tl("Avatar URL")}
         </label>
         <div className="relative min-w-0">
-          <Link2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Link2 className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            className="pl-9"
+            className="ps-9"
             data-testid={`${testIdPrefix}-url`}
             disabled={isInputDisabled}
             id={`${testIdPrefix}-url`}
@@ -189,12 +190,12 @@ export function AvatarUpload({
               clearError();
               onUrlChange(event.target.value);
             }}
-            placeholder="https://example.com/avatar.png"
+            placeholder={tl("https://example.com/avatar.png")}
             value={avatarUrl}
           />
         </div>
         <p className="text-xs text-muted-foreground">
-          Or paste a direct image URL.
+          {tl("Or paste a direct image URL.")}
         </p>
       </div>
 

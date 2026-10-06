@@ -7,6 +7,7 @@ import type { Channel } from "@/shared/api/types";
 import { Button } from "@/shared/ui/button";
 import { useHuddle, useHuddleLevels } from "../HuddleContext";
 import { MicControls } from "./MicControls";
+import { tl } from "@/shared/i18n/tl";
 
 type HuddleProfileState = {
   phase:
@@ -123,8 +124,8 @@ export function HuddleProfileControl({
       data-testid="profile-huddle-control"
     >
       <Button
-        aria-label="Open huddle window"
-        className="h-auto min-w-0 flex-1 justify-start gap-2 px-0 py-0 text-left hover:bg-transparent"
+        aria-label={tl("Open huddle window")}
+        className="h-auto min-w-0 flex-1 justify-start gap-2 px-0 py-0 text-start hover:bg-transparent"
         onClick={() => void handleOpenHuddleWindow()}
         type="button"
         variant="ghost"
@@ -135,10 +136,10 @@ export function HuddleProfileControl({
         />
         <span className="min-w-0 flex-1">
           <span className="block truncate text-sm font-medium leading-tight">
-            In a huddle
+            {tl("In a huddle")}
           </span>
           <span className="block truncate text-xs text-sidebar-foreground/65">
-            {channelName ? `#${channelName}` : "Huddle"}
+            {channelName ? `#${channelName}` : tl("Huddle")}
           </span>
         </span>
       </Button>
@@ -159,14 +160,14 @@ export function HuddleProfileControl({
         />
         <Button
           aria-busy={isLeaving}
-          aria-label="Leave huddle"
+          aria-label={tl("Leave huddle")}
           className="h-8 px-2 text-sm text-sidebar-foreground/70 hover:bg-destructive/15 hover:text-destructive"
           disabled={isLeaving}
           onClick={(event) => void handleLeave(event)}
           type="button"
           variant="ghost"
         >
-          Leave
+          {tl("Leave")}
         </Button>
       </div>
     </div>

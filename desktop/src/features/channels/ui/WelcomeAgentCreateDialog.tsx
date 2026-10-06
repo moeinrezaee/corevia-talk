@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
+import { tl } from "@/shared/i18n/tl";
 
 type WelcomeAgentCreateDialogProps = {
   guideName: string;
@@ -32,15 +33,15 @@ export function WelcomeAgentCreateDialog({
     <Dialog onOpenChange={onOpenChange} open={open}>
       <DialogContent className="max-w-lg">
         <DialogHeader>
-          <DialogTitle>Create an agent</DialogTitle>
+          <DialogTitle>{tl("Create an agent")}</DialogTitle>
           <DialogDescription>
-            Start with a conversation, or set everything up yourself.
+            {tl("Start with a conversation, or set everything up yourself.")}
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-2">
           <button
-            className="flex w-full items-start gap-3 rounded-lg border border-primary bg-transparent p-4 text-left transition-colors hover:bg-primary/5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex w-full items-start gap-3 rounded-lg border border-primary bg-transparent p-4 text-start transition-colors hover:bg-primary/5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
             data-testid="welcome-create-agent-in-chat"
             disabled={isSending}
             onClick={onCreateInChat}
@@ -51,17 +52,17 @@ export function WelcomeAgentCreateDialog({
             </span>
             <span className="min-w-0">
               <span className="block text-sm font-medium text-foreground">
-                Create with {guideName}
+                {tl("Create with")} {guideName}
               </span>
               <span className="mt-0.5 block text-sm text-muted-foreground">
-                Talk through what you need. {guideName} will prepare a draft you
-                can review and edit.
+                {tl("Talk through what you need.")} {guideName}{" "}
+                {tl("will prepare a draft you can review and edit.")}
               </span>
             </span>
           </button>
 
           <button
-            className="flex w-full items-start gap-3 rounded-lg p-4 text-left transition-colors hover:bg-accent focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+            className="flex w-full items-start gap-3 rounded-lg p-4 text-start transition-colors hover:bg-accent focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
             data-testid="welcome-create-agent-manually"
             onClick={onCreateManually}
             type="button"
@@ -71,10 +72,12 @@ export function WelcomeAgentCreateDialog({
             </span>
             <span className="min-w-0">
               <span className="block text-sm font-medium text-foreground">
-                Create manually
+                {tl("Create manually")}
               </span>
               <span className="mt-0.5 block text-sm text-muted-foreground">
-                Fill in the agent’s name, instructions, and settings yourself.
+                {tl(
+                  "Fill in the agent’s name, instructions, and settings yourself.",
+                )}
               </span>
             </span>
           </button>
@@ -93,7 +96,7 @@ export function WelcomeAgentCreateDialog({
             type="button"
             variant="ghost"
           >
-            Cancel
+            {tl("Cancel")}
           </Button>
         </div>
       </DialogContent>

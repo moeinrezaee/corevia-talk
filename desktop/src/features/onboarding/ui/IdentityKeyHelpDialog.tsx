@@ -11,6 +11,7 @@ import {
 } from "@/shared/ui/dialog";
 import { ONBOARDING_INK_ICON_CLASS } from "./OnboardingChrome";
 import { OnboardingFooter } from "./OnboardingFooter";
+import { tl } from "@/shared/i18n/tl";
 
 const IDENTITY_KEY_HELP_SEEN_STORAGE_KEY =
   "buzz.machine-onboarding.identity-key-help-seen.v1";
@@ -60,7 +61,7 @@ export function IdentityKeyHelpDialog({
     <Button
       className={cn(
         inline
-          ? "h-auto justify-start p-0 text-left text-foreground underline decoration-foreground/45 underline-offset-4 hover:decoration-foreground"
+          ? "h-auto justify-start p-0 text-start text-foreground underline decoration-foreground/45 underline-offset-4 hover:decoration-foreground"
           : "text-foreground/70 hover:text-foreground",
         "transition-opacity duration-300 motion-reduce:transition-none",
         isVisible ? "opacity-100" : "pointer-events-none opacity-0",
@@ -71,7 +72,9 @@ export function IdentityKeyHelpDialog({
       type="button"
       variant="link"
     >
-      {inline ? "Learn how identity keys work" : "What’s an identity key?"}
+      {inline
+        ? tl("Learn how identity keys work")
+        : tl("What’s an identity key?")}
     </Button>
   );
 
@@ -102,9 +105,9 @@ export function IdentityKeyHelpDialog({
         overlayVariant="transparent"
         surface="textured"
       >
-        <div className="mx-auto w-full max-w-[35rem] py-14 text-left max-sm:py-6">
-          <DialogTitle className="text-balance pr-8 text-3xl font-normal text-foreground">
-            What’s an identity key?
+        <div className="mx-auto w-full max-w-[35rem] py-14 text-start max-sm:py-6">
+          <DialogTitle className="text-balance pe-8 text-3xl font-normal text-foreground">
+            {tl("What’s an identity key?")}
           </DialogTitle>
           <DialogDescription
             asChild
@@ -124,15 +127,14 @@ function IdentityKeyHelpBody() {
   return (
     <>
       <p>
-        Buzz will create a Nostr identity with two parts: a private key that
-        signs you in and a public key you can safely share. You can find your
-        public identity anytime in Buzz settings.
+        {tl(
+          "Buzz will create a Nostr identity with two parts: a private key that signs you in and a public key you can safely share. You can find your public identity anytime in Buzz settings.",
+        )}
       </p>
       <p>
-        This identity belongs to you, not Buzz, and can move with you to another
-        device or compatible Nostr app. Because only you control the private
-        key, Buzz can’t reset or recover it. Keep a backup somewhere safe, and
-        never share it.
+        {tl(
+          "This identity belongs to you, not Buzz, and can move with you to another device or compatible Nostr app. Because only you control the private key, Buzz can’t reset or recover it. Keep a backup somewhere safe, and never share it.",
+        )}
       </p>
     </>
   );
@@ -143,7 +145,7 @@ export function IdentityKeyHelpContent() {
   return (
     <div className="w-full" data-testid="identity-key-help-dialog">
       <h1 className="text-title font-normal text-foreground">
-        What’s an identity key?
+        {tl("What’s an identity key?")}
       </h1>
       <div
         className="mt-2 w-full space-y-4 text-pretty text-base leading-7 text-foreground/80"

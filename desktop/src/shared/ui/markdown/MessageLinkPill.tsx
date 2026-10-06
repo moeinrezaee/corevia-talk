@@ -19,6 +19,7 @@ import { BuzzLinkChip } from "./BuzzLinkChip";
 import { useInlineTooltipPosition } from "./useInlineTooltipPosition";
 import { useMessageLinkMetadata } from "./useMessageLinkMetadata";
 import type { MessageLinkPillProps } from "./types";
+import { tlt } from "@/shared/i18n/tl";
 
 const graphemeSegmenter =
   typeof Intl.Segmenter === "function"
@@ -110,7 +111,7 @@ function MessageLinkMetadataTooltip({
         </TooltipTrigger>
         <TooltipContent
           ref={contentRef}
-          className="w-72 max-w-[min(18rem,calc(100vw-2rem))] px-3 py-2 text-left"
+          className="w-72 max-w-[min(18rem,calc(100vw-2rem))] px-3 py-2 text-start"
           side="top"
         >
           <span
@@ -196,12 +197,17 @@ function MessageLinkPillContents({
         icon="message"
         aria-label={
           !openable
-            ? `Message in channel ${channelLabel}`
+            ? tlt("Message in channel {0}", [channelLabel])
             : isDeleted
               ? link.threadRootId
-                ? `Open thread in channel ${channelLabel}; linked message was deleted`
-                : `Open channel ${channelLabel}; linked message was deleted`
-              : `Open message in channel ${channelLabel}`
+                ? tlt(
+                    "Open thread in channel {0}; linked message was deleted",
+                    [channelLabel],
+                  )
+                : tlt("Open channel {0}; linked message was deleted", [
+                    channelLabel,
+                  ])
+              : tlt("Open message in channel {0}", [channelLabel])
         }
         className={cn(
           metadata.state.kind === "unavailable" && "buzz-link-unavailable",
@@ -251,11 +257,11 @@ function MessageLinkPillContents({
       type="button"
       data-message-link=""
       data-hovered={isHovered ? "" : undefined}
-      aria-label={`Open thread in ${channelLabel}`}
+      aria-label={tlt("Open thread in {0}", [channelLabel])}
       title={label}
       className={cn(
         "max-w-80 cursor-pointer truncate",
-        "inline-block min-w-0 text-left font-medium text-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring",
+        "inline-block min-w-0 text-start font-medium text-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring",
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

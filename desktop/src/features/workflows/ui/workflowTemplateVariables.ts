@@ -3,6 +3,7 @@ import type {
   StepFormState,
   TriggerType,
 } from "./workflowFormTypes";
+import { tl } from "@/shared/i18n/tl";
 
 export type WorkflowTemplateVariable = {
   description: string;
@@ -19,22 +20,22 @@ export type ActiveTemplateToken = {
 const COMMON_EVENT_VARIABLES: WorkflowTemplateVariable[] = [
   {
     value: "trigger.author",
-    description: "Author pubkey",
+    description: tl("Author pubkey"),
     group: "Trigger",
   },
   {
     value: "trigger.channel_id",
-    description: "Channel UUID",
+    description: tl("Channel UUID"),
     group: "Trigger",
   },
   {
     value: "trigger.timestamp",
-    description: "Unix timestamp",
+    description: tl("Unix timestamp"),
     group: "Trigger",
   },
   {
     value: "trigger.message_id",
-    description: "Message event ID",
+    description: tl("Message event ID"),
     group: "Trigger",
   },
 ];
@@ -59,21 +60,25 @@ function triggerVariables(
       return [
         {
           value: "trigger.text",
-          description: "Message text",
+          description: tl("Message text"),
           group: "Trigger",
         },
         ...COMMON_EVENT_VARIABLES,
       ];
     case "diff_posted":
       return [
-        { value: "trigger.text", description: "Diff text", group: "Trigger" },
+        {
+          value: "trigger.text",
+          description: tl("Diff text"),
+          group: "Trigger",
+        },
         ...COMMON_EVENT_VARIABLES,
       ];
     case "reaction_added":
       return [
         {
           value: "trigger.emoji",
-          description: "Reaction emoji",
+          description: tl("Reaction emoji"),
           group: "Trigger",
         },
         ...COMMON_EVENT_VARIABLES,
@@ -87,7 +92,7 @@ function triggerVariables(
       return [
         {
           value: "trigger.channel_id",
-          description: "Workflow channel UUID",
+          description: tl("Workflow channel UUID"),
           group: "Trigger",
         },
       ];

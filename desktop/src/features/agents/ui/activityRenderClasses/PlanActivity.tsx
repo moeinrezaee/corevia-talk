@@ -7,6 +7,7 @@ import {
 import { ToolActivity } from "./ToolActivity";
 import { formatTranscriptTimestampTitle } from "../agentSessionUtils";
 import type { ActivityRenderClassItemProps } from "./types";
+import { tl } from "@/shared/i18n/tl";
 
 export function PlanActivity(props: ActivityRenderClassItemProps) {
   if (props.item.type === "tool") {
@@ -50,7 +51,7 @@ export function PlanActivity(props: ActivityRenderClassItemProps) {
 function PlanUpdateLabelObject({ text }: { text: string }) {
   return (
     <>
-      plan
+      {tl("plan")}
       {text ? (
         <>
           {" · "}

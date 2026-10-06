@@ -46,6 +46,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type MembersSidebarMemberCardProps = {
   canChangeRole: boolean;
@@ -87,13 +88,13 @@ export type MemberModerationState = {
 
 /** Timeout durations offered in the member menu, in seconds. */
 const TIMEOUT_PRESETS: { label: string; seconds: number }[] = [
-  { label: "1 hour", seconds: 60 * 60 },
-  { label: "24 hours", seconds: 24 * 60 * 60 },
-  { label: "7 days", seconds: 7 * 24 * 60 * 60 },
+  { label: tl("1 hour"), seconds: 60 * 60 },
+  { label: tl("24 hours"), seconds: 24 * 60 * 60 },
+  { label: tl("7 days"), seconds: 7 * 24 * 60 * 60 },
 ];
 
 const MEMBER_ROW_INSET_DIVIDER_CLASS =
-  "after:pointer-events-none after:absolute after:bottom-0 after:left-[3.75rem] after:right-0 after:h-px after:bg-border/60 after:content-[''] last:after:hidden";
+  "after:pointer-events-none after:absolute after:bottom-0 after:start-[3.75rem] after:end-0 after:h-px after:bg-border/60 after:content-[''] last:after:hidden";
 
 function formatRoleLabel(member: ChannelMember, memberIsBot: boolean) {
   if (memberIsBot) {
@@ -173,7 +174,7 @@ export function MembersSidebarMemberCard({
         />
         {presenceStatus ? (
           <span
-            className="absolute -bottom-0.5 -right-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-background"
+            className="absolute -bottom-0.5 -end-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-background"
             data-testid={`sidebar-member-presence-${member.pubkey}`}
           >
             <PresenceDot className="h-2 w-2" status={presenceStatus} />
@@ -235,8 +236,8 @@ export function MembersSidebarMemberCard({
               {managedAgentRuntime
                 ? agentCommunityAvailability(managedAgentRuntime)
                 : managedAgent && isManagedAgentActive(managedAgent)
-                  ? "Running"
-                  : "Stopped"}
+                  ? tl("Running")
+                  : tl("Stopped")}
             </Badge>
             {managedAgent ? (
               <Badge
@@ -256,14 +257,14 @@ export function MembersSidebarMemberCard({
   return (
     <div
       className={cn(
-        "group/member relative isolate flex min-h-14 items-center gap-3 px-4 py-3.5 text-left transition-colors duration-150 ease-out hover:bg-muted/40 focus-within:bg-muted/40",
+        "group/member relative isolate flex min-h-14 items-center gap-3 px-4 py-3.5 text-start transition-colors duration-150 ease-out hover:bg-muted/40 focus-within:bg-muted/40",
         MEMBER_ROW_INSET_DIVIDER_CLASS,
       )}
       data-testid={`sidebar-member-${member.pubkey}`}
     >
       {onOpenProfile ? (
         <button
-          aria-label={`Open profile for ${memberLabel}`}
+          aria-label={tlt("Open profile for {0}", [memberLabel])}
           className="absolute inset-0 z-0 cursor-pointer focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
           data-testid={`sidebar-member-open-profile-${member.pubkey}`}
           onClick={() => onOpenProfile(member.pubkey)}
@@ -379,7 +380,7 @@ function MemberActionsMenu({
             onClick={() => onViewActivity?.(member.pubkey)}
           >
             <Activity className="h-4 w-4" />
-            View activity
+            {tl("View activity")}
           </DropdownMenuItem>
         ) : null}
         {memberIsBot && managedAgent ? (
@@ -407,7 +408,7 @@ function MemberActionsMenu({
                 onClick={() => onEditRespondTo(managedAgent)}
               >
                 <Pencil className="h-4 w-4" />
-                Manage agent access...
+                {tl("Manage agent access...")}
               </DropdownMenuItem>
             ) : null}
             {canRemoveMember || showChangeRole ? (
@@ -422,7 +423,7 @@ function MemberActionsMenu({
               disabled={disabled}
             >
               <Shield className="h-4 w-4" />
-              Change role
+              {tl("Change role")}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
               {PEOPLE_ROLES.map((role) => (
@@ -434,7 +435,7 @@ function MemberActionsMenu({
                 >
                   {role[0]?.toUpperCase()}
                   {role.slice(1)}
-                  {member.role === role ? " (current)" : ""}
+                  {member.role === role ? tl(" (current)") : ""}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuSubContent>
@@ -450,7 +451,7 @@ function MemberActionsMenu({
               onClick={() => onRemoveMember(member)}
             >
               <Trash2 className="h-4 w-4" />
-              Remove from channel
+              {tl("Remove from channel")}
             </DropdownMenuItem>
           </>
         ) : null}
@@ -466,7 +467,7 @@ function MemberActionsMenu({
                 onClick={() => onUntimeout(member)}
               >
                 <ShieldCheck className="h-4 w-4" />
-                Lift timeout
+                {tl("Lift timeout")}
               </DropdownMenuItem>
             ) : (
               <DropdownMenuSub>
@@ -475,7 +476,7 @@ function MemberActionsMenu({
                   disabled={disabled}
                 >
                   <Clock className="h-4 w-4" />
-                  Time out
+                  {tl("Time out")}
                 </DropdownMenuSubTrigger>
                 <DropdownMenuSubContent>
                   {TIMEOUT_PRESETS.map((preset) => (
@@ -503,7 +504,7 @@ function MemberActionsMenu({
                 onClick={() => onUnban(member)}
               >
                 <CircleSlash className="h-4 w-4" />
-                Lift ban
+                {tl("Lift ban")}
               </DropdownMenuItem>
             ) : (
               <DropdownMenuItem
@@ -513,7 +514,7 @@ function MemberActionsMenu({
                 onClick={() => onBan(member)}
               >
                 <Ban className="h-4 w-4" />
-                Ban from community
+                {tl("Ban from community")}
               </DropdownMenuItem>
             )}
           </>

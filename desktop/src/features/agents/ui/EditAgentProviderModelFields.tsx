@@ -10,6 +10,7 @@ import {
 } from "./agentConfigOptions";
 import { PersonaDropdownField } from "./PersonaDropdownField";
 import { PersonaProviderApiKeyField } from "./PersonaProviderApiKeyField";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * LLM provider + provider API key + model block of the Edit Agent dialog.
@@ -82,13 +83,15 @@ export function EditAgentProviderModelFields({
             className="text-sm font-medium text-foreground"
             htmlFor="edit-agent-llm-provider"
           >
-            LLM provider
+            {tl("LLM provider")}
             {providerRequired ? (
-              <span className="ml-1 text-destructive" aria-hidden="true">
+              <span className="ms-1 text-destructive" aria-hidden="true">
                 *
               </span>
             ) : (
-              <span className={PERSONA_LABEL_OPTIONAL_CLASS}>Optional</span>
+              <span className={PERSONA_LABEL_OPTIONAL_CLASS}>
+                {tl("Optional")}
+              </span>
             )}
           </label>
           <PersonaDropdownField
@@ -96,7 +99,7 @@ export function EditAgentProviderModelFields({
             id="edit-agent-llm-provider"
             onValueChange={onProviderDropdownChange}
             options={providerDropdownOptions}
-            placeholder="Default (auto)"
+            placeholder={tl("Default (auto)")}
             value={providerSelectValue}
           />
           {isCustomProviderEditing ? (
@@ -107,7 +110,7 @@ export function EditAgentProviderModelFields({
               )}
             >
               <Input
-                aria-label="Custom provider ID"
+                aria-label={tl("Custom provider ID")}
                 autoCorrect="off"
                 className={cn(
                   "h-8 px-0 py-0 leading-6",
@@ -116,7 +119,7 @@ export function EditAgentProviderModelFields({
                 disabled={disabled}
                 id="edit-agent-custom-provider"
                 onChange={(event) => onProviderChange(event.target.value)}
-                placeholder="Custom provider ID"
+                placeholder={tl("Custom provider ID")}
                 value={provider}
               />
             </div>
@@ -131,7 +134,7 @@ export function EditAgentProviderModelFields({
           isInherited={apiKeyIsInherited}
           inheritedLabel={apiKeyInheritedLabel}
           isRequired={apiKeyIsRequired}
-          label={getProviderApiKeyLabel(effectiveProvider) ?? "API Key"}
+          label={getProviderApiKeyLabel(effectiveProvider) ?? tl("API Key")}
           onValueChange={onApiKeyChange}
           value={apiKeyValue}
         />
@@ -143,13 +146,15 @@ export function EditAgentProviderModelFields({
           className="text-sm font-medium text-foreground"
           htmlFor="edit-agent-model"
         >
-          Model
+          {tl("Model")}
           {modelRequired ? (
-            <span className="ml-1 text-destructive" aria-hidden="true">
+            <span className="ms-1 text-destructive" aria-hidden="true">
               *
             </span>
           ) : (
-            <span className={PERSONA_LABEL_OPTIONAL_CLASS}>Optional</span>
+            <span className={PERSONA_LABEL_OPTIONAL_CLASS}>
+              {tl("Optional")}
+            </span>
           )}
         </label>
         <PersonaDropdownField
@@ -157,7 +162,7 @@ export function EditAgentProviderModelFields({
           id="edit-agent-model"
           onValueChange={onModelDropdownChange}
           options={modelDropdownOptions}
-          placeholder="Default model"
+          placeholder={tl("Default model")}
           value={modelSelectValue}
         />
         {showCustomModelInput ? (
@@ -168,7 +173,7 @@ export function EditAgentProviderModelFields({
             )}
           >
             <Input
-              aria-label="Custom model ID"
+              aria-label={tl("Custom model ID")}
               autoCorrect="off"
               className={cn(
                 "h-8 px-0 py-0 leading-6",
@@ -177,7 +182,7 @@ export function EditAgentProviderModelFields({
               disabled={disabled}
               id="edit-agent-custom-model"
               onChange={(event) => onModelChange(event.target.value)}
-              placeholder="Custom model ID"
+              placeholder={tl("Custom model ID")}
               value={model}
             />
           </div>

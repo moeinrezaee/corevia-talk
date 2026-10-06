@@ -29,6 +29,7 @@ import {
   AlertDialogTitle,
 } from "@/shared/ui/alert-dialog";
 import { Button } from "@/shared/ui/button";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type CanvasHistoryPanelProps = {
   channelId: string;
@@ -137,7 +138,7 @@ export function CanvasHistoryPanel({
   if (historyQuery.isLoading) {
     return (
       <p className="text-sm text-muted-foreground" role="status">
-        Loading history...
+        {tl("Loading history...")}
       </p>
     );
   }
@@ -162,7 +163,7 @@ export function CanvasHistoryPanel({
   if (revisions.length === 0) {
     return (
       <p className="text-sm text-muted-foreground" role="status">
-        No revisions yet.
+        {tl("No revisions yet.")}
       </p>
     );
   }
@@ -178,7 +179,7 @@ export function CanvasHistoryPanel({
         >
           {isRelayUnreachableError(historyQuery.error)
             ? RELAY_UNREACHABLE_SHORT
-            : "Couldn't refresh history — showing last known revisions."}
+            : tl("Couldn't refresh history — showing last known revisions.")}
         </p>
       ) : null}
       {unverifiedRestoreNotice ? (
@@ -190,8 +191,9 @@ export function CanvasHistoryPanel({
           role="status"
           tabIndex={-1}
         >
-          Restored. We couldn't verify against the latest revision just now —
-          check the canvas if a concurrent edit appears.
+          {tl(
+            "Restored. We couldn't verify against the latest revision just now — check the canvas if a concurrent edit appears.",
+          )}
         </p>
       ) : null}
       <ul className="space-y-2">
@@ -206,7 +208,7 @@ export function CanvasHistoryPanel({
             >
               <button
                 aria-expanded={isSelected}
-                className="flex w-full items-baseline justify-between gap-2 px-3 py-2 text-left"
+                className="flex w-full items-baseline justify-between gap-2 px-3 py-2 text-start"
                 disabled={restoreMutation.isPending}
                 ref={revision.eventId === restoredId ? restoredRowRef : null}
                 onClick={() => {
@@ -222,8 +224,8 @@ export function CanvasHistoryPanel({
                 <span className="truncate text-sm font-medium">
                   {authorLabel(revision.author)}
                   {isCurrent ? (
-                    <span className="ml-2 text-xs font-normal text-muted-foreground">
-                      Current
+                    <span className="ms-2 text-xs font-normal text-muted-foreground">
+                      {tl("Current")}
                     </span>
                   ) : null}
                 </span>
@@ -253,8 +255,8 @@ export function CanvasHistoryPanel({
                     >
                       <RotateCcw className="h-4 w-4" />
                       {restoreMutation.isPending
-                        ? "Restoring..."
-                        : "Restore this revision"}
+                        ? tl("Restoring...")
+                        : tl("Restore this revision")}
                     </Button>
                   ) : null}
                   {restoreMutation.error instanceof Error ? (
@@ -278,7 +280,9 @@ export function CanvasHistoryPanel({
           type="button"
           variant="ghost"
         >
-          {historyQuery.isFetchingNextPage ? "Loading..." : "Load older"}
+          {historyQuery.isFetchingNextPage
+            ? tl("Loading...")
+            : tl("Load older")}
         </Button>
       ) : null}
       <AlertDialog
@@ -289,20 +293,26 @@ export function CanvasHistoryPanel({
       >
         <AlertDialogContent data-testid="channel-canvas-restore-confirm">
           <AlertDialogHeader>
-            <AlertDialogTitle>Restore this revision?</AlertDialogTitle>
+            <AlertDialogTitle>{tl("Restore this revision?")}</AlertDialogTitle>
             <AlertDialogDescription>
-              This publishes{" "}
+              {tl("This publishes")}{" "}
               {confirmRevision
-                ? `${authorLabel(confirmRevision.revision.author)}'s revision from ${formatItemTimestamp(confirmRevision.revision.createdAt, { withTime: true })}`
-                : "the selected revision"}{" "}
-              as the current canvas for everyone in this channel. History is
-              preserved.
+                ? tlt("{0}'s revision from {1}", [
+                    authorLabel(confirmRevision.revision.author),
+                    formatItemTimestamp(confirmRevision.revision.createdAt, {
+                      withTime: true,
+                    }),
+                  ])
+                : tl("the selected revision")}{" "}
+              {tl(
+                "as the current canvas for everyone in this channel. History is preserved.",
+              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel asChild>
               <Button type="button" variant="outline">
-                Cancel
+                {tl("Cancel")}
               </Button>
             </AlertDialogCancel>
             <AlertDialogAction asChild>
@@ -322,7 +332,7 @@ export function CanvasHistoryPanel({
                 }}
                 type="button"
               >
-                Restore
+                {tl("Restore")}
               </Button>
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -351,7 +361,7 @@ function CanvasRevisionDiff({
   if (parts.length === 1 && !parts[0].added && !parts[0].removed) {
     return (
       <p className="text-xs text-muted-foreground">
-        Identical to the current canvas.
+        {tl("Identical to the current canvas.")}
       </p>
     );
   }

@@ -15,6 +15,7 @@ import {
   DialogTitle,
 } from "@/shared/ui/dialog";
 import { SnapshotOptionMenu } from "./SnapshotOptionMenu";
+import { tl } from "@/shared/i18n/tl";
 
 type AgentSnapshotExportDialogProps = {
   agentName: string;
@@ -37,15 +38,15 @@ const MEMORY_LEVELS: {
 }[] = [
   {
     value: "none",
-    label: "Agent only",
+    label: tl("Agent only"),
   },
   {
     value: "core",
-    label: "Agent + core memory",
+    label: tl("Agent + core memory"),
   },
   {
     value: "everything",
-    label: "Agent + all memories",
+    label: tl("Agent + all memories"),
   },
 ];
 
@@ -97,7 +98,9 @@ export function AgentSnapshotExportDialog({
         showCloseButton={false}
       >
         <DialogHeader className="space-y-0">
-          <DialogTitle className="truncate">Export {agentName}</DialogTitle>
+          <DialogTitle className="truncate">
+            {tl("Export")} {agentName}
+          </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4 pt-2">
@@ -105,7 +108,7 @@ export function AgentSnapshotExportDialog({
             <div className="flex min-h-8 items-center justify-between gap-4">
               <span className="flex min-w-0 items-center gap-2 text-sm font-medium">
                 <Brain className="h-4 w-4 shrink-0 text-muted-foreground" />
-                Memories
+                {tl("Memories")}
               </span>
               {hasLinkedAgent ? (
                 <SnapshotOptionMenu
@@ -124,7 +127,7 @@ export function AgentSnapshotExportDialog({
                   className="inline-flex h-8 w-auto items-center justify-end px-2 text-sm font-medium"
                   data-testid="agent-snapshot-memory-value"
                 >
-                  Agent only
+                  {tl("Agent only")}
                 </span>
               )}
             </div>
@@ -132,7 +135,7 @@ export function AgentSnapshotExportDialog({
             <div className="flex min-h-8 items-center justify-between gap-4">
               <span className="flex min-w-0 items-center gap-2 text-sm font-medium">
                 <FileType2 className="h-4 w-4 shrink-0 text-muted-foreground" />
-                File format
+                {tl("File format")}
               </span>
               <SnapshotOptionMenu
                 ariaLabel="File format"
@@ -163,8 +166,11 @@ export function AgentSnapshotExportDialog({
                 >
                   <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
                   <p>
-                    Memory is stored as <strong>plaintext</strong> in the
-                    snapshot. Only share it with people you trust.
+                    {tl("Memory is stored as")}{" "}
+                    <strong>{tl("plaintext")}</strong>{" "}
+                    {tl(
+                      "in the snapshot. Only share it with people you trust.",
+                    )}
                   </p>
                 </div>
               </motion.div>
@@ -182,7 +188,7 @@ export function AgentSnapshotExportDialog({
                 type="button"
                 variant="ghost"
               >
-                Cancel
+                {tl("Cancel")}
               </Button>
             </DialogClose>
             <Button
@@ -193,7 +199,7 @@ export function AgentSnapshotExportDialog({
               type="button"
             >
               <Download className="h-4 w-4" />
-              Export
+              {tl("Export")}
             </Button>
           </div>
         </div>

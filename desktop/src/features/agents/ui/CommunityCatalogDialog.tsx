@@ -29,6 +29,7 @@ import agentOutlineUrl from "../assets/agent-outline.svg";
 import { AgentDefinitionMetadata } from "./AgentDefinitionMetadata";
 import { PersonaAddedBy } from "./PersonaAddedBy";
 import { resolveCatalogOwnerLabel } from "./catalogOwnerLabel";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 // ── Type-tagged selection keys ────────────────────────────────────────────────
 
@@ -291,7 +292,7 @@ export function CommunityCatalogDialog({
           className="h-[42rem] max-w-4xl"
           contentClassName="flex min-h-0 min-w-0 flex-1 p-0"
           data-testid="community-catalog-dialog"
-          description="Create, discover, and import agents and teams."
+          description={tl("Create, discover, and import agents and teams.")}
           headerClassName="bg-sidebar pb-3 text-sidebar-foreground"
           headerTestId="community-catalog-dialog-header"
           onOpenAutoFocus={(event) => {
@@ -302,7 +303,7 @@ export function CommunityCatalogDialog({
           scrollAreaClassName="flex min-h-0 overflow-hidden px-0"
           scrollAreaTestId="community-catalog-dialog-body"
           tabIndex={-1}
-          title="Add agent"
+          title={tl("Add agent")}
           onDragEnter={(event) => {
             if (!isImportSelected || !hasFiles(event)) return;
             event.preventDefault();
@@ -336,7 +337,7 @@ export function CommunityCatalogDialog({
                 data-testid="agent-catalog-drop-overlay"
               >
                 <p className="rounded-full bg-background/90 px-4 py-2 text-sm font-medium text-primary shadow-sm">
-                  Drop .agent.json or .agent.png to import
+                  {tl("Drop .agent.json or .agent.png to import")}
                 </p>
               </div>
             ) : null}
@@ -351,14 +352,14 @@ export function CommunityCatalogDialog({
                   <CatalogNavigationButton
                     icon={<Plus className="h-4 w-4" />}
                     isCurrent={isCreateSelected}
-                    label="Create agent"
+                    label={tl("Create agent")}
                     onClick={() => requestSelection("create")}
                     testId="agent-catalog-create"
                   />
                   <CatalogNavigationButton
                     icon={<Upload className="h-4 w-4" />}
                     isCurrent={isImportSelected}
-                    label="Import"
+                    label={tl("Import")}
                     onClick={() => requestSelection("import")}
                     testId="agent-catalog-import"
                   />
@@ -371,7 +372,7 @@ export function CommunityCatalogDialog({
                 {!personasLoading && personas.length > 0 ? (
                   <div className="mb-1">
                     <p className="px-4 pb-1 pt-2 text-2xs font-semibold uppercase tracking-wider text-sidebar-foreground/60">
-                      Agents
+                      {tl("Agents")}
                     </p>
                     <div className="space-y-1">
                       {personas.map((persona) => {
@@ -382,7 +383,7 @@ export function CommunityCatalogDialog({
                           <button
                             aria-current={isCurrent ? "true" : undefined}
                             className={cn(
-                              "flex w-full items-center gap-2 rounded-lg px-4 py-1.5 text-left transition-[background-color,color,box-shadow] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sidebar-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar",
+                              "flex w-full items-center gap-2 rounded-lg px-4 py-1.5 text-start transition-[background-color,color,box-shadow] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sidebar-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar",
                               isCurrent
                                 ? "bg-sidebar-active text-sidebar-active-foreground"
                                 : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
@@ -426,7 +427,7 @@ export function CommunityCatalogDialog({
                 {!teamsLoading && teams.length > 0 ? (
                   <div className="mb-1">
                     <p className="px-4 pb-1 pt-2 text-2xs font-semibold uppercase tracking-wider text-sidebar-foreground/60">
-                      Teams
+                      {tl("Teams")}
                     </p>
                     <div className="space-y-1">
                       {teams.map((team) => {
@@ -436,7 +437,7 @@ export function CommunityCatalogDialog({
                           <button
                             aria-current={isCurrent ? "true" : undefined}
                             className={cn(
-                              "flex w-full items-center gap-2 rounded-lg px-4 py-1.5 text-left transition-[background-color,color,box-shadow] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sidebar-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar",
+                              "flex w-full items-center gap-2 rounded-lg px-4 py-1.5 text-start transition-[background-color,color,box-shadow] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sidebar-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar",
                               isCurrent
                                 ? "bg-sidebar-active text-sidebar-active-foreground"
                                 : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
@@ -467,7 +468,7 @@ export function CommunityCatalogDialog({
             </div>
 
             {/* Detail pane */}
-            <div className="relative z-10 mb-3 ml-px mr-3 flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden rounded-xl bg-background shadow-[-1px_0_0_0_hsl(var(--sidebar-border)/0.45)]">
+            <div className="relative z-10 mb-3 ms-px me-3 flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden rounded-xl bg-background shadow-[-1px_0_0_0_hsl(var(--sidebar-border)/0.45)]">
               {isCreateSelected
                 ? createContent({
                     onDirtyChange: handleCreateDirtyChange,
@@ -500,8 +501,12 @@ export function CommunityCatalogDialog({
                       <Button
                         aria-label={
                           selectedPersonaIsActive
-                            ? `${selectedPersona.displayName} is already in My Agents`
-                            : `Add ${selectedPersona.displayName} from Community Catalog`
+                            ? tlt("{0} is already in My Agents", [
+                                selectedPersona.displayName,
+                              ])
+                            : tlt("Add {0} from Community Catalog", [
+                                selectedPersona.displayName,
+                              ])
                         }
                         className="pointer-events-auto"
                         data-testid={`community-catalog-use-agent-${selectedPersona.id}`}
@@ -511,15 +516,19 @@ export function CommunityCatalogDialog({
                         type="button"
                       >
                         {selectedPersonaIsActive
-                          ? "Added to My Agents"
-                          : "Add agent"}
+                          ? tl("Added to My Agents")
+                          : tl("Add agent")}
                       </Button>
                     ) : selectedTeam ? (
                       <Button
                         aria-label={
                           selectedTeamIsAdded
-                            ? `${selectedTeam.name} is already in your teams`
-                            : `Add ${selectedTeam.name} from Community Catalog`
+                            ? tlt("{0} is already in your teams", [
+                                selectedTeam.name,
+                              ])
+                            : tlt("Add {0} from Community Catalog", [
+                                selectedTeam.name,
+                              ])
                         }
                         className="pointer-events-auto"
                         data-testid="community-catalog-add-team"
@@ -529,10 +538,10 @@ export function CommunityCatalogDialog({
                         type="button"
                       >
                         {selectedTeamIsAdded
-                          ? "Added to my teams"
+                          ? tl("Added to my teams")
                           : teamsAdding
-                            ? "Adding…"
-                            : "Add team"}
+                            ? tl("Adding…")
+                            : tl("Add team")}
                       </Button>
                     ) : null}
                   </div>
@@ -576,16 +585,16 @@ export function CommunityCatalogDialog({
       >
         <AlertDialogContent data-testid="discard-create-agent-dialog">
           <AlertDialogHeader>
-            <AlertDialogTitle>Discard agent changes?</AlertDialogTitle>
+            <AlertDialogTitle>{tl("Discard agent changes?")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Your changes to this agent will be lost.
+              {tl("Your changes to this agent will be lost.")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Keep editing</AlertDialogCancel>
+            <AlertDialogCancel>{tl("Keep editing")}</AlertDialogCancel>
             <AlertDialogAction asChild>
               <Button onClick={discardChangesAndNavigate} variant="destructive">
-                Discard changes
+                {tl("Discard changes")}
               </Button>
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -614,7 +623,7 @@ function CatalogNavigationButton({
     <button
       aria-current={isCurrent ? "true" : undefined}
       className={cn(
-        "flex w-full items-center gap-2 rounded-lg px-4 py-2 text-left text-sm font-medium transition-[background-color,color,box-shadow] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sidebar-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar",
+        "flex w-full items-center gap-2 rounded-lg px-4 py-2 text-start text-sm font-medium transition-[background-color,color,box-shadow] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sidebar-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar",
         isCurrent
           ? "bg-sidebar-active text-sidebar-active-foreground"
           : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
@@ -642,13 +651,16 @@ function ImportAgentPane({ onImport }: { onImport: () => void }) {
       <span className="flex h-14 w-14 items-center justify-center rounded-full bg-muted text-muted-foreground">
         <Upload className="h-6 w-6" />
       </span>
-      <span className="mt-4 text-base font-semibold">Import an agent</span>
+      <span className="mt-4 text-base font-semibold">
+        {tl("Import an agent")}
+      </span>
       <span className="mt-2 max-w-sm text-sm text-muted-foreground">
-        Drop an .agent.json or .agent.png file anywhere in this window, or
-        choose a file.
+        {tl(
+          "Drop an .agent.json or .agent.png file anywhere in this window, or choose a file.",
+        )}
       </span>
       <span className="mt-5 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">
-        Choose file
+        {tl("Choose file")}
       </span>
     </button>
   );
@@ -670,10 +682,10 @@ function CatalogEmptyState() {
         src={agentOutlineUrl}
       />
       <p className="mt-3 text-sm font-semibold text-sidebar-foreground">
-        Nothing shared yet
+        {tl("Nothing shared yet")}
       </p>
       <p className="mt-1 text-xs text-sidebar-foreground/60">
-        Shared agents and teams will appear here.
+        {tl("Shared agents and teams will appear here.")}
       </p>
     </div>
   );
@@ -716,7 +728,7 @@ export function AgentInstructionReview({
       className="mt-3 w-full min-w-0 max-w-full whitespace-pre-wrap break-words font-sans text-sm leading-6 text-muted-foreground"
       data-testid="persona-catalog-exact-instructions"
     >
-      {instructions || "No instructions included."}
+      {instructions || tl("No instructions included.")}
     </pre>
   );
 }
@@ -779,7 +791,7 @@ function PersonaCatalogDetail({ persona }: { persona: AgentPersona }) {
 
       <div className="min-w-0 max-w-full pt-3">
         <p className="text-base font-semibold text-foreground">
-          Agent instructions
+          {tl("Agent instructions")}
         </p>
         <AgentInstructionReview instructions={persona.systemPrompt} />
       </div>
@@ -825,7 +837,7 @@ function TeamCatalogDetail({ team }: { team: CatalogTeam }) {
       {hasInstructions ? (
         <div className="min-w-0 max-w-full pt-3">
           <p className="text-base font-semibold text-foreground">
-            Team instructions
+            {tl("Team instructions")}
           </p>
           <AgentInstructionReview instructions={team.instructions ?? ""} />
         </div>
@@ -860,7 +872,7 @@ function TeamCatalogMemberRow({ member }: TeamCatalogMemberRowProps) {
     >
       <button
         aria-expanded={expanded}
-        className="flex w-full items-center gap-3 px-3 py-2 text-left transition-colors hover:bg-muted/30 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-inset"
+        className="flex w-full items-center gap-3 px-3 py-2 text-start transition-colors hover:bg-muted/30 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-inset"
         data-testid={`community-catalog-member-expand-${member.memberKey}`}
         onClick={() => setExpanded((v) => !v)}
         type="button"
@@ -874,7 +886,7 @@ function TeamCatalogMemberRow({ member }: TeamCatalogMemberRowProps) {
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-medium">{member.displayName}</p>
           <p className="truncate text-xs text-muted-foreground">
-            {member.model ?? "Use app default"}
+            {member.model ?? tl("Use app default")}
           </p>
         </div>
         <ChevronDown
@@ -895,13 +907,13 @@ function TeamCatalogMemberRow({ member }: TeamCatalogMemberRowProps) {
           />
           <div className="min-w-0 max-w-full">
             <p className="text-sm font-semibold text-foreground">
-              Agent instructions
+              {tl("Agent instructions")}
             </p>
             {member.systemPrompt.trim().length > 0 ? (
               <AgentInstructionReview instructions={member.systemPrompt} />
             ) : (
               <p className="mt-3 text-sm italic text-muted-foreground/60">
-                No instructions
+                {tl("No instructions")}
               </p>
             )}
           </div>

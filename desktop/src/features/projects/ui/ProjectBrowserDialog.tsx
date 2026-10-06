@@ -11,6 +11,7 @@ import {
   MODAL_SEARCH_SHELL_CLASS,
 } from "@/shared/ui/modalSearchStyles";
 import { CreateProjectFormContent } from "./CreateProjectFormContent";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 function projectSearchText(project: Project) {
   return [
@@ -97,15 +98,15 @@ export function ProjectBrowserDialog({
           data-testid="project-browser-dialog"
           headerClassName="pb-2"
           scrollAreaClassName="px-3"
-          title="Add a project"
+          title={tl("Add a project")}
         >
           <div className={MODAL_SEARCH_SHELL_CLASS}>
             <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
             <input
-              aria-label="Search projects"
+              aria-label={tl("Search projects")}
               className={MODAL_SEARCH_INPUT_CLASS}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search or create a project"
+              placeholder={tl("Search or create a project")}
               ref={inputRef}
               type="search"
               value={query}
@@ -114,7 +115,7 @@ export function ProjectBrowserDialog({
 
           {!hasExactMatch ? (
             <Button
-              className="h-auto w-full justify-start gap-3 rounded-lg px-3 py-2.5 text-left"
+              className="h-auto w-full justify-start gap-3 rounded-lg px-3 py-2.5 text-start"
               data-testid="project-browser-create"
               onClick={() => setMode("create")}
               type="button"
@@ -126,11 +127,11 @@ export function ProjectBrowserDialog({
               <span className="min-w-0">
                 <span className="block text-sm font-medium text-foreground">
                   {query.trim()
-                    ? `Create “${query.trim()}”`
-                    : "Create a new project"}
+                    ? tlt("Create “{0}”", [query.trim()])
+                    : tl("Create a new project")}
                 </span>
                 <span className="block text-xs font-normal text-muted-foreground">
-                  Configure its repository and access options
+                  {tl("Configure its repository and access options")}
                 </span>
               </span>
             </Button>
@@ -141,7 +142,7 @@ export function ProjectBrowserDialog({
               <div className="space-y-0.5">
                 {visibleProjects.map((project) => (
                   <Button
-                    className="h-auto w-full justify-start gap-3 rounded-lg px-3 py-2.5 text-left"
+                    className="h-auto w-full justify-start gap-3 rounded-lg px-3 py-2.5 text-start"
                     data-testid={`project-browser-result-${project.dtag}`}
                     key={project.id}
                     onClick={() => {
@@ -168,7 +169,7 @@ export function ProjectBrowserDialog({
                     {selectedProjectAddresses.has(project.projectAddress) ? (
                       <span className="flex shrink-0 items-center gap-1 text-xs text-muted-foreground">
                         <Check className="h-3.5 w-3.5" />
-                        Added
+                        {tl("Added")}
                       </span>
                     ) : null}
                   </Button>
@@ -177,10 +178,10 @@ export function ProjectBrowserDialog({
             ) : (
               <div className="px-4 py-10 text-center">
                 <p className="text-sm font-medium text-foreground">
-                  No projects found
+                  {tl("No projects found")}
                 </p>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  Try another search or create a new project.
+                  {tl("Try another search or create a new project.")}
                 </p>
               </div>
             )}

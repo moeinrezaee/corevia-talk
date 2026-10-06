@@ -37,6 +37,7 @@ import {
   OnboardingSlideTransition,
 } from "./OnboardingSlideTransition";
 import type { SetupStepActions, SetupStepState } from "./types";
+import { tl, tlt } from "@/shared/i18n/tl";
 type SetupStepProps = {
   actions: SetupStepActions;
   direction: OnboardingTransitionDirection;
@@ -101,7 +102,7 @@ function RuntimeReadinessIndicator({
   return (
     <span
       aria-hidden="true"
-      className="pointer-events-none absolute right-8 top-8 flex h-8 w-8 items-center justify-center rounded-full border border-[var(--buzz-welcome-chartreuse)] bg-[var(--buzz-welcome-chartreuse)]"
+      className="pointer-events-none absolute end-8 top-8 flex h-8 w-8 items-center justify-center rounded-full border border-[var(--buzz-welcome-chartreuse)] bg-[var(--buzz-welcome-chartreuse)]"
       data-testid={`onboarding-runtime-check-${runtime.id}`}
     >
       <Check
@@ -178,7 +179,7 @@ function RuntimeStatus({
           className="inline-flex h-5 cursor-default items-center rounded-md bg-[#EBEFEF] px-2.5 text-xs font-medium text-foreground/70"
           data-testid={`onboarding-runtime-sign-in-required-${runtime.id}`}
         >
-          Sign in required
+          {tl("Sign in required")}
         </span>
       );
     }
@@ -186,7 +187,7 @@ function RuntimeStatus({
     return (
       <div className="flex flex-col items-center gap-1.5">
         <Button
-          aria-label={`Sign in to ${runtime.label}`}
+          aria-label={tlt("Sign in to {0}", [runtime.label])}
           className="h-7 shrink-0 rounded-full bg-foreground px-3 text-xs font-normal text-background shadow-none hover:bg-foreground/85 hover:text-background"
           data-testid={`onboarding-runtime-instructions-${runtime.id}`}
           onClick={() => {
@@ -214,23 +215,23 @@ function RuntimeStatus({
           variant="ghost"
         >
           {isWaitingForSignIn
-            ? "Checking…"
+            ? tl("Checking…")
             : didSignInCheckTimeOut
-              ? "Check again"
-              : "Sign in"}
+              ? tl("Check again")
+              : tl("Sign in")}
         </Button>
         {methodsQuery.error instanceof Error ? (
           <RuntimeErrorTooltip
             className="absolute inset-x-3 bottom-2 truncate text-xs leading-4 text-destructive"
             detail="Couldn’t load sign-in options."
-            label="Sign-in unavailable"
+            label={tl("Sign-in unavailable")}
           />
         ) : null}
         {connectMutation.error instanceof Error ? (
           <RuntimeErrorTooltip
             className="absolute inset-x-3 bottom-2 truncate text-xs leading-4 text-destructive"
             detail="Couldn’t start sign-in. Try again."
-            label="Sign-in failed"
+            label={tl("Sign-in failed")}
           />
         ) : null}
       </div>
@@ -240,12 +241,12 @@ function RuntimeStatus({
   if (isInstalling) {
     return (
       <div
-        aria-label={`Installing ${runtime.label}`}
+        aria-label={tlt("Installing {0}", [runtime.label])}
         className="flex h-5 items-center gap-2 rounded-md bg-white/60 px-2.5 text-xs font-medium text-foreground/70"
         role="status"
       >
         <Spinner className="h-3 w-3 border-2 text-foreground" />
-        Installing
+        {tl("Installing")}
       </div>
     );
   }
@@ -256,14 +257,14 @@ function RuntimeStatus({
     if (runtimesQuery.isError) {
       return (
         <Button
-          aria-label={`Check ${runtime.label} again`}
+          aria-label={tlt("Check {0} again", [runtime.label])}
           className="buzz-onboarding-runtime-setup h-5 rounded-md bg-[var(--buzz-welcome-chartreuse)]/30 px-2.5 text-xs font-medium text-foreground hover:bg-[var(--buzz-welcome-chartreuse)]/40"
           data-testid={`onboarding-runtime-recheck-${runtime.id}`}
           onClick={() => void runtimesQuery.forceRefresh()}
           type="button"
           variant="ghost"
         >
-          Check again
+          {tl("Check again")}
         </Button>
       );
     }
@@ -276,14 +277,14 @@ function RuntimeStatus({
   ) {
     return (
       <Button
-        aria-label={`Check ${runtime.label} again`}
+        aria-label={tlt("Check {0} again", [runtime.label])}
         className="buzz-onboarding-runtime-setup h-5 rounded-md bg-[var(--buzz-welcome-chartreuse)]/30 px-2.5 text-xs font-medium text-foreground hover:bg-[var(--buzz-welcome-chartreuse)]/40"
         disabled={runtimesQuery.isFetching}
         onClick={() => void runtimesQuery.forceRefresh()}
         type="button"
         variant="ghost"
       >
-        {runtimesQuery.isFetching ? "Checking…" : "Check again"}
+        {runtimesQuery.isFetching ? tl("Checking…") : tl("Check again")}
       </Button>
     );
   }
@@ -306,14 +307,14 @@ function RuntimeStatus({
 
   return (
     <Button
-      aria-label={`View ${runtime.label} install instructions`}
+      aria-label={tlt("View {0} install instructions", [runtime.label])}
       className="buzz-onboarding-runtime-setup h-5 rounded-md bg-[var(--buzz-welcome-chartreuse)]/30 px-2.5 text-xs font-medium text-foreground hover:bg-[var(--buzz-welcome-chartreuse)]/40"
       data-testid={`onboarding-runtime-instructions-${runtime.id}`}
       onClick={() => void openUrl(runtime.installInstructionsUrl)}
       type="button"
       variant="ghost"
     >
-      Install
+      {tl("Install")}
     </Button>
   );
 }
@@ -398,7 +399,7 @@ function RuntimeAuthError({ runtime }: { runtime: AcpRuntimeCatalogEntry }) {
       <RuntimeErrorTooltip
         className="absolute inset-x-3 bottom-2 truncate text-xs leading-4 text-destructive"
         detail="Check this runtime’s configuration and try again."
-        label="Configuration invalid"
+        label={tl("Configuration invalid")}
       />
     );
   }
@@ -410,7 +411,7 @@ function RuntimeAuthError({ runtime }: { runtime: AcpRuntimeCatalogEntry }) {
       <RuntimeErrorTooltip
         className="absolute inset-x-3 bottom-2 truncate text-xs leading-4 text-destructive"
         detail="Couldn’t verify authentication."
-        label="Status unavailable"
+        label={tl("Status unavailable")}
       />
     );
   }
@@ -503,7 +504,7 @@ function RuntimeCard({
     return (
       <div
         className={cn(
-          "group relative flex min-h-14 w-full items-center rounded-xl px-2 py-2 text-left text-sm text-foreground",
+          "group relative flex min-h-14 w-full items-center rounded-xl px-2 py-2 text-start text-sm text-foreground",
           detailCopy && "bg-[#e2e2e2]/30 px-4 py-4",
           onOpenDetails &&
             "transition-colors duration-150 ease-out hover:bg-foreground/[0.04] motion-reduce:transition-none",
@@ -514,14 +515,16 @@ function RuntimeCard({
       >
         {onOpenDetails ? (
           <button
-            aria-label={`Open ${getRuntimeDisplayLabel(runtime)} setup`}
+            aria-label={tlt("Open {0} setup", [
+              getRuntimeDisplayLabel(runtime),
+            ])}
             className="absolute inset-0 rounded-xl focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-foreground/20"
             data-testid={`onboarding-runtime-details-${runtime.id}`}
             onClick={onOpenDetails}
             type="button"
           >
             <span className="sr-only">
-              Open {getRuntimeDisplayLabel(runtime)} setup
+              {tl("Open")} {getRuntimeDisplayLabel(runtime)} {tl("setup")}
             </span>
           </button>
         ) : null}
@@ -533,7 +536,7 @@ function RuntimeCard({
                 className="inline-flex h-5 shrink-0 items-center rounded-md bg-muted px-2 text-xs font-medium text-muted-foreground transition-colors duration-150 ease-out group-hover:bg-background group-hover:text-foreground motion-reduce:transition-none"
                 data-testid={`onboarding-runtime-recommended-${runtime.id}`}
               >
-                Recommended
+                {tl("Recommended")}
               </span>
             ) : null}
             {isAvailable && !isReady ? (
@@ -567,9 +570,9 @@ function RuntimeCard({
         </div>
         {installError ? (
           <RuntimeErrorTooltip
-            className="absolute bottom-0 left-16 right-28 z-20 truncate text-xs leading-4 text-destructive"
+            className="absolute bottom-0 start-16 end-28 z-20 truncate text-xs leading-4 text-destructive"
             detail={installError}
-            label="Installation failed"
+            label={tl("Installation failed")}
             showIcon
             testId={`onboarding-runtime-error-${runtime.id}`}
           />
@@ -634,7 +637,7 @@ function RuntimeCard({
         <RuntimeErrorTooltip
           className="absolute inset-x-3 bottom-2 flex min-w-0 items-center justify-center gap-1.5 overflow-hidden whitespace-nowrap text-xs leading-4 text-destructive"
           detail={installError}
-          label="Installation failed"
+          label={tl("Installation failed")}
           showIcon
           testId={`onboarding-runtime-error-${runtime.id}`}
         />
@@ -654,7 +657,7 @@ function RuntimeProvidersLoadingState() {
       role="status"
     >
       <Spinner aria-hidden className="h-4 w-4 border-2" />
-      <span>Loading providers…</span>
+      <span>{tl("Loading providers…")}</span>
     </div>
   );
 }
@@ -715,13 +718,13 @@ function RuntimeProvidersSection({
       <div
         className={cn(
           "w-full",
-          cardLayout ? "text-left" : "max-w-[820px] text-center",
+          cardLayout ? "text-start" : "max-w-[820px] text-center",
         )}
       >
         <h1 className="text-title font-normal text-foreground">
           {method === "subscription"
-            ? "Continue with an AI subscription"
-            : "Choose a harness"}
+            ? tl("Continue with an AI subscription")
+            : tl("Choose a harness")}
         </h1>
         <p
           className={cn(
@@ -730,8 +733,12 @@ function RuntimeProvidersSection({
           )}
         >
           {method === "subscription"
-            ? "Subscriptions connect through a compatible harness, like Claude Code or Codex. Choose yours to sign in."
-            : "Choose how your agents will connect to AI providers. You can change this at any time."}
+            ? tl(
+                "Subscriptions connect through a compatible harness, like Claude Code or Codex. Choose yours to sign in.",
+              )
+            : tl(
+                "Choose how your agents will connect to AI providers. You can change this at any time.",
+              )}
         </p>
       </div>
 
@@ -780,7 +787,7 @@ function RuntimeProvidersSection({
               className={cn(
                 "min-h-0 min-w-0",
                 cardLayout
-                  ? "h-full space-y-1 overflow-y-auto overscroll-contain pr-1"
+                  ? "h-full space-y-1 overflow-y-auto overscroll-contain pe-1"
                   : "grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4",
               )}
               data-testid="onboarding-harness-list"
@@ -798,7 +805,7 @@ function RuntimeProvidersSection({
                   <React.Fragment key={runtime.id}>
                     {startsNotInstalledSection ? (
                       <p className="px-2 pb-1 pt-4 text-xs font-medium text-muted-foreground">
-                        Not installed
+                        {tl("Not installed")}
                       </p>
                     ) : null}
                     <RuntimeCard
@@ -822,7 +829,9 @@ function RuntimeProvidersSection({
             className="max-w-[560px] rounded-2xl bg-white/70 px-6 py-6 text-sm text-muted-foreground"
             data-testid="onboarding-acp-empty"
           >
-            No supported harnesses are available for this connection method.
+            {tl(
+              "No supported harnesses are available for this connection method.",
+            )}
           </p>
         )}
 
@@ -871,11 +880,11 @@ function RuntimeSetupGuide({
         data-testid="onboarding-harness-setup-guide"
       >
         <h1 className="text-title font-normal text-foreground">
-          Set up {label}
+          {tl("Set up")} {label}
         </h1>
         <p className="mt-2 w-full text-base leading-6 text-foreground/80">
-          Follow the setup guide to install {label}. When you’re done, come back
-          and check again.
+          {tl("Follow the setup guide to install")} {label}
+          {tl(". When you’re done, come back and check again.")}
         </p>
 
         <div className="mt-8 flex min-h-0 flex-1 flex-col">
@@ -891,13 +900,13 @@ function RuntimeSetupGuide({
               </p>
             </div>
             <Button
-              className="ml-auto h-7 shrink-0 rounded-full bg-foreground px-3 text-xs text-background shadow-none hover:bg-foreground/85"
+              className="ms-auto h-7 shrink-0 rounded-full bg-foreground px-3 text-xs text-background shadow-none hover:bg-foreground/85"
               data-testid="onboarding-harness-open-setup-guide"
               onClick={() => void openUrl(runtime.installInstructionsUrl)}
               size="xs"
               type="button"
             >
-              Open guide
+              {tl("Open guide")}
               <ExternalLink aria-hidden />
             </Button>
           </div>
@@ -910,7 +919,7 @@ function RuntimeSetupGuide({
             onClick={onRefresh}
             type="button"
           >
-            Check again
+            {tl("Check again")}
           </Button>
         </OnboardingFooter>
       </section>
@@ -924,10 +933,11 @@ function RuntimeSetupGuide({
     >
       <div className="shrink-0">
         <h1 className="text-title font-normal text-foreground">
-          Connect {label}
+          {tl("Connect")} {label}
         </h1>
         <p className="mt-2 w-full text-base leading-6 text-foreground/80">
-          Sign in to connect {label}. You can change this anytime.
+          {tl("Sign in to connect")} {label}
+          {tl(". You can change this anytime.")}
         </p>
       </div>
 
@@ -953,7 +963,7 @@ function RuntimeSetupGuide({
           onClick={onRefresh}
           type="button"
         >
-          Check again
+          {tl("Check again")}
         </Button>
       </OnboardingFooter>
     </section>
@@ -1122,7 +1132,7 @@ function SetupStepContent({
               type="button"
               variant="ghost"
             >
-              Set up later
+              {tl("Set up later")}
             </Button>
           </OnboardingFooter>
         </>
@@ -1143,7 +1153,7 @@ function SetupStepContent({
               type="button"
               variant="ghost"
             >
-              Set up later
+              {tl("Set up later")}
             </Button>
           </OnboardingFooter>
         </>

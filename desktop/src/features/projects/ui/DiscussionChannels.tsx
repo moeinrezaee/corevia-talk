@@ -29,6 +29,7 @@ import {
 } from "./ProjectEntityListRow";
 import { ProjectPanelState } from "./ProjectPanelState";
 import { useProjectConversationPanel } from "./ProjectConversationPanelContext";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 // Relay search caps a page at 500. Use the full page and surface a lower-bound
 // marker when it fills rather than silently presenting partial totals as exact.
@@ -206,7 +207,7 @@ export function DiscussedInChannels({
       data-testid={testId}
     >
       <h4 className="border-b border-border/40 px-3 py-1.5 text-2xs font-semibold uppercase tracking-wide text-muted-foreground">
-        Related Conversations
+        {tl("Related Conversations")}
       </h4>
       <div className="divide-y divide-border/40">
         {visible.map((channel) => {
@@ -229,15 +230,15 @@ export function DiscussedInChannels({
               <button
                 aria-label={
                   latestHit
-                    ? `Open conversation in #${name}`
-                    : `Open channel #${name}`
+                    ? tlt("Open conversation in #{0}", [name])
+                    : tlt("Open channel #{0}", [name])
                 }
                 className="absolute inset-0"
                 onClick={openConversation}
                 title={
                   latestHit
-                    ? `Open the latest conversation in #${name}`
-                    : `Open #${name}`
+                    ? tlt("Open the latest conversation in #{0}", [name])
+                    : tlt("Open #{0}", [name])
                 }
                 type="button"
               />
@@ -257,13 +258,13 @@ export function DiscussedInChannels({
                   <span className="text-muted-foreground">
                     {" "}
                     {latestHit
-                      ? `discussed ${entityLabel} in`
-                      : `created ${entityLabel} from`}{" "}
+                      ? tlt("discussed {0} in", [entityLabel])
+                      : tlt("created {0} from", [entityLabel])}{" "}
                   </span>
                   <button
                     className="pointer-events-auto font-medium text-foreground hover:underline"
                     onClick={() => void goChannel(channel.id)}
-                    title={`Open #${name}`}
+                    title={tlt("Open #{0}", [name])}
                     type="button"
                   >
                     #{name}
@@ -285,17 +286,17 @@ export function DiscussedInChannels({
       </div>
       {hiddenCount > 0 ? (
         <button
-          className="w-full border-t border-border/40 px-3 py-1.5 text-left text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+          className="w-full border-t border-border/40 px-3 py-1.5 text-start text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
           onClick={() => setExpanded(true)}
           type="button"
         >
-          Show {hiddenCount} more{" "}
+          {tl("Show")} {hiddenCount} {tl("more")}{" "}
           {hiddenCount === 1 ? "conversation" : "conversations"}
         </button>
       ) : null}
       {isTruncated ? (
         <p className="border-t border-border/40 px-3 py-1.5 text-xs text-muted-foreground">
-          Showing mentions from the 500 most recent search results.
+          {tl("Showing mentions from the 500 most recent search results.")}
         </p>
       ) : null}
     </div>
@@ -358,7 +359,7 @@ function DiscussionNameList({
       {others > 0 ? (
         <span className="font-medium text-foreground">
           {" "}
-          and {others} others
+          {tl("and")} {others} {tl("others")}
         </span>
       ) : null}
     </>
@@ -397,15 +398,17 @@ export function DiscussionChannelsPanel({
   const profiles = profilesQuery.data?.profiles;
 
   if (isLoading) {
-    return <BuzzLoadingState label="Loading channel discussions" />;
+    return <BuzzLoadingState label={tl("Loading channel discussions")} />;
   }
   if (channels.length === 0) {
     return (
       <ProjectPanelState
         className="px-4"
-        description="Paste this repository, review, or task link in a channel and it will appear here."
+        description={tl(
+          "Paste this repository, review, or task link in a channel and it will appear here.",
+        )}
         testId="project-discussion-channels-panel"
-        title="No linked channels yet"
+        title={tl("No linked channels yet")}
       />
     );
   }
@@ -472,8 +475,8 @@ export function DiscussionChannelsPanel({
       </ul>
       {isTruncated ? (
         <p className="border-t border-border/50 px-4 py-2 text-xs text-muted-foreground">
-          Showing the latest {DISCUSSION_SEARCH_LIMIT} mentions; totals may be
-          higher.
+          {tl("Showing the latest")} {DISCUSSION_SEARCH_LIMIT}{" "}
+          {tl("mentions; totals may be higher.")}
         </p>
       ) : null}
     </div>

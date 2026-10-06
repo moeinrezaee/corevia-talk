@@ -1,4 +1,5 @@
 import { cn } from "@/shared/lib/cn";
+import { tlt } from "@/shared/i18n/tl";
 
 type StepProgressProps = {
   activeSegmentClassName?: string;
@@ -22,7 +23,7 @@ export function StepProgress({
 
   return (
     <div
-      aria-label={`Step ${safeCurrentStep} of ${safeTotalSteps}`}
+      aria-label={tlt("Step {0} of {1}", [safeCurrentStep, safeTotalSteps])}
       aria-valuemax={safeTotalSteps}
       aria-valuemin={1}
       aria-valuenow={safeCurrentStep}

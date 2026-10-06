@@ -9,6 +9,7 @@ import {
   PERSONA_FIELD_SHELL_CLASS,
 } from "./agentConfigOptions";
 import { OptionLabel } from "./PersonaDropdownOptionLabel";
+import { tl } from "@/shared/i18n/tl";
 
 type PersonaModelComboboxProps = {
   disabled?: boolean;
@@ -124,7 +125,7 @@ export function PersonaModelCombobox({
           <button
             aria-expanded={open}
             className={cn(
-              "flex h-11 w-full items-center justify-between gap-3 px-3 py-2 text-left text-sm leading-6",
+              "flex h-11 w-full items-center justify-between gap-3 px-3 py-2 text-start text-sm leading-6",
               PERSONA_FIELD_CONTROL_CLASS,
               disabled && "cursor-default opacity-60",
             )}
@@ -157,14 +158,14 @@ export function PersonaModelCombobox({
           <div className="group/search flex cursor-text items-center gap-2 border-b border-border/50 px-3 py-2">
             <Search className="h-3.5 w-3.5 shrink-0 text-muted-foreground/55 transition-colors duration-150 ease-out group-focus-within/search:text-foreground" />
             <input
-              aria-label="Search models"
+              aria-label={tl("Search models")}
               autoCapitalize="none"
               autoComplete="off"
               autoCorrect="off"
               className="block min-w-0 flex-1 border-0 bg-transparent p-0 text-sm leading-5 text-muted-foreground/55 shadow-none outline-none placeholder:text-muted-foreground/55 focus:text-foreground focus:placeholder:text-muted-foreground"
               onChange={(event) => setQuery(event.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Search models…"
+              placeholder={tl("Search models…")}
               // Popover supports onOpenAutoFocus; we preventDefault above so
               // Radix doesn't move focus to the first focusable. But we still
               // want the input focused immediately, so use the callback ref.
@@ -183,7 +184,7 @@ export function PersonaModelCombobox({
                 <button
                   aria-disabled={option.disabled}
                   className={cn(
-                    "relative flex min-h-9 w-full select-none items-center rounded-lg py-2 pl-8 pr-4 text-left text-sm outline-none transition-colors",
+                    "relative flex min-h-9 w-full select-none items-center rounded-lg py-2 ps-8 pe-4 text-start text-sm outline-none transition-colors",
                     option.disabled
                       ? "pointer-events-none opacity-50"
                       : "cursor-default hover:bg-muted/50 hover:text-foreground",
@@ -200,7 +201,7 @@ export function PersonaModelCombobox({
                   }}
                   type="button"
                 >
-                  <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+                  <span className="absolute start-2 flex h-3.5 w-3.5 items-center justify-center">
                     <Check
                       className={cn(
                         "h-3.5 w-3.5",
@@ -213,7 +214,7 @@ export function PersonaModelCombobox({
               ))
             ) : (
               <p className="px-3 py-6 text-center text-sm text-muted-foreground/55">
-                No models match
+                {tl("No models match")}
               </p>
             )}
           </div>

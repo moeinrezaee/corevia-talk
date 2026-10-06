@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import type { PersonaDropdownOption } from "./agentConfigOptions";
 import { PersonaDropdownField } from "./PersonaDropdownField";
 import { HarnessCatalogRetryNotice } from "./HarnessCatalogRetryNotice";
+import { tl } from "@/shared/i18n/tl";
 
 export function AgentHarnessField({
   catalogStatus,
@@ -27,7 +28,7 @@ export function AgentHarnessField({
         className="text-sm font-medium text-foreground"
         htmlFor="persona-runtime"
       >
-        Agent harness
+        {tl("Agent harness")}
       </label>
       <PersonaDropdownField
         disabled={disabled}

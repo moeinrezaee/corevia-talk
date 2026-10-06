@@ -3,6 +3,7 @@ import * as React from "react";
 
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * Pre-send disclosure of the exact context payload appended to an outgoing
@@ -39,7 +40,7 @@ export function AgentContextPayloadPreview({
         data-testid="agent-context-preview-trigger"
         onClick={() => setOpen((value) => !value)}
         size="sm"
-        title="Preview the exact context appended to your message"
+        title={tl("Preview the exact context appended to your message")}
         type="button"
         variant="ghost"
       >
@@ -48,13 +49,13 @@ export function AgentContextPayloadPreview({
       </Button>
       {open ? (
         <div
-          className="absolute bottom-full right-0 z-50 mb-1 w-80 rounded-lg border border-border bg-popover p-3 shadow-md"
+          className="absolute bottom-full end-0 z-50 mb-1 w-80 rounded-lg border border-border bg-popover p-3 shadow-md"
           data-testid="agent-context-preview"
         >
           <p className="mb-2 text-xs text-muted-foreground">
-            This exact text is appended to your message before it is signed and
-            sent. Quoted values are untrusted workspace metadata — Buzz does not
-            verify or rewrite them.
+            {tl(
+              "This exact text is appended to your message before it is signed and sent. Quoted values are untrusted workspace metadata — Buzz does not verify or rewrite them.",
+            )}
           </p>
           <pre
             className="max-h-48 overflow-auto whitespace-pre-wrap break-words font-mono text-xs text-foreground"

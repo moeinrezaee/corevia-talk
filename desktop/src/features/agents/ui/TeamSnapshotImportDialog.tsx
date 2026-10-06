@@ -18,6 +18,7 @@ import {
   deriveImportPhase,
   getProfileSyncFailures,
 } from "./teamSnapshotImport.lib";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type TeamSnapshotImportDialogProps = {
   open: boolean;
@@ -67,7 +68,9 @@ export function TeamSnapshotImportDialog({
         <DialogHeader className="space-y-0">
           <div className="flex items-center justify-between gap-4">
             <DialogTitle>
-              {phase === "result" ? "Team imported" : "Import team snapshot"}
+              {phase === "result"
+                ? tl("Team imported")
+                : tl("Import team snapshot")}
             </DialogTitle>
             <div className="flex items-center gap-2">
               {phase === "preview" ? (
@@ -81,7 +84,7 @@ export function TeamSnapshotImportDialog({
                     variant="default"
                   >
                     <Upload className="h-4 w-4" />
-                    Import
+                    {tl("Import")}
                   </Button>
                   <DialogClose asChild>
                     <Button
@@ -90,14 +93,14 @@ export function TeamSnapshotImportDialog({
                       type="button"
                       variant="ghost"
                     >
-                      Cancel
+                      {tl("Cancel")}
                     </Button>
                   </DialogClose>
                 </>
               ) : (
                 <DialogClose asChild>
                   <Button size="sm" type="button" variant="ghost">
-                    Close
+                    {tl("Close")}
                   </Button>
                 </DialogClose>
               )}
@@ -126,7 +129,7 @@ export function TeamSnapshotImportDialog({
           </div>
         ) : phase === "confirming" ? (
           <div className="py-4 text-center text-sm text-muted-foreground">
-            Creating team…
+            {tl("Creating team…")}
           </div>
         ) : result !== null ? (
           <ResultBody result={result} />
@@ -163,15 +166,17 @@ function PreviewBody({
       </div>
 
       <p className="text-sm text-muted-foreground">
-        A new team will be created with fresh keypairs for all members. The
-        imported team is independent of the source — identity never travels.
+        {tl(
+          "A new team will be created with fresh keypairs for all members. The imported team is independent of the source — identity never travels.",
+        )}
       </p>
 
       {/* Member list */}
       {preview.members.length > 0 ? (
         <div className="space-y-1">
           <p className="text-sm font-medium">
-            Members ({preview.members.length})
+            {tl("Members (")}
+            {preview.members.length})
           </p>
           <div className="max-h-36 space-y-1 overflow-y-auto rounded-md border border-border p-2">
             {preview.members.map((member, idx) => (
@@ -195,10 +200,11 @@ function PreviewBody({
           className="space-y-2 rounded-md border border-border p-3"
           data-testid="team-snapshot-import-allowlist-section"
         >
-          <p className="text-sm font-medium">Respond-to allowlist</p>
+          <p className="text-sm font-medium">{tl("Respond-to allowlist")}</p>
           <p className="text-xs text-muted-foreground">
-            This snapshot includes source-environment pubkey allowlists for one
-            or more members. Those identities are not meaningful on your relay.
+            {tl(
+              "This snapshot includes source-environment pubkey allowlists for one or more members. Those identities are not meaningful on your relay.",
+            )}
           </p>
           <div className="flex flex-col gap-1.5">
             <label className="flex cursor-pointer items-center gap-2">
@@ -210,7 +216,8 @@ function PreviewBody({
                 type="radio"
               />
               <span className="text-sm">
-                <strong>Clear</strong> — start with empty allowlists (safer)
+                <strong>{tl("Clear")}</strong>{" "}
+                {tl("— start with empty allowlists (safer)")}
               </span>
             </label>
             <label className="flex cursor-pointer items-center gap-2">
@@ -222,7 +229,8 @@ function PreviewBody({
                 type="radio"
               />
               <span className="text-sm">
-                <strong>Keep</strong> — copy source allowlists to new members
+                <strong>{tl("Keep")}</strong>{" "}
+                {tl("— copy source allowlists to new members")}
               </span>
             </label>
           </div>
@@ -254,10 +262,18 @@ function ResultBody({ result }: { result: TeamSnapshotImportResult }) {
   return (
     <div className="space-y-3 py-1">
       <p className="text-sm">
-        <span className="font-medium">{result.team.name}</span> was created
+        <span className="font-medium">{result.team.name}</span>{" "}
+        {tl("was created")}
         {profileSyncFailures.length > 0
-          ? `, but ${profileSyncFailures.length} member${profileSyncFailures.length === 1 ? "" : "s"} failed to publish ${profileSyncFailures.length === 1 ? "a profile" : "profiles"}.`
-          : ` successfully with ${result.members.length} member${result.members.length === 1 ? "" : "s"}.`}
+          ? tlt(", but {0} member{1} failed to publish {2}.", [
+              profileSyncFailures.length,
+              profileSyncFailures.length === 1 ? "" : "s",
+              profileSyncFailures.length === 1 ? "a profile" : "profiles",
+            ])
+          : tlt(" successfully with {0} member{1}.", [
+              result.members.length,
+              result.members.length === 1 ? "" : "s",
+            ])}
       </p>
 
       {profileSyncFailures.length > 0 ? (
@@ -267,7 +283,7 @@ function ResultBody({ result }: { result: TeamSnapshotImportResult }) {
         >
           <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
           <div className="flex flex-col gap-1">
-            <p>Profile sync failed for:</p>
+            <p>{tl("Profile sync failed for:")}</p>
             <ul className="mt-1 max-h-32 space-y-0.5 overflow-y-auto text-xs">
               {profileSyncFailures.map((m) => (
                 <li key={m.pubkey} className="break-all font-mono">
@@ -288,10 +304,10 @@ function ResultBody({ result }: { result: TeamSnapshotImportResult }) {
             <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
             <div className="flex flex-col gap-1">
               <p>
-                Memory partially restored: {totalMemoryWritten} of{" "}
-                {totalMemoryTotal} entr
-                {totalMemoryTotal === 1 ? "y" : "ies"} written across all
-                members.
+                {tl("Memory partially restored:")} {totalMemoryWritten}{" "}
+                {tl("of")} {totalMemoryTotal} {tl("entr")}
+                {totalMemoryTotal === 1 ? "y" : "ies"}{" "}
+                {tl("written across all members.")}
               </p>
               {totalMemoryErrors > 0 ? (
                 <ul
@@ -318,8 +334,9 @@ function ResultBody({ result }: { result: TeamSnapshotImportResult }) {
             className="text-xs text-muted-foreground"
             data-testid="team-snapshot-import-memory-success"
           >
-            {totalMemoryTotal} memory entr
-            {totalMemoryTotal === 1 ? "y" : "ies"} restored across all members.
+            {totalMemoryTotal} {tl("memory entr")}
+            {totalMemoryTotal === 1 ? "y" : "ies"}{" "}
+            {tl("restored across all members.")}
           </p>
         )
       ) : null}

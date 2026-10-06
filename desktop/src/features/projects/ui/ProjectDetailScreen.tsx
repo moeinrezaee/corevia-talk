@@ -83,6 +83,7 @@ import {
   pushPullTitle,
   snapshotHasContent,
 } from "./projectDetailHelpers";
+import { tl } from "@/shared/i18n/tl";
 
 export function ProjectDetailScreen(props: ProjectDetailScreenProps) {
   const {
@@ -342,7 +343,7 @@ export function ProjectDetailScreen(props: ProjectDetailScreenProps) {
       });
       return;
     }
-    toast.success("Remote state refreshed.");
+    toast.success(tl("Remote state refreshed."));
   }, [
     memberChannelIds,
     repoSnapshotQuery,
@@ -586,7 +587,7 @@ export function ProjectDetailScreen(props: ProjectDetailScreenProps) {
   const handleCreateIssue = React.useCallback(
     async (input: CreateIssueDialogInput) => {
       const issueId = await createIssueMutation.mutateAsync(input);
-      toast.success("Task created.");
+      toast.success(tl("Task created."));
       await issuesQuery.refetch();
       setSelectedIssueId(issueId);
     },

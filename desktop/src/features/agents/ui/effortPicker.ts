@@ -3,6 +3,7 @@ import type {
   ManagedAgentBackend,
 } from "@/shared/api/types";
 import type { PersonaDropdownOption } from "./agentConfigOptions";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * Sentinel dropdown value for "no explicit effort" — reverts the agent to the
@@ -42,7 +43,7 @@ export function effortPickerState({
   const visible = backend.type === "local" && effortConfigId !== undefined;
 
   const options: PersonaDropdownOption[] = [
-    { label: "Adapter default", value: EFFORT_DEFAULT_DROPDOWN_VALUE },
+    { label: tl("Adapter default"), value: EFFORT_DEFAULT_DROPDOWN_VALUE },
     ...(effortOptions ?? []).map((option) => ({
       label: option.displayName ?? option.value,
       value: option.value,

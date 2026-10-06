@@ -100,6 +100,7 @@ import { UserProfilePanelFrame } from "@/features/profile/ui/UserProfilePanelFra
 import { getUserProfilePanelHeaderContent } from "@/features/profile/ui/UserProfilePanelHeaderContent";
 import { UserProfileEditAgentDialog } from "@/features/profile/ui/UserProfileEditAgentDialog";
 import { useProfileEditAgentRequest } from "@/features/profile/ui/useProfileEditAgentRequest";
+import { tl } from "@/shared/i18n/tl";
 export type { ProfilePanelTab, ProfilePanelView };
 
 export function UserProfilePanel({
@@ -586,7 +587,7 @@ export function UserProfilePanel({
     }
 
     if (resolvedPersona.sourceTeam) {
-      toast.error("This agent is managed by a team.");
+      toast.error(tl("This agent is managed by a team."));
       return;
     }
 
@@ -601,7 +602,7 @@ export function UserProfilePanel({
   const handleConfirmDeletePersona = React.useCallback(
     async (personaToConfirm: AgentPersona) => {
       if (personaToConfirm.sourceTeam) {
-        toast.error("This agent is managed by a team.");
+        toast.error(tl("This agent is managed by a team."));
         setPersonaToDelete(null);
         return;
       }

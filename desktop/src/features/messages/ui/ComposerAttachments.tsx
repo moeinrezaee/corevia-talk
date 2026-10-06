@@ -37,6 +37,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { ComposerImageEditor } from "./ComposerImageEditor";
 import { isVoiceNoteAttachment } from "@/features/messages/lib/audioAttachment";
 import { AudioMessageAttachment } from "./AudioMessageAttachment";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 /**
  * Reveal-on-interaction for the composer's media action buttons.
@@ -53,7 +54,7 @@ const COMPOSER_MEDIA_REVEAL_CLASS =
 
 /** Corner "remove attachment" badge on a composer thumbnail. */
 const COMPOSER_MEDIA_REMOVE_CLASS = cn(
-  "absolute -right-1 -top-1 z-10 flex h-4 w-4 items-center justify-center rounded-full bg-foreground text-background",
+  "absolute -end-1 -top-1 z-10 flex h-4 w-4 items-center justify-center rounded-full bg-foreground text-background",
   COMPOSER_MEDIA_REVEAL_CLASS,
 );
 
@@ -77,7 +78,7 @@ export function DropZoneOverlay({ className }: { className?: string }) {
         data-testid="drop-zone-label"
       >
         <UploadCloud aria-hidden="true" className="size-4" />
-        <span>Drop files to upload</span>
+        <span>{tl("Drop files to upload")}</span>
       </span>
     </div>
   );
@@ -196,13 +197,13 @@ function ComposerSnapshotCard({
             {formatAttachmentSize(attachment.size)}
           </AttachmentDescription>
         </AttachmentContent>
-        <AttachmentActions className="ml-4">
+        <AttachmentActions className="ms-4">
           <AttachmentAction
-            aria-label={`Remove ${displayName}`}
+            aria-label={tlt("Remove {0}", [displayName])}
             className="border-0 bg-transparent text-muted-foreground/70 shadow-none hover:text-foreground hover:shadow-none focus-visible:bg-muted focus-visible:ring-0"
             data-testid={`composer-${snapshotKind}-snapshot-remove`}
             onClick={() => onRemove(attachment.url)}
-            title="Remove"
+            title={tl("Remove")}
             type="button"
           >
             <X />
@@ -405,16 +406,17 @@ const MediaAttachmentItem = React.forwardRef<
               onEscapeKeyDown={handleEscapeKeyDown}
             >
               <DialogPrimitive.Title className="sr-only">
-                {mediaLabel} preview
+                {mediaLabel} {tl("preview")}
               </DialogPrimitive.Title>
               <DialogPrimitive.Description className="sr-only">
-                Full-size attachment preview. Press Escape or click outside to
-                close.
+                {tl(
+                  "Full-size attachment preview. Press Escape or click outside to close.",
+                )}
               </DialogPrimitive.Description>
               {mode === "view" ? (
                 <DialogPrimitive.Close
                   className="absolute inset-0 cursor-default"
-                  aria-label="Close lightbox"
+                  aria-label={tl("Close lightbox")}
                 />
               ) : null}
               {mode === "edit" && !isVideo ? (
@@ -462,7 +464,7 @@ const MediaAttachmentItem = React.forwardRef<
                 </div>
               ) : null}
               {mode === "view" ? (
-                <div className="absolute right-4 top-4 flex items-center gap-2">
+                <div className="absolute end-4 top-4 flex items-center gap-2">
                   {canRevert ? (
                     <Tooltip disableHoverableContent>
                       <TooltipTrigger asChild>
@@ -472,10 +474,12 @@ const MediaAttachmentItem = React.forwardRef<
                           size="sm"
                           type="button"
                         >
-                          Revert
+                          {tl("Revert")}
                         </Button>
                       </TooltipTrigger>
-                      <TooltipContent>Revert to original</TooltipContent>
+                      <TooltipContent>
+                        {tl("Revert to original")}
+                      </TooltipContent>
                     </Tooltip>
                   ) : null}
                   {onToggleSpoiler ? (
@@ -483,7 +487,9 @@ const MediaAttachmentItem = React.forwardRef<
                       <TooltipTrigger asChild>
                         <Toggle
                           aria-label={
-                            isSpoilered ? "Remove spoiler" : "Mark as spoiler"
+                            isSpoilered
+                              ? tl("Remove spoiler")
+                              : tl("Mark as spoiler")
                           }
                           className={cn(
                             LIGHTBOX_BUTTON_CLASS,
@@ -501,7 +507,9 @@ const MediaAttachmentItem = React.forwardRef<
                         </Toggle>
                       </TooltipTrigger>
                       <TooltipContent>
-                        {isSpoilered ? "Remove spoiler" : "Mark as spoiler"}
+                        {isSpoilered
+                          ? tl("Remove spoiler")
+                          : tl("Mark as spoiler")}
                       </TooltipContent>
                     </Tooltip>
                   ) : null}
@@ -515,15 +523,15 @@ const MediaAttachmentItem = React.forwardRef<
                           onClick={() => setMode("edit")}
                         >
                           <Pencil className="h-4 w-4" />
-                          <span className="sr-only">Draw on image</span>
+                          <span className="sr-only">{tl("Draw on image")}</span>
                         </button>
                       </TooltipTrigger>
-                      <TooltipContent>Draw on image</TooltipContent>
+                      <TooltipContent>{tl("Draw on image")}</TooltipContent>
                     </Tooltip>
                   ) : null}
                   <DialogPrimitive.Close className={LIGHTBOX_BUTTON_CLASS}>
                     <X className="h-4 w-4" />
-                    <span className="sr-only">Close</span>
+                    <span className="sr-only">{tl("Close")}</span>
                   </DialogPrimitive.Close>
                 </div>
               ) : null}
@@ -533,7 +541,7 @@ const MediaAttachmentItem = React.forwardRef<
         <Tooltip disableHoverableContent>
           <TooltipTrigger asChild>
             <button
-              aria-label={`Remove ${mediaLabel}`}
+              aria-label={tlt("Remove {0}", [mediaLabel])}
               type="button"
               onClick={() => onRemove(attachment.url)}
               className={COMPOSER_MEDIA_REMOVE_CLASS}
@@ -541,7 +549,7 @@ const MediaAttachmentItem = React.forwardRef<
               <X className="h-2.5 w-2.5" />
             </button>
           </TooltipTrigger>
-          <TooltipContent>Remove attachment</TooltipContent>
+          <TooltipContent>{tl("Remove attachment")}</TooltipContent>
         </Tooltip>
         {canEdit ? (
           <Tooltip disableHoverableContent>
@@ -553,17 +561,19 @@ const MediaAttachmentItem = React.forwardRef<
                 type="button"
               >
                 <LineSquiggle className="h-5 w-5" />
-                <span className="sr-only">Draw on image</span>
+                <span className="sr-only">{tl("Draw on image")}</span>
               </button>
             </TooltipTrigger>
-            <TooltipContent>Draw on image</TooltipContent>
+            <TooltipContent>{tl("Draw on image")}</TooltipContent>
           </Tooltip>
         ) : null}
         {isVideo && onToggleSpoiler ? (
           <Tooltip disableHoverableContent>
             <TooltipTrigger asChild>
               <button
-                aria-label={isSpoilered ? "Remove spoiler" : "Mark as spoiler"}
+                aria-label={
+                  isSpoilered ? tl("Remove spoiler") : tl("Mark as spoiler")
+                }
                 aria-pressed={isSpoilered}
                 className={COMPOSER_MEDIA_HOVER_ACTION_CLASS}
                 data-testid="composer-video-spoiler"
@@ -574,7 +584,7 @@ const MediaAttachmentItem = React.forwardRef<
               </button>
             </TooltipTrigger>
             <TooltipContent>
-              {isSpoilered ? "Remove spoiler" : "Mark as spoiler"}
+              {isSpoilered ? tl("Remove spoiler") : tl("Mark as spoiler")}
             </TooltipContent>
           </Tooltip>
         ) : null}
@@ -675,7 +685,7 @@ export const ComposerAttachments = React.memo(function ComposerAttachments({
                   <Tooltip disableHoverableContent>
                     <TooltipTrigger asChild>
                       <button
-                        aria-label="Remove voice note"
+                        aria-label={tl("Remove voice note")}
                         className={COMPOSER_MEDIA_REMOVE_CLASS}
                         data-testid="remove-composer-voice-note"
                         onClick={() => onRemove(attachment.url)}
@@ -684,7 +694,7 @@ export const ComposerAttachments = React.memo(function ComposerAttachments({
                         <X className="h-2.5 w-2.5" />
                       </button>
                     </TooltipTrigger>
-                    <TooltipContent>Remove attachment</TooltipContent>
+                    <TooltipContent>{tl("Remove attachment")}</TooltipContent>
                   </Tooltip>
                 </motion.div>
               );
@@ -716,7 +726,7 @@ export const ComposerAttachments = React.memo(function ComposerAttachments({
                   <Tooltip disableHoverableContent>
                     <TooltipTrigger asChild>
                       <button
-                        aria-label="Remove attachment"
+                        aria-label={tl("Remove attachment")}
                         type="button"
                         onClick={() => onRemove(attachment.url)}
                         className={COMPOSER_MEDIA_REMOVE_CLASS}
@@ -724,7 +734,7 @@ export const ComposerAttachments = React.memo(function ComposerAttachments({
                         <X className="h-2.5 w-2.5" />
                       </button>
                     </TooltipTrigger>
-                    <TooltipContent>Remove attachment</TooltipContent>
+                    <TooltipContent>{tl("Remove attachment")}</TooltipContent>
                   </Tooltip>
                 </motion.div>
               );
@@ -772,7 +782,7 @@ export const ComposerAttachments = React.memo(function ComposerAttachments({
                     <Tooltip disableHoverableContent>
                       <TooltipTrigger asChild>
                         <button
-                          aria-label="Remove voice note"
+                          aria-label={tl("Remove voice note")}
                           className={COMPOSER_MEDIA_REMOVE_CLASS}
                           data-testid="remove-composer-voice-note"
                           onClick={() => onRemoveQueued(preview.id)}
@@ -781,7 +791,7 @@ export const ComposerAttachments = React.memo(function ComposerAttachments({
                           <X className="h-2.5 w-2.5" />
                         </button>
                       </TooltipTrigger>
-                      <TooltipContent>Remove attachment</TooltipContent>
+                      <TooltipContent>{tl("Remove attachment")}</TooltipContent>
                     </Tooltip>
                   ) : null}
                 </motion.div>
@@ -806,7 +816,7 @@ export const ComposerAttachments = React.memo(function ComposerAttachments({
                     <div className="h-full w-full overflow-hidden rounded-2xl border border-border/70 bg-muted">
                       {preview.posterUrl ? (
                         <img
-                          alt={preview.filename ?? "Queued attachment"}
+                          alt={preview.filename ?? tl("Queued attachment")}
                           className="h-full w-full object-cover"
                           src={preview.posterUrl}
                         />
@@ -826,7 +836,7 @@ export const ComposerAttachments = React.memo(function ComposerAttachments({
                   <div className="flex h-5 max-w-40 items-center gap-1 rounded border border-border/70 bg-muted px-1.5">
                     <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
                     <span className="truncate text-2xs text-muted-foreground">
-                      {preview.filename ?? "Attachment"}
+                      {preview.filename ?? tl("Attachment")}
                     </span>
                   </div>
                 )}
@@ -834,7 +844,7 @@ export const ComposerAttachments = React.memo(function ComposerAttachments({
                   <Tooltip disableHoverableContent>
                     <TooltipTrigger asChild>
                       <button
-                        aria-label="Remove attachment"
+                        aria-label={tl("Remove attachment")}
                         className={COMPOSER_MEDIA_REMOVE_CLASS}
                         onClick={() => onRemoveQueued(preview.id)}
                         type="button"
@@ -842,7 +852,7 @@ export const ComposerAttachments = React.memo(function ComposerAttachments({
                         <X className="h-2.5 w-2.5" />
                       </button>
                     </TooltipTrigger>
-                    <TooltipContent>Remove attachment</TooltipContent>
+                    <TooltipContent>{tl("Remove attachment")}</TooltipContent>
                   </Tooltip>
                 ) : null}
                 {isVideo && onToggleQueuedSpoiler ? (
@@ -851,8 +861,8 @@ export const ComposerAttachments = React.memo(function ComposerAttachments({
                       <button
                         aria-label={
                           preview.spoilered
-                            ? "Remove spoiler"
-                            : "Mark as spoiler"
+                            ? tl("Remove spoiler")
+                            : tl("Mark as spoiler")
                         }
                         aria-pressed={preview.spoilered}
                         className={COMPOSER_MEDIA_HOVER_ACTION_CLASS}
@@ -864,7 +874,9 @@ export const ComposerAttachments = React.memo(function ComposerAttachments({
                       </button>
                     </TooltipTrigger>
                     <TooltipContent>
-                      {preview.spoilered ? "Remove spoiler" : "Mark as spoiler"}
+                      {preview.spoilered
+                        ? tl("Remove spoiler")
+                        : tl("Mark as spoiler")}
                     </TooltipContent>
                   </Tooltip>
                 ) : null}
@@ -890,7 +902,9 @@ export const ComposerAttachments = React.memo(function ComposerAttachments({
                     {preview.posterUrl ? (
                       <img
                         src={preview.posterUrl}
-                        alt={`Uploading ${preview.filename ?? "video"}`}
+                        alt={tlt("Uploading {0}", [
+                          preview.filename ?? "video",
+                        ])}
                         className="h-full w-full object-cover"
                       />
                     ) : (
@@ -898,7 +912,9 @@ export const ComposerAttachments = React.memo(function ComposerAttachments({
                     )}
                     <div className="absolute inset-0 flex items-end rounded-2xl bg-background/25 px-2 pb-1.5">
                       <Progress
-                        aria-label={`Uploading ${preview.filename ?? "attachment"}`}
+                        aria-label={tlt("Uploading {0}", [
+                          preview.filename ?? "attachment",
+                        ])}
                         className={cn(
                           "h-1",
                           preview.posterUrl
@@ -915,14 +931,14 @@ export const ComposerAttachments = React.memo(function ComposerAttachments({
                       <TooltipTrigger asChild>
                         <button
                           type="button"
-                          aria-label="Cancel upload"
+                          aria-label={tl("Cancel upload")}
                           onClick={() => onCancelUpload(preview.id)}
-                          className="absolute -right-1 -top-1 z-10 flex h-4 w-4 items-center justify-center rounded-full bg-foreground text-background"
+                          className="absolute -end-1 -top-1 z-10 flex h-4 w-4 items-center justify-center rounded-full bg-foreground text-background"
                         >
                           <X className="h-2.5 w-2.5" />
                         </button>
                       </TooltipTrigger>
-                      <TooltipContent>Cancel upload</TooltipContent>
+                      <TooltipContent>{tl("Cancel upload")}</TooltipContent>
                     </Tooltip>
                   ) : null}
                 </div>

@@ -5,6 +5,7 @@ import {
   effortSelectionToPersistedValue,
 } from "./effortPicker";
 import { PersonaDropdownField } from "./PersonaDropdownField";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * Thinking-effort write control for the edit dialog.
@@ -54,8 +55,8 @@ export function EffortPickerField({
         className="text-sm font-medium text-foreground"
         htmlFor="edit-agent-effort"
       >
-        Thinking effort
-        <span className={PERSONA_LABEL_OPTIONAL_CLASS}>Optional</span>
+        {tl("Thinking effort")}
+        <span className={PERSONA_LABEL_OPTIONAL_CLASS}>{tl("Optional")}</span>
       </label>
       <PersonaDropdownField
         disabled={disabled}
@@ -64,11 +65,11 @@ export function EffortPickerField({
           onChange(effortSelectionToPersistedValue(next))
         }
         options={options}
-        placeholder="Adapter default"
+        placeholder={tl("Adapter default")}
         value={selectValue}
       />
       <p className="text-xs text-muted-foreground">
-        Applied at the next session start.
+        {tl("Applied at the next session start.")}
       </p>
     </div>
   );

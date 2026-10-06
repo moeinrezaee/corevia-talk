@@ -21,6 +21,7 @@ import {
 import { useAgentRunLocation } from "./AgentRunLocationContext";
 import { PersonaDropdownField } from "./PersonaDropdownField";
 import type { PersonaDropdownOption } from "./agentConfigOptions";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 /**
  * Inbound author gate UI for create/edit agent dialogs.
@@ -74,9 +75,9 @@ function formatSearchUserSecondary(user: UserSearchResult) {
 }
 
 const RESPOND_TO_OPTIONS: PersonaDropdownOption[] = [
-  { label: "Only me (default)", value: "owner-only" },
-  { label: "Anyone", value: "anyone" },
-  { label: "Selected people", value: "allowlist" },
+  { label: tl("Only me (default)"), value: "owner-only" },
+  { label: tl("Anyone"), value: "anyone" },
+  { label: tl("Selected people"), value: "allowlist" },
 ];
 
 export const OWNER_ONLY_ACCESS_DISABLED_REASON =
@@ -205,7 +206,7 @@ export function CreateAgentRespondToField({
         }
         htmlFor="agent-respond-to"
       >
-        Who can send instructions
+        {tl("Who can send instructions")}
       </label>
       {isPersonaVariant ? (
         <PersonaDropdownField
@@ -213,7 +214,7 @@ export function CreateAgentRespondToField({
           id="agent-respond-to"
           onValueChange={(value) => onModeChange(value as RespondToMode)}
           options={RESPOND_TO_OPTIONS}
-          placeholder="Only me (default)"
+          placeholder={tl("Only me (default)")}
           value={mode}
         />
       ) : (
@@ -243,7 +244,7 @@ export function CreateAgentRespondToField({
       {mode === "anyone" ? accessWarning : null}
       {mode === "owner-only" ? (
         <p className="text-xs text-muted-foreground">
-          Only you and your agents can send instructions.
+          {tl("Only you and your agents can send instructions.")}
         </p>
       ) : null}
       {mode === "allowlist" ? (
@@ -342,21 +343,21 @@ function AllowlistPicker({
     >
       {!isPersona ? (
         <div className="flex items-center justify-between gap-2">
-          <span className="text-sm font-medium">Selected people</span>
+          <span className="text-sm font-medium">{tl("Selected people")}</span>
           <span className="rounded-full bg-background px-2 py-1 text-2xs font-medium leading-none text-muted-foreground">
-            {allowlist.length} selected
+            {allowlist.length} {tl("selected")}
           </span>
         </div>
       ) : null}
       {!isPersona && ownerPubkey ? (
         <p className="text-xs text-muted-foreground">
-          You (
-          <PubKey pubkey={ownerPubkey} />) can always use this agent. You
-          don&apos;t need to add yourself.
+          {tl("You (")}
+          <PubKey pubkey={ownerPubkey} />
+          {tl(") can always use this agent. You don't need to add yourself.")}
         </p>
       ) : !isPersona ? (
         <p className="text-xs text-muted-foreground">
-          You can always use this agent.
+          {tl("You can always use this agent.")}
         </p>
       ) : null}
       <div className="rounded-lg border border-border/80 bg-background">
@@ -368,7 +369,7 @@ function AllowlistPicker({
             disabled={disabled}
             onChange={(event) => onQueryChange(event.target.value)}
             placeholder={
-              isPersona ? "Search people" : "Search by name or NIP-05."
+              isPersona ? tl("Search people") : tl("Search by name or NIP-05.")
             }
             value={query}
           />
@@ -388,7 +389,7 @@ function AllowlistPicker({
                 />
                 <PubKey pubkey={pubkey} />
                 <button
-                  aria-label={`Remove ${truncateNpub(pubkey)}`}
+                  aria-label={tlt("Remove {0}", [truncateNpub(pubkey)])}
                   className="text-muted-foreground transition-colors hover:text-foreground"
                   disabled={disabled}
                   onClick={() => onRemove(pubkey)}
@@ -404,13 +405,13 @@ function AllowlistPicker({
           <div className="border-t border-border/70 px-2 py-2">
             {searchIsLoading ? (
               <p className="px-2 py-1 text-sm text-muted-foreground">
-                Searching…
+                {tl("Searching…")}
               </p>
             ) : searchResults.length > 0 ? (
               <div className="max-h-44 space-y-1 overflow-y-auto">
                 {searchResults.map((result) => (
                   <button
-                    className="flex w-full items-center justify-between rounded-md px-2.5 py-1.5 text-left transition-colors hover:bg-accent hover:text-accent-foreground"
+                    className="flex w-full items-center justify-between rounded-md px-2.5 py-1.5 text-start transition-colors hover:bg-accent hover:text-accent-foreground"
                     data-testid={`agent-respond-to-result-${result.pubkey}`}
                     key={result.pubkey}
                     onClick={() => onAddSearchResult(result)}
@@ -432,13 +433,15 @@ function AllowlistPicker({
                         </p>
                       </div>
                     </div>
-                    <span className="text-xs text-muted-foreground">Add</span>
+                    <span className="text-xs text-muted-foreground">
+                      {tl("Add")}
+                    </span>
                   </button>
                 ))}
               </div>
             ) : queryIsDirectPubkey ? (
               <button
-                className="flex w-full items-center justify-between rounded-md px-2.5 py-1.5 text-left transition-colors hover:bg-accent hover:text-accent-foreground"
+                className="flex w-full items-center justify-between rounded-md px-2.5 py-1.5 text-start transition-colors hover:bg-accent hover:text-accent-foreground"
                 data-testid="agent-respond-to-add-raw-pubkey"
                 onClick={() => onAddRawPubkey(queryPubkey)}
                 type="button"
@@ -454,15 +457,17 @@ function AllowlistPicker({
                       {truncateNpub(queryPubkey)}
                     </p>
                     <p className="truncate text-xs text-muted-foreground">
-                      Add pubkey directly
+                      {tl("Add pubkey directly")}
                     </p>
                   </div>
                 </div>
-                <span className="text-xs text-muted-foreground">Add</span>
+                <span className="text-xs text-muted-foreground">
+                  {tl("Add")}
+                </span>
               </button>
             ) : (
               <p className="px-2 py-1 text-sm text-muted-foreground">
-                No matching users.
+                {tl("No matching users.")}
               </p>
             )}
           </div>
@@ -487,7 +492,7 @@ function AllowlistPicker({
                 isDirectEntryOpen && "rotate-180",
               )}
             />
-            <span>Paste pubkeys</span>
+            <span>{tl("Paste pubkeys")}</span>
           </button>
           {isDirectEntryOpen ? (
             <div
@@ -495,29 +500,35 @@ function AllowlistPicker({
               id="agent-respond-to-direct-panel"
             >
               <p className="text-xs text-muted-foreground">
-                One per line, or comma/space-separated. Each entry is an npub
-                (npub1…) or a 64-char hex public key.
+                {tl(
+                  "One per line, or comma/space-separated. Each entry is an npub (npub1…) or a 64-char hex public key.",
+                )}
               </p>
               <Textarea
                 className="min-h-20 font-mono text-xs"
                 data-testid="agent-respond-to-paste"
                 disabled={disabled}
                 onChange={(event) => onPasteTextChange(event.target.value)}
-                placeholder="npub1… or abcdef0123…"
+                placeholder={tl("npub1… or abcdef0123…")}
                 value={pasteText}
               />
               {pasteInvalid.length > 0 ? (
                 <p className="text-xs text-destructive">
-                  {pasteInvalid.length} entr
-                  {pasteInvalid.length === 1 ? "y is" : "ies are"} not a valid
-                  npub or 64-char hex public key and will be ignored.
+                  {pasteInvalid.length} {tl("entr")}
+                  {pasteInvalid.length === 1 ? tl("y is") : tl("ies are")}{" "}
+                  {tl(
+                    "not a valid npub or 64-char hex public key and will be ignored.",
+                  )}
                 </p>
               ) : null}
               <div className="flex items-center justify-between gap-2">
                 <span className="text-xs text-muted-foreground">
                   {pasteValidCount > 0
-                    ? `${pasteValidCount} valid pubkey${pasteValidCount === 1 ? "" : "s"} ready.`
-                    : "No valid pubkeys yet."}
+                    ? tlt("{0} valid pubkey{1} ready.", [
+                        pasteValidCount,
+                        pasteValidCount === 1 ? "" : "s",
+                      ])
+                    : tl("No valid pubkeys yet.")}
                 </span>
                 <button
                   className="rounded-md border border-border/80 bg-background px-2.5 py-1 text-xs font-medium transition-colors hover:bg-accent hover:text-accent-foreground disabled:cursor-not-allowed disabled:opacity-50"
@@ -526,7 +537,7 @@ function AllowlistPicker({
                   onClick={onAddFromPaste}
                   type="button"
                 >
-                  Add people
+                  {tl("Add people")}
                 </button>
               </div>
             </div>

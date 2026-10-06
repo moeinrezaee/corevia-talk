@@ -1,3 +1,5 @@
+import type { MessageKey } from "@/shared/i18n/messages";
+import { useTranslation } from "@/shared/i18n/useTranslation";
 import * as React from "react";
 import { getVersion } from "@tauri-apps/api/app";
 import { AlertCircle, ArrowLeft, LoaderCircle, RefreshCw } from "lucide-react";
@@ -36,6 +38,7 @@ import {
   type SettingsSection,
   type SettingsSectionDescriptor,
 } from "./SettingsPanels";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export {
   DEFAULT_SETTINGS_SECTION,
@@ -53,7 +56,7 @@ export const settingsNavGroups: Array<{
   sections: SettingsSection[];
 }> = [
   {
-    label: "Personal",
+    label: tl("Personal"),
     sections: [
       "profile",
       "appearance",
@@ -66,14 +69,22 @@ export const settingsNavGroups: Array<{
     ],
   },
   {
-    label: "Communities",
+    label: tl("Communities"),
     sections: ["hosted-communities", "community-members", "relay-admin"],
   },
   {
-    label: "App",
+    label: tl("App"),
     sections: ["agents", "compute", "experimental", "mobile", "updates"],
   },
 ];
+
+/** Sections whose nav label has a translation; the rest fall back to English. */
+const SECTION_LABEL_KEYS: Partial<Record<SettingsSection, MessageKey>> = {
+  appearance: "settings.appearance",
+  profile: "settings.profile",
+  notifications: "settings.notifications",
+  voice: "settings.voice",
+};
 
 function SettingsSectionButton({
   active,
@@ -85,6 +96,9 @@ function SettingsSectionButton({
   section: (typeof settingsSections)[number];
 }) {
   const Icon = section.icon;
+  const { t } = useTranslation();
+  const labelKey = SECTION_LABEL_KEYS[section.value];
+  const label = labelKey ? t(labelKey) : section.label;
 
   return (
     <SidebarMenuItem>
@@ -93,7 +107,7 @@ function SettingsSectionButton({
         data-testid={`settings-nav-${section.value}`}
         isActive={active}
         onClick={() => onSelect(section.value)}
-        tooltip={section.label}
+        tooltip={label}
         type="button"
       >
         <Icon
@@ -104,7 +118,7 @@ function SettingsSectionButton({
               : "text-sidebar-foreground/70",
           )}
         />
-        <SidebarMenuLabel>{section.label}</SidebarMenuLabel>
+        <SidebarMenuLabel>{label}</SidebarMenuLabel>
       </SidebarMenuButton>
     </SidebarMenuItem>
   );
@@ -218,7 +232,7 @@ export function SettingsView({
   return (
     <>
       <Sidebar
-        className="!border-r-0"
+        className="!border-e-0"
         collapsible="offcanvas"
         data-testid="settings-sidebar"
         variant="sidebar"
@@ -241,11 +255,11 @@ export function SettingsView({
               <SidebarMenuButton
                 data-testid="settings-back-to-app"
                 onClick={onClose}
-                tooltip="Back to app"
+                tooltip={tl("Back to app")}
                 type="button"
               >
                 <ArrowLeft className="h-4 w-4" />
-                <span>Back to app</span>
+                <span>{tl("Back to app")}</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
@@ -258,7 +272,7 @@ export function SettingsView({
               data-testid="community-access-loading"
             >
               <LoaderCircle className="h-3.5 w-3.5 animate-spin" />
-              Checking invite permissions…
+              {tl("Checking invite permissions…")}
             </div>
           ) : null}
           {myMembershipQuery.isError ? (
@@ -268,7 +282,7 @@ export function SettingsView({
             >
               <div className="flex items-center gap-2">
                 <AlertCircle className="h-3.5 w-3.5 text-destructive" />
-                Invite settings could not be checked.
+                {tl("Invite settings could not be checked.")}
               </div>
               <button
                 className="flex items-center gap-1.5 font-medium text-sidebar-foreground underline-offset-2 hover:underline"
@@ -276,7 +290,7 @@ export function SettingsView({
                 type="button"
               >
                 <RefreshCw className="h-3.5 w-3.5" />
-                Try again
+                {tl("Try again")}
               </button>
             </div>
           ) : null}
@@ -286,15 +300,18 @@ export function SettingsView({
               data-testid="community-access-snapshot-missing"
             >
               <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-500" />
-              Invite settings are unavailable. Relay recovery may still be in
-              progress.
+              {tl(
+                "Invite settings are unavailable. Relay recovery may still be in progress.",
+              )}
             </div>
           ) : null}
           {visibleNavGroups.map((group) => (
             <SidebarGroup key={group.label}>
               <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
               <SidebarGroupContent>
-                <SidebarMenu aria-label={`${group.label} settings sections`}>
+                <SidebarMenu
+                  aria-label={tlt("{0} settings sections", [group.label])}
+                >
                   {group.sections.map((entry) => (
                     <SettingsSectionButton
                       active={entry.value === section}
@@ -340,7 +357,7 @@ export function SettingsView({
           data-testid="settings-top-chrome"
         />
         <div
-          className="relative z-10 mb-2 ml-px mr-2 mt-px flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl bg-background shadow-content-edge"
+          className="relative z-10 mb-2 ms-px me-2 mt-px flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl bg-background shadow-content-edge"
           data-buzz-content-surface
           data-testid="settings-content-surface"
         >

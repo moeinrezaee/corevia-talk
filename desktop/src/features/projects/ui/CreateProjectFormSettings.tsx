@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { cn } from "@/shared/lib/cn";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const NONE_AGENT_VALUE = "__none__";
 const NONE_TEAM_VALUE = "__no-team__";
@@ -65,23 +66,25 @@ export function CreateProjectFormSettings({
 
       <div className={cn(SETTINGS_ROW_CLASS, disabled && "opacity-50")}>
         <span className="text-sm font-medium text-foreground">
-          Template
-          <span className="ml-1 text-xs font-normal text-muted-foreground/50">
-            Project home by default
+          {tl("Template")}
+          <span className="ms-1 text-xs font-normal text-muted-foreground/50">
+            {tl("Project home by default")}
           </span>
         </span>
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button
-              aria-label={`Template: ${selectedTemplate?.name ?? "None"}`}
-              className="-mr-2.5 ml-auto h-9 min-w-0 max-w-[60%] justify-end px-2.5 text-right text-sm font-medium text-foreground hover:bg-muted/50"
+              aria-label={tlt("Template: {0}", [
+                selectedTemplate?.name ?? "None",
+              ])}
+              className="-me-2.5 ms-auto h-9 min-w-0 max-w-[60%] justify-end px-2.5 text-end text-sm font-medium text-foreground hover:bg-muted/50"
               data-testid="create-project-template"
               disabled={disabled}
               type="button"
               variant="ghost"
             >
-              <span className="truncate text-right">
-                {selectedTemplate?.name ?? "None"}
+              <span className="truncate text-end">
+                {selectedTemplate?.name ?? tl("None")}
               </span>
               <ChevronDown className="size-4 shrink-0 text-muted-foreground/70" />
             </Button>
@@ -94,7 +97,7 @@ export function CreateProjectFormSettings({
               value={templateId || NO_TEMPLATE_VALUE}
             >
               <DropdownMenuRadioItem value={NO_TEMPLATE_VALUE}>
-                None
+                {tl("None")}
               </DropdownMenuRadioItem>
               {templates.map((template) => (
                 <DropdownMenuRadioItem key={template.id} value={template.id}>
@@ -105,7 +108,7 @@ export function CreateProjectFormSettings({
             <DropdownMenuSeparator />
             <DropdownMenuItem onSelect={() => setIsCreateTemplateOpen(true)}>
               <Plus className="size-4" />
-              Create new channel template…
+              {tl("Create new channel template…")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -119,23 +122,23 @@ export function CreateProjectFormSettings({
 
       <div className={cn(SETTINGS_ROW_CLASS, teamDisabled && "opacity-50")}>
         <span className="text-sm font-medium text-foreground">
-          Team
-          <span className="ml-1 text-xs font-normal text-muted-foreground/50">
-            Optional
+          {tl("Team")}
+          <span className="ms-1 text-xs font-normal text-muted-foreground/50">
+            {tl("Optional")}
           </span>
         </span>
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button
-              aria-label={`Team: ${selectedTeam?.name ?? "None"}`}
-              className="-mr-2.5 ml-auto h-9 min-w-0 max-w-[60%] justify-end px-2.5 text-right text-sm font-medium text-foreground hover:bg-muted/50"
+              aria-label={tlt("Team: {0}", [selectedTeam?.name ?? "None"])}
+              className="-me-2.5 ms-auto h-9 min-w-0 max-w-[60%] justify-end px-2.5 text-end text-sm font-medium text-foreground hover:bg-muted/50"
               data-testid="create-project-team"
               disabled={teamDisabled}
               type="button"
               variant="ghost"
             >
-              <span className="truncate text-right">
-                {selectedTeam?.name ?? "None"}
+              <span className="truncate text-end">
+                {selectedTeam?.name ?? tl("None")}
               </span>
               <ChevronDown className="size-4 shrink-0 text-muted-foreground/70" />
             </Button>
@@ -148,7 +151,7 @@ export function CreateProjectFormSettings({
               value={teamId || NONE_TEAM_VALUE}
             >
               <DropdownMenuRadioItem value={NONE_TEAM_VALUE}>
-                None
+                {tl("None")}
               </DropdownMenuRadioItem>
               {teams.map((team) => (
                 <DropdownMenuRadioItem key={team.id} value={team.id}>
@@ -162,19 +165,19 @@ export function CreateProjectFormSettings({
 
       <div className={cn(SETTINGS_ROW_CLASS, disabled && "opacity-50")}>
         <span className="text-sm font-medium text-foreground">
-          Project list
+          {tl("Project list")}
         </span>
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button
-              aria-label={`Project list: ${listingLabel}`}
-              className="-mr-2.5 ml-auto h-9 w-fit justify-end px-2.5 text-right text-sm font-medium text-foreground hover:bg-muted/50"
+              aria-label={tlt("Project list: {0}", [listingLabel])}
+              className="-me-2.5 ms-auto h-9 w-fit justify-end px-2.5 text-end text-sm font-medium text-foreground hover:bg-muted/50"
               data-testid="create-project-listing"
               disabled={disabled}
               type="button"
               variant="ghost"
             >
-              <span className="text-right">{listingLabel}</span>
+              <span className="text-end">{listingLabel}</span>
               <ChevronDown className="size-4 shrink-0 text-muted-foreground/70" />
             </Button>
           </DropdownMenuTrigger>
@@ -197,13 +200,13 @@ export function CreateProjectFormSettings({
                 data-testid="create-project-listing-option-listed"
                 value="listed"
               >
-                Listed
+                {tl("Listed")}
               </DropdownMenuRadioItem>
               <DropdownMenuRadioItem
                 data-testid="create-project-listing-option-unlisted"
                 value="unlisted"
               >
-                Unlisted
+                {tl("Unlisted")}
               </DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
           </DropdownMenuContent>
@@ -212,19 +215,19 @@ export function CreateProjectFormSettings({
 
       <div className={cn(SETTINGS_ROW_CLASS, agentDisabled && "opacity-50")}>
         <span className="text-sm font-medium text-foreground">
-          Coding agent
+          {tl("Coding agent")}
         </span>
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button
-              aria-label={`Coding agent: ${agentLabel}`}
-              className="-mr-2.5 ml-auto h-9 min-w-0 max-w-[60%] justify-end px-2.5 text-right text-sm font-medium text-foreground hover:bg-muted/50"
+              aria-label={tlt("Coding agent: {0}", [agentLabel])}
+              className="-me-2.5 ms-auto h-9 min-w-0 max-w-[60%] justify-end px-2.5 text-end text-sm font-medium text-foreground hover:bg-muted/50"
               data-testid="create-project-agent"
               disabled={agentDisabled}
               type="button"
               variant="ghost"
             >
-              <span className="truncate text-right">{agentLabel}</span>
+              <span className="truncate text-end">{agentLabel}</span>
               <ChevronDown className="size-4 shrink-0 text-muted-foreground/70" />
             </Button>
           </DropdownMenuTrigger>
@@ -245,7 +248,7 @@ export function CreateProjectFormSettings({
                 data-testid="create-project-agent-option-none"
                 value={NONE_AGENT_VALUE}
               >
-                None
+                {tl("None")}
               </DropdownMenuRadioItem>
               {personas.map((persona) => (
                 <DropdownMenuRadioItem

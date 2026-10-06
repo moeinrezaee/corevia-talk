@@ -1,4 +1,5 @@
 import { cn } from "@/shared/lib/cn";
+import { tl } from "@/shared/i18n/tl";
 
 export function AgentDefinitionMetadata({
   className,
@@ -15,19 +16,24 @@ export function AgentDefinitionMetadata({
 }) {
   const items = [
     {
-      label: "Type",
+      label: tl("Type"),
       value: isBuiltIn ? "Built-in agent" : "Custom agent",
     },
     {
-      label: "Preferred model",
+      label: tl("Preferred model"),
       value: model ?? "Use app default",
     },
     {
-      label: "Preferred runtime",
+      label: tl("Preferred runtime"),
       value: runtime ?? "Use app default",
     },
     ...(provider !== undefined
-      ? [{ label: "Preferred provider", value: provider ?? "Use app default" }]
+      ? [
+          {
+            label: tl("Preferred provider"),
+            value: provider ?? "Use app default",
+          },
+        ]
       : []),
   ];
 
@@ -47,7 +53,7 @@ export function AgentDefinitionMetadata({
             className={cn(
               "relative px-4 py-3",
               index > 0 &&
-                "border-t border-border/60 sm:border-t-0 sm:before:absolute sm:before:bottom-3 sm:before:left-0 sm:before:top-3 sm:before:w-px sm:before:bg-border/70",
+                "border-t border-border/60 sm:border-t-0 sm:before:absolute sm:before:bottom-3 sm:before:start-0 sm:before:top-3 sm:before:w-px sm:before:bg-border/70",
             )}
             key={item.label}
           >

@@ -35,6 +35,7 @@ import { PROJECT_DETAIL_PANEL_CLASS } from "./projectPanelStyles";
 import { ProfileIdentityButton } from "./ProjectProfileIdentity";
 import { ProjectWorkItemRow } from "./ProjectWorkItemRow";
 import { ProjectPanelState } from "./ProjectPanelState";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 function pluralize(count: number, singular: string, plural = `${singular}s`) {
   return `${count} ${count === 1 ? singular : plural}`;
@@ -152,8 +153,10 @@ export function ContributorsPanel({
   if (rows.length === 0) {
     return (
       <ProjectPanelState
-        description="Contributors appear after signed project or repository activity."
-        title="No contributors yet"
+        description={tl(
+          "Contributors appear after signed project or repository activity.",
+        )}
+        title={tl("No contributors yet")}
       />
     );
   }
@@ -198,7 +201,7 @@ export function ContributorsPanel({
             data-testid="project-contributor-commit-count"
             title={
               row.commitCount === null
-                ? "No git commits"
+                ? tl("No git commits")
                 : pluralize(row.commitCount, "commit")
             }
           >
@@ -210,7 +213,7 @@ export function ContributorsPanel({
             data-testid="project-contributor-review-count"
             title={
               row.reviewCount === null
-                ? "No linked reviews"
+                ? tl("No linked reviews")
                 : pluralize(row.reviewCount, "review")
             }
           >
@@ -222,7 +225,7 @@ export function ContributorsPanel({
             data-testid="project-contributor-task-count"
             title={
               row.taskCount === null
-                ? "No linked tasks"
+                ? tl("No linked tasks")
                 : pluralize(row.taskCount, "task")
             }
           >
@@ -301,7 +304,7 @@ export function ActivityPanel({
   });
 
   if (isLoading) {
-    return <BuzzLoadingState label="Loading activity" />;
+    return <BuzzLoadingState label={tl("Loading activity")} />;
   }
 
   if (items.length === 0) {
@@ -309,13 +312,15 @@ export function ActivityPanel({
       <ProjectPanelState
         description={
           error
-            ? "Refresh the repository and try again."
+            ? tl("Refresh the repository and try again.")
             : commitItems
-              ? "Commits pushed to this project's repositories will appear here."
-              : "Commits pushed to this repository will appear here."
+              ? tl(
+                  "Commits pushed to this project's repositories will appear here.",
+                )
+              : tl("Commits pushed to this repository will appear here.")
         }
         error={Boolean(error)}
-        title={error ? "Could not load commits" : "No commits yet"}
+        title={error ? tl("Could not load commits") : tl("No commits yet")}
       />
     );
   }
@@ -397,14 +402,15 @@ export function ActivityPanel({
                   <span
                     className="flex h-5 w-5 shrink-0 items-center justify-center"
                     data-testid="project-commit-author"
-                    title={`Committed by ${authorLabel}${
+                    title={tlt("Committed by {0}{1}", [
+                      authorLabel,
                       matchingContributor?.commitCount
                         ? ` · ${pluralize(
                             matchingContributor.commitCount,
                             "commit",
                           )}`
-                        : ""
-                    }`}
+                        : "",
+                    ])}
                   >
                     <ProfileIdentityButton
                       avatarClassName="shrink-0"
@@ -421,7 +427,7 @@ export function ActivityPanel({
                     hash={item.commit.hash}
                   />
                   <span
-                    className="hidden w-20 shrink-0 whitespace-nowrap text-right text-xs text-muted-foreground/55 sm:block"
+                    className="hidden w-20 shrink-0 whitespace-nowrap text-end text-xs text-muted-foreground/55 sm:block"
                     data-testid="project-commit-row-date"
                     title={new Date(
                       item.commit.timestamp * 1_000,

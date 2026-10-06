@@ -1,4 +1,5 @@
 import { Button } from "@/shared/ui/button";
+import { tl } from "@/shared/i18n/tl";
 
 type AgentDefinitionDialogFooterProps = {
   canSubmit: boolean;
@@ -25,8 +26,9 @@ export function AgentDefinitionDialogFooter({
             className="max-w-sm text-xs text-muted-foreground"
             data-testid="persona-dialog-catalog-publish-notice"
           >
-            This agent is in the community catalog. Your changes will be
-            published when you save.
+            {tl(
+              "This agent is in the community catalog. Your changes will be published when you save.",
+            )}
           </p>
         ) : null}
       </div>
@@ -38,7 +40,7 @@ export function AgentDefinitionDialogFooter({
           type="button"
           variant="outline"
         >
-          Cancel
+          {tl("Cancel")}
         </Button>
         <Button
           data-testid="persona-dialog-submit"
@@ -47,11 +49,11 @@ export function AgentDefinitionDialogFooter({
           type="submit"
         >
           {isPending
-            ? "Saving..."
+            ? tl("Saving...")
             : isAvatarUploadPending
-              ? "Uploading..."
+              ? tl("Uploading...")
               : publishesCatalogUpdates
-                ? "Save and publish"
+                ? tl("Save and publish")
                 : submitLabel}
         </Button>
       </div>

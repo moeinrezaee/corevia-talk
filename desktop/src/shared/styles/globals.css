@@ -18,6 +18,8 @@
 @import "./globals/image-lightbox.css";
 @import "./globals/video-review.css";
 @import "./globals/progress.css";
+@import "./globals/fonts-fa.css";
+@import "./globals/rtl.css";
 
 @config "../../../tailwind.config.js";
 

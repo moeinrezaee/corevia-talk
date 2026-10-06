@@ -9,6 +9,7 @@ import {
   KIND_STREAM_MESSAGE_DIFF,
   KIND_SYSTEM_MESSAGE,
 } from "@/shared/constants/kinds";
+import { tl } from "@/shared/i18n/tl";
 
 // ── Kind groups (derived from shared constants — never raw literals) ──────────
 
@@ -25,35 +26,38 @@ export type KindGroup = {
  */
 export const KIND_GROUPS: ReadonlyArray<KindGroup> = [
   {
-    label: "Messages & posts",
+    label: tl("Messages & posts"),
     items: [
       ...CHANNEL_MESSAGE_EVENT_KINDS.map((k) => ({
         kind: k,
         label: kindLabel(k),
       })),
-      { kind: KIND_STREAM_MESSAGE_DIFF, label: "Message diffs (kind 40008)" },
+      {
+        kind: KIND_STREAM_MESSAGE_DIFF,
+        label: tl("Message diffs (kind 40008)"),
+      },
     ],
   },
   {
-    label: "Reactions, edits & deletions",
+    label: tl("Reactions, edits & deletions"),
     items: CHANNEL_AUX_EVENT_KINDS.map((k) => ({
       kind: k,
       label: kindLabel(k),
     })),
   },
   {
-    label: "Huddle events",
+    label: tl("Huddle events"),
     items: [
-      { kind: KIND_HUDDLE_STARTED, label: "Huddle started" },
-      { kind: KIND_HUDDLE_PARTICIPANT_JOINED, label: "Participant joined" },
-      { kind: KIND_HUDDLE_PARTICIPANT_LEFT, label: "Participant left" },
-      { kind: KIND_HUDDLE_ENDED, label: "Huddle ended" },
+      { kind: KIND_HUDDLE_STARTED, label: tl("Huddle started") },
+      { kind: KIND_HUDDLE_PARTICIPANT_JOINED, label: tl("Participant joined") },
+      { kind: KIND_HUDDLE_PARTICIPANT_LEFT, label: tl("Participant left") },
+      { kind: KIND_HUDDLE_ENDED, label: tl("Huddle ended") },
     ],
   },
   {
-    label: "System messages",
+    label: tl("System messages"),
     items: [
-      { kind: KIND_SYSTEM_MESSAGE, label: "System messages (kind 40099)" },
+      { kind: KIND_SYSTEM_MESSAGE, label: tl("System messages (kind 40099)") },
     ],
   },
 ] as const;

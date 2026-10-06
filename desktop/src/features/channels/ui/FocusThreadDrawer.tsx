@@ -7,6 +7,7 @@ import {
 } from "@/features/channels/lib/threadFocusLayout";
 import { getThreadViewMode } from "@/features/channels/lib/threadViewModePreference";
 import { cn } from "@/shared/lib/cn";
+import { tlt } from "@/shared/i18n/tl";
 
 type FocusThreadDrawerProps = {
   channelName: string;
@@ -256,7 +257,7 @@ export function FocusThreadDrawer({
     >
       <motion.button
         animate={{ opacity: 1 }}
-        aria-label={`Back to #${channelName}`}
+        aria-label={tlt("Back to #{0}", [channelName])}
         className={cn(
           "absolute inset-0 cursor-pointer transition-colors duration-150",
           FOCUS_SCRIM_CLASS,
@@ -288,7 +289,7 @@ export function FocusThreadDrawer({
           // share a radius — a smaller one here would put two radii on one
           // element. `shadow-panel-left` draws the left edge and its corners;
           // see the token for why a `border-l` cannot.
-          "absolute inset-y-0 right-0 flex flex-col overflow-hidden rounded-l-2xl bg-background shadow-panel-left outline-hidden",
+          "absolute inset-y-0 end-0 flex flex-col overflow-hidden rounded-s-2xl bg-background shadow-panel-left outline-hidden",
         )}
         aria-label={label}
         data-testid="focus-thread-drawer"

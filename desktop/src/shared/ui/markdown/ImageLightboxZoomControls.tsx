@@ -6,6 +6,7 @@ import {
   IMAGE_LIGHTBOX_MIN_ZOOM,
   IMAGE_LIGHTBOX_ZOOM_STEP,
 } from "./imageLightbox";
+import { tl } from "@/shared/i18n/tl";
 
 type ImageLightboxZoomControlsProps = {
   markControlGesture: () => void;
@@ -34,7 +35,7 @@ export function ImageLightboxZoomControls({
   return (
     <>
       <button
-        aria-label="Zoom out"
+        aria-label={tl("Zoom out")}
         className={ZOOM_BUTTON_CLASS_NAME}
         disabled={zoom <= IMAGE_LIGHTBOX_MIN_ZOOM}
         type="button"
@@ -47,7 +48,7 @@ export function ImageLightboxZoomControls({
         <ZoomOut aria-hidden="true" className="h-4 w-4 opacity-80" />
       </button>
       <input
-        aria-label="Image zoom"
+        aria-label={tl("Image zoom")}
         className="image-zoom-slider h-3 w-32 cursor-pointer sm:w-44"
         max={IMAGE_LIGHTBOX_MAX_ZOOM}
         min={IMAGE_LIGHTBOX_MIN_ZOOM}
@@ -71,7 +72,7 @@ export function ImageLightboxZoomControls({
         }}
       />
       <button
-        aria-label="Zoom in"
+        aria-label={tl("Zoom in")}
         className={ZOOM_BUTTON_CLASS_NAME}
         disabled={zoom >= IMAGE_LIGHTBOX_MAX_ZOOM}
         type="button"
@@ -83,7 +84,7 @@ export function ImageLightboxZoomControls({
       >
         <ZoomIn aria-hidden="true" className="h-4 w-4 opacity-80" />
       </button>
-      <span className="min-w-10 text-right text-xs font-medium tabular-nums text-muted-foreground">
+      <span className="min-w-10 text-end text-xs font-medium tabular-nums text-muted-foreground">
         {Math.round(zoom * 100)}%
       </span>
     </>

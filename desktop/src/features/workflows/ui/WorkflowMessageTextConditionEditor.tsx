@@ -23,6 +23,7 @@ import {
   parseMessageTextCondition,
 } from "./workflowMessageTextCondition";
 import type { MessageTextCondition } from "./workflowMessageTextCondition";
+import { tl } from "@/shared/i18n/tl";
 
 const DEFAULT_CONDITION: MessageTextCondition = {
   operator: "contains",
@@ -117,14 +118,14 @@ export function WorkflowMessageTextCondition({
       >
         {allowAdvanced ? (
           <TabsList
-            aria-label="Condition editor mode"
+            aria-label={tl("Condition editor mode")}
             className="grid h-9 w-full grid-cols-2 p-0.5"
           >
             <TabsTrigger className="h-8" disabled={disabled} value="basic">
-              Basic
+              {tl("Basic")}
             </TabsTrigger>
             <TabsTrigger className="h-8" disabled={disabled} value="advanced">
-              Advanced
+              {tl("Advanced")}
             </TabsTrigger>
           </TabsList>
         ) : null}
@@ -133,25 +134,26 @@ export function WorkflowMessageTextCondition({
           <div>
             {hasUnsupportedExpression ? (
               <p className="border-b border-border/50 pb-3 text-xs text-muted-foreground">
-                An advanced expression is active. Choosing a basic filter will
-                replace it.
+                {tl(
+                  "An advanced expression is active. Choosing a basic filter will replace it.",
+                )}
               </p>
             ) : null}
             <div className="divide-y divide-border/50">
               <div className={cn(expanded && "pb-4 last:pb-0")}>
                 <button
                   aria-expanded={expanded}
-                  className="flex min-h-12 w-full items-center gap-3 py-3 text-left transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex min-h-12 w-full items-center gap-3 py-3 text-start transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                   disabled={disabled}
                   onClick={openBasicEditor}
                   type="button"
                 >
                   <span className="min-w-0 flex-1 truncate text-base font-medium">
-                    Message text
+                    {tl("Message text")}
                   </span>
                   <span className="max-w-40 truncate text-sm text-muted-foreground">
                     {hasUnsupportedExpression
-                      ? "Any"
+                      ? tl("Any")
                       : conditionSummary(condition)}
                   </span>
                   <ChevronRight
@@ -165,7 +167,7 @@ export function WorkflowMessageTextCondition({
                 {expanded && !hasUnsupportedExpression ? (
                   <div className="animate-in space-y-4 pt-1 fade-in slide-in-from-top-1 duration-150 motion-reduce:animate-none">
                     <fieldset>
-                      <legend className="sr-only">Match</legend>
+                      <legend className="sr-only">{tl("Match")}</legend>
                       <div className="grid grid-cols-2 gap-2.5">
                         {MESSAGE_TEXT_CONDITION_OPERATORS.map((operator) => {
                           const id = `wf-trigger-filter-trigger-text-operator-${operator}`;
@@ -207,7 +209,7 @@ export function WorkflowMessageTextCondition({
 
                     {messageTextConditionNeedsValue(condition.operator) ? (
                       <Input
-                        aria-label="Text to match"
+                        aria-label={tl("Text to match")}
                         autoCapitalize="off"
                         autoCorrect="off"
                         disabled={disabled}
@@ -218,7 +220,7 @@ export function WorkflowMessageTextCondition({
                             value: event.target.value,
                           })
                         }
-                        placeholder="e.g. deploy"
+                        placeholder={tl("e.g. deploy")}
                         value={condition.value}
                       />
                     ) : null}
@@ -230,7 +232,7 @@ export function WorkflowMessageTextCondition({
         ) : (
           <div className="animate-in space-y-2 fade-in duration-150 motion-reduce:animate-none">
             <Input
-              aria-label="Advanced expression"
+              aria-label={tl("Advanced expression")}
               autoCapitalize="off"
               autoCorrect="off"
               disabled={disabled}
@@ -240,11 +242,11 @@ export function WorkflowMessageTextCondition({
                 setAdvancedDraft(expression);
                 emit(expression.trim());
               }}
-              placeholder='e.g. str_contains(trigger_text, "deploy")'
+              placeholder={tl('e.g. str_contains(trigger_text, "deploy")')}
               value={advancedDraft}
             />
             <p className="text-xs text-muted-foreground">
-              Use an evalexpr expression with <code>trigger_text</code>.
+              {tl("Use an evalexpr expression with")} <code>trigger_text</code>.
             </p>
           </div>
         )}
@@ -256,16 +258,19 @@ export function WorkflowMessageTextCondition({
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Replace advanced expression?</AlertDialogTitle>
+            <AlertDialogTitle>
+              {tl("Replace advanced expression?")}
+            </AlertDialogTitle>
             <AlertDialogDescription>
-              Choosing a basic filter will replace the entire advanced
-              expression. This cannot be undone.
+              {tl(
+                "Choosing a basic filter will replace the entire advanced expression. This cannot be undone.",
+              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel asChild>
               <Button type="button" variant="outline">
-                Keep advanced expression
+                {tl("Keep advanced expression")}
               </Button>
             </AlertDialogCancel>
             <AlertDialogAction asChild>
@@ -279,7 +284,7 @@ export function WorkflowMessageTextCondition({
                 type="button"
                 variant="destructive"
               >
-                Replace expression
+                {tl("Replace expression")}
               </Button>
             </AlertDialogAction>
           </AlertDialogFooter>

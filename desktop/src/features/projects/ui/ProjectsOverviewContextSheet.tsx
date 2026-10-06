@@ -3,20 +3,21 @@ import * as React from "react";
 import { Button } from "@/shared/ui/button";
 import { DrawerPanelIcon } from "@/shared/ui/DrawerPanelIcon";
 import { Sheet, SheetContent, SheetTitle } from "@/shared/ui/sheet";
+import { tl } from "@/shared/i18n/tl";
 
 export const ProjectsOverviewNarrowContextToggle = React.forwardRef<
   HTMLButtonElement,
   { onToggle: () => void; open: boolean }
 >(({ onToggle, open }, ref) => (
   <Button
-    aria-label={open ? "Hide project context" : "Show project context"}
+    aria-label={open ? tl("Hide project context") : tl("Show project context")}
     aria-pressed={open}
     className="h-7 w-7 text-sidebar-foreground/65 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
     data-testid="projects-overview-context-toggle"
     onClick={onToggle}
     ref={ref}
     size="icon"
-    title={open ? "Hide project context" : "Show project context"}
+    title={open ? tl("Hide project context") : tl("Show project context")}
     type="button"
     variant="ghost"
   >
@@ -56,7 +57,7 @@ export function ProjectsOverviewContextSheet({
         onCloseAutoFocus={onCloseAutoFocus}
         side="right"
       >
-        <SheetTitle className="sr-only">Project context</SheetTitle>
+        <SheetTitle className="sr-only">{tl("Project context")}</SheetTitle>
         {children}
       </SheetContent>
     </Sheet>

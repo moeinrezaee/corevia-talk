@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { useCommunities } from "../useCommunities";
 import { CommunityEditForm } from "./CommunityEditForm";
+import { tl } from "@/shared/i18n/tl";
 
 type CommunityChangeOverlayProps = {
   onClose: () => void;
@@ -76,10 +77,10 @@ export function CommunityChangeOverlay({
       <div aria-hidden="true" className="absolute inset-0" onClick={onClose} />
       <div className="relative z-10 w-full max-w-md rounded-2xl border border-border bg-background p-8 shadow-2xl">
         <h2 className="text-xl font-semibold tracking-tight">
-          Change community
+          {tl("Change community")}
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Update your community name or relay URL.
+          {tl("Update your community name or relay URL.")}
         </p>
         <div className="mt-6">
           <CommunityEditForm

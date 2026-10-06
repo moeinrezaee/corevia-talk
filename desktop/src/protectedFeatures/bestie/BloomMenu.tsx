@@ -229,12 +229,12 @@ function Container({
               data-bestie-drag-handle
             />
             <div
-              className="pointer-events-auto absolute inset-y-2 left-0 w-2 touch-none cursor-grab active:cursor-grabbing"
+              className="pointer-events-auto absolute inset-y-2 start-0 w-2 touch-none cursor-grab active:cursor-grabbing"
               data-bestie-drag-edge="left"
               data-bestie-drag-handle
             />
             <div
-              className="pointer-events-auto absolute inset-y-2 right-0 w-2 touch-none cursor-grab active:cursor-grabbing"
+              className="pointer-events-auto absolute inset-y-2 end-0 w-2 touch-none cursor-grab active:cursor-grabbing"
               data-bestie-drag-edge="right"
               data-bestie-drag-handle
             />

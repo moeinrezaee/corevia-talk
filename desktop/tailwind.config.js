@@ -78,13 +78,9 @@ export default {
         "conversation-row": "var(--conversation-row-padding-block)",
       },
       fontFamily: {
-        sans: [
-          '"Inter Variable"',
-          "Inter",
-          '"Avenir Next"',
-          '"Segoe UI"',
-          "sans-serif",
-        ],
+        // The stack lives in `--buzz-font-sans` (theme.css) so Persian can put
+        // its own font first and render digits as Persian numerals.
+        sans: ["var(--buzz-font-sans)"],
       },
       colors: {
         background: "hsl(var(--background))",

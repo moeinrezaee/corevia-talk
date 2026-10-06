@@ -7,6 +7,7 @@ import {
   openProjectRepositoryFolder,
 } from "@/shared/api/projectGit";
 import { useOpenProjectTerminal } from "./useOpenProjectTerminal";
+import { tl } from "@/shared/i18n/tl";
 
 type MergeRecoveryInput = {
   expectedCommit: string;
@@ -40,8 +41,10 @@ export function useProjectRepositoryOpenActions({
   const handleOpenLocalRepository = React.useCallback(async () => {
     const cloneUrl = repository?.cloneUrls[0];
     if (!localRepositoryPath || !repository || !cloneUrl) {
-      toast.error("Couldn’t open repository folder", {
-        description: "Buzz could not find this repository’s local checkout.",
+      toast.error(tl("Couldn’t open repository folder"), {
+        description: tl(
+          "Buzz could not find this repository’s local checkout.",
+        ),
       });
       return;
     }
@@ -52,8 +55,10 @@ export function useProjectRepositoryOpenActions({
         reposDir,
       });
     } catch {
-      toast.error("Couldn’t open repository folder", {
-        description: "Buzz could not open this checkout in your file browser.",
+      toast.error(tl("Couldn’t open repository folder"), {
+        description: tl(
+          "Buzz could not open this checkout in your file browser.",
+        ),
       });
     }
   }, [localRepositoryPath, repository, reposDir]);

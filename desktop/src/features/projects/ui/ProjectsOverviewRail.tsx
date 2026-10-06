@@ -8,6 +8,7 @@ import { cn } from "@/shared/lib/cn";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { tlt } from "@/shared/i18n/tl";
 
 /** Matches Tailwind `-space-x-1.5` so stacked rows stay zoom-safe. */
 const STACK_OVERLAP_REM = 0.375;
@@ -173,7 +174,7 @@ export function ProjectsOverviewPeople({
                 <TooltipContent>
                   {remainingLabels.length === 1
                     ? remainingLabels[0]
-                    : `${remaining} more`}
+                    : tlt("{0} more", [remaining])}
                 </TooltipContent>
               </Tooltip>
             ) : null}

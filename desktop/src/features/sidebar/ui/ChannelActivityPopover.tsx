@@ -23,6 +23,7 @@ import {
   PopoverContent,
 } from "@/shared/ui/popover";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const HOVER_CLOSE_DELAY_MS = 180;
 const ACTIVITY_POPOVER_MOTION_STYLE = {
@@ -96,8 +97,8 @@ function ThreadPreviewRow({
       data-testid={`channel-activity-item-${item.conversationId}`}
     >
       <button
-        aria-label={`Open thread from ${item.senderLabel}`}
-        className="absolute inset-0 z-0 w-full text-left"
+        aria-label={tlt("Open thread from {0}", [item.senderLabel])}
+        className="absolute inset-0 z-0 w-full text-start"
         onClick={onOpen}
         type="button"
       />
@@ -119,11 +120,13 @@ function ThreadPreviewRow({
             </span>
           </div>
           <div className="mt-0.5 flex items-center gap-1.5 text-xs leading-4 text-muted-foreground">
-            <span>Thread</span>
+            <span>{tl("Thread")}</span>
             {item.unreadCount > 1 ? (
               <>
                 <span aria-hidden="true">·</span>
-                <span>{item.unreadCount} unread</span>
+                <span>
+                  {item.unreadCount} {tl("unread")}
+                </span>
               </>
             ) : null}
           </div>
@@ -135,11 +138,11 @@ function ThreadPreviewRow({
           />
         </div>
       </div>
-      <div className="pointer-events-none absolute right-2 top-2 z-20 flex items-center gap-0.5 rounded-full bg-muted/95 p-0.5 opacity-0 shadow-xs transition-opacity group-hover/activity-row:pointer-events-auto group-hover/activity-row:opacity-100 group-focus-within/activity-row:pointer-events-auto group-focus-within/activity-row:opacity-100">
-        <RowActionButton label="Mark as read" onClick={onMarkRead}>
+      <div className="pointer-events-none absolute end-2 top-2 z-20 flex items-center gap-0.5 rounded-full bg-muted/95 p-0.5 opacity-0 shadow-xs transition-opacity group-hover/activity-row:pointer-events-auto group-hover/activity-row:opacity-100 group-focus-within/activity-row:pointer-events-auto group-focus-within/activity-row:opacity-100">
+        <RowActionButton label={tl("Mark as read")} onClick={onMarkRead}>
           <MailOpen />
         </RowActionButton>
-        <RowActionButton label="Remind me later" onClick={onRemindLater}>
+        <RowActionButton label={tl("Remind me later")} onClick={onRemindLater}>
           <Clock />
         </RowActionButton>
       </div>
@@ -165,7 +168,7 @@ function WorkingAgentRow({
 }) {
   return (
     <button
-      className="flex w-full min-w-0 items-start gap-2.5 border-t border-border/50 px-3 py-3 text-left transition-colors first:border-t-0 hover:bg-muted/50 focus-visible:bg-muted/50 focus-visible:outline-hidden"
+      className="flex w-full min-w-0 items-start gap-2.5 border-t border-border/50 px-3 py-3 text-start transition-colors first:border-t-0 hover:bg-muted/50 focus-visible:bg-muted/50 focus-visible:outline-hidden"
       data-testid={`channel-activity-agent-${pubkey}`}
       onClick={onOpen}
       type="button"
@@ -189,7 +192,7 @@ function WorkingAgentRow({
         </div>
         <span className="mt-0.5 flex items-center gap-1.5 text-xs leading-4 text-muted-foreground">
           <Loader2 className="h-3.5 w-3.5 animate-spin text-primary/70" />
-          Working
+          {tl("Working")}
         </span>
       </div>
     </button>
@@ -411,14 +414,14 @@ export function ChannelActivityPopover({
         style={ACTIVITY_POPOVER_MOTION_STYLE}
       >
         <section
-          aria-label="Channel activity"
+          aria-label={tl("Channel activity")}
           className="flex max-h-96 min-h-0 flex-col overflow-hidden"
         >
           <h3
             className="relative z-20 shrink-0 border-b border-border/70 bg-background/95 px-3 py-2 text-sm font-semibold text-foreground backdrop-blur-md supports-[backdrop-filter]:bg-background/90"
             data-testid="channel-activity-header"
           >
-            Channel activity
+            {tl("Channel activity")}
           </h3>
           <div
             className="buzz-channel-activity-scrollbar min-h-0 overflow-y-auto overscroll-contain"

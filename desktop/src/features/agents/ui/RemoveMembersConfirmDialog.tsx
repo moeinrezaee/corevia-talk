@@ -7,6 +7,7 @@ import {
   AlertDialogTitle,
 } from "@/shared/ui/alert-dialog";
 import { Button } from "@/shared/ui/button";
+import { tl } from "@/shared/i18n/tl";
 
 type RemoveMembersConfirmDialogProps = {
   open: boolean;
@@ -33,11 +34,15 @@ export function RemoveMembersConfirmDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Remove {count} member{plural ? "s" : ""}?
+            {tl("Remove")} {count} {tl("member")}
+            {plural ? "s" : ""}?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            {memberNames.join(", ")} will be removed from this team. Do you also
-            want to remove the {plural ? "agents" : "agent"} completely?
+            {memberNames.join(", ")}{" "}
+            {tl(
+              "will be removed from this team. Do you also want to remove the",
+            )}{" "}
+            {plural ? "agents" : "agent"} {tl("completely?")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -47,7 +52,7 @@ export function RemoveMembersConfirmDialog({
             type="button"
             variant="outline"
           >
-            Cancel
+            {tl("Cancel")}
           </Button>
           <Button
             disabled={isPending}
@@ -56,7 +61,7 @@ export function RemoveMembersConfirmDialog({
             type="button"
             variant="outline"
           >
-            Keep {plural ? "agents" : "agent"}
+            {tl("Keep")} {plural ? "agents" : "agent"}
           </Button>
           <Button
             disabled={isPending}
@@ -65,7 +70,7 @@ export function RemoveMembersConfirmDialog({
             type="button"
             variant="destructive"
           >
-            Remove {plural ? "agents" : "agent"}
+            {tl("Remove")} {plural ? "agents" : "agent"}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

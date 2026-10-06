@@ -15,6 +15,7 @@ import {
 } from "@/shared/ui/dialog";
 import { useEmojiBurst } from "@/shared/ui/EmojiBurstProvider";
 import { Textarea } from "@/shared/ui/textarea";
+import { tl } from "@/shared/i18n/tl";
 
 /** A random heart emoji so repeated bursts vary a little. */
 const HEART_BURST_EMOJIS = ["❤️", "🩷", "🧡", "💛", "💚", "💙", "💜", "💖"];
@@ -33,9 +34,9 @@ type FeedbackCategory = {
 };
 
 const FEEDBACK_CATEGORIES: readonly FeedbackCategory[] = [
-  { id: "bug", label: "Bug", icon: Bug },
-  { id: "praise", label: "Praise", icon: ThumbsUp, positive: true },
-  { id: "needs-work", label: "Needs work", icon: Wrench },
+  { id: "bug", label: tl("Bug"), icon: Bug },
+  { id: "praise", label: tl("Praise"), icon: ThumbsUp, positive: true },
+  { id: "needs-work", label: tl("Needs work"), icon: Wrench },
 ];
 
 /** Single source of truth for category id → user-facing label. */
@@ -157,18 +158,19 @@ export function SendFeedbackDialog({
       >
         <DialogHeader className="space-y-0 pb-5">
           <div className="flex items-center justify-between gap-4">
-            <DialogTitle>Send feedback</DialogTitle>
+            <DialogTitle>{tl("Send feedback")}</DialogTitle>
             <DialogClose className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors duration-150 ease-out hover:bg-accent hover:text-accent-foreground focus:outline-hidden focus:ring-1 focus:ring-ring">
               <X className="h-4 w-4" />
-              <span className="sr-only">Close</span>
+              <span className="sr-only">{tl("Close")}</span>
             </DialogClose>
           </div>
           <p
             className="pt-2 text-sm text-muted-foreground"
             data-testid="feedback-privacy-disclosure"
           >
-            Feedback is sent privately to this Buzz deployment and is not posted
-            to a channel. Attachments are uploaded before you send.
+            {tl(
+              "Feedback is sent privately to this Buzz deployment and is not posted to a channel. Attachments are uploaded before you send.",
+            )}
           </p>
         </DialogHeader>
 
@@ -195,7 +197,7 @@ export function SendFeedbackDialog({
                   aria-label={entry.label}
                   aria-pressed={selected}
                   className={cn(
-                    "group/feedback-pill inline-flex items-center gap-2 rounded-full border py-1 pl-1 pr-3 text-xs transition-colors duration-150 ease-out focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-60",
+                    "group/feedback-pill inline-flex items-center gap-2 rounded-full border py-1 ps-1 pe-3 text-xs transition-colors duration-150 ease-out focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-60",
                     selected
                       ? "border-primary/60 bg-primary/10 text-foreground"
                       : "border-border/80 bg-background/80 text-foreground hover:bg-muted/50",
@@ -239,21 +241,23 @@ export function SendFeedbackDialog({
                 setMessage(event.target.value);
                 setErrorMessage(null);
               }}
-              placeholder="Tell us what went wrong, or share general feedback."
+              placeholder={tl(
+                "Tell us what went wrong, or share general feedback.",
+              )}
               value={message}
             />
 
             {resolvedAttachedImageUrl ? (
               <div className="group/attachment relative flex w-32 shrink-0 flex-col overflow-hidden rounded-lg border border-border/70 bg-muted/40">
                 <button
-                  aria-label="View attached image"
-                  className="flex flex-1 flex-col text-left focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
+                  aria-label={tl("View attached image")}
+                  className="flex flex-1 flex-col text-start focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
                   data-testid="feedback-attachment-thumb"
                   onClick={() => setPreviewOpen(true)}
                   type="button"
                 >
                   <img
-                    alt="Attached"
+                    alt={tl("Attached")}
                     className="h-20 w-full object-cover"
                     src={resolvedAttachedImageUrl}
                   />
@@ -262,12 +266,12 @@ export function SendFeedbackDialog({
                       aria-hidden="true"
                       className="h-3 w-3 shrink-0"
                     />
-                    <span className="truncate">Attached image</span>
+                    <span className="truncate">{tl("Attached image")}</span>
                   </span>
                 </button>
                 <button
-                  aria-label="Remove attachment"
-                  className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-background/90 text-muted-foreground opacity-0 shadow transition-opacity duration-150 ease-out hover:text-foreground focus-visible:opacity-100 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring group-hover/attachment:opacity-100"
+                  aria-label={tl("Remove attachment")}
+                  className="absolute end-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-background/90 text-muted-foreground opacity-0 shadow transition-opacity duration-150 ease-out hover:text-foreground focus-visible:opacity-100 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring group-hover/attachment:opacity-100"
                   data-testid="feedback-attachment-remove"
                   disabled={isPending}
                   onClick={onRemoveImage}
@@ -278,7 +282,7 @@ export function SendFeedbackDialog({
               </div>
             ) : (
               <button
-                aria-label="Attach image"
+                aria-label={tl("Attach image")}
                 className="flex w-32 shrink-0 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-border/70 bg-muted/20 p-3 text-center text-2xs font-medium text-muted-foreground transition-colors duration-150 ease-out hover:border-muted-foreground/50 hover:text-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-60"
                 data-testid="feedback-attach-image"
                 disabled={isPending || isAttaching}
@@ -286,7 +290,7 @@ export function SendFeedbackDialog({
                 type="button"
               >
                 <ImageIcon aria-hidden="true" className="h-5 w-5" />
-                {isAttaching ? "Attaching…" : "Attach image"}
+                {isAttaching ? tl("Attaching…") : tl("Attach image")}
               </button>
             )}
           </div>
@@ -304,11 +308,12 @@ export function SendFeedbackDialog({
                 id="feedback-include-logs"
                 onCheckedChange={(checked) => setIncludeLogs(checked === true)}
               />
-              Attach diagnostics
+              {tl("Attach diagnostics")}
             </label>
-            <p className="pl-6 text-xs text-muted-foreground">
-              Includes capture time, app version, platform, user agent, and
-              language. No application log lines are collected.
+            <p className="ps-6 text-xs text-muted-foreground">
+              {tl(
+                "Includes capture time, app version, platform, user agent, and language. No application log lines are collected.",
+              )}
             </p>
           </div>
 
@@ -322,14 +327,14 @@ export function SendFeedbackDialog({
           ) : null}
 
           <div className="flex items-center gap-3 py-4">
-            <div className="ml-auto flex items-center gap-2">
+            <div className="ms-auto flex items-center gap-2">
               <Button
                 disabled={isPending}
                 onClick={() => onOpenChange(false)}
                 type="button"
                 variant="ghost"
               >
-                Cancel
+                {tl("Cancel")}
               </Button>
               <Button
                 data-testid="feedback-submit"
@@ -338,7 +343,7 @@ export function SendFeedbackDialog({
                 }
                 type="submit"
               >
-                {isPending ? "Sending…" : "Send feedback"}
+                {isPending ? tl("Sending…") : tl("Send feedback")}
               </Button>
             </div>
           </div>
@@ -353,9 +358,11 @@ export function SendFeedbackDialog({
             className="max-w-4xl border-0 p-2"
             data-testid="feedback-attachment-preview"
           >
-            <DialogTitle className="sr-only">Attached image</DialogTitle>
+            <DialogTitle className="sr-only">
+              {tl("Attached image")}
+            </DialogTitle>
             <img
-              alt="Attached"
+              alt={tl("Attached")}
               className="max-h-[80vh] w-full rounded-lg bg-black/40 object-contain"
               src={resolvedAttachedImageUrl}
             />

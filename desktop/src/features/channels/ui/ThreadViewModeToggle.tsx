@@ -6,6 +6,7 @@ import {
 } from "@/features/channels/lib/threadViewModePreference";
 import { Button } from "@/shared/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
+import { tl } from "@/shared/i18n/tl";
 
 /** Preserve focus only when activation did not come from a pointer click. */
 export function shouldRestoreThreadToggleFocus(clickDetail: number): boolean {
@@ -28,13 +29,13 @@ const THREAD_VIEW_MODE_TOGGLE = {
   focus: {
     // Viewing the drawer → offer the pane.
     icon: Columns2,
-    label: "Show thread beside channel",
+    label: tl("Show thread beside channel"),
     target: "split",
   },
   split: {
     // Viewing the pane → offer the drawer.
     icon: PanelRightOpen,
-    label: "Expand thread",
+    label: tl("Expand thread"),
     target: "focus",
   },
 } as const;

@@ -18,6 +18,7 @@ import {
   OnboardingSlideTransition,
 } from "./OnboardingSlideTransition";
 import type { ProfileStepActions, ProfileStepState } from "./types";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type AvatarStepProps = {
   actions: {
@@ -83,7 +84,7 @@ function AvatarPreview({
     <div className="flex h-48 w-48 items-center justify-center">
       {emojiAvatar ? (
         <div
-          aria-label={`${previewName} avatar`}
+          aria-label={tlt("{0} avatar", [previewName])}
           className="relative flex h-full w-full shrink-0 items-center justify-center overflow-hidden rounded-full shadow-xs transition-colors duration-[250ms] ease-out"
           data-testid="onboarding-avatar-preview"
           role="img"
@@ -102,7 +103,7 @@ function AvatarPreview({
         </div>
       ) : !hasAvatarUrl ? (
         <div
-          aria-label="Add a display image"
+          aria-label={tl("Add a display image")}
           className="flex h-full w-full shrink-0 items-center justify-center rounded-full border-2 border-dashed border-border bg-background text-primary shadow-xs"
           data-testid="onboarding-avatar-preview"
           role="img"
@@ -180,7 +181,7 @@ function AvatarStepActions({
                 type="button"
                 variant="ghost"
               >
-                Skip for now
+                {tl("Skip for now")}
               </Button>
             ) : showAlwaysSkip && !saveRecovery.errorMessage ? (
               // Normal path: advances to the theme step without saving an avatar.
@@ -192,7 +193,7 @@ function AvatarStepActions({
                 type="button"
                 variant="ghost"
               >
-                Skip for now
+                {tl("Skip for now")}
               </Button>
             ) : null}
 
@@ -205,7 +206,7 @@ function AvatarStepActions({
                 type="button"
                 variant="ghost"
               >
-                Continue without saving
+                {tl("Continue without saving")}
               </Button>
             ) : null}
 
@@ -218,7 +219,7 @@ function AvatarStepActions({
                 type="button"
                 variant="ghost"
               >
-                Back
+                {tl("Back")}
               </Button>
             ) : null}
 
@@ -231,11 +232,13 @@ function AvatarStepActions({
             >
               {isSaving || isUploadingAvatar ? (
                 <Spinner
-                  aria-label={isSaving ? "Saving profile" : "Uploading avatar"}
+                  aria-label={
+                    isSaving ? tl("Saving profile") : tl("Uploading avatar")
+                  }
                   className="h-4 w-4 border-2"
                 />
               ) : (
-                "Next"
+                tl("Next")
               )}
             </Button>
           </motion.div>
@@ -343,13 +346,13 @@ export function AvatarStep({
         layoutDependency={`${avatarEditorMode}-${isCustomColorPickerOpen}`}
         transition={AVATAR_POSITION_MOTION_TRANSITION}
       >
-        <div className="flex w-full flex-col items-center text-center lg:items-start lg:text-left">
+        <div className="flex w-full flex-col items-center text-center lg:items-start lg:text-start">
           <div className="w-full max-w-[500px]">
             <h1 className="text-title font-normal text-foreground">
-              Next, add a display image
+              {tl("Next, add a display image")}
             </h1>
             <p className="mt-5 text-sm leading-6 text-muted-foreground">
-              Choose an image or emoji as your avatar
+              {tl("Choose an image or emoji as your avatar")}
             </p>
           </div>
 

@@ -18,6 +18,7 @@ import { useMyRelayMembershipLookupQuery } from "@/features/community-members/ho
 import type { SettingsSection } from "@/features/settings/ui/SettingsPanels";
 import type { PresenceStatus, Profile, UserStatus } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
+import { tlt } from "@/shared/i18n/tl";
 
 type SidebarProfileCardProps = {
   activeCommunity: Community | null;
@@ -111,7 +112,7 @@ export function SidebarProfileCard({
     >
       <div className="flex min-w-0 items-center gap-3">
         <button
-          aria-label={`Open profile menu for ${resolvedDisplayName}`}
+          aria-label={tlt("Open profile menu for {0}", [resolvedDisplayName])}
           className="relative shrink-0 rounded-xl outline-hidden focus:outline-none focus-visible:outline-none"
           data-testid="sidebar-profile-avatar-button"
           onClick={(event) => {
@@ -193,7 +194,7 @@ export function SidebarProfileCard({
                 event.stopPropagation();
                 toggleProfilePopover();
               }}
-              className="block w-full min-w-0 rounded-sm text-left text-sidebar-foreground outline-hidden focus:outline-none focus-visible:outline-none"
+              className="block w-full min-w-0 rounded-sm text-start text-sidebar-foreground outline-hidden focus:outline-none focus-visible:outline-none"
               data-testid="open-settings"
               type="button"
             >
@@ -209,9 +210,11 @@ export function SidebarProfileCard({
           {hasStatus ? (
             <div className="relative mt-0.5">
               <button
-                aria-label={`Open profile menu for ${resolvedDisplayName}`}
+                aria-label={tlt("Open profile menu for {0}", [
+                  resolvedDisplayName,
+                ])}
                 className={cn(
-                  "flex w-full min-w-0 items-center truncate rounded-sm text-left text-xs leading-snug text-sidebar-foreground/70 outline-hidden transition-opacity duration-150 focus:outline-none focus-visible:outline-none group-hover/profile-card:opacity-0",
+                  "flex w-full min-w-0 items-center truncate rounded-sm text-start text-xs leading-snug text-sidebar-foreground/70 outline-hidden transition-opacity duration-150 focus:outline-none focus-visible:outline-none group-hover/profile-card:opacity-0",
                   profilePopoverOpen && "opacity-100",
                 )}
                 data-buzz-sidebar-secondary
@@ -224,7 +227,7 @@ export function SidebarProfileCard({
               >
                 {selfUserStatus?.emoji ? (
                   <StatusEmoji
-                    className="mr-1 w-4 shrink-0 text-xs"
+                    className="me-1 w-4 shrink-0 text-xs"
                     value={selfUserStatus.emoji}
                   />
                 ) : null}

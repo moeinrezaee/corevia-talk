@@ -42,6 +42,7 @@ import { GitHubMark } from "./GitHubMark";
 import { ProjectListRowMenu } from "./ProjectListRowMenu";
 import { PROJECT_GRID_CARD_BODY_CLASS } from "./projectGridCardStyles";
 import { projectTerminalLabel } from "./useOpenProjectTerminal";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export type RepositoryListItem = {
   project: Project;
@@ -114,7 +115,9 @@ function RepositoryOpenButton({
       onClick={() => onOpen(project, repository)}
       type="button"
     >
-      <span className="sr-only">View {repository.name}</span>
+      <span className="sr-only">
+        {tl("View")} {repository.name}
+      </span>
     </button>
   );
 }
@@ -174,7 +177,7 @@ function RepositoryActionsMenu({
   repository,
 }: Pick<RepositoryItemProps, "hasLocal" | "onOpenTerminal" | "repository">) {
   return (
-    <ProjectListRowMenu label={`More options for ${repository.name}`}>
+    <ProjectListRowMenu label={tlt("More options for {0}", [repository.name])}>
       <CopyShareLinkMenuItem
         link={repositoryShareLink(repository)}
         testId={`repository-copy-link-${repository.dtag}`}
@@ -225,7 +228,7 @@ export const RepositoryGridCard = React.memo(function RepositoryGridCard(
             project={project}
             repository={repository}
           />
-          <div className="pointer-events-auto ml-auto">
+          <div className="pointer-events-auto ms-auto">
             <RepositoryActionsMenu
               hasLocal={hasLocal}
               onOpenTerminal={onOpenTerminal}
@@ -240,7 +243,7 @@ export const RepositoryGridCard = React.memo(function RepositoryGridCard(
           )}
           data-testid="projects-grid-card-body"
         >
-          {repository.description || "A repository in this project."}
+          {repository.description || tl("A repository in this project.")}
         </p>
         <div className="pointer-events-auto mt-auto">
           <ProjectPeopleStack

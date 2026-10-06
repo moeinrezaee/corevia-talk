@@ -64,6 +64,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/shared/ui/tooltip";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const MembersSidebar = React.lazy(async () => {
   const module = await import("@/features/channels/ui/MembersSidebar");
@@ -444,9 +445,11 @@ function InboxMessageDetailPane({
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-muted text-muted-foreground">
             <Mail className="h-6 w-6" />
           </div>
-          <p className="mt-4 text-base font-semibold">Select a message</p>
+          <p className="mt-4 text-base font-semibold">
+            {tl("Select a message")}
+          </p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Pick an inbox item to see the full message and react to it.
+            {tl("Pick an inbox item to see the full message and react to it.")}
           </p>
         </div>
       </section>
@@ -555,7 +558,7 @@ function InboxMessageDetailPane({
               >
                 {onBack ? (
                   <Button
-                    aria-label="Back to inbox list"
+                    aria-label={tl("Back to inbox list")}
                     className="rounded-full text-muted-foreground hover:bg-muted/60 hover:text-foreground"
                     onClick={onBack}
                     size="icon"
@@ -569,7 +572,7 @@ function InboxMessageDetailPane({
                   {canOpenChannel && contextChannelId ? (
                     <h2 className="min-w-0">
                       <button
-                        className="block min-w-0 max-w-full text-left text-sm font-semibold leading-5 tracking-tight text-foreground hover:underline focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                        className="block min-w-0 max-w-full text-start text-sm font-semibold leading-5 tracking-tight text-foreground hover:underline focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                         data-testid="home-inbox-context-title"
                         onClick={() =>
                           onOpenContext(
@@ -617,15 +620,15 @@ function InboxMessageDetailPane({
                       {reopenPending ? (
                         <>
                           <LoaderCircle className="h-3.5 w-3.5 shrink-0 animate-spin" />
-                          <span>Reopening…</span>
+                          <span>{tl("Reopening…")}</span>
                         </>
                       ) : (
                         <>
                           <AlertCircle className="h-3.5 w-3.5 shrink-0" />
-                          <span>Couldn’t reopen</span>
+                          <span>{tl("Couldn’t reopen")}</span>
                           {contextChannelId ? (
                             <button
-                              className="ml-0.5 rounded font-semibold underline underline-offset-2 hover:no-underline focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+                              className="ms-0.5 rounded font-semibold underline underline-offset-2 hover:no-underline focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
                               data-testid="home-inbox-reopen-retry"
                               onClick={() =>
                                 onOpenContext(
@@ -636,7 +639,7 @@ function InboxMessageDetailPane({
                               }
                               type="button"
                             >
-                              Retry
+                              {tl("Retry")}
                             </button>
                           ) : null}
                         </>
@@ -712,7 +715,7 @@ function InboxMessageDetailPane({
                 data-testid="home-inbox-context-loading"
               >
                 <LoaderCircle className="h-4 w-4 shrink-0 animate-spin" />
-                <span>Loading surrounding context...</span>
+                <span>{tl("Loading surrounding context...")}</span>
               </div>
             ) : null}
             {hasThreadContextLoadError ? (
@@ -721,7 +724,7 @@ function InboxMessageDetailPane({
                 data-testid="home-inbox-context-error"
               >
                 <AlertCircle className="h-4 w-4 shrink-0" />
-                <span>Some message context could not be loaded.</span>
+                <span>{tl("Some message context could not be loaded.")}</span>
               </div>
             ) : null}
             {displayMessages.map((message, index) => {
@@ -797,7 +800,7 @@ function InboxMessageDetailPane({
         >
           <span
             aria-hidden="true"
-            className="absolute bottom-4 left-4 h-4 w-4 bg-background"
+            className="absolute bottom-4 start-4 h-4 w-4 bg-background"
             style={{
               maskImage:
                 "radial-gradient(circle at top right, transparent 0 1rem, black calc(1rem + 0.5px))",
@@ -807,7 +810,7 @@ function InboxMessageDetailPane({
           />
           <span
             aria-hidden="true"
-            className="absolute bottom-4 right-4 h-4 w-4 bg-background"
+            className="absolute bottom-4 end-4 h-4 w-4 bg-background"
             style={{
               maskImage:
                 "radial-gradient(circle at top left, transparent 0 1rem, black calc(1rem + 0.5px))",
@@ -875,10 +878,14 @@ function InboxMessageDetailPane({
               placeholder={
                 canReply
                   ? isDirectMessage
-                    ? `Message ${item.senderLabel}`
-                    : `Send reply to ${item.channelLabel ? `#${item.channelLabel} thread` : "channel thread"}`
+                    ? tlt("Message {0}", [item.senderLabel])
+                    : tlt("Send reply to {0}", [
+                        item.channelLabel
+                          ? `#${item.channelLabel} thread`
+                          : "channel thread",
+                      ])
                   : (disabledReplyReason ??
-                    "Replies are not available for this item.")
+                    tl("Replies are not available for this item."))
               }
               replyTarget={composerReplyTarget}
             />
@@ -910,7 +917,7 @@ function HeaderMoreMenu({
 }) {
   const trigger = (
     <Button
-      aria-label="More actions"
+      aria-label={tl("More actions")}
       className="rounded-full text-muted-foreground"
       size="icon"
       type="button"
@@ -926,7 +933,7 @@ function HeaderMoreMenu({
         <TooltipTrigger asChild>
           <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
         </TooltipTrigger>
-        <TooltipContent>More actions</TooltipContent>
+        <TooltipContent>{tl("More actions")}</TooltipContent>
       </Tooltip>
       <DropdownMenuContent align="end">
         <DropdownMenuItem
@@ -935,7 +942,7 @@ function HeaderMoreMenu({
           onClick={onDelete}
         >
           <Trash2 className="h-4 w-4" />
-          Delete message
+          {tl("Delete message")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

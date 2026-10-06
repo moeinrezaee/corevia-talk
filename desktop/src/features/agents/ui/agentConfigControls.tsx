@@ -27,6 +27,7 @@ import {
 } from "./agentConfigOptions";
 import { MODEL_DISCOVERY_LOADING_VALUE } from "./usePersonaModelDiscovery";
 import type { PersonaModelDiscoveryStatus } from "./personaModelDiscoveryStatus";
+import { tl } from "@/shared/i18n/tl";
 
 export const MODEL_NO_MODELS_VALUE = "__no_models__";
 
@@ -49,7 +50,7 @@ export function appendNoModelsSentinel(
   if (options.length === 0 && !loading) {
     options.push({
       disabled: true,
-      label: "No models found",
+      label: tl("No models found"),
       value: MODEL_NO_MODELS_VALUE,
     });
   }
@@ -178,7 +179,7 @@ export function AgentDropdownSelect({
           aria-haspopup="listbox"
           aria-required={ariaRequired}
           className={cn(
-            "flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-left text-sm font-normal shadow-xs transition-colors hover:bg-background/90 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-60",
+            "flex h-9 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-start text-sm font-normal shadow-xs transition-colors hover:bg-background/90 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-60",
             className,
           )}
           data-testid={testId}
@@ -200,7 +201,7 @@ export function AgentDropdownSelect({
           <ChevronDown
             aria-hidden="true"
             className={cn(
-              "ml-3 h-4 w-4 shrink-0 transition-transform duration-150",
+              "ms-3 h-4 w-4 shrink-0 transition-transform duration-150",
               disabled ? "text-foreground/30" : "text-foreground",
               open && "rotate-180",
             )}
@@ -226,15 +227,15 @@ export function AgentDropdownSelect({
             <div className="relative">
               <Search
                 aria-hidden="true"
-                className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-foreground/45"
+                className="pointer-events-none absolute start-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-foreground/45"
               />
               <Input
-                aria-label="Search models"
+                aria-label={tl("Search models")}
                 autoFocus
-                className="h-9 rounded-xl border-foreground/10 bg-white pl-9 text-sm"
+                className="h-9 rounded-xl border-foreground/10 bg-white ps-9 text-sm"
                 data-testid={testId ? `${testId}-search` : undefined}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search models…"
+                placeholder={tl("Search models…")}
                 value={query}
               />
             </div>
@@ -245,7 +246,7 @@ export function AgentDropdownSelect({
               data-testid={testId ? `${testId}-empty` : undefined}
             >
               {showSearch && query.trim().length > 0
-                ? "No matches"
+                ? tl("No matches")
                 : emptyOptionsLabel}
             </p>
           ) : null}
@@ -256,7 +257,7 @@ export function AgentDropdownSelect({
                 aria-disabled={option.disabled || undefined}
                 aria-selected={selected}
                 className={cn(
-                  "flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2 text-left text-sm leading-5 text-black opacity-100 transition-colors hover:bg-black/5 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-black/30",
+                  "flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2 text-start text-sm leading-5 text-black opacity-100 transition-colors hover:bg-black/5 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-black/30",
                   selected && "bg-[var(--buzz-welcome-chartreuse)]/35",
                   option.disabled && "cursor-not-allowed text-black/35",
                 )}
@@ -306,7 +307,7 @@ export function RequiredFieldLabel({
     <label className={cn("text-sm font-medium", className)} htmlFor={htmlFor}>
       {children}
       {isRequired ? (
-        <span className="ml-1 text-destructive" aria-hidden="true">
+        <span className="ms-1 text-destructive" aria-hidden="true">
           *
         </span>
       ) : null}
@@ -498,14 +499,14 @@ export function AgentModelField({
       ? [
           {
             disabled: true,
-            label: "Loading models...",
+            label: tl("Loading models..."),
             value: MODEL_DISCOVERY_LOADING_VALUE,
           },
         ]
       : []),
     ...(!isSharedCompute &&
     (showCustomModelOption || modelSelectValue === CUSTOM_MODEL_DROPDOWN_VALUE)
-      ? [{ label: "Custom model...", value: CUSTOM_MODEL_DROPDOWN_VALUE }]
+      ? [{ label: tl("Custom model..."), value: CUSTOM_MODEL_DROPDOWN_VALUE }]
       : []),
   ];
   // An opened dropdown must never show a blank popover. When all the above
@@ -548,7 +549,7 @@ export function AgentModelField({
       aria-required={isRequired}
       className={cn(
         "flex h-9 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs disabled:cursor-not-allowed disabled:opacity-60",
-        useChevronIcon && "appearance-none pr-10",
+        useChevronIcon && "appearance-none pe-10",
         selectClassName,
       )}
       disabled={selectDisabled}
@@ -575,14 +576,14 @@ export function AgentModelField({
         htmlFor={id}
         isRequired={isRequired}
       >
-        Model
+        {tl("Model")}
       </RequiredFieldLabel>
       {!useCustomSelect && useChevronIcon ? (
         <div className="relative">
           {modelSelect}
           <ChevronDown
             aria-hidden="true"
-            className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground"
+            className="pointer-events-none absolute end-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground"
           />
         </div>
       ) : (
@@ -590,11 +591,11 @@ export function AgentModelField({
       )}
       {showCustomModelInput ? (
         <AgentConfigTextInput
-          aria-label="Custom model ID"
+          aria-label={tl("Custom model ID")}
           autoCorrect="off"
           disabled={disabled}
           onChange={(event) => onModelChange(event.target.value)}
-          placeholder="Custom model ID"
+          placeholder={tl("Custom model ID")}
           usePersonaInputStyle={usePersonaInputStyle}
           value={model}
         />
@@ -636,7 +637,7 @@ export function AgentProviderField({
   return (
     <div className="space-y-1.5">
       <RequiredFieldLabel htmlFor="agent-provider" isRequired={isRequired}>
-        LLM provider
+        {tl("LLM provider")}
       </RequiredFieldLabel>
       <select
         aria-required={isRequired}
@@ -655,21 +656,23 @@ export function AgentProviderField({
           </option>
         ))}
         <option value={CUSTOM_PROVIDER_DROPDOWN_VALUE}>
-          Custom provider...
+          {tl("Custom provider...")}
         </option>
       </select>
       {isCustomProviderEditing ? (
         <Input
-          aria-label="Custom provider ID"
+          aria-label={tl("Custom provider ID")}
           autoCorrect="off"
           disabled={disabled}
           onChange={(event) => onProviderChange(event.target.value)}
-          placeholder="Custom provider ID"
+          placeholder={tl("Custom provider ID")}
           value={provider}
         />
       ) : null}
       <p className="text-xs text-muted-foreground">
-        Changing the provider updates the available model list immediately.
+        {tl(
+          "Changing the provider updates the available model list immediately.",
+        )}
       </p>
     </div>
   );

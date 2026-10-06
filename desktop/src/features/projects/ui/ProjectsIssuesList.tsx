@@ -34,6 +34,7 @@ import { ProjectSelectableGroup } from "./ProjectSelectableGroup";
 import { ProjectPanelState } from "./ProjectPanelState";
 import { ProjectsWorkItemsLoadNotice } from "./ProjectsWorkItemsLoadNotice";
 import { groupProjectWorkItemsByProject } from "./projectWorkItemGroups";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type ProjectsIssuesListProps = {
   /** Render without container chrome — a parent table container provides border and rounding. */
@@ -86,7 +87,9 @@ const IssueGridCard = React.memo(function IssueGridCard({
         onClick={() => onOpen(project, repository, issue)}
         type="button"
       >
-        <span className="sr-only">View task {issue.title}</span>
+        <span className="sr-only">
+          {tl("View task")} {issue.title}
+        </span>
       </button>
       <div className="flex min-h-0 flex-1 flex-col gap-2">
         <h3
@@ -99,7 +102,7 @@ const IssueGridCard = React.memo(function IssueGridCard({
           className={cn(PROJECT_GRID_CARD_BODY_CLASS, "text-muted-foreground")}
           data-testid="projects-grid-card-body"
         >
-          {issue.content || "No description provided."}
+          {issue.content || tl("No description provided.")}
         </p>
         <div
           className="mt-auto flex items-center gap-1.5 text-xs font-medium text-muted-foreground"
@@ -177,14 +180,14 @@ const IssueListRow = React.memo(function IssueListRow({
       titleAttr={`Open task ${issue.title}`}
       titleIcon={<ProjectEventTypeIcon className="h-3.5 w-3.5" kind="issue" />}
       trailing={
-        <ProjectListRowMenu label={`More options for ${issue.title}`}>
+        <ProjectListRowMenu label={tlt("More options for {0}", [issue.title])}>
           <DropdownMenuItem onSelect={() => onOpen(project, repository, issue)}>
             <Eye className="h-4 w-4" />
             {nextStepLabel(issue.status)}
           </DropdownMenuItem>
           <CopyShareLinkMenuItem
             link={issueShareLink(issue)}
-            label="Copy task link"
+            label={tl("Copy task link")}
             testId={`projects-issue-copy-link-${issue.id}`}
           />
         </ProjectListRowMenu>
@@ -241,7 +244,7 @@ export function ProjectsIssuesList({
   );
 
   if (isLoading) {
-    return <BuzzLoadingState label="Loading tasks" />;
+    return <BuzzLoadingState label={tl("Loading tasks")} />;
   }
 
   const loadNotice = (
@@ -264,15 +267,17 @@ export function ProjectsIssuesList({
             size="sm"
             variant="outline"
           >
-            {isRetrying ? "Retrying..." : "Retry"}
+            {isRetrying ? tl("Retrying...") : tl("Retry")}
           </Button>
         }
         description={
-          error instanceof Error ? error.message : "The relay request failed."
+          error instanceof Error
+            ? error.message
+            : tl("The relay request failed.")
         }
         error
         panel={false}
-        title="Could not load tasks"
+        title={tl("Could not load tasks")}
       />
     );
   }

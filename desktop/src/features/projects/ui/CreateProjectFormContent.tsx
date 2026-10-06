@@ -9,13 +9,14 @@ import { Button } from "@/shared/ui/button";
 import { ChooserDialogContent } from "@/shared/ui/chooser-dialog-content";
 import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
+import { tl } from "@/shared/i18n/tl";
 
 const CREATE_FIELD_SHELL_CLASS =
   "rounded-xl border border-input bg-muted/40 transition-colors duration-150 ease-out hover:border-muted-foreground/40 focus-within:border-muted-foreground/50";
 const CREATE_FIELD_CONTROL_CLASS =
   "border-0 bg-transparent text-muted-foreground/55 shadow-none outline-none ring-0 transition-colors duration-150 ease-out placeholder:text-muted-foreground/55 focus:bg-transparent focus:text-foreground focus:outline-hidden focus-visible:ring-0";
 const CREATE_LABEL_OPTIONAL_CLASS =
-  "ml-1 text-xs font-normal text-muted-foreground/50";
+  "ms-1 text-xs font-normal text-muted-foreground/50";
 
 export function CreateProjectFormContent({
   active,
@@ -87,13 +88,13 @@ export function CreateProjectFormContent({
             form="create-project-form"
             type="submit"
           >
-            {isCreating ? "Creating..." : "Create project"}
+            {isCreating ? tl("Creating...") : tl("Create project")}
           </Button>
         </div>
       }
       footerClassName="border-t-0 pt-0"
       headerClassName="pb-2"
-      title="Create a new project"
+      title={tl("Create a new project")}
     >
       {onBack ? (
         <Button
@@ -105,7 +106,7 @@ export function CreateProjectFormContent({
           variant="ghost"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to projects
+          {tl("Back to projects")}
         </Button>
       ) : null}
       <form
@@ -120,7 +121,7 @@ export function CreateProjectFormContent({
             className="text-sm font-medium text-foreground"
             htmlFor="create-project-name"
           >
-            Name
+            {tl("Name")}
           </label>
           <div
             className={cn(
@@ -143,7 +144,7 @@ export function CreateProjectFormContent({
                 setName(event.target.value);
                 setErrorMessage(null);
               }}
-              placeholder="bee-garden-game"
+              placeholder={tl("bee-garden-game")}
               ref={nameInputRef}
               spellCheck={false}
               value={name}
@@ -156,8 +157,10 @@ export function CreateProjectFormContent({
             className="text-sm font-medium text-foreground"
             htmlFor="create-project-description"
           >
-            Description
-            <span className={CREATE_LABEL_OPTIONAL_CLASS}>Optional</span>
+            {tl("Description")}
+            <span className={CREATE_LABEL_OPTIONAL_CLASS}>
+              {tl("Optional")}
+            </span>
           </label>
           <div className={CREATE_FIELD_SHELL_CLASS}>
             <Textarea
@@ -172,7 +175,7 @@ export function CreateProjectFormContent({
                 setDescription(event.target.value);
                 setErrorMessage(null);
               }}
-              placeholder="What this project should become"
+              placeholder={tl("What this project should become")}
               rows={2}
               value={description}
             />

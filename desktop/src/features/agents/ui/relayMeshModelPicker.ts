@@ -7,13 +7,14 @@ import {
   type PersonaDropdownOption,
   type PersonaModelOption,
 } from "./agentConfigOptions";
+import { tl } from "@/shared/i18n/tl";
 
 function withSharedComputeAutoOption(
   options: readonly PersonaModelOption[],
 ): readonly PersonaModelOption[] {
   const modelOptions = options.filter((option) => option.id.trim() !== "");
   return [
-    { id: "", label: "Auto (collective when available)" },
+    { id: "", label: tl("Auto (collective when available)") },
     ...modelOptions,
   ];
 }
@@ -91,10 +92,16 @@ export function modelDropdownOptions({
   return [
     ...modelOptions,
     ...(loading
-      ? [{ disabled: true, label: "Loading models...", value: loadingValue }]
+      ? [
+          {
+            disabled: true,
+            label: tl("Loading models..."),
+            value: loadingValue,
+          },
+        ]
       : []),
     ...(allowCustom
-      ? [{ label: "Custom model...", value: CUSTOM_MODEL_DROPDOWN_VALUE }]
+      ? [{ label: tl("Custom model..."), value: CUSTOM_MODEL_DROPDOWN_VALUE }]
       : []),
   ];
 }

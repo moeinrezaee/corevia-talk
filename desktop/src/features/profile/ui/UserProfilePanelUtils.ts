@@ -9,6 +9,7 @@ import type {
   UpdateManagedAgentInput,
 } from "@/shared/api/types";
 import { normalizePubkey, truncateNpub } from "@/shared/lib/pubkey";
+import { tl } from "@/shared/i18n/tl";
 
 export { truncateNpub };
 
@@ -30,7 +31,7 @@ export type ProfilePanelView =
 export type ProfilePanelTab = "info" | "runtime" | "channels" | "memories";
 
 export const PROFILE_PANEL_VIEW_TITLES: Record<ProfilePanelView, string> = {
-  summary: "Profile",
+  summary: tl("Profile"),
   instructions: "Agent instructions",
   info: "Agent info",
   configuration: "Runtime",

@@ -36,6 +36,7 @@ import {
   PROJECT_EVENT_VISUALS,
   type ProjectEventKind,
 } from "./ProjectEventTypeIcon";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type ActivityKind = ProjectEventKind;
 
@@ -315,9 +316,9 @@ function groupActivityItems(items: ProjectActivityItem[], nowMs: number) {
   const thisWeek = startOfWeek(Math.floor(nowMs / 1_000));
   const lastWeek = thisWeek - WEEK_SECONDS;
   const groups: ProjectActivityGroup[] = [
-    { key: "this-week", label: "This week", items: [] },
-    { key: "last-week", label: "Last week", items: [] },
-    { key: "earlier", label: "Earlier", items: [] },
+    { key: "this-week", label: tl("This week"), items: [] },
+    { key: "last-week", label: tl("Last week"), items: [] },
+    { key: "earlier", label: tl("Earlier"), items: [] },
   ];
 
   for (const item of items) {
@@ -361,13 +362,16 @@ function ActivityCard({
   return (
     <div
       className={cn(
-        "group relative block w-full rounded-xl bg-transparent text-left transition-colors hover:bg-muted/20",
-        compact ? "py-3 pr-3" : "py-4 pr-4",
+        "group relative block w-full rounded-xl bg-transparent text-start transition-colors hover:bg-muted/20",
+        compact ? "py-3 pe-3" : "py-4 pe-4",
       )}
       data-testid="projects-activity-card"
     >
       <button
-        aria-label={`Open ${item.title} in ${item.target.project.name}`}
+        aria-label={tlt("Open {0} in {1}", [
+          item.title,
+          item.target.project.name,
+        ])}
         className="absolute inset-0 rounded-xl focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
         onClick={onOpen}
         type="button"
@@ -404,7 +408,7 @@ function ActivityCard({
           {item.actorPubkey ? (
             <UserProfilePopover pubkey={item.actorPubkey} triggerElement="span">
               <button
-                aria-label={`View ${actorLabel}'s profile`}
+                aria-label={tlt("View {0}'s profile", [actorLabel])}
                 className={cn(
                   "pointer-events-auto relative z-10 shrink-0 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring",
                   profile?.isAgent ? "rounded-[30%]" : "rounded-full",
@@ -557,7 +561,7 @@ export function ProjectsActivityFeed(props: ProjectsActivityFeedProps) {
   );
 
   if (props.isLoading && items.length === 0) {
-    return <BuzzLoadingState label="Loading project activity" />;
+    return <BuzzLoadingState label={tl("Loading project activity")} />;
   }
 
   if (items.length === 0) {
@@ -565,12 +569,16 @@ export function ProjectsActivityFeed(props: ProjectsActivityFeedProps) {
     return (
       <div className="rounded-xl border border-dashed border-border/60 px-4 py-12 text-center">
         <p className="text-sm font-medium text-foreground">
-          {searching ? "No matching activity" : "No project activity yet"}
+          {searching
+            ? tl("No matching activity")
+            : tl("No project activity yet")}
         </p>
         <p className="mt-1 text-sm text-muted-foreground">
           {searching
-            ? "Try a different search."
-            : "Commits, reviews, review decisions, and tasks will appear here."}
+            ? tl("Try a different search.")
+            : tl(
+                "Commits, reviews, review decisions, and tasks will appear here.",
+              )}
         </p>
       </div>
     );

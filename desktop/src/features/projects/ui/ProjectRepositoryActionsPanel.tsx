@@ -52,6 +52,7 @@ import {
   projectTaskActivity,
 } from "./projectRightPanelContext";
 import { PROJECT_CONTEXT_ACTION_BUTTON_CLASS } from "./projectContextActionStyles";
+import { tl } from "@/shared/i18n/tl";
 
 type ProjectRepositoryActionsPanelProps = {
   activeTab: string;
@@ -283,7 +284,7 @@ export function ProjectRepositoryActionsPanel({
                 {branchScoped ? (
                   <>
                     <div
-                      className="grid gap-0.5 [&_button]:-mx-2 [&_button]:h-7 [&_button]:w-[calc(100%+1rem)] [&_button]:max-w-none [&_button]:justify-start [&_button]:gap-3 [&_button]:rounded-md [&_button]:border-0 [&_button]:bg-transparent [&_button]:px-2 [&_button]:text-left [&_button]:text-sm [&_button]:font-normal [&_button]:shadow-none [&_button]:hover:bg-muted/70 [&_button>svg:last-child]:ml-auto"
+                      className="grid gap-0.5 [&_button]:-mx-2 [&_button]:h-7 [&_button]:w-[calc(100%+1rem)] [&_button]:max-w-none [&_button]:justify-start [&_button]:gap-3 [&_button]:rounded-md [&_button]:border-0 [&_button]:bg-transparent [&_button]:px-2 [&_button]:text-start [&_button]:text-sm [&_button]:font-normal [&_button]:shadow-none [&_button]:hover:bg-muted/70 [&_button>svg:last-child]:ms-auto"
                       data-testid="project-context-source-controls"
                     >
                       <RepoSourceDropdown controls={sourceControls} />
@@ -320,17 +321,21 @@ export function ProjectRepositoryActionsPanel({
                           ) : (
                             <DownloadCloud className="h-3.5 w-3.5" />
                           )}
-                          {sourceControls.clonePending ? "Cloning…" : "Clone"}
+                          {sourceControls.clonePending
+                            ? tl("Cloning…")
+                            : tl("Clone")}
                         </RepositoryActionButton>
                       ) : null}
                       {sourceControls.remoteUnavailableReason === "access" &&
                       sourceControls.onAskForAccess ? (
                         <RepositoryActionButton
                           onClick={sourceControls.onAskForAccess}
-                          title="Open project chat to ask for repository access"
+                          title={tl(
+                            "Open project chat to ask for repository access",
+                          )}
                         >
                           <MessageCircle className="h-3.5 w-3.5" />
-                          Ask for access
+                          {tl("Ask for access")}
                         </RepositoryActionButton>
                       ) : null}
                       {fetchAction ? (
@@ -344,7 +349,7 @@ export function ProjectRepositoryActionsPanel({
                           ) : (
                             <RefreshCw className="h-3.5 w-3.5" />
                           )}
-                          Fetch
+                          {tl("Fetch")}
                         </RepositoryActionButton>
                       ) : null}
                       {pullAction ? (
@@ -358,7 +363,7 @@ export function ProjectRepositoryActionsPanel({
                           ) : (
                             <DownloadCloud className="h-3.5 w-3.5" />
                           )}
-                          Pull
+                          {tl("Pull")}
                           {sourceControls.behindCount
                             ? ` ${sourceControls.behindCount}`
                             : ""}
@@ -375,7 +380,7 @@ export function ProjectRepositoryActionsPanel({
                           ) : (
                             <UploadCloud className="h-3.5 w-3.5" />
                           )}
-                          Push
+                          {tl("Push")}
                           {sourceControls.aheadCount
                             ? ` ${sourceControls.aheadCount}`
                             : ""}
@@ -383,23 +388,23 @@ export function ProjectRepositoryActionsPanel({
                       ) : null}
                       <RepositoryActionButton
                         onClick={onOpenTerminal}
-                        title={terminalTitle ?? "Open terminal"}
+                        title={terminalTitle ?? tl("Open terminal")}
                       >
                         <SquareTerminal className="h-3.5 w-3.5" />
-                        Terminal
+                        {tl("Terminal")}
                       </RepositoryActionButton>
                       {sourceControls.source === "local" ? (
                         <RepositoryActionButton
                           onClick={onOpenLocalRepository}
-                          title="Open local repository folder"
+                          title={tl("Open local repository folder")}
                         >
                           <FolderOpen className="h-3.5 w-3.5" />
-                          Open
+                          {tl("Open")}
                         </RepositoryActionButton>
                       ) : externalOpenUrl ? (
                         <Button
                           asChild
-                          className="-mx-2 h-7 w-[calc(100%+1rem)] justify-start gap-3 rounded-md px-2 text-left text-sm font-normal hover:bg-muted/70 [&_svg]:h-4 [&_svg]:w-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
+                          className="-mx-2 h-7 w-[calc(100%+1rem)] justify-start gap-3 rounded-md px-2 text-start text-sm font-normal hover:bg-muted/70 [&_svg]:h-4 [&_svg]:w-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
                           size="sm"
                           variant="ghost"
                         >
@@ -409,7 +414,7 @@ export function ProjectRepositoryActionsPanel({
                             target="_blank"
                           >
                             <ExternalLink className="h-3.5 w-3.5" />
-                            Open
+                            {tl("Open")}
                           </a>
                         </Button>
                       ) : null}
@@ -422,16 +427,18 @@ export function ProjectRepositoryActionsPanel({
                     onClick={onCreateTask}
                   >
                     <Plus className="h-3.5 w-3.5" />
-                    Create task
+                    {tl("Create task")}
                   </RepositoryActionButton>
                 ) : null}
                 {showCreateReview && onCreatePullRequest ? (
                   <RepositoryActionButton
                     onClick={onCreatePullRequest}
-                    title="Create review — choose a repository and branches to compare"
+                    title={tl(
+                      "Create review — choose a repository and branches to compare",
+                    )}
                   >
                     <Plus className="h-3.5 w-3.5" />
-                    Create review
+                    {tl("Create review")}
                   </RepositoryActionButton>
                 ) : null}
               </RepositoryPanelSection>
@@ -440,14 +447,14 @@ export function ProjectRepositoryActionsPanel({
             <RepositoryPanelSection
               divided={showActions}
               testId="project-context-details"
-              title="Details"
+              title={tl("Details")}
             >
               {branchScoped ? (
-                <dl className="text-sm [&>div]:h-7 [&_dd]:ml-auto [&_dd]:tabular-nums [&_dt]:gap-3 [&_dt]:text-foreground [&_dt_svg]:h-4 [&_dt_svg]:w-4 [&_dt_svg]:shrink-0 [&_dt_svg]:text-muted-foreground">
+                <dl className="text-sm [&>div]:h-7 [&_dd]:ms-auto [&_dd]:tabular-nums [&_dt]:gap-3 [&_dt]:text-foreground [&_dt_svg]:h-4 [&_dt_svg]:w-4 [&_dt_svg]:shrink-0 [&_dt_svg]:text-muted-foreground">
                   <div className="flex items-center justify-between gap-3">
                     <dt className="flex items-center gap-3 text-muted-foreground">
                       <GitCommitHorizontal className="h-3.5 w-3.5" />
-                      Latest
+                      {tl("Latest")}
                     </dt>
                     <dd className="font-mono text-xs text-foreground">
                       {latestCommit ? latestCommit.hash.slice(0, 7) : "—"}
@@ -456,7 +463,7 @@ export function ProjectRepositoryActionsPanel({
                   <div className="flex items-center justify-between gap-3">
                     <dt className="flex items-center gap-3 text-muted-foreground">
                       <FileCode2 className="h-3.5 w-3.5" />
-                      Files
+                      {tl("Files")}
                     </dt>
                     <dd
                       className="font-medium text-foreground"
@@ -468,7 +475,7 @@ export function ProjectRepositoryActionsPanel({
                   <div className="flex items-center justify-between gap-3">
                     <dt className="flex items-center gap-3 text-muted-foreground">
                       <Users className="h-3.5 w-3.5" />
-                      Contributors
+                      {tl("Contributors")}
                     </dt>
                     <dd className="font-medium text-foreground">
                       {snapshot ? contributors.length : "—"}
@@ -476,7 +483,7 @@ export function ProjectRepositoryActionsPanel({
                   </div>
                 </dl>
               ) : (
-                <dl className="text-sm [&>div]:h-7 [&_dd]:ml-auto [&_dd]:tabular-nums [&_dt]:gap-3 [&_dt]:text-foreground [&_dt_svg]:h-4 [&_dt_svg]:w-4 [&_dt_svg]:shrink-0 [&_dt_svg]:text-muted-foreground">
+                <dl className="text-sm [&>div]:h-7 [&_dd]:ms-auto [&_dd]:tabular-nums [&_dt]:gap-3 [&_dt]:text-foreground [&_dt_svg]:h-4 [&_dt_svg]:w-4 [&_dt_svg]:shrink-0 [&_dt_svg]:text-muted-foreground">
                   <ProjectWorkItemContextDetails
                     issue={selectedIssue}
                     pullRequest={selectedPullRequest}
@@ -489,7 +496,9 @@ export function ProjectRepositoryActionsPanel({
                       <div className="flex items-center justify-between gap-3">
                         <dt className="flex items-center gap-3 text-muted-foreground">
                           <CircleDot className="h-3.5 w-3.5" />
-                          {activeTab === "issues" ? "Tasks" : "Active tasks"}
+                          {activeTab === "issues"
+                            ? tl("Tasks")
+                            : tl("Active tasks")}
                         </dt>
                         <dd className="font-medium text-foreground">
                           {activeTab === "issues"
@@ -502,7 +511,7 @@ export function ProjectRepositoryActionsPanel({
                           <div className="flex items-center justify-between gap-3">
                             <dt className="flex items-center gap-3 text-muted-foreground">
                               <CircleDot className="h-3.5 w-3.5" />
-                              Active
+                              {tl("Active")}
                             </dt>
                             <dd className="font-medium text-foreground">
                               {taskActivity.active}
@@ -511,7 +520,7 @@ export function ProjectRepositoryActionsPanel({
                           <div className="flex items-center justify-between gap-3">
                             <dt className="flex items-center gap-3 text-muted-foreground">
                               <CheckCircle2 className="h-3.5 w-3.5" />
-                              Completed
+                              {tl("Completed")}
                             </dt>
                             <dd className="font-medium text-foreground">
                               {taskActivity.completed}
@@ -528,7 +537,9 @@ export function ProjectRepositoryActionsPanel({
                       <div className="flex items-center justify-between gap-3">
                         <dt className="flex items-center gap-3 text-muted-foreground">
                           <GitPullRequest className="h-3.5 w-3.5" />
-                          {activeTab === "prs" ? "Reviews" : "Open reviews"}
+                          {activeTab === "prs"
+                            ? tl("Reviews")
+                            : tl("Open reviews")}
                         </dt>
                         <dd className="font-medium text-foreground">
                           {activeTab === "prs"
@@ -541,7 +552,7 @@ export function ProjectRepositoryActionsPanel({
                           <div className="flex items-center justify-between gap-3">
                             <dt className="flex items-center gap-3 text-muted-foreground">
                               <GitPullRequest className="h-3.5 w-3.5" />
-                              Open
+                              {tl("Open")}
                             </dt>
                             <dd className="font-medium text-foreground">
                               {reviewActivity.open}
@@ -550,7 +561,7 @@ export function ProjectRepositoryActionsPanel({
                           <div className="flex items-center justify-between gap-3">
                             <dt className="flex items-center gap-3 text-muted-foreground">
                               <GitMerge className="h-3.5 w-3.5" />
-                              Merged
+                              {tl("Merged")}
                             </dt>
                             <dd className="font-medium text-foreground">
                               {reviewActivity.merged}

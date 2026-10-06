@@ -79,6 +79,11 @@ async function setup(options = {}) {
   let editor, media, mentionState, prompt;
   const stubs = {
     react: React,
+    "@/shared/i18n/tl": {
+      tl: (text) => text,
+      tlt: (text, args) =>
+        text.replace(/\{(\d+)\}/g, (_m, i) => String(args[Number(i)] ?? "")),
+    },
     sonner: { toast: { error: (value) => calls.push(["error", value]) } },
     "@tiptap/react": { EditorContent: () => null },
     "lucide-react": { ChevronDown: () => null },

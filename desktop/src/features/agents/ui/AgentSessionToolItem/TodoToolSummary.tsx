@@ -13,6 +13,7 @@ import {
   ActivityRowContent,
   ActivityRowLabel,
 } from "../activityRenderClasses/ActivityRow";
+import { tl } from "@/shared/i18n/tl";
 
 type TodoDisplayItem = {
   checked: boolean;
@@ -67,7 +68,7 @@ export function TodoToolSummary({
               isCompactPreview ? "text-xs" : "text-sm",
             )}
           >
-            No todos.
+            {tl("No todos.")}
           </p>
         )}
       </ActivityRowContent>

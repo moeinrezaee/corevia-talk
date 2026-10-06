@@ -14,6 +14,7 @@ import {
 } from "@/shared/ui/popover";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import type { AudioInputDevice } from "../lib/useAudioDevices";
+import { tl } from "@/shared/i18n/tl";
 
 type VoiceInputMode = "push_to_talk" | "voice_activity";
 
@@ -33,9 +34,9 @@ type MicControlsProps = {
   onGainChange: (value: number) => void;
 };
 
-const splitIconButtonClass = "h-12 w-auto shrink-0 rounded-r-none px-4 py-4";
+const splitIconButtonClass = "h-12 w-auto shrink-0 rounded-e-none px-4 py-4";
 const splitChevronButtonClass =
-  "buzz-huddle-split-chevron group h-12 w-auto shrink-0 rounded-l-none px-2 py-4";
+  "buzz-huddle-split-chevron group h-12 w-auto shrink-0 rounded-s-none px-2 py-4";
 const mutedHuddleControlClass =
   "bg-destructive/35 text-destructive shadow-none hover:bg-destructive/45 hover:text-destructive";
 const compactMutedHuddleControlClass =
@@ -125,10 +126,10 @@ export function MicControls({
     ? "Microphone unavailable. Check app permissions or input device."
     : micButtonLabel;
   const iconButtonClass = compact
-    ? "h-8 w-8 shrink-0 rounded-l-md rounded-r-none px-0 py-0 text-sidebar-foreground/70 !shadow-none hover:bg-sidebar-foreground/5 hover:text-sidebar-foreground/70"
+    ? "h-8 w-8 shrink-0 rounded-s-md rounded-e-none px-0 py-0 text-sidebar-foreground/70 !shadow-none hover:bg-sidebar-foreground/5 hover:text-sidebar-foreground/70"
     : splitIconButtonClass;
   const chevronButtonClass = compact
-    ? "buzz-huddle-split-chevron group h-8 w-5 shrink-0 rounded-l-none rounded-r-md border-l border-sidebar-border/80 px-0.5 py-0 text-sidebar-foreground/70 !shadow-none hover:bg-sidebar-foreground/5 hover:text-sidebar-foreground/70"
+    ? "buzz-huddle-split-chevron group h-8 w-5 shrink-0 rounded-s-none rounded-e-md border-s border-sidebar-border/80 px-0.5 py-0 text-sidebar-foreground/70 !shadow-none hover:bg-sidebar-foreground/5 hover:text-sidebar-foreground/70"
     : splitChevronButtonClass;
   const mutedMicClass =
     isEffectivelyMuted || micUnavailable
@@ -180,7 +181,7 @@ export function MicControls({
           <TooltipContent className="buzz-huddle-tooltip" side="top">
             {isPttMode && !micUnavailable && isEffectivelyMuted ? (
               <span className="flex items-center gap-1.5">
-                <span>Click to unmute or hold</span>
+                <span>{tl("Click to unmute or hold")}</span>
                 <kbd className="rounded border border-border/70 bg-muted/70 px-1.5 py-0.5 text-2xs text-muted-foreground">
                   {pushToTalkShortcut}
                 </kbd>
@@ -192,7 +193,7 @@ export function MicControls({
         </Tooltip>
         <PopoverTrigger asChild>
           <Button
-            aria-label="Audio settings"
+            aria-label={tl("Audio settings")}
             className={chevronButtonClass}
             size="icon"
             variant={compact ? "ghost" : "secondary"}
@@ -230,13 +231,17 @@ export function MicControls({
       >
         <div className="flex flex-col gap-3">
           <div>
-            <span className="mb-1 block text-xs font-medium">Input Mode</span>
+            <span className="mb-1 block text-xs font-medium">
+              {tl("Input Mode")}
+            </span>
             <button
               aria-label={
-                isPttMode ? "Turn off Push to Talk" : "Turn on Push to Talk"
+                isPttMode
+                  ? tl("Turn off Push to Talk")
+                  : tl("Turn on Push to Talk")
               }
               aria-pressed={isPttMode}
-              className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-xs transition-colors hover:bg-accent"
+              className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-start text-xs transition-colors hover:bg-accent"
               onClick={() =>
                 void onSelectVoiceInputMode(
                   isPttMode ? "voice_activity" : "push_to_talk",
@@ -247,19 +252,19 @@ export function MicControls({
               <Check
                 className={cn("h-3 w-3 shrink-0", !isPttMode && "invisible")}
               />
-              <span className="font-medium">Push to Talk</span>
-              <kbd className="ml-auto rounded border border-border/70 bg-muted/70 px-1.5 py-0.5 text-2xs font-medium text-muted-foreground">
+              <span className="font-medium">{tl("Push to Talk")}</span>
+              <kbd className="ms-auto rounded border border-border/70 bg-muted/70 px-1.5 py-0.5 text-2xs font-medium text-muted-foreground">
                 {pushToTalkShortcut}
               </kbd>
             </button>
             <span className="sr-only" aria-live="polite">
               {isPttMode
-                ? "Push to Talk is enabled."
-                : "Microphone is continuous."}
+                ? tl("Push to Talk is enabled.")
+                : tl("Microphone is continuous.")}
             </span>
           </div>
           <DeviceList
-            label="Microphone"
+            label={tl("Microphone")}
             devices={audioDevices.map((d) => ({
               id: d.deviceId,
               label: d.label || `Mic ${d.deviceId.slice(0, 8)}`,
@@ -273,7 +278,7 @@ export function MicControls({
               htmlFor="mic-volume"
               className="mb-1 block text-xs font-medium"
             >
-              Input Volume
+              {tl("Input Volume")}
             </label>
             <div className="flex items-center gap-2">
               <input
@@ -286,16 +291,17 @@ export function MicControls({
                 onChange={(e) => onGainChange(Number(e.target.value))}
                 className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-muted accent-foreground"
               />
-              <span className="w-8 text-right text-xs text-muted-foreground">
+              <span className="w-8 text-end text-xs text-muted-foreground">
                 {Math.round(micGain * 100)}%
               </span>
             </div>
             {micUnavailable && (
               <div className="mt-3 rounded-md border border-foreground/10 bg-foreground/8 px-2 py-2 text-xs text-foreground">
-                <p className="font-medium">Microphone unavailable</p>
+                <p className="font-medium">{tl("Microphone unavailable")}</p>
                 <p className="mt-1 leading-snug text-foreground/70">
-                  Check app microphone permission or select another input
-                  device.
+                  {tl(
+                    "Check app microphone permission or select another input device.",
+                  )}
                 </p>
                 {isMac && (
                   <Button
@@ -314,7 +320,7 @@ export function MicControls({
                     type="button"
                     variant="secondary"
                   >
-                    Open Settings
+                    {tl("Open Settings")}
                   </Button>
                 )}
               </div>
@@ -362,7 +368,7 @@ export function SpeakerControls({
           </PopoverAnchor>
           <PopoverContent
             align="center"
-            aria-label="Headphones recommended"
+            aria-label={tl("Headphones recommended")}
             className="buzz-huddle-drawer buzz-huddle-popover buzz-huddle-headphones-hint w-64 p-3 text-foreground"
             onCloseAutoFocus={(event) => event.preventDefault()}
             onOpenAutoFocus={(event) => event.preventDefault()}
@@ -372,11 +378,12 @@ export function SpeakerControls({
             <div className="flex flex-col gap-2">
               <div>
                 <p className="text-xs font-medium">
-                  Headphones help prevent echo
+                  {tl("Headphones help prevent echo")}
                 </p>
                 <p className="mt-1 text-xs leading-snug text-foreground/75">
-                  If people are nearby, speakers can feed back into your mic.
-                  Headphones keep huddles clearer.
+                  {tl(
+                    "If people are nearby, speakers can feed back into your mic. Headphones keep huddles clearer.",
+                  )}
                 </p>
               </div>
               <div className="flex justify-end">
@@ -387,14 +394,16 @@ export function SpeakerControls({
                   type="button"
                   variant="ghost"
                 >
-                  Got it
+                  {tl("Got it")}
                 </Button>
               </div>
             </div>
           </PopoverContent>
         </Popover>
         <Button
-          aria-label={ttsEnabled ? "Mute agent speech" : "Unmute agent speech"}
+          aria-label={
+            ttsEnabled ? tl("Mute agent speech") : tl("Unmute agent speech")
+          }
           aria-pressed={!ttsEnabled}
           className={cn(
             splitIconButtonClass,
@@ -412,7 +421,7 @@ export function SpeakerControls({
         </Button>
         <PopoverTrigger asChild>
           <Button
-            aria-label="Speaker settings"
+            aria-label={tl("Speaker settings")}
             className={splitChevronButtonClass}
             size="icon"
             variant="secondary"
@@ -426,7 +435,7 @@ export function SpeakerControls({
         className="buzz-huddle-drawer buzz-huddle-popover w-64 text-foreground"
       >
         <DeviceList
-          label="Speaker"
+          label={tl("Speaker")}
           devices={outputDevices.map((d) => ({ id: d.name, label: d.name }))}
           selectedId={selectedOutputDevice}
           onSelect={onSelectOutputDevice}
@@ -467,14 +476,14 @@ export function DeviceList({
       <ul className="flex flex-col">
         <li>
           <button
-            className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-xs transition-colors hover:bg-accent"
+            className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-start text-xs transition-colors hover:bg-accent"
             onClick={() => onSelect("")}
             type="button"
           >
             <Check
               className={cn("h-4 w-4 shrink-0", selectedId && "invisible")}
             />
-            System default
+            {tl("System default")}
           </button>
         </li>
         {keyedDevices.map((d) => {
@@ -482,7 +491,7 @@ export function DeviceList({
           return (
             <li key={d.key}>
               <button
-                className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-xs transition-colors hover:bg-accent"
+                className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-start text-xs transition-colors hover:bg-accent"
                 onClick={() => onSelect(d.id)}
                 type="button"
               >
@@ -497,7 +506,7 @@ export function DeviceList({
       </ul>
       {showChangeHint && (
         <p className="mt-1 text-2xs text-muted-foreground">
-          Change takes effect on next huddle
+          {tl("Change takes effect on next huddle")}
         </p>
       )}
     </div>

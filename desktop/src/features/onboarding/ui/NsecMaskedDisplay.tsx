@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { tl } from "@/shared/i18n/tl";
 
 type NsecAction = {
   icon?: React.ReactNode;
@@ -131,7 +132,9 @@ export function NsecMaskedDisplay({
         </div>
         <div className={`flex shrink-0 ${isBare ? "gap-1.5" : "gap-1"}`}>
           <Button
-            aria-label={isRevealed ? "Hide private key" : "Reveal private key"}
+            aria-label={
+              isRevealed ? tl("Hide private key") : tl("Reveal private key")
+            }
             className={`${isBare ? "h-10 w-10" : "h-7 w-7"} text-muted-foreground hover:text-foreground`}
             data-testid="nsec-reveal-toggle"
             onClick={handleRevealToggle}
@@ -149,7 +152,7 @@ export function NsecMaskedDisplay({
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
-                  aria-label="Private key actions"
+                  aria-label={tl("Private key actions")}
                   className={`${isBare ? "h-10 w-10" : "h-7 w-7"} text-muted-foreground hover:text-foreground`}
                   data-testid="nsec-actions"
                   size="icon"
@@ -165,7 +168,7 @@ export function NsecMaskedDisplay({
                   onSelect={handleMenuCopy}
                 >
                   <Copy aria-hidden="true" />
-                  Copy
+                  {tl("Copy")}
                 </DropdownMenuItem>
                 {actions.map((action) => (
                   <DropdownMenuItem
@@ -181,7 +184,7 @@ export function NsecMaskedDisplay({
             </DropdownMenu>
           ) : (
             <Button
-              aria-label="Copy private key"
+              aria-label={tl("Copy private key")}
               className={`${isBare ? "h-10 w-10" : "h-7 w-7"} text-muted-foreground hover:text-foreground`}
               data-testid="nsec-copy"
               onClick={() => void handleCopy()}

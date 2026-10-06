@@ -9,9 +9,10 @@ import { cn } from "@/shared/lib/cn";
 import { truncateNpub } from "@/shared/lib/pubkey";
 
 import { formatRecipientName } from "./useNewMessageRecipients";
+import { tl } from "@/shared/i18n/tl";
 
 const RESULT_ROW_INSET_DIVIDER_CLASS =
-  "after:pointer-events-none after:absolute after:bottom-0 after:left-[3.75rem] after:right-0 after:h-px after:bg-border/60 after:content-[''] last:after:hidden";
+  "after:pointer-events-none after:absolute after:bottom-0 after:start-[3.75rem] after:end-0 after:h-px after:bg-border/60 after:content-[''] last:after:hidden";
 const TEXT_SWAP_BASE_CLASS =
   "min-w-0 truncate transition-[opacity,filter] duration-[250ms] ease-in-out motion-reduce:transition-none";
 const TEXT_SWAP_VISIBLE_CLASS = "opacity-100 blur-0";
@@ -50,7 +51,7 @@ function HoverRecipientIdentity({
           TEXT_SWAP_BASE_CLASS,
           TEXT_SWAP_HIDDEN_CLASS,
           TEXT_SWAP_HOVER_VISIBLE_CLASS,
-          "absolute inset-y-0 left-0 font-mono text-2xs text-muted-foreground",
+          "absolute inset-y-0 start-0 font-mono text-2xs text-muted-foreground",
         )}
         data-testid={`new-dm-npub-${pubkey}`}
       >
@@ -98,7 +99,7 @@ export function NewMessageResultRow({
         aria-label={`${isAlreadySelected ? "Already added" : "Add"} ${name}`}
         aria-selected={isAlreadySelected || isKeyboardHighlighted}
         className={cn(
-          "group/dm-result flex min-h-14 w-full cursor-pointer items-center gap-3 px-4 py-3.5 text-left transition-colors duration-150 ease-out hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-60",
+          "group/dm-result flex min-h-14 w-full cursor-pointer items-center gap-3 px-4 py-3.5 text-start transition-colors duration-150 ease-out hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-60",
           isKeyboardHighlighted && "bg-muted/40",
         )}
         data-testid={`new-dm-result-${user.pubkey}`}
@@ -132,7 +133,7 @@ export function NewMessageResultRow({
                     className="h-3 w-3"
                     data-testid="new-dm-agent-icon"
                   />
-                  agent
+                  {tl("agent")}
                 </span>
                 <AgentManagementMarker
                   pubkey={user.pubkey}
@@ -141,7 +142,7 @@ export function NewMessageResultRow({
               </div>
               {ownerLabel ? (
                 <span className="block truncate text-xs text-muted-foreground">
-                  managed by {ownerLabel}
+                  {tl("managed by")} {ownerLabel}
                 </span>
               ) : null}
             </div>

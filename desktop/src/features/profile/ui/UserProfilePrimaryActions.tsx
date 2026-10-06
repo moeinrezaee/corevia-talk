@@ -19,6 +19,7 @@ import type {
 import { useFeatureEnabled } from "@/shared/features";
 import { cn } from "@/shared/lib/cn";
 import { Spinner } from "@/shared/ui/spinner";
+import { tl } from "@/shared/i18n/tl";
 
 // ── Primary actions ──────────────────────────────────────────────────────────
 
@@ -108,7 +109,7 @@ export function ProfilePrimaryActions({
         <ProfileActionTile
           disabled={agentActionDisabled}
           icon={RefreshCw}
-          label="Restart agent"
+          label={tl("Restart agent")}
           onClick={onAgentRestart}
           testId="user-profile-agent-restart"
         />
@@ -118,7 +119,7 @@ export function ProfilePrimaryActions({
           disabled={messagePending}
           icon={MessageSquare}
           isLoading={messagePending}
-          label="Message"
+          label={tl("Message")}
           onClick={onMessage}
           testId="user-profile-message"
         />
@@ -128,7 +129,7 @@ export function ProfilePrimaryActions({
           disabled={huddlePending}
           icon={Headphones}
           isLoading={huddlePending}
-          label="Huddle"
+          label={tl("Huddle")}
           onClick={onHuddle}
           testId="user-profile-huddle"
         />
@@ -138,7 +139,7 @@ export function ProfilePrimaryActions({
           disabled={wavePending}
           icon={Hand}
           isLoading={wavePending}
-          label="Wave"
+          label={tl("Wave")}
           onClick={onWave}
           testId="user-profile-wave"
         />
@@ -148,7 +149,7 @@ export function ProfilePrimaryActions({
           active={isFollowing}
           disabled={followToggleMutation.isPending}
           icon={isFollowing ? UserMinus : UserPlus}
-          label={isFollowing ? "Unfollow" : "Follow"}
+          label={isFollowing ? tl("Unfollow") : tl("Follow")}
           onClick={handleFollowClick}
         />
       ) : null}
@@ -179,7 +180,7 @@ export function ProfilePersonaPrimaryActions({
         active
         disabled={disabled}
         icon={Play}
-        label="Start agent"
+        label={tl("Start agent")}
         onClick={onStartAgent}
         testId="user-profile-start-agent"
       />

@@ -13,6 +13,7 @@ import {
   type IdentityArchiveRequest,
   type IdentityUnarchiveRequest,
 } from "@/shared/api/tauriIdentityArchive";
+import { tl } from "@/shared/i18n/tl";
 
 export const archivedIdentitiesQueryKey = ["archivedIdentities"] as const;
 
@@ -153,7 +154,7 @@ export function useIdentityArchive(
     archiveMutation.mutate(
       { targetPubkey },
       {
-        onSuccess: () => toast.success("Archived on this relay"),
+        onSuccess: () => toast.success(tl("Archived on this relay")),
         onError: (error) =>
           toast.error(
             `Archive failed: ${error instanceof Error ? error.message : String(error)}`,
@@ -167,7 +168,7 @@ export function useIdentityArchive(
     unarchiveMutation.mutate(
       { targetPubkey },
       {
-        onSuccess: () => toast.success("Unarchived on this relay"),
+        onSuccess: () => toast.success(tl("Unarchived on this relay")),
         onError: (error) =>
           toast.error(
             `Unarchive failed: ${error instanceof Error ? error.message : String(error)}`,

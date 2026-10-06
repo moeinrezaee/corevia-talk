@@ -42,6 +42,7 @@ import type { ProjectRepoDiff, ProjectRepoDiffFile } from "@/shared/api/types";
 import { BuzzLoadingState } from "@/shared/ui/BuzzLoadingState";
 import { PROJECT_DETAIL_PANEL_CLASS } from "./projectPanelStyles";
 import { ProjectPullRequestInlineCommentThread } from "./ProjectPullRequestInlineComments";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 function fileName(path: string) {
   return path.split("/").pop() || path;
@@ -384,11 +385,11 @@ function diffRows(file: ProjectRepoDiffFile): DiffRow[] {
 }
 
 function diffLineClassName(type: DiffRow["type"]) {
-  if (type === "add") return "border-green-500/10 border-l-2 bg-green-500/10";
+  if (type === "add") return "border-green-500/10 border-s-2 bg-green-500/10";
   if (type === "delete")
-    return "border-destructive/10 border-l-2 bg-destructive/10";
+    return "border-destructive/10 border-s-2 bg-destructive/10";
   if (type === "hunk") return "bg-sky-500/10 text-sky-500";
-  return "border-transparent border-l-2";
+  return "border-transparent border-s-2";
 }
 
 function linePrefix(type: DiffRow["type"]) {
@@ -493,7 +494,7 @@ function DiffPreview({
   if (rows.length === 0) {
     return (
       <div className="bg-muted/20 px-4 py-4 text-sm text-muted-foreground">
-        No textual diff is available for this file.
+        {tl("No textual diff is available for this file.")}
       </div>
     );
   }
@@ -502,8 +503,8 @@ function DiffPreview({
     <div className="overflow-x-auto bg-background/70 font-mono text-xs leading-5">
       {file.truncated ? (
         <div className="border-border/40 border-b bg-amber-500/10 px-4 py-2 text-amber-600 dark:text-amber-400">
-          Large diff truncated — showing the first {rows.length} lines. Use a
-          local checkout to review the full change.
+          {tl("Large diff truncated — showing the first")} {rows.length}{" "}
+          {tl("lines. Use a local checkout to review the full change.")}
         </div>
       ) : null}
       {rows.map((row) => {
@@ -541,23 +542,27 @@ function DiffPreview({
               ref={isFocused ? focusedRowRef : undefined}
               tabIndex={isFocused ? -1 : undefined}
             >
-              <span className="select-none border-border/40 border-r px-2 text-right text-muted-foreground/70">
+              <span className="select-none border-border/40 border-e px-2 text-end text-muted-foreground/70">
                 {row.oldLine ?? " "}
               </span>
-              <span className="select-none border-border/40 border-r px-2 text-right text-muted-foreground/70">
+              <span className="select-none border-border/40 border-e px-2 text-end text-muted-foreground/70">
                 {row.newLine ?? " "}
               </span>
               <span className="flex select-none items-center justify-center">
                 {anchor && inlineComments ? (
                   <button
-                    aria-label={`Comment on ${anchor.path} ${anchor.side} line ${anchor.line}`}
+                    aria-label={tlt("Comment on {0} {1} line {2}", [
+                      anchor.path,
+                      anchor.side,
+                      anchor.line,
+                    ])}
                     className={cn(
                       "flex h-5 w-5 items-center justify-center rounded text-muted-foreground opacity-0 hover:bg-primary hover:text-primary-foreground focus-visible:opacity-100 focus-visible:outline-hidden group-hover:opacity-100",
                       (comments.length > 0 || isActive) && "opacity-100",
                     )}
                     data-testid="project-diff-add-comment"
                     onClick={() => inlineComments.onStart(anchor)}
-                    title="Add line comment"
+                    title={tl("Add line comment")}
                     type="button"
                   >
                     <MessageSquarePlus className="h-3.5 w-3.5" />
@@ -573,7 +578,7 @@ function DiffPreview({
               >
                 {linePrefix(row.type)}
               </span>
-              <code className="min-w-0 whitespace-pre pr-3 text-foreground">
+              <code className="min-w-0 whitespace-pre pe-3 text-foreground">
                 {row.content || " "}
               </code>
             </div>
@@ -619,7 +624,7 @@ function FileTreeItems({
       return (
         <button
           className={cn(
-            "flex w-full min-w-0 items-center gap-2 py-1.5 pr-3 text-left text-xs text-muted-foreground hover:bg-muted/35 hover:text-foreground focus-visible:bg-muted/35 focus-visible:outline-hidden",
+            "flex w-full min-w-0 items-center gap-2 py-1.5 pe-3 text-start text-xs text-muted-foreground hover:bg-muted/35 hover:text-foreground focus-visible:bg-muted/35 focus-visible:outline-hidden",
             selectedPath === child.file.path && "bg-muted/45 text-foreground",
           )}
           key={child.path}
@@ -636,7 +641,7 @@ function FileTreeItems({
     return (
       <div key={child.path}>
         <div
-          className="flex min-w-0 items-center gap-2 py-1.5 pr-3 text-xs font-medium text-muted-foreground"
+          className="flex min-w-0 items-center gap-2 py-1.5 pe-3 text-xs font-medium text-muted-foreground"
           style={{ paddingLeft: `${0.75 + depth * 0.9}rem` }}
         >
           <ChangedFolderTreeIcon />
@@ -821,7 +826,7 @@ export function ProjectDiffFilesPanel({
   }, [filteredFiles, selectedPath]);
 
   if (isLoading && !diff) {
-    return <BuzzLoadingState label="Loading changed files" />;
+    return <BuzzLoadingState label={tl("Loading changed files")} />;
   }
 
   if (error && !diff) {
@@ -834,7 +839,9 @@ export function ProjectDiffFilesPanel({
         )}
         data-project-detail-panel={embedded ? undefined : true}
       >
-        <p>Could not load changed files for this {subjectLabel}.</p>
+        <p>
+          {tl("Could not load changed files for this")} {subjectLabel}.
+        </p>
         {message ? (
           <p className="font-mono text-xs text-muted-foreground/80">
             {message}
@@ -853,7 +860,8 @@ export function ProjectDiffFilesPanel({
         )}
         data-project-detail-panel={embedded ? undefined : true}
       >
-        No changed files are available for this {subjectLabel} yet.
+        {tl("No changed files are available for this")} {subjectLabel}{" "}
+        {tl("yet.")}
       </div>
     );
   }
@@ -867,18 +875,20 @@ export function ProjectDiffFilesPanel({
       )}
       data-project-detail-panel={embedded ? undefined : true}
     >
-      <aside className="border-border/50 border-b bg-background/30 lg:border-r lg:border-b-0">
+      <aside className="border-border/50 border-b bg-background/30 lg:border-e lg:border-b-0">
         <div className="space-y-3 p-3">
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <Files className="h-3.5 w-3.5" />
-            <span>{files.length} changed files</span>
+            <span>
+              {files.length} {tl("changed files")}
+            </span>
           </div>
           <label className="flex h-8 items-center gap-2 border border-border/60 bg-background/70 px-2 text-xs text-muted-foreground">
             <Search className="h-3.5 w-3.5" />
             <input
               className="min-w-0 flex-1 bg-transparent text-foreground outline-hidden placeholder:text-muted-foreground"
               onChange={(event) => setQuery(event.currentTarget.value)}
-              placeholder="Filter files…"
+              placeholder={tl("Filter files…")}
               value={query}
             />
           </label>
@@ -904,7 +914,9 @@ export function ProjectDiffFilesPanel({
             <span className="truncate">{headerLabel}</span>
           </div>
           <div className="flex items-center gap-3">
-            <span>{files.length} files changed</span>
+            <span>
+              {files.length} {tl("files changed")}
+            </span>
             <span className="text-green-500">+{stats.additions}</span>
             <span className="text-destructive">-{stats.deletions}</span>
           </div>
@@ -946,7 +958,7 @@ export function ProjectDiffFilesPanel({
             </article>
           ) : (
             <div className="border border-border/60 bg-background/45 p-4 text-sm text-muted-foreground">
-              No files match this filter.
+              {tl("No files match this filter.")}
             </div>
           )}
         </div>

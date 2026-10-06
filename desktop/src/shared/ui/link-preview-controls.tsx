@@ -21,6 +21,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { tl } from "@/shared/i18n/tl";
 
 const CONTROL_BUTTON_CLASS =
   "h-5 w-5 rounded-full text-muted-foreground opacity-0 transition-opacity hover:text-foreground focus-visible:opacity-100 group-hover/message:opacity-100 data-[state=open]:opacity-100";
@@ -29,8 +30,8 @@ const LINK_PREVIEW_STYLE_OPTIONS: {
   value: LinkPreviewStyle;
   label: string;
 }[] = [
-  { value: "rich", label: "Rich" },
-  { value: "compact", label: "Compact" },
+  { value: "rich", label: tl("Rich") },
+  { value: "compact", label: tl("Compact") },
 ];
 
 export function LinkPreviewControls({
@@ -57,12 +58,13 @@ export function LinkPreviewControls({
       {
         action: onOpenSettings
           ? {
-              label: "Appearance",
+              label: tl("Appearance"),
               onClick: () => onOpenSettings("appearance"),
             }
           : undefined,
-        description:
+        description: tl(
           "You can always modify this and other settings in Appearance.",
+        ),
       },
     );
   };
@@ -71,16 +73,16 @@ export function LinkPreviewControls({
     <div
       className={cn(
         "absolute top-0 z-20 flex flex-col",
-        placement === "left" ? "right-full" : "left-full ml-1",
+        placement === "left" ? "end-full" : "start-full ms-1",
       )}
     >
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button
-            aria-label="Link display settings"
+            aria-label={tl("Link display settings")}
             className={CONTROL_BUTTON_CLASS}
             size="icon-xs"
-            title="Link display settings"
+            title={tl("Link display settings")}
             type="button"
             variant="ghost"
           >
@@ -89,7 +91,7 @@ export function LinkPreviewControls({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" side="right">
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Display</DropdownMenuSubTrigger>
+            <DropdownMenuSubTrigger>{tl("Display")}</DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
               <DropdownMenuRadioGroup
                 onValueChange={handleStyleChange}
@@ -114,7 +116,7 @@ export function LinkPreviewControls({
                 onClick={onRemove}
               >
                 <EyeOff aria-hidden="true" />
-                Remove preview
+                {tl("Remove preview")}
               </DropdownMenuItem>
             </>
           ) : null}

@@ -6,6 +6,7 @@ import { UserProfilePopover } from "@/features/profile/ui/UserProfilePopover";
 import { cn } from "@/shared/lib/cn";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { tlt } from "@/shared/i18n/tl";
 
 const MAX_MEMBERSHIP_AVATARS = 5;
 
@@ -132,7 +133,7 @@ export function SystemMessageAvatar({
       <UserAvatar
         accent={isTargetAgent}
         avatarUrl={resolveAvatarUrl(targetPubkey, profiles)}
-        className="!absolute !bottom-0 !right-0 !h-7 !w-7 border-2 border-background text-2xs"
+        className="!absolute !bottom-0 !end-0 !h-7 !w-7 border-2 border-background text-2xs"
         displayName={targetLabel}
         shape={isTargetAgent ? "squircle" : "circle"}
       />
@@ -174,7 +175,10 @@ export function MembershipAvatarStack({
   if (visiblePubkeys.length === 0) return null;
   return (
     <div
-      aria-label={`${visiblePubkeys.length} channel member${visiblePubkeys.length === 1 ? "" : "s"}`}
+      aria-label={tlt("{0} channel member{1}", [
+        visiblePubkeys.length,
+        visiblePubkeys.length === 1 ? "" : "s",
+      ])}
       className="relative z-10 flex shrink-0 items-center justify-center"
       data-testid="system-message-avatar-stack"
       role="img"
@@ -194,7 +198,7 @@ export function MembershipAvatarStack({
         });
         return (
           <div
-            className={cn("relative", index > 0 && "-ml-1")}
+            className={cn("relative", index > 0 && "-ms-1")}
             data-testid="system-message-avatar"
             key={pubkey}
             style={{ zIndex: index + 1 }}

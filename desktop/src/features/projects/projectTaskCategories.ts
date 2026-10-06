@@ -1,7 +1,8 @@
+import { tl } from "@/shared/i18n/tl";
 export const PROJECT_TASK_CATEGORIES = [
-  { label: "Issue", value: "issue" },
-  { label: "Change request", value: "change-request" },
-  { label: "Improvement", value: "improvement" },
+  { label: tl("Issue"), value: "issue" },
+  { label: tl("Change request"), value: "change-request" },
+  { label: tl("Improvement"), value: "improvement" },
 ] as const;
 
 export type ProjectTaskCategory =

@@ -1,6 +1,7 @@
 import { listen } from "@tauri-apps/api/event";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { tl } from "@/shared/i18n/tl";
 
 const MIGRATION_TOAST_KEY = "buzz-legacy-nest-migrated-notified";
 
@@ -23,7 +24,7 @@ const MIGRATION_TOAST_KEY = "buzz-legacy-nest-migrated-notified";
 export function useNestNotifications(): void {
   useEffect(() => {
     const unlistenReposError = listen<string>("repos-dir-error", (event) => {
-      toast.error("Repos directory not applied", {
+      toast.error(tl("Repos directory not applied"), {
         description: event.payload,
       });
     });
@@ -33,8 +34,8 @@ export function useNestNotifications(): void {
         return;
       }
       localStorage.setItem(MIGRATION_TOAST_KEY, "true");
-      toast.success("Migrated notes from ~/.sprout", {
-        description: "You can delete it to reclaim disk space.",
+      toast.success(tl("Migrated notes from ~/.sprout"), {
+        description: tl("You can delete it to reclaim disk space."),
       });
     });
 

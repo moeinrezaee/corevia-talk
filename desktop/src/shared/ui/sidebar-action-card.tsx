@@ -153,7 +153,7 @@ function SidebarActionDismissButton({
     <button
       aria-label={label}
       className={cn(
-        "group/dismiss pointer-events-none absolute -right-1 -top-2 z-10 h-6 w-6 rounded-full text-muted-foreground/45 transition-colors duration-150 ease-out hover:text-foreground/80 focus-visible:pointer-events-auto focus-visible:text-foreground/80 focus-visible:outline-hidden group-hover/sidebar-action-card:pointer-events-auto group-hover/sidebar-compact-action-card:pointer-events-auto",
+        "group/dismiss pointer-events-none absolute -end-1 -top-2 z-10 h-6 w-6 rounded-full text-muted-foreground/45 transition-colors duration-150 ease-out hover:text-foreground/80 focus-visible:pointer-events-auto focus-visible:text-foreground/80 focus-visible:outline-hidden group-hover/sidebar-action-card:pointer-events-auto group-hover/sidebar-compact-action-card:pointer-events-auto",
         POOF_TRIGGER_CLASS,
         className,
       )}
@@ -251,7 +251,7 @@ export function SidebarCompactActionCard({
       <button
         aria-label={actionAriaLabel}
         className={cn(
-          "flex w-full items-center gap-3 rounded-xl border px-3 py-3 text-left shadow-xs transition-[background-color,border-color,color,box-shadow] duration-150 ease-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-muted-foreground/40 disabled:cursor-default disabled:opacity-100",
+          "flex w-full items-center gap-3 rounded-xl border px-3 py-3 text-start shadow-xs transition-[background-color,border-color,color,box-shadow] duration-150 ease-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-muted-foreground/40 disabled:cursor-default disabled:opacity-100",
           isSuccess
             ? "buzz-sidebar-action-card--success disabled:cursor-default disabled:opacity-100"
             : surface === "secondary"
@@ -303,7 +303,7 @@ export function SidebarCompactActionCard({
         </motion.span>
         <motion.span
           className={cn(
-            "ml-auto flex h-10 w-10 shrink-0 items-center justify-center transition-colors duration-150 ease-out",
+            "ms-auto flex h-10 w-10 shrink-0 items-center justify-center transition-colors duration-150 ease-out",
             isSuccess
               ? "buzz-sidebar-action-card__success-icon"
               : "text-muted-foreground group-hover/sidebar-compact-action-card:text-foreground",

@@ -6,6 +6,7 @@ import { ProfileAvatar } from "@/features/profile/ui/ProfileAvatar";
 import { Dialog } from "@/shared/ui/dialog";
 import { ChooserDialogContent } from "@/shared/ui/chooser-dialog-content";
 import type { ManagedAgentBackend } from "@/shared/api/types";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type ManagedAgentSummary = {
   pubkey: string;
@@ -143,7 +144,7 @@ export function AddAgentDialog({
         data-testid="add-huddle-agent-dialog"
         headerSubtitle="Choose an agent to join this huddle."
         scrollAreaClassName="space-y-5"
-        title="Add agents"
+        title={tl("Add agents")}
       >
         {error ? (
           <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
@@ -159,11 +160,11 @@ export function AddAgentDialog({
 
         {loading ? (
           <p className="py-4 text-center text-sm text-muted-foreground">
-            Loading agents…
+            {tl("Loading agents…")}
           </p>
         ) : availableAgents.length === 0 ? (
           <p className="py-4 text-center text-sm text-muted-foreground">
-            All available agents are already in this huddle.
+            {tl("All available agents are already in this huddle.")}
           </p>
         ) : (
           <ul className="flex flex-col gap-1">
@@ -172,7 +173,7 @@ export function AddAgentDialog({
               return (
                 <li key={agent.pubkey}>
                   <button
-                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent hover:text-accent-foreground disabled:opacity-50"
+                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-start transition-colors hover:bg-accent hover:text-accent-foreground disabled:opacity-50"
                     disabled={adding !== null}
                     onClick={() => void handleAdd(agent)}
                     type="button"
@@ -188,7 +189,7 @@ export function AddAgentDialog({
                     </span>
                     {isAdding ? (
                       <LoaderCircle
-                        aria-label={`Adding ${agent.name}`}
+                        aria-label={tlt("Adding {0}", [agent.name])}
                         className="h-4 w-4 shrink-0 animate-spin text-muted-foreground"
                       />
                     ) : null}

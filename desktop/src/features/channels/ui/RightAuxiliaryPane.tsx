@@ -2,6 +2,7 @@ import type * as React from "react";
 
 import { AUXILIARY_PANEL_MIN_WIDTH_PX } from "@/shared/layout/AuxiliaryPanel";
 import { cn } from "@/shared/lib/cn";
+import { tl } from "@/shared/i18n/tl";
 
 type RightAuxiliaryPaneProps = {
   canResetWidth: boolean;
@@ -38,7 +39,7 @@ export function RightAuxiliaryPane({
         "group/right-pane relative isolate z-31 flex h-full shrink-0 flex-col overflow-hidden bg-background",
         detached
           ? "bg-transparent"
-          : "before:pointer-events-none before:absolute before:bottom-0 before:left-0 before:top-0 before:z-50 before:w-px before:bg-border/80 before:content-['']",
+          : "before:pointer-events-none before:absolute before:bottom-0 before:start-0 before:top-0 before:z-50 before:w-px before:bg-border/80 before:content-['']",
         className,
       )}
       data-testid={testId}
@@ -50,22 +51,22 @@ export function RightAuxiliaryPane({
       }}
     >
       <button
-        aria-label="Resize panel"
-        className="peer/right-pane-resize group/right-pane-resize absolute inset-y-0 left-0 z-50 w-3 -translate-x-1/2 cursor-col-resize"
-        data-testid="right-auxiliary-pane-resize-handle"
+        aria-label={tl("Resize panel")}
+        className="peer/right-pane-resize group/right-pane-resize absolute inset-y-0 left-0 rtl:left-auto rtl:right-0 z-50 w-3 -translate-x-1/2 rtl:translate-x-1/2 cursor-col-resize"
+        data-testid="end-auxiliary-pane-resize-handle"
         onDoubleClick={canResetWidth ? onResetWidth : undefined}
         onPointerDown={onResizeStart}
         title={
           canResetWidth
-            ? "Drag to resize. Double-click to reset width."
-            : "Drag to resize."
+            ? tl("Drag to resize. Double-click to reset width.")
+            : tl("Drag to resize.")
         }
         type="button"
       >
         {showResizeIndicator ? (
           <span
             className="absolute bottom-0 left-1/2 top-0 w-px -translate-x-1/2 bg-transparent group-hover/right-pane-resize:bg-border/80 group-focus-visible/right-pane-resize:bg-border/80"
-            data-testid="right-auxiliary-pane-resize-indicator"
+            data-testid="end-auxiliary-pane-resize-indicator"
           />
         ) : null}
       </button>

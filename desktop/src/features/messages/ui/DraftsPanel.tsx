@@ -39,6 +39,7 @@ import {
 import { Button } from "@/shared/ui/button";
 import { Markdown } from "@/shared/ui/markdown";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const SENT_DRAFT_PREFIX = "sent:";
 const THREAD_DRAFT_PREFIX = "thread:";
@@ -312,17 +313,17 @@ export function SendConfirmDialog({
     >
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Send message</AlertDialogTitle>
+          <AlertDialogTitle>{tl("Send message")}</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to send this message to {destination}?
+            {tl("Are you sure you want to send this message to")} {destination}?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <Button onClick={onCancel} size="sm" type="button" variant="outline">
-            Cancel
+            {tl("Cancel")}
           </Button>
           <Button onClick={onConfirm} size="sm" type="button">
-            Send
+            {tl("Send")}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -373,12 +374,12 @@ function DraftRow({
       data-testid={`home-draft-item-${entry.key}`}
     >
       <button
-        aria-label={`View draft in ${channelLabel}`}
-        className="block w-full min-w-0 px-3 py-3 text-left disabled:cursor-default"
+        aria-label={tlt("View draft in {0}", [channelLabel])}
+        className="block w-full min-w-0 px-3 py-3 text-start disabled:cursor-default"
         onClick={onSelect}
         type="button"
       >
-        <div className="min-w-0 pr-0 transition-[padding] group-hover/draft-row:pr-20 group-focus-within/draft-row:pr-20">
+        <div className="min-w-0 pe-0 transition-[padding] group-hover/draft-row:pe-20 group-focus-within/draft-row:pe-20">
           <div className="flex min-w-0 items-center gap-1.5 text-xs text-muted-foreground">
             {isPrivate ? <Lock className="h-3.5 w-3.5 shrink-0" /> : null}
             <span
@@ -398,7 +399,7 @@ function DraftRow({
                 className="shrink-0 rounded px-1 py-0.5 text-2xs font-medium text-destructive/70 ring-1 ring-destructive/30"
                 data-testid={`home-draft-orphaned-label-${entry.key}`}
               >
-                thread deleted
+                {tl("thread deleted")}
               </span>
             ) : null}
           </div>
@@ -413,17 +414,17 @@ function DraftRow({
       </button>
 
       {/* Hover action buttons: edit / delete / send (order per spec) */}
-      <div className="pointer-events-none absolute right-2 top-2 flex items-center gap-0.5 rounded-full bg-background/95 p-0.5 opacity-0 shadow-xs ring-1 ring-border/70 transition-opacity group-hover/draft-row:pointer-events-auto group-hover/draft-row:opacity-100 group-focus-within/draft-row:pointer-events-auto group-focus-within/draft-row:opacity-100">
+      <div className="pointer-events-none absolute end-2 top-2 flex items-center gap-0.5 rounded-full bg-background/95 p-0.5 opacity-0 shadow-xs ring-1 ring-border/70 transition-opacity group-hover/draft-row:pointer-events-auto group-hover/draft-row:opacity-100 group-focus-within/draft-row:pointer-events-auto group-focus-within/draft-row:opacity-100">
         {isSent ? null : (
           <>
             <DraftRowActionButton
               disabled={!canOpen}
               label={
                 canOpen
-                  ? "Open draft"
+                  ? tl("Open draft")
                   : isOrphaned
-                    ? "Thread deleted"
-                    : "No channel link"
+                    ? tl("Thread deleted")
+                    : tl("No channel link")
               }
               onClick={() => onOpen(entry)}
             >
@@ -433,10 +434,10 @@ function DraftRow({
               disabled={!canSend}
               label={
                 canSend
-                  ? "Send message"
+                  ? tl("Send message")
                   : isOrphaned
-                    ? "Thread deleted"
-                    : "No channel link"
+                    ? tl("Thread deleted")
+                    : tl("No channel link")
               }
               onClick={() => onSend(entry)}
             >
@@ -445,7 +446,7 @@ function DraftRow({
           </>
         )}
         <DraftRowActionButton
-          label="Delete draft"
+          label={tl("Delete draft")}
           onClick={() => onDelete(entry.key)}
         >
           <Trash2 className="h-4 w-4" />
@@ -636,7 +637,7 @@ export function DraftsPanel({
     return (
       <div className="flex h-full flex-col items-center justify-center gap-2 p-8 text-center">
         <FileText className="h-8 w-8 text-muted-foreground/50" />
-        <p className="text-sm text-muted-foreground">No drafts</p>
+        <p className="text-sm text-muted-foreground">{tl("No drafts")}</p>
       </div>
     );
   }
@@ -648,7 +649,7 @@ export function DraftsPanel({
         data-testid="home-inbox-drafts-list"
       >
         <h3 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-          Drafts
+          {tl("Drafts")}
         </h3>
         {items.map(({ entry, rootStatus, source }) => (
           <DraftRow

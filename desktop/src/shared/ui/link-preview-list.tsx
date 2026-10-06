@@ -16,6 +16,7 @@ import { AttachmentGroup } from "@/shared/ui/attachment";
 import { Button } from "@/shared/ui/button";
 import { LinkPreviewAttachment } from "@/shared/ui/link-preview-attachment";
 import type { LinkPreviewImageLightboxComponent } from "@/shared/ui/rich-link-preview-attachment";
+import { tl } from "@/shared/i18n/tl";
 
 export function LinkPreviewList({
   ImageLightbox,
@@ -64,17 +65,19 @@ export function LinkPreviewList({
         <AlertDialog onOpenChange={setDialogOpen} open={dialogOpen}>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Remove {previewNoun}?</AlertDialogTitle>
+              <AlertDialogTitle>
+                {tl("Remove")} {previewNoun}?
+              </AlertDialogTitle>
               <AlertDialogDescription>
-                This removes{" "}
-                {previews.length === 1 ? "the preview" : "the previews"} for
-                everyone.
+                {tl("This removes")}{" "}
+                {previews.length === 1 ? tl("the preview") : tl("the previews")}{" "}
+                {tl("for everyone.")}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel asChild>
                 <Button type="button" variant="outline">
-                  Cancel
+                  {tl("Cancel")}
                 </Button>
               </AlertDialogCancel>
               <AlertDialogAction asChild>
@@ -86,7 +89,7 @@ export function LinkPreviewList({
                   type="button"
                   variant="destructive"
                 >
-                  Remove {previewNoun}
+                  {tl("Remove")} {previewNoun}
                 </Button>
               </AlertDialogAction>
             </AlertDialogFooter>

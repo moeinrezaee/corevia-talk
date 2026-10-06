@@ -29,6 +29,7 @@ import {
 } from "@/shared/ui/mentionChip";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { tl, tlt } from "@/shared/i18n/tl";
 type TopbarSearchProps = {
   channelLabels?: Record<string, string>;
   channels: Channel[];
@@ -447,7 +448,7 @@ export function TopbarSearch({
         kind: "action",
         action: {
           id: "browse-channels",
-          title: "Browse channels",
+          title: tl("Browse channels"),
         },
       });
     }
@@ -457,7 +458,7 @@ export function TopbarSearch({
         kind: "action",
         action: {
           id: "create-channel",
-          title: "Create a new channel",
+          title: tl("Create a new channel"),
         },
       });
     }
@@ -467,7 +468,7 @@ export function TopbarSearch({
         kind: "action",
         action: {
           id: "create-agent",
-          title: "Create a new agent",
+          title: tl("Create a new agent"),
         },
       });
     }
@@ -700,7 +701,7 @@ export function TopbarSearch({
       <button
         aria-selected={menuIndex === selectedMenuIndex}
         className={cn(
-          "search-result-row flex w-full gap-3 rounded-lg px-2.5 text-left transition-colors",
+          "search-result-row flex w-full gap-3 rounded-lg px-2.5 text-start transition-colors",
           result.kind === "message" ? "items-start" : "items-center",
           result.kind === "message" ? "py-3.5" : "py-2.5",
           menuIndex === selectedMenuIndex
@@ -831,12 +832,12 @@ export function TopbarSearch({
             currentChannelSearchAction ? "pb-5" : "py-5",
           )}
         >
-          <p>No recent activity yet.</p>
+          <p>{tl("No recent activity yet.")}</p>
         </div>
       </div>
     ) : (
       <div
-        aria-label="Recent activity"
+        aria-label={tl("Recent activity")}
         className="max-h-96 overflow-y-auto"
         role="listbox"
       >
@@ -850,7 +851,7 @@ export function TopbarSearch({
                 {suggestedResults.length > 0 ? (
                   <div>
                     <div className={SEARCH_SECTION_TITLE_CLASS}>
-                      Recent activity
+                      {tl("Recent activity")}
                     </div>
                     {suggestedResults.map((result) =>
                       renderSearchResultRow(result, resultIndex++),
@@ -859,7 +860,9 @@ export function TopbarSearch({
                 ) : null}
                 {suggestionActionResults.length > 0 ? (
                   <div>
-                    <div className={SEARCH_SECTION_TITLE_CLASS}>Actions</div>
+                    <div className={SEARCH_SECTION_TITLE_CLASS}>
+                      {tl("Actions")}
+                    </div>
                     {suggestionActionResults.map((result) =>
                       renderSearchResultRow(result, resultIndex++),
                     )}
@@ -898,12 +901,12 @@ export function TopbarSearch({
           currentChannelSearchAction ? "pb-5" : "py-5",
         )}
       >
-        No {scopeChannel ? "messages" : "matches"} for{" "}
+        {tl("No")} {scopeChannel ? "messages" : "matches"} {tl("for")}{" "}
         <span className="font-semibold">{trimmedQuery}</span>
         {scopeLabel ? (
           <>
             {" "}
-            in <span className="font-semibold">{scopeLabel}</span>
+            {tl("in")} <span className="font-semibold">{scopeLabel}</span>
           </>
         ) : null}
         .
@@ -925,16 +928,16 @@ export function TopbarSearch({
     <div className={cn("relative", className)}>
       <Dialog open={isOpen} onOpenChange={handleSearchOpenChange}>
         <button
-          aria-label="Search everything"
+          aria-label={tl("Search everything")}
           className={
             isIconVariant
               ? "group/search flex size-6 items-center justify-center rounded p-1 text-sidebar-foreground/50 transition-colors hover:bg-sidebar-border/35 hover:text-sidebar-foreground focus-visible:bg-sidebar-border/35 focus-visible:text-sidebar-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-sidebar-ring"
-              : "group/search flex h-8 w-full items-center gap-2 rounded-md bg-sidebar-border/35 px-2 text-left text-sm text-sidebar-foreground/55 transition-colors duration-150 ease-out hover:bg-sidebar-border/35 hover:text-sidebar-foreground focus-visible:bg-sidebar-border/35 focus-visible:text-sidebar-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-sidebar-ring"
+              : "group/search flex h-8 w-full items-center gap-2 rounded-md bg-sidebar-border/35 px-2 text-start text-sm text-sidebar-foreground/55 transition-colors duration-150 ease-out hover:bg-sidebar-border/35 hover:text-sidebar-foreground focus-visible:bg-sidebar-border/35 focus-visible:text-sidebar-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-sidebar-ring"
           }
           data-testid="open-search"
           onClick={() => openSearchDialog(null)}
           ref={triggerRef}
-          title="Search everything"
+          title={tl("Search everything")}
           type="button"
         >
           <Search
@@ -954,7 +957,7 @@ export function TopbarSearch({
                     : "text-sidebar-foreground/55",
                 )}
               >
-                {query || "Search everything"}
+                {query || tl("Search everything")}
               </span>
               <kbd className="shrink-0 text-2xs text-sidebar-foreground/45">
                 &#x2318;K
@@ -977,7 +980,9 @@ export function TopbarSearch({
           showCloseButton={false}
         >
           <DialogTitle className="sr-only">
-            {scopeLabel ? `Search in ${scopeLabel}` : "Search everything"}
+            {scopeLabel
+              ? tlt("Search in {0}", [scopeLabel])
+              : tl("Search everything")}
           </DialogTitle>
           <SearchDialogInputRow
             inputRef={dialogInputRef}

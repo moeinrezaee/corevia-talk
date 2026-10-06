@@ -18,6 +18,7 @@ import {
   AlertDialogTrigger,
 } from "@/shared/ui/alert-dialog";
 import { Button } from "@/shared/ui/button";
+import { tl } from "@/shared/i18n/tl";
 
 type ChannelMutation<TArgs = void> = {
   error: unknown;
@@ -110,10 +111,10 @@ export function ChannelDeleteConfirmationDialog({
       ) : null}
       <AlertDialogContent data-testid="channel-delete-confirmation-dialog">
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete channel?</AlertDialogTitle>
+          <AlertDialogTitle>{tl("Delete channel?")}</AlertDialogTitle>
           <AlertDialogDescription>
-            Delete {channelName} from the community list. This action cannot be
-            undone.
+            {tl("Delete")} {channelName}{" "}
+            {tl("from the community list. This action cannot be undone.")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         {error instanceof Error ? (
@@ -127,7 +128,7 @@ export function ChannelDeleteConfirmationDialog({
               type="button"
               variant="outline"
             >
-              Cancel
+              {tl("Cancel")}
             </Button>
           </AlertDialogCancel>
           <AlertDialogAction asChild>
@@ -141,7 +142,7 @@ export function ChannelDeleteConfirmationDialog({
               type="button"
               variant="destructive"
             >
-              {isPending ? "Deleting..." : "Delete channel"}
+              {isPending ? tl("Deleting...") : tl("Delete channel")}
             </Button>
           </AlertDialogAction>
         </AlertDialogFooter>
@@ -166,7 +167,7 @@ export function ChannelManagementModerationActions({
   return (
     <div
       className={cn(
-        "absolute bottom-3 right-3 z-20 flex items-center gap-2 rounded-full border border-border/60 p-1 shadow-sm",
+        "absolute bottom-3 end-3 z-20 flex items-center gap-2 rounded-full border border-border/60 p-1 shadow-sm",
         isDark
           ? "bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/70"
           : "bg-background/90 backdrop-blur-md supports-[backdrop-filter]:bg-background/80",
@@ -177,8 +178,8 @@ export function ChannelManagementModerationActions({
         <Button
           aria-label={
             unarchiveChannelMutation.isPending
-              ? "Restoring channel"
-              : "Unarchive channel"
+              ? tl("Restoring channel")
+              : tl("Unarchive channel")
           }
           data-testid="channel-management-unarchive"
           disabled={!canManageChannel || unarchiveChannelMutation.isPending}
@@ -188,8 +189,8 @@ export function ChannelManagementModerationActions({
           size="icon"
           title={
             unarchiveChannelMutation.isPending
-              ? "Restoring channel"
-              : "Unarchive channel"
+              ? tl("Restoring channel")
+              : tl("Unarchive channel")
           }
           type="button"
           variant="ghost"
@@ -200,8 +201,8 @@ export function ChannelManagementModerationActions({
         <Button
           aria-label={
             archiveChannelMutation.isPending
-              ? "Archiving channel"
-              : "Archive channel"
+              ? tl("Archiving channel")
+              : tl("Archive channel")
           }
           data-testid="channel-management-archive"
           disabled={!canManageChannel || archiveChannelMutation.isPending}
@@ -211,8 +212,8 @@ export function ChannelManagementModerationActions({
           size="icon"
           title={
             archiveChannelMutation.isPending
-              ? "Archiving channel"
-              : "Archive channel"
+              ? tl("Archiving channel")
+              : tl("Archive channel")
           }
           type="button"
           variant="ghost"
@@ -232,11 +233,11 @@ export function ChannelManagementModerationActions({
           open={isDeleteDialogOpen}
           trigger={
             <Button
-              aria-label="Delete channel"
+              aria-label={tl("Delete channel")}
               data-testid="channel-management-delete"
               disabled={deleteChannelMutation.isPending}
               size="icon"
-              title="Delete channel"
+              title={tl("Delete channel")}
               type="button"
               variant="ghost"
             >

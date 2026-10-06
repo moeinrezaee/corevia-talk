@@ -19,6 +19,7 @@ import {
   PopoverTrigger,
 } from "@/shared/ui/popover";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const REACTION_PILL_BASE_CLASSES =
   "inline-flex h-7 items-center rounded-full border text-xs font-medium leading-none transition-colors";
@@ -129,7 +130,8 @@ function ReactionPopoverContent({ reaction }: { reaction: TimelineReaction }) {
         />
       </div>
       <div className="max-w-[14rem] text-balance text-sm font-semibold leading-snug text-popover-foreground">
-        {userText} <span className="text-muted-foreground">reacted with</span>
+        {userText}{" "}
+        <span className="text-muted-foreground">{tl("reacted with")}</span>
       </div>
       <div
         className="mt-0.5 break-all text-sm font-semibold leading-snug text-muted-foreground"
@@ -307,7 +309,7 @@ function InlineReactionPicker({
         <TooltipTrigger asChild>
           <PopoverTrigger asChild>
             <button
-              aria-label="Add reaction"
+              aria-label={tl("Add reaction")}
               className={cn(
                 REACTION_PILL_BASE_CLASSES,
                 "pointer-events-none w-10 min-w-10 justify-center p-0 text-muted-foreground opacity-0",
@@ -328,7 +330,7 @@ function InlineReactionPicker({
             </button>
           </PopoverTrigger>
         </TooltipTrigger>
-        <TooltipContent>React</TooltipContent>
+        <TooltipContent>{tl("React")}</TooltipContent>
       </Tooltip>
       <PopoverContent
         align="start"
@@ -442,7 +444,7 @@ function ReactionPill({
   if (reaction.users.length === 0) {
     return (
       <button
-        aria-label={`Toggle ${reaction.emoji} reaction`}
+        aria-label={tlt("Toggle {0} reaction", [reaction.emoji])}
         aria-pressed={reaction.reactedByCurrentUser}
         title={displayName}
         className={pillClasses}
@@ -483,7 +485,7 @@ function ReactionPill({
           onBlur={scheduleClose}
         >
           <button
-            aria-label={`Toggle ${reaction.emoji} reaction`}
+            aria-label={tlt("Toggle {0} reaction", [reaction.emoji])}
             aria-pressed={reaction.reactedByCurrentUser}
             title={displayName}
             className={pillClasses}

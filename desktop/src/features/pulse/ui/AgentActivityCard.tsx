@@ -7,6 +7,7 @@ import type { UserProfileSummary } from "@/shared/api/types";
 import { Markdown } from "@/shared/ui/markdown";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
 import { truncateNpub } from "@/shared/lib/pubkey";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type AgentActivityCardProps = {
   group: AgentNoteGroup;
@@ -38,7 +39,7 @@ function StatusDot({ status }: { status: "online" | "away" | "offline" }) {
         : "bg-zinc-400";
   return (
     <span
-      aria-label={`Agent ${status}`}
+      aria-label={tlt("Agent {0}", [status])}
       role="img"
       className={`inline-block h-2 w-2 rounded-full ${color}`}
     />
@@ -68,7 +69,7 @@ export function AgentActivityCard({
           role={"bot" as const}
         >
           <button
-            aria-label={`Open profile for ${displayName}`}
+            aria-label={tlt("Open profile for {0}", [displayName])}
             className="relative flex shrink-0 rounded-xl pt-1 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
             type="button"
           >
@@ -77,7 +78,7 @@ export function AgentActivityCard({
               displayName={displayName}
               shape="squircle"
             />
-            <Bot className="absolute -bottom-0.5 -right-0.5 h-4 w-4 rounded-full bg-background p-0.5 text-muted-foreground" />
+            <Bot className="absolute -bottom-0.5 -end-0.5 h-4 w-4 rounded-full bg-background p-0.5 text-muted-foreground" />
           </button>
         </UserProfilePopover>
         <div className="min-w-0 flex-1">
@@ -104,18 +105,18 @@ export function AgentActivityCard({
             ) : (
               <ChevronRight className="h-4 w-4" />
             )}
-            {group.notes.length} updates
+            {group.notes.length} {tl("updates")}
           </button>
         ) : null}
       </div>
 
       {/* Content */}
       {isSingleNote || !expanded ? (
-        <div className="mt-1.5 ml-[44px] text-sm leading-relaxed text-foreground">
+        <div className="mt-1.5 ms-[44px] text-sm leading-relaxed text-foreground">
           <Markdown content={summaryNote.content} />
         </div>
       ) : (
-        <div className="mt-2 ml-[44px] space-y-2">
+        <div className="mt-2 ms-[44px] space-y-2">
           {group.notes.map((note, idx) => (
             <div
               className="flex gap-2 rounded-xl border border-border/50 bg-muted/20 px-3 py-2"

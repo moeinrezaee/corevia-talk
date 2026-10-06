@@ -7,6 +7,7 @@ import {
   type MintedAgentCard,
   type SnapshotMemoryLevel,
 } from "@/shared/api/tauriPersonas";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * Module store for agent-card mints (`useSyncExternalStore` pattern, same as
@@ -111,7 +112,7 @@ export async function runCardMintJob(
     updateJob(jobId, { phase: "done", card });
     toast.success(`${input.agentName}'s card is ready`, {
       action: {
-        label: "View card",
+        label: tl("View card"),
         onClick: () => viewMintedCardJob(jobId),
       },
       duration: 10_000,

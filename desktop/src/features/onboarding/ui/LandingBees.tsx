@@ -141,7 +141,7 @@ export function LandingBees() {
       aria-hidden
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
-      <span className="absolute left-6 top-12 block w-11 text-[#231E1E]">
+      <span className="absolute start-6 top-12 block w-11 text-[#231E1E]">
         <BuzzMark className="h-auto w-full" />
       </span>
       {BEES.map((bee, i) => (

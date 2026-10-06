@@ -1,6 +1,7 @@
 import type * as React from "react";
 import type { ExtensionEntry } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
+import { tl } from "@/shared/i18n/tl";
 
 type McpServersSectionProps = {
   extensions: ExtensionEntry[];
@@ -53,7 +54,9 @@ export function McpServersSection({
       )}
     >
       {variant === "compact" ? (
-        <p className="py-2 text-xs font-medium text-foreground">MCP servers</p>
+        <p className="py-2 text-xs font-medium text-foreground">
+          {tl("MCP servers")}
+        </p>
       ) : null}
 
       {isBuzzAgent && buzzAgentSlot ? buzzAgentSlot : null}
@@ -77,7 +80,7 @@ export function McpServersSection({
               : "flex min-h-16 items-center px-4 py-3",
           )}
         >
-          No custom servers configured.
+          {tl("No custom servers configured.")}
         </p>
       )}
 
@@ -118,7 +121,7 @@ function McpServerRow({
         </span>
       </span>
       <span className="shrink-0 text-sm text-muted-foreground">
-        {extension.enabled ? "Enabled" : "Disabled"}
+        {extension.enabled ? tl("Enabled") : tl("Disabled")}
       </span>
     </div>
   );

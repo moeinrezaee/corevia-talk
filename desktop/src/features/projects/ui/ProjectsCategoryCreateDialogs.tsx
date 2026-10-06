@@ -8,6 +8,7 @@ import { useAddProjectChannelMutation } from "@/features/projects/useAddProjectC
 import { useAddProjectRepositoryMutation } from "@/features/projects/useAddProjectRepository";
 import { AddProjectRepositoryDialog } from "@/features/projects/ui/AddProjectRepositoryDialog";
 import { CreateChannelDialog } from "@/features/sidebar/ui/CreateChannelDialog";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export function ProjectsCategoryCreateDialogs({
   channelOpen,
@@ -49,8 +50,8 @@ export function ProjectsCategoryCreateDialogs({
         channelKind={channelOpen ? "stream" : null}
         description={
           channelProject
-            ? `Add another stream to ${channelProject.name}.`
-            : "Choose a project for this channel."
+            ? tlt("Add another stream to {0}.", [channelProject.name])
+            : tl("Choose a project for this channel.")
         }
         isCreating={createChannelMutation.isPending}
         onCreate={async (input) => {
@@ -65,10 +66,10 @@ export function ProjectsCategoryCreateDialogs({
         }}
         onOpenChange={onChannelOpenChange}
         testId="create-project-channel-dialog"
-        title="Create a project channel"
+        title={tl("Create a project channel")}
       >
         <label className="block space-y-1.5 text-sm font-medium">
-          <span>Project</span>
+          <span>{tl("Project")}</span>
           <select
             className="h-10 w-full rounded-lg border border-input bg-background px-3 text-sm font-normal outline-hidden focus:ring-1 focus:ring-ring"
             data-testid="create-project-channel-project"

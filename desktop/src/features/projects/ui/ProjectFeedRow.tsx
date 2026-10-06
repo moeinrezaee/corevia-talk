@@ -33,7 +33,7 @@ export function ProjectFeedRow({
         <div className="flex min-w-0 items-center gap-1.5">
           {onOpen ? (
             <button
-              className="block min-w-0 truncate rounded-sm text-left text-sm font-semibold leading-5 text-foreground transition-colors hover:text-primary hover:underline focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+              className="block min-w-0 truncate rounded-sm text-start text-sm font-semibold leading-5 text-foreground transition-colors hover:text-primary hover:underline focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
               onClick={onOpen}
               title={title}
               type="button"

@@ -16,6 +16,7 @@ import {
   AttachmentTitle,
   AttachmentTrigger,
 } from "@/shared/ui/attachment";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 /**
  * Stable key for a requirement row. The combination of surface + primary
@@ -268,7 +269,7 @@ export function ConfigNudgeCard({
       </AttachmentMedia>
       <AttachmentContent>
         <AttachmentTitle className="whitespace-normal text-destructive line-clamp-2">
-          {nudge.agent_name} needs configuration
+          {nudge.agent_name} {tl("needs configuration")}
         </AttachmentTitle>
         <div className="mt-1 flex flex-col gap-0.5">
           {nudge.requirements.map((req, i) => (
@@ -287,7 +288,7 @@ export function ConfigNudgeCard({
       {opensDoctor && !informationalOnly && (
         <AttachmentActions className="items-end self-end">
           <span className="text-xs text-muted-foreground">
-            Open Agent runtimes →
+            {tl("Open Agent runtimes →")}
           </span>
         </AttachmentActions>
       )}
@@ -296,8 +297,8 @@ export function ConfigNudgeCard({
         <AttachmentTrigger
           aria-label={
             opensDoctor
-              ? `Open Agent runtimes for ${nudge.agent_name}`
-              : `Open Edit Agent for ${nudge.agent_name}`
+              ? tlt("Open Agent runtimes for {0}", [nudge.agent_name])
+              : tlt("Open Edit Agent for {0}", [nudge.agent_name])
           }
           onClick={handleOpen}
         />
@@ -325,11 +326,11 @@ function RequirementRow({
       return (
         <div className="flex items-center gap-2 text-xs leading-4 text-muted-foreground">
           <span className="flex-1 [overflow-wrap:anywhere]">
-            Set{" "}
+            {tl("Set")}{" "}
             <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs text-foreground">
               {requirement.key}
             </code>{" "}
-            in Edit Agent → Environment variables
+            {tl("in Edit Agent → Environment variables")}
           </span>
           {!allCliLogin && (
             <button
@@ -339,7 +340,7 @@ function RequirementRow({
               }
               type="button"
             >
-              Edit Agent →
+              {tl("Edit Agent →")}
             </button>
           )}
         </div>
@@ -348,8 +349,8 @@ function RequirementRow({
       return (
         <div className="flex items-center gap-2 text-xs leading-4 text-muted-foreground">
           <span className="flex-1 [overflow-wrap:anywhere]">
-            Set the <strong>{requirement.field}</strong> field in Edit Agent
-            dropdowns
+            {tl("Set the")} <strong>{requirement.field}</strong>{" "}
+            {tl("field in Edit Agent dropdowns")}
           </span>
           {!allCliLogin && (
             <button
@@ -359,7 +360,7 @@ function RequirementRow({
               }
               type="button"
             >
-              Edit Agent →
+              {tl("Edit Agent →")}
             </button>
           )}
         </div>
@@ -384,7 +385,7 @@ function RequirementRow({
               onClick={onOpenDoctor}
               type="button"
             >
-              Open Agent runtimes →
+              {tl("Open Agent runtimes →")}
             </button>
           )}
         </div>
@@ -393,7 +394,7 @@ function RequirementRow({
       return (
         <div className="flex items-center gap-2 text-xs leading-4 text-muted-foreground">
           <span className="flex-1 [overflow-wrap:anywhere]">
-            Git for Windows is required for buzz-agent shell tools
+            {tl("Git for Windows is required for buzz-agent shell tools")}
           </span>
         </div>
       );
@@ -421,11 +422,11 @@ function RequirementRow({
       return (
         <div className="flex items-center gap-2 text-xs leading-4 text-muted-foreground">
           <span className="flex-1 [overflow-wrap:anywhere]">
-            {configFile} is invalid:{" "}
+            {configFile} {tl("is invalid:")}{" "}
             <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs text-foreground">
               {requirement.diagnostic}
             </code>{" "}
-            — fix the config and restart the agent
+            {tl("— fix the config and restart the agent")}
           </span>
         </div>
       );

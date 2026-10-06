@@ -3,6 +3,7 @@ import type {
   ProjectsViewMode,
 } from "@/features/projects/lib/projectsViewHelpers";
 import { ProjectsViewModeToggle } from "@/features/projects/ui/ProjectsToolbar";
+import { tl } from "@/shared/i18n/tl";
 
 type ProjectsListHeaderBarProps = {
   onViewModeChange: (viewMode: ProjectsViewMode) => void;
@@ -19,15 +20,15 @@ export function ProjectsSortSelect({
 }) {
   return (
     <label className="flex items-center gap-2 text-xs text-muted-foreground">
-      <span className="sr-only">Sort projects</span>
+      <span className="sr-only">{tl("Sort projects")}</span>
       <select
         className="h-8 rounded-md bg-transparent px-2 text-xs text-foreground outline-hidden hover:bg-muted/50 focus:ring-1 focus:ring-ring"
         onChange={(event) => onChange(event.target.value as ProjectsSort)}
         value={sort}
       >
-        <option value="updated">Recent activity</option>
-        <option value="created">Created date</option>
-        <option value="name">Name</option>
+        <option value="updated">{tl("Recent activity")}</option>
+        <option value="created">{tl("Created date")}</option>
+        <option value="name">{tl("Name")}</option>
       </select>
     </label>
   );
@@ -40,7 +41,7 @@ export function ProjectsListHeaderBar({
 }: ProjectsListHeaderBarProps) {
   return (
     <div
-      className="ml-auto flex flex-wrap items-center justify-end gap-2"
+      className="ms-auto flex flex-wrap items-center justify-end gap-2"
       data-testid="projects-list-header"
     >
       <ProjectsViewModeToggle

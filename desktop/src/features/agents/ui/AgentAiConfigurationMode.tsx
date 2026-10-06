@@ -3,6 +3,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 import type { AgentAiConfigurationMode } from "./agentAiConfigurationPolicy";
 import { AgentAiDefaultsNotice } from "./AgentAiDefaults";
 import type { InheritedDefault } from "./bakedEnvHelpers";
+import { tl } from "@/shared/i18n/tl";
 
 export type { AgentAiConfigurationMode } from "./agentAiConfigurationPolicy";
 
@@ -18,13 +19,13 @@ export function HarnessModelDefaultNotice({
       className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 text-sm"
       data-testid="agent-harness-defaults-notice"
     >
-      <dt className="text-muted-foreground">Harness</dt>
+      <dt className="text-muted-foreground">{tl("Harness")}</dt>
       <dd className="truncate text-foreground">
-        {harness || "Not configured"}
+        {harness || tl("Not configured")}
       </dd>
-      <dt className="text-muted-foreground">Model</dt>
+      <dt className="text-muted-foreground">{tl("Model")}</dt>
       <dd className="truncate text-foreground">
-        {model?.trim() || "Harness default"}
+        {model?.trim() || tl("Harness default")}
       </dd>
     </dl>
   );
@@ -76,7 +77,9 @@ export function AgentAiConfigurationModeField({
 }) {
   return (
     <div className="space-y-1.5">
-      <p className="text-sm font-medium text-foreground">AI configuration</p>
+      <p className="text-sm font-medium text-foreground">
+        {tl("AI configuration")}
+      </p>
       <Tabs
         onValueChange={(value) =>
           onModeChange(value as AgentAiConfigurationMode)
@@ -86,7 +89,7 @@ export function AgentAiConfigurationModeField({
         <TabsList className="relative isolate grid h-9 w-full grid-cols-2 overflow-hidden rounded-lg bg-muted p-0.5">
           <div
             aria-hidden="true"
-            className="absolute bottom-0.5 left-0.5 top-0.5 z-0 rounded-md bg-background shadow-sm transition-transform duration-[250ms] ease-out"
+            className="absolute bottom-0.5 start-0.5 top-0.5 z-0 rounded-md bg-background shadow-sm transition-transform duration-[250ms] ease-out"
             style={{
               transform: `translateX(${mode === "custom" ? 100 : 0}%)`,
               width: "calc((100% - 4px) / 2)",
@@ -97,14 +100,14 @@ export function AgentAiConfigurationModeField({
             value="defaults"
           >
             {needsProviderSelection
-              ? "Use agent defaults"
-              : "Use harness defaults"}
+              ? tl("Use agent defaults")
+              : tl("Use harness defaults")}
           </TabsTrigger>
           <TabsTrigger
             className="relative z-10 h-full rounded-md bg-transparent text-xs font-medium shadow-none transition-colors data-[state=active]:bg-transparent data-[state=active]:shadow-none"
             value="custom"
           >
-            Customize for this agent
+            {tl("Customize for this agent")}
           </TabsTrigger>
         </TabsList>
       </Tabs>

@@ -4,6 +4,7 @@ import { openUrl } from "@tauri-apps/plugin-opener";
 import { joinPolicyDocumentUrl, type JoinPolicy } from "@/shared/api/invites";
 import { Button } from "@/shared/ui/button";
 import { Checkbox } from "@/shared/ui/checkbox";
+import { tl } from "@/shared/i18n/tl";
 
 type JoinPolicyNoticeProps = {
   ageConfirmed: boolean;
@@ -37,7 +38,7 @@ export function JoinPolicyNotice({
   const agreementConfirmationId = React.useId();
 
   return (
-    <div className="space-y-3 rounded-xl border border-border/70 bg-muted/30 p-4 text-left">
+    <div className="space-y-3 rounded-xl border border-border/70 bg-muted/30 p-4 text-start">
       {policy.ageAttestationRequired ? (
         <div className="flex items-start gap-3">
           <Checkbox
@@ -52,7 +53,7 @@ export function JoinPolicyNotice({
             className="cursor-pointer text-xs leading-5 text-muted-foreground"
             htmlFor={ageConfirmationId}
           >
-            I am 18 years of age or older.
+            {tl("I am 18 years of age or older.")}
           </label>
         </div>
       ) : null}
@@ -71,7 +72,7 @@ export function JoinPolicyNotice({
             className="cursor-pointer text-xs leading-5 text-muted-foreground"
             htmlFor={agreementConfirmationId}
           >
-            I agree to the Buzz{" "}
+            {tl("I agree to the Buzz")}{" "}
             {policy.termsMarkdown ? (
               <Button
                 className="h-auto p-0 align-baseline text-xs no-underline hover:underline focus-visible:no-underline"
@@ -82,10 +83,12 @@ export function JoinPolicyNotice({
                 type="button"
                 variant="link"
               >
-                Terms of Service
+                {tl("Terms of Service")}
               </Button>
             ) : null}
-            {policy.termsMarkdown && policy.privacyMarkdown ? " and " : null}
+            {policy.termsMarkdown && policy.privacyMarkdown
+              ? tl(" and ")
+              : null}
             {policy.privacyMarkdown ? (
               <Button
                 className="h-auto p-0 align-baseline text-xs no-underline hover:underline focus-visible:no-underline"
@@ -96,7 +99,7 @@ export function JoinPolicyNotice({
                 type="button"
                 variant="link"
               >
-                Privacy Policy
+                {tl("Privacy Policy")}
               </Button>
             ) : null}
             .

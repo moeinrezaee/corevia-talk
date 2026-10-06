@@ -25,6 +25,7 @@ import {
   DialogTitle,
 } from "@/shared/ui/dialog";
 import { Input } from "@/shared/ui/input";
+import { tl } from "@/shared/i18n/tl";
 
 export function CreateProjectBranchDialog({
   existingBranches,
@@ -78,9 +79,9 @@ export function CreateProjectBranchDialog({
       <DialogContent data-testid="project-create-branch-dialog">
         <form className="space-y-5" onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>Create branch</DialogTitle>
+            <DialogTitle>{tl("Create branch")}</DialogTitle>
             <DialogDescription>
-              Create a remote branch from{" "}
+              {tl("Create a remote branch from")}{" "}
               <span className="font-mono text-foreground">{sourceBranch}</span>
               {sourceCommit ? ` at ${sourceCommit.slice(0, 7)}` : ""}.
             </DialogDescription>
@@ -89,14 +90,14 @@ export function CreateProjectBranchDialog({
             className="block space-y-2 text-sm font-medium"
             htmlFor="project-create-branch-name"
           >
-            <span>Branch name</span>
+            <span>{tl("Branch name")}</span>
             <Input
               autoFocus
               data-testid="project-create-branch-name"
               disabled={pending}
               id="project-create-branch-name"
               onChange={(event) => setBranchName(event.target.value)}
-              placeholder="feature/my-change"
+              placeholder={tl("feature/my-change")}
               value={branchName}
             />
           </label>
@@ -105,7 +106,7 @@ export function CreateProjectBranchDialog({
           ) : null}
           {!sourceCommit ? (
             <p className="text-sm text-destructive">
-              Refresh the repository before creating a branch.
+              {tl("Refresh the repository before creating a branch.")}
             </p>
           ) : null}
           {submitError ? (
@@ -118,7 +119,7 @@ export function CreateProjectBranchDialog({
               type="button"
               variant="outline"
             >
-              Cancel
+              {tl("Cancel")}
             </Button>
             <Button
               data-testid="project-create-branch-submit"
@@ -126,7 +127,7 @@ export function CreateProjectBranchDialog({
               type="submit"
             >
               {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-              {pending ? "Creating…" : "Create branch"}
+              {pending ? tl("Creating…") : tl("Create branch")}
             </Button>
           </DialogFooter>
         </form>
@@ -175,11 +176,13 @@ export function DeleteProjectBranchDialog({
     >
       <AlertDialogContent data-testid="project-delete-branch-dialog">
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete branch?</AlertDialogTitle>
+          <AlertDialogTitle>{tl("Delete branch?")}</AlertDialogTitle>
           <AlertDialogDescription>
-            Delete the remote branch{" "}
-            <span className="font-mono text-foreground">{branch}</span>. This
-            cannot be undone and may be rejected by repository protection rules.
+            {tl("Delete the remote branch")}{" "}
+            <span className="font-mono text-foreground">{branch}</span>
+            {tl(
+              ". This cannot be undone and may be rejected by repository protection rules.",
+            )}
           </AlertDialogDescription>
         </AlertDialogHeader>
         {submitError ? (
@@ -188,7 +191,7 @@ export function DeleteProjectBranchDialog({
         <AlertDialogFooter>
           <AlertDialogCancel asChild>
             <Button disabled={pending} type="button" variant="outline">
-              Cancel
+              {tl("Cancel")}
             </Button>
           </AlertDialogCancel>
           <Button
@@ -199,7 +202,7 @@ export function DeleteProjectBranchDialog({
             variant="destructive"
           >
             {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-            {pending ? "Deleting…" : "Delete branch"}
+            {pending ? tl("Deleting…") : tl("Delete branch")}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

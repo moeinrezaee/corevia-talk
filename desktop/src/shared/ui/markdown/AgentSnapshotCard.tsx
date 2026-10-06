@@ -13,6 +13,7 @@ import {
   AttachmentMedia,
   AttachmentTitle,
 } from "@/shared/ui/attachment";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export type AgentSnapshotCardProps = {
   displayName: string;
@@ -177,16 +178,16 @@ export function AgentSnapshotCard({
         ) : null}
       </AttachmentContent>
       <AttachmentActions
-        aria-label={`Actions for ${displayName}`}
-        className="ml-4 gap-2"
+        aria-label={tlt("Actions for {0}", [displayName])}
+        className="ms-4 gap-2"
         role="group"
       >
         <AttachmentAction
-          aria-label={`Download ${displayName}`}
+          aria-label={tlt("Download {0}", [displayName])}
           data-testid="agent-snapshot-card-download"
           onClick={handleDownload}
           size="icon"
-          title="Download"
+          title={tl("Download")}
           type="button"
           variant="ghost"
         >
@@ -203,10 +204,10 @@ export function AgentSnapshotCard({
         >
           {isFetching ? <Loader2 className="animate-spin" /> : <SnapshotIcon />}
           {isFetching
-            ? "Loading…"
+            ? tl("Loading…")
             : snapshotKind === "team"
-              ? "Add team"
-              : "Add agent"}
+              ? tl("Add team")
+              : tl("Add agent")}
         </AttachmentAction>
       </AttachmentActions>
     </Attachment>

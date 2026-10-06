@@ -24,6 +24,7 @@ import {
 } from "@/shared/ui/alert-dialog";
 import { Button, buttonVariants } from "@/shared/ui/button";
 import { PanelSectionGroup } from "@/shared/ui/PanelSectionGroup";
+import { tl } from "@/shared/i18n/tl";
 
 export function UserProfileAgentManagementRows({
   archiveActions,
@@ -66,7 +67,7 @@ export function UserProfileAgentManagementRows({
         <ProfileAgentActionRow
           disabled={isDeletePending}
           icon={CopyPlus}
-          label="Duplicate agent"
+          label={tl("Duplicate agent")}
           onClick={onDuplicateAgent}
           testId="user-profile-duplicate-agent-row"
         />
@@ -75,7 +76,7 @@ export function UserProfileAgentManagementRows({
         <ProfileAgentActionRow
           disabled={isDeletePending}
           icon={Download}
-          label="Export agent"
+          label={tl("Export agent")}
           onClick={onExportAgent}
           testId="user-profile-export-agent-row"
         />
@@ -84,7 +85,7 @@ export function UserProfileAgentManagementRows({
         <ProfileAgentActionRow
           disabled={isDeletePending}
           icon={Sparkles}
-          label="Create trading card"
+          label={tl("Create trading card")}
           onClick={onCreateCard}
           testId="user-profile-create-card-row"
         />
@@ -123,7 +124,7 @@ export function ProfileAgentActionRow({
 }) {
   return (
     <button
-      className="flex min-h-16 w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/40 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
+      className="flex min-h-16 w-full items-center gap-3 px-4 py-3 text-start transition-colors hover:bg-muted/40 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
       data-testid={testId}
       disabled={disabled}
       onClick={onClick}
@@ -217,7 +218,7 @@ function ProfileDeleteAgentRow({
         destructive
         disabled={isPending}
         icon={Trash2}
-        label="Delete agent"
+        label={tl("Delete agent")}
         onClick={() => {
           if (managedAgent) {
             setConfirmOpen(true);
@@ -262,33 +263,44 @@ function AgentDeleteConfirmDialog({
     <AlertDialog onOpenChange={onOpenChange} open={open}>
       <AlertDialogContent data-testid="agent-delete-confirm-dialog">
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete this agent?</AlertDialogTitle>
+          <AlertDialogTitle>{tl("Delete this agent?")}</AlertDialogTitle>
           <AlertDialogDescription>
             {isProviderAgent
-              ? "Deleting removes this agent’s local management record, not its remote deployment."
-              : "Deleting this agent stops and removes the agent from this community."}
+              ? tl(
+                  "Deleting removes this agent’s local management record, not its remote deployment.",
+                )
+              : tl(
+                  "Deleting this agent stops and removes the agent from this community.",
+                )}
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <ul className="list-disc space-y-1.5 pl-5 text-sm text-muted-foreground">
-          <li>Removes the local management record and saved agent key</li>
-          <li>Removes the agent from every channel it belongs to</li>
+        <ul className="list-disc space-y-1.5 ps-5 text-sm text-muted-foreground">
           <li>
-            Archives the agent&apos;s identity on the relay so it no longer
-            appears in member lists or mention suggestions
+            {tl("Removes the local management record and saved agent key")}
+          </li>
+          <li>{tl("Removes the agent from every channel it belongs to")}</li>
+          <li>
+            {tl(
+              "Archives the agent's identity on the relay so it no longer appears in member lists or mention suggestions",
+            )}
           </li>
           <li>
             {isProviderAgent
-              ? "Unless the agent is known to be Offline, Buzz first requests shutdown through a channel when available. A failed request cancels deletion. The remote process may still be running even after a successful request."
-              : "Stops any local agent process before deleting the record"}
+              ? tl(
+                  "Unless the agent is known to be Offline, Buzz first requests shutdown through a channel when available. A failed request cancels deletion. The remote process may still be running even after a successful request.",
+                )
+              : tl("Stops any local agent process before deleting the record")}
           </li>
         </ul>
         <p className="text-sm text-muted-foreground">
-          Archive this agent if you want to hide it instead of removing it.
+          {tl(
+            "Archive this agent if you want to hide it instead of removing it.",
+          )}
         </p>
         <AlertDialogFooter>
           <AlertDialogCancel asChild>
             <Button type="button" variant="outline">
-              Cancel
+              {tl("Cancel")}
             </Button>
           </AlertDialogCancel>
           <AlertDialogAction
@@ -297,7 +309,7 @@ function AgentDeleteConfirmDialog({
             disabled={isPending}
             onClick={onConfirm}
           >
-            {isPending ? "Deleting…" : "Delete agent"}
+            {isPending ? tl("Deleting…") : tl("Delete agent")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

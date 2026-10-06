@@ -4,6 +4,7 @@ import type {
 } from "@/shared/api/types";
 import { BUZZ_AGENT_THINKING_EFFORT } from "./buzzAgentConfig";
 import type { RuntimeFileConfigSubset } from "@/shared/api/tauri";
+import { tl } from "@/shared/i18n/tl";
 // Dialogs import getDefaultPersonaRuntime via this re-export; lib code imports
 // directly from lib/resolvePersonaRuntime.
 export { getDefaultPersonaRuntime } from "../lib/resolvePersonaRuntime";
@@ -28,7 +29,7 @@ export const PERSONA_FIELD_SHELL_CLASS =
 export const PERSONA_FIELD_CONTROL_CLASS =
   "border-0 bg-transparent text-muted-foreground shadow-none outline-none ring-0 transition-colors duration-150 ease-out placeholder:text-muted-foreground/55 focus:bg-transparent focus:text-muted-foreground focus:outline-hidden focus-visible:ring-0";
 export const PERSONA_LABEL_OPTIONAL_CLASS =
-  "ml-1 text-xs font-normal text-muted-foreground/50";
+  "ms-1 text-xs font-normal text-muted-foreground/50";
 
 /** Shared advanced-fields expand/collapse easing for the agent dialogs. */
 export const ADVANCED_FIELDS_MOTION_TRANSITION = {
@@ -141,17 +142,17 @@ const PROVIDER_CREDENTIAL_CONFIG: Partial<
 
 const DEFAULT_MODEL_OPTION: PersonaModelOption = {
   id: "",
-  label: "Default model",
+  label: tl("Default model"),
 };
 
 export const PERSONA_LLM_PROVIDER_OPTIONS: readonly PersonaModelOption[] = [
-  { id: "anthropic", label: "Anthropic" },
-  { id: "openai", label: "OpenAI" },
-  { id: "openai-compat", label: "OpenAI-compatible" },
-  { id: "openrouter", label: "OpenRouter" },
-  { id: "relay-mesh", label: "Buzz shared compute" },
-  { id: "databricks", label: "Databricks" },
-  { id: "databricks_v2", label: "Databricks v2" },
+  { id: "anthropic", label: tl("Anthropic") },
+  { id: "openai", label: tl("OpenAI") },
+  { id: "openai-compat", label: tl("OpenAI-compatible") },
+  { id: "openrouter", label: tl("OpenRouter") },
+  { id: "relay-mesh", label: tl("Buzz shared compute") },
+  { id: "databricks", label: tl("Databricks") },
+  { id: "databricks_v2", label: tl("Databricks v2") },
 ];
 
 const PERSONA_MODEL_OPTIONS_BY_RUNTIME: Record<

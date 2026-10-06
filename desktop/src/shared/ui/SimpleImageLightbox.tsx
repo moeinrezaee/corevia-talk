@@ -3,6 +3,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 
 import { cn } from "@/shared/lib/cn";
 import { MODAL_BACKDROP_BLUR_CLASS } from "@/shared/ui/modalBackdrop";
+import { tl } from "@/shared/i18n/tl";
 
 export function SimpleImageLightbox({
   alt,
@@ -35,11 +36,12 @@ export function SimpleImageLightbox({
             {alt}
           </DialogPrimitive.Title>
           <DialogPrimitive.Description className="sr-only">
-            Full-size image preview. Press Escape or click outside the image to
-            close.
+            {tl(
+              "Full-size image preview. Press Escape or click outside the image to close.",
+            )}
           </DialogPrimitive.Description>
           <DialogPrimitive.Close
-            aria-label="Close lightbox"
+            aria-label={tl("Close lightbox")}
             className="absolute inset-0 cursor-default"
           />
           {children ?? (
@@ -49,7 +51,7 @@ export function SimpleImageLightbox({
               src={src}
             />
           )}
-          <DialogPrimitive.Close className="absolute right-4 top-4 rounded-full bg-black/50 p-2 text-white/80 transition-colors hover:bg-black/70 hover:text-white focus:outline-hidden focus:ring-2 focus:ring-white/30">
+          <DialogPrimitive.Close className="absolute end-4 top-4 rounded-full bg-black/50 p-2 text-white/80 transition-colors hover:bg-black/70 hover:text-white focus:outline-hidden focus:ring-2 focus:ring-white/30">
             <svg
               aria-hidden="true"
               fill="none"

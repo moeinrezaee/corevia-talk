@@ -34,6 +34,7 @@ import {
   voiceOptionLabel,
   voicesForBackend,
 } from "./voiceSettingsLogic";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export type TtsSettings = {
   version: number;
@@ -187,25 +188,27 @@ export function VoiceSettingsCard() {
   return (
     <section className="min-w-0" data-testid="settings-voice">
       <SettingsSectionHeader
-        title="Voice"
-        description="Choose whether Buzz reads new agent responses aloud during an active huddle."
+        title={tl("Voice")}
+        description={tl(
+          "Choose whether Buzz reads new agent responses aloud during an active huddle.",
+        )}
       />
 
       <SettingsOptionGroupList>
-        <SettingsOptionGroup title="Playback">
+        <SettingsOptionGroup title={tl("Playback")}>
           <SettingsOptionRow>
             <div className="min-w-0">
               <label
                 className="text-sm font-medium"
                 htmlFor="agent-text-to-speech-switch"
               >
-                Agent text to speech
+                {tl("Agent text to speech")}
               </label>
               <p
                 className="text-sm text-muted-foreground/70"
                 data-settings-subcopy
               >
-                Read new agent messages aloud in the order they arrive.
+                {tl("Read new agent messages aloud in the order they arrive.")}
               </p>
             </div>
             <Switch
@@ -228,15 +231,15 @@ export function VoiceSettingsCard() {
           )}
           data-testid="pocket-voice-controls"
         >
-          <SettingsOptionGroup title="Voice">
+          <SettingsOptionGroup title={tl("Voice")}>
             <SettingsOptionRow>
               <div className="min-w-0">
-                <p className="text-sm font-medium">Pocket TTS voice</p>
+                <p className="text-sm font-medium">{tl("Pocket TTS voice")}</p>
                 <p
                   className="text-sm text-muted-foreground/70"
                   data-settings-subcopy
                 >
-                  Voice files stay private on this device.
+                  {tl("Voice files stay private on this device.")}
                 </p>
               </div>
 
@@ -244,7 +247,9 @@ export function VoiceSettingsCard() {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
-                      aria-label={`Pocket TTS voice: ${selectedVoice?.displayName ?? "Mary"}`}
+                      aria-label={tlt("Pocket TTS voice: {0}", [
+                        selectedVoice?.displayName ?? "Mary",
+                      ])}
                       className="min-w-32 justify-between"
                       data-testid="pocket-voice-selector"
                       disabled={controlsDisabled}
@@ -252,7 +257,7 @@ export function VoiceSettingsCard() {
                     >
                       {selectedVoice
                         ? voiceOptionLabel(selectedVoice, voices)
-                        : "Mary"}
+                        : tl("Mary")}
                       <ChevronDown className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
@@ -278,7 +283,9 @@ export function VoiceSettingsCard() {
                   </DropdownMenuContent>
                 </DropdownMenu>
                 <Button
-                  aria-label={`Preview ${selectedVoice?.displayName ?? "Mary"}`}
+                  aria-label={tlt("Preview {0}", [
+                    selectedVoice?.displayName ?? "Mary",
+                  ])}
                   data-testid="pocket-voice-preview"
                   disabled={controlsDisabled || previewing || !selectedVoice}
                   onClick={() => {
@@ -305,7 +312,7 @@ export function VoiceSettingsCard() {
                   ) : (
                     <Play className="h-4 w-4" />
                   )}
-                  Preview
+                  {tl("Preview")}
                 </Button>
                 <Button
                   data-testid="pocket-voice-import"
@@ -315,11 +322,11 @@ export function VoiceSettingsCard() {
                   variant="outline"
                 >
                   <Upload className="h-4 w-4" />
-                  Add voice
+                  {tl("Add voice")}
                 </Button>
                 {selectedVoice?.key.startsWith("pocket:imported:") && (
                   <Button
-                    aria-label={`Delete ${selectedVoice.displayName}`}
+                    aria-label={tlt("Delete {0}", [selectedVoice.displayName])}
                     data-testid="pocket-voice-delete"
                     disabled={controlsDisabled}
                     onClick={() => setDeleteCandidate(selectedVoice)}
@@ -351,17 +358,23 @@ export function VoiceSettingsCard() {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete imported voice?</AlertDialogTitle>
+            <AlertDialogTitle>{tl("Delete imported voice?")}</AlertDialogTitle>
             <AlertDialogDescription>
               {deleteCandidate
-                ? `${deleteCandidate.displayName} and its local audio file will be removed.`
-                : "This imported voice and its local audio file will be removed."}
+                ? tlt("{0} and its local audio file will be removed.", [
+                    deleteCandidate.displayName,
+                  ])
+                : tl(
+                    "This imported voice and its local audio file will be removed.",
+                  )}
               {selectedVoice?.key === deleteCandidate?.key &&
-                " Mary will be selected instead."}
+                tl(" Mary will be selected instead.")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={busy}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={busy}>
+              {tl("Cancel")}
+            </AlertDialogCancel>
             <AlertDialogAction
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               data-testid="confirm-pocket-voice-delete"
@@ -373,7 +386,7 @@ export function VoiceSettingsCard() {
                 }
               }}
             >
-              Delete voice
+              {tl("Delete voice")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -22,11 +22,12 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { tl } from "@/shared/i18n/tl";
 
 const TIMEOUT_PRESETS: { label: string; seconds: number }[] = [
-  { label: "1 hour", seconds: 60 * 60 },
-  { label: "24 hours", seconds: 24 * 60 * 60 },
-  { label: "7 days", seconds: 7 * 24 * 60 * 60 },
+  { label: tl("1 hour"), seconds: 60 * 60 },
+  { label: tl("24 hours"), seconds: 24 * 60 * 60 },
+  { label: tl("7 days"), seconds: 7 * 24 * 60 * 60 },
 ];
 
 /**
@@ -118,7 +119,7 @@ export function MessageModerationMenuItems({
           }
         >
           <ShieldCheck className="h-4 w-4" />
-          Lift timeout
+          {tl("Lift timeout")}
         </DropdownMenuItem>
       ) : (
         <DropdownMenuSub>
@@ -127,7 +128,7 @@ export function MessageModerationMenuItems({
             disabled={isPending}
           >
             <Clock className="h-4 w-4" />
-            Time out author
+            {tl("Time out author")}
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             {TIMEOUT_PRESETS.map((preset) => (
@@ -167,7 +168,7 @@ export function MessageModerationMenuItems({
           }
         >
           <UserMinus className="h-4 w-4" />
-          Kick from channel
+          {tl("Kick from channel")}
         </DropdownMenuItem>
       ) : null}
 
@@ -183,7 +184,7 @@ export function MessageModerationMenuItems({
           }
         >
           <CircleSlash className="h-4 w-4" />
-          Lift ban
+          {tl("Lift ban")}
         </DropdownMenuItem>
       ) : (
         <DropdownMenuItem
@@ -198,7 +199,7 @@ export function MessageModerationMenuItems({
           }
         >
           <Ban className="h-4 w-4" />
-          Ban author from community
+          {tl("Ban author from community")}
         </DropdownMenuItem>
       )}
     </>

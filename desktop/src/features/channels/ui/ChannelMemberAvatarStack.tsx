@@ -5,6 +5,7 @@ import { resolveUserLabel } from "@/features/profile/lib/identity";
 import type { ChannelMember } from "@/shared/api/types";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { tlt } from "@/shared/i18n/tl";
 
 const MAX_VISIBLE_AVATARS = 3;
 
@@ -31,7 +32,7 @@ export function ChannelMemberAvatarStack({
 
   return (
     <div
-      className="flex shrink-0 items-center pl-3"
+      className="flex shrink-0 items-center ps-3"
       data-testid="channel-management-member-avatar-stack"
     >
       {visibleMembers.map((member, index) => {
@@ -46,7 +47,7 @@ export function ChannelMemberAvatarStack({
 
         return (
           <span
-            className={index > 0 ? "-ml-2" : ""}
+            className={index > 0 ? "-ms-2" : ""}
             data-testid="channel-management-member-avatar"
             key={normalizedPubkey}
             style={{ zIndex: index + 1 }}
@@ -63,10 +64,10 @@ export function ChannelMemberAvatarStack({
       })}
       {overflowCount > 0 ? (
         <span
-          className="-ml-2 flex h-8 w-8 items-center justify-center rounded-full border-2 border-background bg-muted text-2xs font-semibold text-muted-foreground"
+          className="-ms-2 flex h-8 w-8 items-center justify-center rounded-full border-2 border-background bg-muted text-2xs font-semibold text-muted-foreground"
           data-testid="channel-management-member-avatar-overflow"
           style={{ zIndex: stackItemCount }}
-          title={`${overflowCount} more members`}
+          title={tlt("{0} more members", [overflowCount])}
         >
           +{overflowCount}
         </span>

@@ -9,6 +9,7 @@ import { getInitials } from "@/shared/lib/initials";
 import { rewriteRelayUrl } from "@/shared/lib/mediaUrl";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar";
 import { Spinner } from "@/shared/ui/spinner";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 /**
  * A `data:` URL is inlined bytes — rendering it makes no network request, so an
@@ -122,7 +123,7 @@ export function ProfileAvatar({
     >
       {src !== undefined ? (
         <AvatarImage
-          alt={`${label} avatar`}
+          alt={tlt("{0} avatar", [label])}
           className={cn(
             "object-cover",
             presentation?.state === "pending" && "brightness-75",
@@ -157,7 +158,7 @@ export function ProfileAvatar({
       ) : null}
       {presentation?.state === "pending" ? (
         <span
-          aria-label="Avatar upload pending"
+          aria-label={tl("Avatar upload pending")}
           className="pointer-events-none absolute inset-0 flex items-center justify-center text-white drop-shadow-sm"
           data-testid={testId ? `${testId}-upload-pending` : undefined}
           role="status"

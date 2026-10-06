@@ -8,6 +8,7 @@ import { DrawerPanelIcon } from "@/shared/ui/DrawerPanelIcon";
 import { cn } from "@/shared/lib/cn";
 import { topChromeBackdrop } from "@/shared/layout/chromeLayout";
 import { useOptionalSidebar } from "@/shared/ui/sidebar";
+import { tl } from "@/shared/i18n/tl";
 
 type AppTopChromeProps = {
   canGoBack: boolean;
@@ -35,7 +36,7 @@ function TopChromeSidebarTrigger() {
 
   return (
     <Button
-      aria-label="Toggle Sidebar"
+      aria-label={tl("Toggle Sidebar")}
       className={TOP_CHROME_ICON_BUTTON_CLASS}
       data-sidebar="trigger"
       disabled={!sidebar}
@@ -47,7 +48,7 @@ function TopChromeSidebarTrigger() {
       variant="ghost"
     >
       <DrawerPanelIcon side={sidebar?.open ? "left" : "right"} />
-      <span className="sr-only">Toggle Sidebar</span>
+      <span className="sr-only">{tl("Toggle Sidebar")}</span>
     </Button>
   );
 }
@@ -75,7 +76,7 @@ export function AppTopChrome({
     ? hasCommunityRail
       ? "pl-[32px]"
       : "pl-[80px]"
-    : "pl-3";
+    : "ps-3";
   const navRowAlignmentClass = macChrome ? "translate-y-[3px]" : null;
 
   React.useLayoutEffect(() => {
@@ -118,7 +119,7 @@ export function AppTopChrome({
     <div
       ref={topChromeRef}
       className={cn(
-        "relative z-45 flex shrink-0 cursor-default select-none items-center bg-sidebar pr-3 text-sidebar-foreground",
+        "relative z-45 flex shrink-0 cursor-default select-none items-center bg-sidebar pe-3 text-sidebar-foreground",
         topChromeBackdrop.height,
         navRowPaddingClass,
       )}
@@ -133,7 +134,7 @@ export function AppTopChrome({
       <div className={cn("flex items-center gap-0.5", navRowAlignmentClass)}>
         <TopChromeSidebarTrigger />
         <Button
-          aria-label="Go back"
+          aria-label={tl("Go back")}
           className={HISTORY_ICON_BUTTON_CLASS}
           data-testid="global-back"
           disabled={!canGoBack}
@@ -144,7 +145,7 @@ export function AppTopChrome({
           <ChevronLeft />
         </Button>
         <Button
-          aria-label="Go forward"
+          aria-label={tl("Go forward")}
           className={HISTORY_ICON_BUTTON_CLASS}
           data-testid="global-forward"
           disabled={!canGoForward}

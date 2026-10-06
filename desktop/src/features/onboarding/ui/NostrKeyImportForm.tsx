@@ -24,6 +24,7 @@ import {
 import { OnboardingFooter } from "./OnboardingFooter";
 import { OnboardingInput } from "./OnboardingInput";
 import { ONBOARDING_CARD_INPUT_CLASS } from "./onboardingCardStyles";
+import { tl } from "@/shared/i18n/tl";
 
 const NOSTR_KEY_FILE_MAX_BYTES = 1024;
 
@@ -279,7 +280,7 @@ export function NostrKeyImportForm({
       }}
     >
       {!isPasswordStage && mode === "key" ? (
-        <div className={cn("text-left", !cardLayout && "space-y-1.5")}>
+        <div className={cn("text-start", !cardLayout && "space-y-1.5")}>
           <label
             className={cn(
               "text-sm font-medium text-foreground",
@@ -288,7 +289,7 @@ export function NostrKeyImportForm({
             )}
             htmlFor="nostr-private-key"
           >
-            Private key
+            {tl("Private key")}
           </label>
           {variant === "spotlight" ? (
             cardLayout ? (
@@ -296,14 +297,14 @@ export function NostrKeyImportForm({
                 <OnboardingInput
                   autoComplete="off"
                   autoCorrect="off"
-                  className={cn(ONBOARDING_CARD_INPUT_CLASS, "pr-12 font-mono")}
+                  className={cn(ONBOARDING_CARD_INPUT_CLASS, "pe-12 font-mono")}
                   data-testid="nostr-import-nsec-input"
                   id="nostr-private-key"
                   onChange={(event) => {
                     setNsecInput(event.target.value);
                     setImportError(null);
                   }}
-                  placeholder="Enter your key here"
+                  placeholder={tl("Enter your key here")}
                   ref={inputRef}
                   spellCheck={false}
                   type={isRevealed ? "text" : "password"}
@@ -314,10 +315,12 @@ export function NostrKeyImportForm({
                 <Button
                   aria-hidden={!hasInput}
                   aria-label={
-                    isRevealed ? "Hide private key" : "Reveal private key"
+                    isRevealed
+                      ? tl("Hide private key")
+                      : tl("Reveal private key")
                   }
                   className={cn(
-                    "absolute right-2 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground transition-opacity duration-300 hover:bg-foreground/10 hover:text-foreground motion-reduce:transition-none",
+                    "absolute end-2 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground transition-opacity duration-300 hover:bg-foreground/10 hover:text-foreground motion-reduce:transition-none",
                     hasInput ? "opacity-100" : "pointer-events-none opacity-0",
                   )}
                   data-testid="nostr-import-reveal-toggle"
@@ -354,7 +357,7 @@ export function NostrKeyImportForm({
                       setNsecInput(event.target.value);
                       setImportError(null);
                     }}
-                    placeholder="Enter your key here"
+                    placeholder={tl("Enter your key here")}
                     ref={inputRef}
                     spellCheck={false}
                     type={isRevealed ? "text" : "password"}
@@ -363,10 +366,12 @@ export function NostrKeyImportForm({
                   <Button
                     aria-hidden={!hasInput}
                     aria-label={
-                      isRevealed ? "Hide private key" : "Reveal private key"
+                      isRevealed
+                        ? tl("Hide private key")
+                        : tl("Reveal private key")
                     }
                     className={cn(
-                      "absolute right-8 top-1/2 h-10 w-10 -translate-y-1/2 text-muted-foreground transition-opacity duration-300 hover:bg-foreground/10 hover:text-foreground motion-reduce:transition-none",
+                      "absolute end-8 top-1/2 h-10 w-10 -translate-y-1/2 text-muted-foreground transition-opacity duration-300 hover:bg-foreground/10 hover:text-foreground motion-reduce:transition-none",
                       hasInput
                         ? "opacity-100"
                         : "pointer-events-none opacity-0",
@@ -398,7 +403,7 @@ export function NostrKeyImportForm({
                 setNsecInput(event.target.value);
                 setImportError(null);
               }}
-              placeholder="nsec1..."
+              placeholder={tl("nsec1...")}
               ref={inputRef}
               spellCheck={false}
               type="password"
@@ -445,8 +450,8 @@ export function NostrKeyImportForm({
               onClick={openFilePicker}
               type="button"
             >
-              <FileKey2 aria-hidden="true" className="mr-2 size-4" />
-              Choose a backup file
+              <FileKey2 aria-hidden="true" className="me-2 size-4" />
+              {tl("Choose a backup file")}
             </Button>
             <BackupFileUnlockPreview />
           </div>
@@ -458,7 +463,7 @@ export function NostrKeyImportForm({
             >
               <span className="flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm font-semibold text-background shadow-sm ring-1 ring-background/15">
                 <KeyRound aria-hidden="true" className="size-4" />
-                <span>Drop your backup file here</span>
+                <span>{tl("Drop your backup file here")}</span>
               </span>
             </fieldset>
           ) : null}
@@ -530,7 +535,7 @@ export function NostrKeyImportForm({
               isDragging && "text-primary",
             )}
           >
-            Drop a key here
+            {tl("Drop a key here")}
           </span>
         </button>
       ) : null}
@@ -545,7 +550,7 @@ export function NostrKeyImportForm({
         >
           <BackupPasswordTimeline mode="restore" />
           <label className="sr-only" htmlFor="nostr-import-passphrase">
-            Backup password
+            {tl("Backup password")}
           </label>
           <div className="relative z-10">
             <Input
@@ -558,15 +563,17 @@ export function NostrKeyImportForm({
                 setPassphrase(event.target.value);
                 setImportError(null);
               }}
-              placeholder="Backup password"
+              placeholder={tl("Backup password")}
               ref={passphraseInputRef}
               spellCheck={false}
               type={isRevealed ? "text" : "password"}
               value={passphrase}
             />
             <Button
-              aria-label={isRevealed ? "Hide password" : "Reveal password"}
-              className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 text-black/55 hover:bg-black/5 hover:text-black/80"
+              aria-label={
+                isRevealed ? tl("Hide password") : tl("Reveal password")
+              }
+              className="absolute end-1 top-1/2 h-8 w-8 -translate-y-1/2 text-black/55 hover:bg-black/5 hover:text-black/80"
               data-testid="nostr-import-passphrase-reveal-toggle"
               disabled={isInteractionDisabled}
               onClick={() => setIsRevealed((current) => !current)}
@@ -589,7 +596,7 @@ export function NostrKeyImportForm({
           className={cn(
             "min-h-8",
             variant === "spotlight" &&
-              (cardLayout ? "mt-6 text-left" : "mt-6 text-center"),
+              (cardLayout ? "mt-6 text-start" : "mt-6 text-center"),
           )}
           data-testid="nostr-import-feedback"
         >
@@ -608,7 +615,7 @@ export function NostrKeyImportForm({
                   )}
                 >
                   <Check aria-hidden="true" className="h-4 w-4 shrink-0" />
-                  Nostr identity found
+                  {tl("Nostr identity found")}
                 </p>
                 <p className="break-all font-mono text-[color:var(--buzz-onboarding-backup-ink)]">
                   {previewNpub}
@@ -622,7 +629,7 @@ export function NostrKeyImportForm({
                 <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                 <div className="min-w-0 space-y-0.5">
                   <p className="font-medium text-foreground">
-                    This will use this Nostr identity:
+                    {tl("This will use this Nostr identity:")}
                   </p>
                   <p className="break-all font-mono text-2xs text-muted-foreground">
                     {previewNpub}
@@ -635,8 +642,8 @@ export function NostrKeyImportForm({
           {showInvalidHint && !errorMessage ? (
             <p className="text-sm text-muted-foreground">
               {isEncryptedInput
-                ? "Waiting for a complete ncryptsec backup"
-                : "Waiting for a valid nsec1 key"}
+                ? tl("Waiting for a complete ncryptsec backup")
+                : tl("Waiting for a valid nsec1 key")}
             </p>
           ) : null}
 
@@ -673,13 +680,13 @@ export function NostrKeyImportForm({
           >
             {isImporting ? (
               <Spinner
-                aria-label="Importing key"
+                aria-label={tl("Importing key")}
                 className="h-4 w-4 border-2"
               />
             ) : variant === "spotlight" ? (
-              "Next"
+              tl("Next")
             ) : (
-              "Continue with this key"
+              tl("Continue with this key")
             )}
           </Button>
         ) : null}
@@ -696,7 +703,7 @@ export function NostrKeyImportForm({
             type="button"
             variant="ghost"
           >
-            {isPasswordStage ? "Back" : backLabel}
+            {isPasswordStage ? tl("Back") : backLabel}
           </Button>
         ) : null}
       </Footer>

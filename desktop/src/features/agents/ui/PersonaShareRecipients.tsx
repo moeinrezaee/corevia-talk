@@ -18,6 +18,7 @@ import type { UserSearchResult } from "@/shared/api/types";
 import { normalizePubkey, truncateNpub } from "@/shared/lib/pubkey";
 import { Popover, PopoverAnchor, PopoverContent } from "@/shared/ui/popover";
 import { Skeleton } from "@/shared/ui/skeleton";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const RECIPIENT_LIMIT = 8;
 
@@ -172,7 +173,7 @@ export function PersonaShareRecipients({
                 aria-autocomplete="list"
                 aria-controls={`${testIdPrefix}-recipient-results`}
                 aria-expanded={isPickerOpen && !disabled}
-                aria-label="Share with"
+                aria-label={tl("Share with")}
                 autoCapitalize="none"
                 autoComplete="off"
                 autoCorrect="off"
@@ -214,9 +215,9 @@ export function PersonaShareRecipients({
                 }}
                 placeholder={
                   selectedUsers.length >= RECIPIENT_LIMIT
-                    ? "Recipient limit reached"
+                    ? tl("Recipient limit reached")
                     : selectedUsers.length === 0
-                      ? "Search people"
+                      ? tl("Search people")
                       : ""
                 }
                 ref={searchInputRef}
@@ -256,7 +257,7 @@ export function PersonaShareRecipients({
           >
             {isSearchSettling ? (
               <div
-                aria-label="Loading people"
+                aria-label={tl("Loading people")}
                 className="space-y-3 px-3 py-3"
                 role="status"
               >
@@ -270,8 +271,8 @@ export function PersonaShareRecipients({
             ) : visibleSearchResults.length > 0 ? (
               visibleSearchResults.map((user) => (
                 <button
-                  aria-label={`Add ${formatShareRecipientName(user)}`}
-                  className="flex min-h-11 w-full items-center gap-3 px-3 py-2 text-left transition-colors hover:bg-muted/50 focus-visible:bg-muted/50 focus-visible:outline-hidden"
+                  aria-label={tlt("Add {0}", [formatShareRecipientName(user)])}
+                  className="flex min-h-11 w-full items-center gap-3 px-3 py-2 text-start transition-colors hover:bg-muted/50 focus-visible:bg-muted/50 focus-visible:outline-hidden"
                   data-testid={`${testIdPrefix}-recipient-option-${user.pubkey}`}
                   key={user.pubkey}
                   onClick={() => selectUser(user)}
@@ -291,7 +292,7 @@ export function PersonaShareRecipients({
               ))
             ) : (
               <p className="px-3 py-3 text-sm text-muted-foreground">
-                No people found.
+                {tl("No people found.")}
               </p>
             )}
           </div>

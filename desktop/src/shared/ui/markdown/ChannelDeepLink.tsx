@@ -24,6 +24,7 @@ import { MessageLinkPill } from "./MessageLinkPill";
 import { useMarkdownRuntime } from "./runtimeContext";
 import { useInlineTooltipPosition } from "./useInlineTooltipPosition";
 import { getReactNodeText } from "./utils";
+import { tlt } from "@/shared/i18n/tl";
 
 function formatChannelActivity(timestamp: string): string | null {
   const activityAt = Date.parse(timestamp);
@@ -69,7 +70,7 @@ function ChannelMetadataTooltip({
         </TooltipTrigger>
         <TooltipContent
           ref={contentRef}
-          className="max-w-72 p-2 text-left"
+          className="max-w-72 p-2 text-start"
           side="top"
         >
           {description ? (
@@ -126,7 +127,11 @@ function ChannelPermalinkChipContents({
         href={href}
         icon="channel"
         title={href}
-        aria-label={openable ? `Open channel ${label}` : `Channel ${label}`}
+        aria-label={
+          openable
+            ? tlt("Open channel {0}", [label])
+            : tlt("Channel {0}", [label])
+        }
         interactive={openable && interactive}
         onOpenLink={() => {
           if (openable) onOpenChannel(channelId);
@@ -415,7 +420,9 @@ function ChannelReferenceChip({
         href={channel ? buildChannelLink(channel.id) : undefined}
         icon="channel"
         aria-label={
-          channel ? `Open channel ${channelName}` : `Channel ${channelName}`
+          channel
+            ? tlt("Open channel {0}", [channelName])
+            : tlt("Channel {0}", [channelName])
         }
         interactive={Boolean(channel) && interactive}
         onOpenLink={() => {

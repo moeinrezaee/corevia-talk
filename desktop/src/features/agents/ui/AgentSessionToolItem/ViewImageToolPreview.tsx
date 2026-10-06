@@ -24,7 +24,7 @@ export function ViewImageToolPreview({
       {/* biome-ignore lint/a11y/useKeyWithClickEvents: opens lightbox on click */}
       <img
         alt={alt}
-        className="ml-1.5 block max-h-64 max-w-[min(24rem,calc(100%-0.375rem))] cursor-pointer rounded-lg object-contain"
+        className="ms-1.5 block max-h-64 max-w-[min(24rem,calc(100%-0.375rem))] cursor-pointer rounded-lg object-contain"
         decoding="async"
         loading="lazy"
         onClick={() => setLightboxOpen(true)}

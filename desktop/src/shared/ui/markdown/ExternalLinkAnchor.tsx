@@ -11,6 +11,7 @@ import {
   type MediaContextMenuPosition,
   useDismissMediaContextMenu,
 } from "./MediaContextMenu";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * An external `[text](href)` link with a custom right-click menu.
@@ -68,16 +69,16 @@ export function ExternalLinkAnchor({
           dataAttributes={["data-link-context-menu"]}
           items={[
             {
-              label: "Open link",
+              label: tl("Open link"),
               onSelect: () => {
                 closeMenu();
                 void openUrl(href).catch(() => {
-                  toast.error("Failed to open link");
+                  toast.error(tl("Failed to open link"));
                 });
               },
             },
             {
-              label: "Copy link",
+              label: tl("Copy link"),
               onSelect: () => {
                 closeMenu();
                 copyTextToClipboard(href, "Link copied to clipboard");

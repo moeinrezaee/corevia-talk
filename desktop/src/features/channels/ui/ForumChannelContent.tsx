@@ -12,6 +12,7 @@ import type {
 import type { Channel } from "@/shared/api/types";
 import type { ProfilePanelOpenOptions } from "@/shared/context/ProfilePanelContext";
 import { ViewLoadingFallback } from "@/shared/ui/ViewLoadingFallback";
+import { tl } from "@/shared/i18n/tl";
 
 type ForumChannelContentProps = {
   canResetPanelWidth: boolean;
@@ -81,7 +82,7 @@ export function ForumChannelContent({
       {header}
       <div className="flex min-h-0 min-w-0 flex-1 flex-row overflow-hidden">
         <section
-          aria-label="Forum posts"
+          aria-label={tl("Forum posts")}
           className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden"
         >
           <React.Suspense fallback={<ViewLoadingFallback kind="forum" />}>

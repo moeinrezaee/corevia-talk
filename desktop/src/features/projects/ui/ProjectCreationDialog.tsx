@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { useAppNavigation } from "@/app/navigation/useAppNavigation";
 import { useCreateProjectMutation } from "@/features/projects/useCreateProject";
 import { CreateProjectDialog } from "@/features/projects/ui/CreateProjectDialog";
+import { tl } from "@/shared/i18n/tl";
 
 /** Shared project-creation flow for populated and first-run project views. */
 export function ProjectCreationDialog({
@@ -21,7 +22,7 @@ export function ProjectCreationDialog({
       onCreate={async (input) => {
         const result = await createProjectMutation.mutateAsync(input);
         if (result.compatibilityWarning) {
-          toast.warning("Created as a standalone project", {
+          toast.warning(tl("Created as a standalone project"), {
             description: result.compatibilityWarning,
           });
         } else {

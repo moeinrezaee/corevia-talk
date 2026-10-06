@@ -19,6 +19,7 @@ import {
   OnboardingSlideTransition,
 } from "./OnboardingSlideTransition";
 import type { ProfileStepActions, ProfileStepState } from "./types";
+import { tl } from "@/shared/i18n/tl";
 
 type ProfileStepProps = {
   actions: ProfileStepActions;
@@ -145,7 +146,7 @@ function OnboardingRelayConnectionErrorCard({
   }
 
   return createPortal(
-    <div className="buzz-onboarding-neutral-theme fixed bottom-4 left-4 z-50 w-[calc(100vw-2rem)] text-left sm:bottom-6 sm:left-6 sm:w-[22rem]">
+    <div className="buzz-onboarding-neutral-theme fixed bottom-4 start-4 z-50 w-[calc(100vw-2rem)] text-start sm:bottom-6 sm:start-6 sm:w-[22rem]">
       <SidebarRelayConnectionCompactCard
         actionTestId="onboarding-reconnect-relay"
         dismissClassName="pointer-events-auto [&>span]:opacity-100"
@@ -222,7 +223,7 @@ export function ProfileStep({
     <OnboardingSlideTransition
       className={cn(
         "flex w-full flex-col",
-        cardLayout ? "items-stretch text-left" : "items-center text-center",
+        cardLayout ? "items-stretch text-start" : "items-center text-center",
       )}
       data-testid="onboarding-page-1"
       direction={direction}
@@ -231,11 +232,12 @@ export function ProfileStep({
     >
       <div className="w-full max-w-2xl">
         <h1 className="text-title font-normal text-foreground">
-          What should we call you?
+          {tl("What should we call you?")}
         </h1>
         <p className="mt-5 text-sm leading-6 text-muted-foreground">
-          Pick the name people and agents will see in Buzz. You can change it
-          anytime.
+          {tl(
+            "Pick the name people and agents will see in Buzz. You can change it anytime.",
+          )}
         </p>
       </div>
 
@@ -244,9 +246,9 @@ export function ProfileStep({
           className="mt-8 block w-full text-sm font-medium text-foreground"
           htmlFor="onboarding-display-name"
         >
-          <span className="mb-2 block">Name</span>
+          <span className="mb-2 block">{tl("Name")}</span>
           <OnboardingInput
-            aria-label="Name"
+            aria-label={tl("Name")}
             autoCapitalize="none"
             autoComplete="off"
             autoCorrect="off"
@@ -260,7 +262,7 @@ export function ProfileStep({
                 submit();
               }
             }}
-            placeholder="Enter your name"
+            placeholder={tl("Enter your name")}
             ref={inputRef}
             spellCheck={false}
             value={displayNameDraft}
@@ -271,7 +273,7 @@ export function ProfileStep({
           className="mt-12 flex w-full cursor-text flex-col items-center"
           htmlFor="onboarding-display-name"
         >
-          <span className="sr-only">Name</span>
+          <span className="sr-only">{tl("Name")}</span>
           <div className="relative h-20 w-full max-w-[576px]">
             {!hasDisplayNameDraft ? (
               <div
@@ -283,12 +285,12 @@ export function ProfileStep({
                     aria-hidden="true"
                     className="buzz-onboarding-name-placeholder-caret h-[0.9em] w-0.5 rounded-full bg-primary"
                   />
-                  Enter your name
+                  {tl("Enter your name")}
                 </span>
               </div>
             ) : null}
             <input
-              aria-label="Name"
+              aria-label={tl("Name")}
               autoCapitalize="none"
               autoComplete="off"
               autoCorrect="off"
@@ -327,11 +329,14 @@ export function ProfileStep({
           type="button"
         >
           {isSaving ? (
-            <Spinner aria-label="Saving profile" className="h-4 w-4 border-2" />
+            <Spinner
+              aria-label={tl("Saving profile")}
+              className="h-4 w-4 border-2"
+            />
           ) : usesExistingIdentity ? (
-            "Continue"
+            tl("Continue")
           ) : (
-            "Create an identity key"
+            tl("Create an identity key")
           )}
         </Button>
 
@@ -344,7 +349,7 @@ export function ProfileStep({
             type="button"
             variant="ghost"
           >
-            Back
+            {tl("Back")}
           </Button>
         ) : null}
 
@@ -357,7 +362,7 @@ export function ProfileStep({
             type="button"
             variant="ghost"
           >
-            I already have a key
+            {tl("I already have a key")}
           </Button>
         ) : null}
 
@@ -372,7 +377,7 @@ export function ProfileStep({
                 type="button"
                 variant="ghost"
               >
-                Skip for now
+                {tl("Skip for now")}
               </Button>
             ) : null}
             {saveRecovery.canAdvanceWithoutSaving ? (
@@ -383,7 +388,7 @@ export function ProfileStep({
                 type="button"
                 variant="ghost"
               >
-                Continue without saving
+                {tl("Continue without saving")}
               </Button>
             ) : null}
             <div className="flex-1" />

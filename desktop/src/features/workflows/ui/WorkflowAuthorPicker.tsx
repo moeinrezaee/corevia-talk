@@ -21,6 +21,7 @@ import {
   parseDirectAuthorInput,
   type WorkflowAuthorCandidate,
 } from "./workflowAuthorCandidates";
+import { tl } from "@/shared/i18n/tl";
 
 const PAGE_SIZE = 50;
 
@@ -145,7 +146,7 @@ export function WorkflowAuthorPicker({
       ref={pickerRef}
     >
       <div className="relative shrink-0 border-b border-border/70">
-        <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <Search className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           aria-activedescendant={
             activeIndex !== null && visibleCandidates[activeIndex]
@@ -153,12 +154,12 @@ export function WorkflowAuthorPicker({
               : undefined
           }
           aria-controls={listId}
-          aria-label="Search authors or paste a public key"
+          aria-label={tl("Search authors or paste a public key")}
           aria-expanded="true"
           autoCapitalize="none"
           autoComplete="off"
           autoCorrect="off"
-          className="h-11 rounded-none border-0 bg-transparent pl-9 focus-visible:ring-0"
+          className="h-11 rounded-none border-0 bg-transparent ps-9 focus-visible:ring-0"
           data-workflow-filter-picker-search="true"
           disabled={disabled}
           id={id}
@@ -202,7 +203,7 @@ export function WorkflowAuthorPicker({
               }
             }
           }}
-          placeholder="Search people or paste a public key…"
+          placeholder={tl("Search people or paste a public key…")}
           role="combobox"
           spellCheck={false}
           value={query}
@@ -210,7 +211,7 @@ export function WorkflowAuthorPicker({
       </div>
 
       <div
-        aria-label="Authors"
+        aria-label={tl("Authors")}
         className={cn(
           "grid min-h-0 flex-1 gap-2 overflow-y-auto overscroll-contain p-2",
           columnCount === 3 ? "grid-cols-3" : "grid-cols-2",
@@ -254,11 +255,12 @@ export function WorkflowAuthorPicker({
             className="col-span-full flex items-center justify-center gap-2 px-3 py-8 text-sm text-muted-foreground"
             role="status"
           >
-            <LoaderCircle className="h-4 w-4 animate-spin" /> Loading authors…
+            <LoaderCircle className="h-4 w-4 animate-spin" />{" "}
+            {tl("Loading authors…")}
           </p>
         ) : visibleCandidates.length === 0 ? (
           <p className="col-span-full px-3 py-8 text-center text-sm text-muted-foreground">
-            {failed ? "Couldn’t load authors." : "No authors found."}
+            {failed ? tl("Couldn’t load authors.") : tl("No authors found.")}
           </p>
         ) : null}
         {failed ? (
@@ -271,7 +273,7 @@ export function WorkflowAuthorPicker({
             }}
             type="button"
           >
-            Couldn’t load all authors. Retry
+            {tl("Couldn’t load all authors. Retry")}
           </button>
         ) : null}
         {directoryQuery.hasNextPage ? (
@@ -282,8 +284,8 @@ export function WorkflowAuthorPicker({
             type="button"
           >
             {directoryQuery.isFetchingNextPage
-              ? "Loading more…"
-              : "Load more authors"}
+              ? tl("Loading more…")
+              : tl("Load more authors")}
           </button>
         ) : null}
       </div>
@@ -352,10 +354,7 @@ function AuthorOption({
         </span>
       </span>
       <Check
-        className={cn(
-          "absolute right-2 top-2 h-4 w-4",
-          !selected && "opacity-0",
-        )}
+        className={cn("absolute end-2 top-2 h-4 w-4", !selected && "opacity-0")}
       />
     </button>
   );

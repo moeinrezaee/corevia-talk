@@ -5,6 +5,7 @@ import type { AgentPersona } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
 import { rewriteRelayUrl } from "@/shared/lib/mediaUrl";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type QuickBotBarProps = {
   personas: Array<{
@@ -31,12 +32,12 @@ export function QuickBotBar({ personas, pending, onAdd }: QuickBotBarProps) {
     <div
       className="flex items-center"
       role="toolbar"
-      aria-label="Quick add bots"
+      aria-label={tl("Quick add bots")}
     >
       <div
         className={cn(
           "flex items-center gap-1 overflow-hidden transition-all duration-200 ease-out",
-          "max-w-0 opacity-0 group-hover/quick:mr-1 group-hover/quick:max-w-[120px] group-hover/quick:opacity-100",
+          "max-w-0 opacity-0 group-hover/quick:me-1 group-hover/quick:max-w-[120px] group-hover/quick:opacity-100",
         )}
       >
         {personas.slice(0, 3).map(({ persona, instanceName }) => {
@@ -52,7 +53,7 @@ export function QuickBotBar({ personas, pending, onAdd }: QuickBotBarProps) {
             <Tooltip key={persona.id}>
               <TooltipTrigger asChild>
                 <button
-                  aria-label={`Add ${persona.displayName}`}
+                  aria-label={tlt("Add {0}", [persona.displayName])}
                   className={cn(
                     "relative flex h-7 w-7 shrink-0 items-center justify-center rounded-lg",
                     "border border-border/50 shadow-xs",
@@ -87,7 +88,7 @@ export function QuickBotBar({ personas, pending, onAdd }: QuickBotBarProps) {
                 </button>
               </TooltipTrigger>
               <TooltipContent side="bottom" className="text-xs">
-                Add {instanceName} ({persona.displayName})
+                {tl("Add")} {instanceName} ({persona.displayName})
               </TooltipContent>
             </Tooltip>
           );

@@ -42,10 +42,11 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/shared/ui/dialog";
+import { tl } from "@/shared/i18n/tl";
 
 const FUZZY_SURFACE_CLASS =
   "relative left-1/2 w-[min(calc(100%+12rem),calc(100vw-2rem))] max-w-[1040px] -translate-x-1/2 px-20 pb-14 pt-20 !text-[rgb(var(--buzz-hosted-community-surface-fg))] [--buzz-card-textured-min-height:224px]";
-const COMMUNITY_LIST_CLASS = "mx-auto w-full max-w-[520px] text-left";
+const COMMUNITY_LIST_CLASS = "mx-auto w-full max-w-[520px] text-start";
 const COMMUNITY_ROW_CLASS =
   "flex min-h-[5.75rem] items-center justify-between gap-8 py-4 text-sm";
 const COMMUNITY_DIVIDER_CLASS =
@@ -372,7 +373,7 @@ export function HostedCommunityOnboarding({
 
   const errorBox = error ? (
     <div
-      className="flex items-start gap-3 rounded-xl border border-destructive/30 bg-destructive/10 p-4 text-left"
+      className="flex items-start gap-3 rounded-xl border border-destructive/30 bg-destructive/10 p-4 text-start"
       role="alert"
     >
       <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-destructive/15 text-destructive">
@@ -417,12 +418,12 @@ export function HostedCommunityOnboarding({
       aria-describedby={
         creationFeedback ? "hosted-community-feedback" : undefined
       }
-      aria-label="Community name"
+      aria-label={tl("Community name")}
       autoComplete="off"
       className={
         inline
           ? "h-[2.375rem] w-[16.5rem] rounded-full border border-[color:var(--buzz-onboarding-backup-ink)]/25 bg-[rgb(var(--buzz-hosted-community-input-bg)/0.6)] px-6 text-center text-sm shadow-none placeholder:text-foreground/30 focus-visible:ring-1 focus-visible:ring-[color:var(--buzz-onboarding-backup-ink)]/40"
-          : "h-auto min-w-0 flex-none rounded-none border-0 bg-transparent p-0 text-right font-mono !text-[rgb(var(--buzz-hosted-community-surface-fg))] shadow-none placeholder:!text-[rgb(var(--buzz-hosted-community-surface-fg))] placeholder:opacity-20 focus-visible:ring-0"
+          : "h-auto min-w-0 flex-none rounded-none border-0 bg-transparent p-0 text-end font-mono !text-[rgb(var(--buzz-hosted-community-surface-fg))] shadow-none placeholder:!text-[rgb(var(--buzz-hosted-community-surface-fg))] placeholder:opacity-20 focus-visible:ring-0"
       }
       disabled={busy || atCommunityLimit}
       id="hosted-community-address"
@@ -432,7 +433,7 @@ export function HostedCommunityOnboarding({
         setName(event.target.value.toLowerCase());
         setAvailability(null);
       }}
-      placeholder={inline ? "Community name here" : "your-community"}
+      placeholder={inline ? tl("Community name here") : "your-community"}
       spellCheck={false}
       style={
         inline
@@ -455,7 +456,7 @@ export function HostedCommunityOnboarding({
       >
         <div className={COMMUNITY_ROW_CLASS}>
           <label className="text-sm" htmlFor="hosted-community-address">
-            Set new community name
+            {tl("Set new community name")}
           </label>
           {creationInput(true)}
         </div>
@@ -511,12 +512,12 @@ export function HostedCommunityOnboarding({
           {!auth ? (
             <>
               <DialogTitle className="text-xl font-medium text-foreground">
-                Set up your community
+                {tl("Set up your community")}
               </DialogTitle>
               <DialogDescription className="mt-2 text-sm leading-6 text-foreground">
-                Sign in to connect a community you already own or create a new
-                one. We’ll open Builderlab in your browser, then bring you back
-                to Buzz.
+                {tl(
+                  "Sign in to connect a community you already own or create a new one. We’ll open Builderlab in your browser, then bring you back to Buzz.",
+                )}
               </DialogDescription>
               {errorBox ? <div className="mt-5 w-full">{errorBox}</div> : null}
               {action === "Signing in…" ? (
@@ -525,33 +526,35 @@ export function HostedCommunityOnboarding({
                   disabled
                 >
                   <LoaderCircle className="h-4 w-4 animate-spin" />
-                  Waiting for your browser…
+                  {tl("Waiting for your browser…")}
                 </Button>
               ) : (
                 <Button
                   className={`mt-6 ${MODAL_PRIMARY_ACTION_CLASS}`}
                   onClick={signIn}
                 >
-                  Sign in to continue
+                  {tl("Sign in to continue")}
                 </Button>
               )}
               {/* Quiet breadcrumb: Buzz itself is open source; this hosted
                     relay is the one account-backed piece of the flow. */}
               <p className="mt-6 w-full border-t border-foreground/10 pt-4 text-xs leading-5 text-foreground/45">
-                Buzz is open source. Builderlab hosts the relay for this
-                account.
+                {tl(
+                  "Buzz is open source. Builderlab hosts the relay for this account.",
+                )}
               </p>
             </>
           ) : !identity ? (
             <>
               <DialogTitle className="text-xl font-medium text-foreground">
-                Finish connecting Buzz
+                {tl("Finish connecting Buzz")}
               </DialogTitle>
               <DialogDescription className="mt-2 text-sm leading-6 text-foreground">
-                Your Builderlab account
-                {auth.email ? ` (${auth.email})` : ""} is ready. Connect this
-                device’s Buzz identity to finish setup. Your private key stays
-                on this device.
+                {tl("Your Builderlab account")}
+                {auth.email ? ` (${auth.email})` : ""}{" "}
+                {tl(
+                  "is ready. Connect this device’s Buzz identity to finish setup. Your private key stays on this device.",
+                )}
               </DialogDescription>
               {errorBox ? <div className="mt-5 w-full">{errorBox}</div> : null}
               <Button
@@ -562,22 +565,23 @@ export function HostedCommunityOnboarding({
                 {busy ? (
                   <LoaderCircle className="h-4 w-4 animate-spin" />
                 ) : null}
-                {busy ? action : "Connect and continue"}
+                {busy ? action : tl("Connect and continue")}
               </Button>
             </>
           ) : (
             <>
               <DialogTitle className="text-xl font-medium text-foreground">
-                This account uses a different Buzz identity
+                {tl("This account uses a different Buzz identity")}
               </DialogTitle>
               <DialogDescription className="mt-2 text-sm leading-6 text-foreground">
-                This account is connected to another Buzz identity. Reconnect
-                this device, or sign out to use a different email.
+                {tl(
+                  "This account is connected to another Buzz identity. Reconnect this device, or sign out to use a different email.",
+                )}
               </DialogDescription>
-              <p className="mt-4 w-full break-all rounded-xl bg-[rgb(var(--buzz-hosted-community-identity-bg)/0.5)] px-4 py-3 text-left font-mono text-xs text-foreground">
-                Account: {boundNpub ?? UNAVAILABLE_KEY_LABEL}
+              <p className="mt-4 w-full break-all rounded-xl bg-[rgb(var(--buzz-hosted-community-identity-bg)/0.5)] px-4 py-3 text-start font-mono text-xs text-foreground">
+                {tl("Account:")} {boundNpub ?? UNAVAILABLE_KEY_LABEL}
                 <br />
-                This device: {localNpub ?? UNAVAILABLE_KEY_LABEL}
+                {tl("This device:")} {localNpub ?? UNAVAILABLE_KEY_LABEL}
               </p>
               {errorBox ? <div className="mt-5 w-full">{errorBox}</div> : null}
               <div className="mt-6 flex flex-col items-stretch gap-2">
@@ -586,7 +590,7 @@ export function HostedCommunityOnboarding({
                   disabled={busy}
                   onClick={() => void switchToDeviceIdentity()}
                 >
-                  {busy ? action : "Use this device's identity"}
+                  {busy ? action : tl("Use this device's identity")}
                 </Button>
                 <Button
                   className={MODAL_BACK_ACTION_CLASS}
@@ -594,7 +598,7 @@ export function HostedCommunityOnboarding({
                   onClick={() => void signOut()}
                   variant="ghost"
                 >
-                  Sign in with a different email
+                  {tl("Sign in with a different email")}
                 </Button>
               </div>
             </>
@@ -613,19 +617,19 @@ export function HostedCommunityOnboarding({
   return (
     <div className="flex min-h-[calc(100dvh-15.625rem)] w-full max-w-[920px] flex-col items-center text-center">
       <h1 className="max-w-[620px] text-title font-normal leading-[1.18] tracking-[-0.025em]">
-        {hasCommunities ? "Choose a community" : "Create a community"}
+        {hasCommunities ? tl("Choose a community") : tl("Create a community")}
       </h1>
       <p className="mx-auto mt-2 max-w-[560px] text-sm leading-6 text-foreground">
         {hasCommunities
-          ? "Connect one you own, or start something new."
-          : "Claim a Buzz address to get started."}
+          ? tl("Connect one you own, or start something new.")
+          : tl("Claim a Buzz address to get started.")}
       </p>
 
-      <div className="flex w-full flex-1 flex-col justify-center text-left">
+      <div className="flex w-full flex-1 flex-col justify-center text-start">
         {loading ? (
           <div className="flex justify-center py-10" role="status">
             <LoaderCircle className="h-6 w-6 animate-spin" />
-            <span className="sr-only">Checking sign-in</span>
+            <span className="sr-only">{tl("Checking sign-in")}</span>
           </div>
         ) : ready ? (
           <>
@@ -639,7 +643,7 @@ export function HostedCommunityOnboarding({
                 >
                   <section className={COMMUNITY_LIST_CLASS}>
                     <h2 className="text-center text-sm font-medium">
-                      Your communities
+                      {tl("Your communities")}
                     </h2>
                     <ul className="mt-2">
                       {activeCommunities.map((community, index) => (
@@ -653,7 +657,7 @@ export function HostedCommunityOnboarding({
                             <p className="truncate text-sm">
                               {community.name ??
                                 community.slug ??
-                                "Hosted community"}
+                                tl("Hosted community")}
                             </p>
                             <p className="mt-1 truncate text-sm text-foreground/55">
                               {community.normalized_host}
@@ -670,7 +674,7 @@ export function HostedCommunityOnboarding({
                             size="sm"
                             variant="ghost"
                           >
-                            Connect
+                            {tl("Connect")}
                           </Button>
                         </li>
                       ))}
@@ -696,7 +700,7 @@ export function HostedCommunityOnboarding({
                           }}
                         >
                           <p className="text-sm">
-                            Want to create a new community?
+                            {tl("Want to create a new community?")}
                           </p>
                           <Button
                             className={COMMUNITY_ACTION_CLASS}
@@ -706,7 +710,7 @@ export function HostedCommunityOnboarding({
                             type="button"
                             variant="ghost"
                           >
-                            + Add new
+                            {tl("+ Add new")}
                           </Button>
                         </motion.div>
                       ) : (
@@ -743,7 +747,7 @@ export function HostedCommunityOnboarding({
                   }`}
                   id="hosted-community-feedback"
                 >
-                  {creationFeedback ?? "Community address status"}
+                  {creationFeedback ?? tl("Community address status")}
                 </p>
               </>
             ) : (
@@ -760,7 +764,7 @@ export function HostedCommunityOnboarding({
                   }`}
                   id="hosted-community-feedback"
                 >
-                  {creationFeedback ?? "Community address status"}
+                  {creationFeedback ?? tl("Community address status")}
                 </p>
               </>
             )}
@@ -789,7 +793,7 @@ export function HostedCommunityOnboarding({
             type="submit"
           >
             {busy ? <LoaderCircle className="h-4 w-4 animate-spin" /> : null}
-            {action ?? "Next"}
+            {action ?? tl("Next")}
           </Button>
           <Button
             className={PAGE_BACK_CLASS}
@@ -798,7 +802,7 @@ export function HostedCommunityOnboarding({
             type="button"
             variant="ghost"
           >
-            Back
+            {tl("Back")}
           </Button>
         </OnboardingFooter>
       ) : null}

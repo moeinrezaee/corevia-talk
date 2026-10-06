@@ -19,6 +19,7 @@ import {
 import type { Channel, SearchHit, UserSearchResult } from "@/shared/api/types";
 import { Badge } from "@/shared/ui/badge";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { tl } from "@/shared/i18n/tl";
 
 export type SearchResult =
   | {
@@ -117,8 +118,8 @@ export function SearchResultShell({
     <button
       className={
         isSelected
-          ? "w-full rounded-2xl border border-primary/30 bg-primary/10 px-4 py-4 text-left shadow-xs outline-hidden transition-colors"
-          : "w-full rounded-2xl border border-border/80 bg-card/60 px-4 py-4 text-left shadow-xs outline-hidden transition-colors hover:border-primary/20 hover:bg-accent"
+          ? "w-full rounded-2xl border border-primary/30 bg-primary/10 px-4 py-4 text-start shadow-xs outline-hidden transition-colors"
+          : "w-full rounded-2xl border border-border/80 bg-card/60 px-4 py-4 text-start shadow-xs outline-hidden transition-colors hover:border-primary/20 hover:bg-accent"
       }
       data-testid={testId}
       onClick={onClick}
@@ -144,8 +145,8 @@ export function ChannelResultBody({ channel }: { channel: Channel }) {
       <div className="flex flex-wrap items-center gap-2">
         <p className="text-sm font-semibold tracking-tight">{channel.name}</p>
         <Badge variant="secondary">{channel.channelType}</Badge>
-        <p className="ml-auto whitespace-nowrap text-xs text-muted-foreground">
-          Channel
+        <p className="ms-auto whitespace-nowrap text-xs text-muted-foreground">
+          {tl("Channel")}
         </p>
       </div>
       {channel.description ? (
@@ -252,7 +253,7 @@ export function MessageResultBody({
           />
           {authorLabel}
         </span>
-        <p className="ml-auto whitespace-nowrap text-xs text-muted-foreground">
+        <p className="ms-auto whitespace-nowrap text-xs text-muted-foreground">
           {formatRelativeTime(hit.createdAt)}
         </p>
       </div>

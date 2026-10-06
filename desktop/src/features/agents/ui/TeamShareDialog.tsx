@@ -8,6 +8,7 @@ import { Switch } from "@/shared/ui/switch";
 
 import { SnapshotShareDialog } from "./PersonaShareDialog";
 import { teamCatalogCopy } from "./teamLibraryCopy";
+import { tl } from "@/shared/i18n/tl";
 
 type TeamShareDialogProps = {
   catalogShareLevel: CatalogTeamShareLevel;
@@ -55,7 +56,7 @@ export function TeamShareDialog({
               </p>
             </div>
             <Switch
-              aria-label="Share to catalog"
+              aria-label={tl("Share to catalog")}
               checked={catalogShareLevel !== "not-shared"}
               data-testid="team-share-catalog-access"
               disabled={isPending}

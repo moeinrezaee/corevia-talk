@@ -6,6 +6,7 @@ import { useSystemColorScheme } from "@/shared/theme/useSystemColorScheme";
 import { Button } from "@/shared/ui/button";
 import { StartupWindowDragRegion } from "@/shared/ui/StartupWindowDragRegion";
 import { NostrKeyImportForm } from "./NostrKeyImportForm";
+import { tl } from "@/shared/i18n/tl";
 
 export function KeyringLockedScreen() {
   const queryClient = useQueryClient();
@@ -41,12 +42,12 @@ export function KeyringLockedScreen() {
       <StartupWindowDragRegion />
       <div className="relative flex w-full max-w-[500px] flex-col items-center text-center">
         <h1 className="text-3xl font-semibold tracking-tight">
-          Unlock your system keyring
+          {tl("Unlock your system keyring")}
         </h1>
         <p className="mt-3 text-sm leading-6 text-muted-foreground">
-          Your identity is safe in the OS keyring, but it's unreachable this
-          session. Unlock your keyring or sign into your desktop session, then
-          relaunch Buzz.
+          {tl(
+            "Your identity is safe in the OS keyring, but it's unreachable this session. Unlock your keyring or sign into your desktop session, then relaunch Buzz.",
+          )}
         </p>
 
         {showImport ? (
@@ -65,7 +66,7 @@ export function KeyringLockedScreen() {
               }}
               type="button"
             >
-              Relaunch Buzz
+              {tl("Relaunch Buzz")}
             </Button>
             <Button
               className="h-10 w-full"
@@ -73,7 +74,7 @@ export function KeyringLockedScreen() {
               type="button"
               variant="secondary"
             >
-              Re-import your key instead
+              {tl("Re-import your key instead")}
             </Button>
           </div>
         )}

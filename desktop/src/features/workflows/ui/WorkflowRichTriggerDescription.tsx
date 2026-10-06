@@ -2,6 +2,7 @@ import { LoaderCircle } from "lucide-react";
 
 import { UserAvatar } from "@/shared/ui/UserAvatar";
 import { splitWorkflowAuthorDescription } from "./workflowTriggerDescription";
+import { tl } from "@/shared/i18n/tl";
 
 export function WorkflowRichTriggerDescription({
   avatarUrl,
@@ -21,7 +22,7 @@ export function WorkflowRichTriggerDescription({
       <span className="flex min-w-0 items-center gap-1.5">
         <span className="truncate">{description}</span>
         <LoaderCircle
-          aria-label="Loading author"
+          aria-label={tl("Loading author")}
           className="h-3.5 w-3.5 shrink-0 animate-spin"
           role="status"
         />

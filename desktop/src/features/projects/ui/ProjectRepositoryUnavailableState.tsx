@@ -19,6 +19,7 @@ import {
 } from "@/features/projects/lib/projectRepoAvailability";
 import { Button } from "@/shared/ui/button";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const UNAVAILABLE_ICONS = {
   authentication: LockKeyhole,
@@ -40,7 +41,7 @@ function RepositoryOwnerReference({
   ownerName?: string;
 }) {
   if (!ownerName) {
-    return <>the repository owner</>;
+    return <>{tl("the repository owner")}</>;
   }
   return (
     <>
@@ -63,7 +64,7 @@ function RepositoryOwnerReference({
           {ownerName}
         </span>
       </span>
-      , the repository owner,
+      {tl(", the repository owner,")}
     </>
   );
 }
@@ -86,35 +87,37 @@ function AccessRestrictedDescription({
   if (!isOpenable) {
     return (
       <>
-        Repository access is granted through a channel you can’t see. Ask{" "}
+        {tl(
+          "Repository access is granted through a channel you can’t see. Ask",
+        )}{" "}
         <RepositoryOwnerReference
           ownerAvatarUrl={ownerAvatarUrl}
           ownerIsAgent={ownerIsAgent}
           ownerName={ownerName}
         />{" "}
-        for an invite.
+        {tl("for an invite.")}
       </>
     );
   }
 
   return (
     <>
-      Repository access is granted through{" "}
+      {tl("Repository access is granted through")}{" "}
       <button
-        aria-label={`Open repository access channel #${channel.name}`}
+        aria-label={tlt("Open repository access channel #{0}", [channel.name])}
         className="font-medium text-foreground underline-offset-2 hover:underline"
         onClick={() => void goChannel(channel.id)}
         type="button"
       >
         #{channel.name}
       </button>
-      , and you’re not a member. Join the channel or ask{" "}
+      {tl(", and you’re not a member. Join the channel or ask")}{" "}
       <RepositoryOwnerReference
         ownerAvatarUrl={ownerAvatarUrl}
         ownerIsAgent={ownerIsAgent}
         ownerName={ownerName}
       />{" "}
-      for an invite.
+      {tl("for an invite.")}
     </>
   );
 }
@@ -177,13 +180,13 @@ export function ProjectRepositoryUnavailableState({
             ) : (
               <RefreshCw className="h-4 w-4" />
             )}
-            {retryPending ? "Retrying…" : "Retry"}
+            {retryPending ? tl("Retrying…") : tl("Retry")}
           </Button>
         ) : null}
         {reason === "access" && onAskForAccess ? (
           <Button onClick={onAskForAccess} size="sm">
             <MessageCircle className="h-4 w-4" />
-            Ask for access
+            {tl("Ask for access")}
           </Button>
         ) : null}
       </div>

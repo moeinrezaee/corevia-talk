@@ -41,6 +41,7 @@ import {
 import { Button } from "@/shared/ui/button";
 import { PageHeader } from "@/shared/ui/PageHeader";
 import { Skeleton } from "@/shared/ui/skeleton";
+import { tl } from "@/shared/i18n/tl";
 
 type WorkflowsViewProps = {
   channels: Channel[];
@@ -90,7 +91,7 @@ function WorkflowsListSkeleton() {
 function CreateWorkflowCard({ onClick }: { onClick: () => void }) {
   return (
     <button
-      aria-label="Create Workflow"
+      aria-label={tl("Create Workflow")}
       className="group relative flex min-h-60 w-full min-w-0 items-center justify-center overflow-hidden rounded-2xl border border-dashed border-border/80 bg-transparent text-muted-foreground shadow-xs transition-colors hover:border-border hover:bg-muted/70 hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
       data-testid="new-workflow-card"
       onClick={onClick}
@@ -185,7 +186,7 @@ export function WorkflowsView({
         workflow.revision,
       ),
     onError: (error) => {
-      toast.error("Couldn’t change workflow status", {
+      toast.error(tl("Couldn’t change workflow status"), {
         description:
           error instanceof Error
             ? error.message
@@ -282,7 +283,7 @@ export function WorkflowsView({
           <PageHeader
             action={
               <Button
-                aria-label="Refresh workflows"
+                aria-label={tl("Refresh workflows")}
                 disabled={allWorkflowsQuery.isFetching}
                 onClick={() => void allWorkflowsQuery.refetch()}
                 size="icon"
@@ -293,21 +294,23 @@ export function WorkflowsView({
                 />
               </Button>
             }
-            description="Automations that keep your community moving."
-            title="Workflows"
+            description={tl("Automations that keep your community moving.")}
+            title={tl("Workflows")}
           />
 
           {allWorkflowsQuery.isLoading ? (
             <WorkflowsListSkeleton />
           ) : allWorkflowsQuery.isError ? (
             <div className="flex flex-col items-center justify-center gap-2 py-16 text-muted-foreground">
-              <p className="text-sm text-red-400">Failed to load workflows</p>
+              <p className="text-sm text-red-400">
+                {tl("Failed to load workflows")}
+              </p>
               <Button
                 onClick={() => void allWorkflowsQuery.refetch()}
                 size="sm"
                 variant="outline"
               >
-                Retry
+                {tl("Retry")}
               </Button>
             </div>
           ) : (
@@ -360,15 +363,17 @@ export function WorkflowsView({
         <AlertDialogContent data-testid="workflow-activation-confirmation">
           <AlertDialogHeader>
             <AlertDialogTitle>
-              {activationWarning?.title ?? "Turn on this workflow?"}
+              {activationWarning?.title ?? tl("Turn on this workflow?")}
             </AlertDialogTitle>
             <AlertDialogDescription>
               {activationWarning?.description ??
-                "Turn it on to let it run immediately, or keep it off until you’re ready."}
+                tl(
+                  "Turn it on to let it run immediately, or keep it off until you’re ready.",
+                )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Keep off</AlertDialogCancel>
+            <AlertDialogCancel>{tl("Keep off")}</AlertDialogCancel>
             <AlertDialogAction
               disabled={toggleEnabledMutation.isPending}
               onClick={(event) => {
@@ -377,7 +382,7 @@ export function WorkflowsView({
                 toggleEnabled(activationTarget);
               }}
             >
-              Turn on
+              {tl("Turn on")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

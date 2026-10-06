@@ -33,6 +33,7 @@ import { safeNpub } from "@/shared/lib/nostrUtils";
 import { UNAVAILABLE_KEY_LABEL } from "@/shared/lib/pubkey";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
+import { tl } from "@/shared/i18n/tl";
 
 type HostedCommunityCreateFlowProps = {
   onComplete: () => void;
@@ -305,7 +306,7 @@ export function HostedCommunityCreateFlow({
     return (
       <div className="flex min-h-40 items-center justify-center" role="status">
         <LoaderCircle className="h-5 w-5 animate-spin text-muted-foreground" />
-        <span className="sr-only">Checking sign-in</span>
+        <span className="sr-only">{tl("Checking sign-in")}</span>
       </div>
     );
   }
@@ -314,8 +315,9 @@ export function HostedCommunityCreateFlow({
     return (
       <div className="space-y-5">
         <p className="text-sm leading-6 text-muted-foreground">
-          Sign in with Builderlab to create and host a community. Buzz will open
-          your browser, then bring you back here.
+          {tl(
+            "Sign in with Builderlab to create and host a community. Buzz will open your browser, then bring you back here.",
+          )}
         </p>
         {errorBox}
         <div className="flex justify-end pt-1">
@@ -323,7 +325,7 @@ export function HostedCommunityCreateFlow({
             {action === "Signing in…" ? (
               <LoaderCircle className="h-4 w-4 animate-spin" />
             ) : null}
-            {action ?? "Continue to Builderlab"}
+            {action ?? tl("Continue to Builderlab")}
             {action ? null : <ExternalLink className="h-4 w-4" />}
           </Button>
         </div>
@@ -335,8 +337,9 @@ export function HostedCommunityCreateFlow({
     return (
       <div className="space-y-5">
         <p className="text-sm leading-6 text-muted-foreground">
-          Connect this device’s Buzz identity to your Builderlab account. Your
-          private key stays on this device.
+          {tl(
+            "Connect this device’s Buzz identity to your Builderlab account. Your private key stays on this device.",
+          )}
         </p>
         {errorBox}
         <div className="flex justify-end gap-2 pt-1">
@@ -346,7 +349,7 @@ export function HostedCommunityCreateFlow({
             type="button"
             variant="outline"
           >
-            Use a different account
+            {tl("Use a different account")}
           </Button>
           <Button
             disabled={Boolean(action)}
@@ -354,7 +357,7 @@ export function HostedCommunityCreateFlow({
             type="button"
           >
             {action ? <LoaderCircle className="h-4 w-4 animate-spin" /> : null}
-            {action ?? "Connect and continue"}
+            {action ?? tl("Connect and continue")}
           </Button>
         </div>
       </div>
@@ -365,15 +368,16 @@ export function HostedCommunityCreateFlow({
     return (
       <div className="space-y-5">
         <p className="text-sm leading-6 text-muted-foreground">
-          This Builderlab account uses a different Buzz identity. Switch it to
-          this device, or sign in with another account.
+          {tl(
+            "This Builderlab account uses a different Buzz identity. Switch it to this device, or sign in with another account.",
+          )}
         </p>
         <div className="rounded-xl bg-muted/40 px-4 py-3 font-mono text-xs text-muted-foreground">
           <p className="break-all">
-            Account: {boundNpub ?? UNAVAILABLE_KEY_LABEL}
+            {tl("Account:")} {boundNpub ?? UNAVAILABLE_KEY_LABEL}
           </p>
           <p className="mt-1 break-all">
-            This device: {localNpub ?? UNAVAILABLE_KEY_LABEL}
+            {tl("This device:")} {localNpub ?? UNAVAILABLE_KEY_LABEL}
           </p>
         </div>
         {errorBox}
@@ -384,7 +388,7 @@ export function HostedCommunityCreateFlow({
             type="button"
             variant="outline"
           >
-            Use a different account
+            {tl("Use a different account")}
           </Button>
           <Button
             disabled={Boolean(action)}
@@ -392,7 +396,7 @@ export function HostedCommunityCreateFlow({
             type="button"
           >
             {action ? <LoaderCircle className="h-4 w-4 animate-spin" /> : null}
-            {action ?? "Use this device"}
+            {action ?? tl("Use this device")}
           </Button>
         </div>
       </div>
@@ -418,7 +422,7 @@ export function HostedCommunityCreateFlow({
           className="text-sm font-medium text-foreground"
           htmlFor="hosted-community-create-name"
         >
-          Community address
+          {tl("Community address")}
         </label>
         <div
           className={cn(
@@ -444,7 +448,7 @@ export function HostedCommunityCreateFlow({
               setAvailability(null);
               setError(null);
             }}
-            placeholder="north-star"
+            placeholder={tl("north-star")}
             spellCheck={false}
             value={name}
           />
@@ -477,7 +481,7 @@ export function HostedCommunityCreateFlow({
           type="submit"
         >
           {action ? <LoaderCircle className="h-4 w-4 animate-spin" /> : null}
-          {action ?? "Create community"}
+          {action ?? tl("Create community")}
         </Button>
       </div>
     </form>

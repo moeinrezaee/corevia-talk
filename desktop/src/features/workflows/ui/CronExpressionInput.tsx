@@ -10,6 +10,7 @@ import {
   validateCronFields,
 } from "./cronExpression";
 import type { CronFields } from "./cronExpression";
+import { tl } from "@/shared/i18n/tl";
 
 export function CronExpressionInput({
   disabled,
@@ -55,7 +56,7 @@ export function CronExpressionInput({
   return (
     <fieldset className="space-y-1.5">
       <legend className="text-xs font-medium text-muted-foreground">
-        Cron expression
+        {tl("Cron expression")}
       </legend>
       <div aria-describedby={messageId} className="space-y-1">
         <div className="grid grid-cols-5 gap-px px-px">
@@ -87,7 +88,7 @@ export function CronExpressionInput({
               autoCapitalize="characters"
               autoCorrect="off"
               className={cn(
-                "h-11 min-w-0 border-l border-input/50 bg-transparent px-1 text-center font-mono text-sm text-foreground outline-hidden first:border-l-0",
+                "h-11 min-w-0 border-s border-input/50 bg-transparent px-1 text-center font-mono text-sm text-foreground outline-hidden first:border-s-0",
                 "placeholder:text-muted-foreground/60 focus:z-10 focus:bg-muted/35",
                 "disabled:cursor-not-allowed",
                 validationErrors[index] &&
@@ -162,7 +163,9 @@ export function CronExpressionInput({
         role={firstError ? "alert" : undefined}
       >
         {firstError ??
-          "UTC · Paste all 5 fields, or use wildcards, lists, ranges, and steps."}
+          tl(
+            "UTC · Paste all 5 fields, or use wildcards, lists, ranges, and steps.",
+          )}
       </p>
     </fieldset>
   );

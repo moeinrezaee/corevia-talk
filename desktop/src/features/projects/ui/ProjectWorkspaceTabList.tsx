@@ -2,6 +2,7 @@ import { ArrowLeft } from "lucide-react";
 
 import { cn } from "@/shared/lib/cn";
 import { TabsList, TabsTrigger } from "@/shared/ui/tabs";
+import { tl } from "@/shared/i18n/tl";
 
 export const PROJECT_TAB_TRIGGER_CLASS =
   "h-7 shrink-0 rounded-full bg-muted/30 px-3 text-xs font-medium leading-5 tracking-tight text-muted-foreground shadow-none transition-colors hover:bg-muted/55 hover:text-foreground data-[state=active]:bg-muted data-[state=active]:text-foreground data-[state=active]:shadow-none";
@@ -24,27 +25,27 @@ export function ProjectTabsList({
   return (
     <div className="flex h-full min-w-0 max-w-full flex-none items-center gap-1.5 overflow-x-auto scrollbar-none">
       <button
-        aria-label="Back"
+        aria-label={tl("Back")}
         className={PROJECT_TAB_ICON_BUTTON_CLASS}
         data-testid="project-workspace-back"
         onClick={onBack}
-        title="Back"
+        title={tl("Back")}
         type="button"
       >
         <ArrowLeft className="h-full w-full" strokeWidth={2} />
       </button>
       <TabsList className="h-full min-w-0 max-w-full flex-none justify-start gap-1.5 overflow-x-auto bg-transparent p-0 scrollbar-none">
         <TabsTrigger className={PROJECT_TAB_TRIGGER_CLASS} value="overview">
-          <ProjectTabLabel>Overview</ProjectTabLabel>
+          <ProjectTabLabel>{tl("Overview")}</ProjectTabLabel>
         </TabsTrigger>
         <TabsTrigger className={PROJECT_TAB_TRIGGER_CLASS} value="files">
-          <ProjectTabLabel>Files</ProjectTabLabel>
+          <ProjectTabLabel>{tl("Files")}</ProjectTabLabel>
         </TabsTrigger>
         <TabsTrigger className={PROJECT_TAB_TRIGGER_CLASS} value="activity">
-          <ProjectTabLabel>Commits</ProjectTabLabel>
+          <ProjectTabLabel>{tl("Commits")}</ProjectTabLabel>
         </TabsTrigger>
         <TabsTrigger className={PROJECT_TAB_TRIGGER_CLASS} value="issues">
-          <ProjectTabLabel>Tasks</ProjectTabLabel>
+          <ProjectTabLabel>{tl("Tasks")}</ProjectTabLabel>
         </TabsTrigger>
         <TabsTrigger
           aria-current={prsActive ? "page" : undefined}
@@ -54,13 +55,13 @@ export function ProjectTabsList({
           )}
           value="prs"
         >
-          <ProjectTabLabel>Review</ProjectTabLabel>
+          <ProjectTabLabel>{tl("Review")}</ProjectTabLabel>
         </TabsTrigger>
         <TabsTrigger className={PROJECT_TAB_TRIGGER_CLASS} value="channels">
-          <ProjectTabLabel>Channels</ProjectTabLabel>
+          <ProjectTabLabel>{tl("Channels")}</ProjectTabLabel>
         </TabsTrigger>
         <TabsTrigger className={PROJECT_TAB_TRIGGER_CLASS} value="contributors">
-          <ProjectTabLabel>Contributors</ProjectTabLabel>
+          <ProjectTabLabel>{tl("Contributors")}</ProjectTabLabel>
         </TabsTrigger>
       </TabsList>
     </div>

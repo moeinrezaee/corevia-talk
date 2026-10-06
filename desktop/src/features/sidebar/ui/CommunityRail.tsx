@@ -38,6 +38,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { cn } from "@/shared/lib/cn";
 import { getInitials } from "@/shared/lib/initials";
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
+import { tl } from "@/shared/i18n/tl";
 
 type CommunityRailProps = {
   communities: Community[];
@@ -136,7 +137,7 @@ function CommunityButton({
               {isActive ? (
                 <span
                   aria-hidden="true"
-                  className="absolute -left-2.5 h-5 w-1 rounded-r-full bg-primary"
+                  className="absolute -start-2.5 h-5 w-1 rounded-e-full bg-primary"
                   data-testid={`community-rail-active-${community.id}`}
                 />
               ) : null}
@@ -160,17 +161,17 @@ function CommunityButton({
               </span>
               {showBadge ? (
                 <span
-                  className="absolute -bottom-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-2xs font-semibold text-primary-foreground ring-2 ring-sidebar"
+                  className="absolute -bottom-0.5 -end-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-2xs font-semibold text-primary-foreground ring-2 ring-sidebar"
                   data-testid={`community-rail-mentions-${community.id}`}
                 >
                   {badgeLabel}
                 </span>
               ) : showDot ? (
                 <span
-                  className="absolute -bottom-0.5 -right-0.5 h-2 w-2 shrink-0 rounded-full bg-primary ring-2 ring-sidebar"
+                  className="absolute -bottom-0.5 -end-0.5 h-2 w-2 shrink-0 rounded-full bg-primary ring-2 ring-sidebar"
                   data-testid={`community-rail-unread-dot-${community.id}`}
                 >
-                  <span className="sr-only">unread</span>
+                  <span className="sr-only">{tl("unread")}</span>
                 </span>
               ) : null}
             </button>
@@ -261,7 +262,7 @@ function SortableCommunityButton({
           <>
             <ContextMenuItem onClick={() => onMarkAllRead(community)}>
               <CheckCheck className="h-4 w-4" />
-              Mark all as read
+              {tl("Mark all as read")}
             </ContextMenuItem>
             <ContextMenuSeparator />
             <ContextMenuItem
@@ -270,17 +271,17 @@ function SortableCommunityButton({
               }}
             >
               <Link2 className="h-4 w-4" />
-              Copy community URL
+              {tl("Copy community URL")}
             </ContextMenuItem>
             {canInvite ? (
               <ContextMenuItem onClick={onInvite}>
                 <Ticket className="h-4 w-4" />
-                Invite to community
+                {tl("Invite to community")}
               </ContextMenuItem>
             ) : null}
             <ContextMenuItem onClick={() => onSetEditingCommunity(community)}>
               <Settings2 className="h-4 w-4" />
-              Community settings
+              {tl("Community settings")}
             </ContextMenuItem>
           </>
         }
@@ -373,7 +374,7 @@ export function CommunityRail({
 
   return (
     <nav
-      aria-label="Communities"
+      aria-label={tl("Communities")}
       className="relative z-20 flex w-14 shrink-0 flex-col items-center gap-2.5 overflow-y-auto bg-sidebar px-2.5 pb-5 pt-[calc(var(--buzz-top-chrome-height,40px)+7px)]"
       data-testid="community-rail"
     >
@@ -415,7 +416,7 @@ export function CommunityRail({
       <Tooltip>
         <TooltipTrigger asChild>
           <button
-            aria-label="Add community"
+            aria-label={tl("Add community")}
             className="flex h-9 w-9 items-center justify-center rounded-2xl bg-sidebar-accent/60 text-sidebar-foreground/70 outline-hidden transition-all hover:rounded-xl hover:bg-primary/80 hover:text-primary-foreground focus:outline-none focus-visible:outline-none"
             data-testid="community-rail-add"
             onClick={onAddCommunity}
@@ -425,7 +426,7 @@ export function CommunityRail({
           </button>
         </TooltipTrigger>
         <TooltipContent side="right" sideOffset={8}>
-          Add community
+          {tl("Add community")}
         </TooltipContent>
       </Tooltip>
       <EditCommunityDialog

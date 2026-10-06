@@ -21,6 +21,7 @@ import type { UserStatusInput } from "@/features/user-status/types";
 import type { PresenceStatus } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
 import { isMacPlatform } from "@/shared/lib/platform";
+import { tl } from "@/shared/i18n/tl";
 
 interface ProfilePopoverProps {
   open: boolean;
@@ -50,7 +51,7 @@ interface ProfilePopoverProps {
 }
 
 const MENU_ITEM_CLASS =
-  "flex min-h-9 w-full cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-popover-foreground outline-hidden transition-colors hover:bg-muted/50 focus:outline-none focus-visible:bg-muted/50 focus-visible:outline-none";
+  "flex min-h-9 w-full cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-start text-sm text-popover-foreground outline-hidden transition-colors hover:bg-muted/50 focus:outline-none focus-visible:bg-muted/50 focus-visible:outline-none";
 
 const ALL_STATUSES: PresenceStatus[] = ["online", "away", "offline"];
 
@@ -118,7 +119,7 @@ export function ProfilePopover({
             }
           }}
         >
-          <div aria-label="Profile menu" role="menu">
+          <div aria-label={tl("Profile menu")} role="menu">
             {/* ── Identity block ─────────────────────────────────── */}
             <div className="flex items-center gap-2 px-3 pt-2 pb-2">
               <MaskedAvatarBadgeFrame
@@ -180,7 +181,7 @@ export function ProfilePopover({
                     side="bottom"
                     sideOffset={4}
                   >
-                    <div aria-label="Presence status" role="menu">
+                    <div aria-label={tl("Presence status")} role="menu">
                       {ALL_STATUSES.map((status) => (
                         <button
                           className={MENU_ITEM_CLASS}
@@ -207,7 +208,7 @@ export function ProfilePopover({
             {/* ── Status input (Slack-style) ──────────────────────── */}
             <div className="px-2 pt-0 pb-1">
               <button
-                className="flex w-full items-center gap-2 rounded-lg border border-border/60 bg-transparent px-3 py-2 text-left text-sm outline-hidden transition-colors hover:bg-muted/50 focus:outline-none focus-visible:bg-muted/50 focus-visible:outline-none"
+                className="flex w-full items-center gap-2 rounded-lg border border-border/60 bg-transparent px-3 py-2 text-start text-sm outline-hidden transition-colors hover:bg-muted/50 focus:outline-none focus-visible:bg-muted/50 focus-visible:outline-none"
                 data-testid="profile-popover-set-status"
                 onClick={() => {
                   closePopover();
@@ -236,7 +237,7 @@ export function ProfilePopover({
                   </span>
                 ) : (
                   <span className="flex-1 truncate text-muted-foreground">
-                    Update your status
+                    {tl("Update your status")}
                   </span>
                 )}
               </button>
@@ -267,7 +268,7 @@ export function ProfilePopover({
                 role="menuitem"
                 type="button"
               >
-                <span className="flex-1">Send feedback</span>
+                <span className="flex-1">{tl("Send feedback")}</span>
               </button>
             ) : null}
 
@@ -284,7 +285,7 @@ export function ProfilePopover({
               role="menuitem"
               type="button"
             >
-              <span className="flex-1">Settings</span>
+              <span className="flex-1">{tl("Settings")}</span>
               <kbd className="text-xs text-muted-foreground">
                 {settingsShortcutLabel}
               </kbd>

@@ -8,6 +8,7 @@ import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 import { DrawerPanelIcon } from "@/shared/ui/DrawerPanelIcon";
 import { TerminalPanelIcon } from "@/shared/ui/TerminalPanelIcon";
+import { tl } from "@/shared/i18n/tl";
 
 export type ProjectRightPanelMode = "chat" | "repository";
 
@@ -27,7 +28,7 @@ export function ProjectChatPanelControl({
   const chatOpen = !collapsed && mode === "chat";
   return (
     <Button
-      aria-label={chatOpen ? "Hide project chat" : "Show project chat"}
+      aria-label={chatOpen ? tl("Hide project chat") : tl("Show project chat")}
       aria-pressed={chatOpen}
       className="h-7 w-7 text-sidebar-foreground hover:bg-sidebar-accent"
       data-testid="project-right-panel-chat-tab"
@@ -40,7 +41,7 @@ export function ProjectChatPanelControl({
         onExpand();
       }}
       size="icon"
-      title="Project chat"
+      title={tl("Project chat")}
       type="button"
       variant="ghost"
     >
@@ -76,7 +77,7 @@ export function ProjectRightPanelControls({
   return (
     <div className="flex items-center gap-0.5">
       <Button
-        aria-label={terminalOpen ? "Hide Buzz Term" : "Open Buzz Term"}
+        aria-label={terminalOpen ? tl("Hide Buzz Term") : tl("Open Buzz Term")}
         aria-pressed={terminalOpen}
         className={cn(
           "h-7 w-7 text-sidebar-foreground/65 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
@@ -86,7 +87,7 @@ export function ProjectRightPanelControls({
         disabled={!terminalAvailable}
         onClick={toggleTerminalPanel}
         size="icon"
-        title="Buzz Term (⌘J)"
+        title={tl("Buzz Term (⌘J)")}
         type="button"
         variant="ghost"
       >
@@ -105,7 +106,9 @@ export function ProjectRightPanelControls({
       />
       <Button
         aria-label={
-          repositoryOpen ? "Hide project context" : "Show project context"
+          repositoryOpen
+            ? tl("Hide project context")
+            : tl("Show project context")
         }
         aria-pressed={repositoryOpen}
         className="h-7 w-7 text-sidebar-foreground hover:bg-sidebar-accent"
@@ -119,7 +122,7 @@ export function ProjectRightPanelControls({
           onExpand();
         }}
         size="icon"
-        title="Project context"
+        title={tl("Project context")}
         type="button"
         variant="ghost"
       >

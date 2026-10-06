@@ -876,7 +876,7 @@ function ImageZoomOverlay({
         <button
           aria-label="Previous image"
           className={cn(
-            "absolute left-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-muted text-muted-foreground shadow-sm backdrop-blur-xl backdrop-saturate-150 transition-[background-color,color,opacity] duration-150 hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/70 sm:left-6",
+            "absolute start-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-muted text-muted-foreground shadow-sm backdrop-blur-xl backdrop-saturate-150 transition-[background-color,color,opacity] duration-150 hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/70 sm:start-6",
             isOpen ? "opacity-100" : "pointer-events-none opacity-0",
           )}
           data-image-lightbox-controls=""
@@ -893,7 +893,7 @@ function ImageZoomOverlay({
         <button
           aria-label="Next image"
           className={cn(
-            "absolute right-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-muted text-muted-foreground shadow-sm backdrop-blur-xl backdrop-saturate-150 transition-[background-color,color,opacity] duration-150 hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/70 sm:right-6",
+            "absolute end-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-muted text-muted-foreground shadow-sm backdrop-blur-xl backdrop-saturate-150 transition-[background-color,color,opacity] duration-150 hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/70 sm:end-6",
             isOpen ? "opacity-100" : "pointer-events-none opacity-0",
           )}
           data-image-lightbox-controls=""
@@ -1153,7 +1153,7 @@ function ImageBlock({ alt, dim, resolvedSrc, src, thumbSrc }: ImageBlockProps) {
         aria-hidden={isHiddenInSpoiler ? true : undefined}
         aria-label={alt?.trim() ? `Zoom image: ${alt}` : "Zoom image"}
         className={cn(
-          "mt-1 inline-block min-w-0 max-w-full cursor-zoom-in overflow-hidden rounded-2xl border-0 bg-transparent p-0 text-left align-top focus:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/50",
+          "mt-1 inline-block min-w-0 max-w-full cursor-zoom-in overflow-hidden rounded-2xl border-0 bg-transparent p-0 text-start align-top focus:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/50",
           lightboxState && "opacity-0",
         )}
         data-image-lightbox-resolved-src={resolvedSrc}
@@ -1215,7 +1215,7 @@ export function createMarkdownComponents(
   blockCode = false,
 ): Components {
   const listItemClassName = "[&_p]:inline";
-  const listClassName = "space-y-1 pl-6 marker:text-muted-foreground/80";
+  const listClassName = "space-y-1 ps-6 marker:text-muted-foreground/80";
 
   function MarkdownAnchor({
     children,
@@ -1401,7 +1401,7 @@ export function createMarkdownComponents(
     },
     a: MarkdownAnchor,
     blockquote: ({ children }) => (
-      <blockquote className="border-l-2 border-border pl-4 italic text-muted-foreground [&>*:first-child]:mt-0 [&>*+*]:mt-2">
+      <blockquote className="border-s-2 border-border ps-4 italic text-muted-foreground [&>*:first-child]:mt-0 [&>*+*]:mt-2">
         {children}
       </blockquote>
     ),

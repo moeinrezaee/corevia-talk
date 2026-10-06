@@ -22,6 +22,7 @@ import {
   validatedWorkflowMessageCandidate,
   validateWorkflowMessageSearchResults,
 } from "./workflowMessageCandidates";
+import { tl } from "@/shared/i18n/tl";
 
 const PAGE_SIZE = 25;
 
@@ -227,7 +228,7 @@ export function WorkflowMessagePicker({
       data-testid="workflow-message-picker"
     >
       <div className="relative shrink-0 border-b border-border/70">
-        <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <Search className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           aria-activedescendant={
             activeIndex !== null && visibleCandidates[activeIndex]
@@ -235,12 +236,12 @@ export function WorkflowMessagePicker({
               : undefined
           }
           aria-controls={listId}
-          aria-label="Search messages or paste a message ID"
+          aria-label={tl("Search messages or paste a message ID")}
           aria-expanded="true"
           autoCapitalize="none"
           autoComplete="off"
           autoCorrect="off"
-          className="h-11 rounded-none border-0 bg-transparent pl-9 focus-visible:ring-0"
+          className="h-11 rounded-none border-0 bg-transparent ps-9 focus-visible:ring-0"
           data-workflow-filter-picker-search="true"
           disabled={disabled || !channelId}
           id={id}
@@ -286,8 +287,8 @@ export function WorkflowMessagePicker({
           }}
           placeholder={
             channelId
-              ? "Search messages or paste a message ID…"
-              : "Choose a channel first"
+              ? tl("Search messages or paste a message ID…")
+              : tl("Choose a channel first")
           }
           role="combobox"
           spellCheck={false}
@@ -298,18 +299,18 @@ export function WorkflowMessagePicker({
         searchEventsFetching ||
         exactQuery.isFetching ? (
           <LoaderCircle
-            aria-label="Loading messages"
-            className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-muted-foreground"
+            aria-label={tl("Loading messages")}
+            className="absolute end-3 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-muted-foreground"
           />
         ) : null}
       </div>
       {invalidDirectResult ? (
         <p className="shrink-0 border-b border-border/70 px-3 py-2 text-xs text-destructive">
-          That message is not available in this channel.
+          {tl("That message is not available in this channel.")}
         </p>
       ) : null}
       <div
-        aria-label="Messages"
+        aria-label={tl("Messages")}
         className="min-h-0 flex-1 space-y-1 overflow-y-auto overscroll-contain p-2"
         data-testid="workflow-message-picker-results"
         id={listId}
@@ -352,15 +353,16 @@ export function WorkflowMessagePicker({
             className="flex items-center justify-center gap-2 px-3 py-8 text-sm text-muted-foreground"
             role="status"
           >
-            <LoaderCircle className="h-4 w-4 animate-spin" /> Loading messages…
+            <LoaderCircle className="h-4 w-4 animate-spin" />{" "}
+            {tl("Loading messages…")}
           </p>
         ) : visibleCandidates.length === 0 ? (
           <p className="px-3 py-8 text-center text-sm text-muted-foreground">
             {failed
-              ? "Couldn’t load messages."
+              ? tl("Couldn’t load messages.")
               : normalizedQuery
-                ? "No messages found."
-                : "No messages yet."}
+                ? tl("No messages found.")
+                : tl("No messages yet.")}
           </p>
         ) : null}
         {failed ? (
@@ -376,7 +378,7 @@ export function WorkflowMessagePicker({
             }}
             type="button"
           >
-            Couldn’t load all messages. Retry
+            {tl("Couldn’t load all messages. Retry")}
           </button>
         ) : null}
         {!normalizedQuery && historyQuery.hasNextPage ? (
@@ -387,8 +389,8 @@ export function WorkflowMessagePicker({
             type="button"
           >
             {historyQuery.isFetchingNextPage
-              ? "Loading older messages…"
-              : "Load older messages"}
+              ? tl("Loading older messages…")
+              : tl("Load older messages")}
           </button>
         ) : null}
       </div>
@@ -426,7 +428,7 @@ function MessageOption({
     <button
       aria-selected={selected}
       className={cn(
-        "relative flex min-w-0 w-full items-start gap-2.5 overflow-hidden rounded-md border px-3 py-2.5 text-left transition-colors",
+        "relative flex min-w-0 w-full items-start gap-2.5 overflow-hidden rounded-md border px-3 py-2.5 text-start transition-colors",
         selected
           ? "border-foreground/40 bg-muted/70"
           : "border-transparent hover:border-border hover:bg-muted/45",
@@ -452,7 +454,7 @@ function MessageOption({
         <span className="flex items-center gap-2 text-xs text-muted-foreground">
           <span className="truncate font-medium text-foreground">{author}</span>
           {timestamp ? (
-            <span className="ml-auto shrink-0">{timestamp}</span>
+            <span className="ms-auto shrink-0">{timestamp}</span>
           ) : null}
         </span>
         <span className="mt-1 block min-w-0 break-words text-sm leading-5 text-foreground [overflow-wrap:anywhere]">

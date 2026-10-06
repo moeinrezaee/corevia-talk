@@ -1,6 +1,7 @@
 import type * as React from "react";
 
 import { cn } from "@/shared/lib/cn";
+import { tlt } from "@/shared/i18n/tl";
 
 /** Interactive table-header row that opens the repository's latest commit. */
 export function ProjectRepositoryLatestCommitRow({
@@ -15,7 +16,7 @@ export function ProjectRepositoryLatestCommitRow({
   return (
     <tr
       aria-label={
-        commitShortHash ? `Open commit ${commitShortHash}` : undefined
+        commitShortHash ? tlt("Open commit {0}", [commitShortHash]) : undefined
       }
       className={cn(
         "bg-muted/20",

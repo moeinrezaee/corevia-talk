@@ -5,6 +5,7 @@ import { clampFrameIndex } from "@/features/profile/ui/AnimatedAvatarCapture.hel
 import { cn } from "@/shared/lib/cn";
 import { performDefaultHaptic } from "@/shared/lib/haptics";
 import { Spinner } from "@/shared/ui/spinner";
+import { tl } from "@/shared/i18n/tl";
 
 const FILMSTRIP_SELECTOR_SIZE = 48;
 const SLIDER_TICK_STEP = 10;
@@ -318,7 +319,7 @@ export function AvatarOutlineToggle({
   const Icon = enabled ? Circle : CircleDashed;
   return (
     <button
-      aria-label={enabled ? "Turn outline off" : "Turn outline on"}
+      aria-label={enabled ? tl("Turn outline off") : tl("Turn outline on")}
       aria-pressed={enabled}
       className={cn(
         "grid h-12 w-12 shrink-0 place-items-center rounded-full border border-foreground/10 bg-background text-foreground transition-[background-color,box-shadow,color] duration-150 ease-out hover:bg-muted/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
@@ -327,7 +328,7 @@ export function AvatarOutlineToggle({
       data-testid={`${testIdPrefix}-animated-outline-toggle`}
       disabled={disabled}
       onClick={() => onChange(!enabled)}
-      title={enabled ? "Outline on" : "Outline off"}
+      title={enabled ? tl("Outline on") : tl("Outline off")}
       type="button"
     >
       <Icon aria-hidden="true" className="h-4 w-4" />
@@ -399,7 +400,7 @@ export function AvatarFilmstripPicker({
       data-testid={`${testIdPrefix}-animated-poster-strip`}
     >
       <div
-        aria-label="Choose still frame"
+        aria-label={tl("Choose still frame")}
         aria-valuemax={maxFrameIndex}
         aria-valuemin={0}
         aria-valuenow={safeSelectedFrame}
@@ -442,7 +443,7 @@ export function AvatarFilmstripPicker({
             {frames.length === 0 ? (
               <div className="grid h-full w-full place-items-center">
                 <Spinner
-                  aria-label="Generating frame thumbnails"
+                  aria-label={tl("Generating frame thumbnails")}
                   className="h-5 w-5"
                 />
               </div>

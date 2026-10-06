@@ -104,9 +104,10 @@ import {
   writeSidebarProjectsFilter,
   writeSidebarProjectsSort,
 } from "@/features/sidebar/ui/listSidebarProjects";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const SECTION_LABEL_BUTTON_CLASS =
-  "group/section-label flex w-fit max-w-[calc(100%-3rem)] cursor-pointer appearance-none items-center gap-1 text-left transition-colors hover:text-sidebar-foreground focus-visible:text-sidebar-foreground";
+  "group/section-label flex w-fit max-w-[calc(100%-3rem)] cursor-pointer appearance-none items-center gap-1 text-start transition-colors hover:text-sidebar-foreground focus-visible:text-sidebar-foreground";
 const SECTION_LABEL_CHEVRON_CLASS =
   "relative size-2.5 shrink-0 text-current opacity-0 transition-[color,opacity] group-hover/sidebar-section:opacity-100 group-hover/section-label:opacity-100 group-focus-within/sidebar-section:opacity-100 group-focus-visible/section-label:opacity-100 group-data-[section-actions-open=true]/sidebar-section:opacity-100";
 const SECTION_LABEL_CHEVRON_ICON_CLASS =
@@ -231,7 +232,7 @@ function SidebarProjectsSectionContent() {
           relayOrigin,
           currentPubkey,
         );
-        toast.success("Project deleted");
+        toast.success(tl("Project deleted"));
         if (
           routeProjectId != null &&
           projectMatchesRouteId(project, routeProjectId)
@@ -271,7 +272,7 @@ function SidebarProjectsSectionContent() {
             onClick={() => setCollapsed((current) => !current)}
             type="button"
           >
-            <span data-sidebar-section-title>Projects</span>
+            <span data-sidebar-section-title>{tl("Projects")}</span>
             <span aria-hidden="true" className={SECTION_LABEL_CHEVRON_CLASS}>
               <ChevronDown
                 className={cn(
@@ -341,7 +342,7 @@ function SidebarProjectsSectionContent() {
                               key={`${project.id}:${binding.role}:${channel.id}`}
                             >
                               <SidebarMenuButton
-                                className="h-7 pl-7 text-sidebar-foreground/70 data-[active=true]:!bg-transparent data-[active=true]:font-semibold data-[active=true]:text-sidebar-foreground data-[active=true]:shadow-none data-[active=true]:hover:!bg-transparent data-[active=true]:hover:text-sidebar-foreground data-[active=true]:active:!bg-transparent"
+                                className="h-7 ps-7 text-sidebar-foreground/70 data-[active=true]:!bg-transparent data-[active=true]:font-semibold data-[active=true]:text-sidebar-foreground data-[active=true]:shadow-none data-[active=true]:hover:!bg-transparent data-[active=true]:hover:text-sidebar-foreground data-[active=true]:active:!bg-transparent"
                                 data-testid={`sidebar-project-channel-${project.dtag}-${channel.name}`}
                                 isActive={channel.id === routeChannelId}
                                 onClick={() => {
@@ -365,7 +366,7 @@ function SidebarProjectsSectionContent() {
             </SidebarMenu>
           ) : isPending ? null : (
             <p className="px-2 py-1 text-xs text-sidebar-foreground/50">
-              No projects yet
+              {tl("No projects yet")}
             </p>
           )}
         </SidebarGroupContent>
@@ -375,7 +376,7 @@ function SidebarProjectsSectionContent() {
         onCreate={async (input) => {
           const result = await createProjectMutation.mutateAsync(input);
           if (result.compatibilityWarning) {
-            toast.warning("Created as a standalone project", {
+            toast.warning(tl("Created as a standalone project"), {
               description: result.compatibilityWarning,
             });
           } else {
@@ -406,10 +407,12 @@ function SidebarProjectsSectionContent() {
           }
         >
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete project?</AlertDialogTitle>
+            <AlertDialogTitle>{tl("Delete project?")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Delete {projectToDelete?.name} from Projects for everyone. This
-              can only be done for projects you own and cannot be undone.
+              {tl("Delete")} {projectToDelete?.name}{" "}
+              {tl(
+                "from Projects for everyone. This can only be done for projects you own and cannot be undone.",
+              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -419,7 +422,7 @@ function SidebarProjectsSectionContent() {
                 type="button"
                 variant="outline"
               >
-                Cancel
+                {tl("Cancel")}
               </Button>
             </AlertDialogCancel>
             <AlertDialogAction asChild>
@@ -438,8 +441,8 @@ function SidebarProjectsSectionContent() {
                 variant="destructive"
               >
                 {deleteProjectMutation.isPending
-                  ? "Deleting..."
-                  : "Delete project"}
+                  ? tl("Deleting...")
+                  : tl("Delete project")}
               </Button>
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -469,9 +472,9 @@ function SidebarProjectsHeaderActions({
   const actionsTriggerRef = React.useRef<HTMLButtonElement>(null);
 
   return (
-    <div className="absolute right-1 top-1/2 z-10 flex -translate-y-1/2 items-center gap-0.5">
+    <div className="absolute end-1 top-1/2 z-10 flex -translate-y-1/2 items-center gap-0.5">
       <button
-        aria-label="Add project"
+        aria-label={tl("Add project")}
         className={cn(
           SECTION_ICON_BUTTON_CLASS,
           SECTION_ACTION_VISIBILITY_CLASS,
@@ -482,7 +485,7 @@ function SidebarProjectsHeaderActions({
           onCreate();
         }}
         onPointerDown={(event) => event.stopPropagation()}
-        title="Add project"
+        title={tl("Add project")}
         type="button"
       >
         <Plus className="h-4 w-4" />
@@ -490,7 +493,7 @@ function SidebarProjectsHeaderActions({
       <DropdownMenu onOpenChange={onOpenChange}>
         <DropdownMenuTrigger asChild>
           <button
-            aria-label="More actions for Projects"
+            aria-label={tl("More actions for Projects")}
             className={cn(
               SECTION_ICON_BUTTON_CLASS,
               SECTION_ACTION_VISIBILITY_CLASS,
@@ -514,7 +517,7 @@ function SidebarProjectsHeaderActions({
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
               <Folders className="h-4 w-4" />
-              <span>Show</span>
+              <span>{tl("Show")}</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
               <DropdownMenuRadioGroup
@@ -524,10 +527,10 @@ function SidebarProjectsHeaderActions({
                 value={filter}
               >
                 <DropdownMenuRadioItem value="added">
-                  Added
+                  {tl("Added")}
                 </DropdownMenuRadioItem>
                 <DropdownMenuRadioItem value="owned">
-                  Owned by me
+                  {tl("Owned by me")}
                 </DropdownMenuRadioItem>
               </DropdownMenuRadioGroup>
             </DropdownMenuSubContent>
@@ -535,7 +538,7 @@ function SidebarProjectsHeaderActions({
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
               <ArrowUpDown className="h-4 w-4" />
-              <span>Sort</span>
+              <span>{tl("Sort")}</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
               <DropdownMenuRadioGroup
@@ -546,7 +549,7 @@ function SidebarProjectsHeaderActions({
               >
                 <DropdownMenuRadioItem value="name">A–Z</DropdownMenuRadioItem>
                 <DropdownMenuRadioItem value="created">
-                  Newest
+                  {tl("Newest")}
                 </DropdownMenuRadioItem>
               </DropdownMenuRadioGroup>
             </DropdownMenuSubContent>
@@ -554,7 +557,7 @@ function SidebarProjectsHeaderActions({
           <DropdownMenuSeparator />
           <DropdownMenuItem onSelect={() => deferMenuAction(onBrowseAll)}>
             <Folder className="h-4 w-4" />
-            <span>Browse all projects</span>
+            <span>{tl("Browse all projects")}</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -595,7 +598,7 @@ function SidebarProjectRow({
           <SidebarMenuButton
             className={cn(
               "data-[active=true]:!bg-transparent data-[active=true]:font-normal data-[active=true]:text-sidebar-foreground data-[active=true]:shadow-none data-[active=true]:hover:!bg-transparent data-[active=true]:hover:text-sidebar-foreground data-[active=true]:active:!bg-transparent",
-              hasChildren && "pr-8",
+              hasChildren && "pe-8",
             )}
             data-testid={`sidebar-project-${project.dtag}`}
             isActive={isActive}
@@ -613,8 +616,8 @@ function SidebarProjectRow({
               aria-expanded={isExpanded}
               aria-label={
                 isExpanded
-                  ? `Hide channels in ${project.name}`
-                  : `Show channels in ${project.name}`
+                  ? tlt("Hide channels in {0}", [project.name])
+                  : tlt("Show channels in {0}", [project.name])
               }
               data-testid={`sidebar-project-expand-${project.dtag}`}
               onClick={(event) => {
@@ -633,7 +636,7 @@ function SidebarProjectRow({
           ) : null}
           {canDelete && !hasChildren ? (
             <SidebarMenuAction
-              aria-label={`Delete ${project.name}`}
+              aria-label={tlt("Delete {0}", [project.name])}
               data-testid={`sidebar-project-delete-${project.dtag}`}
               disabled={deleteDisabled}
               onClick={(event) => {
@@ -653,7 +656,7 @@ function SidebarProjectRow({
           <ContextMenuIconSlot>
             <ListMinus className="h-4 w-4" />
           </ContextMenuIconSlot>
-          <span>Remove from sidebar</span>
+          <span>{tl("Remove from sidebar")}</span>
         </ContextMenuItem>
         {shareLink ? (
           <>
@@ -668,7 +671,7 @@ function SidebarProjectRow({
               <ContextMenuIconSlot>
                 <Link2 className="h-4 w-4" />
               </ContextMenuIconSlot>
-              <span>Copy link</span>
+              <span>{tl("Copy link")}</span>
             </ContextMenuItem>
           </>
         ) : null}
@@ -684,7 +687,7 @@ function SidebarProjectRow({
               <ContextMenuIconSlot>
                 <Trash2 className="h-4 w-4" />
               </ContextMenuIconSlot>
-              <span>Delete project</span>
+              <span>{tl("Delete project")}</span>
             </ContextMenuItem>
           </>
         ) : null}

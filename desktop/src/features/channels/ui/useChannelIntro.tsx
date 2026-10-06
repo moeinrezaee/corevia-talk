@@ -13,6 +13,7 @@ import { useIsProjectHomeChannel } from "@/features/projects/lib/projectHomeChan
 import { ProjectChannelIcon } from "@/features/projects/ui/ProjectChannelIcon";
 import type { Channel } from "@/shared/api/types";
 import { HashSearch } from "@/shared/ui/icons";
+import { tl } from "@/shared/i18n/tl";
 
 type ChannelIntroAction = {
   description?: string;
@@ -57,7 +58,7 @@ export function useChannelIntro({
       if (onBrowseChannels) {
         actions.push({
           icon: <HashSearch aria-hidden className="h-6 w-6" />,
-          label: "Browse channels",
+          label: tl("Browse channels"),
           onClick: onBrowseChannels,
           testId: "welcome-intro-action-browse-channels",
         });
@@ -66,7 +67,7 @@ export function useChannelIntro({
       if (onCreateChannel) {
         actions.push({
           icon: <Plus aria-hidden className="h-6 w-6" />,
-          label: "Create a channel",
+          label: tl("Create a channel"),
           onClick: onCreateChannel,
           testId: "welcome-intro-action-create-channel",
         });
@@ -75,7 +76,7 @@ export function useChannelIntro({
       if (onWelcomeAddAgent) {
         actions.push({
           icon: <Bot aria-hidden className="h-6 w-6" />,
-          label: "Create an agent",
+          label: tl("Create an agent"),
           onClick: onWelcomeAddAgent,
           testId: "welcome-intro-action-create-agent",
         });
@@ -97,9 +98,9 @@ export function useChannelIntro({
     if (!activeChannel.archivedAt && activeChannel.isMember) {
       if (onAddFiles) {
         actions.push({
-          description: "Add a repo.",
+          description: tl("Add a repo."),
           icon: <FolderPlus aria-hidden className="h-5 w-5" />,
-          label: "Add files",
+          label: tl("Add files"),
           onClick: onAddFiles,
           testId: "channel-intro-action-add-files",
         });
@@ -107,9 +108,9 @@ export function useChannelIntro({
 
       if (onAddAgent) {
         actions.push({
-          description: "Add an agent here.",
+          description: tl("Add an agent here."),
           icon: <Bot aria-hidden className="h-5 w-5" />,
-          label: "Add agent",
+          label: tl("Add agent"),
           onClick: onAddAgent,
           testId: "channel-intro-action-create-agent",
         });
@@ -117,9 +118,9 @@ export function useChannelIntro({
 
       if (onOpenMembers) {
         actions.push({
-          description: "Invite members.",
+          description: tl("Invite members."),
           icon: <UserPlus aria-hidden className="h-5 w-5" />,
-          label: "Add people",
+          label: tl("Add people"),
           onClick: onOpenMembers,
           testId: "channel-intro-action-add-people",
         });

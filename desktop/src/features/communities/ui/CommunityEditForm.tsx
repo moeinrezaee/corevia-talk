@@ -11,6 +11,7 @@ import { Input } from "@/shared/ui/input";
 import { Spinner } from "@/shared/ui/spinner";
 import { JoinPolicyNotice } from "@/features/onboarding/ui/JoinPolicyNotice";
 import { normalizeRelayUrl, probeRelayReachable } from "../relayProbe";
+import { tl } from "@/shared/i18n/tl";
 
 const POLICY_DISCOVERY_DELAY_MS = 250;
 const POLICY_REVEAL_EASE = [0.23, 1, 0.32, 1] as const;
@@ -197,12 +198,12 @@ export function CommunityEditForm({
         void handleSubmit(e);
       }}
     >
-      <div className="space-y-1.5 text-left">
+      <div className="space-y-1.5 text-start">
         <label
           className="text-sm font-medium text-foreground"
           htmlFor="community-edit-name"
         >
-          Community name
+          {tl("Community name")}
         </label>
         <Input
           autoFocus
@@ -213,18 +214,18 @@ export function CommunityEditForm({
             setName(event.target.value);
             setError(null);
           }}
-          placeholder="Design team"
+          placeholder={tl("Design team")}
           type="text"
           value={name}
         />
       </div>
 
-      <div className="space-y-1.5 text-left">
+      <div className="space-y-1.5 text-start">
         <label
           className="text-sm font-medium text-foreground"
           htmlFor="community-edit-url"
         >
-          Community URL
+          {tl("Community URL")}
         </label>
         <Input
           className="h-10 bg-background"
@@ -240,7 +241,7 @@ export function CommunityEditForm({
             setAgeConfirmed(false);
             setAgreementConfirmed(false);
           }}
-          placeholder="wss://relay.example.com"
+          placeholder={tl("wss://relay.example.com")}
           type="text"
           value={relayUrl}
         />
@@ -318,9 +319,12 @@ export function CommunityEditForm({
           type="submit"
         >
           {isProbing ? (
-            <Spinner aria-label="Checking relay" className="h-4 w-4 border-2" />
+            <Spinner
+              aria-label={tl("Checking relay")}
+              className="h-4 w-4 border-2"
+            />
           ) : isSubmitting ? (
-            <Spinner aria-label="Saving" className="h-4 w-4 border-2" />
+            <Spinner aria-label={tl("Saving")} className="h-4 w-4 border-2" />
           ) : (
             submitLabel
           )}
@@ -352,7 +356,7 @@ export function CommunityEditForm({
               type="button"
               variant="outline"
             >
-              Use anyway
+              {tl("Use anyway")}
             </Button>
           </div>
         ) : null}

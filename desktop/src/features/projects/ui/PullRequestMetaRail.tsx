@@ -16,6 +16,7 @@ import {
   ProjectDetailMetaRow,
 } from "./ProjectDetailMeta";
 import { PullRequestReviewersRow } from "./PullRequestReviewersRow";
+import { tl } from "@/shared/i18n/tl";
 
 function statusClassName(status: ProjectPullRequest["status"]) {
   if (status === "Closed") return "text-destructive";
@@ -71,7 +72,7 @@ export function PullRequestMetaHeader({
 
   return (
     <ProjectDetailMetaList>
-      <ProjectDetailMetaRow icon={GitBranch} label="Branch">
+      <ProjectDetailMetaRow icon={GitBranch} label={tl("Branch")}>
         <div className="flex min-w-0 flex-1 items-center gap-3">
           <p className="flex min-w-0 items-center gap-1.5 overflow-hidden">
             <span className="truncate text-foreground">{sourceBranch}</span>
@@ -80,7 +81,7 @@ export function PullRequestMetaHeader({
             </span>
             <span className="truncate text-foreground">{targetBranch}</span>
           </p>
-          <div className="ml-auto flex shrink-0 items-center gap-1.5">
+          <div className="ms-auto flex shrink-0 items-center gap-1.5">
             <span className="inline-flex min-w-20 justify-end gap-1.5 tabular-nums">
               {displayedDiffStats ? (
                 <>
@@ -121,13 +122,13 @@ export function PullRequestMetaHeader({
         pullRequest={pullRequest}
         signAsManagedOwner={isManagedAgentOwner && !isOwner}
       />
-      <ProjectDetailMetaRow icon={StatusIcon} label="Status">
+      <ProjectDetailMetaRow icon={StatusIcon} label={tl("Status")}>
         <span className={`font-medium ${statusClassName(pullRequest.status)}`}>
           {pullRequest.status}
         </span>
       </ProjectDetailMetaRow>
       {labels.length > 0 ? (
-        <ProjectDetailMetaRow icon={Tag} label="Labels">
+        <ProjectDetailMetaRow icon={Tag} label={tl("Labels")}>
           <ProjectDetailMetaPills labels={labels} />
         </ProjectDetailMetaRow>
       ) : null}

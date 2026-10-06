@@ -44,7 +44,7 @@ export function FlappingBee({ className }: { className?: string }) {
         .filter(Boolean)
         .join(" ")}
     >
-      <div className={`${wingLayer} bee-wing-layer-left left-0`}>
+      <div className={`${wingLayer} bee-wing-layer-left start-0`}>
         <svg
           aria-hidden="true"
           className={`${wingSvg} bee-wing-left`}
@@ -54,7 +54,7 @@ export function FlappingBee({ className }: { className?: string }) {
           <circle cx="91.7" cy="91.7" r="91.7" />
         </svg>
       </div>
-      <div className={`${wingLayer} bee-wing-layer-right right-0`}>
+      <div className={`${wingLayer} bee-wing-layer-right end-0`}>
         <svg
           aria-hidden="true"
           className={`${wingSvg} bee-wing-right`}

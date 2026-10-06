@@ -23,22 +23,23 @@ import {
 import { SegmentedControl } from "@/shared/ui/segmented-control";
 import { EditableInfoFieldRow } from "./ChannelManagementSheetRows";
 import { ChannelTypePicker } from "./ChannelTypePicker";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const CHANNEL_TYPE_OPTIONS = [
-  { value: "temporary", label: "Temporary", Icon: ClockFading },
-  { value: "ongoing", label: "Ongoing", Icon: Hash },
+  { value: "temporary", label: tl("Temporary"), Icon: ClockFading },
+  { value: "ongoing", label: tl("Ongoing"), Icon: Hash },
 ] as const;
 
 const EPHEMERAL_TIMEOUT_OPTIONS = [
-  { label: "30 minutes", seconds: 30 * 60 },
-  { label: "1 hour", seconds: 60 * 60 },
-  { label: "6 hours", seconds: 6 * 60 * 60 },
-  { label: "12 hours", seconds: 12 * 60 * 60 },
-  { label: "1 day", seconds: 24 * 60 * 60 },
-  { label: "3 days", seconds: 3 * 24 * 60 * 60 },
-  { label: "7 days", seconds: DEFAULT_EPHEMERAL_TTL_SECONDS },
-  { label: "14 days", seconds: 14 * 24 * 60 * 60 },
-  { label: "30 days", seconds: 30 * 24 * 60 * 60 },
+  { label: tl("30 minutes"), seconds: 30 * 60 },
+  { label: tl("1 hour"), seconds: 60 * 60 },
+  { label: tl("6 hours"), seconds: 6 * 60 * 60 },
+  { label: tl("12 hours"), seconds: 12 * 60 * 60 },
+  { label: tl("1 day"), seconds: 24 * 60 * 60 },
+  { label: tl("3 days"), seconds: 3 * 24 * 60 * 60 },
+  { label: tl("7 days"), seconds: DEFAULT_EPHEMERAL_TTL_SECONDS },
+  { label: tl("14 days"), seconds: 14 * 24 * 60 * 60 },
+  { label: tl("30 days"), seconds: 30 * 24 * 60 * 60 },
 ] as const;
 
 const CHANNEL_TYPE_RESIZE_TRANSITION = {
@@ -64,7 +65,7 @@ export function ChannelTypeDetailRow({
   return (
     <EditableInfoFieldRow
       editTestId="channel-management-edit-channel-type"
-      label="Channel type"
+      label={tl("Channel type")}
       onEdit={canEdit ? onEdit : undefined}
       testId="channel-management-type"
       value={channelLifecycleLabel(lifecycle, channel.ttlSeconds)}
@@ -147,7 +148,7 @@ export function ChannelTypeSettings({
           <ChannelTypePicker
             align="end"
             allowProject={projectHome}
-            className="-mr-2.5"
+            className="-me-2.5"
             disabled={disabled}
             lifecycle={lifecycle}
             onLifecycleChange={(next) =>
@@ -180,22 +181,22 @@ export function ChannelTypeSettings({
                 )}
                 htmlFor={`${testIdPrefix}-ttl`}
               >
-                Expires after
+                {tl("Expires after")}
               </label>
               <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
                   <Button
-                    aria-label="Expires after"
-                    className="-mr-2.5 ml-auto h-9 w-fit justify-end px-2.5 text-right text-sm font-medium text-foreground hover:bg-muted/50"
+                    aria-label={tl("Expires after")}
+                    className="-me-2.5 ms-auto h-9 w-fit justify-end px-2.5 text-end text-sm font-medium text-foreground hover:bg-muted/50"
                     data-testid={`${testIdPrefix}-ttl`}
                     disabled={disabled}
                     id={`${testIdPrefix}-ttl`}
                     type="button"
                     variant="ghost"
                   >
-                    <span className="text-right">
+                    <span className="text-end">
                       {selectedTimeoutOption?.label ??
-                        `Current (${formatTtlDuration(ttlSeconds)})`}
+                        tlt("Current ({0})", [formatTtlDuration(ttlSeconds)])}
                     </span>
                     <ChevronDown className="size-4 shrink-0 text-muted-foreground/70" />
                   </Button>

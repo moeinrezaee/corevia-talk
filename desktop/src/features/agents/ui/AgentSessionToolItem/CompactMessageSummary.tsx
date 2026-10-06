@@ -14,6 +14,7 @@ import { compactSummaryTone } from "./CompactToolSummaryRow";
 import type { SentMessageLink } from "./messageLinks";
 import { SentMessageContextDialog } from "./SentMessageContextDialog";
 import { useSentMessageBody } from "./useSentMessageBody";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export function CompactMessageSummary({
   args,
@@ -58,7 +59,7 @@ export function CompactMessageSummary({
   const canOpenMessage = shouldClampBubble && messageLink !== null;
   const mutedTone = compactSummaryTone();
   const avatarClassName = cn(
-    "mr-2 mt-1 shrink-0",
+    "me-2 mt-1 shrink-0",
     isCompactPreview ? "size-5" : "size-7",
   );
   const handleBubbleClick = React.useCallback(
@@ -103,7 +104,7 @@ export function CompactMessageSummary({
       <div className="flex max-w-full flex-row items-start justify-start">
         {openProfilePanel && !isCompactPreview ? (
           <button
-            aria-label={`Open ${displayName} profile`}
+            aria-label={tlt("Open {0} profile", [displayName])}
             className={cn(
               avatarClassName,
               "pointer-events-auto rounded-[30%] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
@@ -185,14 +186,14 @@ export function CompactMessageSummary({
               timestamp={timestamp}
             />
             <button
-              aria-label="Show sent message context"
+              aria-label={tl("Show sent message context")}
               className={cn(
                 "inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-sm transition-colors hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
                 mutedTone,
               )}
               data-testid="transcript-sent-message-context-button"
               onClick={() => setDetailsOpen(true)}
-              title="Show sent message context"
+              title={tl("Show sent message context")}
               type="button"
             >
               <CheckCheck className="h-3.5 w-3.5" />

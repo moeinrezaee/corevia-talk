@@ -15,6 +15,7 @@ import {
   AlertDialogTitle,
 } from "@/shared/ui/alert-dialog";
 import { useBestie } from "./useBestie";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export function BestieProfileAction({ agent }: { agent: ManagedAgent }) {
   const bestie = useBestie();
@@ -44,22 +45,32 @@ export function BestieProfileAction({ agent }: { agent: ManagedAgent }) {
         iconClassName={
           isBestie ? "h-4 w-4 shrink-0 fill-current text-foreground" : undefined
         }
-        label={isBestie ? "Remove Bestie" : "Make Bestie"}
+        label={isBestie ? tl("Remove Bestie") : tl("Make Bestie")}
         onClick={handleClick}
         testId="user-profile-bestie-action"
       />
       <AlertDialog onOpenChange={setConfirmOpen} open={confirmOpen}>
         <AlertDialogContent data-testid="bestie-confirm-dialog">
           <AlertDialogHeader>
-            <AlertDialogTitle>Make {agent.name} your Bestie?</AlertDialogTitle>
+            <AlertDialogTitle>
+              {tl("Make")} {agent.name} {tl("your Bestie?")}
+            </AlertDialogTitle>
             <AlertDialogDescription>
               {bestie.assignedAgent && !isBestie
-                ? `${agent.name} will replace ${bestie.assignedAgent.name} in the floating shortcut and message actions.`
-                : `${agent.name} will appear in the floating shortcut and message actions.`}
+                ? tlt(
+                    "{0} will replace {1} in the floating shortcut and message actions.",
+                    [agent.name, bestie.assignedAgent.name],
+                  )
+                : tlt(
+                    "{0} will appear in the floating shortcut and message actions.",
+                    [agent.name],
+                  )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isPending}>
+              {tl("Cancel")}
+            </AlertDialogCancel>
             <AlertDialogAction
               disabled={isPending}
               onClick={(event) => {
@@ -76,7 +87,7 @@ export function BestieProfileAction({ agent }: { agent: ManagedAgent }) {
                   });
               }}
             >
-              {isPending ? "Saving…" : "Make Bestie"}
+              {isPending ? tl("Saving…") : tl("Make Bestie")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

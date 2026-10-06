@@ -34,6 +34,7 @@ import { ProjectSelectableGroup } from "./ProjectSelectableGroup";
 import { ProjectPanelState } from "./ProjectPanelState";
 import { ProjectsWorkItemsLoadNotice } from "./ProjectsWorkItemsLoadNotice";
 import { groupProjectWorkItemsByProject } from "./projectWorkItemGroups";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type ProjectsPullRequestsListProps = {
   /** Render without container chrome — a parent table container provides border and rounding. */
@@ -86,7 +87,9 @@ const PullRequestGridCard = React.memo(function PullRequestGridCard({
         onClick={() => onOpen(project, repository, pullRequest)}
         type="button"
       >
-        <span className="sr-only">View review {pullRequest.title}</span>
+        <span className="sr-only">
+          {tl("View review")} {pullRequest.title}
+        </span>
       </button>
       <div className="flex min-h-0 flex-1 flex-col gap-2">
         <h3
@@ -99,7 +102,7 @@ const PullRequestGridCard = React.memo(function PullRequestGridCard({
           className={cn(PROJECT_GRID_CARD_BODY_CLASS, "text-muted-foreground")}
           data-testid="projects-grid-card-body"
         >
-          {pullRequest.content || "No description provided."}
+          {pullRequest.content || tl("No description provided.")}
         </p>
         <div
           className="mt-auto flex items-center gap-1.5 text-xs font-medium text-muted-foreground"
@@ -182,7 +185,9 @@ const PullRequestListRow = React.memo(function PullRequestListRow({
         <ProjectEventTypeIcon className="h-3.5 w-3.5" kind="pull-request" />
       }
       trailing={
-        <ProjectListRowMenu label={`More options for ${pullRequest.title}`}>
+        <ProjectListRowMenu
+          label={tlt("More options for {0}", [pullRequest.title])}
+        >
           <DropdownMenuItem
             onSelect={() => onOpen(project, repository, pullRequest)}
           >
@@ -191,7 +196,7 @@ const PullRequestListRow = React.memo(function PullRequestListRow({
           </DropdownMenuItem>
           <CopyShareLinkMenuItem
             link={pullRequestShareLink(pullRequest)}
-            label="Copy review link"
+            label={tl("Copy review link")}
             testId={`projects-pull-request-copy-link-${pullRequest.id}`}
           />
         </ProjectListRowMenu>
@@ -248,7 +253,7 @@ export function ProjectsPullRequestsList({
   );
 
   if (isLoading) {
-    return <BuzzLoadingState label="Loading reviews" />;
+    return <BuzzLoadingState label={tl("Loading reviews")} />;
   }
 
   const loadNotice = (
@@ -271,15 +276,17 @@ export function ProjectsPullRequestsList({
             size="sm"
             variant="outline"
           >
-            {isRetrying ? "Retrying..." : "Retry"}
+            {isRetrying ? tl("Retrying...") : tl("Retry")}
           </Button>
         }
         description={
-          error instanceof Error ? error.message : "The relay request failed."
+          error instanceof Error
+            ? error.message
+            : tl("The relay request failed.")
         }
         error
         panel={false}
-        title="Could not load reviews"
+        title={tl("Could not load reviews")}
       />
     );
   }

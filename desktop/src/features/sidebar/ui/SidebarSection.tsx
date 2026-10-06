@@ -33,9 +33,10 @@ import {
 import { ChannelActivityPopover } from "@/features/sidebar/ui/ChannelActivityPopover";
 import { useAppShell } from "@/app/AppShellContext";
 import { UserNameIndicators } from "@/features/user-status/ui/UserNameIndicators";
+import { tl } from "@/shared/i18n/tl";
 
 const SECTION_LABEL_BUTTON_CLASS =
-  "group/section-label flex w-fit max-w-[calc(100%-3rem)] cursor-pointer appearance-none items-center gap-1 text-left transition-colors hover:text-sidebar-foreground focus-visible:text-sidebar-foreground";
+  "group/section-label flex w-fit max-w-[calc(100%-3rem)] cursor-pointer appearance-none items-center gap-1 text-start transition-colors hover:text-sidebar-foreground focus-visible:text-sidebar-foreground";
 const SECTION_LABEL_CHEVRON_CLASS =
   "relative size-2.5 shrink-0 text-current opacity-0 transition-[color,opacity] group-hover/sidebar-section:opacity-100 group-hover/section-label:opacity-100 group-focus-within/sidebar-section:opacity-100 group-focus-visible/section-label:opacity-100 group-data-[section-actions-open=true]/sidebar-section:opacity-100";
 const SECTION_LABEL_CHEVRON_ICON_CLASS =
@@ -76,7 +77,8 @@ function UnreadCountBadge({
       {formatUnreadCount(count)}
       <span className="sr-only">
         {" "}
-        unread notification{count === 1 ? "" : "s"}
+        {tl("unread notification")}
+        {count === 1 ? "" : "s"}
       </span>
     </span>
   );
@@ -94,7 +96,7 @@ function UnreadDotBadge({
       className={cn("h-2 w-2 shrink-0 rounded-full bg-primary", className)}
       data-testid={`channel-unread-dot-${channelName}`}
     >
-      <span className="sr-only">unread</span>
+      <span className="sr-only">{tl("unread")}</span>
     </span>
   );
 }
@@ -320,7 +322,7 @@ export function ChannelMenuButton({
         (channel.participantPubkeys.length === 2 ||
           dmParticipants?.length === 1) ? (
           <UserNameIndicators
-            className="ml-1"
+            className="ms-1"
             pubkey={dmParticipants?.[0]?.pubkey}
             size="dm"
           />
@@ -349,7 +351,7 @@ export function ChannelMenuButton({
       {isMuted ? (
         <BellOff
           className={cn(
-            "ml-auto h-4 w-4 shrink-0",
+            "ms-auto h-4 w-4 shrink-0",
             isActive
               ? "text-sidebar-active-foreground/60"
               : "text-sidebar-foreground/40",
@@ -357,7 +359,7 @@ export function ChannelMenuButton({
         />
       ) : null}
       {hasThreadUnread ? (
-        <UnreadDotBadge channelName={channel.name} className="ml-auto" />
+        <UnreadDotBadge channelName={channel.name} className="ms-auto" />
       ) : null}
     </SidebarMenuButton>
   );
@@ -493,7 +495,7 @@ export function SidebarSection({
                       <UnreadCountBadge
                         channelName={channel.name}
                         className={cn(
-                          "pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 transition-opacity",
+                          "pointer-events-none absolute end-1 top-1/2 -translate-y-1/2 transition-opacity",
                           onHideDm && SIDEBAR_ROW_ACTION_REPLACED_BADGE_CLASS,
                         )}
                         count={Math.max(
@@ -504,9 +506,9 @@ export function SidebarSection({
                     ) : null}
                     {channel.channelType === "dm" && onHideDm ? (
                       <button
-                        aria-label="Close direct message"
+                        aria-label={tl("Close direct message")}
                         className={cn(
-                          "absolute right-1 top-1/2 z-10 -translate-y-1/2 after:absolute after:-inset-2 after:md:hidden group-data-[collapsible=icon]:hidden",
+                          "absolute end-1 top-1/2 z-10 -translate-y-1/2 after:absolute after:-inset-2 after:md:hidden group-data-[collapsible=icon]:hidden",
                           SIDEBAR_ROW_ICON_ACTION_CLASS,
                           SIDEBAR_ROW_ACTION_VISIBILITY_CLASS,
                         )}

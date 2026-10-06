@@ -38,7 +38,7 @@ export function RuntimeErrorTooltip({
         </span>
       </TooltipTrigger>
       <TooltipContent
-        className="pointer-events-auto max-w-80 text-left"
+        className="pointer-events-auto max-w-80 text-start"
         side="bottom"
         sideOffset={12}
       >

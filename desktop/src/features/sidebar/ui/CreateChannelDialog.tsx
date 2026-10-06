@@ -13,6 +13,7 @@ import {
   CreateChannelFormFields,
   CreateChannelFormFooter,
 } from "@/features/sidebar/ui/CreateChannelFormFields";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type ChannelKind = "stream" | "forum";
 
@@ -70,12 +71,12 @@ export function CreateChannelDialog({
         data-testid={testId}
         footerClassName="border-t-0 pt-0"
         headerClassName="pb-2"
-        title={title ?? `Create a new ${kindLabel}`}
+        title={title ?? tlt("Create a new {0}", [kindLabel])}
         description={
           description ??
           (channelKind === "forum"
-            ? "Forums organize threaded discussions around a topic."
-            : "Channels are real-time streams for team conversation.")
+            ? tl("Forums organize threaded discussions around a topic.")
+            : tl("Channels are real-time streams for team conversation."))
         }
         footer={<CreateChannelFormFooter form={form} />}
       >

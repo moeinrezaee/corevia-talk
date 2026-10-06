@@ -15,6 +15,7 @@ import { TopChromeInsetHeader } from "@/shared/layout/TopChromeInsetHeader";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import { Button } from "@/shared/ui/button";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { tl } from "@/shared/i18n/tl";
 
 type ProjectInboxDetailPaneProps = {
   isSinglePanelView?: boolean;
@@ -87,7 +88,7 @@ export function ProjectInboxDetailPane({
             <div className="flex min-w-0 items-center gap-1">
               {isSinglePanelView && onBack ? (
                 <Button
-                  aria-label="Back to Inbox"
+                  aria-label={tl("Back to Inbox")}
                   onClick={onBack}
                   size="icon"
                   type="button"

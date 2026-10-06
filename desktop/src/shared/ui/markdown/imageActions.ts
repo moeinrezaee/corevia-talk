@@ -1,11 +1,12 @@
 import { toast } from "sonner";
 
 import { invokeTauri } from "@/shared/api/tauri";
+import { tl } from "@/shared/i18n/tl";
 
 export function copyImageToClipboard(src: string | undefined) {
   if (!src) return;
   invokeTauri("copy_image_to_clipboard", { url: src })
-    .then(() => toast.success("Copied to clipboard"))
+    .then(() => toast.success(tl("Copied to clipboard")))
     .catch((error: unknown) => {
       toast.error(error instanceof Error ? error.message : "Copy failed");
     });

@@ -11,6 +11,7 @@ import type { ProjectRepoCommit } from "@/shared/api/types";
 import { BuzzLoadingState } from "@/shared/ui/BuzzLoadingState";
 import { ProjectPanelState } from "./ProjectPanelState";
 import { ActivityPanel } from "./ProjectDetailFeedPanels";
+import { tl } from "@/shared/i18n/tl";
 
 export function ProjectHomeCommitsPanel({
   onSelectCommit,
@@ -50,7 +51,7 @@ export function ProjectHomeCommitsPanel({
       )
     : null;
   if (results.some((result) => result.isLoading) && loaded.length === 0) {
-    return <BuzzLoadingState label="Loading commits" />;
+    return <BuzzLoadingState label={tl("Loading commits")} />;
   }
   if (loaded.length === 0) {
     return (
@@ -62,10 +63,12 @@ export function ProjectHomeCommitsPanel({
                   ? ` ${failed.length - 1} other repositories also failed.`
                   : ""
               }`
-            : "Commits pushed to this project's repositories will appear here."
+            : tl(
+                "Commits pushed to this project's repositories will appear here.",
+              )
         }
         error={failed.length > 0}
-        title={failure?.title ?? "No commits yet"}
+        title={failure?.title ?? tl("No commits yet")}
       />
     );
   }
@@ -82,10 +85,12 @@ export function ProjectHomeCommitsPanel({
         >
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
           <p>
-            Showing commits from {loaded.length} of {results.length}{" "}
-            repositories. {failed.length}{" "}
-            {failed.length === 1 ? "repository could" : "repositories could"}{" "}
-            not be loaded.
+            {tl("Showing commits from")} {loaded.length} {tl("of")}{" "}
+            {results.length} {tl("repositories.")} {failed.length}{" "}
+            {failed.length === 1
+              ? tl("repository could")
+              : tl("repositories could")}{" "}
+            {tl("not be loaded.")}
           </p>
         </div>
       ) : null}

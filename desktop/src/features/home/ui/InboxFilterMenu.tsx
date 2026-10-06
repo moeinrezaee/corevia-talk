@@ -10,23 +10,24 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const INBOX_FILTER_OPTIONS: Array<{
   label: string;
   value: InboxFilter;
 }> = [
-  { value: "all", label: "All" },
-  { value: "project", label: "Projects" },
-  { value: "mention", label: "Mentions" },
-  { value: "thread", label: "Threads" },
-  { value: "needs_action", label: "Needs action" },
-  { value: "agent_activity", label: "Agents" },
-  { value: "reminders", label: "Reminders" },
-  { value: "drafts", label: "Drafts" },
+  { value: "all", label: tl("All") },
+  { value: "project", label: tl("Projects") },
+  { value: "mention", label: tl("Mentions") },
+  { value: "thread", label: tl("Threads") },
+  { value: "needs_action", label: tl("Needs action") },
+  { value: "agent_activity", label: tl("Agents") },
+  { value: "reminders", label: tl("Reminders") },
+  { value: "drafts", label: tl("Drafts") },
 ];
 
 const TRIGGER_CLASS =
-  "inline-flex h-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring data-[state=open]:bg-muted/70 data-[state=open]:text-foreground disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 relative -ml-2 w-auto gap-1 px-2 text-sm font-medium text-foreground";
+  "inline-flex h-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring data-[state=open]:bg-muted/70 data-[state=open]:text-foreground disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 relative -ms-2 w-auto gap-1 px-2 text-sm font-medium text-foreground";
 
 type InboxFilterMenuProps = {
   activeDraftCount: number;
@@ -57,12 +58,15 @@ export function InboxFilterMenu({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
-          aria-label={`Filter inbox: ${activeFilter?.label ?? "All"}${statusLabel ? `. ${statusLabel}` : ""}`}
+          aria-label={tlt("Filter inbox: {0}{1}", [
+            activeFilter?.label ?? "All",
+            statusLabel ? `. ${statusLabel}` : "",
+          ])}
           className={cn(TRIGGER_CLASS)}
           data-testid="inbox-filter-trigger"
           type="button"
         >
-          <span>{activeFilter?.label ?? "All"}</span>
+          <span>{activeFilter?.label ?? tl("All")}</span>
           <ChevronDown className="text-muted-foreground" />
         </button>
       </DropdownMenuTrigger>
@@ -79,7 +83,7 @@ export function InboxFilterMenu({
               <DropdownMenuRadioItem value={option.value}>
                 <span className="flex flex-1 items-center gap-2">
                   <span>{option.label}</span>
-                  <span className="ml-auto flex items-center gap-1.5">
+                  <span className="ms-auto flex items-center gap-1.5">
                     {option.value === "reminders" && reminderCount > 0 ? (
                       <span
                         className="inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-2xs font-semibold leading-none text-primary-foreground"

@@ -14,6 +14,7 @@ import {
   scheduleWeekdaysFromCronField,
 } from "./workflowSchedule";
 import type { ScheduleFormState } from "./workflowSchedule";
+import { tl } from "@/shared/i18n/tl";
 
 const WEEKDAYS = [
   ["0", "Sunday", "S"],
@@ -79,7 +80,7 @@ export function WorkflowScheduleFields({
   return (
     <div className="space-y-3">
       <fieldset>
-        <legend className="sr-only">Repeats</legend>
+        <legend className="sr-only">{tl("Repeats")}</legend>
         <div className="grid grid-cols-2 gap-2.5">
           {SCHEDULE_FREQUENCIES.map((frequency) => {
             const id = `wf-trigger-frequency-${frequency}`;
@@ -133,7 +134,7 @@ export function WorkflowScheduleFields({
       {schedule.frequency === "weekly" ? (
         <fieldset className="space-y-1.5">
           <legend className="text-xs font-medium text-muted-foreground">
-            Repeat on
+            {tl("Repeat on")}
           </legend>
           <div className="grid grid-cols-7 gap-2">
             {WEEKDAYS.map(([value, label, shortLabel]) => {
@@ -186,7 +187,9 @@ export function WorkflowScheduleFields({
 
       {schedule.frequency === "monthly" ? (
         <div className="space-y-1.5">
-          <FieldLabel htmlFor="wf-trigger-month-day">Day of month</FieldLabel>
+          <FieldLabel htmlFor="wf-trigger-month-day">
+            {tl("Day of month")}
+          </FieldLabel>
           <FormSelect
             disabled={disabled}
             id="wf-trigger-month-day"
@@ -213,7 +216,9 @@ export function WorkflowScheduleFields({
 
       {usesTime ? (
         <div className="space-y-1.5">
-          <FieldLabel htmlFor="wf-trigger-time">Run time (UTC)</FieldLabel>
+          <FieldLabel htmlFor="wf-trigger-time">
+            {tl("Run time (UTC)")}
+          </FieldLabel>
           <Input
             disabled={disabled}
             id="wf-trigger-time"
@@ -235,7 +240,7 @@ export function WorkflowScheduleFields({
       {schedule.frequency === "custom_interval" ? (
         <div className="space-y-1.5">
           <FieldLabel htmlFor="wf-trigger-interval">
-            Existing interval
+            {tl("Existing interval")}
           </FieldLabel>
           <Input
             autoCapitalize="off"
@@ -248,8 +253,9 @@ export function WorkflowScheduleFields({
             value={schedule.customInterval}
           />
           <p className="text-xs text-muted-foreground">
-            Keep this legacy interval or choose a repeat option above. All
-            schedules use UTC.
+            {tl(
+              "Keep this legacy interval or choose a repeat option above. All schedules use UTC.",
+            )}
           </p>
         </div>
       ) : null}

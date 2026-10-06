@@ -40,6 +40,7 @@ import {
 } from "@/features/agents/ui/AgentConfigFields";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type SaveState = "idle" | "saving" | "saved" | "error";
 
@@ -268,7 +269,7 @@ export function AgentDefaultsEditor({
       {configSurfaceLoading ? (
         <div className="flex items-center gap-2 py-4 text-sm text-muted-foreground">
           <Loader className="size-4 animate-spin" />
-          Loading…
+          {tl("Loading…")}
         </div>
       ) : configSurfaceError ? (
         runtimeCatalogError && !loadError ? (
@@ -278,7 +279,7 @@ export function AgentDefaultsEditor({
         ) : (
           <div className="flex items-center gap-2 py-4 text-sm text-destructive">
             <AlertCircle className="size-4" />
-            Couldn't load agent defaults. Restart the app to try again.
+            {tl("Couldn't load agent defaults. Restart the app to try again.")}
           </div>
         )
       ) : (
@@ -288,14 +289,14 @@ export function AgentDefaultsEditor({
               className="text-sm font-medium text-foreground"
               htmlFor="global-agent-default-harness"
             >
-              Default harness
+              {tl("Default harness")}
             </label>
             <AgentDropdownSelect
               className={flatLayout ? PERSONA_SELECT_TRIGGER_CLASS : undefined}
               id="global-agent-default-harness"
               onValueChange={handleHarnessChange}
               options={harnessOptions}
-              placeholder="Select a harness"
+              placeholder={tl("Select a harness")}
               placeholderClassName={
                 flatLayout ? "text-muted-foreground/55" : undefined
               }
@@ -332,10 +333,19 @@ export function AgentDefaultsEditor({
             <span className="flex min-w-0 items-center gap-1 text-sm text-green-600 dark:text-green-400">
               <Check className="size-3.5 shrink-0" />
               {restartedCount > 0
-                ? `Saved. Restarted ${restartedCount} agent${restartedCount === 1 ? "" : "s"}.${failedRestartCount > 0 ? ` ${failedRestartCount} couldn't restart — check the Agents page.` : ""}`
+                ? tlt("Saved. Restarted {0} agent{1}.{2}", [
+                    restartedCount,
+                    restartedCount === 1 ? "" : "s",
+                    failedRestartCount > 0
+                      ? ` ${failedRestartCount} couldn't restart — check the Agents page.`
+                      : "",
+                  ])
                 : failedRestartCount > 0
-                  ? `Saved. ${failedRestartCount} agent${failedRestartCount === 1 ? "" : "s"} couldn't restart — check the Agents page.`
-                  : "Saved."}
+                  ? tlt(
+                      "Saved. {0} agent{1} couldn't restart — check the Agents page.",
+                      [failedRestartCount, failedRestartCount === 1 ? "" : "s"],
+                    )
+                  : tl("Saved.")}
             </span>
           )}
           {saveState === "error" && saveError && (
@@ -344,7 +354,7 @@ export function AgentDefaultsEditor({
               {saveError}
             </span>
           )}
-          <div className="ml-auto flex items-center gap-3">
+          <div className="ms-auto flex items-center gap-3">
             {secondaryAction}
             <Button
               disabled={
@@ -357,9 +367,9 @@ export function AgentDefaultsEditor({
               size="sm"
             >
               {saveState === "saving" ? (
-                <Loader className="mr-1.5 size-3.5 animate-spin" />
+                <Loader className="me-1.5 size-3.5 animate-spin" />
               ) : null}
-              Save defaults
+              {tl("Save defaults")}
             </Button>
           </div>
         </div>

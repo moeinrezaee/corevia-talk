@@ -136,7 +136,7 @@ test("AuxiliaryPanelHeaderGroup derives overlay button styling from context", ()
     ),
   );
 
-  assert.match(html, /ml-0/);
+  assert.match(html, /ms-0/);
   assert.doesNotMatch(html, /-ml-2/);
 });
 
@@ -243,7 +243,7 @@ test("AuxiliaryPanelHeader keeps resize border in single-panel mode when request
     ),
   );
 
-  assert.match(html, /after:-left-px/);
+  assert.match(html, /after:-start-px/);
   assert.match(html, /peer-hover\/auxiliary-panel-resize:after:bg-border\/80/);
 });
 
@@ -265,7 +265,7 @@ test("AuxiliaryPanelHeader omits resize border in single-panel mode by default",
     ),
   );
 
-  assert.doesNotMatch(html, /after:-left-px/);
+  assert.doesNotMatch(html, /after:-start-px/);
   assert.doesNotMatch(
     html,
     /peer-hover\/auxiliary-panel-resize:after:bg-border\/80/,

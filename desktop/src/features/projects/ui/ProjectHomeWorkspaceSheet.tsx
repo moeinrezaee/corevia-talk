@@ -24,6 +24,7 @@ import { ProjectIssuesPanel } from "./ProjectIssuesPanel";
 import { PullRequestsPanel } from "./ProjectPullRequestsPanel";
 import { PROJECT_DETAIL_PANEL_CLASS } from "./projectPanelStyles";
 import { useProjectDetailPeople } from "./useProjectDetailPeople";
+import { tl } from "@/shared/i18n/tl";
 
 export type ProjectHomeWorkspaceCreateAction = {
   disabled?: boolean;
@@ -273,7 +274,7 @@ export function ProjectHomeWorkspaceSheet({
     if (tab === "issues" && !selectedIssueId) {
       onCreateActionChange?.({
         disabled: project.repositories.length === 0,
-        label: "Create task",
+        label: tl("Create task"),
         onClick: () => setCreateIssueOpen(true),
       });
       return;
@@ -281,9 +282,11 @@ export function ProjectHomeWorkspaceSheet({
     if (tab === "prs" && !selectedPullRequestId) {
       onCreateActionChange?.({
         disabled: projects.length === 0,
-        label: "Create review",
+        label: tl("Create review"),
         onClick: () => setCreatePullRequestOpen(true),
-        title: "Create review — choose a repository and branches to compare",
+        title: tl(
+          "Create review — choose a repository and branches to compare",
+        ),
       });
       return;
     }

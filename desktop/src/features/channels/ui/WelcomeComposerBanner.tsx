@@ -4,6 +4,7 @@ import { Bot, Check, X } from "lucide-react";
 
 import { ComposerDockGlassBackdrop } from "@/features/messages/ui/ComposerDockBackdrop";
 import { cn } from "@/shared/lib/cn";
+import { tl } from "@/shared/i18n/tl";
 
 const WELCOME_PERSONA_NAMES = ["Fizz"] as const;
 export const WELCOME_PERSONA_ROTATION_MS = 3200;
@@ -244,7 +245,7 @@ function WelcomeComposerPersonaMention() {
         ...(mentionWidth === null ? {} : { width: mentionWidth }),
       }}
     >
-      <span className="sr-only">@Fizz</span>
+      <span className="sr-only">{tl("@Fizz")}</span>
       <span
         aria-hidden
         className="pointer-events-none invisible inline-block whitespace-nowrap leading-[inherit]"
@@ -388,7 +389,7 @@ export function WelcomeComposerBanner({
                 key="complete-copy"
                 variants={welcomeComposerBannerSuccessCopyVariants}
               >
-                Nice work.
+                {tl("Nice work.")}
               </motion.span>
             ) : settingUp ? (
               <motion.span
@@ -400,7 +401,7 @@ export function WelcomeComposerBanner({
                 key="setting-up-copy"
                 variants={welcomeComposerBannerContentVariants}
               >
-                Setting up your welcome team…
+                {tl("Setting up your welcome team…")}
               </motion.span>
             ) : (
               <motion.span
@@ -411,15 +412,15 @@ export function WelcomeComposerBanner({
                 key="prompt-copy"
                 variants={welcomeComposerBannerContentVariants}
               >
-                Mention <WelcomeComposerPersonaMention /> or another teammate
-                whenever you want their help.
+                {tl("Mention")} <WelcomeComposerPersonaMention />{" "}
+                {tl("or another teammate whenever you want their help.")}
               </motion.span>
             )}
           </AnimatePresence>
           {state === "prompt" && onDismiss && !settingUp ? (
             <button
-              aria-label="Dismiss hint"
-              className="ml-auto flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-muted-foreground/60 transition-colors hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              aria-label={tl("Dismiss hint")}
+              className="ms-auto flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-muted-foreground/60 transition-colors hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               data-testid="welcome-composer-dismiss-button"
               onClick={onDismiss}
               type="button"

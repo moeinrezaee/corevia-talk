@@ -15,6 +15,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/shared/ui/popover";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const HOVER_CLOSE_DELAY_MS = 200;
 
@@ -52,7 +53,7 @@ function CopyRow({ label, value }: { label: string; value: string }) {
         <div className="break-all font-mono text-xs">{value}</div>
       </div>
       <Button
-        aria-label={`Copy ${label}`}
+        aria-label={tlt("Copy {0}", [label])}
         onClick={() => {
           copyTextToClipboard(value, `${label} copied`);
           setCopied(true);
@@ -72,7 +73,7 @@ function CopyRow({ label, value }: { label: string; value: string }) {
 function PubKeyDetails({ npub }: { npub: string }) {
   return (
     <div className="space-y-2">
-      <CopyRow label="npub" value={npub} />
+      <CopyRow label={tl("npub")} value={npub} />
     </div>
   );
 }
@@ -138,7 +139,7 @@ export function PubKey({
           <Popover>
             <PopoverTrigger asChild>
               <Button
-                aria-label="Copy public key"
+                aria-label={tl("Copy public key")}
                 size="icon-xs"
                 type="button"
                 variant="ghost"
@@ -177,7 +178,7 @@ export function PubKey({
     <Popover onOpenChange={setOpen} open={open}>
       <PopoverTrigger asChild>
         <button
-          aria-label="Show full public key"
+          aria-label={tl("Show full public key")}
           className={cn(
             "cursor-pointer rounded font-mono hover:underline focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring",
             className,

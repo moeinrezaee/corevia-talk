@@ -21,6 +21,7 @@ import {
   definitionFromFormValues,
   idFromLabel,
 } from "./harnessFormLogic";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 // ── Shared empty state ────────────────────────────────────────────────────────
 
@@ -56,7 +57,7 @@ function CommandAvailabilityBadge({ command }: { command: string }) {
           : "bg-amber-500/15 text-amber-600 dark:text-amber-400",
       )}
     >
-      {available ? "Found on PATH" : "Not found on PATH"}
+      {available ? tl("Found on PATH") : tl("Not found on PATH")}
     </span>
   );
 }
@@ -112,12 +113,12 @@ function ArgsEditor({
             <Input
               className={cn(FIELD_INPUT_CLASS, "font-mono")}
               onChange={(e) => set(i, e.target.value)}
-              placeholder={`arg ${i + 1}`}
+              placeholder={tlt("arg {0}", [i + 1])}
               value={arg}
             />
           </FieldShell>
           <Button
-            aria-label="Remove argument"
+            aria-label={tl("Remove argument")}
             onClick={() => onChange(args.filter((_, idx) => idx !== i))}
             size="icon"
             type="button"
@@ -133,8 +134,8 @@ function ArgsEditor({
         type="button"
         variant="outline"
       >
-        <Plus className="mr-1 h-4 w-4" />
-        Add argument
+        <Plus className="me-1 h-4 w-4" />
+        {tl("Add argument")}
       </Button>
     </div>
   );
@@ -160,7 +161,7 @@ function EnvEditor({
             <Input
               className={cn(FIELD_INPUT_CLASS, "font-mono")}
               onChange={(e) => set(i, "key", e.target.value)}
-              placeholder="KEY"
+              placeholder={tl("KEY")}
               value={pair.key}
             />
           </FieldShell>
@@ -168,12 +169,12 @@ function EnvEditor({
             <Input
               className={cn(FIELD_INPUT_CLASS, "font-mono")}
               onChange={(e) => set(i, "value", e.target.value)}
-              placeholder="value"
+              placeholder={tl("value")}
               value={pair.value}
             />
           </FieldShell>
           <Button
-            aria-label="Remove env var"
+            aria-label={tl("Remove env var")}
             onClick={() => onChange(env.filter((_, idx) => idx !== i))}
             size="icon"
             type="button"
@@ -189,8 +190,8 @@ function EnvEditor({
         type="button"
         variant="outline"
       >
-        <Plus className="mr-1 h-4 w-4" />
-        Add env var
+        <Plus className="me-1 h-4 w-4" />
+        {tl("Add env var")}
       </Button>
     </div>
   );
@@ -295,10 +296,10 @@ export function CustomHarnessForm({
       {chromeless ? null : (
         <div className="flex items-center justify-between">
           <p className="text-sm font-medium">
-            {originalId ? "Edit harness" : "Add custom harness"}
+            {originalId ? tl("Edit harness") : tl("Add custom harness")}
           </p>
           <button
-            aria-label="Cancel"
+            aria-label={tl("Cancel")}
             className="rounded-md p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
             onClick={onCancel}
             type="button"
@@ -322,14 +323,14 @@ export function CustomHarnessForm({
               className="text-sm font-medium text-foreground"
               htmlFor="ch-label"
             >
-              Name
+              {tl("Name")}
             </label>
             <FieldShell>
               <Input
                 className={FIELD_INPUT_CLASS}
                 id="ch-label"
                 onChange={field("label")}
-                placeholder="My Runtime"
+                placeholder={tl("My Runtime")}
                 required
                 value={form.label}
               />
@@ -341,9 +342,9 @@ export function CustomHarnessForm({
               className="text-sm font-medium text-foreground"
               htmlFor="ch-id"
             >
-              ID
+              {tl("ID")}
               <span className={PERSONA_LABEL_OPTIONAL_CLASS}>
-                (auto-derived)
+                {tl("(auto-derived)")}
               </span>
             </label>
             <FieldShell>
@@ -351,7 +352,7 @@ export function CustomHarnessForm({
                 className={cn(FIELD_INPUT_CLASS, "font-mono")}
                 id="ch-id"
                 onChange={field("id")}
-                placeholder="my-runtime"
+                placeholder={tl("my-runtime")}
                 required
                 value={form.id}
               />
@@ -365,7 +366,7 @@ export function CustomHarnessForm({
               className="text-sm font-medium text-foreground"
               htmlFor="ch-command"
             >
-              Command
+              {tl("Command")}
             </label>
             <CommandAvailabilityBadge command={form.command} />
           </div>
@@ -374,18 +375,20 @@ export function CustomHarnessForm({
               className={cn(FIELD_INPUT_CLASS, "font-mono")}
               id="ch-command"
               onChange={field("command")}
-              placeholder="my-agent-bin"
+              placeholder={tl("my-agent-bin")}
               required
               value={form.command}
             />
           </FieldShell>
           <p className="text-xs text-muted-foreground">
-            Any command that speaks ACP over stdio works.
+            {tl("Any command that speaks ACP over stdio works.")}
           </p>
         </div>
 
         <div className="space-y-1.5">
-          <p className="text-sm font-medium text-foreground">Arguments</p>
+          <p className="text-sm font-medium text-foreground">
+            {tl("Arguments")}
+          </p>
           <ArgsEditor
             args={form.args}
             onChange={(args) => setForm((p) => ({ ...p, args }))}
@@ -394,9 +397,9 @@ export function CustomHarnessForm({
 
         <div className="space-y-1.5">
           <p className="text-sm font-medium text-foreground">
-            Env vars
+            {tl("Env vars")}
             <span className={PERSONA_LABEL_OPTIONAL_CLASS}>
-              (override at spawn time; Buzz-managed vars always win)
+              {tl("(override at spawn time; Buzz-managed vars always win)")}
             </span>
           </p>
           <EnvEditor
@@ -410,15 +413,17 @@ export function CustomHarnessForm({
             className="text-sm font-medium text-foreground"
             htmlFor="ch-docs-url"
           >
-            Docs URL
-            <span className={PERSONA_LABEL_OPTIONAL_CLASS}>(optional)</span>
+            {tl("Docs URL")}
+            <span className={PERSONA_LABEL_OPTIONAL_CLASS}>
+              {tl("(optional)")}
+            </span>
           </label>
           <FieldShell>
             <Input
               className={FIELD_INPUT_CLASS}
               id="ch-docs-url"
               onChange={field("installInstructionsUrl")}
-              placeholder="https://example.com/docs"
+              placeholder={tl("https://example.com/docs")}
               value={form.installInstructionsUrl}
             />
           </FieldShell>
@@ -429,15 +434,17 @@ export function CustomHarnessForm({
             className="text-sm font-medium text-foreground"
             htmlFor="ch-install-hint"
           >
-            Install hint
-            <span className={PERSONA_LABEL_OPTIONAL_CLASS}>(optional)</span>
+            {tl("Install hint")}
+            <span className={PERSONA_LABEL_OPTIONAL_CLASS}>
+              {tl("(optional)")}
+            </span>
           </label>
           <FieldShell>
             <Input
               className={FIELD_INPUT_CLASS}
               id="ch-install-hint"
               onChange={field("installHint")}
-              placeholder="npm install -g my-harness"
+              placeholder={tl("npm install -g my-harness")}
               value={form.installHint}
             />
           </FieldShell>
@@ -462,8 +469,8 @@ export function CustomHarnessForm({
           disabled={save.isPending || !requiredFieldsSatisfied}
           type="submit"
         >
-          {save.isPending ? <Spinner className="mr-2 h-3.5 w-3.5" /> : null}
-          Save
+          {save.isPending ? <Spinner className="me-2 h-3.5 w-3.5" /> : null}
+          {tl("Save")}
         </Button>
       </div>
     </form>

@@ -18,7 +18,7 @@ export function ProjectsOverviewChatToggle({
     <Button
       aria-label={label}
       aria-pressed={active}
-      className="-mr-2 ml-auto h-7 w-7 shrink-0 text-muted-foreground hover:bg-muted/70 hover:text-foreground"
+      className="-me-2 ms-auto h-7 w-7 shrink-0 text-muted-foreground hover:bg-muted/70 hover:text-foreground"
       data-testid="projects-overview-chat-toggle"
       onClick={onToggle}
       size="icon"

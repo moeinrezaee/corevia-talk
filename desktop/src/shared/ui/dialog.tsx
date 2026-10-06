@@ -12,6 +12,7 @@ import {
   MODAL_CONTENT_MOTION_CLASS,
   MODAL_OVERLAY_MOTION_CLASS,
 } from "@/shared/ui/modalMotion";
+import { tl } from "@/shared/i18n/tl";
 
 const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
@@ -120,13 +121,13 @@ const DialogContent = React.forwardRef<
                 // fade; dock the close button at the safe-inset corner so it
                 // stays on the solid center of the texture.
                 surface === "textured"
-                  ? "right-[var(--buzz-card-textured-safe-inset)] top-[var(--buzz-card-textured-safe-inset)] -mr-2 -mt-2"
-                  : "right-4 top-4",
+                  ? "end-[var(--buzz-card-textured-safe-inset)] top-[var(--buzz-card-textured-safe-inset)] -me-2 -mt-2"
+                  : "end-4 top-4",
                 closeButtonClassName,
               )}
             >
               <X className="h-4 w-4" />
-              <span className="sr-only">Close</span>
+              <span className="sr-only">{tl("Close")}</span>
             </DialogPrimitive.Close>
           ) : null}
         </DialogPrimitive.Content>
@@ -141,7 +142,7 @@ const DialogHeader = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn("flex flex-col space-y-2 text-left", className)}
+    className={cn("flex flex-col space-y-2 text-start", className)}
     {...props}
   />
 );

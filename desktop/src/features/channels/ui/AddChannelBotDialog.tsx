@@ -17,6 +17,7 @@ import type { AcpRuntime } from "@/shared/api/types";
 import { Button } from "@/shared/ui/button";
 import { ChooserDialogContent } from "@/shared/ui/chooser-dialog-content";
 import { Dialog } from "@/shared/ui/dialog";
+import { tl } from "@/shared/i18n/tl";
 
 type AddChannelBotDialogProps = {
   channelId: string | null;
@@ -207,7 +208,7 @@ export function AddChannelBotDialog({
       <ChooserDialogContent
         className="max-w-xl"
         data-testid="add-channel-bot-dialog"
-        description="Choose from your agents, or create a new one."
+        description={tl("Choose from your agents, or create a new one.")}
         footer={
           <>
             <Button
@@ -216,7 +217,7 @@ export function AddChannelBotDialog({
               type="button"
               variant="outline"
             >
-              Cancel
+              {tl("Cancel")}
             </Button>
             <Button
               disabled={!canSubmit}
@@ -233,7 +234,7 @@ export function AddChannelBotDialog({
         headerTestId="add-channel-bot-dialog-header"
         scrollAreaClassName="space-y-5"
         scrollAreaTestId="add-channel-bot-dialog-scroll-area"
-        title="Add agents"
+        title={tl("Add agents")}
       >
         <AddChannelBotPersonasSection
           canToggleSelections={!createBotsMutation.isPending}
@@ -265,7 +266,9 @@ export function AddChannelBotDialog({
           <div className="flex gap-3 rounded-lg border border-warning/30 bg-warning-bg px-4 py-3">
             <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-warning" />
             <p className="text-sm text-warning">
-              Install an agent runtime before adding an agent to this channel.
+              {tl(
+                "Install an agent runtime before adding an agent to this channel.",
+              )}
             </p>
           </div>
         ) : null}

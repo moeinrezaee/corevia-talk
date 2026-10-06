@@ -8,6 +8,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 
 import { useUpdaterContext } from "./hooks/UpdaterProvider";
 import type { UpdateStatus } from "./hooks/use-updater";
+import { tl } from "@/shared/i18n/tl";
 
 const indicatorButtonClass =
   "relative text-muted-foreground/80 hover:bg-muted/60 hover:text-foreground";
@@ -28,30 +29,31 @@ const variants: Record<
 > = {
   available: {
     Icon: RefreshCcw,
-    label: "Update available",
+    label: tl("Update available"),
     badgeColor: "bg-primary",
   },
   downloading: {
     Icon: Spinner,
     iconClassName: "h-4 w-4 border-2",
-    label: "Downloading update\u2026",
+    label: tl("Downloading update…"),
     badgeColor: "bg-primary",
   },
   installing: {
     Icon: Spinner,
     iconClassName: "h-4 w-4 border-2",
-    label: "Installing update\u2026",
+    label: tl("Installing update…"),
     badgeColor: "bg-primary",
   },
   "manual-required": {
     Icon: ExternalLink,
-    label:
+    label: tl(
       "Update available — download from GitHub (use AppImage for auto-updates)",
+    ),
     badgeColor: "bg-primary",
   },
   ready: {
     Icon: RotateCw,
-    label: "Update now",
+    label: tl("Update now"),
     badgeColor: "bg-emerald-500",
   },
 };
@@ -107,7 +109,7 @@ export function UpdateIndicator({ className }: { className?: string }) {
         >
           <Icon aria-hidden className={iconClassName} />
           <span
-            className={`absolute right-1 top-1 h-1.5 w-1.5 rounded-full ${badgeColor} animate-pulse`}
+            className={`absolute end-1 top-1 h-1.5 w-1.5 rounded-full ${badgeColor} animate-pulse`}
           />
         </Button>
       </TooltipTrigger>

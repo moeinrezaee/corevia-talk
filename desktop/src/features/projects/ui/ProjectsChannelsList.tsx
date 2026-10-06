@@ -17,6 +17,7 @@ import { BuzzLoadingState } from "@/shared/ui/BuzzLoadingState";
 import { ProjectEntityListRow } from "./ProjectEntityListRow";
 import { ProjectSelectableGroup } from "./ProjectSelectableGroup";
 import { ProjectPanelState } from "./ProjectPanelState";
+import { tl } from "@/shared/i18n/tl";
 
 function lastMessageAtSeconds(value: string | null | undefined) {
   if (!value) return null;
@@ -130,7 +131,7 @@ export function ProjectsChannelsList({
   }, [rows]);
 
   if (channelsQuery.isLoading && rows.length === 0) {
-    return <BuzzLoadingState label="Loading project channels" />;
+    return <BuzzLoadingState label={tl("Loading project channels")} />;
   }
   if (rows.length === 0) {
     const searching = Boolean(searchQuery.trim());
@@ -138,11 +139,15 @@ export function ProjectsChannelsList({
       <ProjectPanelState
         description={
           searching
-            ? "Try a different search."
-            : "Link a discussion channel to a project or repository and it will appear here."
+            ? tl("Try a different search.")
+            : tl(
+                "Link a discussion channel to a project or repository and it will appear here.",
+              )
         }
         panel={false}
-        title={searching ? "No matching channels" : "No project channels yet"}
+        title={
+          searching ? tl("No matching channels") : tl("No project channels yet")
+        }
       />
     );
   }
@@ -207,7 +212,7 @@ export function ProjectsChannelsList({
                     description={
                       channel
                         ? listRowDescription(channel.description, name)
-                        : "Channel details are unavailable"
+                        : tl("Channel details are unavailable")
                     }
                     icon={
                       channel ? (

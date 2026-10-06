@@ -1,3 +1,4 @@
+import { tl } from "@/shared/i18n/tl";
 export type ProjectRepoUnavailableReason =
   | "missing"
   | "access"
@@ -18,39 +19,46 @@ const PROJECT_REPO_UNAVAILABLE_PRESENTATIONS: Record<
   ProjectRepoUnavailablePresentation
 > = {
   authentication: {
-    description:
+    description: tl(
       "Buzz could not authenticate with this repository. Check your access and try again.",
-    title: "Repository access failed",
+    ),
+    title: tl("Repository access failed"),
   },
   missing: {
-    description:
+    description: tl(
       "The project announcement exists, but its git repository was not found on the Buzz relay.",
-    title: "Repository not initialized",
+    ),
+    title: tl("Repository not initialized"),
   },
   access: {
-    description:
+    description: tl(
       "Repository access is granted through its channel, and you’re not a member. Ask the repository owner for an invite.",
-    title: "Repository access restricted",
+    ),
+    title: tl("Repository access restricted"),
   },
   unbound: {
-    description:
+    description: tl(
       "This repository has no access channel binding, so the relay cannot authorize anyone to read it. The repository owner can bind a channel from the Access menu.",
-    title: "No access channel bound",
+    ),
+    title: tl("No access channel bound"),
   },
   network: {
-    description:
+    description: tl(
       "The Buzz git service could not be reached. Check your connection and try again.",
-    title: "Couldn’t reach repository",
+    ),
+    title: tl("Couldn’t reach repository"),
   },
   ref: {
-    description:
+    description: tl(
       "The selected branch is advertised by the project but is missing from its git remote.",
-    title: "Branch unavailable",
+    ),
+    title: tl("Branch unavailable"),
   },
   unknown: {
-    description:
+    description: tl(
       "Buzz could not load this repository. Try again or contact the project owner.",
-    title: "Repository unavailable",
+    ),
+    title: tl("Repository unavailable"),
   },
 };
 

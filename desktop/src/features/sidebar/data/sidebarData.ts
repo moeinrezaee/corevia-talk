@@ -1,3 +1,4 @@
+import { tl } from "@/shared/i18n/tl";
 export type Channel = {
   name: string;
   unread?: number;
@@ -12,7 +13,7 @@ export type ChannelSection = {
 
 export const sidebarSections: ChannelSection[] = [
   {
-    title: "Pinned",
+    title: tl("Pinned"),
     items: [
       {
         name: "general",
@@ -28,7 +29,7 @@ export const sidebarSections: ChannelSection[] = [
     ],
   },
   {
-    title: "Channels",
+    title: tl("Channels"),
     items: [
       {
         name: "engineering",
@@ -41,7 +42,7 @@ export const sidebarSections: ChannelSection[] = [
     ],
   },
   {
-    title: "Direct Messages",
+    title: tl("Direct Messages"),
     items: [
       {
         name: "Avery",

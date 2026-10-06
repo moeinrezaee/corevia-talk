@@ -43,6 +43,7 @@ import {
 import { Switch } from "@/shared/ui/switch";
 import { SettingsOptionRow } from "./SettingsOptionGroup";
 import { SegmentedControl } from "@/shared/ui/segmented-control";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 /** Buzz navigation can use either its production tint or a stronger tab. */
 export function ProminentActiveTabSetting() {
@@ -55,13 +56,15 @@ export function ProminentActiveTabSetting() {
           className="text-sm font-medium"
           htmlFor="prominent-active-tab-switch"
         >
-          Prominent active tab
+          {tl("Prominent active tab")}
         </label>
         <p
           className="text-sm font-normal text-muted-foreground/70"
           data-settings-subcopy
         >
-          Give the selected navigation item a higher-contrast background.
+          {tl(
+            "Give the selected navigation item a higher-contrast background.",
+          )}
         </p>
       </div>
       <Switch
@@ -81,13 +84,13 @@ const LINK_PREVIEW_STYLE_OPTIONS: {
 }[] = [
   {
     value: "compact",
-    label: "Compact",
-    description: "Small cards with a thumbnail",
+    label: tl("Compact"),
+    description: tl("Small cards with a thumbnail"),
   },
   {
     value: "rich",
-    label: "Rich",
-    description: "Large previews with images and descriptions",
+    label: tl("Rich"),
+    description: tl("Large previews with images and descriptions"),
   },
 ];
 
@@ -97,15 +100,15 @@ const CONVERSATION_DENSITY_OPTIONS: readonly {
 }[] = [
   {
     value: "compact",
-    label: "Compact",
+    label: tl("Compact"),
   },
   {
     value: "comfortable",
-    label: "Comfy",
+    label: tl("Comfy"),
   },
   {
     value: "spacious",
-    label: "Spacious",
+    label: tl("Spacious"),
   },
 ];
 
@@ -115,15 +118,15 @@ const FONT_SIZE_OPTIONS: readonly {
 }[] = [
   {
     value: "smaller",
-    label: "Smaller",
+    label: tl("Smaller"),
   },
   {
     value: "default",
-    label: "Default",
+    label: tl("Default"),
   },
   {
     value: "larger",
-    label: "Larger",
+    label: tl("Larger"),
   },
 ];
 
@@ -168,9 +171,9 @@ function ConversationPreview() {
         className="relative overflow-hidden rounded-xl border border-border/65 bg-transparent"
         data-testid="conversation-preview-surface"
       >
-        <span className="absolute right-3.5 top-3 inline-flex items-center gap-1 text-2xs font-medium text-muted-foreground/55">
+        <span className="absolute end-3.5 top-3 inline-flex items-center gap-1 text-2xs font-medium text-muted-foreground/55">
           <Eye aria-hidden="true" className="size-3" />
-          Preview
+          {tl("Preview")}
         </span>
         <div className="p-4" data-testid="conversation-preview-content">
           <ConversationDensityPreviewMessage
@@ -178,7 +181,7 @@ function ConversationPreview() {
             author="Maya"
             timestamp="9:41"
           >
-            The revised conversation layout is ready to review.
+            {tl("The revised conversation layout is ready to review.")}
           </ConversationDensityPreviewMessage>
           <ConversationDensityPreviewMessage
             avatar="T"
@@ -186,11 +189,14 @@ function ConversationPreview() {
             timestamp="9:43"
           >
             <p>
-              I added a longer message so you can compare line height and text
-              spacing.
+              {tl(
+                "I added a longer message so you can compare line height and text spacing.",
+              )}
             </p>
             <p className="mt-conversation-paragraph">
-              The same rhythm carries through channels, threads, DMs, and Inbox.
+              {tl(
+                "The same rhythm carries through channels, threads, DMs, and Inbox.",
+              )}
             </p>
           </ConversationDensityPreviewMessage>
         </div>
@@ -208,12 +214,12 @@ export function ConversationDisplaySettings() {
     <div data-testid="conversation-display-group">
       <SettingsOptionRow data-testid="font-size-row">
         <div className="min-w-0">
-          <p className="text-sm font-medium">Font size</p>
+          <p className="text-sm font-medium">{tl("Font size")}</p>
           <p
             className="text-sm font-normal text-muted-foreground/70"
             data-settings-subcopy
           >
-            Applies across conversations and interface text
+            {tl("Applies across conversations and interface text")}
           </p>
         </div>
         <SegmentedControl
@@ -229,12 +235,12 @@ export function ConversationDisplaySettings() {
       </SettingsOptionRow>
       <SettingsOptionRow data-testid="conversation-density-row">
         <div className="min-w-0">
-          <p className="text-sm font-medium">Conversation density</p>
+          <p className="text-sm font-medium">{tl("Conversation density")}</p>
           <p
             className="text-sm font-normal text-muted-foreground/70"
             data-settings-subcopy
           >
-            Spacing in conversations and Markdown content across Buzz
+            {tl("Spacing in conversations and Markdown content across Buzz")}
           </p>
         </div>
         <SegmentedControl
@@ -261,10 +267,11 @@ const LINK_PREVIEW_SAMPLE_BASE: Omit<ResolvedLinkPreview, "imageDataUrl"> = {
   kind: "generic-link",
   href: "https://example.com/product-updates",
   provider: "example.com",
-  title: "Product updates — a fresh look at conversations",
+  title: tl("Product updates — a fresh look at conversations"),
   typeLabel: "link",
-  description:
+  description: tl(
     "Highlights from this release: refreshed conversation layout, quicker link handling, and readability improvements.",
+  ),
   imageState: "image",
   imageDomain: "example.com",
 };
@@ -320,11 +327,11 @@ function LinkPreviewSample({ style }: { style: LinkPreviewStyle }) {
         data-testid="link-preview-sample-surface"
         inert
       >
-        <span className="absolute right-3.5 top-3 inline-flex items-center gap-1 text-2xs font-medium text-muted-foreground/55">
+        <span className="absolute end-3.5 top-3 inline-flex items-center gap-1 text-2xs font-medium text-muted-foreground/55">
           <Eye aria-hidden="true" className="size-3" />
-          Preview
+          {tl("Preview")}
         </span>
-        <div className="p-4 pr-24">
+        <div className="p-4 pe-24">
           <LinkPreviewAttachmentPresentation
             ImageLightbox={SampleImageLightbox}
             preview={preview}
@@ -351,7 +358,7 @@ export function LinkPreviewStyleSetting() {
     <div data-testid="link-preview-style-group">
       <SettingsOptionRow>
         <div className="min-w-0">
-          <p className="text-sm font-medium">Link previews</p>
+          <p className="text-sm font-medium">{tl("Link previews")}</p>
           <p
             className="text-sm font-normal text-muted-foreground/70"
             data-settings-subcopy
@@ -382,13 +389,13 @@ const THREAD_VIEW_MODE_OPTIONS: {
 }[] = [
   {
     value: "focus",
-    label: "Focus",
-    description: "Threads open over the channel",
+    label: tl("Focus"),
+    description: tl("Threads open over the channel"),
   },
   {
     value: "split",
-    label: "Split",
-    description: "Threads open in a side panel next to the channel",
+    label: tl("Split"),
+    description: tl("Threads open in a side panel next to the channel"),
   },
 ];
 
@@ -409,13 +416,13 @@ export function GlassBackgroundSetting() {
   const opacityRow = (
     <SettingsOptionRow data-testid="glass-opacity-row">
       <div className="min-w-0">
-        <p className="text-sm font-medium">Glass opacity</p>
+        <p className="text-sm font-medium">{tl("Glass opacity")}</p>
         <p
           className="text-sm font-normal text-muted-foreground/70"
           data-settings-subcopy
           id="glass-opacity-description"
         >
-          Lower values reveal more of the desktop blur.
+          {tl("Lower values reveal more of the desktop blur.")}
         </p>
       </div>
       <div className="flex w-64 shrink-0 items-center">
@@ -447,15 +454,17 @@ export function GlassBackgroundSetting() {
             className="text-sm font-medium"
             htmlFor="glass-background-switch"
           >
-            Glass background
+            {tl("Glass background")}
           </label>
           <p
             className="text-sm font-normal text-muted-foreground/70"
             data-settings-subcopy
           >
             {glassBackgroundSupported
-              ? "Blur the desktop behind navigation while keeping content solid."
-              : "Available in the macOS desktop app."}
+              ? tl(
+                  "Blur the desktop behind navigation while keeping content solid.",
+                )
+              : tl("Available in the macOS desktop app.")}
           </p>
         </div>
         <Switch
@@ -590,11 +599,11 @@ function ThreadLayoutPreview({ mode }: { mode: ThreadViewMode }) {
         className="relative overflow-hidden rounded-xl border border-border/65 bg-transparent"
         data-testid="thread-layout-preview-surface"
       >
-        <span className="absolute right-3.5 top-3 inline-flex items-center gap-1 text-2xs font-medium text-muted-foreground/55">
+        <span className="absolute end-3.5 top-3 inline-flex items-center gap-1 text-2xs font-medium text-muted-foreground/55">
           <Eye aria-hidden="true" className="size-3" />
-          Preview
+          {tl("Preview")}
         </span>
-        <div className="p-4 pr-24">
+        <div className="p-4 pe-24">
           <ThreadLayoutDiagram mode={mode} />
         </div>
       </div>
@@ -619,11 +628,11 @@ export function ThreadLayoutSetting() {
       <SettingsOptionRow>
         <div className="min-w-0">
           <p className="text-sm font-medium">
-            Thread layout
+            {tl("Thread layout")}
             {showCommunityScope ? (
               <span className="font-normal text-muted-foreground">
                 {" "}
-                (all communities)
+                {tl("(all communities)")}
               </span>
             ) : null}
           </p>
@@ -663,12 +672,12 @@ export function AccentPickerContent({
   return (
     <SettingsOptionRow className="items-start">
       <div className="min-w-0">
-        <p className="text-sm font-medium">Accent color</p>
+        <p className="text-sm font-medium">{tl("Accent color")}</p>
         <p
           className="text-sm font-normal text-muted-foreground/70"
           data-settings-subcopy
         >
-          Choose the highlight color used throughout Buzz.
+          {tl("Choose the highlight color used throughout Buzz.")}
         </p>
       </div>
       <div
@@ -690,7 +699,7 @@ export function AccentPickerContent({
 
             return (
               <button
-                aria-label={`Use ${color.name} accent`}
+                aria-label={tlt("Use {0} accent", [color.name])}
                 aria-pressed={isSelected}
                 className="relative h-9 w-9 shrink-0 rounded-full border border-border transition-transform duration-200 ease-out hover:scale-[1.15] focus-visible:scale-[1.15] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transform-none motion-reduce:transition-none"
                 data-testid={`accent-color-${color.name.toLowerCase()}`}

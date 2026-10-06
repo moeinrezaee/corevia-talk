@@ -2,6 +2,7 @@ import { CornerUpLeft, Pencil, X } from "lucide-react";
 
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
+import { tl } from "@/shared/i18n/tl";
 
 const BANNER_CLASS =
   "relative z-0 -mb-4 flex transform-gpu gap-2 rounded-t-2xl border border-b-0 border-border/60 bg-muted/55 px-4 pb-6 pt-2.5 text-sm leading-5 text-muted-foreground backdrop-blur-sm transition-colors";
@@ -34,13 +35,13 @@ export function ComposerReplyEditBanner({
         <Pencil aria-hidden className="h-4 w-4 shrink-0" />
         <div className="min-w-0 flex-1">
           <p className="truncate font-medium text-foreground">
-            Editing message
+            {tl("Editing message")}
           </p>
         </div>
         {onCancelEdit ? (
           <Button
-            aria-label="Cancel edit"
-            className="-mr-1 h-7 w-7 shrink-0 px-0 text-muted-foreground hover:text-foreground"
+            aria-label={tl("Cancel edit")}
+            className="-me-1 h-7 w-7 shrink-0 px-0 text-muted-foreground hover:text-foreground"
             disabled={isEditCancelDisabled}
             onClick={onCancelEdit}
             size="icon"
@@ -63,7 +64,7 @@ export function ComposerReplyEditBanner({
         <CornerUpLeft aria-hidden className="mt-0.5 h-4 w-4 shrink-0" />
         <div className="min-w-0 flex-1">
           <p className="truncate font-medium text-foreground">
-            Replying to {replyTarget.author}
+            {tl("Replying to")} {replyTarget.author}
           </p>
           {replyTarget.body ? (
             <p className="truncate text-muted-foreground/80">
@@ -73,8 +74,8 @@ export function ComposerReplyEditBanner({
         </div>
         {onCancelReply ? (
           <Button
-            aria-label="Cancel reply"
-            className="-mr-1 h-7 w-7 shrink-0 px-0 text-muted-foreground hover:text-foreground"
+            aria-label={tl("Cancel reply")}
+            className="-me-1 h-7 w-7 shrink-0 px-0 text-muted-foreground hover:text-foreground"
             onClick={onCancelReply}
             size="icon"
             type="button"

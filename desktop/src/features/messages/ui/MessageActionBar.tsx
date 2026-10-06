@@ -53,6 +53,7 @@ import { isPositiveEmojiParticle } from "@/shared/ui/EmojiBurstProvider";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { ProtectedMessageAction } from "@protected-feature-components";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const ACTION_BUTTON_CLASS = "h-8 w-8 rounded-full p-0";
 const ACTION_ICON_CLASS = "!h-4 !w-4";
@@ -149,7 +150,7 @@ function MoreActionsMenu({
           <TooltipTrigger asChild>
             <DropdownMenuTrigger asChild>
               <Button
-                aria-label="More actions"
+                aria-label={tl("More actions")}
                 className={ACTION_BUTTON_CLASS}
                 data-testid={`more-actions-${message.id}`}
                 size="sm"
@@ -160,7 +161,7 @@ function MoreActionsMenu({
               </Button>
             </DropdownMenuTrigger>
           </TooltipTrigger>
-          <TooltipContent>More actions</TooltipContent>
+          <TooltipContent>{tl("More actions")}</TooltipContent>
         </Tooltip>
         <DropdownMenuContent
           align="end"
@@ -183,7 +184,7 @@ function MoreActionsMenu({
               }}
             >
               <Pencil className="h-4 w-4" />
-              Edit message
+              {tl("Edit message")}
             </DropdownMenuItem>
           ) : null}
 
@@ -203,7 +204,7 @@ function MoreActionsMenu({
               ) : (
                 <MailOpen className="h-4 w-4" />
               )}
-              {isUnread ? "Mark read" : "Mark unread"}
+              {isUnread ? tl("Mark read") : tl("Mark unread")}
             </DropdownMenuItem>
           ) : null}
 
@@ -222,7 +223,7 @@ function MoreActionsMenu({
               ) : (
                 <BellRing className="h-4 w-4" />
               )}
-              {isFollowingThread ? "Unfollow thread" : "Follow thread"}
+              {isFollowingThread ? tl("Unfollow thread") : tl("Follow thread")}
             </DropdownMenuItem>
           ) : null}
 
@@ -240,7 +241,7 @@ function MoreActionsMenu({
               }}
             >
               <Copy className="h-4 w-4" />
-              Copy message
+              {tl("Copy message")}
             </DropdownMenuItem>
           ) : null}
 
@@ -251,23 +252,23 @@ function MoreActionsMenu({
               }}
             >
               <Clock className="h-4 w-4" />
-              Remind me later
+              {tl("Remind me later")}
             </DropdownMenuItem>
           ) : null}
 
           {onSendToChannel ? (
             <DropdownMenuItem
-              aria-label="Send to channel"
+              aria-label={tl("Send to channel")}
               data-testid={`send-to-channel-${message.id}`}
               onClick={() => {
                 void onSendToChannel(message)
-                  .then(() => toast.success("Sent to channel"))
+                  .then(() => toast.success(tl("Sent to channel")))
                   .catch((error) => {
                     console.error(
                       "Failed to send thread message to channel",
                       error,
                     );
-                    toast.error("Couldn't send to channel");
+                    toast.error(tl("Couldn't send to channel"));
                   });
               }}
             >
@@ -276,7 +277,7 @@ function MoreActionsMenu({
                 className="h-4 w-4"
                 data-testid="send-to-channel-icon"
               />
-              Send to channel
+              {tl("Send to channel")}
             </DropdownMenuItem>
           ) : null}
 
@@ -288,7 +289,7 @@ function MoreActionsMenu({
               }}
             >
               <Link2 className="h-4 w-4" />
-              Copy link
+              {tl("Copy link")}
             </DropdownMenuItem>
           ) : null}
 
@@ -302,7 +303,7 @@ function MoreActionsMenu({
               }}
             >
               <Flag className="h-4 w-4" />
-              Report message
+              {tl("Report message")}
             </DropdownMenuItem>
           ) : null}
 
@@ -315,7 +316,7 @@ function MoreActionsMenu({
               }}
             >
               <Trash2 className="h-4 w-4" />
-              Delete message
+              {tl("Delete message")}
             </DropdownMenuItem>
           ) : null}
 
@@ -364,7 +365,7 @@ function QuickReactionButton({
     <Tooltip>
       <TooltipTrigger asChild>
         <button
-          aria-label={`React with ${displayName}`}
+          aria-label={tlt("React with {0}", [displayName])}
           className="flex h-8 w-8 items-center justify-center rounded-full text-base leading-none text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
           onClick={() => onSelect(emoji)}
           title={displayName}
@@ -544,7 +545,7 @@ export const MessageActionBar = React.memo(function MessageActionBar({
                 <TooltipTrigger asChild>
                   <PopoverTrigger asChild>
                     <Button
-                      aria-label="Open reactions"
+                      aria-label={tl("Open reactions")}
                       className={ACTION_BUTTON_CLASS}
                       data-testid={`react-message-${message.id}`}
                       size="sm"
@@ -555,7 +556,7 @@ export const MessageActionBar = React.memo(function MessageActionBar({
                     </Button>
                   </PopoverTrigger>
                 </TooltipTrigger>
-                <TooltipContent>React</TooltipContent>
+                <TooltipContent>{tl("React")}</TooltipContent>
               </Tooltip>
               <PopoverContent
                 align="end"
@@ -596,7 +597,7 @@ export const MessageActionBar = React.memo(function MessageActionBar({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
-                  aria-label="Reply"
+                  aria-label={tl("Reply")}
                   className={ACTION_BUTTON_CLASS}
                   data-testid={`reply-message-${message.id}`}
                   onClick={() => {
@@ -609,7 +610,7 @@ export const MessageActionBar = React.memo(function MessageActionBar({
                   <CornerUpLeft className={ACTION_ICON_CLASS} />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Reply</TooltipContent>
+              <TooltipContent>{tl("Reply")}</TooltipContent>
             </Tooltip>
           ) : null}
 
@@ -617,7 +618,7 @@ export const MessageActionBar = React.memo(function MessageActionBar({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
-                  aria-label="Copy link"
+                  aria-label={tl("Copy link")}
                   className={ACTION_BUTTON_CLASS}
                   data-testid={`copy-link-message-${message.id}`}
                   onClick={() => {
@@ -630,7 +631,7 @@ export const MessageActionBar = React.memo(function MessageActionBar({
                   <Link2 className={ACTION_ICON_CLASS} />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Copy link</TooltipContent>
+              <TooltipContent>{tl("Copy link")}</TooltipContent>
             </Tooltip>
           ) : null}
 

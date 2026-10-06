@@ -12,7 +12,7 @@ export function ProjectChannelIcon({ className }: { className?: string }) {
     >
       <Folders className="!size-full" />
       <Hash
-        className="pointer-events-none absolute -bottom-px -right-px !size-[62.5%]"
+        className="pointer-events-none absolute -bottom-px -end-px !size-[62.5%]"
         strokeWidth={2.5}
       />
     </span>

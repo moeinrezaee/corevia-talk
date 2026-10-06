@@ -59,7 +59,7 @@ export const ChooserDialogContent = React.forwardRef<
       {...props}
     >
       <DialogHeader
-        className={cn("shrink-0 px-6 py-5 pr-14", headerClassName)}
+        className={cn("shrink-0 px-6 py-5 pe-14", headerClassName)}
         data-testid={headerTestId}
       >
         <DialogTitle>{title}</DialogTitle>

@@ -83,6 +83,7 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { tl } from "@/shared/i18n/tl";
 
 export type AgentCandidate = {
   pubkey: string;
@@ -134,21 +135,21 @@ function buildSuggestions(projects: readonly Project[]) {
   const firstRepo = projects[0]?.name;
   return [
     {
-      label: "Reviews",
+      label: tl("Reviews"),
       prompt: "Which reviews need attention today?",
     },
     {
-      label: "Release check",
+      label: tl("Release check"),
       prompt: firstRepo
         ? `Are we safe to cut a release of ${firstRepo} this week?`
         : "Are we safe to cut a release this week?",
     },
     {
-      label: "Tasks",
+      label: tl("Tasks"),
       prompt: "Summarize the open tasks and flag anything urgent.",
     },
     {
-      label: "Activity",
+      label: tl("Activity"),
       prompt: firstRepo
         ? `Summarize recent activity in ${firstRepo}.`
         : "Summarize recent repository activity.",
@@ -377,9 +378,9 @@ export function ConversationThread({
         <ThreadRepliesErrorCard onRetry={threadReplies.refetch} />
       ) : null}
       {agentWorking.working ? (
-        <div className="flex items-center gap-2 pl-11 text-sm text-muted-foreground">
+        <div className="flex items-center gap-2 ps-11 text-sm text-muted-foreground">
           <Loader2 className="h-3.5 w-3.5 animate-spin" />
-          {agent.name} is working…
+          {agent.name} {tl("is working…")}
         </div>
       ) : null}
       <div ref={bottomRef} />
@@ -640,13 +641,13 @@ export function ProjectsAgentPromptPage({
         <div className="flex items-center justify-between gap-2 pt-2">
           <div className="flex min-w-0 items-center gap-1">
             <Button
-              aria-label="Toggle formatting"
+              aria-label={tl("Toggle formatting")}
               aria-pressed={isFormattingOpen}
               className="h-7 w-7 shrink-0 px-0"
               disabled={isSending}
               onClick={() => setIsFormattingOpen((open) => !open)}
               size="icon"
-              title="Formatting"
+              title={tl("Formatting")}
               type="button"
               variant={isFormattingOpen ? "default" : "ghost"}
             >
@@ -682,7 +683,7 @@ export function ProjectsAgentPromptPage({
                       />
                     ) : null}
                     <span className="min-w-0 truncate">
-                      {selectedAgent?.name ?? "No agents available"}
+                      {selectedAgent?.name ?? tl("No agents available")}
                     </span>
                     {candidates.length > 0 && conversation === null ? (
                       <ChevronDown className="h-3 w-3 shrink-0 text-muted-foreground" />
@@ -702,7 +703,7 @@ export function ProjectsAgentPromptPage({
                         <UserAvatar
                           accent
                           avatarUrl={avatarUrlFor(candidate.pubkey)}
-                          className="mr-2 shrink-0"
+                          className="me-2 shrink-0"
                           displayName={candidate.name}
                           shape="squircle"
                           size="xs"
@@ -713,7 +714,7 @@ export function ProjectsAgentPromptPage({
                         {candidate.isActive !== null ? (
                           <span
                             className={cn(
-                              "ml-2 h-1.5 w-1.5 shrink-0 rounded-full",
+                              "ms-2 h-1.5 w-1.5 shrink-0 rounded-full",
                               candidate.isActive
                                 ? "bg-emerald-500"
                                 : "bg-muted-foreground/40",
@@ -740,7 +741,7 @@ export function ProjectsAgentPromptPage({
             ) : (
               <SendHorizontal className="h-3.5 w-3.5" />
             )}
-            Ask
+            {tl("Ask")}
           </Button>
         </div>
         {conversation ? null : (
@@ -771,7 +772,7 @@ export function ProjectsAgentPromptPage({
                 variant="ghost"
               >
                 <Trash2 className="h-3.5 w-3.5" />
-                Clear conversation
+                {tl("Clear conversation")}
               </Button>
             </div>
             <ConversationThread
@@ -795,21 +796,22 @@ export function ProjectsAgentPromptPage({
     <div className="flex flex-1 items-center justify-center overflow-y-auto px-4">
       <div className="w-full max-w-xl space-y-6 py-10">
         <h2 className="text-center text-lg font-semibold text-foreground">
-          Ask an agent about your projects
+          {tl("Ask an agent about your projects")}
         </h2>
 
         {promptBox}
 
         {candidates.length === 0 ? (
           <p className="text-center text-sm text-muted-foreground">
-            No agents available yet — create or start one from the Agents view
-            to ask about your repositories.
+            {tl(
+              "No agents available yet — create or start one from the Agents view to ask about your repositories.",
+            )}
           </p>
         ) : (
           <div className="space-y-1.5">
             {suggestions.map((suggestion) => (
               <button
-                className="flex w-full items-baseline gap-2 rounded-xl border border-border/50 bg-card/60 px-4 py-2 text-left transition-colors duration-150 hover:bg-muted/30"
+                className="flex w-full items-baseline gap-2 rounded-xl border border-border/50 bg-card/60 px-4 py-2 text-start transition-colors duration-150 hover:bg-muted/30"
                 key={suggestion.label}
                 onClick={() => {
                   setPrompt(suggestion.prompt);

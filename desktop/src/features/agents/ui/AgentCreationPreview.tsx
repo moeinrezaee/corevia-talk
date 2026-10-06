@@ -44,6 +44,7 @@ import {
   type EmojiMartEmoji,
   isAvatarFileDrag,
 } from "./AgentCreationPreview.utils";
+import { tl, tlt } from "@/shared/i18n/tl";
 export function AgentCreationPreview({
   assetLabel = "avatar",
   avatarUrl,
@@ -426,7 +427,7 @@ export function AgentCreationPreview({
     >
       {/* Single drop zone covering the entire popover */}
       <fieldset
-        aria-label={`${assetLabelTitle} picker`}
+        aria-label={tlt("{0} picker", [assetLabelTitle])}
         className={cn(
           "relative m-0 rounded-lg border-2 border-transparent p-0 transition-[border-color,background-color] duration-150",
           isPopoverDragOver && "border-dashed border-primary bg-primary/5",
@@ -447,7 +448,7 @@ export function AgentCreationPreview({
           <TabsList className="relative isolate mb-3 grid h-9 w-full grid-cols-2 overflow-hidden rounded-lg bg-muted p-0.5">
             <div
               aria-hidden="true"
-              className="absolute bottom-0.5 left-0.5 top-0.5 z-0 rounded-md bg-background shadow-sm transition-transform duration-[250ms] ease-out"
+              className="absolute bottom-0.5 start-0.5 top-0.5 z-0 rounded-md bg-background shadow-sm transition-transform duration-[250ms] ease-out"
               style={{
                 transform: `translateX(${activeTab === "emoji" ? 100 : 0}%)`,
                 width: "calc((100% - 4px) / 2)",
@@ -457,13 +458,13 @@ export function AgentCreationPreview({
               className="relative z-10 h-full rounded-md bg-transparent text-xs font-medium shadow-none transition-colors data-[state=active]:bg-transparent data-[state=active]:shadow-none"
               value="image"
             >
-              Image
+              {tl("Image")}
             </TabsTrigger>
             <TabsTrigger
               className="relative z-10 h-full rounded-md bg-transparent text-xs font-medium shadow-none transition-colors data-[state=active]:bg-transparent data-[state=active]:shadow-none"
               value="emoji"
             >
-              Emoji
+              {tl("Emoji")}
             </TabsTrigger>
           </TabsList>
         </Tabs>
@@ -489,7 +490,7 @@ export function AgentCreationPreview({
                 <UploadCloud className="h-5 w-5 text-muted-foreground" />
               )}
               <span className="text-xs font-medium text-muted-foreground">
-                {isUploading ? "Uploading..." : "Drop or browse"}
+                {isUploading ? tl("Uploading...") : tl("Drop or browse")}
               </span>
             </button>
 
@@ -508,7 +509,7 @@ export function AgentCreationPreview({
                     applyAvatarUrl();
                   }
                 }}
-                placeholder="Paste a URL"
+                placeholder={tl("Paste a URL")}
                 spellCheck={false}
                 type="url"
                 value={avatarUrlDraft}
@@ -530,7 +531,7 @@ export function AgentCreationPreview({
                       size="xs"
                       type="button"
                     >
-                      Apply
+                      {tl("Apply")}
                     </Button>
                   </motion.div>
                 ) : null}
@@ -553,7 +554,7 @@ export function AgentCreationPreview({
                 }}
                 type="button"
               >
-                Remove {assetLabel}
+                {tl("Remove")} {assetLabel}
               </button>
             ) : null}
           </div>
@@ -618,9 +619,9 @@ export function AgentCreationPreview({
                     aria-label={
                       isCustomSwatch
                         ? selectedEmoji
-                          ? "Choose custom color"
-                          : "Choose an emoji first"
-                        : `Use ${swatch} background`
+                          ? tl("Choose custom color")
+                          : tl("Choose an emoji first")
+                        : tlt("Use {0} background", [swatch])
                     }
                     aria-pressed={isSelected}
                     className={cn(
@@ -682,7 +683,7 @@ export function AgentCreationPreview({
                 }}
                 type="button"
               >
-                Remove {assetLabel}
+                {tl("Remove")} {assetLabel}
               </button>
             ) : null}
           </div>
@@ -767,7 +768,7 @@ export function AgentCreationPreview({
       )}
     >
       <fieldset
-        aria-label={`${assetLabelTitle} preview`}
+        aria-label={tlt("{0} preview", [assetLabelTitle])}
         className={cn(
           "group/avatar-preview relative m-0 flex min-w-0 flex-col items-center justify-center rounded-xl border border-transparent p-0 transition-[background-color,border-color,box-shadow] duration-150",
           isCompact ? "min-h-0" : "min-h-[190px] gap-3",
@@ -798,18 +799,18 @@ export function AgentCreationPreview({
                   badge={
                     <PopoverTrigger asChild>
                       <button
-                        aria-label={`Edit ${assetLabel}`}
+                        aria-label={tlt("Edit {0}", [assetLabel])}
                         className={cn(
                           "flex items-center justify-center rounded-full bg-sidebar-active text-sidebar-active-foreground shadow-lg transition-[background-color,scale] duration-150 ease-out hover:scale-[1.04] hover:bg-sidebar-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-default disabled:opacity-90 disabled:hover:scale-100",
                           isCompact ? "h-6 w-6" : "h-9 w-9",
                         )}
                         disabled={disabled || isUploading}
-                        title={`Edit ${assetLabel}`}
+                        title={tlt("Edit {0}", [assetLabel])}
                         type="button"
                       >
                         {isUploading ? (
                           <Spinner
-                            aria-label={`Uploading ${assetLabel}`}
+                            aria-label={tlt("Uploading {0}", [assetLabel])}
                             className={cn(
                               "border-2",
                               isCompact ? "h-3 w-3" : "h-4 w-4",
@@ -887,18 +888,18 @@ export function AgentCreationPreview({
                   badge={
                     <PopoverTrigger asChild>
                       <button
-                        aria-label={`Edit ${assetLabel}`}
+                        aria-label={tlt("Edit {0}", [assetLabel])}
                         className={cn(
                           "flex items-center justify-center rounded-full bg-sidebar-active text-sidebar-active-foreground shadow-lg transition-[background-color,scale] duration-150 ease-out hover:scale-[1.04] hover:bg-sidebar-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-default disabled:opacity-90 disabled:hover:scale-100",
                           isCompact ? "h-6 w-6" : "h-9 w-9",
                         )}
                         disabled={disabled || isUploading}
-                        title={`Edit ${assetLabel}`}
+                        title={tlt("Edit {0}", [assetLabel])}
                         type="button"
                       >
                         {isUploading ? (
                           <Spinner
-                            aria-label={`Uploading ${assetLabel}`}
+                            aria-label={tlt("Uploading {0}", [assetLabel])}
                             className={cn(
                               "border-2",
                               isCompact ? "h-3 w-3" : "h-4 w-4",
@@ -972,7 +973,7 @@ export function AgentCreationPreview({
               ) : (
                 <PopoverTrigger asChild>
                   <button
-                    aria-label={`Add ${assetLabel}`}
+                    aria-label={tlt("Add {0}", [assetLabel])}
                     className={cn(
                       "group/add-avatar relative flex items-center justify-center bg-transparent text-primary shadow-xs transition-[background-color,border-color,color,filter,scale] duration-150 ease-out hover:scale-[1.02] hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-default disabled:opacity-60 disabled:hover:scale-100",
                       isCompact ? "h-16 w-16" : "h-36 w-36",
@@ -989,7 +990,7 @@ export function AgentCreationPreview({
                           : "ring-2 ring-primary/30"),
                     )}
                     disabled={disabled || isUploading}
-                    title={`Add ${assetLabel}`}
+                    title={tlt("Add {0}", [assetLabel])}
                     type="button"
                   >
                     {isRoundedSquare ? null : (
@@ -1012,7 +1013,7 @@ export function AgentCreationPreview({
                     )}
                     {isUploading ? (
                       <Spinner
-                        aria-label={`Uploading ${assetLabel}`}
+                        aria-label={tlt("Uploading {0}", [assetLabel])}
                         className="relative z-10 h-4 w-4 border-2"
                       />
                     ) : (

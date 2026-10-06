@@ -17,6 +17,7 @@ import {
 import { ProjectRepositoryManagement } from "./ProjectRepositoryManagement";
 import { RepositoryFilesPanel } from "./ProjectRepositoryPanel";
 import { useRepositoryFileContentSource } from "./useRepositoryFileContentSource";
+import { tl } from "@/shared/i18n/tl";
 
 export function ProjectHomeCodebasePanel({
   identityPubkey,
@@ -70,7 +71,9 @@ export function ProjectHomeCodebasePanel({
         data-testid="project-home-codebase-empty"
       >
         <p className="text-sm text-muted-foreground">
-          Attach a repository to browse the file tree beside this channel.
+          {tl(
+            "Attach a repository to browse the file tree beside this channel.",
+          )}
         </p>
         <ProjectRepositoryManagement
           identityPubkey={identityPubkey}
@@ -100,7 +103,7 @@ export function ProjectHomeCodebasePanel({
               >
                 <FolderGit2 className="h-4 w-4 shrink-0 text-muted-foreground" />
                 <span className="min-w-0 truncate">{repository.name}</span>
-                <ChevronDown className="ml-auto h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+                <ChevronDown className="ms-auto h-3.5 w-3.5 shrink-0 text-muted-foreground" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">

@@ -10,6 +10,7 @@ import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { PubKey } from "@/shared/ui/PubKey";
 import { Spinner } from "@/shared/ui/spinner";
+import { tl } from "@/shared/i18n/tl";
 
 type BackupTestStage = "drop" | "password" | "success";
 
@@ -260,12 +261,14 @@ export function BackupTestFlow({
           }
         >
           <p className="text-lg font-medium text-foreground">
-            This backup works
+            {tl("This backup works")}
           </p>
           <p className="mt-1.5 text-sm leading-6 text-muted-foreground">
             {result.matchesCurrentIdentity
-              ? "It restores your current Buzz identity."
-              : "It restores a different identity than the one signed in here."}
+              ? tl("It restores your current Buzz identity.")
+              : tl(
+                  "It restores a different identity than the one signed in here.",
+                )}
           </p>
           <div className="mt-3 flex justify-center">
             <PubKey
@@ -285,7 +288,7 @@ export function BackupTestFlow({
           type="button"
           variant="ghost"
         >
-          Test another backup
+          {tl("Test another backup")}
         </Button>
       </div>
     );
@@ -318,7 +321,9 @@ export function BackupTestFlow({
             onClick={() => fileInputRef.current?.click()}
             type="button"
           >
-            <span className="text-sm font-medium">Select your backup file</span>
+            <span className="text-sm font-medium">
+              {tl("Select your backup file")}
+            </span>
           </button>
           {isWindowDragging ? (
             /*
@@ -340,7 +345,7 @@ export function BackupTestFlow({
             >
               <span className="flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm font-semibold text-background shadow-sm ring-1 ring-background/15">
                 <FileUp aria-hidden="true" className="size-4" />
-                <span>Drop your backup file here</span>
+                <span>{tl("Drop your backup file here")}</span>
               </span>
             </div>
           ) : null}
@@ -370,13 +375,15 @@ export function BackupTestFlow({
             <Check aria-hidden="true" className="h-4 w-4 text-primary" />
           </div>
           <p className="text-center text-sm leading-6 text-muted-foreground">
-            That's the one. Now enter your password to prove you can unlock it.
+            {tl(
+              "That's the one. Now enter your password to prove you can unlock it.",
+            )}
           </p>
           <div className="relative">
             <Input
-              aria-label="Backup password"
+              aria-label={tl("Backup password")}
               autoComplete="off"
-              className="h-10 bg-background pr-10 font-mono"
+              className="h-10 bg-background pe-10 font-mono"
               data-testid="backup-test-password"
               disabled={isVerifying}
               onChange={(event) => setAttempt(event.target.value)}
@@ -386,14 +393,16 @@ export function BackupTestFlow({
                   void handleVerify();
                 }
               }}
-              placeholder="Your backup password"
+              placeholder={tl("Your backup password")}
               ref={passwordInputRef}
               type={isRevealed ? "text" : "password"}
               value={attempt}
             />
             <Button
-              aria-label={isRevealed ? "Hide password" : "Reveal password"}
-              className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+              aria-label={
+                isRevealed ? tl("Hide password") : tl("Reveal password")
+              }
+              className="absolute end-1 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground hover:text-foreground"
               data-testid="backup-test-password-reveal-toggle"
               disabled={isVerifying}
               onClick={() => setIsRevealed((revealed) => !revealed)}
@@ -409,7 +418,7 @@ export function BackupTestFlow({
             </Button>
             {error ? (
               <p
-                className="absolute left-1 top-full mt-1 text-xs text-destructive animate-in fade-in duration-200 motion-reduce:animate-none"
+                className="absolute start-1 top-full mt-1 text-xs text-destructive animate-in fade-in duration-200 motion-reduce:animate-none"
                 data-testid="backup-test-error"
                 role="alert"
               >
@@ -428,10 +437,10 @@ export function BackupTestFlow({
               {isVerifying ? (
                 <>
                   <Spinner className="h-4 w-4 border-2" />
-                  Checking…
+                  {tl("Checking…")}
                 </>
               ) : (
-                "Verify backup"
+                tl("Verify backup")
               )}
             </Button>
             <Button
@@ -449,7 +458,7 @@ export function BackupTestFlow({
               type="button"
               variant="ghost"
             >
-              Use a different file
+              {tl("Use a different file")}
             </Button>
           </div>
         </>

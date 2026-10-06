@@ -8,6 +8,7 @@ import {
 } from "@/features/messages/lib/audioAttachment";
 import { Button } from "@/shared/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
+import { tl } from "@/shared/i18n/tl";
 
 const BAR_PITCH_PX = 5;
 
@@ -103,15 +104,15 @@ export function VoiceNoteRecorder({
     >
       <legend className="sr-only">
         {requesting
-          ? "Waiting for microphone access"
+          ? tl("Waiting for microphone access")
           : processing
-            ? "Preparing voice note"
-            : "Recording voice note"}
+            ? tl("Preparing voice note")
+            : tl("Recording voice note")}
       </legend>
       <Tooltip disableHoverableContent>
         <TooltipTrigger asChild>
           <Button
-            aria-label="Discard voice note"
+            aria-label={tl("Discard voice note")}
             className="shrink-0"
             onClick={onCancel}
             size="icon"
@@ -121,12 +122,14 @@ export function VoiceNoteRecorder({
             <X />
           </Button>
         </TooltipTrigger>
-        <TooltipContent>Discard voice note</TooltipContent>
+        <TooltipContent>{tl("Discard voice note")}</TooltipContent>
       </Tooltip>
       <div className="mx-1 h-5 w-px shrink-0 bg-border/60" />
       {requesting || processing ? (
         <span className="shrink-0 whitespace-nowrap text-xs font-medium text-muted-foreground">
-          {requesting ? "Waiting for microphone…" : "Preparing voice note…"}
+          {requesting
+            ? tl("Waiting for microphone…")
+            : tl("Preparing voice note…")}
         </span>
       ) : (
         <span className="shrink-0 whitespace-nowrap text-xs font-medium tabular-nums text-foreground">

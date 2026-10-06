@@ -58,6 +58,7 @@ import {
 import { ProjectWorkItemGroup } from "./ProjectWorkItemGroup";
 import { ProjectWorkItemRow } from "./ProjectWorkItemRow";
 import { PullRequestsPanelSurface } from "./PullRequestsPanelSurface";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export { PullRequestMetaHeader } from "./PullRequestMetaRail";
 
@@ -168,7 +169,7 @@ function CommitHashChip({
   }
   return (
     <button
-      aria-label={`View commit ${short}`}
+      aria-label={tlt("View commit {0}", [short])}
       className="shrink-0 rounded-md bg-background/55 px-2 py-1 font-mono text-xs text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground hover:underline focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
       onClick={() => onOpenCommit(hash)}
       type="button"
@@ -215,7 +216,7 @@ function PullRequestCommitRow({
           />
           <span className="truncate">
             <ProfileAuthorName pubkey={author}>{authorLabel}</ProfileAuthorName>{" "}
-            authored
+            {tl("authored")}
           </span>
           {branch ? (
             <span className="inline-flex min-w-0 items-center gap-1 rounded-full border border-border/60 px-1.5 py-0.5 font-mono text-2xs">
@@ -235,13 +236,13 @@ function PullRequestCommitRow({
               <ProjectFeedRowMonoCell
                 label={hash.slice(0, 7)}
                 onClick={openCommit}
-                title={`View commit ${hash.slice(0, 7)}`}
+                title={tlt("View commit {0}", [hash.slice(0, 7)])}
               />
               <CopyCommitHashButton hash={hash} />
             </ProjectFeedRowCluster>
           ) : null}
           <span
-            className="hidden w-20 shrink-0 text-right text-xs text-muted-foreground sm:block"
+            className="hidden w-20 shrink-0 text-end text-xs text-muted-foreground sm:block"
             data-testid="project-pull-request-commit-row-date"
             title={formatExactTimestamp(createdAt)}
           >
@@ -316,8 +317,8 @@ function PullRequestRow({
             <button
               aria-label={
                 pullRequest.comments.length > 0
-                  ? `View ${pullRequest.comments.length} comments`
-                  : "View comments"
+                  ? tlt("View {0} comments", [pullRequest.comments.length])
+                  : tl("View comments")
               }
               className={`flex items-center gap-1 rounded-md text-xs hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring ${
                 pullRequest.comments.length > 0
@@ -342,7 +343,7 @@ function PullRequestRow({
             showLabel={false}
           />
           <span
-            className="hidden w-20 shrink-0 text-right text-xs text-muted-foreground/55 sm:block"
+            className="hidden w-20 shrink-0 text-end text-xs text-muted-foreground/55 sm:block"
             data-testid="project-pull-request-row-date"
             title={formatExactTimestamp(pullRequest.createdAt)}
           >
@@ -369,8 +370,8 @@ export function PullRequestDetailHeader({
           #{pullRequest.id.slice(0, 8)}
         </span>
         <ShareLinkButton
-          className="ml-1 inline-flex h-7 w-7 align-text-bottom"
-          label="Copy review link"
+          className="ms-1 inline-flex h-7 w-7 align-text-bottom"
+          label={tl("Copy review link")}
           link={pullRequestShareLink(pullRequest)}
           testId="project-pull-request-copy-link"
         />
@@ -379,7 +380,7 @@ export function PullRequestDetailHeader({
         className="flex flex-wrap items-center gap-x-1 gap-y-1 text-xs text-muted-foreground"
         data-testid="project-pull-request-detail-metadata"
       >
-        <span data-project-metadata-phrase>Review opened</span>
+        <span data-project-metadata-phrase>{tl("Review opened")}</span>
         <span
           className="shrink-0 whitespace-nowrap"
           data-project-metadata-phrase
@@ -528,7 +529,7 @@ export function ProjectPullRequestDetail({
         pullRequest={pullRequest}
       />
       {pullRequest.content || pullRequest.updates.length > 0 ? (
-        <ProjectDetailSection defaultOpen title="Description">
+        <ProjectDetailSection defaultOpen title={tl("Description")}>
           {pullRequest.content ? (
             <ProjectRichContent
               content={pullRequest.content}
@@ -539,7 +540,9 @@ export function ProjectPullRequestDetail({
             <div
               className={pullRequest.content ? "mt-4 space-y-4" : "space-y-4"}
             >
-              <h4 className="text-sm font-semibold text-foreground">Updates</h4>
+              <h4 className="text-sm font-semibold text-foreground">
+                {tl("Updates")}
+              </h4>
               {pullRequest.updates.map((update) => (
                 <article className="space-y-1" key={update.id}>
                   <div className="flex min-w-0 items-center justify-between gap-3">
@@ -580,7 +583,7 @@ export function ProjectPullRequestDetail({
           onOpenChange={setFilesOpen}
           open={filesOpen}
           testId="project-detail-section-files"
-          title="Files changed"
+          title={tl("Files changed")}
         >
           <div className="-mx-6">{filesChanged}</div>
         </ProjectDetailSection>
@@ -588,7 +591,7 @@ export function ProjectPullRequestDetail({
       <ProjectDetailSection
         count={commitCount}
         defaultOpen={false}
-        title="Commits"
+        title={tl("Commits")}
       >
         <div className="-mx-6">
           <PullRequestCommitRow
@@ -614,12 +617,12 @@ export function ProjectPullRequestDetail({
           ))}
         </div>
       </ProjectDetailSection>
-      <ProjectDetailSection defaultOpen={false} title="Checks">
+      <ProjectDetailSection defaultOpen={false} title={tl("Checks")}>
         <p className="text-sm text-muted-foreground">
-          No checks have been reported for this review yet.
+          {tl("No checks have been reported for this review yet.")}
         </p>
       </ProjectDetailSection>
-      <ProjectDetailSection defaultOpen title="Activity">
+      <ProjectDetailSection defaultOpen title={tl("Activity")}>
         <div className="space-y-3">
           <DiscussedInChannels
             entityLabel="this review"
@@ -658,12 +661,13 @@ export function ProjectPullRequestDetail({
                     <History className="h-3 w-3" />
                   </span>
                 </span>
-                <span className="flex min-h-5 min-w-0 flex-1 items-center text-left">
+                <span className="flex min-h-5 min-w-0 flex-1 items-center text-start">
                   {reviewHistoryCollapsed
-                    ? `Show ${reviewHistory.length} earlier ${
-                        reviewHistory.length === 1 ? "activity" : "activities"
-                      }`
-                    : "Collapse review history"}
+                    ? tlt("Show {0} earlier {1}", [
+                        reviewHistory.length,
+                        reviewHistory.length === 1 ? "activity" : "activities",
+                      ])
+                    : tl("Collapse review history")}
                 </span>
                 {reviewHistoryCollapsed ? (
                   <ChevronDown className="mt-0.5 h-3.5 w-3.5" />
@@ -693,8 +697,8 @@ export function ProjectPullRequestDetail({
                     <ChevronDown className="h-3 w-3" />
                   </span>
                 </span>
-                <span className="min-w-0 flex-1 text-left">
-                  Show {earlierReviewHistoryCount} earlier{" "}
+                <span className="min-w-0 flex-1 text-start">
+                  {tl("Show")} {earlierReviewHistoryCount} {tl("earlier")}{" "}
                   {earlierReviewHistoryCount === 1 ? "activity" : "activities"}
                 </span>
               </button>
@@ -760,18 +764,18 @@ export function ProjectPullRequestDetail({
                             {" "}
                             {timelineKind === "approved"
                               ? isHistoricalDecision
-                                ? "approved an earlier commit"
-                                : "approved these changes"
+                                ? tl("approved an earlier commit")
+                                : tl("approved these changes")
                               : timelineKind === "changes-requested"
                                 ? isHistoricalDecision
-                                  ? "requested changes on an earlier commit"
-                                  : "requested changes"
-                                : trimmedContent || "requested a review"}
+                                  ? tl("requested changes on an earlier commit")
+                                  : tl("requested changes")
+                                : trimmedContent || tl("requested a review")}
                           </>
                         ) : null}
                       </span>
                       <span
-                        className="ml-auto w-20 shrink-0 text-right text-xs text-muted-foreground/70"
+                        className="ms-auto w-20 shrink-0 text-end text-xs text-muted-foreground/70"
                         title={formatExactTimestamp(item.createdAt)}
                       >
                         {relativeTime(item.createdAt)}
@@ -786,7 +790,14 @@ export function ProjectPullRequestDetail({
                     ) : null}
                     {item.anchor ? (
                       <button
-                        aria-label={`Open ${item.anchor.path} ${item.anchor.side} line ${item.anchor.line} in Files changed`}
+                        aria-label={tlt(
+                          "Open {0} {1} line {2} in Files changed",
+                          [
+                            item.anchor.path,
+                            item.anchor.side,
+                            item.anchor.line,
+                          ],
+                        )}
                         className="mt-1 inline-flex min-w-0 items-center gap-1 rounded-md bg-muted/65 px-1.5 py-0.5 font-mono text-2xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                         onClick={() => {
                           if (item.anchor) onOpenInlineComment?.(item.anchor);
@@ -801,7 +812,7 @@ export function ProjectPullRequestDetail({
                         </span>
                         {item.inlineCommentStatus === "outdated" ? (
                           <span className="shrink-0 text-destructive">
-                            Outdated
+                            {tl("Outdated")}
                           </span>
                         ) : null}
                       </button>
@@ -833,7 +844,7 @@ export function ProjectPullRequestDetail({
             canRequestChanges ? handleChangeRequestSubmit : undefined
           }
           onSubmit={handleCommentSubmit}
-          placeholder="Add a comment…"
+          placeholder={tl("Add a comment…")}
           profiles={profiles}
           secondarySubmitLabel="Request changes"
         />

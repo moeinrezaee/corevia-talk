@@ -1,4 +1,5 @@
 import { Button } from "@/shared/ui/button";
+import { tl } from "@/shared/i18n/tl";
 
 /** Retryable terminal failure for a channel history load with no cached rows. */
 export function MessageTimelineErrorCard({
@@ -13,11 +14,12 @@ export function MessageTimelineErrorCard({
       role="alert"
     >
       <p className="text-base font-semibold tracking-tight">
-        Couldn&apos;t load messages
+        {tl("Couldn't load messages")}
       </p>
       <p className="mt-2 text-sm text-muted-foreground">
-        The channel history didn&apos;t load. Check your connection and try
-        again.
+        {tl(
+          "The channel history didn't load. Check your connection and try again.",
+        )}
       </p>
       {onRetry ? (
         <Button
@@ -28,7 +30,7 @@ export function MessageTimelineErrorCard({
           type="button"
           variant="outline"
         >
-          Retry
+          {tl("Retry")}
         </Button>
       ) : null}
     </div>

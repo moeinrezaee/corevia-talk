@@ -21,6 +21,7 @@ import {
 } from "@/shared/ui/dialog";
 import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
+import { tl } from "@/shared/i18n/tl";
 
 export function RemindMeLaterDialog({
   open,
@@ -44,11 +45,11 @@ export function RemindMeLaterDialog({
       { target, notBefore, note: note || undefined },
       {
         onSuccess: () => {
-          toast.success("Reminder set");
+          toast.success(tl("Reminder set"));
           onOpenChange(false);
           setNote("");
         },
-        onError: () => toast.error("Failed to create reminder"),
+        onError: () => toast.error(tl("Failed to create reminder")),
       },
     );
   };
@@ -59,10 +60,10 @@ export function RemindMeLaterDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Clock className="h-4 w-4" />
-            Remind me later
+            {tl("Remind me later")}
           </DialogTitle>
           <DialogDescription>
-            Choose when you want to be reminded about this message.
+            {tl("Choose when you want to be reminded about this message.")}
           </DialogDescription>
         </DialogHeader>
 
@@ -83,11 +84,11 @@ export function RemindMeLaterDialog({
         <div className="space-y-3 border-t pt-3">
           <p className="flex items-center gap-2 text-sm font-medium">
             <CalendarClock className="h-4 w-4" />
-            Custom date & time
+            {tl("Custom date & time")}
           </p>
           <div className="flex gap-2">
             <Input
-              aria-label="Reminder date"
+              aria-label={tl("Reminder date")}
               className="flex-1"
               min={todayDateString()}
               onChange={(e) => setCustomDate(e.target.value)}
@@ -95,7 +96,7 @@ export function RemindMeLaterDialog({
               value={customDate}
             />
             <Input
-              aria-label="Reminder time"
+              aria-label={tl("Reminder time")}
               className="w-[120px]"
               onChange={(e) => setCustomTime(e.target.value)}
               type="time"
@@ -109,11 +110,11 @@ export function RemindMeLaterDialog({
             htmlFor="reminder-note"
             className="text-sm font-medium text-muted-foreground"
           >
-            Note (optional)
+            {tl("Note (optional)")}
           </label>
           <Textarea
             id="reminder-note"
-            placeholder="Add a note..."
+            placeholder={tl("Add a note...")}
             value={note}
             onChange={(e) => setNote(e.target.value)}
             rows={2}
@@ -127,7 +128,7 @@ export function RemindMeLaterDialog({
             onClick={() => onOpenChange(false)}
             disabled={create.isPending}
           >
-            Cancel
+            {tl("Cancel")}
           </Button>
           <Button
             className="relative"
@@ -141,7 +142,7 @@ export function RemindMeLaterDialog({
             {/* The hidden label keeps the button width stable while the
                 spinner overlays it. */}
             <span className={create.isPending ? "invisible" : undefined}>
-              Set reminder
+              {tl("Set reminder")}
             </span>
             {create.isPending ? (
               <span className="absolute inset-0 flex items-center justify-center">

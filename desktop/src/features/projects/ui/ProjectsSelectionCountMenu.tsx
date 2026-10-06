@@ -23,6 +23,7 @@ import { copyTextToClipboard } from "@/shared/lib/clipboard";
 import { Button } from "@/shared/ui/button";
 import { ProjectSelectionDiscussAction } from "./ProjectSelectionDiscussAction";
 import { useProjectDiscussInChannel } from "./useProjectDiscussInChannel";
+import { tl } from "@/shared/i18n/tl";
 
 function selectionActionIcon(id: ProjectSelectionAction["id"]) {
   if (id === "chat-agent") return Bot;
@@ -128,7 +129,7 @@ export function ProjectsSelectionCountMenu({
             const Icon = selectionActionIcon(action.id);
             return (
               <Button
-                className="-mx-2 h-7 w-[calc(100%+1rem)] justify-start gap-3 rounded-md px-2 text-left text-sm font-normal hover:bg-muted/70 [&_svg]:h-4 [&_svg]:w-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
+                className="-mx-2 h-7 w-[calc(100%+1rem)] justify-start gap-3 rounded-md px-2 text-start text-sm font-normal hover:bg-muted/70 [&_svg]:h-4 [&_svg]:w-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
                 data-testid={action.testId}
                 key={action.id}
                 onClick={() => handleAction(action.id)}
@@ -142,7 +143,7 @@ export function ProjectsSelectionCountMenu({
             );
           })}
         <Button
-          className="-mx-2 h-7 w-[calc(100%+1rem)] justify-start gap-3 rounded-md px-2 text-left text-sm font-normal hover:bg-muted/70 [&_svg]:h-4 [&_svg]:w-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
+          className="-mx-2 h-7 w-[calc(100%+1rem)] justify-start gap-3 rounded-md px-2 text-start text-sm font-normal hover:bg-muted/70 [&_svg]:h-4 [&_svg]:w-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
           data-testid="projects-selection-clear"
           onClick={() => selection?.clear()}
           size="sm"
@@ -150,7 +151,7 @@ export function ProjectsSelectionCountMenu({
           variant="ghost"
         >
           <X className="h-3.5 w-3.5" />
-          Clear selection
+          {tl("Clear selection")}
         </Button>
       </div>
     </div>

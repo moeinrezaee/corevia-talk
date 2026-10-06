@@ -12,6 +12,7 @@ import { PersonaDeleteDialog } from "@/features/agents/ui/PersonaDeleteDialog";
 import { AgentDialog } from "@/features/agents/ui/AgentDialog";
 import type { PersonaDialogState } from "@/features/agents/ui/personaDialogState";
 import { UserProfileSnapshotExportDialog } from "@/features/profile/ui/UserProfileSnapshotExportDialog";
+import { tl } from "@/shared/i18n/tl";
 
 /** Agent selected for card minting. */
 export type CardMintTarget = {
@@ -111,7 +112,7 @@ export function UserProfilePersonaDialogs({
         onSubmit={onSubmit}
         open={personaDialogState !== null}
         submitLabel={personaDialogState?.submitLabel ?? "Save"}
-        title={personaDialogState?.title ?? "Agent"}
+        title={personaDialogState?.title ?? tl("Agent")}
       />
       <PersonaDeleteDialog
         instanceCount={instanceCount}

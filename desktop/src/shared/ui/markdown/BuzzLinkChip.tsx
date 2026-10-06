@@ -16,6 +16,7 @@ import {
   type MediaContextMenuPosition,
   useDismissMediaContextMenu,
 } from "./MediaContextMenu";
+import { tl } from "@/shared/i18n/tl";
 
 function useBuzzLinkContextMenu({
   href,
@@ -46,14 +47,14 @@ function useBuzzLinkContextMenu({
         dataAttributes={["data-buzz-link-context-menu"]}
         items={[
           {
-            label: "Open link",
+            label: tl("Open link"),
             onSelect: () => {
               closeMenu();
               onOpenLink();
             },
           },
           {
-            label: "Copy link",
+            label: tl("Copy link"),
             onSelect: () => {
               closeMenu();
               copyTextToClipboard(href, "Link copied to clipboard");

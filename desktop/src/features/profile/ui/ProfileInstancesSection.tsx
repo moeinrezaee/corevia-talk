@@ -4,6 +4,7 @@ import { ChevronRight } from "lucide-react";
 import { ProfileSectionGroup } from "@/features/profile/ui/UserProfilePanelFields";
 import type { ManagedAgent } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
+import { tl } from "@/shared/i18n/tl";
 
 function ProfileInstanceRow({
   archived = false,
@@ -19,7 +20,7 @@ function ProfileInstanceRow({
   const isCurrent = instance.pubkey === currentPubkey;
   return (
     <button
-      className="flex min-h-16 w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/40 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
+      className="flex min-h-16 w-full items-center gap-3 px-4 py-3 text-start transition-colors hover:bg-muted/40 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
       data-testid={`user-profile-instance-${instance.pubkey}`}
       onClick={() => onOpenInstance(instance.pubkey)}
       type="button"
@@ -29,9 +30,9 @@ function ProfileInstanceRow({
       </span>
       <span className="text-xs capitalize text-muted-foreground">
         {archived
-          ? "Archived"
+          ? tl("Archived")
           : isCurrent
-            ? "Current"
+            ? tl("Current")
             : instance.status.replace("_", " ")}
       </span>
       <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -66,11 +67,11 @@ export function ProfileInstancesSection({
   return (
     <ProfileSectionGroup
       testId="user-profile-instances-section"
-      title="Instances"
+      title={tl("Instances")}
     >
       <button
         aria-expanded={expanded}
-        className="flex min-h-16 w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/40 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
+        className="flex min-h-16 w-full items-center gap-3 px-4 py-3 text-start transition-colors hover:bg-muted/40 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
         data-testid="user-profile-instances"
         onClick={() => setExpanded((value) => !value)}
         type="button"
@@ -101,7 +102,7 @@ export function ProfileInstancesSection({
                 className="px-4 pb-1 pt-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
                 data-testid="user-profile-instances-archived-header"
               >
-                Archived
+                {tl("Archived")}
               </p>
               {archivedInstances.map((instance) => (
                 <ProfileInstanceRow

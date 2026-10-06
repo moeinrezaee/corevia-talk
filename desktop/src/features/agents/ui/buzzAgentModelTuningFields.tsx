@@ -20,6 +20,7 @@ import {
   BUZZ_AGENT_THINKING_EFFORT_VALUES,
   getProviderEffortConfig,
 } from "./buzzAgentConfig";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * Capitalize the first character of an effort value for human display.
@@ -352,7 +353,7 @@ export function BuzzAgentModelTuningFields({
   return (
     <div className="space-y-4">
       <p className="text-2xs font-semibold uppercase tracking-wide text-muted-foreground">
-        buzz-agent model tuning
+        {tl("buzz-agent model tuning")}
       </p>
 
       <div className="grid gap-4 md:grid-cols-2">
@@ -366,7 +367,7 @@ export function BuzzAgentModelTuningFields({
             htmlFor="ba-thinking-effort"
             inheritedEffort={inheritedEnvVars[BUZZ_AGENT_THINKING_EFFORT]}
             inheritFallbackLabel="Inherit (agent default)"
-            label="Thinking / Effort"
+            label={tl("Thinking / Effort")}
             onChange={(value) =>
               onEnvVarChange(BUZZ_AGENT_THINKING_EFFORT, value)
             }
@@ -376,8 +377,9 @@ export function BuzzAgentModelTuningFields({
             className="text-xs text-muted-foreground"
             id="help-ba-thinking-effort"
           >
-            Controls how much reasoning effort the LLM applies per turn. Leave
-            blank to inherit from the global or persona default.
+            {tl(
+              "Controls how much reasoning effort the LLM applies per turn. Leave blank to inherit from the global or persona default.",
+            )}
           </p>
         </div>
       </div>

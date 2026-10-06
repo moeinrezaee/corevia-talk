@@ -10,6 +10,7 @@ import {
 } from "@/shared/ui/markdown/MediaContextMenu";
 import { resolveVideoDownloadFilename } from "@/shared/ui/videoDownload";
 import { toast } from "sonner";
+import { tl } from "@/shared/i18n/tl";
 
 type UseVideoContextMenu = {
   /** `onContextMenuCapture` handler for the inline video surface. */
@@ -48,7 +49,7 @@ export function useVideoContextMenu(
     const entries: MediaContextMenuItem[] = [];
     if (downloadUrl) {
       entries.push({
-        label: "Download video",
+        label: tl("Download video"),
         onSelect: () => {
           close();
           invokeTauri("download_file", {
@@ -61,7 +62,7 @@ export function useVideoContextMenu(
       });
     }
     entries.push({
-      label: "Copy link",
+      label: tl("Copy link"),
       onSelect: () => {
         close();
         copyTextToClipboard(downloadUrl ?? src, "Link copied to clipboard");

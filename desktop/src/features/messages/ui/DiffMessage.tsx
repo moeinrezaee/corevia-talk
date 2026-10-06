@@ -8,6 +8,7 @@ import { Button } from "@/shared/ui/button";
 import { useSmoothCorners } from "@/shared/ui/smoothCorners";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { DiffViewer } from "./DiffViewer";
+import { tl } from "@/shared/i18n/tl";
 
 type DiffMessageProps = {
   content: string;
@@ -68,7 +69,7 @@ export default function DiffMessage({
             {titleBadge}
           </span>
         )}
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ms-auto flex items-center gap-2">
           {shortSha && (
             <span className="text-xs text-muted-foreground font-mono">
               {commitUrl ? (
@@ -101,7 +102,7 @@ export default function DiffMessage({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
-                  aria-label="Expand diff"
+                  aria-label={tl("Expand diff")}
                   className="h-6 w-6 p-0 text-muted-foreground hover:text-foreground"
                   onClick={onExpand}
                   size="sm"
@@ -111,7 +112,7 @@ export default function DiffMessage({
                   <Maximize2 className="h-4 w-4" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Expand diff</TooltipContent>
+              <TooltipContent>{tl("Expand diff")}</TooltipContent>
             </Tooltip>
           )}
         </div>
@@ -137,7 +138,7 @@ export default function DiffMessage({
       {/* Truncation warning */}
       {truncated && (
         <div className="px-3 py-2 border-t border-border/50 bg-amber-500/10 text-xs text-warning">
-          Diff truncated.{" "}
+          {tl("Diff truncated.")}{" "}
           {safeRepoUrl && commitUrl ? (
             <a
               className="underline hover:no-underline"
@@ -145,10 +146,10 @@ export default function DiffMessage({
               rel="noreferrer noopener"
               target="_blank"
             >
-              View full diff on {getHostname(safeRepoUrl)}
+              {tl("View full diff on")} {getHostname(safeRepoUrl)}
             </a>
           ) : (
-            "View the full diff at the source repository."
+            tl("View the full diff at the source repository.")
           )}
         </div>
       )}

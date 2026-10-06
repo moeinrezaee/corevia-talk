@@ -22,6 +22,7 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { AddMemberDialog } from "./AddMemberDialog";
 import { ConfirmRemoveDialog } from "./ConfirmRemoveDialog";
+import { tl } from "@/shared/i18n/tl";
 
 function formatRelativeDate(dateString: string): string {
   const date = new Date(dateString);
@@ -105,12 +106,16 @@ function MemberRow({
             </span>
             <RoleBadge role={member.role} />
             {isSelf ? (
-              <span className="text-xs text-muted-foreground">(you)</span>
+              <span className="text-xs text-muted-foreground">
+                {tl("(you)")}
+              </span>
             ) : null}
           </div>
           <p className="flex items-center gap-2 text-xs text-muted-foreground">
             <PubKey className="text-xs" pubkey={member.pubkey} />
-            <span>Joined {formatRelativeDate(member.createdAt)}</span>
+            <span>
+              {tl("Joined")} {formatRelativeDate(member.createdAt)}
+            </span>
           </p>
         </div>
       </div>
@@ -124,7 +129,7 @@ function MemberRow({
               variant="ghost"
             >
               <MoreHorizontal className="h-4 w-4" />
-              <span className="sr-only">Actions</span>
+              <span className="sr-only">{tl("Actions")}</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -134,14 +139,14 @@ function MemberRow({
                   <DropdownMenuItem
                     onClick={() => onChangeRole(member.pubkey, "admin")}
                   >
-                    Make Admin
+                    {tl("Make Admin")}
                   </DropdownMenuItem>
                 ) : null}
                 {member.role === "admin" ? (
                   <DropdownMenuItem
                     onClick={() => onChangeRole(member.pubkey, "member")}
                   >
-                    Make Member
+                    {tl("Make Member")}
                   </DropdownMenuItem>
                 ) : null}
               </>
@@ -152,7 +157,7 @@ function MemberRow({
                 className="text-destructive focus:text-destructive"
                 onClick={() => onRemove(member)}
               >
-                Remove
+                {tl("Remove")}
               </DropdownMenuItem>
             ) : null}
           </DropdownMenuContent>
@@ -219,11 +224,11 @@ export function CommunityMembersCard({
           <div className="flex items-center gap-2">
             <Shield className="h-4 w-4 text-muted-foreground" />
             <h2 className="text-sm font-semibold tracking-tight">
-              Community Members
+              {tl("Community Members")}
             </h2>
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
-            Manage who has access to this relay.
+            {tl("Manage who has access to this relay.")}
           </p>
         </div>
 
@@ -234,7 +239,7 @@ export function CommunityMembersCard({
             size="sm"
           >
             <Plus className="h-4 w-4" />
-            Add Member
+            {tl("Add Member")}
           </Button>
         ) : null}
       </div>
@@ -246,7 +251,9 @@ export function CommunityMembersCard({
       ) : null}
 
       {membersQuery.isLoading ? (
-        <p className="mt-4 text-sm text-muted-foreground">Loading members...</p>
+        <p className="mt-4 text-sm text-muted-foreground">
+          {tl("Loading members...")}
+        </p>
       ) : members.length > 0 ? (
         <div className="mt-4 space-y-2">
           {members.map((member) => (
@@ -264,7 +271,9 @@ export function CommunityMembersCard({
           ))}
         </div>
       ) : membersQuery.isSuccess ? (
-        <p className="mt-4 text-sm text-muted-foreground">No members yet.</p>
+        <p className="mt-4 text-sm text-muted-foreground">
+          {tl("No members yet.")}
+        </p>
       ) : null}
 
       <AddMemberDialog

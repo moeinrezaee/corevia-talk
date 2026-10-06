@@ -10,6 +10,7 @@ import {
   AlertDialogTitle,
 } from "@/shared/ui/alert-dialog";
 import { Button } from "@/shared/ui/button";
+import { tl } from "@/shared/i18n/tl";
 
 type PersonaDeleteDialogProps = {
   open: boolean;
@@ -55,7 +56,7 @@ export function PersonaDeleteDialog({
     <AlertDialog onOpenChange={onOpenChange} open={open}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete agent?</AlertDialogTitle>
+          <AlertDialogTitle>{tl("Delete agent?")}</AlertDialogTitle>
           <AlertDialogDescription>
             {personaDeleteDescription(persona, instanceCount)}
           </AlertDialogDescription>
@@ -63,7 +64,7 @@ export function PersonaDeleteDialog({
         <AlertDialogFooter>
           <AlertDialogCancel asChild>
             <Button type="button" variant="outline">
-              Cancel
+              {tl("Cancel")}
             </Button>
           </AlertDialogCancel>
           <AlertDialogAction asChild>
@@ -76,7 +77,7 @@ export function PersonaDeleteDialog({
               type="button"
               variant="destructive"
             >
-              Delete
+              {tl("Delete")}
             </Button>
           </AlertDialogAction>
         </AlertDialogFooter>

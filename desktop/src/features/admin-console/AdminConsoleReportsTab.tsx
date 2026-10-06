@@ -38,6 +38,7 @@ import {
   adminErrorMessage,
   preserveRequestIdOnError,
 } from "./AdminConsolePanelHelpers";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 // ── Display-name helper (mirrors AdminConsoleStaffingTab) ─────────────────
 
@@ -237,7 +238,7 @@ function EnforcementStateBlock({
       await cancelAdminReport(origin, reportId, {
         actionId: activeAction.id,
       });
-      toast.success("Enforcement cancelled — report reopened");
+      toast.success(tl("Enforcement cancelled — report reopened"));
       onActionComplete();
     } catch (e) {
       // A 409 means the action is no longer cancellable (already cancelled,
@@ -283,7 +284,7 @@ function EnforcementStateBlock({
           {isWorking ? (
             <LoaderCircle className="h-3.5 w-3.5 animate-spin" />
           ) : (
-            "Cancel & reopen"
+            tl("Cancel & reopen")
           )}
         </Button>
       )}
@@ -438,7 +439,7 @@ function ResolveReportForm({
       data-testid="resolve-report-form"
     >
       <p className="text-xs font-medium text-muted-foreground">
-        Resolve report
+        {tl("Resolve report")}
       </p>
       <div className="flex flex-wrap gap-1.5">
         {allowedActions.map((action) => (
@@ -468,7 +469,7 @@ function ResolveReportForm({
             className="text-xs text-muted-foreground shrink-0"
             htmlFor="timeout-duration-input"
           >
-            Duration (seconds)
+            {tl("Duration (seconds)")}
           </label>
           <input
             className="flex-1 rounded-md border border-border/60 bg-background px-2 py-1 text-xs font-mono"
@@ -490,7 +491,7 @@ function ResolveReportForm({
           data-testid="resolve-reason-input"
           disabled={isLocked || isSubmitting}
           onChange={(e) => setReason(e.target.value)}
-          placeholder="Reason (optional)"
+          placeholder={tl("Reason (optional)")}
           type="text"
           value={reason}
         />
@@ -520,7 +521,9 @@ function ResolveReportForm({
           {isSubmitting ? (
             <LoaderCircle className="h-3.5 w-3.5 animate-spin" />
           ) : (
-            `Confirm: ${actionLabel(frozenRef.current?.action ?? selectedAction)}`
+            tlt("Confirm: {0}", [
+              actionLabel(frozenRef.current?.action ?? selectedAction),
+            ])
           )}
         </Button>
       )}
@@ -572,7 +575,7 @@ function ReopenReportForm({
         requestId: requestIdRef.current,
         reason: reason.trim() || undefined,
       });
-      toast.success("Report reopened");
+      toast.success(tl("Report reopened"));
       onReopened();
     } catch (e) {
       // Preserve the requestId on an ambiguous outcome (409, 5xx, lost
@@ -595,13 +598,15 @@ function ReopenReportForm({
     >
       <div className="space-y-1">
         <p className="text-xs font-medium text-muted-foreground">
-          Reopen report
+          {tl("Reopen report")}
         </p>
         <p className="text-xs text-muted-foreground">
-          Moves this report back to the open queue for re-triage.{" "}
+          {tl("Moves this report back to the open queue for re-triage.")}{" "}
           {wasEnforced
-            ? "The enforcement action already taken is not reversed — reopening does not un-ban, un-timeout, or restore a deleted message."
-            : "Reopening does not reverse any enforcement action."}
+            ? tl(
+                "The enforcement action already taken is not reversed — reopening does not un-ban, un-timeout, or restore a deleted message.",
+              )
+            : tl("Reopening does not reverse any enforcement action.")}
         </p>
       </div>
 
@@ -609,7 +614,7 @@ function ReopenReportForm({
         className="w-full rounded-md border border-border/60 bg-background px-2 py-1 text-xs"
         data-testid="reopen-reason-input"
         onChange={(e) => setReason(e.target.value)}
-        placeholder="Reason (optional)"
+        placeholder={tl("Reason (optional)")}
         type="text"
         value={reason}
       />
@@ -625,7 +630,7 @@ function ReopenReportForm({
         {isSubmitting ? (
           <LoaderCircle className="h-3.5 w-3.5 animate-spin" />
         ) : (
-          "Reopen report"
+          tl("Reopen report")
         )}
       </Button>
     </div>
@@ -703,7 +708,9 @@ export function ReportsTab({
 
   const reports = listState.data;
   if (!Array.isArray(reports) || reports.length === 0) {
-    return <p className="text-sm text-muted-foreground">No reports found.</p>;
+    return (
+      <p className="text-sm text-muted-foreground">{tl("No reports found.")}</p>
+    );
   }
 
   return (
@@ -733,7 +740,7 @@ export function ReportsTab({
                 is pending. Detail suppresses only the resolve form for a
                 non-open report. */}
             <button
-              className="w-full rounded-md border border-border/60 px-3 py-2.5 text-left text-sm hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="w-full rounded-md border border-border/60 px-3 py-2.5 text-start text-sm hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               onClick={() => setSelectedId(id)}
               type="button"
             >
@@ -776,14 +783,16 @@ function ReportFields({ data }: { data: AdminReportDetailDto }) {
         {status && <Badge variant={statusVariant(status)}>{status}</Badge>}
         {data.reportType && <Badge variant="outline">{data.reportType}</Badge>}
       </div>
-      <DetailRow label="ID" value={data.id} mono />
-      <DetailRow label="Community" value={data.communityId} mono />
-      <DetailRow label="Host" value={data.communityHost} />
-      <DetailRow label="Event ID" value={data.reportEventId} mono />
+      <DetailRow label={tl("ID")} value={data.id} mono />
+      <DetailRow label={tl("Community")} value={data.communityId} mono />
+      <DetailRow label={tl("Host")} value={data.communityHost} />
+      <DetailRow label={tl("Event ID")} value={data.reportEventId} mono />
       {/* Reporter uses PubKey widget for valid keys; falls back to mono text. */}
       {isHex64(data.reporterPubkey) ? (
         <div className="flex gap-2 text-xs">
-          <span className="w-28 shrink-0 text-muted-foreground">Reporter</span>
+          <span className="w-28 shrink-0 text-muted-foreground">
+            {tl("Reporter")}
+          </span>
           <PubKey
             className="min-w-0"
             interactive
@@ -793,14 +802,16 @@ function ReportFields({ data }: { data: AdminReportDetailDto }) {
           />
         </div>
       ) : (
-        <DetailRow label="Reporter" value={data.reporterPubkey} mono />
+        <DetailRow label={tl("Reporter")} value={data.reporterPubkey} mono />
       )}
-      <DetailRow label="Target kind" value={data.targetKind} />
+      <DetailRow label={tl("Target kind")} value={data.targetKind} />
       {/* Pubkey targets get the PubKey widget; event IDs are not keys, so they
           render as raw hex with a copy control. */}
       {isHex64(data.target) && data.targetKind?.toLowerCase() === "pubkey" ? (
         <div className="flex gap-2 text-xs">
-          <span className="w-28 shrink-0 text-muted-foreground">Target</span>
+          <span className="w-28 shrink-0 text-muted-foreground">
+            {tl("Target")}
+          </span>
           <PubKey
             className="min-w-0"
             interactive
@@ -811,7 +822,9 @@ function ReportFields({ data }: { data: AdminReportDetailDto }) {
         </div>
       ) : data.targetKind?.toLowerCase() === "event" ? (
         <div className="flex items-center gap-2 text-xs">
-          <span className="w-28 shrink-0 text-muted-foreground">Target</span>
+          <span className="w-28 shrink-0 text-muted-foreground">
+            {tl("Target")}
+          </span>
           <span
             className="min-w-0 break-all font-mono"
             data-testid="report-target-event-id"
@@ -819,7 +832,7 @@ function ReportFields({ data }: { data: AdminReportDetailDto }) {
             {data.target}
           </span>
           <button
-            aria-label="Copy event ID"
+            aria-label={tl("Copy event ID")}
             className="shrink-0 text-muted-foreground hover:text-foreground"
             data-testid="report-target-event-copy"
             onClick={() => copyTextToClipboard(data.target)}
@@ -829,26 +842,36 @@ function ReportFields({ data }: { data: AdminReportDetailDto }) {
           </button>
         </div>
       ) : (
-        <DetailRow label="Target" value={data.target} mono />
+        <DetailRow label={tl("Target")} value={data.target} mono />
       )}
-      <DetailRow label="Channel" value={data.channelId ?? null} mono />
-      <DetailRow label="Note" value={data.note ?? null} />
-      <DetailRow label="Resolved by" value={data.resolvedBy ?? null} mono />
-      <DetailRow label="Resolved at" value={formatTimestamp(data.resolvedAt)} />
-      <DetailRow label="Action ID" value={data.actionId ?? null} mono />
-      <DetailRow label="Created" value={formatTimestamp(data.createdAt)} />
+      <DetailRow label={tl("Channel")} value={data.channelId ?? null} mono />
+      <DetailRow label={tl("Note")} value={data.note ?? null} />
+      <DetailRow
+        label={tl("Resolved by")}
+        value={data.resolvedBy ?? null}
+        mono
+      />
+      <DetailRow
+        label={tl("Resolved at")}
+        value={formatTimestamp(data.resolvedAt)}
+      />
+      <DetailRow label={tl("Action ID")} value={data.actionId ?? null} mono />
+      <DetailRow
+        label={tl("Created")}
+        value={formatTimestamp(data.createdAt)}
+      />
       {data.message != null && (
         <div className="mt-3 space-y-1.5 rounded-md border border-border/40 px-3 py-2.5">
           <p className="mb-1 text-xs font-semibold text-muted-foreground">
-            Reported message
+            {tl("Reported message")}
             {data.message.deletedAt != null && (
-              <span className="ml-1.5 text-destructive">(deleted)</span>
+              <span className="ms-1.5 text-destructive">{tl("(deleted)")}</span>
             )}
           </p>
           {isHex64(data.message.authorPubkey) ? (
             <div className="flex gap-2 text-xs">
               <span className="w-28 shrink-0 text-muted-foreground">
-                Author
+                {tl("Author")}
               </span>
               <PubKey
                 className="min-w-0"
@@ -859,11 +882,15 @@ function ReportFields({ data }: { data: AdminReportDetailDto }) {
               />
             </div>
           ) : (
-            <DetailRow label="Author" value={data.message.authorPubkey} mono />
+            <DetailRow
+              label={tl("Author")}
+              value={data.message.authorPubkey}
+              mono
+            />
           )}
-          <DetailRow label="Content" value={data.message.content} />
+          <DetailRow label={tl("Content")} value={data.message.content} />
           <DetailRow
-            label="Msg created"
+            label={tl("Msg created")}
             value={formatTimestamp(data.message.createdAt)}
           />
         </div>
@@ -922,7 +949,7 @@ function ReportDetail({
         type="button"
       >
         <ChevronLeft className="h-3.5 w-3.5" />
-        Back to reports
+        {tl("Back to reports")}
       </button>
       {detailState.status === "loading" && <LoadingSpinner />}
       {detailState.status === "error" && (

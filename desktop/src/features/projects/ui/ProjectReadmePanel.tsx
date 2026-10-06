@@ -28,6 +28,7 @@ import {
 import { GitHubMark } from "./GitHubMark";
 import { ProjectRepositoryUnavailableState } from "./ProjectRepositoryUnavailableState";
 import { ProjectPanelState } from "./ProjectPanelState";
+import { tl } from "@/shared/i18n/tl";
 
 export function findReadmeFile(files: ProjectRepoFile[]) {
   const readmes = files.filter((file) =>
@@ -150,7 +151,7 @@ export function ReadmePanel({
             selectedTag={sourceControls.selectedTag}
             tagOptions={sourceControls.tagOptions}
           />
-          <div className="ml-auto flex shrink-0 items-center">
+          <div className="ms-auto flex shrink-0 items-center">
             <RepoSyncActionButton controls={sourceControls} />
           </div>
         </div>
@@ -162,7 +163,7 @@ export function ReadmePanel({
         </span>
         {file ? (
           <span className="hidden shrink-0 text-2xs text-muted-foreground sm:block">
-            Last changed {formatLastChangedAt(file.lastChangedAt)}
+            {tl("Last changed")} {formatLastChangedAt(file.lastChangedAt)}
           </span>
         ) : null}
       </div>
@@ -173,7 +174,7 @@ export function ReadmePanel({
     return (
       <section className="overflow-hidden">
         {header}
-        <BuzzLoadingState label="Loading repository" />
+        <BuzzLoadingState label={tl("Loading repository")} />
       </section>
     );
   }
@@ -207,11 +208,12 @@ export function ReadmePanel({
             )}
           </div>
           <h3 className="text-base font-semibold text-foreground">
-            Code hosted on {externalHost}
+            {tl("Code hosted on")} {externalHost}
           </h3>
           <p className="mt-1 max-w-lg text-sm text-muted-foreground">
-            Clone this repository locally to explore its files, commits, and
-            contributors in Buzz.
+            {tl(
+              "Clone this repository locally to explore its files, commits, and contributors in Buzz.",
+            )}
           </p>
           {externalOpenUrl ? (
             <a
@@ -235,14 +237,16 @@ export function ReadmePanel({
                 ) : (
                   <DownloadCloud className="h-4 w-4" />
                 )}
-                {sourceControls.clonePending ? "Cloning…" : "Clone locally"}
+                {sourceControls.clonePending
+                  ? tl("Cloning…")
+                  : tl("Clone locally")}
               </Button>
             ) : null}
             {externalOpenUrl ? (
               <Button asChild size="sm" variant="outline">
                 <a href={externalOpenUrl} rel="noreferrer" target="_blank">
                   <ExternalLink className="h-4 w-4" />
-                  Open on {externalHost}
+                  {tl("Open on")} {externalHost}
                 </a>
               </Button>
             ) : null}
@@ -256,7 +260,7 @@ export function ReadmePanel({
     return (
       <section className="overflow-hidden">
         {header}
-        <BuzzLoadingState label="Loading README" />
+        <BuzzLoadingState label={tl("Loading README")} />
       </section>
     );
   }
@@ -272,25 +276,29 @@ export function ReadmePanel({
             sourceControls?.onAskForAccess ? (
               <Button onClick={sourceControls.onAskForAccess} size="sm">
                 <MessageCircle className="h-4 w-4" />
-                Chat with an agent
+                {tl("Chat with an agent")}
               </Button>
             ) : undefined
           }
           description={
             loadError
-              ? "Refresh the repository or ask an agent to investigate."
+              ? tl("Refresh the repository or ask an agent to investigate.")
               : emptyRepository
-                ? "Ask an agent to create the initial codebase or connect an existing repository."
-                : "Add a README to describe setup, usage, and project context."
+                ? tl(
+                    "Ask an agent to create the initial codebase or connect an existing repository.",
+                  )
+                : tl(
+                    "Add a README to describe setup, usage, and project context.",
+                  )
           }
           error={loadError}
           panel={false}
           title={
             loadError
-              ? "Could not load the README"
+              ? tl("Could not load the README")
               : emptyRepository
-                ? "No files have been pushed yet"
-                : "No README yet"
+                ? tl("No files have been pushed yet")
+                : tl("No README yet")
           }
         />
       </section>

@@ -3,6 +3,7 @@ import { MessageCircle } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 import { DrawerPanelIcon } from "@/shared/ui/DrawerPanelIcon";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export function ProjectsOverviewChromeActions({
   chatOpen,
@@ -20,13 +21,13 @@ export function ProjectsOverviewChromeActions({
   return (
     <>
       <Button
-        aria-label={`Chat with an agent about ${sectionTitle}`}
+        aria-label={tlt("Chat with an agent about {0}", [sectionTitle])}
         aria-pressed={chatOpen}
         className="h-7 w-7 text-sidebar-foreground hover:bg-sidebar-accent"
         data-testid="projects-overview-chat-toggle"
         onClick={onToggleChat}
         size="icon"
-        title={`Chat with an agent about ${sectionTitle}`}
+        title={tlt("Chat with an agent about {0}", [sectionTitle])}
         type="button"
         variant="ghost"
       >
@@ -39,14 +40,16 @@ export function ProjectsOverviewChromeActions({
       </Button>
       <Button
         aria-label={
-          contextOpen ? "Hide project context" : "Show project context"
+          contextOpen ? tl("Hide project context") : tl("Show project context")
         }
         aria-pressed={contextOpen}
         className="h-7 w-7 text-sidebar-foreground hover:bg-sidebar-accent"
         data-testid="projects-overview-context-toggle"
         onClick={onToggleContext}
         size="icon"
-        title={contextOpen ? "Hide project context" : "Show project context"}
+        title={
+          contextOpen ? tl("Hide project context") : tl("Show project context")
+        }
         type="button"
         variant="ghost"
       >

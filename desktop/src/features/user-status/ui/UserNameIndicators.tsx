@@ -13,6 +13,7 @@ import {
 import { cn } from "@/shared/lib/cn";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
+import { tl } from "@/shared/i18n/tl";
 
 export function UserNameIndicators({
   className,
@@ -55,7 +56,7 @@ export function UserNameIndicators({
         <Tooltip disableHoverableContent>
           <TooltipTrigger asChild>
             <span
-              aria-label="🎧 In a huddle"
+              aria-label={tl("🎧 In a huddle")}
               className={cn(
                 "inline-flex cursor-default items-center justify-center leading-none",
                 indicatorTextClass,
@@ -66,7 +67,7 @@ export function UserNameIndicators({
               🎧
             </span>
           </TooltipTrigger>
-          <TooltipContent>In a huddle</TooltipContent>
+          <TooltipContent>{tl("In a huddle")}</TooltipContent>
         </Tooltip>
       ) : null}
       {status ? (
@@ -88,7 +89,7 @@ export function UserNameIndicators({
               />
             </span>
           </TooltipTrigger>
-          <TooltipContent>{status.text || "Status set"}</TooltipContent>
+          <TooltipContent>{status.text || tl("Status set")}</TooltipContent>
         </Tooltip>
       ) : null}
     </span>

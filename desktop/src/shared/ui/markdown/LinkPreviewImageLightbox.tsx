@@ -13,6 +13,7 @@ import {
   imageLightboxSourceScopeForTrigger,
   visibleImageGalleryForTrigger,
 } from "./imageLightbox";
+import { tlt } from "@/shared/i18n/tl";
 
 type ImageZoomOverlayProps = {
   alt: string | undefined;
@@ -80,9 +81,9 @@ export function createLinkPreviewImageLightbox(
     return (
       <>
         <button
-          aria-label={`Zoom image: ${alt}`}
+          aria-label={tlt("Zoom image: {0}", [alt])}
           className={cn(
-            "cursor-zoom-in border-0 p-0 text-left focus:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/50",
+            "cursor-zoom-in border-0 p-0 text-start focus:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/50",
             lightboxState && "opacity-0",
             className,
           )}

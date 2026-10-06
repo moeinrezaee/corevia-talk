@@ -12,6 +12,7 @@ import {
 } from "@/features/projects/ui/ProjectWorkspaceTabList";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
+import { tl } from "@/shared/i18n/tl";
 
 // Fade the clipped edge(s) of the scrollable tab row so a cut-off label
 // reads as "scroll for more" instead of a rendering bug. Masking the row
@@ -39,9 +40,9 @@ export function ProjectsViewModeToggle({
 }) {
   return (
     <fieldset className="flex items-center rounded-lg bg-muted/30 p-0.5">
-      <legend className="sr-only">Project layout</legend>
+      <legend className="sr-only">{tl("Project layout")}</legend>
       <Button
-        aria-label="Grid layout"
+        aria-label={tl("Grid layout")}
         aria-pressed={viewMode === "grid"}
         className="h-7 w-7 px-0"
         onClick={() => onViewModeChange("grid")}
@@ -52,7 +53,7 @@ export function ProjectsViewModeToggle({
         <LayoutGrid className="h-3.5 w-3.5" />
       </Button>
       <Button
-        aria-label="List layout"
+        aria-label={tl("List layout")}
         aria-pressed={viewMode === "list"}
         className="h-7 w-7 px-0"
         onClick={() => onViewModeChange("list")}
@@ -123,12 +124,12 @@ export function ProjectsToolbar({
     label: string;
     value: ProjectsFilter;
   }> = [
-    { label: "Activity", value: "all" },
-    { label: "Projects", value: "projects" },
-    { label: "Repositories", value: "repositories" },
-    { label: "Tasks", value: "issues" },
-    { label: "Reviews", value: "prs" },
-    { label: "Channels", value: "channels" },
+    { label: tl("Activity"), value: "all" },
+    { label: tl("Projects"), value: "projects" },
+    { label: tl("Repositories"), value: "repositories" },
+    { label: tl("Tasks"), value: "issues" },
+    { label: tl("Reviews"), value: "prs" },
+    { label: tl("Channels"), value: "channels" },
   ];
 
   return (
@@ -150,7 +151,7 @@ export function ProjectsToolbar({
           )}
           ref={scrollRef}
         >
-          <legend className="sr-only">Project owner filter</legend>
+          <legend className="sr-only">{tl("Project owner filter")}</legend>
           {filterOptions.map((option) => (
             <motion.span
               className="shrink-0"

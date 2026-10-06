@@ -3,6 +3,7 @@ import { ChevronDown } from "lucide-react";
 
 import { cn } from "@/shared/lib/cn";
 import type { PromptSection } from "./agentSessionTypes";
+import { tl } from "@/shared/i18n/tl";
 
 export function PromptSectionList({
   className,
@@ -38,7 +39,7 @@ export function PromptSectionAccordion({
     <article className="overflow-hidden rounded-2xl bg-muted/40">
       <button
         aria-expanded={open}
-        className="w-full px-4 py-3 text-left transition-colors hover:bg-muted/50"
+        className="w-full px-4 py-3 text-start transition-colors hover:bg-muted/50"
         onClick={() => setOpen((value) => !value)}
         type="button"
       >
@@ -63,7 +64,9 @@ export function PromptSectionAccordion({
               {body.length > 0 ? (
                 body
               ) : (
-                <span className="italic text-foreground/50">No metadata.</span>
+                <span className="italic text-foreground/50">
+                  {tl("No metadata.")}
+                </span>
               )}
             </div>
           </div>

@@ -5,6 +5,7 @@ import type { UserProfileSummary } from "@/shared/api/types";
 import { Markdown } from "@/shared/ui/markdown";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
 import { truncateNpub } from "@/shared/lib/pubkey";
+import { tl } from "@/shared/i18n/tl";
 
 type RecentNotesSectionProps = {
   notes: UserNote[];
@@ -37,7 +38,7 @@ export function RecentNotesSection({
         <div className="flex items-center gap-2">
           <Activity className="h-4 w-4 text-muted-foreground" />
           <h3 className="text-sm font-semibold text-foreground">
-            Recent Notes
+            {tl("Recent Notes")}
           </h3>
         </div>
         <button
@@ -45,7 +46,7 @@ export function RecentNotesSection({
           onClick={onOpenPulse}
           type="button"
         >
-          View all in Pulse
+          {tl("View all in Pulse")}
         </button>
       </div>
 
@@ -68,7 +69,7 @@ export function RecentNotesSection({
                   size="sm"
                 />
                 {isAgent ? (
-                  <Bot className="absolute -bottom-0.5 -right-0.5 h-4 w-4 rounded-full bg-background p-0.5 text-muted-foreground" />
+                  <Bot className="absolute -bottom-0.5 -end-0.5 h-4 w-4 rounded-full bg-background p-0.5 text-muted-foreground" />
                 ) : null}
               </div>
               <div className="min-w-0 flex-1">
@@ -78,7 +79,7 @@ export function RecentNotesSection({
                   </span>
                   {isAgent ? (
                     <span className="inline-flex h-3.5 items-center rounded bg-muted px-1 text-2xs font-medium text-muted-foreground">
-                      bot
+                      {tl("bot")}
                     </span>
                   ) : null}
                   <span className="shrink-0 text-2xs text-muted-foreground">

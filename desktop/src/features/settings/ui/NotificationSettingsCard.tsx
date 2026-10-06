@@ -24,6 +24,7 @@ import {
 } from "./SettingsOptionGroup";
 import { SettingsSectionHeader } from "./SettingsSectionHeader";
 import { SoundPicker } from "./SoundPicker";
+import { tl } from "@/shared/i18n/tl";
 
 export function NotificationSettingsCard({
   isUpdatingDesktopNotifications,
@@ -66,22 +67,24 @@ export function NotificationSettingsCard({
   return (
     <section className="min-w-0" data-testid="settings-notifications">
       <SettingsSectionHeader
-        title="Notifications"
-        description="Desktop alerts are on by default. Fine-tune what gets through below."
+        title={tl("Notifications")}
+        description={tl(
+          "Desktop alerts are on by default. Fine-tune what gets through below.",
+        )}
       />
 
       <span className="sr-only" data-testid="notifications-desktop-state">
         {notificationPermission === "unsupported"
-          ? "Unavailable"
+          ? tl("Unavailable")
           : notificationPermission === "denied"
-            ? "Blocked"
+            ? tl("Blocked")
             : notificationSettings.desktopEnabled
-              ? "On"
-              : "Off"}
+              ? tl("On")
+              : tl("Off")}
       </span>
 
       <SettingsOptionGroupList>
-        <SettingsOptionGroup title="Desktop">
+        <SettingsOptionGroup title={tl("Desktop")}>
           <SettingsOptionRow>
             <div className="min-w-0">
               <label
@@ -89,16 +92,20 @@ export function NotificationSettingsCard({
                 htmlFor="desktop-alerts-switch"
               >
                 {isUpdatingDesktopNotifications
-                  ? "Requesting..."
-                  : "Desktop alerts"}
+                  ? tl("Requesting...")
+                  : tl("Desktop alerts")}
               </label>
               <p
                 className="text-sm font-normal text-muted-foreground/70"
                 data-settings-subcopy
               >
                 {notificationSettings.desktopEnabled
-                  ? "Native desktop alerts are enabled for the categories you have armed below."
-                  : "Request OS permission and surface new mentions or needs-action items outside the app."}
+                  ? tl(
+                      "Native desktop alerts are enabled for the categories you have armed below.",
+                    )
+                  : tl(
+                      "Request OS permission and surface new mentions or needs-action items outside the app.",
+                    )}
               </p>
             </div>
             <Switch
@@ -118,14 +125,15 @@ export function NotificationSettingsCard({
                 className="text-sm font-medium"
                 htmlFor="notify-while-viewing-switch"
               >
-                Notify while viewing
+                {tl("Notify while viewing")}
               </label>
               <p
                 className="text-sm font-normal text-muted-foreground/70"
                 data-settings-subcopy
               >
-                Also alert for direct messages in the conversation you have
-                open.
+                {tl(
+                  "Also alert for direct messages in the conversation you have open.",
+                )}
               </p>
             </div>
             <Switch
@@ -145,20 +153,20 @@ export function NotificationSettingsCard({
 
         {notificationSettings.desktopEnabled ? (
           <>
-            <SettingsOptionGroup title="Sound">
+            <SettingsOptionGroup title={tl("Sound")}>
               <SettingsOptionRow>
                 <div className="min-w-0">
                   <label
                     className="text-sm font-medium"
                     htmlFor="notification-sound-switch"
                   >
-                    Sound
+                    {tl("Sound")}
                   </label>
                   <p
                     className="text-sm font-normal text-muted-foreground/70"
                     data-settings-subcopy
                   >
-                    Alert with a sound for the events below.
+                    {tl("Alert with a sound for the events below.")}
                   </p>
                 </div>
                 <Switch
@@ -174,7 +182,7 @@ export function NotificationSettingsCard({
 
             {anyAlertsOn ? (
               <div className="space-y-4">
-                <SettingsOptionGroup title="Alert sounds">
+                <SettingsOptionGroup title={tl("Alert sounds")}>
                   {visibleSlots.map((slot) => {
                     const comingSoon = COMING_SOON_SLOTS.has(slot);
                     const alertsOn =
@@ -192,7 +200,7 @@ export function NotificationSettingsCard({
                             {SLOT_LABELS[slot]}
                             {comingSoon ? (
                               <span className="rounded-full bg-muted/70 px-2 py-0.5 text-2xs font-normal uppercase tracking-wide text-muted-foreground">
-                                Coming soon
+                                {tl("Coming soon")}
                               </span>
                             ) : null}
                           </span>
@@ -243,12 +251,12 @@ export function NotificationSettingsCard({
                     {showComingSoon ? (
                       <>
                         <ChevronUp className="h-4 w-4" />
-                        Show less
+                        {tl("Show less")}
                       </>
                     ) : (
                       <>
                         <ChevronDown className="h-4 w-4" />
-                        View all
+                        {tl("View all")}
                       </>
                     )}
                   </Button>
@@ -258,21 +266,22 @@ export function NotificationSettingsCard({
           </>
         ) : null}
 
-        <SettingsOptionGroup title="Badges">
+        <SettingsOptionGroup title={tl("Badges")}>
           <SettingsOptionRow>
             <div className="min-w-0">
               <label
                 className="text-sm font-medium"
                 htmlFor="home-badge-switch"
               >
-                Home badge
+                {tl("Home badge")}
               </label>
               <p
                 className="text-sm font-normal text-muted-foreground/70"
                 data-settings-subcopy
               >
-                Show a Home badge for mentions and needs-action items in the
-                sidebar.
+                {tl(
+                  "Show a Home badge for mentions and needs-action items in the sidebar.",
+                )}
               </p>
             </div>
             <Switch
@@ -290,8 +299,10 @@ export function NotificationSettingsCard({
       {permissionBlocked && (
         <p className="mt-4 rounded-xl border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
           {notificationPermission === "unsupported"
-            ? "Desktop notifications are not supported in this environment."
-            : "Desktop notifications are blocked. Enable them in your system settings."}
+            ? tl("Desktop notifications are not supported in this environment.")
+            : tl(
+                "Desktop notifications are blocked. Enable them in your system settings.",
+              )}
         </p>
       )}
 

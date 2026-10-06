@@ -41,6 +41,7 @@ import {
 
 import { PersonaShareRecipients } from "./PersonaShareRecipients";
 import { useSnapshotSendController } from "./useSnapshotSendController";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 /** Decode base64 card bytes into the number[] shape the upload path expects. */
 function cardBytesFromBase64(b64: string): number[] {
@@ -159,19 +160,26 @@ function AgentCardViewerContent({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Sparkles className="h-4 w-4" />
-            {`${agentName}'s card`}
+            {tlt("{0}'s card", [agentName])}
           </DialogTitle>
           <DialogDescription>
             {card.locked
-              ? "This card is locked: only you and the agent can import it. Anyone else sees just the image."
+              ? tl(
+                  "This card is locked: only you and the agent can import it. Anyone else sees just the image.",
+                )
               : card.memoryLevel === "none"
-                ? "The card carries the agent — anyone who imports this PNG gets a working copy (config only, fresh identity, no memories)."
-                : `The card carries the agent — anyone who imports this PNG gets a working copy (fresh identity) including its ${card.memoryLevel === "core" ? "core memory" : "memories"}, stored as plaintext.`}
+                ? tl(
+                    "The card carries the agent — anyone who imports this PNG gets a working copy (config only, fresh identity, no memories).",
+                  )
+                : tlt(
+                    "The card carries the agent — anyone who imports this PNG gets a working copy (fresh identity) including its {0}, stored as plaintext.",
+                    [card.memoryLevel === "core" ? "core memory" : "memories"],
+                  )}
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-4">
           <img
-            alt={`${agentName} trading card`}
+            alt={tlt("{0} trading card", [agentName])}
             className="mx-auto max-h-[28rem] rounded-lg border shadow-lg"
             data-testid="agent-card-preview"
             onContextMenu={(event) => {
@@ -185,7 +193,7 @@ function AgentCardViewerContent({
               dataAttributes={["data-agent-card-context-menu"]}
               items={[
                 {
-                  label: "Download card",
+                  label: tl("Download card"),
                   onSelect: () => {
                     closeMenu();
                     saveMutation.mutate();
@@ -220,8 +228,8 @@ function AgentCardViewerContent({
                 }}
                 variant="outline"
               >
-                <RefreshCw className="mr-2 h-4 w-4" />
-                Reroll
+                <RefreshCw className="me-2 h-4 w-4" />
+                {tl("Reroll")}
               </Button>
             ) : null}
             <Button
@@ -230,8 +238,8 @@ function AgentCardViewerContent({
               data-testid="agent-card-save"
               variant={recipients.length > 0 ? "outline" : "default"}
             >
-              <Download className="mr-2 h-4 w-4" />
-              Save card
+              <Download className="me-2 h-4 w-4" />
+              {tl("Save card")}
             </Button>
             {recipients.length > 0 ? (
               <Button
@@ -239,8 +247,8 @@ function AgentCardViewerContent({
                 onClick={() => void sendToRecipients()}
                 data-testid="agent-card-send"
               >
-                <Send className="mr-2 h-4 w-4" />
-                {isSending ? "Sending…" : "Send"}
+                <Send className="me-2 h-4 w-4" />
+                {isSending ? tl("Sending…") : tl("Send")}
               </Button>
             ) : null}
           </div>
@@ -302,16 +310,17 @@ function AgentCardGalleryContent() {
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Sparkles className="h-4 w-4" />
-            Minted cards
+            {tl("Minted cards")}
           </DialogTitle>
           <DialogDescription>
-            Every card you’ve minted, newest first. Click one to view, save, or
-            share it.
+            {tl(
+              "Every card you’ve minted, newest first. Click one to view, save, or share it.",
+            )}
           </DialogDescription>
         </DialogHeader>
         {viewState.kind === "loading" ? (
           <p className="py-8 text-center text-sm text-muted-foreground">
-            Loading cards…
+            {tl("Loading cards…")}
           </p>
         ) : viewState.kind === "error" ? (
           <div
@@ -320,7 +329,7 @@ function AgentCardGalleryContent() {
             role="alert"
           >
             <p className="text-center text-sm text-destructive">
-              Couldn’t load your minted cards: {viewState.message}
+              {tl("Couldn’t load your minted cards:")} {viewState.message}
             </p>
             <Button
               disabled={cardsQuery.isFetching}
@@ -328,19 +337,19 @@ function AgentCardGalleryContent() {
               size="sm"
               variant="outline"
             >
-              <RefreshCw className="mr-2 h-4 w-4" />
-              {cardsQuery.isFetching ? "Retrying…" : "Retry"}
+              <RefreshCw className="me-2 h-4 w-4" />
+              {cardsQuery.isFetching ? tl("Retrying…") : tl("Retry")}
             </Button>
           </div>
         ) : viewState.kind === "empty" ? (
           <p className="py-8 text-center text-sm text-muted-foreground">
-            No cards yet — mint one from an agent’s profile.
+            {tl("No cards yet — mint one from an agent’s profile.")}
           </p>
         ) : (
-          <div className="grid max-h-[60vh] grid-cols-3 gap-3 overflow-y-auto pr-1">
+          <div className="grid max-h-[60vh] grid-cols-3 gap-3 overflow-y-auto pe-1">
             {cards.map((entry) => (
               <button
-                className="group flex flex-col gap-1.5 text-left"
+                className="group flex flex-col gap-1.5 text-start"
                 data-testid="agent-card-gallery-item"
                 disabled={openMutation.isPending}
                 key={entry.storedFileName}
@@ -349,7 +358,7 @@ function AgentCardGalleryContent() {
               >
                 {entry.thumbJpegBase64 ? (
                   <img
-                    alt={`${entry.agentName} trading card`}
+                    alt={tlt("{0} trading card", [entry.agentName])}
                     className="aspect-2/3 w-full rounded-lg border object-cover shadow-sm transition-transform group-hover:scale-[1.02]"
                     src={`data:image/jpeg;base64,${entry.thumbJpegBase64}`}
                   />

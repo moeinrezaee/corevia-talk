@@ -32,6 +32,7 @@ import {
   type DirectMessageIntroParticipant,
 } from "./DirectMessageIntroAvatarStack";
 import { useSettleGatedPrependMessages } from "./useSettleGatedPrependMessages";
+import { tl } from "@/shared/i18n/tl";
 
 export type MessageTimelineHandle = {
   scrollToBottomOnNextUpdate: () => void;
@@ -625,7 +626,7 @@ const MessageTimelineBase = React.forwardRef<
         <ChannelIntroBlock className="pb-4 pt-2" intro={activeChannelIntro} />
       ) : activeDirectMessageIntro ? (
         <div
-          className="mb-2 flex w-full flex-col items-start px-3 pb-2 pt-2 text-left"
+          className="mb-2 flex w-full flex-col items-start px-3 pb-2 pt-2 text-start"
           data-testid="message-dm-intro"
         >
           <DirectMessageIntroAvatarStack
@@ -635,7 +636,7 @@ const MessageTimelineBase = React.forwardRef<
             {activeDirectMessageIntro.displayName}
           </p>
           <p className="mt-1 max-w-full truncate whitespace-nowrap text-sm leading-5 text-muted-foreground">
-            This is the beginning of your direct message with{" "}
+            {tl("This is the beginning of your direct message with")}{" "}
             <span className="font-medium text-foreground">
               {activeDirectMessageIntro.displayName}
             </span>
@@ -816,7 +817,7 @@ const MessageTimelineBase = React.forwardRef<
                 ) : null}
                 {activeDirectMessageIntro ? (
                   <div
-                    className="mt-auto flex w-full flex-col items-start px-3 py-2 text-left"
+                    className="mt-auto flex w-full flex-col items-start px-3 py-2 text-start"
                     data-testid="message-dm-intro"
                   >
                     <DirectMessageIntroAvatarStack
@@ -826,7 +827,7 @@ const MessageTimelineBase = React.forwardRef<
                       {activeDirectMessageIntro.displayName}
                     </p>
                     <p className="mt-1 max-w-full truncate whitespace-nowrap text-sm leading-5 text-muted-foreground">
-                      This is the beginning of your direct message with{" "}
+                      {tl("This is the beginning of your direct message with")}{" "}
                       <span className="font-medium text-foreground">
                         {activeDirectMessageIntro.displayName}
                       </span>
@@ -900,7 +901,7 @@ const MessageTimelineBase = React.forwardRef<
                   ? unreadCountLabel(bufferedTimeline.pendingCount)
                   : newMessageCount > 0
                     ? unreadCountLabel(newMessageCount)
-                    : "Jump to latest"
+                    : tl("Jump to latest")
               }
               onClick={() => {
                 setIsSemanticallyAtBottom(true);

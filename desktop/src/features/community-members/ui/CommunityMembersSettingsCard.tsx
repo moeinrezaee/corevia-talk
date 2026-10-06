@@ -34,6 +34,7 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { VirtualizedList } from "@/shared/ui/VirtualizedList";
 import { CommunityInviteDialog } from "./CommunityInviteDialog";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 function formatDisplayName(member: RelayMember, displayName?: string | null) {
   const trimmedDisplayName = displayName?.trim();
@@ -168,13 +169,15 @@ function RelayMemberRow({
           <span aria-hidden="true" className="shrink-0">
             ·
           </span>
-          <span className="shrink-0">Added {formatDate(member.createdAt)}</span>
+          <span className="shrink-0">
+            {tl("Added")} {formatDate(member.createdAt)}
+          </span>
           {isSelf ? (
             <>
               <span aria-hidden="true" className="shrink-0">
                 ·
               </span>
-              <span className="shrink-0">You</span>
+              <span className="shrink-0">{tl("You")}</span>
             </>
           ) : null}
         </div>
@@ -184,7 +187,7 @@ function RelayMemberRow({
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button
-              aria-label={`Actions for ${displayName}`}
+              aria-label={tlt("Actions for {0}", [displayName])}
               data-testid={`relay-member-actions-${member.pubkey}`}
               disabled={isBusy}
               size="icon"
@@ -207,7 +210,7 @@ function RelayMemberRow({
                   )
                 }
               >
-                Make admin
+                {tl("Make admin")}
               </DropdownMenuItem>
             ) : null}
             {canDemote ? (
@@ -223,7 +226,7 @@ function RelayMemberRow({
                   )
                 }
               >
-                Make member
+                {tl("Make member")}
               </DropdownMenuItem>
             ) : null}
             {canRemove && (canPromote || canDemote) ? (
@@ -239,7 +242,7 @@ function RelayMemberRow({
                   )
                 }
               >
-                Remove from community
+                {tl("Remove from community")}
               </DropdownMenuItem>
             ) : null}
           </DropdownMenuContent>
@@ -295,7 +298,7 @@ export function CommunityMembersSettingsCard({
     return (
       <section className="min-w-0" data-testid="settings-community-members">
         <p className="text-sm text-muted-foreground">
-          Checking invite permissions…
+          {tl("Checking invite permissions…")}
         </p>
       </section>
     );
@@ -313,33 +316,33 @@ export function CommunityMembersSettingsCard({
             data-testid="community-invite-dialog-trigger"
             onClick={() => setInviteDialogOpen(true)}
           >
-            Invite to community
+            {tl("Invite to community")}
           </Button>
         }
-        title="Invites"
-        description="Manage members and community access."
+        title={tl("Invites")}
+        description={tl("Manage members and community access.")}
       />
 
       <SettingsOptionGroup
         title={
           <>
-            Members
+            {tl("Members")}
             {members.length > 0 ? (
-              <span className="ml-1.5 font-normal">{members.length}</span>
+              <span className="ms-1.5 font-normal">{members.length}</span>
             ) : null}
           </>
         }
       >
         <div className="space-y-3 p-4 sm:p-5">
           <div className="relative">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
               autoCapitalize="none"
               autoCorrect="off"
-              className="w-full rounded-lg border border-border/70 bg-background py-2 pl-9 pr-3 text-sm placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+              className="w-full rounded-lg border border-border/70 bg-background py-2 ps-9 pe-3 text-sm placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
               data-testid="community-members-search"
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search members"
+              placeholder={tl("Search members")}
               spellCheck={false}
               type="text"
               value={search}
@@ -354,15 +357,15 @@ export function CommunityMembersSettingsCard({
 
           {membersQuery.isLoading ? (
             <p className="py-3 text-sm text-muted-foreground">
-              Loading community members…
+              {tl("Loading community members…")}
             </p>
           ) : members.length === 0 ? (
             <p className="rounded-lg border border-dashed border-border/70 px-3 py-6 text-center text-sm text-muted-foreground">
-              No community members yet.
+              {tl("No community members yet.")}
             </p>
           ) : filteredMembers.length === 0 ? (
             <p className="rounded-lg border border-dashed border-border/70 px-3 py-6 text-center text-sm text-muted-foreground">
-              No members match your search.
+              {tl("No members match your search.")}
             </p>
           ) : (
             <VirtualizedList

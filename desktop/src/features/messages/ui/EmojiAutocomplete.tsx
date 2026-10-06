@@ -53,7 +53,7 @@ export const EmojiAutocomplete = React.memo(function EmojiAutocomplete({
   return (
     <div
       className={cn(
-        "absolute left-0 right-0 z-50 px-3 sm:px-4",
+        "absolute start-0 end-0 z-50 px-3 sm:px-4",
         position === "below" ? "top-full mt-1" : "bottom-full mb-1",
       )}
     >
@@ -80,7 +80,7 @@ export const EmojiAutocomplete = React.memo(function EmojiAutocomplete({
           renderItem={(suggestion, index) => (
             <button
               className={cn(
-                "flex w-full cursor-pointer items-center gap-2 rounded-lg px-3 py-1.5 text-left text-sm",
+                "flex w-full cursor-pointer items-center gap-2 rounded-lg px-3 py-1.5 text-start text-sm",
                 index === selectedIndex
                   ? "bg-accent text-accent-foreground"
                   : "text-popover-foreground hover:bg-accent/50",

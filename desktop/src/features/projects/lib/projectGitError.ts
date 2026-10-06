@@ -1,4 +1,5 @@
 import type { ProjectRepoUnavailableReason } from "./projectRepoAvailability";
+import { tl } from "@/shared/i18n/tl";
 
 export type ProjectGitErrorPresentation = {
   title: string;
@@ -28,9 +29,10 @@ export function projectCloneErrorPresentation(
 
   if (unavailableReason === "access") {
     return {
-      title: "Repository access restricted",
-      description:
+      title: tl("Repository access restricted"),
+      description: tl(
         "You need access to the repository’s channel before you can clone it.",
+      ),
     };
   }
   if (
@@ -39,7 +41,7 @@ export function projectCloneErrorPresentation(
     )
   ) {
     return {
-      title: "Repository access required",
+      title: tl("Repository access required"),
       description: github
         ? "This repository requires GitHub authentication. Buzz currently clones public GitHub repositories without credentials."
         : "Buzz could not authenticate with this repository. Check your access and try again.",
@@ -47,9 +49,10 @@ export function projectCloneErrorPresentation(
   }
   if (/\b404\b|repository not found|repository does not exist/.test(message)) {
     return {
-      title: "Repository not found",
-      description:
+      title: tl("Repository not found"),
+      description: tl(
         "Check that the repository link is correct and that the repository still exists.",
+      ),
     };
   }
   if (
@@ -58,8 +61,8 @@ export function projectCloneErrorPresentation(
     )
   ) {
     return {
-      title: "Couldn’t reach the repository",
-      description: "Check your connection and try cloning again.",
+      title: tl("Couldn’t reach the repository"),
+      description: tl("Check your connection and try cloning again."),
     };
   }
   if (
@@ -68,13 +71,14 @@ export function projectCloneErrorPresentation(
     )
   ) {
     return {
-      title: "Local folder already exists",
-      description:
+      title: tl("Local folder already exists"),
+      description: tl(
         "Choose a different repositories directory or remove the existing checkout.",
+      ),
     };
   }
   return {
-    title: "Couldn’t clone repository",
+    title: tl("Couldn’t clone repository"),
     description: github
       ? "Try again, or open the repository on GitHub for more information."
       : "Try again. If the problem continues, contact the repository owner.",

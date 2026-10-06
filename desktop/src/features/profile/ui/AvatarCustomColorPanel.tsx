@@ -15,6 +15,7 @@ import {
   normalizeHue,
   snapToGrid,
 } from "./ProfileAvatarEditor.utils";
+import { tl } from "@/shared/i18n/tl";
 
 const PANEL_MOTION_TRANSITION = {
   duration: 0.25,
@@ -227,7 +228,7 @@ export function AvatarCustomColorPanel({
       </div>
 
       <div
-        aria-label="Choose custom avatar color hue"
+        aria-label={tl("Choose custom avatar color hue")}
         aria-valuemax={360}
         aria-valuemin={0}
         aria-valuenow={hue}
@@ -291,7 +292,7 @@ export function AvatarCustomColorPanel({
         tabIndex={visible ? 0 : -1}
         type="button"
       >
-        Use color
+        {tl("Use color")}
       </Button>
     </motion.div>
   );

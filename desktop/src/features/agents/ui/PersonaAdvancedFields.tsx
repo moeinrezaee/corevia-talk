@@ -37,6 +37,7 @@ import {
   structuredEnvKeys,
   type RuntimeCatalogStatus,
 } from "../lib/agentConfigCore";
+import { tl } from "@/shared/i18n/tl";
 
 export function PersonaAdvancedFields({
   behaviorDraft,
@@ -168,7 +169,7 @@ export function PersonaAdvancedFields({
             className="text-sm font-medium text-foreground"
             htmlFor="persona-session-policy"
           >
-            Conversation context
+            {tl("Conversation context")}
           </label>
           <PersonaDropdownField
             ariaDescribedBy="persona-session-policy-description"
@@ -181,10 +182,10 @@ export function PersonaAdvancedFields({
               })
             }
             options={[
-              { label: "Entire channel", value: "channel" },
-              { label: "Each thread", value: "thread" },
+              { label: tl("Entire channel"), value: "channel" },
+              { label: tl("Each thread"), value: "thread" },
             ]}
-            placeholder="Entire channel"
+            placeholder={tl("Entire channel")}
             value={behaviorDraft.sessionPolicy}
           />
           <p
@@ -192,8 +193,10 @@ export function PersonaAdvancedFields({
             id="persona-session-policy-description"
           >
             {behaviorDraft.sessionPolicy === "thread"
-              ? "Keeps a separate conversation for each channel thread. Direct messages remain shared."
-              : "Shares one conversation across every thread in a channel."}
+              ? tl(
+                  "Keeps a separate conversation for each channel thread. Direct messages remain shared.",
+                )
+              : tl("Shares one conversation across every thread in a channel.")}
           </p>
         </div>
 
@@ -202,8 +205,10 @@ export function PersonaAdvancedFields({
             className="text-sm font-medium text-foreground"
             htmlFor="persona-parallelism"
           >
-            Parallelism
-            <span className={PERSONA_LABEL_OPTIONAL_CLASS}>Optional</span>
+            {tl("Parallelism")}
+            <span className={PERSONA_LABEL_OPTIONAL_CLASS}>
+              {tl("Optional")}
+            </span>
           </label>
           <div
             className={cn(
@@ -248,8 +253,8 @@ export function PersonaAdvancedFields({
           className="text-sm font-medium text-foreground"
           htmlFor="persona-name-pool"
         >
-          Instance name pool
-          <span className={PERSONA_LABEL_OPTIONAL_CLASS}>Optional</span>
+          {tl("Instance name pool")}
+          <span className={PERSONA_LABEL_OPTIONAL_CLASS}>{tl("Optional")}</span>
         </label>
         <div
           className={cn(
@@ -267,7 +272,7 @@ export function PersonaAdvancedFields({
             disabled={disabled}
             id="persona-name-pool"
             onChange={(event) => onNamePoolTextChange(event.target.value)}
-            placeholder="Birch, Compass, Ridge, Thistle"
+            placeholder={tl("Birch, Compass, Ridge, Thistle")}
             spellCheck={false}
             value={namePoolText}
           />

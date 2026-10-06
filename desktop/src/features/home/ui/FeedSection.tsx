@@ -22,6 +22,7 @@ import { Button } from "@/shared/ui/button";
 import { Markdown } from "@/shared/ui/markdown";
 import { hasLinkPreviewSuppression } from "@/features/messages/lib/formatTimelineMessages";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const relativeTimeFormatter = new Intl.RelativeTimeFormat("en-US", {
   numeric: "auto",
@@ -180,7 +181,9 @@ export function FeedSection({
               >
                 {canOpenChannel ? (
                   <button
-                    aria-label={`Open ${item.channelName || "channel"}`}
+                    aria-label={tlt("Open {0}", [
+                      item.channelName || "channel",
+                    ])}
                     className="absolute inset-0"
                     data-testid={`home-feed-open-${item.id}`}
                     onClick={() => {
@@ -226,7 +229,7 @@ export function FeedSection({
                       #{item.channelName}
                     </span>
                   ) : null}
-                  <span className="ml-auto shrink-0 text-2xs text-muted-foreground/60">
+                  <span className="ms-auto shrink-0 text-2xs text-muted-foreground/60">
                     {formatRelativeTime(item.createdAt)}
                   </span>
                 </div>
@@ -246,7 +249,7 @@ export function FeedSection({
 
                 {showDoneAction ? (
                   <Button
-                    aria-label={isDone ? "Undo done" : "Mark done"}
+                    aria-label={isDone ? tl("Undo done") : tl("Mark done")}
                     onClick={() => {
                       if (isDone) {
                         onUndoDone(item.id);
@@ -257,7 +260,7 @@ export function FeedSection({
                     size="icon"
                     type="button"
                     variant="ghost"
-                    className={`pointer-events-auto absolute right-1.5 top-1.5 opacity-0 transition-opacity group-hover:opacity-100 ${isDone ? "text-green-500 opacity-100" : "text-muted-foreground"}`}
+                    className={`pointer-events-auto absolute end-1.5 top-1.5 opacity-0 transition-opacity group-hover:opacity-100 ${isDone ? "text-green-500 opacity-100" : "text-muted-foreground"}`}
                   >
                     <Check />
                   </Button>

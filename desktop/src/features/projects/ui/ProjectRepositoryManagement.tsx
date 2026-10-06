@@ -20,6 +20,7 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { AddProjectRepositoryDialog } from "./AddProjectRepositoryDialog";
 import { AttachProjectRepositoryDialog } from "./AttachProjectRepositoryDialog";
+import { tl } from "@/shared/i18n/tl";
 
 export function ProjectRepositoryManagement({
   compact = false,
@@ -146,7 +147,7 @@ export function ProjectRepositoryManagement({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
-              aria-label="Add repository"
+              aria-label={tl("Add repository")}
               className={
                 compact
                   ? "h-6 w-6 shrink-0 rounded-md text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
@@ -157,14 +158,14 @@ export function ProjectRepositoryManagement({
               size={compact ? "icon" : "sm"}
               title={
                 canEdit
-                  ? "Add repository"
-                  : "Only the project owner can add repositories"
+                  ? tl("Add repository")
+                  : tl("Only the project owner can add repositories")
               }
               type="button"
               variant={compact ? "ghost" : "outline"}
             >
               <Plus className={compact ? "h-4 w-4" : "h-3.5 w-3.5"} />
-              {compact ? null : "Add"}
+              {compact ? null : tl("Add")}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
@@ -173,14 +174,14 @@ export function ProjectRepositoryManagement({
               onSelect={() => setCreateOpen(true)}
             >
               <FolderPlus className="h-4 w-4" />
-              Create new repository
+              {tl("Create new repository")}
             </DropdownMenuItem>
             <DropdownMenuItem
               data-testid="attach-project-repository"
               onSelect={() => setAttachOpen(true)}
             >
               <Link className="h-4 w-4" />
-              Select existing repository
+              {tl("Select existing repository")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -189,7 +190,7 @@ export function ProjectRepositoryManagement({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
-              aria-label="Manage repository access"
+              aria-label={tl("Manage repository access")}
               className={
                 compact
                   ? "h-6 w-6 shrink-0 rounded-md text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
@@ -204,12 +205,14 @@ export function ProjectRepositoryManagement({
               {compact
                 ? null
                 : repairMutation.isPending
-                  ? "Updating…"
-                  : "Access"}
+                  ? tl("Updating…")
+                  : tl("Access")}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="min-w-56">
-            <DropdownMenuLabel>Repository access channel</DropdownMenuLabel>
+            <DropdownMenuLabel>
+              {tl("Repository access channel")}
+            </DropdownMenuLabel>
             {accessChannels.map((channel) => (
               <DropdownMenuItem
                 className="justify-between gap-4"

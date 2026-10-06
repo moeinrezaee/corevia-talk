@@ -37,6 +37,7 @@ import type {
   OnboardingProfileValues,
   ProfileStepState,
 } from "./types";
+import { tl } from "@/shared/i18n/tl";
 
 function isRelayMembershipDeniedError(error: unknown): boolean {
   if (!(error instanceof Error)) {
@@ -511,17 +512,17 @@ export function OnboardingFlow({
         testId="onboarding-gate"
         total={totalOnboardingSteps}
       >
-        <div className="relative flex w-full max-w-none flex-col items-stretch text-left">
+        <div className="relative flex w-full max-w-none flex-col items-stretch text-start">
           {membershipError &&
           (currentPage === "profile" || currentPage === "avatar") ? (
             <div className="mb-4 w-full max-w-[500px] rounded-lg border border-destructive/30 bg-destructive/5 p-4 text-sm">
               {membershipError.kind === "unreachable" ? (
                 <>
                   <p className="font-medium text-destructive">
-                    Can't reach this relay
+                    {tl("Can't reach this relay")}
                   </p>
                   <p className="mt-1 text-muted-foreground">
-                    Check your connection or change your community.
+                    {tl("Check your connection or change your community.")}
                   </p>
                   <Button
                     className="mt-3"
@@ -529,16 +530,16 @@ export function OnboardingFlow({
                     size="sm"
                     variant="outline"
                   >
-                    Change community
+                    {tl("Change community")}
                   </Button>
                 </>
               ) : (
                 <>
                   <p className="font-medium text-destructive">
-                    {membershipError.message ?? "Something went wrong"}
+                    {membershipError.message ?? tl("Something went wrong")}
                   </p>
                   <p className="mt-1 text-muted-foreground">
-                    The relay returned an error. Try again.
+                    {tl("The relay returned an error. Try again.")}
                   </p>
                 </>
               )}
@@ -573,24 +574,23 @@ export function OnboardingFlow({
                 {identityLost ? (
                   <>
                     <h1 className="text-title font-normal text-foreground">
-                      Re-import your key
+                      {tl("Re-import your key")}
                     </h1>
                     <p className="mt-5 text-sm leading-6 text-muted-foreground">
-                      Your identity is no longer in the system keyring.
-                      Re-import your nsec to restore it — Buzz will restart to
-                      finish recovery. Or go back to start a new identity with a
-                      fresh key.
+                      {tl(
+                        "Your identity is no longer in the system keyring. Re-import your nsec to restore it — Buzz will restart to finish recovery. Or go back to start a new identity with a fresh key.",
+                      )}
                     </p>
                   </>
                 ) : (
                   <>
                     <h1 className="text-title font-normal text-foreground">
-                      Use your existing key
+                      {tl("Use your existing key")}
                     </h1>
                     <p className="mt-5 text-sm leading-6 text-muted-foreground">
-                      Import your Nostr private key to use that identity with
-                      Buzz. If this key already has a profile on the relay, your
-                      name and avatar are restored automatically.
+                      {tl(
+                        "Import your Nostr private key to use that identity with Buzz. If this key already has a profile on the relay, your name and avatar are restored automatically.",
+                      )}
                     </p>
                   </>
                 )}

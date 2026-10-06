@@ -5,6 +5,7 @@ import { ChevronLeft } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 import { ONBOARDING_CARD_SECONDARY_CTA_CLASS } from "./onboardingCardStyles";
+import { tl } from "@/shared/i18n/tl";
 
 type OnboardingFooterPlacement = "card" | "viewport";
 
@@ -65,7 +66,7 @@ export function OnboardingFooterProvider({
           <div className="flex min-w-0 flex-1 justify-start">
             {backAction ? (
               <Button
-                aria-label={backAction.label ?? "Back"}
+                aria-label={backAction.label ?? tl("Back")}
                 className={cn(
                   "size-[3.25rem] rounded-full p-0 [&_svg]:size-6",
                   ONBOARDING_CARD_SECONDARY_CTA_CLASS,
@@ -104,7 +105,7 @@ export function OnboardingFooterProvider({
         className="pointer-events-none fixed inset-x-0 bottom-0 z-10 h-36 bg-[linear-gradient(to_top,var(--buzz-onboarding-shell-bottom)_35%,transparent)]"
       />
       {backAction ? (
-        <div className="fixed bottom-5 left-6 z-20">
+        <div className="fixed bottom-5 start-6 z-20">
           <Button
             className="h-9 rounded-full bg-foreground/10 px-6 text-sm text-foreground hover:bg-foreground/15 hover:text-foreground"
             data-testid={backAction.testId ?? "onboarding-back"}
@@ -113,7 +114,7 @@ export function OnboardingFooterProvider({
             type="button"
             variant="ghost"
           >
-            {backAction.label ?? "Back"}
+            {backAction.label ?? tl("Back")}
           </Button>
         </div>
       ) : null}

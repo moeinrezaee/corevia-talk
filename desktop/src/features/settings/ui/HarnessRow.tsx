@@ -42,6 +42,7 @@ import {
 } from "./harnessCatalogLogic";
 import { formValuesFromCatalogEntry } from "./harnessFormLogic";
 import { deleteConfirmState } from "./harnessGalleryLogic";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 /** Link label for the row's install-instructions URL. Distinct from the
  * catalog's `installLinkLabel` — rows spell out what the guide covers
@@ -111,7 +112,7 @@ function RuntimeOverflowMenu({
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <button
-          aria-label={`Open actions for ${runtime.label}`}
+          aria-label={tlt("Open actions for {0}", [runtime.label])}
           className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           data-testid={`doctor-runtime-menu-${runtime.id}`}
           type="button"
@@ -138,7 +139,7 @@ function RuntimeOverflowMenu({
         {runtime.nodeRequired ? (
           <DropdownMenuItem onSelect={() => void openUrl("https://nodejs.org")}>
             <ExternalLink className="h-4 w-4" />
-            Install Node.js
+            {tl("Install Node.js")}
           </DropdownMenuItem>
         ) : null}
         {hasInstructions ? (
@@ -154,7 +155,7 @@ function RuntimeOverflowMenu({
             data-testid={`custom-harness-edit-${runtime.id}`}
             onSelect={onEdit}
           >
-            Edit
+            {tl("Edit")}
           </DropdownMenuItem>
         ) : null}
         {onDelete ? (
@@ -163,7 +164,7 @@ function RuntimeOverflowMenu({
             data-testid={`custom-harness-delete-${runtime.id}`}
             onSelect={onDelete}
           >
-            Delete
+            {tl("Delete")}
           </DropdownMenuItem>
         ) : null}
       </DropdownMenuContent>
@@ -202,7 +203,7 @@ function RuntimeActions({
   const isWorking = isInstalling || isConnecting;
 
   return (
-    <div className="ml-auto flex shrink-0 items-center justify-end gap-1">
+    <div className="ms-auto flex shrink-0 items-center justify-end gap-1">
       <RuntimeOverflowMenu
         authMethods={authMethods}
         connectingMethodId={connectingMethodId}
@@ -226,14 +227,14 @@ function RuntimeActions({
             className="inline-flex shrink-0 items-center rounded-md bg-emerald-500/15 px-2 py-0.5 text-xs font-medium text-emerald-600 dark:text-emerald-400"
             data-testid={`doctor-runtime-ready-${runtime.id}`}
           >
-            Ready
+            {tl("Ready")}
           </span>
         )
       ) : canInstall ? (
         // Rows needing multi-step setup render no action here — setup lives in
         // the Add-runtimes catalog. Custom rows keep their ••• menu instead.
         <Button
-          aria-label={`Install ${runtime.label}`}
+          aria-label={tlt("Install {0}", [runtime.label])}
           className="h-7 px-3 text-xs"
           data-testid={`doctor-runtime-install-${runtime.id}`}
           onClick={onInstall}
@@ -241,7 +242,9 @@ function RuntimeActions({
           type="button"
           variant="outline"
         >
-          {runtime.availability === "adapter_outdated" ? "Update" : "Install"}
+          {runtime.availability === "adapter_outdated"
+            ? tl("Update")
+            : tl("Install")}
         </Button>
       ) : null}
     </div>
@@ -463,7 +466,7 @@ export function HarnessRow({
             className="mt-2 whitespace-pre-line rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-1.5 text-sm text-destructive"
             data-testid={`doctor-runtime-config-error-${runtime.id}`}
           >
-            Config error: {runtime.authStatus.diagnostic}
+            {tl("Config error:")} {runtime.authStatus.diagnostic}
           </p>
         ) : null}
 
@@ -497,8 +500,10 @@ export function HarnessRow({
             className="mt-2 rounded-lg border border-border/60 bg-background/60 px-3 py-1.5 text-sm text-muted-foreground"
             data-testid={`doctor-runtime-terminal-guidance-${runtime.id}`}
           >
-            Finish signing in from the Terminal window, then click Check again
-            to re-check {runtime.label}.
+            {tl(
+              "Finish signing in from the Terminal window, then click Check again to re-check",
+            )}{" "}
+            {runtime.label}.
           </p>
         ) : null}
         {confirmingDelete ? (
@@ -520,7 +525,7 @@ export function HarnessRow({
                 type="button"
                 variant="ghost"
               >
-                Cancel
+                {tl("Cancel")}
               </Button>
               <Button
                 className="h-7 px-3 text-xs"
@@ -542,7 +547,11 @@ export function HarnessRow({
                 type="button"
                 variant="destructive"
               >
-                {del.isPending ? <Spinner className="h-3.5 w-3.5" /> : "Delete"}
+                {del.isPending ? (
+                  <Spinner className="h-3.5 w-3.5" />
+                ) : (
+                  tl("Delete")
+                )}
               </Button>
             </div>
           </div>
@@ -559,18 +568,20 @@ export function HarnessRow({
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Update {runtime.label} adapter?</AlertDialogTitle>
+            <AlertDialogTitle>
+              {tl("Update")} {runtime.label} {tl("adapter?")}
+            </AlertDialogTitle>
             <AlertDialogDescription>
               {adapterUpdateWarning(runtime)}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{tl("Cancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleInstall}
               data-testid={`doctor-runtime-confirm-update-${runtime.id}`}
             >
-              Update
+              {tl("Update")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

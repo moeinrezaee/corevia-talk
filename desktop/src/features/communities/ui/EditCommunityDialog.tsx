@@ -17,6 +17,7 @@ import {
   DialogTitle,
 } from "@/shared/ui/dialog";
 import { Input } from "@/shared/ui/input";
+import { tl } from "@/shared/i18n/tl";
 
 type EditCommunityDialogProps = {
   community: Community | null;
@@ -126,9 +127,9 @@ export function EditCommunityDialog({
     <Dialog onOpenChange={onOpenChange} open={open}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>Edit Community</DialogTitle>
+          <DialogTitle>{tl("Edit Community")}</DialogTitle>
           <DialogDescription>
-            Update this community's name or relay URL.
+            {tl("Update this community's name or relay URL.")}
           </DialogDescription>
         </DialogHeader>
         <form
@@ -138,9 +139,9 @@ export function EditCommunityDialog({
           {canEditIcon ? (
             <div className="flex items-center justify-between gap-4 rounded-xl border border-border/70 bg-muted/20 p-3">
               <div className="min-w-0">
-                <p className="text-sm font-medium">Community icon</p>
+                <p className="text-sm font-medium">{tl("Community icon")}</p>
                 <p className="text-xs text-muted-foreground">
-                  Shown in the community rail and switcher.
+                  {tl("Shown in the community rail and switcher.")}
                 </p>
               </div>
               <CommunityIconSettingsCard compact />
@@ -151,13 +152,13 @@ export function EditCommunityDialog({
               className="text-sm font-medium text-foreground"
               htmlFor="edit-ws-name"
             >
-              Name
+              {tl("Name")}
             </label>
             <Input
               autoFocus
               id="edit-ws-name"
               onChange={(e) => setName(e.target.value)}
-              placeholder="My Community"
+              placeholder={tl("My Community")}
               type="text"
               value={name}
             />
@@ -167,12 +168,12 @@ export function EditCommunityDialog({
               className="text-sm font-medium text-foreground"
               htmlFor="edit-ws-relay-url"
             >
-              Relay URL
+              {tl("Relay URL")}
             </label>
             <Input
               id="edit-ws-relay-url"
               onChange={(e) => setRelayUrl(e.target.value)}
-              placeholder="wss://relay.example.com"
+              placeholder={tl("wss://relay.example.com")}
               type="text"
               value={relayUrl}
             />
@@ -182,15 +183,15 @@ export function EditCommunityDialog({
               className="text-sm font-medium text-foreground"
               htmlFor="edit-ws-token"
             >
-              API Token
-              <span className="ml-1 text-xs font-normal text-muted-foreground">
-                (optional)
+              {tl("API Token")}
+              <span className="ms-1 text-xs font-normal text-muted-foreground">
+                {tl("(optional)")}
               </span>
             </label>
             <Input
               id="edit-ws-token"
               onChange={(e) => setToken(e.target.value)}
-              placeholder="buzz_..."
+              placeholder={tl("buzz_...")}
               type="password"
               value={token}
             />
@@ -200,9 +201,9 @@ export function EditCommunityDialog({
               className="text-sm font-medium text-foreground"
               htmlFor="edit-ws-repos-dir"
             >
-              Repos Directory
-              <span className="ml-1 text-xs font-normal text-muted-foreground">
-                (optional)
+              {tl("Repos Directory")}
+              <span className="ms-1 text-xs font-normal text-muted-foreground">
+                {tl("(optional)")}
               </span>
             </label>
             <Input
@@ -211,7 +212,7 @@ export function EditCommunityDialog({
                 setReposDir(e.target.value);
                 setReposDirError(null);
               }}
-              placeholder="~/Development"
+              placeholder={tl("~/Development")}
               type="text"
               value={reposDir}
             />
@@ -219,17 +220,18 @@ export function EditCommunityDialog({
               <p className="text-xs text-destructive">{reposDirError}</p>
             ) : null}
             <p className="text-xs text-muted-foreground">
-              Point the agent's <code>REPOS</code> directory at an existing
-              folder so agents work in your local checkouts. Leave blank to use
-              the default location.
+              {tl("Point the agent's")} <code>REPOS</code>{" "}
+              {tl(
+                "directory at an existing folder so agents work in your local checkouts. Leave blank to use the default location.",
+              )}
             </p>
           </div>
           <div className="flex justify-end gap-2 pt-2">
             <Button onClick={handleClose} type="button" variant="outline">
-              Cancel
+              {tl("Cancel")}
             </Button>
             <Button disabled={!name.trim() || !relayUrl.trim()} type="submit">
-              Save Changes
+              {tl("Save Changes")}
             </Button>
           </div>
         </form>

@@ -9,6 +9,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { AlertCircle, LoaderCircle } from "lucide-react";
 import { formatRelativeTime } from "../forum/lib/time";
+import { tl } from "@/shared/i18n/tl";
 
 // ── Generic async state ───────────────────────────────────────────────────
 
@@ -195,7 +196,7 @@ export function LoadingSpinner() {
   return (
     <div className="flex items-center gap-2 text-sm text-muted-foreground">
       <LoaderCircle className="h-4 w-4 animate-spin" />
-      Loading…
+      {tl("Loading…")}
     </div>
   );
 }

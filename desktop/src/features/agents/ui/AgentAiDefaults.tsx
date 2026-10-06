@@ -2,6 +2,7 @@ import type * as React from "react";
 import type { InheritedDefault } from "./bakedEnvHelpers";
 import { getPersonaProviderOptions } from "./agentConfigOptions";
 import { Button } from "@/shared/ui/button";
+import { tl } from "@/shared/i18n/tl";
 
 function providerLabel(providerId: string) {
   const option = getPersonaProviderOptions("", "buzz-agent").find(
@@ -54,7 +55,7 @@ export function AgentAiDefaultsNotice({
         data-testid="agent-ai-defaults-notice"
       >
         <p className="text-sm font-medium text-foreground">
-          Global defaults not set
+          {tl("Global defaults not set")}
         </p>
         <Button
           className="shrink-0"
@@ -65,7 +66,7 @@ export function AgentAiDefaultsNotice({
           type="button"
           variant="outline"
         >
-          Set
+          {tl("Set")}
         </Button>
       </div>
     );
@@ -76,19 +77,19 @@ export function AgentAiDefaultsNotice({
       <dl className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 text-sm">
         {harness !== undefined ? (
           <>
-            <dt className="text-muted-foreground">Harness</dt>
+            <dt className="text-muted-foreground">{tl("Harness")}</dt>
             <dd className="truncate text-foreground">
-              {harness || "Not configured"}
+              {harness || tl("Not configured")}
             </dd>
           </>
         ) : null}
-        <dt className="text-muted-foreground">Provider</dt>
+        <dt className="text-muted-foreground">{tl("Provider")}</dt>
         <dd className="truncate text-foreground">
-          {provider ? providerLabel(provider) : "Not configured"}
+          {provider ? providerLabel(provider) : tl("Not configured")}
         </dd>
-        <dt className="text-muted-foreground">Model</dt>
+        <dt className="text-muted-foreground">{tl("Model")}</dt>
         <dd className="truncate text-foreground">
-          {model || "Not configured"}
+          {model || tl("Not configured")}
         </dd>
       </dl>
       <Button
@@ -100,7 +101,7 @@ export function AgentAiDefaultsNotice({
         type="button"
         variant="link"
       >
-        Edit global defaults
+        {tl("Edit global defaults")}
       </Button>
     </div>
   );

@@ -5,6 +5,7 @@ import {
   selectThreadRepliesSurface,
 } from "@/features/messages/lib/timelineSnapshot";
 import { Button } from "@/shared/ui/button";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * Terminal empty/error states for the thread reply region.
@@ -35,11 +36,12 @@ export function ThreadRepliesErrorCard({ onRetry }: { onRetry?: () => void }) {
       role="alert"
     >
       <p className="text-sm font-medium text-foreground/80">
-        Couldn&apos;t load replies
+        {tl("Couldn't load replies")}
       </p>
       <p className="mt-1 text-xs text-muted-foreground">
-        The thread history didn&apos;t load. Check your connection and try
-        again.
+        {tl(
+          "The thread history didn't load. Check your connection and try again.",
+        )}
       </p>
       {onRetry ? (
         <Button
@@ -50,7 +52,7 @@ export function ThreadRepliesErrorCard({ onRetry }: { onRetry?: () => void }) {
           type="button"
           variant="outline"
         >
-          Retry
+          {tl("Retry")}
         </Button>
       ) : null}
     </div>
@@ -66,10 +68,10 @@ export function ThreadRepliesEmptyCard() {
   return (
     <div className="rounded-2xl border border-dashed border-border/70 bg-card/40 px-4 py-6 text-center">
       <p className="text-sm font-medium text-foreground/80">
-        No replies in this branch yet
+        {tl("No replies in this branch yet")}
       </p>
       <p className="mt-1 text-xs text-muted-foreground">
-        Reply in the thread to continue this branch.
+        {tl("Reply in the thread to continue this branch.")}
       </p>
     </div>
   );

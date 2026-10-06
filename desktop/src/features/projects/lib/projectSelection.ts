@@ -1,3 +1,4 @@
+import { tl } from "@/shared/i18n/tl";
 /** Clustered overview selection that drives the context pod. */
 
 export type ProjectSelectionKind =
@@ -217,13 +218,13 @@ export function projectSelectionPresentation(
   const actions: ProjectSelectionAction[] = [
     {
       id: "chat-agent",
-      label: "Chat with an agent",
+      label: tl("Chat with an agent"),
       testId: "projects-selection-chat-agent",
     },
   ];
   actions.push({
     id: "discuss",
-    label: "Discuss in a channel",
+    label: tl("Discuss in a channel"),
     testId: "projects-selection-discuss",
   });
   if (kind === "commit") {

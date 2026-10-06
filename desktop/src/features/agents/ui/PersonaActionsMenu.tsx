@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export function PersonaActionsMenu({
   isActionPending,
@@ -47,7 +48,7 @@ export function PersonaActionsMenu({
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <button
-          aria-label={`Open actions for ${persona.displayName}`}
+          aria-label={tlt("Open actions for {0}", [persona.displayName])}
           className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           type="button"
         >
@@ -61,7 +62,7 @@ export function PersonaActionsMenu({
         {canEdit ? (
           <DropdownMenuItem disabled={disabled} onClick={() => onEdit(persona)}>
             <Pencil className="h-4 w-4" />
-            Edit
+            {tl("Edit")}
           </DropdownMenuItem>
         ) : null}
         <DropdownMenuItem
@@ -69,20 +70,20 @@ export function PersonaActionsMenu({
           onClick={() => onDuplicate(persona)}
         >
           <CopyPlus className="h-4 w-4" />
-          Duplicate
+          {tl("Duplicate")}
         </DropdownMenuItem>
         <DropdownMenuItem
           disabled={disabled}
           onClick={() => onShare(persona, linkedAgent)}
         >
           <Share2 className="h-4 w-4" />
-          Share
+          {tl("Share")}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         {persona.sourceTeam ? (
           <DropdownMenuItem disabled>
             <Trash2 className="h-4 w-4" />
-            Managed by team
+            {tl("Managed by team")}
           </DropdownMenuItem>
         ) : (
           <DropdownMenuItem
@@ -98,7 +99,7 @@ export function PersonaActionsMenu({
             }}
           >
             <Trash2 className="h-4 w-4" />
-            Delete
+            {tl("Delete")}
           </DropdownMenuItem>
         )}
       </DropdownMenuContent>

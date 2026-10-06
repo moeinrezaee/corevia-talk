@@ -24,6 +24,7 @@ import { PubKey } from "@/shared/ui/PubKey";
 import { SubsectionLabel } from "@/shared/ui/PageHeader";
 import { resolveModelLabel } from "@/features/agents/lib/formatAgentModelLabel";
 import { RestartDiffBadge } from "./RestartDiffBadge";
+import { tl } from "@/shared/i18n/tl";
 
 export function ManagedAgentRow({
   agent,
@@ -103,7 +104,7 @@ export function ManagedAgentRow({
         {isLocal ? (
           <button
             aria-expanded={isLogSelected}
-            className="-m-1 min-w-0 flex-1 rounded-lg p-1 text-left transition-colors hover:bg-background/40"
+            className="-m-1 min-w-0 flex-1 rounded-lg p-1 text-start transition-colors hover:bg-background/40"
             onClick={() =>
               onSelectLogAgent(isLogSelected ? null : agent.pubkey)
             }
@@ -171,7 +172,7 @@ export function ManagedAgentRow({
             type="button"
             variant="outline"
           >
-            Manage
+            {tl("Manage")}
           </Button>
         </div>
       </div>
@@ -190,7 +191,7 @@ export function ManagedAgentRow({
           />
           <div className="mt-4 border-t border-border/50 pt-3">
             <p className="mb-2 text-xs font-medium text-muted-foreground">
-              Configuration
+              {tl("Configuration")}
             </p>
             <AgentConfigPanel pubkey={agent.pubkey} />
           </div>
@@ -247,13 +248,13 @@ function AgentSummary({
             {agent.personaOrphaned ? (
               <Badge className="gap-1" variant="warning">
                 <AlertTriangle className="h-3 w-3" />
-                Configuration missing
+                {tl("Configuration missing")}
               </Badge>
             ) : null}
             {agent.personaOutOfDate ? (
               <Badge className="gap-1" variant="warning">
                 <AlertTriangle className="h-3 w-3" />
-                Out of date
+                {tl("Out of date")}
               </Badge>
             ) : null}
           </div>
@@ -261,27 +262,30 @@ function AgentSummary({
             <PubKey pubkey={agent.pubkey} />
             {agent.backend.type === "local" ? (
               <span>
-                {agent.startOnAppLaunch ? "Auto-start" : "Manual start"}
+                {agent.startOnAppLaunch ? tl("Auto-start") : tl("Manual start")}
               </span>
             ) : (
-              <span>Remote deployment</span>
+              <span>{tl("Remote deployment")}</span>
             )}
           </div>
           {agent.personaOrphaned ? (
             <p className="mt-1.5 text-xs text-amber-600 dark:text-amber-400">
-              This agent's configuration is missing — it may still be syncing or
-              was deleted on another device.
+              {tl(
+                "This agent's configuration is missing — it may still be syncing or was deleted on another device.",
+              )}
             </p>
           ) : agent.needsRestart ? (
             <p className="mt-1.5 text-xs text-amber-600 dark:text-amber-400">
-              Configuration changed since this agent started. Restart to apply
-              it.
+              {tl(
+                "Configuration changed since this agent started. Restart to apply it.",
+              )}
             </p>
           ) : null}
           {agent.personaOutOfDate ? (
             <p className="mt-1.5 text-xs text-amber-600 dark:text-amber-400">
-              Template updated since this agent was created. Respawn to apply
-              the new configuration.
+              {tl(
+                "Template updated since this agent was created. Respawn to apply the new configuration.",
+              )}
             </p>
           ) : null}
           {channelNames.length > 0 ? (
@@ -348,7 +352,8 @@ function WorkingBadge({
         onNavigate(channelId);
       }}
     >
-      Working in #{name} · {formatElapsed(now - anchorAt)}
+      {tl("Working in #")}
+      {name} · {formatElapsed(now - anchorAt)}
     </Badge>
   );
 }
@@ -370,7 +375,7 @@ function StatusBlock({
 }) {
   return (
     <div className="space-y-1 lg:pt-0.5">
-      <SubsectionLabel className="lg:hidden">Status</SubsectionLabel>
+      <SubsectionLabel className="lg:hidden">{tl("Status")}</SubsectionLabel>
       <AgentStatusBadge
         isWorking={isWorking}
         presenceLoaded={presenceLoaded}
@@ -404,7 +409,7 @@ function RuntimeBlock({
 }) {
   return (
     <div className="space-y-1 lg:pt-0.5">
-      <SubsectionLabel className="lg:hidden">Runtime</SubsectionLabel>
+      <SubsectionLabel className="lg:hidden">{tl("Runtime")}</SubsectionLabel>
       <p className="truncate font-mono text-xs text-foreground">
         {agent.agentCommand}
       </p>
@@ -423,7 +428,7 @@ function RuntimeBlock({
 function AgentOriginBadge({ agent }: { agent: ManagedAgent }) {
   return (
     <Badge variant="outline">
-      {agent.backend.type === "local" ? "Local" : "Remote"}
+      {agent.backend.type === "local" ? tl("Local") : tl("Remote")}
     </Badge>
   );
 }

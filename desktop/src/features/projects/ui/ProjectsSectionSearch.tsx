@@ -10,6 +10,7 @@ import { ProjectsSortSelect } from "@/features/projects/ui/ProjectsListHeaderBar
 import { projectsSectionTitle } from "@/features/projects/ui/projectsSectionMeta";
 import { ProjectsToolbar } from "@/features/projects/ui/ProjectsToolbar";
 import { Button } from "@/shared/ui/button";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export function ProjectsSectionSearch({
   filter,
@@ -63,8 +64,8 @@ export function ProjectsSectionSearch({
       <Button
         aria-label={
           open
-            ? "Close project search"
-            : `Search ${projectsSectionTitle(filter)}`
+            ? tl("Close project search")
+            : tlt("Search {0}", [projectsSectionTitle(filter)])
         }
         className="group/projects-search relative h-7 w-7 shrink-0 rounded-full border border-border/55 bg-transparent px-0 text-muted-foreground shadow-none hover:border-border hover:bg-muted/25 hover:text-foreground focus-visible:border-border"
         data-testid={
@@ -72,7 +73,11 @@ export function ProjectsSectionSearch({
         }
         onClick={open ? close : () => setOpen(true)}
         size="icon"
-        title={open ? "Close search" : `Search ${projectsSectionTitle(filter)}`}
+        title={
+          open
+            ? tl("Close search")
+            : tlt("Search {0}", [projectsSectionTitle(filter)])
+        }
         type="button"
         variant="ghost"
       >
@@ -102,8 +107,8 @@ export function ProjectsSectionSearch({
               transition={transition}
             >
               <input
-                aria-label={`Search ${projectsSectionTitle(filter)}`}
-                className="min-w-0 flex-1 bg-transparent px-2 pr-36 text-sm text-foreground outline-none placeholder:text-muted-foreground/55"
+                aria-label={tlt("Search {0}", [projectsSectionTitle(filter)])}
+                className="min-w-0 flex-1 bg-transparent px-2 pe-36 text-sm text-foreground outline-none placeholder:text-muted-foreground/55"
                 data-testid="projects-section-search-input"
                 onChange={(event) => setQuery(event.target.value)}
                 onKeyDown={(event) => {
@@ -111,13 +116,15 @@ export function ProjectsSectionSearch({
                   event.preventDefault();
                   close();
                 }}
-                placeholder={`Search ${projectsSectionTitle(filter).toLocaleLowerCase()}`}
+                placeholder={tlt("Search {0}", [
+                  projectsSectionTitle(filter).toLocaleLowerCase(),
+                ])}
                 ref={focusSearchInput}
                 type="search"
                 value={query}
               />
               {filter !== "all" && filter !== "channels" ? (
-                <div className="absolute inset-y-0 right-0 flex w-32 items-center justify-end">
+                <div className="absolute inset-y-0 end-0 flex w-32 items-center justify-end">
                   <ProjectsSortSelect onChange={onSortChange} sort={sort} />
                 </div>
               ) : null}

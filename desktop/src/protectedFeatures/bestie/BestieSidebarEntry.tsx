@@ -5,6 +5,7 @@ import { useAppNavigation } from "@/app/navigation/useAppNavigation";
 import { SidebarMenuButton, SidebarMenuItem } from "@/shared/ui/sidebar";
 import { BestieAgentLockup } from "./BestiePopover";
 import { useBestie } from "./useBestie";
+import { tl } from "@/shared/i18n/tl";
 
 export function BestieSidebarEntry() {
   const bestie = useBestie();
@@ -29,7 +30,7 @@ export function BestieSidebarEntry() {
       <SidebarMenuButton
         disabled={bestie.isOpening}
         onClick={handleClick}
-        tooltip="Bestie"
+        tooltip={tl("Bestie")}
         type="button"
       >
         {bestie.assignedAgent ? (
@@ -41,7 +42,7 @@ export function BestieSidebarEntry() {
         ) : (
           <>
             <Plus className="h-4 w-4" />
-            <span>Bestie</span>
+            <span>{tl("Bestie")}</span>
           </>
         )}
       </SidebarMenuButton>

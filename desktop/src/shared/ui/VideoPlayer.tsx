@@ -504,7 +504,7 @@ function VideoScrubber({
         onKeyDown={handleKeyDown}
       />
       <div
-        className="pointer-events-none absolute left-0 right-0 top-1/2 h-1 -translate-y-1/2 overflow-hidden rounded-full bg-white/[0.16]"
+        className="pointer-events-none absolute start-0 end-0 top-1/2 h-1 -translate-y-1/2 overflow-hidden rounded-full bg-white/[0.16]"
         data-testid={`${testIdPrefix}-progress-track`}
       >
         <div
@@ -574,8 +574,8 @@ function VolumeControl({
         className={cn(
           "video-volume-slider h-3 cursor-pointer transition-all duration-200",
           expanded
-            ? "ml-1 w-16"
-            : "pointer-events-none w-0 opacity-0 focus-visible:pointer-events-auto focus-visible:ml-1 focus-visible:w-16 focus-visible:opacity-100 group-hover/volume:pointer-events-auto group-hover/volume:ml-1 group-hover/volume:w-16 group-hover/volume:opacity-100",
+            ? "ms-1 w-16"
+            : "pointer-events-none w-0 opacity-0 focus-visible:pointer-events-auto focus-visible:ms-1 focus-visible:w-16 focus-visible:opacity-100 group-hover/volume:pointer-events-auto group-hover/volume:ms-1 group-hover/volume:w-16 group-hover/volume:opacity-100",
         )}
         max={1}
         min={0}
@@ -649,7 +649,7 @@ function PlaybackSpeedControl({
               <button
                 aria-pressed={selected}
                 className={cn(
-                  "flex h-8 w-full items-center justify-between rounded-lg px-2 text-left text-xs font-medium tabular-nums text-white transition-colors hover:bg-white/15 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/60",
+                  "flex h-8 w-full items-center justify-between rounded-lg px-2 text-start text-xs font-medium tabular-nums text-white transition-colors hover:bg-white/15 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/60",
                   selected && "bg-white/15",
                 )}
                 key={speed}
@@ -1162,7 +1162,7 @@ export function VideoPlayer({
             aria-label="Open video review"
             data-video-review-launcher=""
             title="Open video review"
-            className="group absolute right-2 top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full text-white shadow-sm outline-hidden focus-visible:ring-2 focus-visible:ring-white/60"
+            className="group absolute end-2 top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full text-white shadow-sm outline-hidden focus-visible:ring-2 focus-visible:ring-white/60"
             onClick={handleOpenReview}
           >
             <span className="relative isolate flex h-full w-full items-center justify-center rounded-full transition-transform duration-200 ease-out group-hover:scale-110">
@@ -1887,7 +1887,7 @@ function VideoReviewDialog({
                     </Tooltip>
                     {isEmojiPickerOpen ? (
                       <div
-                        className="absolute bottom-full right-0 z-30 mb-2 overflow-hidden rounded-2xl shadow-2xl"
+                        className="absolute bottom-full end-0 z-30 mb-2 overflow-hidden rounded-2xl shadow-2xl"
                         data-testid="video-review-emoji-picker"
                       >
                         <EmojiPicker
@@ -1909,7 +1909,7 @@ function VideoReviewDialog({
               inert={!isPanelOpen || undefined}
               style={{ width: isPanelOpen ? 380 : 0 }}
             >
-              <div className="flex h-full w-[380px] min-h-0 flex-col border-l border-border bg-neutral-950">
+              <div className="flex h-full w-[380px] min-h-0 flex-col border-s border-border bg-neutral-950">
                 <div className="flex h-12 shrink-0 items-center border-b border-border px-4">
                   <div className="flex min-w-0 items-center gap-2">
                     <MessageCircle className="h-4 w-4 text-muted-foreground" />
@@ -1917,7 +1917,7 @@ function VideoReviewDialog({
                       Comments
                     </h3>
                   </div>
-                  <span className="ml-auto rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
+                  <span className="ms-auto rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
                     {displayComments.length}
                   </span>
                 </div>
@@ -2087,7 +2087,7 @@ function VideoReviewCommentCard({
         onToggleReaction={onToggleReaction}
       />
       {replies.length > 0 ? (
-        <div className="mt-3 space-y-3 border-l border-border pl-3">
+        <div className="mt-3 space-y-3 border-s border-border ps-3">
           {replies.map((reply) => (
             <VideoReviewCommentBody
               canReply={canReply}
@@ -2149,7 +2149,7 @@ function VideoReviewCommentBody({
         </p>
         {reactions.some((reaction) => reaction.reactedByCurrentUser) ? (
           <Check
-            className="ml-auto h-4 w-4 shrink-0 text-primary"
+            className="ms-auto h-4 w-4 shrink-0 text-primary"
             aria-hidden
           />
         ) : null}

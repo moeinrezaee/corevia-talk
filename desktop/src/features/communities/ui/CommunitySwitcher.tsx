@@ -49,6 +49,7 @@ import {
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
 import { useActiveCommunityIcon } from "@/features/communities/useCommunityIcons";
 import { EditCommunityDialog } from "./EditCommunityDialog";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 // Community actions is a responsive navigation submenu, not an informational
 // disclosure. Keep its short hover dwell explicit rather than inheriting the
@@ -188,9 +189,10 @@ export function CommunitySwitcher({
       const result = await onLeaveCommunity(activeCommunity.id);
       setDropdownOpen(false);
       if (result?.status === "already-absent") {
-        toast("Community removed", {
-          description:
+        toast(tl("Community removed"), {
+          description: tl(
             "You were no longer a member, so Buzz removed the community from this device.",
+          ),
         });
       }
     } catch (error) {
@@ -261,7 +263,7 @@ export function CommunitySwitcher({
             : "min-w-0 flex-1 truncate font-medium"
         }
       >
-        {activeCommunity?.name ?? "No community"}
+        {activeCommunity?.name ?? tl("No community")}
       </span>
       {variant === "profile-menu" ? (
         <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -287,9 +289,9 @@ export function CommunitySwitcher({
             aria-label={
               degraded
                 ? `${activeCommunity?.name ?? "Community"} — ${connectionLabel}`
-                : "Community actions"
+                : tl("Community actions")
             }
-            className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-popover-foreground outline-hidden transition-colors hover:bg-muted/50 focus:bg-muted/50 focus:outline-none focus-visible:bg-muted/50 focus-visible:outline-none data-[state=open]:bg-muted/50 data-[state=open]:text-popover-foreground"
+            className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-start text-sm text-popover-foreground outline-hidden transition-colors hover:bg-muted/50 focus:bg-muted/50 focus:outline-none focus-visible:bg-muted/50 focus-visible:outline-none data-[state=open]:bg-muted/50 data-[state=open]:text-popover-foreground"
             data-testid="community-switcher"
             onMouseEnter={() => scheduleProfileMenu(true)}
             onMouseLeave={() => scheduleProfileMenu(false)}
@@ -309,14 +311,14 @@ export function CommunitySwitcher({
           sideOffset={0}
         >
           <div
-            aria-label="Community actions"
+            aria-label={tl("Community actions")}
             data-testid="profile-community-actions"
             role="menu"
           >
             {activeCommunity ? (
               <>
                 <button
-                  className="flex min-h-9 w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm outline-hidden transition-colors hover:bg-muted/50 focus:bg-muted/50 focus:outline-none focus-visible:bg-muted/50 focus-visible:outline-none"
+                  className="flex min-h-9 w-full items-center gap-2 rounded-lg px-3 py-2 text-start text-sm outline-hidden transition-colors hover:bg-muted/50 focus:bg-muted/50 focus:outline-none focus-visible:bg-muted/50 focus-visible:outline-none"
                   onClick={() => {
                     setDropdownOpen(false);
                     void writeTextToClipboard(activeCommunity.relayUrl);
@@ -325,11 +327,11 @@ export function CommunitySwitcher({
                   type="button"
                 >
                   <Link2 className="h-4 w-4" />
-                  <span>Copy community URL</span>
+                  <span>{tl("Copy community URL")}</span>
                 </button>
                 {canInvite && onInvite ? (
                   <button
-                    className="flex min-h-9 w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm outline-hidden transition-colors hover:bg-muted/50 focus:bg-muted/50 focus:outline-none focus-visible:bg-muted/50 focus-visible:outline-none"
+                    className="flex min-h-9 w-full items-center gap-2 rounded-lg px-3 py-2 text-start text-sm outline-hidden transition-colors hover:bg-muted/50 focus:bg-muted/50 focus:outline-none focus-visible:bg-muted/50 focus-visible:outline-none"
                     onClick={() => {
                       setDropdownOpen(false);
                       onInvite();
@@ -338,11 +340,11 @@ export function CommunitySwitcher({
                     type="button"
                   >
                     <Ticket className="h-4 w-4" />
-                    <span>Invite to community</span>
+                    <span>{tl("Invite to community")}</span>
                   </button>
                 ) : null}
                 <button
-                  className="flex min-h-9 w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm outline-hidden transition-colors hover:bg-muted/50 focus:bg-muted/50 focus:outline-none focus-visible:bg-muted/50 focus-visible:outline-none"
+                  className="flex min-h-9 w-full items-center gap-2 rounded-lg px-3 py-2 text-start text-sm outline-hidden transition-colors hover:bg-muted/50 focus:bg-muted/50 focus:outline-none focus-visible:bg-muted/50 focus-visible:outline-none"
                   onClick={() => {
                     setDropdownOpen(false);
                     setEditingCommunity(activeCommunity);
@@ -351,20 +353,22 @@ export function CommunitySwitcher({
                   type="button"
                 >
                   <Settings2 className="h-4 w-4" />
-                  <span>Community settings</span>
+                  <span>{tl("Community settings")}</span>
                 </button>
                 <button
-                  className="flex min-h-9 w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-destructive outline-hidden transition-colors hover:bg-destructive/10 focus:bg-destructive/10 focus:outline-none focus-visible:bg-destructive/10 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                  className="flex min-h-9 w-full items-center gap-2 rounded-lg px-3 py-2 text-start text-sm text-destructive outline-hidden transition-colors hover:bg-destructive/10 focus:bg-destructive/10 focus:outline-none focus-visible:bg-destructive/10 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
                   disabled={isLeaving}
                   onClick={() => void handleLeaveCommunity()}
                   role="menuitem"
                   type="button"
                 >
                   <LogOut className="h-4 w-4" />
-                  <span>{isLeaving ? "Leaving…" : "Leave community"}</span>
+                  <span>
+                    {isLeaving ? tl("Leaving…") : tl("Leave community")}
+                  </span>
                 </button>
                 <button
-                  className="flex min-h-9 w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-destructive outline-hidden transition-colors hover:bg-destructive/10 focus:bg-destructive/10 focus:outline-none focus-visible:bg-destructive/10 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                  className="flex min-h-9 w-full items-center gap-2 rounded-lg px-3 py-2 text-start text-sm text-destructive outline-hidden transition-colors hover:bg-destructive/10 focus:bg-destructive/10 focus:outline-none focus-visible:bg-destructive/10 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
                   disabled={isLeaving}
                   onClick={() => {
                     setDropdownOpen(false);
@@ -374,7 +378,7 @@ export function CommunitySwitcher({
                   type="button"
                 >
                   <Trash2 className="h-4 w-4" />
-                  <span>Remove from this device</span>
+                  <span>{tl("Remove from this device")}</span>
                 </button>
                 {leaveError ? (
                   <p
@@ -388,7 +392,7 @@ export function CommunitySwitcher({
               </>
             ) : null}
             <button
-              className="flex min-h-9 w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm outline-hidden transition-colors hover:bg-muted/50 focus:bg-muted/50 focus:outline-none focus-visible:bg-muted/50 focus-visible:outline-none"
+              className="flex min-h-9 w-full items-center gap-2 rounded-lg px-3 py-2 text-start text-sm outline-hidden transition-colors hover:bg-muted/50 focus:bg-muted/50 focus:outline-none focus-visible:bg-muted/50 focus-visible:outline-none"
               onClick={() => {
                 setDropdownOpen(false);
                 onAddCommunity();
@@ -397,7 +401,7 @@ export function CommunitySwitcher({
               type="button"
             >
               <Plus className="h-4 w-4" />
-              <span>Add a community</span>
+              <span>{tl("Add a community")}</span>
             </button>
           </div>
         </PopoverContent>
@@ -416,9 +420,9 @@ export function CommunitySwitcher({
             aria-label={
               degraded
                 ? `${activeCommunity?.name ?? "Community"} — ${connectionLabel}`
-                : "Switch community"
+                : tl("Switch community")
             }
-            className="flex min-w-0 max-w-full items-center gap-1.5 rounded-md py-0.5 text-left text-xs text-sidebar-foreground/50 outline-hidden transition-colors hover:text-sidebar-foreground focus:outline-none focus-visible:outline-none data-[state=open]:text-sidebar-foreground"
+            className="flex min-w-0 max-w-full items-center gap-1.5 rounded-md py-0.5 text-start text-xs text-sidebar-foreground/50 outline-hidden transition-colors hover:text-sidebar-foreground focus:outline-none focus-visible:outline-none data-[state=open]:text-sidebar-foreground"
             data-testid="community-switcher"
             type="button"
           >
@@ -449,7 +453,7 @@ export function CommunitySwitcher({
         {communities.map((community) => (
           <DropdownMenuItem
             key={community.id}
-            className="group flex items-center gap-2 pr-1"
+            className="group flex items-center gap-2 pe-1"
             onSelect={() => {
               onSwitchCommunity(community.id);
             }}
@@ -461,7 +465,7 @@ export function CommunitySwitcher({
             </span>
             <span className="min-w-0 flex-1 truncate">{community.name}</span>
             <button
-              aria-label={`Edit ${community.name}`}
+              aria-label={tlt("Edit {0}", [community.name])}
               className="flex h-5 w-5 shrink-0 items-center justify-center rounded opacity-0 hover:bg-accent group-hover:opacity-100 group-focus:opacity-100"
               onClick={(e) => {
                 e.stopPropagation();
@@ -478,7 +482,7 @@ export function CommunitySwitcher({
         <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={onAddCommunity}>
           <Plus className="h-4 w-4" />
-          <span>Add a community</span>
+          <span>{tl("Add a community")}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -514,15 +518,18 @@ export function CommunitySwitcher({
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Remove from this device</AlertDialogTitle>
+            <AlertDialogTitle>{tl("Remove from this device")}</AlertDialogTitle>
             <AlertDialogDescription>
-              {`Remove "${removingCommunity?.name ?? ""}" from this device? Buzz won't contact the relay, so your membership isn't revoked. You can add the community again later.`}
+              {tlt(
+                "Remove \"{0}\" from this device? Buzz won't contact the relay, so your membership isn't revoked. You can add the community again later.",
+                [removingCommunity?.name ?? ""],
+              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{tl("Cancel")}</AlertDialogCancel>
             <AlertDialogAction onClick={() => void handleRemoveFromDevice()}>
-              Remove
+              {tl("Remove")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

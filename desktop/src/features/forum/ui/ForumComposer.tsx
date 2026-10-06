@@ -39,6 +39,7 @@ import { ForumComposerMediaStatus } from "./ForumComposerMediaStatus";
 import { useCompactComposerInteractions } from "./useCompactComposerInteractions";
 import { useForumMentionPreparation } from "./useForumMentionPreparation";
 import { useForumDraftRecovery } from "./useForumDraftRecovery";
+import { tl } from "@/shared/i18n/tl";
 
 export function ForumComposer(props: ForumComposerProps) {
   return (
@@ -710,7 +711,7 @@ function ForumComposerVisit({
                         type="button"
                         variant="ghost"
                       >
-                        Cancel
+                        {tl("Cancel")}
                       </Button>
                     ) : null}
                     {onSecondarySubmit && secondarySubmitLabel ? (
@@ -730,7 +731,7 @@ function ForumComposerVisit({
                           >
                             {submitMode === "secondary"
                               ? secondarySubmitLabel
-                              : "Comment"}
+                              : tl("Comment")}
                             <ChevronDown className="h-3.5 w-3.5" />
                           </Button>
                         </DropdownMenuTrigger>
@@ -742,7 +743,7 @@ function ForumComposerVisit({
                             value={submitMode}
                           >
                             <DropdownMenuRadioItem value="primary">
-                              Comment
+                              {tl("Comment")}
                             </DropdownMenuRadioItem>
                             <DropdownMenuRadioItem value="secondary">
                               {secondarySubmitLabel}

@@ -28,6 +28,7 @@ import {
   parseSystemPromptSections,
 } from "./agentSessionTranscriptHelpers";
 import { friendlyTurnErrorCopy } from "../lib/friendlyAgentLastError";
+import { tl } from "@/shared/i18n/tl";
 
 export { describeRawEvent } from "./agentSessionTranscriptHelpers";
 
@@ -216,7 +217,7 @@ function describePermissionRequest(payload: Record<string, unknown>) {
     optionNames,
     descriptor: {
       renderClass: "permission" as const,
-      label: "Permission requested",
+      label: tl("Permission requested"),
       preview: title,
       action: { verb: "Requested", object: title },
       tone: "admin" as const,
@@ -513,7 +514,7 @@ function upsertPlan(
         id: updateMarkerId ?? `${id}:update:${timestamp}`,
         type: "plan",
         renderClass: "plan",
-        title: "Plan updated",
+        title: tl("Plan updated"),
         text: summarizePlanUpdate(text),
         timestamp,
         isUpdate: true,

@@ -30,6 +30,7 @@ import { ReportsTab } from "./AdminConsoleReportsTab";
 import { FeedbackTab } from "./AdminConsoleFeedbackTab";
 import { StaffingTab } from "./AdminConsoleStaffingTab";
 import { ActionsTab } from "./AdminConsoleActionsTab";
+import { tl } from "@/shared/i18n/tl";
 
 export {
   parseImetaAttachments,
@@ -54,11 +55,11 @@ function TabBar({
     label: string;
     Icon: React.ComponentType<{ className?: string }>;
   }> = [
-    { value: "reports", label: "Reports", Icon: ShieldAlert },
-    { value: "feedback", label: "Feedback", Icon: MessageSquare },
-    { value: "actions", label: "Actions", Icon: Gavel },
+    { value: "reports", label: tl("Reports"), Icon: ShieldAlert },
+    { value: "feedback", label: tl("Feedback"), Icon: MessageSquare },
+    { value: "actions", label: tl("Actions"), Icon: Gavel },
     ...(showStaffing
-      ? [{ value: "staffing" as const, label: "Staffing", Icon: Users }]
+      ? [{ value: "staffing" as const, label: tl("Staffing"), Icon: Users }]
       : []),
   ];
   return (

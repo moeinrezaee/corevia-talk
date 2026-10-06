@@ -1,6 +1,7 @@
 import { FolderGit2 } from "lucide-react";
 
 import type { Project } from "@/features/projects/hooks";
+import { tl } from "@/shared/i18n/tl";
 
 export function UnavailableProjectRepositories({
   project,
@@ -16,7 +17,7 @@ export function UnavailableProjectRepositories({
       <span className="max-w-80 truncate">
         {address.slice(address.indexOf(":", 6) + 1)}
       </span>
-      <span>Unavailable</span>
+      <span>{tl("Unavailable")}</span>
     </div>
   ));
 }

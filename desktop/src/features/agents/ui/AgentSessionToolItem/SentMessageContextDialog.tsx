@@ -10,6 +10,7 @@ import {
   DialogTitle,
 } from "@/shared/ui/dialog";
 import { formatCodeValue } from "../agentSessionUtils";
+import { tl } from "@/shared/i18n/tl";
 
 export function SentMessageContextDialog({
   args,
@@ -50,8 +51,8 @@ export function SentMessageContextDialog({
     <Dialog onOpenChange={onOpenChange} open={open}>
       <DialogContent className="max-w-xl overflow-hidden p-0">
         <div className="flex max-h-[85vh] flex-col">
-          <DialogHeader className="px-6 pb-3 pt-5 pr-14">
-            <DialogTitle>Sent message context</DialogTitle>
+          <DialogHeader className="px-6 pb-3 pt-5 pe-14">
+            <DialogTitle>{tl("Sent message context")}</DialogTitle>
             <DialogDescription className="flex items-center gap-1.5">
               <CheckCheck className="h-3.5 w-3.5 shrink-0" />
               <span>{label}</span>
@@ -91,14 +92,14 @@ function buildSentMessageContextSections({
 }): SentMessageContextSection[] {
   const sections: SentMessageContextSection[] = [];
   if (preview) {
-    sections.push({ title: "Message", body: preview });
+    sections.push({ title: tl("Message"), body: preview });
   }
   if (description) {
-    sections.push({ title: "Tool", body: description });
+    sections.push({ title: tl("Tool"), body: description });
   }
   if (hasArgs) {
     sections.push({
-      title: "Parameters",
+      title: tl("Parameters"),
       body: JSON.stringify(args, null, 2),
     });
   }
@@ -110,7 +111,7 @@ function buildSentMessageContextSections({
   }
   if (sections.length === 0) {
     sections.push({
-      title: "Status",
+      title: tl("Status"),
       body: "Waiting for tool details.",
     });
   }
@@ -146,7 +147,7 @@ function SentMessageContextSectionAccordion({
     <article className="overflow-hidden rounded-2xl bg-muted/40">
       <button
         aria-expanded={open}
-        className="w-full px-4 py-3 text-left transition-colors hover:bg-muted/50"
+        className="w-full px-4 py-3 text-start transition-colors hover:bg-muted/50"
         onClick={() => setOpen((value) => !value)}
         type="button"
       >
@@ -169,7 +170,9 @@ function SentMessageContextSectionAccordion({
               {body.length > 0 ? (
                 body
               ) : (
-                <span className="italic text-foreground/50">No metadata.</span>
+                <span className="italic text-foreground/50">
+                  {tl("No metadata.")}
+                </span>
               )}
             </div>
           </div>

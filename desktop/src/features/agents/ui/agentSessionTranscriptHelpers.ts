@@ -5,6 +5,7 @@ import {
   normalizeToolName,
 } from "./agentSessionToolCatalog";
 import { asRecord, asString, titleCase } from "./agentSessionUtils";
+import { tl } from "@/shared/i18n/tl";
 
 export function extractPromptBlocks(
   payload: Record<string, unknown>,
@@ -44,7 +45,7 @@ export function parsePromptBlocks(
   const parsed = parsePromptText(remainingBlocks.join("\n"));
   return {
     ...parsed,
-    sections: [{ title: "Prompt", body: firstBlock }, ...parsed.sections],
+    sections: [{ title: tl("Prompt"), body: firstBlock }, ...parsed.sections],
   };
 }
 
@@ -224,8 +225,8 @@ export function parseSystemPromptSections(
   }
 
   const instructionFrames = [
-    { header: "[Agent Instructions]", title: "Agent Instructions" },
-    { header: "[System]", title: "System" },
+    { header: "[Agent Instructions]", title: tl("Agent Instructions") },
+    { header: "[System]", title: tl("System") },
   ] as const;
 
   function appendBaseAndWorkspace(raw: string): void {
@@ -244,9 +245,9 @@ export function parseSystemPromptSections(
         const workspaceBody = raw
           .slice(workspaceAt + workspaceMarker.length)
           .trim();
-        if (baseBody) sections.push({ title: "Base", body: baseBody });
+        if (baseBody) sections.push({ title: tl("Base"), body: baseBody });
         if (workspaceBody)
-          sections.push({ title: "Workspace", body: workspaceBody });
+          sections.push({ title: tl("Workspace"), body: workspaceBody });
         return;
       }
     }
@@ -261,14 +262,14 @@ export function parseSystemPromptSections(
           .trim();
         const baseBody = raw.slice(baseAt + baseMarker.length).trim();
         if (workspaceBody)
-          sections.push({ title: "Workspace", body: workspaceBody });
-        if (baseBody) sections.push({ title: "Base", body: baseBody });
+          sections.push({ title: tl("Workspace"), body: workspaceBody });
+        if (baseBody) sections.push({ title: tl("Base"), body: baseBody });
         return;
       }
     }
 
     const baseBody = raw.replace(/^\[Base]\n/, "").trim();
-    if (baseBody) sections.push({ title: "Base", body: baseBody });
+    if (baseBody) sections.push({ title: tl("Base"), body: baseBody });
   }
 
   const baseAndInstructions = remainder;
@@ -282,7 +283,7 @@ export function parseSystemPromptSections(
       if (instructionsBody)
         sections.push({ title: leadingFrame.title, body: instructionsBody });
       if (teamBody)
-        sections.push({ title: "Team Instructions", body: teamBody });
+        sections.push({ title: tl("Team Instructions"), body: teamBody });
     } else {
       const boundary = instructionFrames
         .map((frame) => ({
@@ -305,16 +306,17 @@ export function parseSystemPromptSections(
         if (instructionsBody)
           sections.push({ title: boundary.title, body: instructionsBody });
         if (teamBody)
-          sections.push({ title: "Team Instructions", body: teamBody });
+          sections.push({ title: tl("Team Instructions"), body: teamBody });
       }
     }
   }
 
   // ── 5. Append team (modern), core, and canvas sections in producer order ──
   if (modernTeamBody)
-    sections.push({ title: "Team Instructions", body: modernTeamBody });
-  if (coreBody) sections.push({ title: "Core Memory", body: coreBody });
-  if (canvasBody) sections.push({ title: "Channel Canvas", body: canvasBody });
+    sections.push({ title: tl("Team Instructions"), body: modernTeamBody });
+  if (coreBody) sections.push({ title: tl("Core Memory"), body: coreBody });
+  if (canvasBody)
+    sections.push({ title: tl("Channel Canvas"), body: canvasBody });
 
   return sections;
 }
@@ -349,7 +351,7 @@ function parseSemanticStandingSections(
     return parsed.sections;
   }
 
-  return [{ title: "Prompt", body: systemPrompt }];
+  return [{ title: tl("Prompt"), body: systemPrompt }];
 }
 
 function splitSemanticStandingPrefix(text: string): {
@@ -515,7 +517,10 @@ function parsePromptSections(text: string): PromptSection[] {
           body: current.body.trim(),
         });
       } else if (preamble.join("\n").trim()) {
-        sections.push({ title: "Prompt", body: preamble.join("\n").trim() });
+        sections.push({
+          title: tl("Prompt"),
+          body: preamble.join("\n").trim(),
+        });
       }
       current = { title: header[1], body: "" };
       continue;
@@ -531,7 +536,7 @@ function parsePromptSections(text: string): PromptSection[] {
   if (current) {
     sections.push({ title: current.title, body: current.body.trim() });
   } else if (preamble.join("\n").trim()) {
-    sections.push({ title: "Prompt", body: preamble.join("\n").trim() });
+    sections.push({ title: tl("Prompt"), body: preamble.join("\n").trim() });
   }
 
   return sections;

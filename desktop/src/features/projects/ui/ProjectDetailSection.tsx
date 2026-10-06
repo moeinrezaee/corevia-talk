@@ -51,7 +51,7 @@ export function ProjectDetailSection({
       <button
         aria-expanded={open}
         className={cn(
-          "flex min-h-10 w-full min-w-0 items-center gap-2 px-6 py-2 text-left text-sm font-medium leading-5 text-foreground transition-colors hover:bg-muted/20",
+          "flex min-h-10 w-full min-w-0 items-center gap-2 px-6 py-2 text-start text-sm font-medium leading-5 text-foreground transition-colors hover:bg-muted/20",
           headerClassName,
         )}
         onClick={() => setOpen(!open)}

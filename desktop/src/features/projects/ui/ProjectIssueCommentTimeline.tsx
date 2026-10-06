@@ -15,6 +15,7 @@ import { normalizePubkey } from "@/shared/lib/pubkey";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
 import { ProfileAuthorName } from "./ProjectProfileIdentity";
 import { ProjectRichContent } from "./ProjectRichContent";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const COLLAPSED_COMMENT_COUNT = 3;
 
@@ -66,10 +67,12 @@ export function ProjectIssueCommentTimeline({
             <History className="h-3 w-3" />
           </span>
         </span>
-        <span className="flex min-h-5 min-w-0 flex-1 items-center text-left">
+        <span className="flex min-h-5 min-w-0 flex-1 items-center text-start">
           {isCollapsed
-            ? `Show ${pluralize(orderedComments.length, "earlier comment")}`
-            : "Collapse comment history"}
+            ? tlt("Show {0}", [
+                pluralize(orderedComments.length, "earlier comment"),
+              ])
+            : tl("Collapse comment history")}
         </span>
         {isCollapsed ? (
           <ChevronDown className="mt-0.5 h-3.5 w-3.5" />
@@ -91,8 +94,8 @@ export function ProjectIssueCommentTimeline({
               <ChevronDown className="h-3 w-3" />
             </span>
           </span>
-          <span className="min-w-0 flex-1 text-left">
-            Show {pluralize(earlierCommentCount, "earlier comment")}
+          <span className="min-w-0 flex-1 text-start">
+            {tl("Show")} {pluralize(earlierCommentCount, "earlier comment")}
           </span>
         </button>
       ) : null}
@@ -137,7 +140,7 @@ export function ProjectIssueCommentTimeline({
                   </ProfileAuthorName>
                 </span>
                 <span
-                  className="ml-auto w-20 shrink-0 text-right text-muted-foreground/70"
+                  className="ms-auto w-20 shrink-0 text-end text-muted-foreground/70"
                   title={formatExactTimestamp(comment.createdAt)}
                 >
                   {relativeTime(comment.createdAt)}

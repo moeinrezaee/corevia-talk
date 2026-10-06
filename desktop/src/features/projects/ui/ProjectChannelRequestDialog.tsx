@@ -11,6 +11,7 @@ import {
 import { formatTtlDuration } from "@/features/channels/lib/ephemeralChannel";
 import type { ProjectChannelRequest } from "@/features/projects/projectChannelRequest";
 import { useProjectChannelRequests } from "@/features/projects/useProjectChannelRequests";
+import { tl } from "@/shared/i18n/tl";
 
 type RequestedChannel = ProjectChannelRequest["request"];
 
@@ -23,33 +24,41 @@ export function ProjectChannelRequestDetails({
   return (
     <dl className="space-y-2 rounded-xl border border-border/60 bg-muted/25 p-3 text-sm">
       <div className="flex gap-3">
-        <dt className="w-24 shrink-0 text-muted-foreground">Name</dt>
+        <dt className="w-24 shrink-0 text-muted-foreground">{tl("Name")}</dt>
         <dd className="min-w-0 break-words text-foreground">#{request.name}</dd>
       </div>
       {request.description ? (
         <div className="flex gap-3">
-          <dt className="w-24 shrink-0 text-muted-foreground">Description</dt>
+          <dt className="w-24 shrink-0 text-muted-foreground">
+            {tl("Description")}
+          </dt>
           <dd className="min-w-0 break-words text-foreground">
             {request.description}
           </dd>
         </div>
       ) : null}
       <div className="flex gap-3">
-        <dt className="w-24 shrink-0 text-muted-foreground">Visibility</dt>
+        <dt className="w-24 shrink-0 text-muted-foreground">
+          {tl("Visibility")}
+        </dt>
         <dd className="text-foreground">{request.visibility}</dd>
       </div>
       {request.ttlSeconds ? (
         <div className="flex gap-3">
-          <dt className="w-24 shrink-0 text-muted-foreground">Lifetime</dt>
+          <dt className="w-24 shrink-0 text-muted-foreground">
+            {tl("Lifetime")}
+          </dt>
           <dd className="min-w-0 break-words text-foreground">
-            Temporary · {formatTtlDuration(request.ttlSeconds)}. Cleans up
-            automatically after that period of inactivity.
+            {tl("Temporary ·")} {formatTtlDuration(request.ttlSeconds)}
+            {tl(". Cleans up automatically after that period of inactivity.")}
           </dd>
         </div>
       ) : null}
       {request.templateName ? (
         <div className="flex gap-3">
-          <dt className="w-24 shrink-0 text-muted-foreground">Template</dt>
+          <dt className="w-24 shrink-0 text-muted-foreground">
+            {tl("Template")}
+          </dt>
           <dd className="min-w-0 break-words text-foreground">
             {request.templateName}
           </dd>
@@ -73,11 +82,11 @@ export function ProjectChannelRequestDialog() {
     >
       <AlertDialogContent data-testid="project-channel-request-dialog">
         <AlertDialogHeader>
-          <AlertDialogTitle>Create project channel?</AlertDialogTitle>
+          <AlertDialogTitle>{tl("Create project channel?")}</AlertDialogTitle>
           <AlertDialogDescription>
-            Your agent requested a new channel in{" "}
-            {management.project?.name ?? "this project"}. Review the details
-            before creating it.
+            {tl("Your agent requested a new channel in")}{" "}
+            {management.project?.name ?? tl("this project")}
+            {tl(". Review the details before creating it.")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         {request ? <ProjectChannelRequestDetails request={request} /> : null}
@@ -86,7 +95,7 @@ export function ProjectChannelRequestDialog() {
         ) : null}
         <AlertDialogFooter>
           <AlertDialogCancel disabled={management.isPending}>
-            Cancel
+            {tl("Cancel")}
           </AlertDialogCancel>
           <AlertDialogAction
             data-testid="project-channel-request-approve"
@@ -96,7 +105,7 @@ export function ProjectChannelRequestDialog() {
               void management.approve();
             }}
           >
-            {management.isPending ? "Creating…" : "Create channel"}
+            {management.isPending ? tl("Creating…") : tl("Create channel")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

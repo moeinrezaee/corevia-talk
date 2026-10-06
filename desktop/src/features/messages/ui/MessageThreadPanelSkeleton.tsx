@@ -16,6 +16,7 @@ import {
   AuxiliaryPanelTitle,
 } from "@/shared/layout/AuxiliaryPanel";
 import { Skeleton } from "@/shared/ui/skeleton";
+import { tlt } from "@/shared/i18n/tl";
 
 /** Shared title row so the skeleton and loaded panel keep the same chrome. */
 export function MessageThreadPanelHeader({
@@ -39,11 +40,11 @@ export function MessageThreadPanelHeader({
 }) {
   const title = onHeaderTitleClick ? (
     <button
-      aria-label={headerTitleAriaLabel ?? `Open ${headerTitle}`}
-      className="min-w-0 max-w-full truncate text-left hover:underline"
+      aria-label={headerTitleAriaLabel ?? tlt("Open {0}", [headerTitle])}
+      className="min-w-0 max-w-full truncate text-start hover:underline"
       data-testid="message-thread-open-channel"
       onClick={onHeaderTitleClick}
-      title={headerTitleAriaLabel ?? `Open ${headerTitle}`}
+      title={headerTitleAriaLabel ?? tlt("Open {0}", [headerTitle])}
       type="button"
     >
       {headerTitle}
@@ -134,7 +135,7 @@ function ThreadComposerSkeleton({
             <div className="mt-4 flex items-center gap-2">
               <Skeleton className="h-8 w-8 rounded-lg" />
               <Skeleton className="h-8 w-8 rounded-lg" />
-              <Skeleton className="ml-auto h-8 w-20 rounded-full" />
+              <Skeleton className="ms-auto h-8 w-20 rounded-full" />
             </div>
           </div>
         </div>
@@ -199,7 +200,7 @@ export function MessageThreadPanelSkeleton({
         >
           <ThreadMessageSkeleton />
           <ThreadMessageSkeleton />
-          <div className="ml-[58px] flex items-center gap-1.5 pt-0.5">
+          <div className="ms-[58px] flex items-center gap-1.5 pt-0.5">
             <Skeleton className="h-7 w-7 rounded-full" />
             <Skeleton className="h-7 w-7 rounded-full" />
             <Skeleton className="h-4 w-28 rounded-full" />

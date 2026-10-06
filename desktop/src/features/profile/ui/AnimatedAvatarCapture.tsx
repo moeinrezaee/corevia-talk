@@ -67,6 +67,7 @@ import { uploadMediaBytes } from "@/shared/api/tauri";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 import { Spinner } from "@/shared/ui/spinner";
+import { tl } from "@/shared/i18n/tl";
 
 export function AnimatedAvatarCapture({
   disabled = false,
@@ -690,7 +691,7 @@ export function AnimatedAvatarCapture({
               animation on hover — exactly how the avatar behaves in the app.
               Dragging repositions the active framing target. */}
       <div
-        aria-label="Avatar preview — drag or use arrow keys to position"
+        aria-label={tl("Avatar preview — drag or use arrow keys to position")}
         className={cn(
           // Transparent like the real avatar container — only a faint
           // ring marks the circular crop boundary. pointer-events-auto
@@ -782,15 +783,18 @@ export function AnimatedAvatarCapture({
       ) : phase === "starting" ? (
         <div className="absolute inset-0 grid place-items-center rounded-full bg-background/70 text-center shadow-inner">
           <div className="grid justify-items-center gap-2 px-4">
-            <Spinner aria-label="Starting camera" className="h-4 w-4" />
+            <Spinner aria-label={tl("Starting camera")} className="h-4 w-4" />
             <span className="text-xs font-medium text-muted-foreground">
-              Starting camera
+              {tl("Starting camera")}
             </span>
           </div>
         </div>
       ) : phase === "processing" ? (
         <div className="grid h-full w-full place-items-center rounded-full bg-background/60 shadow-inner">
-          <Spinner aria-label="Processing recording" className="h-6 w-6" />
+          <Spinner
+            aria-label={tl("Processing recording")}
+            className="h-6 w-6"
+          />
         </div>
       ) : null}
     </div>
@@ -964,11 +968,11 @@ export function AnimatedAvatarCapture({
         >
           {isSaving ? (
             <Spinner
-              aria-label="Uploading animated avatar"
+              aria-label={tl("Uploading animated avatar")}
               className="h-4 w-4 border-2"
             />
           ) : (
-            "Use as avatar"
+            tl("Use as avatar")
           )}
         </Button>
       ) : null}

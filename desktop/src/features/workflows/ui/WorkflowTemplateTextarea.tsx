@@ -13,6 +13,7 @@ import type {
   ActiveTemplateToken,
   WorkflowTemplateVariable,
 } from "./workflowTemplateVariables";
+import { tl } from "@/shared/i18n/tl";
 
 export function WorkflowTemplateTextarea({
   className,
@@ -149,7 +150,7 @@ export function WorkflowTemplateTextarea({
                   <button
                     aria-selected={index === selectedIndex}
                     className={cn(
-                      "flex w-full items-center justify-between gap-3 rounded-md px-2 py-1.5 text-left",
+                      "flex w-full items-center justify-between gap-3 rounded-md px-2 py-1.5 text-start",
                       index === selectedIndex
                         ? "bg-muted text-foreground"
                         : "text-foreground hover:bg-muted/60",
@@ -173,13 +174,13 @@ export function WorkflowTemplateTextarea({
             })
           ) : (
             <p className="px-2 py-2 text-xs text-muted-foreground">
-              No matching variables
+              {tl("No matching variables")}
             </p>
           )}
         </div>
         {triggerType === "webhook" ? (
           <p className="border-t border-border/50 px-2 pb-1 pt-2 text-2xs text-muted-foreground">
-            JSON fields are available as {"{{trigger.field_name}}"}.
+            {tl("JSON fields are available as")} {"{{trigger.field_name}}"}.
           </p>
         ) : null}
       </PopoverContent>

@@ -17,6 +17,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
+import { tl } from "@/shared/i18n/tl";
 
 export function EditRespondToDialog({
   agent,
@@ -65,9 +66,10 @@ export function EditRespondToDialog({
     <Dialog onOpenChange={onOpenChange} open={open}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>Manage agent access</DialogTitle>
+          <DialogTitle>{tl("Manage agent access")}</DialogTitle>
           <DialogDescription>
-            Choose who can send instructions to {agent?.name ?? "this agent"}.
+            {tl("Choose who can send instructions to")}{" "}
+            {agent?.name ?? tl("this agent")}.
           </DialogDescription>
         </DialogHeader>
         <CreateAgentRespondToField
@@ -94,7 +96,7 @@ export function EditRespondToDialog({
             type="button"
             variant="outline"
           >
-            Cancel
+            {tl("Cancel")}
           </Button>
           <Button
             disabled={
@@ -104,7 +106,7 @@ export function EditRespondToDialog({
             size="sm"
             type="button"
           >
-            {updateMutation.isPending ? "Saving..." : "Save access"}
+            {updateMutation.isPending ? tl("Saving...") : tl("Save access")}
           </Button>
         </div>
       </DialogContent>

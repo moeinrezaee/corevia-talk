@@ -14,7 +14,7 @@ export function MarkdownTable({ children }: { children?: React.ReactNode }) {
     >
       {/* Inherit message wrap-anywhere for long tokens. The cells' minimum
           widths keep short labels readable; many-column tables scroll locally. */}
-      <table className="w-full border-collapse text-left text-sm">
+      <table className="w-full border-collapse text-start text-sm">
         {children}
       </table>
     </div>

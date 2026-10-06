@@ -3,6 +3,7 @@ import { X } from "lucide-react";
 import type { ProjectDetailAgentContext } from "@/features/projects/lib/projectDetailAgentContext";
 import { Button } from "@/shared/ui/button";
 import { PROJECT_COLUMN_HEADER_BACKDROP_CLASS } from "./projectPanelStyles";
+import { tl } from "@/shared/i18n/tl";
 
 function contextLabel(context: ProjectDetailAgentContext) {
   if (context.selection?.length) {
@@ -41,11 +42,11 @@ export function ProjectAgentContextStrip({
       </p>
       {onClose ? (
         <Button
-          aria-label="Close agent chat"
+          aria-label={tl("Close agent chat")}
           className="h-7 w-7 shrink-0"
           onClick={onClose}
           size="icon"
-          title="Close agent chat"
+          title={tl("Close agent chat")}
           type="button"
           variant="ghost"
         >

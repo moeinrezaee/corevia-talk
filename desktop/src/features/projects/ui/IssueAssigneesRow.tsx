@@ -27,6 +27,7 @@ import { Input } from "@/shared/ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
 import { PROJECT_CONTEXT_ACTION_BUTTON_CLASS } from "./projectContextActionStyles";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 function profileForPubkey(pubkey: string, profiles?: UserProfileLookup) {
   return profiles?.[normalizePubkey(pubkey)] ?? null;
@@ -73,7 +74,7 @@ export function IssueAssigneeFacepile({
               profile?.isAgent ? "rounded-squircle" : "rounded-full",
             )}
             key={pubkey}
-            title={`Assigned to ${label}`}
+            title={tlt("Assigned to {0}", [label])}
           >
             <UserAvatar
               accent={profile?.isAgent === true}
@@ -167,7 +168,7 @@ export function IssueAssigneesRow({
         });
         setPickerOpen(false);
         setAssigneeQuery("");
-        toast.success("Task assigned.");
+        toast.success(tl("Task assigned."));
       } catch (error) {
         toast.error(
           error instanceof Error ? error.message : "Failed to assign task.",
@@ -192,7 +193,7 @@ export function IssueAssigneesRow({
           signerPubkey: operationSigner,
           signAsManagedOwner,
         });
-        toast.success("Task unassigned.");
+        toast.success(tl("Task unassigned."));
       } catch (error) {
         toast.error(
           error instanceof Error ? error.message : "Failed to unassign task.",
@@ -245,7 +246,7 @@ export function IssueAssigneesRow({
             <TooltipTrigger asChild>
               {canUnassign ? (
                 <button
-                  aria-label={`Unassign ${label}`}
+                  aria-label={tlt("Unassign {0}", [label])}
                   className={cn(
                     "group relative inline-flex rounded-full focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring",
                   )}
@@ -271,7 +272,9 @@ export function IssueAssigneesRow({
               )}
             </TooltipTrigger>
             <TooltipContent>
-              {canUnassign ? `Unassign ${label}` : `${label} — assigned`}
+              {canUnassign
+                ? tlt("Unassign {0}", [label])
+                : tlt("{0} — assigned", [label])}
             </TooltipContent>
           </Tooltip>
         );
@@ -294,7 +297,7 @@ export function IssueAssigneesRow({
           variant="ghost"
         >
           {contextActions ? <UserPlus /> : null}
-          Assign to me
+          {tl("Assign to me")}
         </Button>
       ) : null}
       {showSelfAssignmentState && isSelfAssigned ? (
@@ -309,7 +312,7 @@ export function IssueAssigneesRow({
           variant="ghost"
         >
           <Check className="h-3 w-3" />
-          Assigned to me
+          {tl("Assigned to me")}
         </Button>
       ) : null}
       {canAssignOthers ? (
@@ -327,14 +330,14 @@ export function IssueAssigneesRow({
               variant="ghost"
             >
               {contextActions ? <Users /> : null}
-              Assign
+              {tl("Assign")}
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-md gap-0 overflow-hidden p-0">
-            <DialogHeader className="border-b border-border/60 px-6 py-5 pr-14">
-              <DialogTitle>Assign task</DialogTitle>
+            <DialogHeader className="border-b border-border/60 px-6 py-5 pe-14">
+              <DialogTitle>{tl("Assign task")}</DialogTitle>
               <DialogDescription>
-                Choose a person or agent to work on this task.
+                {tl("Choose a person or agent to work on this task.")}
               </DialogDescription>
             </DialogHeader>
             <div className="flex items-center gap-2 border-b border-border/60 px-6 py-3">
@@ -344,21 +347,21 @@ export function IssueAssigneesRow({
                 className="h-8 border-0 px-0 text-sm shadow-none focus-visible:ring-0"
                 data-testid="project-assignee-search"
                 onChange={(event) => setAssigneeQuery(event.target.value)}
-                placeholder="Search people and agents"
+                placeholder={tl("Search people and agents")}
                 value={assigneeQuery}
               />
             </div>
             <div className="max-h-72 min-h-28 overflow-y-auto p-2">
               {userSearchQuery.isLoading ? (
                 <p className="px-3 py-4 text-sm text-muted-foreground">
-                  Searching…
+                  {tl("Searching…")}
                 </p>
               ) : candidates.length > 0 ? (
                 candidates.map((candidate) => {
                   const label = assigneeSearchLabel(candidate);
                   return (
                     <button
-                      className="flex w-full min-w-0 items-center gap-3 rounded-lg px-3 py-2 text-left hover:bg-accent disabled:cursor-not-allowed disabled:opacity-50"
+                      className="flex w-full min-w-0 items-center gap-3 rounded-lg px-3 py-2 text-start hover:bg-accent disabled:cursor-not-allowed disabled:opacity-50"
                       data-testid={`project-assignee-result-${candidate.pubkey}`}
                       disabled={assignMutation.isPending}
                       key={candidate.pubkey}
@@ -381,7 +384,7 @@ export function IssueAssigneesRow({
                           {label}
                         </span>
                         <span className="block truncate text-xs text-muted-foreground">
-                          {candidate.isAgent ? "Agent · " : ""}
+                          {candidate.isAgent ? tl("Agent · ") : ""}
                           {truncateNpub(candidate.pubkey)}
                         </span>
                       </span>
@@ -390,7 +393,7 @@ export function IssueAssigneesRow({
                 })
               ) : (
                 <p className="px-3 py-4 text-sm text-muted-foreground">
-                  No matching people or agents.
+                  {tl("No matching people or agents.")}
                 </p>
               )}
             </div>

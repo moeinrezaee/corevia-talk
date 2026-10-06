@@ -9,6 +9,7 @@ import {
 } from "@/shared/ui/dropdown-menu";
 
 import { DeleteConfirmDialog } from "./DeleteConfirmDialog";
+import { tl } from "@/shared/i18n/tl";
 
 type DeleteActionMenuProps = {
   label: string;
@@ -21,7 +22,7 @@ export function DeleteActionMenu({ label, onConfirm }: DeleteActionMenuProps) {
   const iconClass = "h-4 w-4";
 
   return (
-    <div className="ml-auto opacity-0 transition-opacity group-hover:opacity-100">
+    <div className="ms-auto opacity-0 transition-opacity group-hover:opacity-100">
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <button
@@ -37,8 +38,8 @@ export function DeleteActionMenu({ label, onConfirm }: DeleteActionMenuProps) {
             className="text-destructive focus:text-destructive"
             onClick={() => setIsOpen(true)}
           >
-            <Trash2 className="mr-2 h-4 w-4" />
-            Delete {label}
+            <Trash2 className="me-2 h-4 w-4" />
+            {tl("Delete")} {label}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

@@ -19,6 +19,7 @@ import { cn } from "@/shared/lib/cn";
 import { channelChrome } from "@/shared/layout/chromeLayout";
 import { Button } from "@/shared/ui/button";
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type ChatHeaderProps = {
   actions?: React.ReactNode;
@@ -109,9 +110,9 @@ export function ChatHeader({
 
     try {
       await writeTextToClipboard(value);
-      toast.success("Channel name copied");
+      toast.success(tl("Channel name copied"));
     } catch {
-      toast.error("Failed to copy channel name");
+      toast.error(tl("Failed to copy channel name"));
     }
   }
 
@@ -148,11 +149,11 @@ export function ChatHeader({
             </h1>
             {titleAdornment}
             <Button
-              aria-label={`Copy channel name: ${title}`}
+              aria-label={tlt("Copy channel name: {0}", [title])}
               className="h-6 w-6 shrink-0 opacity-0 text-muted-foreground transition-opacity hover:text-foreground focus-visible:opacity-100 group-hover/title:opacity-100"
               onClick={() => void handleCopyTitle()}
               size="icon-xs"
-              title="Copy channel name"
+              title={tl("Copy channel name")}
               type="button"
               variant="ghost"
             >
@@ -182,7 +183,7 @@ export function ChatHeader({
     <div
       ref={chromeWrapperRef}
       className={cn(
-        "pointer-events-none relative z-40 overflow-visible rounded-tl-xl",
+        "pointer-events-none relative z-40 overflow-visible rounded-ss-xl",
         transparentChrome
           ? "bg-transparent"
           : "bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/70 dark:bg-background/70 dark:backdrop-blur-xl dark:supports-backdrop-filter:bg-background/55",

@@ -2,6 +2,7 @@ import type * as React from "react";
 
 import { cn } from "@/shared/lib/cn";
 import { Checkbox } from "@/shared/ui/checkbox";
+import { tl } from "@/shared/i18n/tl";
 
 type MarkdownInputProps = React.ComponentProps<"input"> & {
   node?: unknown;
@@ -17,10 +18,10 @@ export function MarkdownInput({
   if (type === "checkbox") {
     return (
       <Checkbox
-        aria-label={checked ? "Completed task" : "Incomplete task"}
+        aria-label={checked ? tl("Completed task") : tl("Incomplete task")}
         checked={Boolean(checked)}
         className={cn(
-          "pointer-events-none mr-1.5 inline-flex align-[-0.125rem] disabled:opacity-45",
+          "pointer-events-none me-1.5 inline-flex align-[-0.125rem] disabled:opacity-45",
           className,
         )}
         disabled

@@ -1,3 +1,4 @@
+import "@/shared/i18n/installPersianDates";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "@/app/App";
@@ -23,6 +24,12 @@ import { recoverLocalStorageQuotaOnStartup } from "@/shared/lib/localStorageQuot
 import { startLocalStorageSweep } from "@/shared/lib/localStorageSweep";
 import { initializeConversationDensityPreference } from "@/shared/lib/conversationDensityPreference";
 import { initializeFontSizePreference } from "@/shared/lib/fontSizePreference";
+import { installDomTranslator } from "@/shared/i18n/domTranslator";
+import { installAutoDirection } from "@/shared/i18n/autoDirection";
+import {
+  getLanguage,
+  initializeLanguagePreference,
+} from "@/shared/i18n/languagePreference";
 
 type E2eWindow = Window & {
   __BUZZ_E2E__?: unknown;
@@ -130,10 +137,13 @@ async function bootstrap() {
   recoverLocalStorageQuotaOnStartup();
   initializeConversationDensityPreference();
   initializeFontSizePreference();
+  initializeLanguagePreference();
+  installAutoDirection();
   startLocalStorageSweep();
   await installE2eBridgeIfConfigured();
   await migrateLegacyCommunityStorageBeforeRender();
   renderApp();
+  if (getLanguage() === "fa") installDomTranslator();
 }
 
 void bootstrap();

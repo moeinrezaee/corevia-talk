@@ -1,24 +1,27 @@
+import { tl } from "@/shared/i18n/tl";
 export const personaLibraryCopy = {
-  title: "My agents",
-  description:
+  title: tl("My agents"),
+  description: tl(
     "The agents you have chosen for this app. Use them to create teams and launch agents.",
+  ),
   chooseFromCatalog: "Choose from catalog",
   createNew: "New agent",
   import: "Import snapshot",
-  emptyTitle: "No agents yet",
-  emptyDescription:
+  emptyTitle: tl("No agents yet"),
+  emptyDescription: tl(
     "Choose one from Agent Catalog, create your own, or import one to get started.",
+  ),
   emptyImportHint:
     "Or drop an .agent.json or .agent.png snapshot here to import.",
 } as const;
 
 export const personaCatalogCopy = {
-  title: "Agent Catalog",
-  description: "Browse agents shared to this relay.",
+  title: tl("Agent Catalog"),
+  description: tl("Browse agents shared to this relay."),
   dialogTitle: "Add agent",
   dialogDescription: "Browse agents shared to this relay.",
-  emptyTitle: "You're all set",
-  emptyDescription: "Everything in Agent Catalog is already in My Agents.",
+  emptyTitle: tl("You're all set"),
+  emptyDescription: tl("Everything in Agent Catalog is already in My Agents."),
   emptyCatalogDescription: "Shared agents will appear here.",
   emptyCatalogTitle: "No agents are being shared",
   detailsAction: "View details",

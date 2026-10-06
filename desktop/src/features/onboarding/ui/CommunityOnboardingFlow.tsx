@@ -39,6 +39,7 @@ import {
   type OnboardingTransitionDirection,
   OnboardingSlideTransition,
 } from "./OnboardingSlideTransition";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 function isRelayMembershipDeniedError(error: unknown): boolean {
   if (!(error instanceof Error)) return false;
@@ -90,7 +91,7 @@ function AvatarCircle({
 
   return (
     <button
-      aria-label={hasAvatar ? "Change your avatar" : "Add an avatar"}
+      aria-label={hasAvatar ? tl("Change your avatar") : tl("Add an avatar")}
       className="group block shrink-0 rounded-full"
       data-testid="community-avatar-open"
       onClick={onClick}
@@ -530,18 +531,18 @@ export function CommunityOnboardingFlow({
               <>
                 <Users className="mx-auto h-10 w-10" />
                 <h1 className="mt-5 text-title font-normal">
-                  Joining {transaction.communityName}
+                  {tl("Joining")} {transaction.communityName}
                 </h1>
                 <p className="mt-3 text-sm text-foreground/80">
                   {transaction.error ??
                     (transaction.stage === "claiming"
-                      ? "Accepting your invite…"
-                      : "Connecting securely…")}
+                      ? tl("Accepting your invite…")
+                      : tl("Connecting securely…"))}
                 </p>
                 <div className="mt-6 flex justify-center gap-3">
                   {transaction.error ? (
                     <Button className="rounded-full px-6" onClick={retry}>
-                      Retry
+                      {tl("Retry")}
                     </Button>
                   ) : null}
                   <Button
@@ -549,7 +550,7 @@ export function CommunityOnboardingFlow({
                     onClick={onCancel}
                     variant="ghost"
                   >
-                    Cancel
+                    {tl("Cancel")}
                   </Button>
                 </div>
               </>
@@ -565,11 +566,12 @@ export function CommunityOnboardingFlow({
                 >
                   <div className="shrink-0">
                     <h1 className="text-title font-normal">
-                      Build your profile
+                      {tl("Build your profile")}
                     </h1>
                     <p className="mx-auto mt-3 max-w-[380px] text-sm leading-6 text-foreground/80">
-                      Add a name and avatar. They’ll show up on your messages,
-                      reactions, and agent handoffs.
+                      {tl(
+                        "Add a name and avatar. They’ll show up on your messages, reactions, and agent handoffs.",
+                      )}
                     </p>
                   </div>
                   <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-center pt-6">
@@ -580,14 +582,14 @@ export function CommunityOnboardingFlow({
                       triggerRef={avatarTriggerRef}
                     />
                     <label
-                      className="mt-4 block w-full max-w-[412px] text-left"
+                      className="mt-4 block w-full max-w-[412px] text-start"
                       htmlFor="community-display-name"
                     >
-                      <span className="mb-2 block pl-4 text-sm text-foreground">
-                        Your username
+                      <span className="mb-2 block ps-4 text-sm text-foreground">
+                        {tl("Your username")}
                       </span>
                       <OnboardingInput
-                        aria-label="Community username"
+                        aria-label={tl("Community username")}
                         autoCapitalize="none"
                         autoComplete="username"
                         autoCorrect="off"
@@ -595,7 +597,7 @@ export function CommunityOnboardingFlow({
                         disabled={isPending || isUploadingAvatar}
                         id="community-display-name"
                         onChange={(event) => setDisplayName(event.target.value)}
-                        placeholder="Enter your username here"
+                        placeholder={tl("Enter your username here")}
                         ref={nameInputRef}
                         spellCheck={false}
                         type="text"
@@ -625,7 +627,7 @@ export function CommunityOnboardingFlow({
                     onClick={() => void saveProfile()}
                     type="button"
                   >
-                    Next
+                    {tl("Next")}
                   </Button>
                 </OnboardingFooter>
                 <Dialog
@@ -634,7 +636,7 @@ export function CommunityOnboardingFlow({
                 >
                   <DialogContent
                     className="buzz-onboarding-neutral-theme w-[min(calc(100vw-2rem),920px)] max-w-[920px] gap-0 overflow-hidden rounded-[18px] bg-[rgb(var(--buzz-onboarding-avatar-dialog-bg))] px-8 pb-6 pt-10 text-sm text-foreground shadow-[0_28px_90px_rgb(var(--buzz-onboarding-avatar-dialog-shadow)_/_0.28),0_8px_28px_rgb(var(--buzz-onboarding-avatar-dialog-shadow)_/_0.18)] transition-[height] duration-[250ms] ease-out"
-                    closeButtonClassName="right-6 top-6 h-10 w-10 rounded-full bg-[rgb(var(--buzz-onboarding-avatar-action-bg))] text-[rgb(var(--buzz-onboarding-avatar-action-fg))] hover:bg-[rgb(var(--buzz-onboarding-avatar-action-bg)/0.9)] hover:text-[rgb(var(--buzz-onboarding-avatar-action-fg))]"
+                    closeButtonClassName="end-6 top-6 h-10 w-10 rounded-full bg-[rgb(var(--buzz-onboarding-avatar-action-bg))] text-[rgb(var(--buzz-onboarding-avatar-action-fg))] hover:bg-[rgb(var(--buzz-onboarding-avatar-action-bg)/0.9)] hover:text-[rgb(var(--buzz-onboarding-avatar-action-fg))]"
                     data-system-color-scheme="light"
                     data-testid="community-avatar-editor-key-frame"
                     onCloseAutoFocus={(event) => {
@@ -649,7 +651,7 @@ export function CommunityOnboardingFlow({
                     }
                   >
                     <DialogTitle className="sr-only">
-                      Edit your avatar
+                      {tl("Edit your avatar")}
                     </DialogTitle>
                     <div
                       className="grid items-center gap-8 md:grid-cols-[240px_minmax(0,1fr)]"
@@ -674,7 +676,7 @@ export function CommunityOnboardingFlow({
                                       avatarUrl={localAvatarPreviewUrl}
                                       className="h-full w-full rounded-full text-5xl"
                                       label={
-                                        displayName.trim() || "Your profile"
+                                        displayName.trim() || tl("Your profile")
                                       }
                                       testId="community-avatar-live-preview"
                                     />
@@ -684,7 +686,9 @@ export function CommunityOnboardingFlow({
                                   parseEmojiAvatarDataUrl(avatarUrl);
                                 return emojiAvatar ? (
                                   <div
-                                    aria-label={`${displayName.trim() || "Your profile"} avatar`}
+                                    aria-label={tlt("{0} avatar", [
+                                      displayName.trim() || "Your profile",
+                                    ])}
                                     className="flex h-full w-full items-center justify-center overflow-hidden rounded-full text-6xl shadow-xs"
                                     data-testid="community-avatar-live-preview"
                                     role="img"
@@ -709,7 +713,9 @@ export function CommunityOnboardingFlow({
                                       localAvatarPreviewUrl || avatarUrl || null
                                     }
                                     className="h-full w-full rounded-full text-5xl"
-                                    label={displayName.trim() || "Your profile"}
+                                    label={
+                                      displayName.trim() || tl("Your profile")
+                                    }
                                     testId="community-avatar-live-preview"
                                   />
                                 );
@@ -750,11 +756,12 @@ export function CommunityOnboardingFlow({
             ) : (
               <>
                 <h1 className="text-title font-normal">
-                  Meet your starter team
+                  {tl("Meet your starter team")}
                 </h1>
                 <p className="mx-auto mt-3 max-w-[400px] text-sm leading-6 text-foreground/80">
-                  Buzz lets you bring multiple agents into the same workspace.
-                  Your team will help you get started using Buzz.
+                  {tl(
+                    "Buzz lets you bring multiple agents into the same workspace. Your team will help you get started using Buzz.",
+                  )}
                 </p>
                 <div className="flex w-full flex-1 items-center justify-center py-6">
                   {starterPersonas.length > 0 ? (
@@ -769,7 +776,9 @@ export function CommunityOnboardingFlow({
                           >
                             {animationUrl ? (
                               <img
-                                alt={`${persona.displayName} animated character`}
+                                alt={tlt("{0} animated character", [
+                                  persona.displayName,
+                                ])}
                                 className="size-24 object-contain"
                                 data-testid={`starter-persona-${persona.displayName.toLowerCase()}`}
                                 src={animationUrl}
@@ -793,7 +802,9 @@ export function CommunityOnboardingFlow({
                 {transaction.error ? (
                   <p className="text-sm text-destructive">
                     {transaction.error}
-                    {starterChannelFailureCount === 1 ? " Try again." : null}
+                    {starterChannelFailureCount === 1
+                      ? tl(" Try again.")
+                      : null}
                   </p>
                 ) : null}
                 <OnboardingFooter>
@@ -804,9 +815,9 @@ export function CommunityOnboardingFlow({
                     onClick={() => void finalize()}
                   >
                     {isPending || transaction.stage === "entering" ? (
-                      <LoadingDots label="Preparing Welcome" />
+                      <LoadingDots label={tl("Preparing Welcome")} />
                     ) : (
-                      "Take me to Buzz"
+                      tl("Take me to Buzz")
                     )}
                   </Button>
                   {starterChannelFailureCount >= 2 ? (
@@ -817,7 +828,7 @@ export function CommunityOnboardingFlow({
                       onClick={() => void finish()}
                       variant="ghost"
                     >
-                      Skip for now
+                      {tl("Skip for now")}
                     </Button>
                   ) : null}
                 </OnboardingFooter>

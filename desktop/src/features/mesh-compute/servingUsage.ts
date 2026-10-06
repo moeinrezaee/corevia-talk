@@ -1,4 +1,5 @@
 import type { MeshServingUsage } from "@/shared/api/tauriMesh";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * Pure projection of host-side serving usage into a small, politely-worded
@@ -85,7 +86,7 @@ export function deriveServingIndicator(
       show: true,
       active: false,
       hasRemoteConsumers: false,
-      label: "Idle · no one using it right now",
+      label: tl("Idle · no one using it right now"),
       detail: `${usage.requestsServed} ${plural(usage.requestsServed, "request")} served this session`,
     };
   }
@@ -95,7 +96,7 @@ export function deriveServingIndicator(
     show: true,
     active: false,
     hasRemoteConsumers: false,
-    label: "Idle · no one using it yet",
+    label: tl("Idle · no one using it yet"),
     detail: null,
   };
 }

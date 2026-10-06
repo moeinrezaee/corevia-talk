@@ -10,6 +10,7 @@ import {
 } from "@/features/projects/hooks";
 import type { UserProfileLookup } from "@/features/profile/lib/identity";
 import { Button } from "@/shared/ui/button";
+import { tl } from "@/shared/i18n/tl";
 
 type ProjectInboxDetailProps = {
   isSinglePanelView?: boolean;
@@ -32,7 +33,7 @@ function ProjectInboxStatus({
       {onBack ? (
         <div className="flex min-h-13 items-center px-5 py-2">
           <Button
-            aria-label="Back to Inbox"
+            aria-label={tl("Back to Inbox")}
             onClick={onBack}
             size="icon"
             type="button"
@@ -46,7 +47,7 @@ function ProjectInboxStatus({
         <p className="text-sm text-muted-foreground">{message}</p>
         {onRetry ? (
           <Button onClick={onRetry} size="sm" type="button" variant="outline">
-            Retry
+            {tl("Retry")}
           </Button>
         ) : null}
       </div>

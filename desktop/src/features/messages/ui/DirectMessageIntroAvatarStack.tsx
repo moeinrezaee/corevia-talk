@@ -32,7 +32,7 @@ export function DirectMessageIntroAvatarStack({
           role={participant.isAgent ? "bot" : undefined}
         >
           <span
-            className={index > 0 ? "-ml-5" : ""}
+            className={index > 0 ? "-ms-5" : ""}
             data-testid="message-dm-intro-avatar-stack-participant"
             style={{ zIndex: index + 1 }}
           >
@@ -53,7 +53,7 @@ export function DirectMessageIntroAvatarStack({
       ))}
       {hiddenCount > 0 ? (
         <div
-          className={visibleParticipants.length > 0 ? "-ml-5" : ""}
+          className={visibleParticipants.length > 0 ? "-ms-5" : ""}
           data-testid="message-dm-intro-avatar-stack-more"
           style={{ zIndex: stackItemCount }}
         >

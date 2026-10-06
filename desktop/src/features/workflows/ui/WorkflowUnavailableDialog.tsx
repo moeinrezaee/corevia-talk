@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from "@/shared/ui/dialog";
 import { Skeleton } from "@/shared/ui/skeleton";
+import { tl } from "@/shared/i18n/tl";
 
 type WorkflowUnavailableDialogProps = {
   loading: boolean;
@@ -30,17 +31,19 @@ export function WorkflowUnavailableDialog({
       <DialogContent className="sm:max-w-lg" showCloseButton={false}>
         <DialogHeader>
           <DialogTitle>
-            {loading ? "Loading workflow…" : "Workflow unavailable"}
+            {loading ? tl("Loading workflow…") : tl("Workflow unavailable")}
           </DialogTitle>
           <DialogDescription>
             {loading
-              ? "Resolving workflow details."
-              : "This workflow could not be loaded. It may no longer be available to you."}
+              ? tl("Resolving workflow details.")
+              : tl(
+                  "This workflow could not be loaded. It may no longer be available to you.",
+                )}
           </DialogDescription>
         </DialogHeader>
         {loading ? (
           <div
-            aria-label="Loading workflow"
+            aria-label={tl("Loading workflow")}
             className="space-y-3"
             role="status"
           >
@@ -52,11 +55,11 @@ export function WorkflowUnavailableDialog({
             <DialogClose asChild>
               <Button type="button" variant="outline">
                 <X className="h-4 w-4" />
-                Close
+                {tl("Close")}
               </Button>
             </DialogClose>
             <Button onClick={onRetry} type="button">
-              Retry
+              {tl("Retry")}
             </Button>
           </DialogFooter>
         )}

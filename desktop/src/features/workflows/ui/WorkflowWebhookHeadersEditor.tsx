@@ -4,6 +4,7 @@ import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { FieldLabel } from "./workflowFormPrimitives";
 import type { HeaderFormState } from "./workflowFormTypes";
+import { tl } from "@/shared/i18n/tl";
 
 function updateHeaders(
   headers: HeaderFormState[],
@@ -28,7 +29,7 @@ export function WorkflowWebhookHeadersEditor({
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <FieldLabel>Headers (optional)</FieldLabel>
+        <FieldLabel>{tl("Headers (optional)")}</FieldLabel>
         <Button
           className="h-7 gap-1 text-xs"
           disabled={disabled}
@@ -49,11 +50,13 @@ export function WorkflowWebhookHeadersEditor({
           variant="outline"
         >
           <Plus className="h-4 w-4" />
-          Add header
+          {tl("Add header")}
         </Button>
       </div>
       {headers.length === 0 ? (
-        <p className="text-xs text-muted-foreground">No custom headers.</p>
+        <p className="text-xs text-muted-foreground">
+          {tl("No custom headers.")}
+        </p>
       ) : (
         <div className="space-y-2">
           {headers.map((header, index) => (
@@ -72,7 +75,7 @@ export function WorkflowWebhookHeadersEditor({
                     ),
                   )
                 }
-                placeholder="Header name"
+                placeholder={tl("Header name")}
                 value={header.key}
               />
               <Input
@@ -89,11 +92,11 @@ export function WorkflowWebhookHeadersEditor({
                     ),
                   )
                 }
-                placeholder="Header value"
+                placeholder={tl("Header value")}
                 value={header.value}
               />
               <Button
-                aria-label="Remove header"
+                aria-label={tl("Remove header")}
                 className="h-9 w-9 shrink-0"
                 disabled={disabled}
                 onClick={() =>

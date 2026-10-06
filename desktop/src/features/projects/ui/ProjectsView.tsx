@@ -104,6 +104,7 @@ import {
   useDeleteProjectHandler,
   useOpenProjectTerminalHandler,
 } from "./projectsViewWorkItems";
+import { tl } from "@/shared/i18n/tl";
 
 const MANY_PROJECTS_THRESHOLD = 12;
 const PROJECTS_CONTEXT_POD_MIN_VIEWPORT_PX = 1024;
@@ -550,13 +551,13 @@ export function ProjectsView() {
   if (projectsQuery.isError) {
     return (
       <div className="flex flex-1 flex-col items-center justify-center gap-2 text-muted-foreground">
-        <p className="text-sm text-red-400">Failed to load projects</p>
+        <p className="text-sm text-red-400">{tl("Failed to load projects")}</p>
         <Button
           onClick={() => void projectsQuery.refetch()}
           size="sm"
           variant="outline"
         >
-          Retry
+          {tl("Retry")}
         </Button>
       </div>
     );
@@ -721,8 +722,8 @@ export function ProjectsView() {
       <div
         className={cn(
           "relative flex min-h-0 min-w-0 flex-1 flex-row overflow-hidden",
-          !isNarrowProjectsLayout && "bg-sidebar pb-2 pr-2 pt-px",
-          !isNarrowProjectsLayout && sidebar?.open === false && "pl-2",
+          !isNarrowProjectsLayout && "bg-sidebar pb-2 pe-2 pt-px",
+          !isNarrowProjectsLayout && sidebar?.open === false && "ps-2",
         )}
         data-project-context-detached={
           isNarrowProjectsLayout ? undefined : "true"
@@ -738,8 +739,8 @@ export function ProjectsView() {
           className={cn(
             "relative flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden",
             !isNarrowProjectsLayout
-              ? "ml-px rounded-2xl bg-background"
-              : cn("rounded-tl-xl", topChromeInset.divider),
+              ? "ms-px rounded-2xl bg-background"
+              : cn("rounded-ss-xl", topChromeInset.divider),
           )}
           data-testid={
             overviewDetached ? "projects-overview-content-pod" : undefined
@@ -790,7 +791,7 @@ export function ProjectsView() {
             <div className="relative min-h-0 min-w-0 flex-1">
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute right-[3px] top-0 z-50 w-1 rounded-full bg-border/80 opacity-0 transition-opacity duration-200"
+                className="pointer-events-none absolute end-[3px] top-0 z-50 w-1 rounded-full bg-border/80 opacity-0 transition-opacity duration-200"
                 ref={scrollIndicatorRef}
               />
               <div
@@ -845,7 +846,7 @@ export function ProjectsView() {
                                   embedded={viewMode === "list"}
                                   emptyMessage={
                                     searchQuery.trim()
-                                      ? "No matching reviews"
+                                      ? tl("No matching reviews")
                                       : undefined
                                   }
                                   error={projectsWorkItemsQuery.error}
@@ -871,7 +872,7 @@ export function ProjectsView() {
                                   embedded={viewMode === "list"}
                                   emptyMessage={
                                     searchQuery.trim()
-                                      ? "No matching tasks"
+                                      ? tl("No matching tasks")
                                       : undefined
                                   }
                                   error={projectsWorkItemsQuery.error}
@@ -939,7 +940,7 @@ export function ProjectsView() {
           testId="projects-overview-context-rail"
         >
           <aside
-            aria-label="Project context"
+            aria-label={tl("Project context")}
             className="relative z-30 flex h-full flex-col overflow-hidden bg-sidebar text-sidebar-foreground"
           >
             <div className="min-h-0 flex-1 overflow-y-auto">

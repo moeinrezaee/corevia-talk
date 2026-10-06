@@ -17,6 +17,7 @@ import { Checkbox } from "@/shared/ui/checkbox";
 import { Input } from "@/shared/ui/input";
 import { Spinner } from "@/shared/ui/spinner";
 import { SettingsOptionGroup, SettingsOptionRow } from "./SettingsOptionGroup";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * The exact phrase the user must type before the destructive sign-out button
@@ -122,16 +123,16 @@ export function SignOutSection() {
 
   return (
     <div className="mt-12 pb-6" data-testid="settings-signout">
-      <SettingsOptionGroup title="Sign out">
+      <SettingsOptionGroup title={tl("Sign out")}>
         <SettingsOptionRow>
           <div className="min-w-0">
             <p
               className="text-sm font-normal text-muted-foreground/70"
               data-settings-subcopy
             >
-              Removes your identity key and all local app data from this device.
-              Before signing out, create and test a password-protected key
-              backup above — this cannot be undone.
+              {tl(
+                "Removes your identity key and all local app data from this device. Before signing out, create and test a password-protected key backup above — this cannot be undone.",
+              )}
             </p>
           </div>
           <Button
@@ -142,9 +143,12 @@ export function SignOutSection() {
             variant="destructive"
           >
             {isPending ? (
-              <Spinner aria-label="Signing out" className="h-4 w-4 border-2" />
+              <Spinner
+                aria-label={tl("Signing out")}
+                className="h-4 w-4 border-2"
+              />
             ) : null}
-            {isPending ? "Signing out…" : "Delete my data"}
+            {isPending ? tl("Signing out…") : tl("Delete my data")}
           </Button>
         </SettingsOptionRow>
       </SettingsOptionGroup>
@@ -159,20 +163,22 @@ export function SignOutSection() {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Sign out and wipe all data?</AlertDialogTitle>
+            <AlertDialogTitle>
+              {tl("Sign out and wipe all data?")}
+            </AlertDialogTitle>
             <AlertDialogDescription>
-              This will delete your identity key, all agent settings, and cached
-              data from this device, then relaunch Buzz into first-run setup.
-              This cannot be undone.
+              {tl(
+                "This will delete your identity key, all agent settings, and cached data from this device, then relaunch Buzz into first-run setup. This cannot be undone.",
+              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
 
           <div className="space-y-3">
             <p className="text-sm font-medium">
-              1. Confirm you can restore your identity
+              {tl("1. Confirm you can restore your identity")}
             </p>
             {isNsecLoading ? (
-              <p className="text-sm text-muted-foreground">Loading…</p>
+              <p className="text-sm text-muted-foreground">{tl("Loading…")}</p>
             ) : nsecError ? (
               <p
                 className="text-sm text-destructive"
@@ -199,8 +205,9 @@ export function SignOutSection() {
                 }
               />
               <span>
-                I have tested a key backup or saved this private key somewhere
-                safe.
+                {tl(
+                  "I have tested a key backup or saved this private key somewhere safe.",
+                )}
               </span>
             </label>
           </div>
@@ -210,9 +217,9 @@ export function SignOutSection() {
               className="text-sm font-medium"
               htmlFor="signout-confirm-phrase"
             >
-              2. Type{" "}
+              {tl("2. Type")}{" "}
               <span className="font-semibold">"{SIGNOUT_CONFIRM_PHRASE}"</span>{" "}
-              to confirm
+              {tl("to confirm")}
             </label>
             <Input
               autoComplete="off"
@@ -227,7 +234,9 @@ export function SignOutSection() {
           </div>
 
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isPending}>
+              {tl("Cancel")}
+            </AlertDialogCancel>
             {/* A plain Button, not AlertDialogAction: Radix's Action closes
                 the dialog on click, which would drop the pending state while
                 the wipe + restart is still in flight. */}
@@ -240,11 +249,11 @@ export function SignOutSection() {
             >
               {isPending ? (
                 <Spinner
-                  aria-label="Signing out"
+                  aria-label={tl("Signing out")}
                   className="h-4 w-4 border-2"
                 />
               ) : null}
-              {isPending ? "Signing out…" : "Delete my data"}
+              {isPending ? tl("Signing out…") : tl("Delete my data")}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

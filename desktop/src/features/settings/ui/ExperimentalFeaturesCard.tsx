@@ -4,6 +4,7 @@ import type { FeatureDefinition } from "@/shared/features";
 import { Switch } from "@/shared/ui/switch";
 import { SettingsOptionGroup, SettingsOptionRow } from "./SettingsOptionGroup";
 import { SettingsSectionHeader } from "./SettingsSectionHeader";
+import { tl } from "@/shared/i18n/tl";
 
 function FeatureRow({ feature }: { feature: FeatureDefinition }) {
   const [enabled, toggle] = useFeatureToggle(feature.id);
@@ -47,16 +48,13 @@ export function ExperimentalFeaturesCard() {
   return (
     <section className="min-w-0" data-testid="settings-experimental">
       <SettingsSectionHeader
-        title="Experiments"
-        description={
-          <>
-            These features are functional but still being refined. Enable them
-            to try new capabilities early.
-          </>
-        }
+        title={tl("Experiments")}
+        description={tl(
+          "These features are functional but still being refined. Enable them to try new capabilities early.",
+        )}
       />
 
-      <SettingsOptionGroup title="Features">
+      <SettingsOptionGroup title={tl("Features")}>
         {previewFeatures.map((f) => (
           <FeatureRow feature={f} key={f.id} />
         ))}

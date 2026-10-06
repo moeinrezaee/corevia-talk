@@ -4,6 +4,7 @@ import {
   formatDurationSecondsVerbose,
   parseDurationSeconds,
 } from "./workflowDuration";
+import { tl } from "@/shared/i18n/tl";
 
 type WorkflowActivationWarning = {
   description: string;
@@ -137,9 +138,10 @@ export function getWorkflowActivationWarning(
 
   if (triggerType === "message_posted" && !nonEmptyString(trigger?.filter)) {
     return {
-      description:
+      description: tl(
         "It will run for every new message in this channel. Review the trigger before turning it on.",
-      title: "This workflow may run often",
+      ),
+      title: tl("This workflow may run often"),
     };
   }
 
@@ -152,7 +154,7 @@ export function getWorkflowActivationWarning(
         ? frequentCronDescription(cron)
         : null;
     if (description) {
-      return { description, title: "This workflow may run often" };
+      return { description, title: tl("This workflow may run often") };
     }
   }
 

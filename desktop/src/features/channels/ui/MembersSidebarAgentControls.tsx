@@ -7,6 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { tl } from "@/shared/i18n/tl";
 
 type MembersSidebarAgentControlsProps = {
   canBulkRemove: boolean;
@@ -31,7 +32,7 @@ export function MembersSidebarAgentControls({
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <button
-          className="ml-auto flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          className="ms-auto flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           data-testid="members-sidebar-agent-controls"
           type="button"
         >
@@ -48,7 +49,7 @@ export function MembersSidebarAgentControls({
           onClick={onRespawnAll}
         >
           <Play className="h-4 w-4" />
-          Spawn or respawn all
+          {tl("Spawn or respawn all")}
         </DropdownMenuItem>
         <DropdownMenuItem
           data-testid="members-sidebar-stop-all"
@@ -56,7 +57,7 @@ export function MembersSidebarAgentControls({
           onClick={onStopAll}
         >
           <Square className="h-4 w-4" />
-          Stop all
+          {tl("Stop all")}
         </DropdownMenuItem>
         {canBulkRemove ? (
           <>
@@ -68,7 +69,7 @@ export function MembersSidebarAgentControls({
               onClick={onRemoveAll}
             >
               <Trash2 className="h-4 w-4" />
-              Remove all from channel
+              {tl("Remove all from channel")}
             </DropdownMenuItem>
           </>
         ) : null}

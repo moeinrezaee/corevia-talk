@@ -67,6 +67,7 @@ import { useComposerLinkPreviews } from "./useComposerLinkPreviews";
 import { useAddressedAgentMentionRestore } from "./useAddressedAgentMentionRestore";
 import { scheduleSettleGatedAutoSubmit } from "./messageComposerAutoSubmit";
 import type { MessageComposerProps } from "./MessageComposer.types";
+import { tl } from "@/shared/i18n/tl";
 function MessageComposerImpl({
   audienceContext = null,
   channelId = null,
@@ -899,13 +900,13 @@ function MessageComposerImpl({
             />
             {media.uploadState.status === "error" ? (
               <div className="mb-2 rounded-lg bg-destructive/10 px-3 py-2 text-xs text-destructive">
-                Upload failed: {media.uploadState.message}
+                {tl("Upload failed:")} {media.uploadState.message}
                 <button
-                  className="ml-2 underline"
+                  className="ms-2 underline"
                   onClick={() => media.setUploadState({ status: "idle" })}
                   type="button"
                 >
-                  Dismiss
+                  {tl("Dismiss")}
                 </button>
               </div>
             ) : null}

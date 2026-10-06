@@ -30,6 +30,7 @@ import {
   getChannels,
   updateChannel,
 } from "@/shared/api/tauri";
+import { tl } from "@/shared/i18n/tl";
 
 // Adapter: resolves the full channel list without the not-modified short-circuit.
 // Onboarding paths run once and always need fresh data.
@@ -592,10 +593,10 @@ export function useAppOnboardingState(isSharedIdentity: boolean) {
 
   const showStarterRetryToast = React.useCallback(
     (reason: string) => {
-      toast.error("Couldn't set up starter channels", {
+      toast.error(tl("Couldn't set up starter channels"), {
         id: STARTER_CHANNEL_SETUP_TOAST_ID,
         action: {
-          label: "Retry",
+          label: tl("Retry"),
           onClick: (event) => {
             event.preventDefault();
             void requestStarterChannels(true).then((result) => {

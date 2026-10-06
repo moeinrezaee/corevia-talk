@@ -2,6 +2,7 @@ import { Smartphone, Webcam } from "lucide-react";
 
 import type { CameraSource } from "@/features/profile/ui/AnimatedAvatarCapture.helpers";
 import { cn } from "@/shared/lib/cn";
+import { tl } from "@/shared/i18n/tl";
 
 type AnimatedAvatarCameraPickerProps = {
   activeCameraSource: CameraSource | null;
@@ -33,13 +34,13 @@ export function AnimatedAvatarCameraPicker({
         {
           disabled: iphoneDisabled,
           icon: Smartphone,
-          label: "Use iPhone",
+          label: tl("Use iPhone"),
           source: "iphone" as const,
         },
         {
           disabled: computerDisabled,
           icon: Webcam,
-          label: "Use this computer",
+          label: tl("Use this computer"),
           source: "computer" as const,
         },
       ].map((option) => {

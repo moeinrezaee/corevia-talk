@@ -2,6 +2,7 @@ import * as React from "react";
 
 import type { useMediaUpload } from "@/features/messages/lib/useMediaUpload";
 import { ComposerAttachments } from "@/features/messages/ui/ComposerAttachments";
+import { tl } from "@/shared/i18n/tl";
 
 type ComposerMedia = Pick<
   ReturnType<typeof useMediaUpload>,
@@ -46,14 +47,14 @@ export function ForumComposerMediaStatus({
     <>
       {media.uploadState.status === "error" ? (
         <div className="mb-2 rounded-lg bg-destructive/10 px-3 py-2 text-xs text-destructive">
-          Upload failed: {media.uploadState.message}
+          {tl("Upload failed:")} {media.uploadState.message}
           <button
-            className="ml-2 underline"
+            className="ms-2 underline"
             disabled={disabled}
             onClick={() => media.setUploadState({ status: "idle" })}
             type="button"
           >
-            Dismiss
+            {tl("Dismiss")}
           </button>
         </div>
       ) : null}

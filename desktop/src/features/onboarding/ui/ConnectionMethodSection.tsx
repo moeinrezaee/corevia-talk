@@ -3,16 +3,17 @@ import { ChevronRight, CreditCard, KeyRound } from "lucide-react";
 
 import { Button } from "@/shared/ui/button";
 import type { HarnessConnectionMethod } from "./harnessConnectionOptions";
+import { tl } from "@/shared/i18n/tl";
 
 const CONNECTION_METHOD_CHOICES = [
   {
     icon: CreditCard,
-    label: "Log in with a subscription",
+    label: tl("Log in with a subscription"),
     method: "subscription",
   },
   {
     icon: KeyRound,
-    label: "Use an API key",
+    label: tl("Use an API key"),
     method: "api",
   },
 ] as const satisfies ReadonlyArray<{
@@ -33,10 +34,12 @@ export function ConnectionMethodSection({
     >
       <div className="shrink-0">
         <h1 className="text-title font-normal text-foreground">
-          Connect your AI provider
+          {tl("Connect your AI provider")}
         </h1>
         <p className="mt-2 text-base leading-6 text-foreground/80">
-          Choose how your agents will access AI. You can change this later.
+          {tl(
+            "Choose how your agents will access AI. You can change this later.",
+          )}
         </p>
       </div>
 
@@ -44,7 +47,7 @@ export function ConnectionMethodSection({
         {CONNECTION_METHOD_CHOICES.map(
           ({ icon: MethodIcon, label, method }) => (
             <Button
-              className="group h-auto min-h-14 w-full items-center justify-start gap-4 rounded-2xl bg-foreground/[0.04] px-4 py-3 text-left text-sm text-foreground shadow-none transition-colors duration-150 ease-out hover:bg-foreground/[0.08] hover:text-foreground focus-visible:ring-2 focus-visible:ring-foreground/20 motion-reduce:transition-none"
+              className="group h-auto min-h-14 w-full items-center justify-start gap-4 rounded-2xl bg-foreground/[0.04] px-4 py-3 text-start text-sm text-foreground shadow-none transition-colors duration-150 ease-out hover:bg-foreground/[0.08] hover:text-foreground focus-visible:ring-2 focus-visible:ring-foreground/20 motion-reduce:transition-none"
               data-testid={`onboarding-harness-method-${method}`}
               key={method}
               onClick={() => onSelect(method)}
@@ -55,7 +58,7 @@ export function ConnectionMethodSection({
                 <MethodIcon aria-hidden className="!size-6" />
               </span>
               <span className="min-w-0 flex-1 font-medium">{label}</span>
-              <span className="ml-auto flex size-8 shrink-0 items-center justify-center">
+              <span className="ms-auto flex size-8 shrink-0 items-center justify-center">
                 <ChevronRight
                   aria-hidden
                   className="size-4 text-muted-foreground transition-colors duration-150 ease-out group-hover:text-foreground motion-reduce:transition-none"

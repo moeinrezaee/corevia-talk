@@ -17,6 +17,7 @@ import { useSystemColorScheme } from "@/shared/theme/useSystemColorScheme";
 import { Button } from "@/shared/ui/button";
 import { StartupWindowDragRegion } from "@/shared/ui/StartupWindowDragRegion";
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const COPY_SUCCESS_MESSAGE =
   "Signed response copied. Paste it into the Buzz admin console.";
@@ -156,7 +157,7 @@ function SignedResponseControls({
   return (
     <div className="space-y-4" data-testid="nostr-bind-manual-fallback-content">
       <pre
-        className="max-h-56 w-full overflow-auto rounded-2xl border border-border/70 bg-muted/60 p-4 text-left shadow-xs"
+        className="max-h-56 w-full overflow-auto rounded-2xl border border-border/70 bg-muted/60 p-4 text-start shadow-xs"
         data-testid="nostr-bind-signed-response"
       >
         <code className="whitespace-pre-wrap break-all font-mono text-xs leading-5 text-foreground">
@@ -165,7 +166,7 @@ function SignedResponseControls({
       </pre>
 
       {copyFailed ? (
-        <p className="w-full rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-left text-sm text-destructive">
+        <p className="w-full rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-start text-sm text-destructive">
           {COPY_FAILURE_MESSAGE}
         </p>
       ) : null}
@@ -192,7 +193,7 @@ function SignedResponseControls({
                 : "-translate-y-0.5 opacity-0",
             )}
           >
-            Copy response
+            {tl("Copy response")}
           </span>
           <span
             className={cn(
@@ -202,7 +203,7 @@ function SignedResponseControls({
                 : "translate-y-0.5 opacity-0",
             )}
           >
-            Copied
+            {tl("Copied")}
           </span>
         </span>
       </Button>
@@ -652,7 +653,7 @@ export function NostrBindConsentDialog() {
             <StartupWindowDragRegion />
             <div className="m-auto flex w-full max-w-[500px] flex-col items-center text-center">
               <img
-                alt="Buzz"
+                alt={tl("Buzz")}
                 className="h-14 w-14 rounded-xl shadow-xs"
                 src="/app-icon@2x.png"
                 srcSet="/app-icon@2x.png 1x, /app-icon@3x.png 2x"
@@ -667,27 +668,29 @@ export function NostrBindConsentDialog() {
                 >
                   <DialogPrimitive.Title className="mt-6 text-3xl font-semibold tracking-tight">
                     {payload.returnMode === "browser_fragment_v1"
-                      ? "Continue in your browser"
-                      : "Finish on the Buzz website"}
+                      ? tl("Continue in your browser")
+                      : tl("Finish on the Buzz website")}
                   </DialogPrimitive.Title>
                   <DialogPrimitive.Description
                     className="mt-3 max-w-[440px] text-sm leading-6 text-muted-foreground"
                     id="nostr-bind-description"
                   >
                     {payload.returnMode === "browser_fragment_v1"
-                      ? "Buzz opened your browser to finish verification."
-                      : "Copy the response below, then paste it into the Buzz website to finish verification."}
+                      ? tl("Buzz opened your browser to finish verification.")
+                      : tl(
+                          "Copy the response below, then paste it into the Buzz website to finish verification.",
+                        )}
                   </DialogPrimitive.Description>
 
                   {error ? (
-                    <p className="mt-4 w-full rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-left text-sm text-destructive">
+                    <p className="mt-4 w-full rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-start text-sm text-destructive">
                       {error}
                     </p>
                   ) : null}
 
                   {payload.returnMode === "browser_fragment_v1" ? (
                     <details
-                      className="group mt-10 w-full overflow-hidden rounded-2xl border border-border/70 bg-muted/30 text-left shadow-xs"
+                      className="group mt-10 w-full overflow-hidden rounded-2xl border border-border/70 bg-muted/30 text-start shadow-xs"
                       data-testid="nostr-bind-manual-fallback"
                       onToggle={(event) =>
                         setIsManualFallbackOpen(event.currentTarget.open)
@@ -695,12 +698,16 @@ export function NostrBindConsentDialog() {
                       open={isManualFallbackOpen}
                     >
                       <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-medium transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
-                        <span>Pairing didn’t finish automatically?</span>
+                        <span>
+                          {tl("Pairing didn’t finish automatically?")}
+                        </span>
                         <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-150 group-open:rotate-180" />
                       </summary>
                       <div className="space-y-4 border-t border-border/55 p-4">
                         <p className="text-sm leading-6 text-muted-foreground">
-                          Copy this response and paste it into the pairing page.
+                          {tl(
+                            "Copy this response and paste it into the pairing page.",
+                          )}
                         </p>
                         <SignedResponseControls
                           copyFailed={copyFailed}
@@ -728,7 +735,7 @@ export function NostrBindConsentDialog() {
                       type="button"
                       variant="ghost"
                     >
-                      Continue
+                      {tl("Continue")}
                     </Button>
                   </div>
                 </OnboardingSlideTransition>
@@ -740,13 +747,13 @@ export function NostrBindConsentDialog() {
                   transitionKey="nostr-bind-code"
                 >
                   <DialogPrimitive.Title className="mt-6 text-3xl font-semibold tracking-tight">
-                    Enter verification code
+                    {tl("Enter verification code")}
                   </DialogPrimitive.Title>
                   <DialogPrimitive.Description
                     className="mt-3 max-w-[440px] text-sm leading-6 text-muted-foreground"
                     id="nostr-bind-description"
                   >
-                    Enter the six-digit code shown in your browser
+                    {tl("Enter the six-digit code shown in your browser")}
                   </DialogPrimitive.Description>
 
                   <div className="mt-10 w-full space-y-4 text-sm">
@@ -757,7 +764,9 @@ export function NostrBindConsentDialog() {
                       aria-invalid={hasCodeMismatch}
                       className="w-full min-w-0 text-center"
                     >
-                      <legend className="sr-only">Verification code</legend>
+                      <legend className="sr-only">
+                        {tl("Verification code")}
+                      </legend>
                       <div
                         className="flex justify-center gap-2"
                         data-testid="nostr-bind-verification-code"
@@ -769,7 +778,10 @@ export function NostrBindConsentDialog() {
                             key={VERIFICATION_CODE_DIGIT_KEYS[index]}
                           >
                             <input
-                              aria-label={`Verification code digit ${index + 1} of ${VERIFICATION_CODE_LENGTH}`}
+                              aria-label={tlt(
+                                "Verification code digit {0} of {1}",
+                                [index + 1, VERIFICATION_CODE_LENGTH],
+                              )}
                               autoComplete={
                                 index === 0 ? "one-time-code" : "off"
                               }
@@ -857,13 +869,13 @@ export function NostrBindConsentDialog() {
                     </fieldset>
 
                     {isExpired ? (
-                      <p className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-left text-destructive">
+                      <p className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-start text-destructive">
                         {EXPIRED_LINK_MESSAGE}
                       </p>
                     ) : null}
 
                     {error ? (
-                      <p className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-left text-destructive">
+                      <p className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-start text-destructive">
                         {error}
                       </p>
                     ) : null}
@@ -898,7 +910,7 @@ export function NostrBindConsentDialog() {
                               : "-translate-y-0.5 opacity-0",
                           )}
                         >
-                          Continue
+                          {tl("Continue")}
                         </span>
                         <span
                           className={cn(
@@ -908,7 +920,7 @@ export function NostrBindConsentDialog() {
                               : "translate-y-0.5 opacity-0",
                           )}
                         >
-                          Signing…
+                          {tl("Signing…")}
                         </span>
                       </span>
                     </Button>
@@ -919,7 +931,7 @@ export function NostrBindConsentDialog() {
                       type="button"
                       variant="ghost"
                     >
-                      Cancel
+                      {tl("Cancel")}
                     </Button>
                   </div>
                 </OnboardingSlideTransition>

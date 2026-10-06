@@ -16,6 +16,7 @@ import { parseImetaTags } from "@/shared/ui/markdown/parseImeta";
 
 import { formatRelativeTime } from "../lib/time";
 import { DeleteActionMenu } from "./DeleteActionMenu";
+import { tl } from "@/shared/i18n/tl";
 
 type ForumPostCardProps = {
   post: ForumPost;
@@ -70,7 +71,7 @@ export function ForumPostCard({
       role="button"
       tabIndex={0}
       className={cn(
-        "group w-full cursor-pointer rounded-xl border border-border/60 bg-card p-4 text-left transition-colors hover:border-border hover:bg-accent/40",
+        "group w-full cursor-pointer rounded-xl border border-border/60 bg-card p-4 text-start transition-colors hover:border-border hover:bg-accent/40",
         isActive && "border-primary/40 bg-accent/60",
         isDeleting && "pointer-events-none opacity-50",
       )}
@@ -113,12 +114,12 @@ export function ForumPostCard({
         {canDelete && onDelete ? (
           // biome-ignore lint/a11y/noStaticElementInteractions: presentation wrapper only stops click propagation to parent card link
           <div
-            className="ml-auto"
+            className="ms-auto"
             onClick={(e) => e.stopPropagation()}
             role="presentation"
           >
             <DeleteActionMenu
-              label="post"
+              label={tl("post")}
               onConfirm={() => onDelete(post.eventId)}
             />
           </div>
@@ -148,7 +149,9 @@ export function ForumPostCard({
           {summary.lastReplyAt ? (
             <>
               <span className="text-muted-foreground/50">·</span>
-              <span>last {formatRelativeTime(summary.lastReplyAt)}</span>
+              <span>
+                {tl("last")} {formatRelativeTime(summary.lastReplyAt)}
+              </span>
             </>
           ) : null}
         </div>

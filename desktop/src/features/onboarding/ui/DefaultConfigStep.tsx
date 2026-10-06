@@ -34,6 +34,7 @@ import {
 } from "./onboardingRuntimeSelection";
 import type { DefaultConfigDraft, DefaultConfigStepActions } from "./types";
 import { ONBOARDING_CARD_INPUT_CLASS } from "./onboardingCardStyles";
+import { tl } from "@/shared/i18n/tl";
 
 type DefaultConfigStepProps = {
   actions: DefaultConfigStepActions;
@@ -230,28 +231,28 @@ function AgentDefaultsSection({
   return (
     <fieldset
       aria-busy={isPending}
-      className="w-full space-y-4 text-left text-sm text-primary disabled:pointer-events-none disabled:opacity-70"
+      className="w-full space-y-4 text-start text-sm text-primary disabled:pointer-events-none disabled:opacity-70"
       disabled={isPending}
     >
       {configSurfaceLoading ? (
         <div className="flex items-center justify-center gap-2 py-4 text-sm text-muted-foreground">
           <Spinner className="h-4 w-4 border-2" />
-          Loading…
+          {tl("Loading…")}
         </div>
       ) : configSurfaceError ? (
         <p className="py-4 text-center text-sm text-destructive">
-          Couldn't load harness settings. Go back and try again.
+          {tl("Couldn't load harness settings. Go back and try again.")}
         </p>
       ) : (
         <div className="space-y-7">
           {!onUseDifferentHarness ? (
             <div className="space-y-4">
-              <div className="pl-3">
+              <div className="ps-3">
                 <label
                   className="text-sm font-medium"
                   htmlFor="global-agent-default-harness"
                 >
-                  Default harness
+                  {tl("Default harness")}
                 </label>
               </div>
               <AgentDropdownSelect
@@ -263,7 +264,7 @@ function AgentDefaultsSection({
                 id="global-agent-default-harness"
                 onValueChange={handleHarnessChange}
                 options={harnessOptions}
-                placeholder="Select a harness"
+                placeholder={tl("Select a harness")}
                 placeholderClassName="text-foreground/70"
                 testId="global-agent-default-harness"
                 value={selectedRuntimeId}
@@ -315,7 +316,7 @@ function AgentDefaultsSection({
 
           {onUseDifferentHarness ? (
             <div className="flex items-baseline gap-1.5 text-sm text-foreground/70">
-              <span>or</span>
+              <span>{tl("or")}</span>
               <Button
                 className="h-auto p-0 text-sm text-foreground"
                 data-testid="onboarding-use-different-harness"
@@ -324,7 +325,7 @@ function AgentDefaultsSection({
                 type="button"
                 variant="link"
               >
-                Use a different harness
+                {tl("Use a different harness")}
               </Button>
             </div>
           ) : null}
@@ -391,19 +392,23 @@ export function DefaultConfigStep({
       transitionKey={`default-config-${direction}`}
     >
       <div
-        className={`w-full ${cardLayout ? "text-left" : "max-w-[500px] text-center"}`}
+        className={`w-full ${cardLayout ? "text-start" : "max-w-[500px] text-center"}`}
       >
         <h1 className="text-title font-normal text-foreground">
           {actions.useDifferentHarness
-            ? "Connect with an API key"
-            : "Choose your model settings"}
+            ? tl("Connect with an API key")
+            : tl("Choose your model settings")}
         </h1>
         <p
           className={`w-full text-foreground/80 ${cardLayout ? "mt-2 text-base leading-6" : "mx-auto mt-3 max-w-[440px] text-sm leading-5"}`}
         >
           {actions.useDifferentHarness
-            ? "Choose your provider and enter an API key to connect to the Buzz harness."
-            : "Select the model and effort level your agents will use by default."}
+            ? tl(
+                "Choose your provider and enter an API key to connect to the Buzz harness.",
+              )
+            : tl(
+                "Select the model and effort level your agents will use by default.",
+              )}
         </p>
       </div>
 
@@ -431,7 +436,7 @@ export function DefaultConfigStep({
           type="button"
           variant="ghost"
         >
-          Skip for now
+          {tl("Skip for now")}
         </Button>
         <Button
           className={`${ONBOARDING_PRIMARY_CTA_CLASS} text-sm`}
@@ -440,7 +445,7 @@ export function DefaultConfigStep({
           onClick={() => void handleComplete()}
           type="button"
         >
-          {isSaving ? "Saving…" : "Next"}
+          {isSaving ? tl("Saving…") : tl("Next")}
         </Button>
 
         {saveError ? (
@@ -449,7 +454,7 @@ export function DefaultConfigStep({
             data-testid="onboarding-config-save-error"
             role="alert"
           >
-            Couldn’t save model settings. {saveError} Try again.
+            {tl("Couldn’t save model settings.")} {saveError} {tl("Try again.")}
           </p>
         ) : null}
       </OnboardingFooter>

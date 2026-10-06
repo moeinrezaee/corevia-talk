@@ -24,6 +24,7 @@ import {
   toggleTerminalPanel,
   useTerminalPanel,
 } from "@/features/terminal/terminalPanelStore";
+import { tl } from "@/shared/i18n/tl";
 
 const DM_HEADER_AVATAR_SIZE = 32;
 const DM_HEADER_AVATAR_STATUS_GEOMETRY = scaleProfileAvatarStatusGeometry(
@@ -87,11 +88,13 @@ export function ChannelScreenHeader({
   const terminalButton = activeChannel ? (
     <Button
       aria-label={
-        terminalPanel.mode === "closed" ? "Open Buzz Term" : "Hide Buzz Term"
+        terminalPanel.mode === "closed"
+          ? tl("Open Buzz Term")
+          : tl("Hide Buzz Term")
       }
       onClick={toggleTerminalPanel}
       size="icon"
-      title="Buzz Term (⌘J)"
+      title={tl("Buzz Term (⌘J)")}
       type="button"
       variant={terminalPanel.mode === "closed" ? "outline" : "secondary"}
     >
@@ -107,8 +110,8 @@ export function ChannelScreenHeader({
           size="sm"
           variant="default"
         >
-          <LogIn className="mr-1.5 h-4 w-4" />
-          {isJoining ? "Joining…" : "Join"}
+          <LogIn className="me-1.5 h-4 w-4" />
+          {isJoining ? tl("Joining…") : tl("Join")}
         </Button>
         {headerEndActions}
       </div>
@@ -162,7 +165,7 @@ export function ChannelScreenHeader({
               <ProfileAvatarWithStatus
                 avatarClassName="text-xs"
                 avatarUrl={activeDmAvatarUrl}
-                className="mr-1.5 h-8 w-8"
+                className="me-1.5 h-8 w-8"
                 geometry={DM_HEADER_AVATAR_STATUS_GEOMETRY}
                 iconClassName="h-4 w-4"
                 label={activeChannelTitle}
@@ -177,7 +180,7 @@ export function ChannelScreenHeader({
             <ProfileAvatarWithStatus
               avatarClassName="text-xs"
               avatarUrl={activeDmAvatarUrl}
-              className="mr-1.5 h-8 w-8"
+              className="me-1.5 h-8 w-8"
               geometry={DM_HEADER_AVATAR_STATUS_GEOMETRY}
               iconClassName="h-4 w-4"
               label={activeChannelTitle}
@@ -212,7 +215,7 @@ export function ChannelScreenHeader({
       titleAdornment={
         activeChannel?.channelType === "dm" && !isGroupDm ? (
           <UserNameIndicators
-            className="ml-1"
+            className="ms-1"
             pubkey={activeDmParticipant?.pubkey}
             size="dm"
           />
@@ -235,7 +238,7 @@ function DmHeaderParticipantStack({
 
   return (
     <div
-      className="mr-1.5 flex shrink-0 items-center"
+      className="me-1.5 flex shrink-0 items-center"
       data-testid="chat-header-dm-avatar-stack"
     >
       {visibleParticipants.map((participant, index) => (
@@ -247,7 +250,7 @@ function DmHeaderParticipantStack({
           role={participant.isAgent ? "bot" : undefined}
         >
           <span
-            className={index > 0 ? "-ml-2" : ""}
+            className={index > 0 ? "-ms-2" : ""}
             data-testid="chat-header-dm-avatar-stack-participant"
             style={{ zIndex: index + 1 }}
           >
@@ -268,7 +271,7 @@ function DmHeaderParticipantStack({
       ))}
       {hiddenCount > 0 ? (
         <div
-          className={visibleParticipants.length > 0 ? "-ml-2" : ""}
+          className={visibleParticipants.length > 0 ? "-ms-2" : ""}
           data-testid="chat-header-dm-avatar-stack-more"
           style={{ zIndex: stackItemCount }}
         >

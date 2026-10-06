@@ -36,6 +36,7 @@ import {
   type ProjectHomeWorkspaceDetail,
 } from "./ProjectHomeWorkspaceSheet";
 import { ProjectRepositoryManagement } from "./ProjectRepositoryManagement";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const EMPTY_TARGET_MESSAGE_EVENTS: RelayEvent[] = [];
 const PROJECT_HOME_SUMMARY_WIDTH_KEY =
@@ -66,7 +67,9 @@ function ProjectHomeHeaderToggle({
     <Tooltip disableHoverableContent>
       <TooltipTrigger asChild>
         <Button
-          aria-label={open ? `Hide ${label}` : `Show ${label}`}
+          aria-label={
+            open ? tlt("Hide {0}", [label]) : tlt("Show {0}", [label])
+          }
           aria-pressed={open}
           className="h-7 w-7 text-sidebar-foreground hover:bg-sidebar-accent"
           data-testid={testId}
@@ -254,7 +257,7 @@ export function ProjectChannelHome({
         className={cn(
           "relative flex min-h-0 min-w-0 flex-1 overflow-hidden",
           summaryVisible && "bg-sidebar",
-          summaryVisible && sidebar?.open === false && "pl-2",
+          summaryVisible && sidebar?.open === false && "ps-2",
         )}
         data-project-context-detached={summaryVisible ? "true" : undefined}
         data-project-detail-screen
@@ -265,14 +268,14 @@ export function ProjectChannelHome({
           className={cn(
             "relative flex min-h-0 min-w-60 flex-1 flex-col overflow-hidden",
             summaryVisible
-              ? "mb-2 ml-px mt-px rounded-2xl bg-background"
+              ? "mb-2 ms-px mt-px rounded-2xl bg-background"
               : "bg-muted/20",
           )}
         >
           <ProjectDetailChrome
             actions={
               <ProjectHomeHeaderToggle
-                label="Overview"
+                label={tl("Overview")}
                 onClick={() => {
                   if (workspaceSheetOpen) {
                     closeWorkspaceSheet();
@@ -388,7 +391,7 @@ export function ProjectChannelHome({
           ) : (
             <div className="flex min-h-0 flex-1 items-center justify-center px-6 py-8">
               <p className="text-sm text-muted-foreground">
-                This project's channel could not be found.
+                {tl("This project's channel could not be found.")}
               </p>
             </div>
           )}

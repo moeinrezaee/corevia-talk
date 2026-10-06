@@ -15,6 +15,7 @@ import { startIdentityRecoveryPairing } from "@/shared/api/tauriPairing";
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
 import { Button } from "@/shared/ui/button";
 import { StyledQrCode } from "@/shared/ui/styled-qr-code";
+import { tl } from "@/shared/i18n/tl";
 
 type Step = "loading" | "qr" | "sas" | "receiving" | "done" | "error";
 
@@ -170,14 +171,14 @@ export function IdentityRecoveryPairing({
             centerImageSrc="/app-icon@2x.png"
             data-testid="identity-recovery-qr"
             size={240}
-            title="Desktop identity recovery QR code"
+            title={tl("Desktop identity recovery QR code")}
             value={qrUri}
           />
         ) : step === "sas" && sas ? (
           <div className="flex max-w-60 flex-col items-center gap-3 py-2 text-center text-foreground">
             <ShieldCheck className="h-10 w-10 text-primary" />
             <p className="text-sm font-medium">
-              Does this code match your phone?
+              {tl("Does this code match your phone?")}
             </p>
             <div className="rounded-xl border-2 border-primary/30 bg-primary/5 px-5 py-3">
               <p
@@ -188,8 +189,9 @@ export function IdentityRecoveryPairing({
               </p>
             </div>
             <p className="text-xs text-muted-foreground">
-              This gives this desktop permanent access to your Buzz identity.
-              Only continue if you trust it.
+              {tl(
+                "This gives this desktop permanent access to your Buzz identity. Only continue if you trust it.",
+              )}
             </p>
             <div className="flex w-full flex-col gap-2">
               <Button
@@ -197,8 +199,8 @@ export function IdentityRecoveryPairing({
                 data-testid="confirm-identity-recovery-sas"
                 onClick={() => void confirm()}
               >
-                <Check className="mr-1.5 h-4 w-4" />
-                Codes match
+                <Check className="me-1.5 h-4 w-4" />
+                {tl("Codes match")}
               </Button>
               <Button
                 className="flex-1"
@@ -206,8 +208,8 @@ export function IdentityRecoveryPairing({
                 onClick={() => void deny()}
                 variant="outline"
               >
-                <X className="mr-1.5 h-4 w-4" />
-                Cancel
+                <X className="me-1.5 h-4 w-4" />
+                {tl("Cancel")}
               </Button>
             </div>
           </div>
@@ -216,15 +218,17 @@ export function IdentityRecoveryPairing({
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
               <Check className="h-6 w-6 text-green-600 dark:text-green-400" />
             </div>
-            <p className="text-sm font-medium">Identity received securely</p>
+            <p className="text-sm font-medium">
+              {tl("Identity received securely")}
+            </p>
           </div>
         ) : step === "error" ? (
           <div className="flex max-w-52 flex-col items-center gap-3 text-center text-foreground">
             <TriangleAlert className="h-6 w-6 text-destructive" />
             <p className="text-sm text-destructive">{error}</p>
             <Button onClick={() => void start()} size="sm" variant="outline">
-              <RefreshCw className="mr-1.5 h-4 w-4" />
-              Try again
+              <RefreshCw className="me-1.5 h-4 w-4" />
+              {tl("Try again")}
             </Button>
           </div>
         ) : (
@@ -232,8 +236,8 @@ export function IdentityRecoveryPairing({
             <LoaderCircle className="h-6 w-6 animate-spin text-muted-foreground" />
             <p className="text-sm text-muted-foreground">
               {step === "receiving"
-                ? "Receiving identity from mobile device..."
-                : "Starting pairing..."}
+                ? tl("Receiving identity from mobile device...")
+                : tl("Starting pairing...")}
             </p>
           </div>
         )}
@@ -249,17 +253,17 @@ export function IdentityRecoveryPairing({
           variant="outline"
         >
           {step === "loading" ? (
-            <LoaderCircle className="mr-1.5 h-4 w-4 animate-spin" />
+            <LoaderCircle className="me-1.5 h-4 w-4 animate-spin" />
           ) : copied ? (
-            <Check className="mr-1.5 h-4 w-4" />
+            <Check className="me-1.5 h-4 w-4" />
           ) : (
-            <Copy className="mr-1.5 h-4 w-4" />
+            <Copy className="me-1.5 h-4 w-4" />
           )}
           {step === "loading"
-            ? "Generating pairing code..."
+            ? tl("Generating pairing code...")
             : copied
-              ? "Copied"
-              : "Copy pairing code"}
+              ? tl("Copied")
+              : tl("Copy pairing code")}
         </Button>
       ) : null}
       {step === "qr" && error ? (

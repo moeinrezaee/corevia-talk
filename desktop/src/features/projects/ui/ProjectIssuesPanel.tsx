@@ -57,6 +57,7 @@ import {
 import { ProjectWorkItemGroup } from "./ProjectWorkItemGroup";
 import { ProjectWorkItemRow } from "./ProjectWorkItemRow";
 import { ProjectPanelState } from "./ProjectPanelState";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export function issueStatusClassName(status: ProjectIssue["status"]) {
   if (status === "Triage" || status === "In Progress") return "text-amber-500";
@@ -195,7 +196,7 @@ function IssueRow({
       trailing={
         <>
           <span
-            className="hidden w-24 shrink-0 truncate text-right text-xs text-muted-foreground/60 md:block"
+            className="hidden w-24 shrink-0 truncate text-end text-xs text-muted-foreground/60 md:block"
             data-testid="project-issue-row-category"
           >
             {projectTaskCategoryLabel(issue.category)}
@@ -204,7 +205,7 @@ function IssueRow({
             <span
               className="flex h-5 w-5 shrink-0 items-center justify-center"
               data-testid="project-issue-creator"
-              title={`Created by ${authorLabel}`}
+              title={tlt("Created by {0}", [authorLabel])}
             >
               <ProfileIdentityButton
                 avatarClassName="shrink-0"
@@ -229,10 +230,10 @@ function IssueRow({
                 <span
                   className="flex h-5 w-5 items-center justify-center rounded-full border border-border/70 bg-muted/35"
                   data-testid="project-issue-assignee-placeholder"
-                  title="Unassigned"
+                  title={tl("Unassigned")}
                 >
                   <User aria-hidden="true" className="h-3 w-3" />
-                  <span className="sr-only">Unassigned</span>
+                  <span className="sr-only">{tl("Unassigned")}</span>
                 </span>
               )}
             </span>
@@ -241,8 +242,8 @@ function IssueRow({
             <button
               aria-label={
                 issue.comments.length > 0
-                  ? `View ${issue.comments.length} comments`
-                  : "View comments"
+                  ? tlt("View {0} comments", [issue.comments.length])
+                  : tl("View comments")
               }
               className={`flex items-center gap-1 rounded-md text-xs hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring ${
                 issue.comments.length > 0
@@ -258,7 +259,7 @@ function IssueRow({
             </button>
           </span>
           <span
-            className="hidden w-20 shrink-0 text-right text-xs text-muted-foreground/55 sm:block"
+            className="hidden w-20 shrink-0 text-end text-xs text-muted-foreground/55 sm:block"
             data-testid="project-issue-row-date"
             title={new Date(issue.createdAt * 1_000).toLocaleString()}
           >
@@ -298,7 +299,7 @@ export function ProjectIssueDetail({
           mediaTags,
           mentionPubkeys,
         });
-        toast.success("Comment posted.");
+        toast.success(tl("Comment posted."));
       } catch (error) {
         toast.error(
           error instanceof Error ? error.message : "Failed to post comment.",
@@ -332,14 +333,14 @@ export function ProjectIssueDetail({
             #{issue.id.slice(0, 8)}
           </span>
           <ShareLinkButton
-            className="ml-1 inline-flex h-7 w-7 align-text-bottom"
-            label="Copy task link"
+            className="ms-1 inline-flex h-7 w-7 align-text-bottom"
+            label={tl("Copy task link")}
             link={issueShareLink(issue)}
             testId="project-issue-copy-link"
           />
         </h3>
         <p className="flex flex-wrap items-center gap-x-1 gap-y-1 text-xs text-muted-foreground">
-          <span>Task created</span>
+          <span>{tl("Task created")}</span>
           <span
             className="shrink-0 whitespace-nowrap"
             title={new Date(issue.createdAt * 1_000).toLocaleString()}
@@ -353,16 +354,16 @@ export function ProjectIssueDetail({
         </p>
       </header>
       <ProjectDetailMetaList>
-        <ProjectDetailMetaRow icon={status.icon} label="Status">
+        <ProjectDetailMetaRow icon={status.icon} label={tl("Status")}>
           <span className={`font-medium ${status.className}`}>
             {issue.status}
           </span>
         </ProjectDetailMetaRow>
-        <ProjectDetailMetaRow icon={CircleDot} label="Category">
+        <ProjectDetailMetaRow icon={CircleDot} label={tl("Category")}>
           {projectTaskCategoryLabel(issue.category)}
         </ProjectDetailMetaRow>
         {issue.assignees.length > 0 || viewer ? (
-          <ProjectDetailMetaRow icon={User} label="Assignees">
+          <ProjectDetailMetaRow icon={User} label={tl("Assignees")}>
             <IssueAssigneesRow
               canAssignOthers={canAssignOthers}
               issue={issue}
@@ -374,17 +375,17 @@ export function ProjectIssueDetail({
           </ProjectDetailMetaRow>
         ) : null}
         {labels.length > 0 ? (
-          <ProjectDetailMetaRow icon={Tag} label="Labels">
+          <ProjectDetailMetaRow icon={Tag} label={tl("Labels")}>
             <ProjectDetailMetaPills labels={labels} />
           </ProjectDetailMetaRow>
         ) : null}
       </ProjectDetailMetaList>
       {issue.content ? (
-        <ProjectDetailSection defaultOpen title="Description">
+        <ProjectDetailSection defaultOpen title={tl("Description")}>
           <ProjectRichContent content={issue.content} tags={issue.tags} />
         </ProjectDetailSection>
       ) : null}
-      <ProjectDetailSection defaultOpen title="Activity">
+      <ProjectDetailSection defaultOpen title={tl("Activity")}>
         <div className="space-y-3">
           <DiscussedInChannels
             entityLabel="this task"
@@ -411,7 +412,7 @@ export function ProjectIssueDetail({
           isSending={commentMutation.isPending}
           members={members}
           onSubmit={handleCommentSubmit}
-          placeholder="Add a comment…"
+          placeholder={tl("Add a comment…")}
           profiles={profiles}
         />
       </div>
@@ -447,7 +448,7 @@ export function ProjectIssuesPanel({
   const loadError = error ?? issuesQuery.error;
 
   if (loading) {
-    return <BuzzLoadingState label="Loading tasks" />;
+    return <BuzzLoadingState label={tl("Loading tasks")} />;
   }
 
   if (resolvedItems.length === 0) {
@@ -455,13 +456,15 @@ export function ProjectIssuesPanel({
       <ProjectPanelState
         description={
           loadError
-            ? "Refresh the project and try again."
+            ? tl("Refresh the project and try again.")
             : issueItems
-              ? "Tasks created for this project's repositories will appear here."
-              : "Tasks created for this repository will appear here."
+              ? tl(
+                  "Tasks created for this project's repositories will appear here.",
+                )
+              : tl("Tasks created for this repository will appear here.")
         }
         error={Boolean(loadError)}
-        title={loadError ? "Could not load tasks" : "No tasks yet"}
+        title={loadError ? tl("Could not load tasks") : tl("No tasks yet")}
       />
     );
   }

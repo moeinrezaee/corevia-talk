@@ -3,6 +3,7 @@ import type * as React from "react";
 
 import { AppTopChromePortal } from "@/app/AppTopChromePortal";
 import type { Project, Repository } from "@/features/projects/hooks";
+import { tl } from "@/shared/i18n/tl";
 
 export type ProjectDetailWorkItemCrumb = {
   category: string;
@@ -86,12 +87,12 @@ export function ProjectDetailChrome({
   return (
     <AppTopChromePortal>
       <div
-        className="flex min-w-0 flex-1 items-center justify-between gap-3 pl-2"
+        className="flex min-w-0 flex-1 items-center justify-between gap-3 ps-2"
         data-tauri-drag-region
         data-testid="project-detail-chrome"
       >
         <nav
-          aria-label="Project breadcrumb"
+          aria-label={tl("Project breadcrumb")}
           className="absolute flex max-w-[50%] min-w-0 -translate-x-1/2 -translate-y-px items-center gap-0.5 text-xs text-sidebar-foreground/65 transition-[left] duration-200 ease-linear motion-reduce:transition-none"
           style={{
             left: "calc(50% + var(--app-top-chrome-center-offset, 0rem))",
@@ -103,7 +104,7 @@ export function ProjectDetailChrome({
             type="button"
           >
             <Folders className="h-3.5 w-3.5" />
-            Projects
+            {tl("Projects")}
           </button>
           <ChevronRight className="h-3 w-3 shrink-0 opacity-60" />
           {repositoryCrumb ? (
@@ -129,7 +130,7 @@ export function ProjectDetailChrome({
             </span>
           )}
         </nav>
-        <div className="ml-auto flex shrink-0 items-center gap-0.5">
+        <div className="ms-auto flex shrink-0 items-center gap-0.5">
           {actions}
         </div>
       </div>
@@ -154,12 +155,12 @@ export function ProjectsWorkspaceChrome({
   return (
     <AppTopChromePortal>
       <div
-        className="flex min-w-0 flex-1 items-center justify-between gap-3 pl-2"
+        className="flex min-w-0 flex-1 items-center justify-between gap-3 ps-2"
         data-tauri-drag-region
         data-testid="projects-workspace-chrome"
       >
         <nav
-          aria-label="Projects breadcrumb"
+          aria-label={tl("Projects breadcrumb")}
           className="absolute flex max-w-[50%] min-w-0 -translate-x-1/2 -translate-y-px items-center gap-0.5 text-xs text-sidebar-foreground/65 transition-[left] duration-200 ease-linear motion-reduce:transition-none"
           style={{
             left: "calc(50% + var(--app-top-chrome-center-offset, 0rem))",
@@ -168,7 +169,7 @@ export function ProjectsWorkspaceChrome({
           {onActivity ? (
             <span className="flex min-w-0 items-center gap-1.5 px-1 py-1 font-medium">
               <Folders className="h-3.5 w-3.5 shrink-0" />
-              Projects
+              {tl("Projects")}
             </span>
           ) : (
             <button
@@ -177,7 +178,7 @@ export function ProjectsWorkspaceChrome({
               type="button"
             >
               <Folders className="h-3.5 w-3.5 shrink-0" />
-              Projects
+              {tl("Projects")}
             </button>
           )}
           <ChevronRight className="h-3 w-3 shrink-0 opacity-60" />
@@ -188,7 +189,7 @@ export function ProjectsWorkspaceChrome({
             {section}
           </span>
         </nav>
-        <div className="ml-auto flex shrink-0 items-center gap-0.5">
+        <div className="ms-auto flex shrink-0 items-center gap-0.5">
           {actions}
         </div>
       </div>

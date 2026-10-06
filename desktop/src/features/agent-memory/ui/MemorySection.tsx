@@ -8,6 +8,7 @@ import { cn } from "@/shared/lib/cn";
 import { Button, type ButtonProps } from "@/shared/ui/button";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
+import { tl } from "@/shared/i18n/tl";
 
 const MEMORY_LIST_PREVIEW_LIMIT = 3;
 type MemorySectionVariant = "cards" | "grouped";
@@ -76,7 +77,7 @@ export function MemoryRefreshButton({
 
   return (
     <Button
-      aria-label="Refresh memory"
+      aria-label={tl("Refresh memory")}
       className={cn(className, query.isFetching && "cursor-wait")}
       data-testid="agent-memory-refetch"
       disabled={query.isFetching}
@@ -155,7 +156,7 @@ function MemorySectionForOwner({
 function MemorySkeleton({ variant }: { variant: MemorySectionVariant }) {
   return (
     <div
-      aria-label="Loading memory"
+      aria-label={tl("Loading memory")}
       className={cn("space-y-2", variant === "grouped" && "p-4")}
       data-testid="agent-memory-skeleton"
       role="status"
@@ -193,7 +194,7 @@ function MemoryErrorState({
         <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
         <div className="space-y-1">
           <div className="font-medium text-destructive">
-            Couldn't load memory
+            {tl("Couldn't load memory")}
           </div>
           <div className="text-muted-foreground">{message}</div>
         </div>
@@ -205,7 +206,7 @@ function MemoryErrorState({
         size="sm"
         variant="outline"
       >
-        {retrying ? "Retrying…" : "Retry"}
+        {retrying ? tl("Retrying…") : tl("Retry")}
       </Button>
     </div>
   );
@@ -227,13 +228,15 @@ function MemoryStaleErrorBanner({
       data-testid="agent-memory-stale-error"
     >
       <AlertTriangle className="h-4 w-4 shrink-0 text-warning" />
-      <span className="flex-1 text-muted-foreground">Refresh failed.</span>
+      <span className="flex-1 text-muted-foreground">
+        {tl("Refresh failed.")}
+      </span>
       <button
         className="font-medium text-warning hover:underline"
         onClick={onRetry}
         type="button"
       >
-        Retry
+        {tl("Retry")}
       </button>
     </div>
   );
@@ -263,9 +266,11 @@ function MemoryGraphView({
         data-testid="agent-memory-empty"
       >
         <Brain className="mx-auto h-4 w-4 text-muted-foreground" />
-        <p className="mt-3 text-sm font-medium">Build this agent's memory</p>
+        <p className="mt-3 text-sm font-medium">
+          {tl("Build this agent's memory")}
+        </p>
         <p className="mt-1 text-sm text-muted-foreground">
-          Try telling this agent to remember something for next time.
+          {tl("Try telling this agent to remember something for next time.")}
         </p>
       </div>
     );
@@ -292,8 +297,8 @@ function MemoryGraphView({
           )}
           data-testid="agent-memory-no-core"
         >
-          No <code className="font-mono text-2xs">core</code> memory yet — agent
-          identity is unrooted.
+          {tl("No")} <code className="font-mono text-2xs">core</code>{" "}
+          {tl("memory yet — agent identity is unrooted.")}
         </p>
       ) : null}
 
@@ -338,7 +343,7 @@ function MemoryGraphView({
           onClick={() => setShowAllEntries(false)}
           type="button"
         >
-          Show less
+          {tl("Show less")}
         </button>
       ) : null}
     </div>
@@ -370,7 +375,8 @@ function MemoryShowMoreButton({
       onClick={onClick}
       type="button"
     >
-      View all ({count})
+      {tl("View all (")}
+      {count})
     </button>
   );
 
@@ -456,7 +462,7 @@ function MemoryDanglingRefsHint({ slugs }: { slugs: string[] }) {
     >
       <div className="rounded-xl bg-warning/5 px-2.5 py-2 text-xs leading-5">
         <p className="text-warning">
-          Missing {slugs.length === 1 ? "link" : "links"}:{" "}
+          {tl("Missing")} {slugs.length === 1 ? "link" : "links"}:{" "}
           {slugs.map((slug, index) => (
             <React.Fragment key={slug}>
               {index > 0 ? ", " : null}
@@ -576,7 +582,7 @@ function MemoryEntryAccordion({
           ref={titleRef}
         >
           {hasDanglingRefs ? (
-            <AlertTriangle className="mr-1 inline-block h-4 w-4 align-[-2px] text-warning" />
+            <AlertTriangle className="me-1 inline-block h-4 w-4 align-[-2px] text-warning" />
           ) : null}
           <MemorySlugTitle slug={entry.slug} />
         </div>
@@ -588,7 +594,7 @@ function MemoryEntryAccordion({
           ref={bodyRef}
         >
           {isEmpty ? (
-            <span className="italic text-foreground/50">(empty)</span>
+            <span className="italic text-foreground/50">{tl("(empty)")}</span>
           ) : (
             <MemoryBodyText body={entry.body} />
           )}
@@ -616,7 +622,7 @@ function MemoryEntryAccordion({
       {canExpand ? (
         <button
           aria-expanded={open}
-          className="w-full px-4 py-3 text-left transition-colors hover:bg-muted/50"
+          className="w-full px-4 py-3 text-start transition-colors hover:bg-muted/50"
           onClick={() => setOpen((value) => !value)}
           type="button"
         >

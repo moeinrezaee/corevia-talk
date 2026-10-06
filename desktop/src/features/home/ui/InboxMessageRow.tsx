@@ -156,7 +156,7 @@ export function InboxMessageRow({
         {canReply || canToggleReactions || onDelete || onEdit ? (
           <div
             className={cn(
-              "absolute right-2 top-1 z-10",
+              "absolute end-2 top-1 z-10",
               !isFirst && "sm:top-0 sm:-translate-y-1/2",
             )}
           >
@@ -264,7 +264,7 @@ export function InboxMessageRow({
           >
             <VideoReviewCommentMarkdown
               className={cn(
-                "max-w-full text-left text-message text-foreground",
+                "max-w-full text-start text-message text-foreground",
                 emojiOnly &&
                   "text-4xl leading-tight [&_p]:leading-tight [&_img[data-custom-emoji]]:h-[1.45em] [&_img[data-custom-emoji]]:align-middle [&_button:has(img[data-custom-emoji])]:align-middle",
               )}

@@ -13,6 +13,7 @@ import { useAgentSessionTranscriptVariant } from "../agentSessionTranscriptConte
 import type { TranscriptItem } from "../agentSessionTypes";
 import { MessageLinkHoverCue } from "./MessageLinkHoverCue";
 import { useTranscriptBubbleOverflow } from "./useTranscriptBubbleOverflow";
+import { tlt } from "@/shared/i18n/tl";
 
 export function UserMessageBubble({
   bubbleClassName,
@@ -100,9 +101,9 @@ export function UserMessageBubble({
     >
       {isCompactPreview ? null : item.authorPubkey && openProfilePanel ? (
         <button
-          aria-label={`Open ${authorLabel} profile`}
+          aria-label={tlt("Open {0} profile", [authorLabel])}
           className={cn(
-            "pointer-events-auto order-last ml-2 mt-1 size-7 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            "pointer-events-auto order-last ms-2 mt-1 size-7 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
             authorProfile?.isAgent ? "rounded-[30%]" : "rounded-full",
           )}
           onClick={(event) => {
@@ -125,7 +126,7 @@ export function UserMessageBubble({
       ) : (
         <UserAvatar
           avatarUrl={authorProfile?.avatarUrl ?? null}
-          className="order-last ml-2 mt-1 size-7 shrink-0 text-xs"
+          className="order-last ms-2 mt-1 size-7 shrink-0 text-xs"
           displayName={authorLabel}
           shape={authorProfile?.isAgent ? "squircle" : "circle"}
           size="sm"

@@ -11,6 +11,7 @@ import {
   PERSONA_FIELD_SHELL_CLASS,
   PERSONA_LABEL_OPTIONAL_CLASS,
 } from "./agentConfigOptions";
+import { tl } from "@/shared/i18n/tl";
 
 type PersonaModelFieldProps = {
   disabled: boolean;
@@ -53,9 +54,11 @@ export function PersonaModelField({
           className="text-sm font-medium text-foreground"
           htmlFor="persona-model"
         >
-          Model
+          {tl("Model")}
           {!isExplicitModelRequired ? (
-            <span className={PERSONA_LABEL_OPTIONAL_CLASS}>Optional</span>
+            <span className={PERSONA_LABEL_OPTIONAL_CLASS}>
+              {tl("Optional")}
+            </span>
           ) : null}
         </label>
         <PersonaModelCombobox
@@ -64,7 +67,7 @@ export function PersonaModelField({
           onValueChange={onModelValueChange}
           options={modelDropdownOptions}
           placeholder={
-            isExplicitModelRequired ? "Choose a model" : "Default model"
+            isExplicitModelRequired ? tl("Choose a model") : tl("Default model")
           }
           value={modelSelectValue}
         />
@@ -76,7 +79,7 @@ export function PersonaModelField({
             )}
           >
             <Input
-              aria-label="Custom model ID"
+              aria-label={tl("Custom model ID")}
               autoCorrect="off"
               className={cn(
                 "h-8 px-0 py-0 leading-6",
@@ -85,15 +88,16 @@ export function PersonaModelField({
               disabled={disabled}
               id="persona-custom-model"
               onChange={(event) => onCustomModelChange(event.target.value)}
-              placeholder="Custom model ID"
+              placeholder={tl("Custom model ID")}
               value={model}
             />
           </div>
         ) : null}
         {showSharedComputeAutoHint ? (
           <p className="text-xs text-muted-foreground">
-            Auto uses Mesh collective intelligence when two or more models stay
-            available, otherwise it chooses one available model.
+            {tl(
+              "Auto uses Mesh collective intelligence when two or more models stay available, otherwise it chooses one available model.",
+            )}
           </p>
         ) : null}
         {modelDiscoveryStatus ? (

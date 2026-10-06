@@ -11,10 +11,11 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { cn } from "@/shared/lib/cn";
 import { SegmentedControl } from "@/shared/ui/segmented-control";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const VISIBILITY_OPTIONS = [
-  { value: "private", label: "Private", Icon: Lock },
-  { value: "open", label: "Public", Icon: Globe },
+  { value: "private", label: tl("Private"), Icon: Lock },
+  { value: "open", label: tl("Public"), Icon: Globe },
 ] as const;
 
 export function ChannelPermissionsSettings({
@@ -46,7 +47,7 @@ export function ChannelPermissionsSettings({
           disabled && variant === "segmented" && "opacity-50",
         )}
       >
-        Visibility
+        {tl("Visibility")}
       </span>
       {variant === "segmented" ? (
         <SegmentedControl
@@ -62,14 +63,14 @@ export function ChannelPermissionsSettings({
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button
-              aria-label={`Visibility: ${visibilityLabel}`}
-              className="-mr-2.5 ml-auto h-9 w-fit justify-end px-2.5 text-right text-sm font-medium text-foreground hover:bg-muted/50"
+              aria-label={tlt("Visibility: {0}", [visibilityLabel])}
+              className="-me-2.5 ms-auto h-9 w-fit justify-end px-2.5 text-end text-sm font-medium text-foreground hover:bg-muted/50"
               data-testid={`${testIdPrefix}-permissions`}
               disabled={disabled}
               type="button"
               variant="ghost"
             >
-              <span aria-live="polite" className="text-right">
+              <span aria-live="polite" className="text-end">
                 {visibilityLabel}
               </span>
               <ChevronDown className="size-4 shrink-0 text-muted-foreground/70" />
@@ -94,13 +95,13 @@ export function ChannelPermissionsSettings({
                 data-testid={`${testIdPrefix}-permissions-option-open`}
                 value="open"
               >
-                Public
+                {tl("Public")}
               </DropdownMenuRadioItem>
               <DropdownMenuRadioItem
                 data-testid={`${testIdPrefix}-permissions-option-private`}
                 value="private"
               >
-                Private
+                {tl("Private")}
               </DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
           </DropdownMenuContent>

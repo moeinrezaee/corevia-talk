@@ -42,6 +42,7 @@ import {
   groupCatalogEntries,
   installLinkLabel,
 } from "./harnessCatalogLogic";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 /** Sentinel list selection for the "+ Custom harness" entry. */
 const CUSTOM_ENTRY_ID = "\u0000custom";
@@ -138,20 +139,20 @@ export function HarnessCatalogDialog({
         scrollAreaClassName="flex min-h-0 overflow-hidden px-0"
         scrollAreaTestId="harness-catalog-dialog-body"
         tabIndex={-1}
-        title="Add runtimes"
+        title={tl("Add runtimes")}
       >
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden bg-sidebar sm:flex-row">
           {/* Left: search + chooser list */}
           <div className="flex max-h-56 min-h-0 flex-col sm:max-h-none sm:w-56">
             <div className="px-3 pt-3">
               <div className="relative">
-                <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-sidebar-foreground/50" />
+                <Search className="pointer-events-none absolute start-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-sidebar-foreground/50" />
                 <Input
-                  aria-label="Search runtimes"
-                  className="h-8 border-sidebar-border bg-sidebar-accent/40 pl-8 text-sm"
+                  aria-label={tl("Search runtimes")}
+                  className="h-8 border-sidebar-border bg-sidebar-accent/40 ps-8 text-sm"
                   data-testid="harness-catalog-search"
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search runtimes…"
+                  placeholder={tl("Search runtimes…")}
                   value={query}
                 />
               </div>
@@ -174,21 +175,21 @@ export function HarnessCatalogDialog({
                     data-testid="harness-catalog-refreshing"
                   >
                     <Spinner className="h-2.5 w-2.5" />
-                    Refreshing…
+                    {tl("Refreshing…")}
                   </div>
                 ) : isWarmError ? (
                   <div
                     className="flex items-center justify-between gap-2 px-4 py-1 text-xs text-destructive"
                     data-testid="harness-catalog-refresh-error"
                   >
-                    <span>Couldn't refresh runtimes.</span>
+                    <span>{tl("Couldn't refresh runtimes.")}</span>
                     <button
                       className="shrink-0 underline underline-offset-2 hover:text-foreground"
                       data-testid="harness-catalog-refresh-retry"
                       onClick={() => void runtimesQuery.forceRefresh()}
                       type="button"
                     >
-                      Retry
+                      {tl("Retry")}
                     </button>
                   </div>
                 ) : null}
@@ -199,26 +200,28 @@ export function HarnessCatalogDialog({
                     className="flex items-center justify-between gap-2 px-4 py-2 text-sm text-sidebar-foreground/60"
                     data-testid="harness-catalog-load-error"
                   >
-                    <span>Couldn't load runtimes.</span>
+                    <span>{tl("Couldn't load runtimes.")}</span>
                     <button
                       className="shrink-0 text-destructive underline underline-offset-2 hover:text-foreground"
                       data-testid="harness-catalog-load-retry"
                       onClick={() => void runtimesQuery.forceRefresh()}
                       type="button"
                     >
-                      Retry
+                      {tl("Retry")}
                     </button>
                   </div>
                 ) : filtered.length === 0 ? (
                   <p className="px-4 py-2 text-sm text-sidebar-foreground/60">
-                    {isSearching ? "No runtimes match." : "No runtimes found."}
+                    {isSearching
+                      ? tl("No runtimes match.")
+                      : tl("No runtimes found.")}
                   </p>
                 ) : (
                   <>
                     {groups.setup.length > 0 ? (
                       <CatalogSection
                         count={groups.setup.length}
-                        label="Setup"
+                        label={tl("Setup")}
                         onToggle={() => setSetupOpen((v) => !v)}
                         open={setupExpanded}
                         testId="harness-catalog-section-setup"
@@ -236,7 +239,7 @@ export function HarnessCatalogDialog({
                     {groups.installed.length > 0 ? (
                       <CatalogSection
                         count={groups.installed.length}
-                        label="Installed"
+                        label={tl("Installed")}
                         onToggle={() => setInstalledOpen((v) => !v)}
                         open={installedExpanded}
                         testId="harness-catalog-section-installed"
@@ -260,7 +263,7 @@ export function HarnessCatalogDialog({
                   selectedId === CUSTOM_ENTRY_ID ? "true" : undefined
                 }
                 className={cn(
-                  "flex w-full items-center gap-2 rounded-lg px-4 py-1.5 text-left transition-[background-color,color,box-shadow] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sidebar-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar",
+                  "flex w-full items-center gap-2 rounded-lg px-4 py-1.5 text-start transition-[background-color,color,box-shadow] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sidebar-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar",
                   selectedId === CUSTOM_ENTRY_ID
                     ? "bg-sidebar-active text-sidebar-active-foreground"
                     : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
@@ -271,14 +274,14 @@ export function HarnessCatalogDialog({
               >
                 <Plus className="h-4 w-4 shrink-0" />
                 <span className="min-w-0 flex-1 truncate text-sm font-medium">
-                  Custom harness
+                  {tl("Custom harness")}
                 </span>
               </button>
             </div>
           </div>
 
           {/* Right: detail pane */}
-          <div className="relative z-10 ml-px flex min-h-0 flex-1 flex-col overflow-hidden rounded-tl-xl bg-background shadow-[-1px_0_0_0_hsl(var(--sidebar-border)/0.45)]">
+          <div className="relative z-10 ms-px flex min-h-0 flex-1 flex-col overflow-hidden rounded-ss-xl bg-background shadow-[-1px_0_0_0_hsl(var(--sidebar-border)/0.45)]">
             <div
               className="flex min-h-0 flex-1 flex-col overflow-hidden"
               data-testid="harness-catalog-detail-pane"
@@ -295,7 +298,7 @@ export function HarnessCatalogDialog({
                 <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5">
                   <div className="flex min-h-80 items-center justify-center rounded-lg border border-dashed border-border/70 px-6 text-center">
                     <p className="max-w-sm text-sm text-muted-foreground">
-                      Select a runtime on the left, or add a custom one.
+                      {tl("Select a runtime on the left, or add a custom one.")}
                     </p>
                   </div>
                 </div>
@@ -332,7 +335,7 @@ function CatalogSection({
     <div>
       <button
         aria-expanded={open}
-        className="flex w-full items-center gap-1 rounded-md px-2 py-1 text-left text-2xs font-semibold uppercase tracking-wider text-sidebar-foreground/60 transition-colors hover:text-sidebar-foreground focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sidebar-ring/50"
+        className="flex w-full items-center gap-1 rounded-md px-2 py-1 text-start text-2xs font-semibold uppercase tracking-wider text-sidebar-foreground/60 transition-colors hover:text-sidebar-foreground focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sidebar-ring/50"
         data-testid={testId}
         onClick={onToggle}
         type="button"
@@ -346,7 +349,7 @@ function CatalogSection({
         />
         <span className="min-w-0 flex-1 truncate">{label}</span>
         <span
-          className="ml-auto shrink-0 rounded-full bg-sidebar-accent px-1.5 py-px font-medium normal-case tracking-normal text-sidebar-foreground/70"
+          className="ms-auto shrink-0 rounded-full bg-sidebar-accent px-1.5 py-px font-medium normal-case tracking-normal text-sidebar-foreground/70"
           data-testid={`${testId}-count`}
         >
           {count}
@@ -362,7 +365,7 @@ function CatalogListSkeleton() {
   const widths = ["w-24", "w-32", "w-20", "w-28", "w-24", "w-16"];
   return (
     <div
-      aria-label="Loading runtimes"
+      aria-label={tl("Loading runtimes")}
       className="space-y-1"
       data-testid="harness-catalog-list-skeleton"
       role="status"
@@ -386,7 +389,7 @@ function CatalogListSkeleton() {
 function CatalogDetailSkeleton() {
   return (
     <div
-      aria-label="Loading runtime details"
+      aria-label={tl("Loading runtime details")}
       className="flex min-h-full flex-col gap-6"
       data-testid="harness-catalog-detail-skeleton"
       role="status"
@@ -424,7 +427,7 @@ function CatalogListItem({
     <button
       aria-current={isCurrent ? "true" : undefined}
       className={cn(
-        "flex w-full items-center gap-2 rounded-lg px-4 py-1.5 text-left transition-[background-color,color,box-shadow] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sidebar-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar",
+        "flex w-full items-center gap-2 rounded-lg px-4 py-1.5 text-start transition-[background-color,color,box-shadow] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sidebar-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar",
         isCurrent
           ? "bg-sidebar-active text-sidebar-active-foreground"
           : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
@@ -439,7 +442,7 @@ function CatalogListItem({
       </span>
       {isReady ? (
         <span
-          aria-label={`${entry.label} is ready`}
+          aria-label={tlt("{0} is ready", [entry.label])}
           className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500"
           role="img"
         />
@@ -499,7 +502,7 @@ function CatalogDetail({ entry }: { entry: AcpRuntimeCatalogEntry }) {
         onClick={handlePrimaryClick}
         type="button"
       >
-        {install.isPending ? <Spinner className="mr-2 h-3.5 w-3.5" /> : null}
+        {install.isPending ? <Spinner className="me-2 h-3.5 w-3.5" /> : null}
         {action.label}
       </Button>
     ) : docsUrl ? (
@@ -513,7 +516,7 @@ function CatalogDetail({ entry }: { entry: AcpRuntimeCatalogEntry }) {
         type="button"
         variant={action.kind === "docs" ? "default" : "outline"}
       >
-        <ExternalLink className="mr-1 h-3.5 w-3.5" />
+        <ExternalLink className="me-1 h-3.5 w-3.5" />
         {action.kind === "docs" ? action.label : installLinkLabel(entry)}
       </Button>
     ) : null;
@@ -540,7 +543,7 @@ function CatalogDetail({ entry }: { entry: AcpRuntimeCatalogEntry }) {
               </span>
             ) : isReady ? (
               <span className="mt-1 inline-flex items-center rounded-md bg-emerald-500/15 px-2 py-0.5 text-xs font-medium text-emerald-600 dark:text-emerald-400">
-                Ready
+                {tl("Ready")}
               </span>
             ) : null}
           </div>
@@ -554,7 +557,9 @@ function CatalogDetail({ entry }: { entry: AcpRuntimeCatalogEntry }) {
 
         {entry.installHint ? (
           <div className="space-y-1">
-            <p className="text-xs font-semibold text-muted-foreground">Setup</p>
+            <p className="text-xs font-semibold text-muted-foreground">
+              {tl("Setup")}
+            </p>
             <p className="whitespace-pre-line text-sm leading-6 text-foreground">
               {entry.installHint}
             </p>
@@ -587,7 +592,7 @@ function CatalogDetail({ entry }: { entry: AcpRuntimeCatalogEntry }) {
               className="text-xs text-muted-foreground/80"
               data-testid={`harness-catalog-ready-hint-${entry.id}`}
             >
-              Already set up
+              {tl("Already set up")}
             </p>
           ) : null}
           {primaryCta}
@@ -599,18 +604,20 @@ function CatalogDetail({ entry }: { entry: AcpRuntimeCatalogEntry }) {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Update {entry.label} adapter?</AlertDialogTitle>
+            <AlertDialogTitle>
+              {tl("Update")} {entry.label} {tl("adapter?")}
+            </AlertDialogTitle>
             <AlertDialogDescription>
               {adapterUpdateWarning(entry)}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{tl("Cancel")}</AlertDialogCancel>
             <AlertDialogAction
               data-testid={`harness-catalog-confirm-update-${entry.id}`}
               onClick={handleInstall}
             >
-              Update
+              {tl("Update")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -622,16 +629,18 @@ function CatalogDetail({ entry }: { entry: AcpRuntimeCatalogEntry }) {
 function TechnicalDetails({ entry }: { entry: AcpRuntimeCatalogEntry }) {
   const rows: Array<{ label: string; value: string }> = [
     { label: "ID", value: entry.id },
-    ...(entry.command ? [{ label: "Command", value: entry.command }] : []),
+    ...(entry.command ? [{ label: tl("Command"), value: entry.command }] : []),
     ...(entry.defaultArgs.length > 0
-      ? [{ label: "Arguments", value: entry.defaultArgs.join(" ") }]
+      ? [{ label: tl("Arguments"), value: entry.defaultArgs.join(" ") }]
       : []),
     ...(entry.underlyingCliPath
-      ? [{ label: "Underlying CLI", value: entry.underlyingCliPath }]
+      ? [{ label: tl("Underlying CLI"), value: entry.underlyingCliPath }]
       : []),
-    ...(entry.binaryPath ? [{ label: "Path", value: entry.binaryPath }] : []),
+    ...(entry.binaryPath
+      ? [{ label: tl("Path"), value: entry.binaryPath }]
+      : []),
     {
-      label: "Source",
+      label: tl("Source"),
       value: entry.source === "builtin" ? "Built-in" : "Bundled preset",
     },
   ];
@@ -666,10 +675,12 @@ function CustomHarnessDetail({ onDone }: { onDone: () => void }) {
         header={
           <div>
             <h3 className="text-xl font-semibold leading-snug">
-              Custom harness
+              {tl("Custom harness")}
             </h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Register any ACP-speaking agent tool as a selectable runtime.
+              {tl(
+                "Register any ACP-speaking agent tool as a selectable runtime.",
+              )}
             </p>
           </div>
         }

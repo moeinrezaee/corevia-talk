@@ -6,6 +6,7 @@ import { StatusEmoji } from "@/features/user-status/ui/StatusEmoji";
 import { emojiDisplayName } from "@/shared/lib/emojiName";
 import { Button } from "@/shared/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * Emoji chooser for workflow editor fields that hold a single reaction.
@@ -60,7 +61,9 @@ export function WorkflowEmojiField({
             ) : (
               <>
                 <SmilePlus className="text-muted-foreground" />
-                <span className="text-muted-foreground">Choose a reaction</span>
+                <span className="text-muted-foreground">
+                  {tl("Choose a reaction")}
+                </span>
               </>
             )}
           </Button>

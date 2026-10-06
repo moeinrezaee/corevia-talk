@@ -12,6 +12,7 @@ import {
   initialEncryptedBackupState,
   pendingEncryptPassphrase,
 } from "./lib/encryptedBackup";
+import { tl } from "@/shared/i18n/tl";
 
 const ENCRYPT_DEBOUNCE_MS = 400;
 /** How long a completed encrypted backup remains available in memory. */
@@ -114,8 +115,8 @@ export function EncryptedBackupProvider({
 
   React.useEffect(() => {
     if (state.downloadPending) {
-      toast.loading("Preparing backup…", {
-        description: "You can close this window while Buzz finishes.",
+      toast.loading(tl("Preparing backup…"), {
+        description: tl("You can close this window while Buzz finishes."),
         duration: Number.POSITIVE_INFINITY,
         id: BACKUP_READY_TOAST_ID,
       });
@@ -126,7 +127,7 @@ export function EncryptedBackupProvider({
       state.passphrase.length === 0 &&
       !state.ncryptsec
     ) {
-      toast.error("Couldn’t create backup", {
+      toast.error(tl("Couldn’t create backup"), {
         description: state.createError,
         id: BACKUP_READY_TOAST_ID,
       });
@@ -142,14 +143,14 @@ export function EncryptedBackupProvider({
     (description: string, error = false) => {
       const options = {
         action: {
-          label: "Open settings",
+          label: tl("Open settings"),
           onClick: () => onOpenSettingsRef.current(),
         },
         description,
         id: BACKUP_READY_TOAST_ID,
       };
-      if (error) toast.error("Backup ready to download", options);
-      else toast.success("Backup ready to download", options);
+      if (error) toast.error(tl("Backup ready to download"), options);
+      else toast.success(tl("Backup ready to download"), options);
     },
     [],
   );
@@ -159,8 +160,8 @@ export function EncryptedBackupProvider({
       if (isSaving) return;
       setIsSaving(true);
       setSaveError(null);
-      toast("Saving backup…", {
-        description: "The download window will open when it’s ready.",
+      toast(tl("Saving backup…"), {
+        description: tl("The download window will open when it’s ready."),
         id: BACKUP_READY_TOAST_ID,
       });
       try {

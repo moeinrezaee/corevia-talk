@@ -17,6 +17,7 @@ import {
 } from "@/shared/ui/dialog";
 
 import { SnapshotOptionMenu } from "./SnapshotOptionMenu";
+import { tl } from "@/shared/i18n/tl";
 
 type TeamSnapshotExportDialogProps = {
   isSavePending: boolean;
@@ -33,9 +34,9 @@ const MEMORY_LEVELS: {
   value: SnapshotMemoryLevel;
   label: string;
 }[] = [
-  { value: "none", label: "Team only" },
-  { value: "core", label: "Team + core memory" },
-  { value: "everything", label: "Team + all memories" },
+  { value: "none", label: tl("Team only") },
+  { value: "core", label: tl("Team + core memory") },
+  { value: "everything", label: tl("Team + all memories") },
 ];
 
 const FORMAT_OPTIONS: { value: SnapshotFormat; label: string }[] = [
@@ -80,7 +81,9 @@ export function TeamSnapshotExportDialog({
         showCloseButton={false}
       >
         <DialogHeader className="space-y-0">
-          <DialogTitle className="truncate">Export {team.name}</DialogTitle>
+          <DialogTitle className="truncate">
+            {tl("Export")} {team.name}
+          </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4 pt-2">
@@ -88,7 +91,7 @@ export function TeamSnapshotExportDialog({
             <div className="flex min-h-8 items-center justify-between gap-4">
               <span className="flex min-w-0 items-center gap-2 text-sm font-medium">
                 <Brain className="h-4 w-4 shrink-0 text-muted-foreground" />
-                Memories
+                {tl("Memories")}
               </span>
               <SnapshotOptionMenu
                 ariaLabel="Memories"
@@ -106,7 +109,7 @@ export function TeamSnapshotExportDialog({
             <div className="flex min-h-8 items-center justify-between gap-4">
               <span className="flex min-w-0 items-center gap-2 text-sm font-medium">
                 <FileType2 className="h-4 w-4 shrink-0 text-muted-foreground" />
-                File format
+                {tl("File format")}
               </span>
               <SnapshotOptionMenu
                 ariaLabel="File format"
@@ -137,8 +140,11 @@ export function TeamSnapshotExportDialog({
                 >
                   <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
                   <p>
-                    Memory is stored as <strong>plaintext</strong> in the
-                    snapshot. Only share it with people you trust.
+                    {tl("Memory is stored as")}{" "}
+                    <strong>{tl("plaintext")}</strong>{" "}
+                    {tl(
+                      "in the snapshot. Only share it with people you trust.",
+                    )}
                   </p>
                 </div>
               </motion.div>
@@ -156,7 +162,7 @@ export function TeamSnapshotExportDialog({
                 type="button"
                 variant="ghost"
               >
-                Cancel
+                {tl("Cancel")}
               </Button>
             </DialogClose>
             <Button
@@ -167,7 +173,7 @@ export function TeamSnapshotExportDialog({
               type="button"
             >
               <Download className="h-4 w-4" />
-              Export
+              {tl("Export")}
             </Button>
           </div>
         </div>

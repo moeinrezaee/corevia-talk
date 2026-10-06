@@ -51,14 +51,15 @@ import {
   CreateChannelFormFields,
   CreateChannelFormFooter,
 } from "@/features/sidebar/ui/CreateChannelFormFields";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type BrowserTab = "all" | "joined" | "archived";
 type ChannelSort = ChannelSortMode | "members";
 
 const CHANNEL_SORT_OPTIONS: { label: string; value: ChannelSort }[] = [
-  { label: "Alphabetical", value: "alpha" },
-  { label: "Recent", value: "recent" },
-  { label: "Most members", value: "members" },
+  { label: tl("Alphabetical"), value: "alpha" },
+  { label: tl("Recent"), value: "recent" },
+  { label: tl("Most members"), value: "members" },
 ];
 
 function BrowseState({
@@ -441,7 +442,7 @@ export function ChannelBrowserDialog({
                 <DialogTitle>{browseTitle}</DialogTitle>
                 <DialogClose className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors duration-150 ease-out hover:bg-accent hover:text-accent-foreground focus:outline-hidden focus:ring-1 focus:ring-ring">
                   <X className="h-4 w-4" />
-                  <span className="sr-only">Close</span>
+                  <span className="sr-only">{tl("Close")}</span>
                 </DialogClose>
               </div>
               <div className={MODAL_SEARCH_SHELL_CLASS}>
@@ -517,7 +518,10 @@ export function ChannelBrowserDialog({
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
-                      aria-label={`Sort ${entityLabel}s: ${selectedSortLabel}`}
+                      aria-label={tlt("Sort {0}s: {1}", [
+                        entityLabel,
+                        selectedSortLabel,
+                      ])}
                       data-testid="channel-browser-sort"
                       size="icon-xs"
                       type="button"
@@ -527,7 +531,7 @@ export function ChannelBrowserDialog({
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Sort by</DropdownMenuLabel>
+                    <DropdownMenuLabel>{tl("Sort by")}</DropdownMenuLabel>
                     <DropdownMenuRadioGroup
                       onValueChange={(value) => {
                         setSort(value as ChannelSort);
@@ -566,7 +570,7 @@ export function ChannelBrowserDialog({
                   >
                     <span
                       aria-hidden="true"
-                      className="pointer-events-none absolute bottom-[-1px] left-0 h-0.5 w-px origin-left rounded-full bg-foreground opacity-0 transition-[transform,opacity] duration-[180ms] ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none data-[ready=true]:opacity-100"
+                      className="pointer-events-none absolute bottom-[-1px] start-0 h-0.5 w-px origin-left rounded-full bg-foreground opacity-0 transition-[transform,opacity] duration-[180ms] ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none data-[ready=true]:opacity-100"
                       data-ready={tabIndicator.width > 0}
                       data-testid="channel-browser-tab-indicator"
                       style={{
@@ -589,7 +593,7 @@ export function ChannelBrowserDialog({
                       }}
                       value="joined"
                     >
-                      Joined
+                      {tl("Joined")}
                     </TabsTrigger>
                     <TabsTrigger
                       className="rounded-none border-b-2 border-transparent bg-transparent px-0 py-2 text-sm font-medium shadow-none transition-colors duration-150 ease-out data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none"
@@ -598,7 +602,7 @@ export function ChannelBrowserDialog({
                       }}
                       value="archived"
                     >
-                      Archived
+                      {tl("Archived")}
                     </TabsTrigger>
                   </TabsList>
                 </Tabs>
@@ -669,8 +673,8 @@ function CreateChannelRow({
     <button
       className={
         isSelected
-          ? "flex w-full items-center gap-3 rounded-xl border border-border/70 bg-muted/60 px-4 py-3 text-left transition-colors duration-150 ease-out focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
-          : "flex w-full items-center gap-3 rounded-xl border border-border/70 bg-muted/30 px-4 py-3 text-left transition-colors duration-150 ease-out hover:bg-muted/60 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
+          ? "flex w-full items-center gap-3 rounded-xl border border-border/70 bg-muted/60 px-4 py-3 text-start transition-colors duration-150 ease-out focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
+          : "flex w-full items-center gap-3 rounded-xl border border-border/70 bg-muted/30 px-4 py-3 text-start transition-colors duration-150 ease-out hover:bg-muted/60 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
       }
       data-testid="channel-browser-create-row"
       data-selected={isSelected}
@@ -683,13 +687,13 @@ function CreateChannelRow({
       {hasQuery ? (
         <span className="min-w-0 text-sm">
           <span className="font-medium text-foreground">
-            Create {entityLabel}{" "}
+            {tl("Create")} {entityLabel}{" "}
           </span>
           <span className="font-semibold text-foreground">“{query}”</span>
         </span>
       ) : (
         <span className="min-w-0 text-sm font-medium text-foreground">
-          Create a new {entityLabel}
+          {tl("Create a new")} {entityLabel}
         </span>
       )}
     </button>
@@ -713,7 +717,7 @@ function ChannelCreateView({
         <div className="flex items-center justify-between gap-4">
           <div className="flex min-w-0 items-center gap-2">
             <button
-              aria-label="Back to search"
+              aria-label={tl("Back to search")}
               className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors duration-150 ease-out hover:bg-accent hover:text-accent-foreground focus:outline-hidden focus:ring-1 focus:ring-ring"
               data-testid="channel-browser-create-back"
               onClick={onBack}
@@ -722,17 +726,17 @@ function ChannelCreateView({
               <ArrowLeft className="h-4 w-4" />
             </button>
             <DialogTitle className="truncate">
-              {`New ${entityLabel}`}
+              {tlt("New {0}", [entityLabel])}
             </DialogTitle>
           </div>
           <button
-            aria-label="Close"
+            aria-label={tl("Close")}
             className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors duration-150 ease-out hover:bg-accent hover:text-accent-foreground focus:outline-hidden focus:ring-1 focus:ring-ring"
             onClick={onClose}
             type="button"
           >
             <X className="h-4 w-4" />
-            <span className="sr-only">Close</span>
+            <span className="sr-only">{tl("Close")}</span>
           </button>
         </div>
       </DialogHeader>
@@ -781,7 +785,7 @@ function ChannelCard({
       data-testid={`browse-channel-${channel.name}`}
     >
       <button
-        className="min-w-0 flex-1 border-0 bg-transparent p-0 text-left text-foreground outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
+        className="min-w-0 flex-1 border-0 bg-transparent p-0 text-start text-foreground outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
         onClick={(event) => {
           event.stopPropagation();
           onSelect();
@@ -797,8 +801,8 @@ function ChannelCard({
               {channel.name}
             </p>
             {channel.archivedAt ? (
-              <Badge className="ml-1 shrink-0" variant="warning">
-                archived
+              <Badge className="ms-1 shrink-0" variant="warning">
+                {tl("archived")}
               </Badge>
             ) : null}
           </div>
@@ -830,7 +834,7 @@ function ChannelCard({
           type="button"
           variant="default"
         >
-          {isJoining ? "Joining..." : "Join"}
+          {isJoining ? tl("Joining...") : tl("Join")}
         </Button>
       ) : null}
     </div>

@@ -17,6 +17,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { tl } from "@/shared/i18n/tl";
 
 type WorkflowActionsMenuProps = {
   isEnabled: boolean;
@@ -43,7 +44,7 @@ export function WorkflowActionsMenu({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          aria-label="Workflow actions"
+          aria-label={tl("Workflow actions")}
           className="h-8 w-8 text-muted-foreground hover:bg-background/80 hover:text-foreground data-[state=open]:bg-background/80 data-[state=open]:text-foreground"
           size="icon"
           type="button"
@@ -54,21 +55,21 @@ export function WorkflowActionsMenu({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={onTrigger}>
-          <Play className="mr-2 h-4 w-4" />
-          Trigger
+          <Play className="me-2 h-4 w-4" />
+          {tl("Trigger")}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={onEdit}>
-          <Pencil className="mr-2 h-4 w-4" />
-          Edit
+          <Pencil className="me-2 h-4 w-4" />
+          {tl("Edit")}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={onDuplicate}>
-          <Copy className="mr-2 h-4 w-4" />
-          Duplicate
+          <Copy className="me-2 h-4 w-4" />
+          {tl("Duplicate")}
         </DropdownMenuItem>
         {showEnabledToggle ? (
           <DropdownMenuCheckboxItem
             checked={isEnabled}
-            className="gap-2 pl-2 [&>span:first-child]:hidden"
+            className="gap-2 ps-2 [&>span:first-child]:hidden"
             disabled={isTogglingEnabled}
             onCheckedChange={(checked) => {
               if (checked !== isEnabled) onToggleEnabled();
@@ -76,15 +77,15 @@ export function WorkflowActionsMenu({
             onSelect={(event) => event.preventDefault()}
           >
             {isEnabled ? (
-              <Power className="mr-2 h-4 w-4 shrink-0" />
+              <Power className="me-2 h-4 w-4 shrink-0" />
             ) : (
-              <PowerOff className="mr-2 h-4 w-4 shrink-0" />
+              <PowerOff className="me-2 h-4 w-4 shrink-0" />
             )}
-            <span>Enable</span>
+            <span>{tl("Enable")}</span>
             <span
               aria-hidden="true"
               className={
-                "ml-auto inline-flex h-5 w-9 shrink-0 items-center rounded-full border-2 border-transparent transition-colors " +
+                "ms-auto inline-flex h-5 w-9 shrink-0 items-center rounded-full border-2 border-transparent transition-colors " +
                 (isEnabled ? "bg-primary" : "bg-input")
               }
               data-testid="workflow-enabled-switch-visual"
@@ -100,8 +101,8 @@ export function WorkflowActionsMenu({
         ) : null}
         <DropdownMenuSeparator />
         <DropdownMenuItem className="text-destructive" onClick={onDelete}>
-          <Trash2 className="mr-2 h-4 w-4" />
-          Delete
+          <Trash2 className="me-2 h-4 w-4" />
+          {tl("Delete")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

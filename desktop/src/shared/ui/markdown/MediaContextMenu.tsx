@@ -81,7 +81,7 @@ export function MediaContextMenu({
   position: MediaContextMenuPosition;
 }) {
   const itemClass =
-    "flex min-h-9 w-full cursor-default select-none items-center rounded-lg py-2 pl-2 pr-4 text-sm outline-hidden hover:bg-muted/50 hover:text-foreground";
+    "flex min-h-9 w-full cursor-default select-none items-center rounded-lg py-2 ps-2 pe-4 text-sm outline-hidden hover:bg-muted/50 hover:text-foreground";
   return createPortal(
     <div
       className={cn(

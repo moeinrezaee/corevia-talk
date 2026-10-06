@@ -57,13 +57,13 @@ export function LifecycleActivity(props: ActivityRenderClassItemProps) {
     const tone = outcome ? permissionOutcomeTone(outcome) : null;
     return (
       <div
-        className="rounded-md border border-amber-500/20 bg-amber-500/5 px-2 py-1.5 text-left text-xs text-amber-700 dark:text-amber-400"
+        className="rounded-md border border-amber-500/20 bg-amber-500/5 px-2 py-1.5 text-start text-xs text-amber-700 dark:text-amber-400"
         data-testid="transcript-permission-item"
         title={timestampTitle}
       >
         {/* Row 1: request */}
         <div>
-          <ShieldCheck className="mr-1.5 inline h-3.5 w-3.5 align-text-bottom" />
+          <ShieldCheck className="me-1.5 inline h-3.5 w-3.5 align-text-bottom" />
           <span className="font-medium">{props.item.title}</span>
           {requestLines ? (
             <span className="opacity-80"> · {requestLines}</span>
@@ -71,7 +71,7 @@ export function LifecycleActivity(props: ActivityRenderClassItemProps) {
         </div>
         {/* Row 2: options (muted sub-line) */}
         {optionsLine ? (
-          <div className="mt-0.5 pl-5 opacity-60">{optionsLine}</div>
+          <div className="mt-0.5 ps-5 opacity-60">{optionsLine}</div>
         ) : null}
         {/* Row 3: decision — only when outcome is resolved */}
         {outcome && tone ? (
@@ -105,11 +105,11 @@ export function LifecycleActivity(props: ActivityRenderClassItemProps) {
   if (isError) {
     return (
       <div
-        className="rounded-md border border-destructive/20 bg-destructive/5 px-2 py-1.5 text-left text-xs text-destructive"
+        className="rounded-md border border-destructive/20 bg-destructive/5 px-2 py-1.5 text-start text-xs text-destructive"
         data-testid="transcript-lifecycle-item"
         title={timestampTitle}
       >
-        <AlertCircle className="mr-1.5 inline h-3.5 w-3.5 align-text-bottom" />
+        <AlertCircle className="me-1.5 inline h-3.5 w-3.5 align-text-bottom" />
         <span className="font-medium">{props.item.title}</span>
         {props.item.text ? (
           <span className="opacity-80"> · {props.item.text}</span>

@@ -25,6 +25,7 @@ import {
 import { useHuddle } from "../HuddleContext";
 import { isHuddleStartStale } from "../lib/huddleCardState";
 import { formatHuddleActionError } from "../lib/huddleError";
+import { tl } from "@/shared/i18n/tl";
 
 type HuddleAttachmentProps = {
   channelId: string | null;
@@ -243,9 +244,9 @@ export function HuddleAttachment({
           <Headphones />
         </AttachmentMedia>
         <AttachmentContent>
-          <AttachmentTitle>Huddle unavailable</AttachmentTitle>
+          <AttachmentTitle>{tl("Huddle unavailable")}</AttachmentTitle>
           <AttachmentDescription>
-            This huddle card is missing session details.
+            {tl("This huddle card is missing session details.")}
           </AttachmentDescription>
         </AttachmentContent>
       </Attachment>
@@ -268,9 +269,9 @@ export function HuddleAttachment({
       </AttachmentMedia>
       <AttachmentContent>
         <AttachmentTitle>
-          Huddle
+          {tl("Huddle")}
           <span aria-hidden="true"> · </span>
-          {displayEnded ? "Ended" : "In progress"}
+          {displayEnded ? tl("Ended") : tl("In progress")}
         </AttachmentTitle>
         <AttachmentDescription>
           {participantLabel(participantCount)}
@@ -286,11 +287,11 @@ export function HuddleAttachment({
             variant="secondary"
           >
             <Headphones className="h-4 w-4" />
-            {isJoining || isStarting ? "Joining" : "Join"}
+            {isJoining || isStarting ? tl("Joining") : tl("Join")}
           </AttachmentAction>
         ) : isCurrentHuddle || displayEnded ? (
           <AttachmentAction
-            aria-label="View huddle"
+            aria-label={tl("View huddle")}
             onClick={() => {
               if (isCurrentHuddle) {
                 showHuddleInMainApp(ephemeralChannelId);
@@ -303,7 +304,7 @@ export function HuddleAttachment({
             variant="ghost"
           >
             <MessageSquareText className="h-4 w-4" />
-            View
+            {tl("View")}
           </AttachmentAction>
         ) : null}
       </AttachmentActions>

@@ -20,6 +20,7 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { Switch } from "@/shared/ui/switch";
+import { tl } from "@/shared/i18n/tl";
 
 export function UserProfileAgentSettingsMenu({
   archiveActions,
@@ -67,7 +68,7 @@ export function UserProfileAgentSettingsMenu({
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button
-            aria-label="Open profile settings"
+            aria-label={tl("Open profile settings")}
             data-testid="user-profile-settings-menu-trigger"
             size="icon"
             type="button"
@@ -83,7 +84,7 @@ export function UserProfileAgentSettingsMenu({
         >
           {canToggleAutoStart ? (
             <DropdownMenuItem
-              className="gap-3 pr-2"
+              className="gap-3 pe-2"
               disabled={isPending}
               onSelect={(event) => {
                 event.preventDefault();
@@ -92,10 +93,10 @@ export function UserProfileAgentSettingsMenu({
             >
               <Power className="h-4 w-4 text-muted-foreground" />
               <span className="min-w-0 flex-1 text-sm font-medium">
-                Auto-start
+                {tl("Auto-start")}
               </span>
               <Switch
-                aria-label="Auto-start"
+                aria-label={tl("Auto-start")}
                 checked={managedAgent.startOnAppLaunch}
                 data-testid={autoStartSwitchId}
                 disabled={isPending}
@@ -112,7 +113,7 @@ export function UserProfileAgentSettingsMenu({
               onClick={onDuplicatePersona}
             >
               <CopyPlus className="h-4 w-4" />
-              Duplicate
+              {tl("Duplicate")}
             </DropdownMenuItem>
           ) : null}
           {onExportPersona ? (
@@ -122,7 +123,7 @@ export function UserProfileAgentSettingsMenu({
               onClick={onExportPersona}
             >
               <Download className="h-4 w-4" />
-              Export
+              {tl("Export")}
             </DropdownMenuItem>
           ) : null}
           {hasArchiveAction && (canToggleAutoStart || hasPrimaryActions) ? (
@@ -136,7 +137,7 @@ export function UserProfileAgentSettingsMenu({
                 onClick={archiveActions.unarchive}
               >
                 <ArchiveRestore className="h-4 w-4" />
-                {archiveActions.isPending ? "Unarchiving…" : unarchiveLabel}
+                {archiveActions.isPending ? tl("Unarchiving…") : unarchiveLabel}
               </DropdownMenuItem>
             ) : (
               <DropdownMenuItem
@@ -145,7 +146,7 @@ export function UserProfileAgentSettingsMenu({
                 onSelect={() => setArchiveConfirmOpen(true)}
               >
                 <Archive className="h-4 w-4" />
-                {archiveActions.isPending ? "Archiving…" : archiveLabel}
+                {archiveActions.isPending ? tl("Archiving…") : archiveLabel}
               </DropdownMenuItem>
             )
           ) : null}

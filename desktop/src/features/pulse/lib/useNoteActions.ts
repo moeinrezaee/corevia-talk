@@ -18,6 +18,7 @@ import {
 } from "@/features/pulse/lib/noteActions";
 import type { UserNote } from "@/shared/api/socialTypes";
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
+import { tl } from "@/shared/i18n/tl";
 
 export type PulseNoteActions = {
   isReplySending: boolean;
@@ -146,9 +147,9 @@ export function usePulseNoteActions({
   const share = React.useCallback(async (note: UserNote) => {
     try {
       await writeTextToClipboard(buildNoteShareUri(note));
-      toast.success("Copied note link");
+      toast.success(tl("Copied note link"));
     } catch {
-      toast.error("Failed to copy note link");
+      toast.error(tl("Failed to copy note link"));
     }
   }, []);
 

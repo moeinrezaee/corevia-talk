@@ -74,12 +74,12 @@ test("mention control expands with automatically mentioned agents", async () => 
   const manage = view.getByRole("button", {
     name: "Manage mentions",
   });
-  assert.match(manage.className, /(?:^|\s)-ml-2(?:\s|$)/);
-  assert.match(manage.className, /(?:^|\s)pl-2(?:\s|$)/);
-  assert.match(manage.parentElement?.className ?? "", /(?:^|\s)pl-2(?:\s|$)/);
+  assert.match(manage.className, /(?:^|\s)-ms-2(?:\s|$)/);
+  assert.match(manage.className, /(?:^|\s)ps-2(?:\s|$)/);
+  assert.match(manage.parentElement?.className ?? "", /(?:^|\s)ps-2(?:\s|$)/);
   assert.match(
     manage.parentElement?.className ?? "",
-    /(?:^|\s)pr-1\.5(?:\s|$)/,
+    /(?:^|\s)pe-1\.5(?:\s|$)/,
   );
   assert.match(
     view.getByRole("button", { name: "Manage mentions" }).parentElement
@@ -135,7 +135,7 @@ test("mention control expands with automatically mentioned agents", async () => 
   assert.match(
     view.getByRole("button", { name: "Mention someone" }).parentElement
       ?.className ?? "",
-    /(?:^|\s)pr-1\.5(?:\s|$)/,
+    /(?:^|\s)pe-1\.5(?:\s|$)/,
   );
   fireEvent.click(view.getByRole("button", { name: "Mention someone" }));
   assert.equal(opened, 1);

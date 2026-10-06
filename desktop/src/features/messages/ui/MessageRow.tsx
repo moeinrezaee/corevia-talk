@@ -60,6 +60,7 @@ import { SentFromThreadLine } from "./SentFromThreadLine";
 import { WaveMessageAttachment } from "./WaveMessageAttachment";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { useMessageAgentAddressPrefix } from "./MessageAgentAddressPrefix";
+import { tl } from "@/shared/i18n/tl";
 const DiffMessage = React.lazy(() => import("./DiffMessage"));
 const DiffMessageExpanded = React.lazy(() => import("./DiffMessageExpanded"));
 export type ThreadDepthGuideAction = {
@@ -388,7 +389,7 @@ export const MessageRow = React.memo(
             <React.Suspense
               fallback={
                 <div className="p-3 text-sm text-muted-foreground">
-                  Loading diff…
+                  {tl("Loading diff…")}
                 </div>
               }
             >
@@ -489,18 +490,18 @@ export const MessageRow = React.memo(
         !isThreadReplyLayout ? (
           <span
             className={cn(
-              "absolute -bottom-0.5 -right-0.5 flex h-3 w-3 items-center justify-center rounded-full bg-background",
+              "absolute -bottom-0.5 -end-0.5 flex h-3 w-3 items-center justify-center rounded-full bg-background",
             )}
             role="img"
             aria-label={
               message.respondTo === "anyone"
-                ? "Anyone can send instructions to this agent"
-                : "Selected people can send instructions to this agent"
+                ? tl("Anyone can send instructions to this agent")
+                : tl("Selected people can send instructions to this agent")
             }
             title={
               message.respondTo === "anyone"
-                ? "Anyone can send instructions to this agent"
-                : "Selected people can send instructions to this agent"
+                ? tl("Anyone can send instructions to this agent")
+                : tl("Selected people can send instructions to this agent")
             }
           >
             {message.respondTo === "anyone" ? (
@@ -569,7 +570,7 @@ export const MessageRow = React.memo(
     const actionBarNode = (
       <div
         className={cn(
-          "absolute right-2 top-1 z-10 sm:pointer-events-none",
+          "absolute end-2 top-1 z-10 sm:pointer-events-none",
           actionBarPlacement === "floating"
             ? isContinuation
               ? "sm:-top-3 sm:-translate-y-1/2"
@@ -617,15 +618,17 @@ export const MessageRow = React.memo(
               className="font-normal text-muted-foreground/70"
               data-testid="message-send-status"
             >
-              Sending…
+              {tl("Sending…")}
             </p>
           ) : null}
           {message.edited ? (
             <Tooltip>
               <TooltipTrigger asChild>
-                <p className="text-muted-foreground/70">(edited)</p>
+                <p className="text-muted-foreground/70">{tl("(edited)")}</p>
               </TooltipTrigger>
-              <TooltipContent>This message has been edited</TooltipContent>
+              <TooltipContent>
+                {tl("This message has been edited")}
+              </TooltipContent>
             </Tooltip>
           ) : null}
         </>
@@ -712,7 +715,7 @@ export const MessageRow = React.memo(
           <React.Suspense
             fallback={
               <div className="p-3 text-sm text-muted-foreground">
-                Loading diff viewer…
+                {tl("Loading diff viewer…")}
               </div>
             }
           >
@@ -743,7 +746,7 @@ export const MessageRow = React.memo(
               collapseDepthGuideActionsByDepth.size > 0 ? undefined : true
             }
             className={cn(
-              "absolute left-0",
+              "absolute start-0",
               collapseDepthGuideActionsByDepth.size === 0 &&
                 "pointer-events-none",
             )}
@@ -764,7 +767,7 @@ export const MessageRow = React.memo(
                     <div
                       aria-hidden
                       className={cn(
-                        "pointer-events-none absolute bottom-0 top-0 border-l transition-[border-color]",
+                        "pointer-events-none absolute bottom-0 top-0 border-s transition-[border-color]",
                         isHighlighted ? "border-primary" : "border-border/45",
                       )}
                       style={{
@@ -817,7 +820,7 @@ export const MessageRow = React.memo(
                 <div
                   aria-hidden
                   className={cn(
-                    "pointer-events-none absolute bottom-0 top-0 border-l transition-[border-color]",
+                    "pointer-events-none absolute bottom-0 top-0 border-s transition-[border-color]",
                     isHighlighted ? "border-primary" : "border-border/45",
                   )}
                   key={`${message.id}-depth-guide-${offset}`}
@@ -837,7 +840,7 @@ export const MessageRow = React.memo(
             <div
               aria-hidden
               className={cn(
-                "pointer-events-none absolute bottom-0 z-0 border-l transition-[border-color]",
+                "pointer-events-none absolute bottom-0 z-0 border-s transition-[border-color]",
                 highlightDescendantRail ? "border-primary" : "border-border/45",
               )}
               style={{
@@ -850,7 +853,8 @@ export const MessageRow = React.memo(
             {onCollapseDescendants ? (
               <button
                 aria-label={
-                  collapseDescendantsLabel ?? "Collapse replies to this message"
+                  collapseDescendantsLabel ??
+                  tl("Collapse replies to this message")
                 }
                 className="absolute bottom-0 z-20 w-5 -translate-x-1/2 cursor-pointer rounded-full p-0 focus-visible:outline-hidden"
                 data-thread-head-id={message.id}
@@ -873,7 +877,7 @@ export const MessageRow = React.memo(
           <div
             aria-hidden
             className={cn(
-              "pointer-events-none absolute left-0 top-0 rounded-bl-2xl border-b border-l transition-[border-color]",
+              "pointer-events-none absolute start-0 top-0 rounded-es-2xl border-b border-s transition-[border-color]",
               highlightReplyConnector ? "border-primary" : "border-border/45",
             )}
             style={{

@@ -13,6 +13,7 @@ import {
   InviteLinkSection,
 } from "./InviteLinkSection";
 import { Separator } from "@/shared/ui/separator";
+import { tl } from "@/shared/i18n/tl";
 
 export function CommunityInviteDialog({
   isOwner,
@@ -38,9 +39,9 @@ export function CommunityInviteDialog({
         data-testid="community-invite-dialog"
       >
         <DialogHeader>
-          <DialogTitle>Invite to community</DialogTitle>
+          <DialogTitle>{tl("Invite to community")}</DialogTitle>
           <DialogDescription>
-            Add someone directly or share a link they can use to join.
+            {tl("Add someone directly or share a link they can use to join.")}
           </DialogDescription>
         </DialogHeader>
 
@@ -58,7 +59,7 @@ export function CommunityInviteDialog({
         >
           <Separator className="bg-input/40" />
           <span className="absolute left-1/2 -translate-x-1/2 bg-background px-3 text-sm text-muted-foreground">
-            Or, copy a link
+            {tl("Or, copy a link")}
           </span>
         </div>
 

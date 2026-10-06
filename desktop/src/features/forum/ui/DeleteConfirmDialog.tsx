@@ -9,6 +9,7 @@ import {
   AlertDialogTitle,
 } from "@/shared/ui/alert-dialog";
 import { Button } from "@/shared/ui/button";
+import { tl } from "@/shared/i18n/tl";
 
 export function DeleteConfirmDialog({
   open,
@@ -25,20 +26,23 @@ export function DeleteConfirmDialog({
     <AlertDialog onOpenChange={onOpenChange} open={open}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete {label}?</AlertDialogTitle>
+          <AlertDialogTitle>
+            {tl("Delete")} {label}?
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            This will permanently delete this {label} and cannot be undone.
+            {tl("This will permanently delete this")} {label}{" "}
+            {tl("and cannot be undone.")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel asChild>
             <Button type="button" variant="outline">
-              Cancel
+              {tl("Cancel")}
             </Button>
           </AlertDialogCancel>
           <AlertDialogAction asChild>
             <Button onClick={onConfirm} type="button" variant="destructive">
-              Delete {label}
+              {tl("Delete")} {label}
             </Button>
           </AlertDialogAction>
         </AlertDialogFooter>

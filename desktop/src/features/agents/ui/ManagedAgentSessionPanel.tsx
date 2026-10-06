@@ -37,6 +37,7 @@ import {
   useArchivedChannelEvents,
 } from "./useObserverEvents";
 import { buildTranscriptState } from "./agentSessionTranscript";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type ManagedAgentSessionPanelProps = {
   agent: Pick<ManagedAgent, "pubkey" | "name"> & {
@@ -186,20 +187,21 @@ function SessionHeader({
       <div className="min-w-0">
         <div className="flex items-center gap-2">
           <h3 className="text-sm font-semibold tracking-tight">
-            Live ACP session
+            {tl("Live ACP session")}
           </h3>
           <ObserverStatusBadge state={connectionState} />
         </div>
         <p className="mt-1 text-sm text-muted-foreground">
           {hasObserver
             ? latestSessionId
-              ? `Session ${shorten(latestSessionId)}`
-              : "Waiting for the next agent turn."
-            : "Restart this local agent to attach the observer feed."}
+              ? tlt("Session {0}", [shorten(latestSessionId)])
+              : tl("Waiting for the next agent turn.")
+            : tl("Restart this local agent to attach the observer feed.")}
         </p>
       </div>
       <Badge className="w-fit font-mono" variant="outline">
-        {eventCount} event{eventCount === 1 ? "" : "s"}
+        {eventCount} {tl("event")}
+        {eventCount === 1 ? "" : "s"}
       </Badge>
     </div>
   );
@@ -339,18 +341,26 @@ function SessionLoadingSkeleton() {
 function ObserverStatusBadge({ state }: { state: ConnectionState }) {
   const display =
     state === "open"
-      ? { label: "Live", Icon: CircleDot, variant: "default" as const }
+      ? { label: tl("Live"), Icon: CircleDot, variant: "default" as const }
       : state === "connecting"
-        ? { label: "Connecting", variant: "secondary" as const }
+        ? { label: tl("Connecting"), variant: "secondary" as const }
         : state === "error"
           ? {
-              label: "Unavailable",
+              label: tl("Unavailable"),
               Icon: XCircle,
               variant: "destructive" as const,
             }
           : state === "closed"
-            ? { label: "Closed", Icon: Clock3, variant: "secondary" as const }
-            : { label: "Idle", Icon: Clock3, variant: "secondary" as const };
+            ? {
+                label: tl("Closed"),
+                Icon: Clock3,
+                variant: "secondary" as const,
+              }
+            : {
+                label: tl("Idle"),
+                Icon: Clock3,
+                variant: "secondary" as const,
+              };
   const StatusIcon = display.Icon;
 
   return (
@@ -369,9 +379,11 @@ function EmptyObserverState() {
   return (
     <div className="mt-4 flex min-h-48 flex-col items-center justify-center px-6 py-8 text-center">
       <TerminalSquare className="mx-auto h-4 w-4 text-muted-foreground" />
-      <p className="mt-3 text-sm font-medium">Observer not attached</p>
+      <p className="mt-3 text-sm font-medium">{tl("Observer not attached")}</p>
       <p className="mt-1 text-sm text-muted-foreground">
-        The live feed is available for local agents started after this update.
+        {tl(
+          "The live feed is available for local agents started after this update.",
+        )}
       </p>
     </div>
   );

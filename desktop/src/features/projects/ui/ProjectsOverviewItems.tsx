@@ -39,6 +39,7 @@ import {
 } from "@/features/projects/ui/RepositoryCards";
 import { useIncrementalMount } from "@/shared/hooks/useIncrementalMount";
 import { normalizePubkey } from "@/shared/lib/pubkey";
+import { tl } from "@/shared/i18n/tl";
 
 const RESPONSIVE_CARD_GRID_CLASS =
   "grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr))]";
@@ -198,13 +199,13 @@ export function ProjectsOverviewProjectItems({
       items: visibleProjects.filter((project) =>
         isProjectMine(project, currentPubkey),
       ),
-      title: "Mine",
+      title: tl("Mine"),
     },
     {
       items: visibleProjects.filter(
         (project) => !isProjectMine(project, currentPubkey),
       ),
-      title: "Other projects",
+      title: tl("Other projects"),
     },
   ].filter((group) => group.items.length > 0);
   if (viewMode === "grid") {
@@ -363,13 +364,13 @@ export function ProjectsOverviewRepositoryItems({
       items: visibleRepositories.filter(({ repository }) =>
         repositoryIsMine(repository, currentPubkey),
       ),
-      title: "Mine",
+      title: tl("Mine"),
     },
     {
       items: visibleRepositories.filter(
         ({ repository }) => !repositoryIsMine(repository, currentPubkey),
       ),
-      title: "Other repositories",
+      title: tl("Other repositories"),
     },
   ].filter((group) => group.items.length > 0);
   if (viewMode === "grid") {

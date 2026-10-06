@@ -89,8 +89,8 @@ export function ProjectConversationPanelController({
       <div
         className={cn(
           "relative flex min-h-0 min-w-0 flex-1 flex-row overflow-hidden",
-          detached && "bg-sidebar pb-2 pr-2 pt-px",
-          detached && sidebar?.open === false && "pl-2",
+          detached && "bg-sidebar pb-2 pe-2 pt-px",
+          detached && sidebar?.open === false && "ps-2",
         )}
         data-detached={detached ? "true" : "false"}
         data-project-context-detached={detached ? "true" : undefined}
@@ -107,7 +107,7 @@ export function ProjectConversationPanelController({
         <div
           className={cn(
             detached
-              ? "relative ml-px flex min-h-0 min-w-0 flex-1 overflow-hidden rounded-2xl bg-background"
+              ? "relative ms-px flex min-h-0 min-w-0 flex-1 overflow-hidden rounded-2xl bg-background"
               : "contents",
           )}
           data-testid={detached ? "project-content-pod" : undefined}

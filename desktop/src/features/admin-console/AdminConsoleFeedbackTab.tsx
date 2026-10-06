@@ -35,6 +35,7 @@ import {
   parseImetaAttachments,
   useAsyncLoad,
 } from "./AdminConsolePanelHelpers";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 // ── Attachment budget ─────────────────────────────────────────────────────
 
@@ -126,7 +127,11 @@ export function FeedbackTab({
 
   const items = listState.data;
   if (!Array.isArray(items) || items.length === 0) {
-    return <p className="text-sm text-muted-foreground">No feedback found.</p>;
+    return (
+      <p className="text-sm text-muted-foreground">
+        {tl("No feedback found.")}
+      </p>
+    );
   }
 
   return (
@@ -140,7 +145,7 @@ export function FeedbackTab({
         return (
           <li key={id}>
             <button
-              className="w-full rounded-md border border-border/60 px-3 py-2.5 text-left text-sm hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="w-full rounded-md border border-border/60 px-3 py-2.5 text-start text-sm hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               onClick={() => setSelectedId(id)}
               type="button"
             >
@@ -286,7 +291,7 @@ function AttachmentViewer({
         attachment.size,
       );
       if (saved) {
-        toast.success("Attachment saved");
+        toast.success(tl("Attachment saved"));
       }
     } catch (e) {
       setSaveError(
@@ -319,7 +324,7 @@ function AttachmentViewer({
           ) : (
             <>
               <Download className="h-3.5 w-3.5" />
-              {`Save attachment (${attachment.mime})`}
+              {tlt("Save attachment ({0})", [attachment.mime])}
             </>
           )}
         </Button>
@@ -332,14 +337,14 @@ function AttachmentViewer({
     return (
       <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
         <LoaderCircle className="h-3.5 w-3.5 animate-spin" />
-        Loading…
+        {tl("Loading…")}
       </div>
     );
   }
 
   return (
     <img
-      alt="Feedback attachment"
+      alt={tl("Feedback attachment")}
       className="max-h-96 max-w-full rounded-md border border-border/60 object-contain"
       src={blobUrl}
     />
@@ -354,18 +359,21 @@ function FeedbackFields({ data }: { data: AdminFeedbackDto }) {
       className="space-y-1.5 rounded-md border border-border/60 px-3 py-2.5"
       data-testid="feedback-detail-fields"
     >
-      <DetailRow label="ID" value={data.id} mono />
-      <DetailRow label="Body" value={data.body} />
-      <DetailRow label="Submitter" value={data.submitterPubkey} mono />
-      <DetailRow label="Category" value={data.category ?? null} />
-      <DetailRow label="Community" value={data.communityId} mono />
-      <DetailRow label="Host" value={data.communityHost} />
-      <DetailRow label="Event ID" value={data.eventId} mono />
+      <DetailRow label={tl("ID")} value={data.id} mono />
+      <DetailRow label={tl("Body")} value={data.body} />
+      <DetailRow label={tl("Submitter")} value={data.submitterPubkey} mono />
+      <DetailRow label={tl("Category")} value={data.category ?? null} />
+      <DetailRow label={tl("Community")} value={data.communityId} mono />
+      <DetailRow label={tl("Host")} value={data.communityHost} />
+      <DetailRow label={tl("Event ID")} value={data.eventId} mono />
       <DetailRow
-        label="Event created"
+        label={tl("Event created")}
         value={formatTimestamp(data.eventCreatedAt)}
       />
-      <DetailRow label="Received" value={formatTimestamp(data.receivedAt)} />
+      <DetailRow
+        label={tl("Received")}
+        value={formatTimestamp(data.receivedAt)}
+      />
     </div>
   );
 }
@@ -411,7 +419,9 @@ function FeedbackStatusControl({
       className="flex flex-col gap-1.5"
       data-testid="feedback-status-control"
     >
-      <span className="text-xs font-medium text-muted-foreground">Status</span>
+      <span className="text-xs font-medium text-muted-foreground">
+        {tl("Status")}
+      </span>
       <div className="flex gap-1.5">
         {statuses.map((s) => (
           <Button
@@ -496,7 +506,7 @@ export function FeedbackDetail({
         type="button"
       >
         <ChevronLeft className="h-3.5 w-3.5" />
-        Back to feedback
+        {tl("Back to feedback")}
       </button>
       {detailState.status === "loading" && <LoadingSpinner />}
       {detailState.status === "error" && (
@@ -522,7 +532,7 @@ export function FeedbackDetail({
                 data-testid="feedback-status-readonly"
               >
                 <span className="text-xs font-medium text-muted-foreground">
-                  Status
+                  {tl("Status")}
                 </span>
                 <Badge variant="secondary">{localStatus}</Badge>
               </div>
@@ -530,7 +540,7 @@ export function FeedbackDetail({
           )}
           {attachments.length > 0 && (
             <div className="space-y-3">
-              <h4 className="text-sm font-medium">Attachments</h4>
+              <h4 className="text-sm font-medium">{tl("Attachments")}</h4>
               {attachments.map((a) => (
                 <AttachmentViewer
                   attachment={a}
@@ -546,9 +556,9 @@ export function FeedbackDetail({
                   className="text-xs text-muted-foreground"
                   data-testid="attachment-truncated-notice"
                 >
-                  {truncatedCount} attachment
-                  {truncatedCount === 1 ? "" : "s"} not shown (display limit
-                  reached).
+                  {truncatedCount} {tl("attachment")}
+                  {truncatedCount === 1 ? "" : "s"}{" "}
+                  {tl("not shown (display limit reached).")}
                 </p>
               )}
             </div>
@@ -572,7 +582,7 @@ function AttachmentError({ code }: { code: AdminAttachmentErrorCode }) {
   return (
     <div className="flex items-center gap-1.5 text-xs text-destructive">
       <AlertCircle className="h-3.5 w-3.5" />
-      {FRIENDLY_ATTACHMENT_ERROR[code] ?? `Error: ${code}`}
+      {FRIENDLY_ATTACHMENT_ERROR[code] ?? tlt("Error: {0}", [code])}
     </div>
   );
 }

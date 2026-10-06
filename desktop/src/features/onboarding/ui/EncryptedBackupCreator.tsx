@@ -44,6 +44,7 @@ import {
   ONBOARDING_SECURITY_PRIMARY_CTA_CLASS,
   ONBOARDING_SECONDARY_CTA_CLASS,
 } from "./OnboardingChrome";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 /** Word-count bounds mirroring `key_backup.rs` (Rust clamps regardless). */
 const MIN_GENERATED_WORDS = 3;
@@ -51,10 +52,10 @@ const MAX_GENERATED_WORDS = 10;
 const DEFAULT_GENERATED_WORDS = 3;
 
 const SEPARATOR_OPTIONS = [
-  { label: "Spaces", value: " " },
-  { label: "Hyphens", value: "-" },
-  { label: "Periods", value: "." },
-  { label: "Commas", value: "," },
+  { label: tl("Spaces"), value: " " },
+  { label: tl("Hyphens"), value: "-" },
+  { label: tl("Periods"), value: "." },
+  { label: tl("Commas"), value: "," },
 ] as const;
 
 const DEFAULT_SEPARATOR = SEPARATOR_OPTIONS[0].value;
@@ -245,9 +246,9 @@ function PassphraseGeneratorPopover({
           open. Only click-outside or Esc closes it. */}
       <PopoverAnchor asChild>
         <Button
-          aria-label="Generate a password"
+          aria-label={tl("Generate a password")}
           className={cn(
-            "absolute right-9 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground hover:text-foreground",
+            "absolute end-9 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground hover:text-foreground",
             securityTheme &&
               "text-black/55 hover:bg-black/5 hover:text-black/80",
           )}
@@ -291,7 +292,7 @@ function PassphraseGeneratorPopover({
             className="text-sm text-muted-foreground"
             htmlFor="backup-passphrase-words"
           >
-            Words
+            {tl("Words")}
           </label>
           <div className="flex flex-1 items-center justify-end gap-3">
             <input
@@ -304,7 +305,7 @@ function PassphraseGeneratorPopover({
               type="range"
               value={words}
             />
-            <span className="w-6 text-right text-sm tabular-nums text-foreground">
+            <span className="w-6 text-end text-sm tabular-nums text-foreground">
               {words}
             </span>
           </div>
@@ -315,7 +316,7 @@ function PassphraseGeneratorPopover({
             className="text-sm text-muted-foreground"
             htmlFor="backup-passphrase-separator"
           >
-            Separator
+            {tl("Separator")}
           </label>
           <select
             className="h-8 rounded-lg border border-border bg-background px-2 text-sm text-foreground outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
@@ -536,7 +537,7 @@ export function EncryptedBackupCreator({
   return (
     <div
       className={cn(
-        "w-full max-w-[500px] space-y-3 text-left",
+        "w-full max-w-[500px] space-y-3 text-start",
         !cardLayout && "mx-auto",
       )}
       data-testid="encrypted-backup-creator"
@@ -554,21 +555,21 @@ export function EncryptedBackupCreator({
               className="mb-2 block text-sm font-medium text-foreground"
               htmlFor="backup-passphrase-input"
             >
-              Password
+              {tl("Password")}
             </label>
           ) : null}
           <div className="relative">
             <PasswordInput
-              aria-label="Encryption password"
+              aria-label={tl("Encryption password")}
               autoComplete="new-password"
               autoFocus={variant === "spotlight"}
               className={cn(
                 "font-mono",
                 variant === "spotlight"
                   ? cardLayout
-                    ? "pr-20 text-left text-sm"
+                    ? "pe-20 text-start text-sm"
                     : "h-14 rounded-2xl border-black/20 bg-white px-20 text-center text-lg text-black/80 shadow-none placeholder:text-black/55 focus-visible:ring-black/35"
-                  : "h-10 bg-background pr-19",
+                  : "h-10 bg-background pe-19",
               )}
               data-testid="backup-passphrase-input"
               disabled={state.downloadPending}
@@ -608,7 +609,7 @@ export function EncryptedBackupCreator({
               placeholder={
                 state.savedPassword
                   ? ""
-                  : `Password (min ${MIN_PASSPHRASE_LEN} characters)`
+                  : tlt("Password (min {0} characters)", [MIN_PASSPHRASE_LEN])
               }
               type={isRevealed ? "text" : "password"}
               value={state.passphrase}
@@ -617,7 +618,7 @@ export function EncryptedBackupCreator({
               <div
                 aria-hidden
                 className={cn(
-                  "pointer-events-none absolute inset-y-0 left-3 flex items-center font-mono tracking-widest text-foreground",
+                  "pointer-events-none absolute inset-y-0 start-3 flex items-center font-mono tracking-widest text-foreground",
                   variant === "spotlight" && !cardLayout && "text-black/80",
                 )}
                 data-testid="backup-saved-password-mask"
@@ -627,19 +628,19 @@ export function EncryptedBackupCreator({
             ) : null}
             {state.savedPassword ? (
               <span className="sr-only" id="backup-saved-password-description">
-                Backup password saved; hidden for security.
+                {tl("Backup password saved; hidden for security.")}
               </span>
             ) : null}
             <Button
               aria-label={
                 state.savedPassword
-                  ? "Change saved backup password"
+                  ? tl("Change saved backup password")
                   : isRevealed
-                    ? "Hide password"
-                    : "Reveal password"
+                    ? tl("Hide password")
+                    : tl("Reveal password")
               }
               className={cn(
-                "absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground hover:text-foreground",
+                "absolute end-1 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground hover:text-foreground",
                 variant === "spotlight" &&
                   !cardLayout &&
                   "text-black/55 hover:bg-black/5 hover:text-black/80",
@@ -677,7 +678,7 @@ export function EncryptedBackupCreator({
             />
             {issue ? (
               <p
-                className="absolute left-1 top-full mt-1 animate-in text-xs text-muted-foreground fade-in slide-in-from-top-1 duration-200 motion-reduce:animate-none"
+                className="absolute start-1 top-full mt-1 animate-in text-xs text-muted-foreground fade-in slide-in-from-top-1 duration-200 motion-reduce:animate-none"
                 data-testid="backup-passphrase-issue"
               >
                 {issue}
@@ -696,11 +697,12 @@ export function EncryptedBackupCreator({
             className="text-xs text-muted-foreground"
             data-testid="encrypted-backup-saved-path"
           >
-            Backup saved to {savedPath}
+            {tl("Backup saved to")} {savedPath}
           </p>
           <p className="text-xs leading-5 text-muted-foreground">
-            Your password isn't kept — download another copy anytime, or start
-            over to choose a new password.
+            {tl(
+              "Your password isn't kept — download another copy anytime, or start over to choose a new password.",
+            )}
           </p>
         </div>
       ) : null}
@@ -731,7 +733,9 @@ export function EncryptedBackupCreator({
           <div className="relative">
             <Button
               aria-busy={isCreatePending || undefined}
-              aria-label={isCreatePending ? "Encrypting your key" : undefined}
+              aria-label={
+                isCreatePending ? tl("Encrypting your key") : undefined
+              }
               className={cn(
                 "h-9 rounded-full px-6",
                 createButtonClassName,
@@ -754,9 +758,9 @@ export function EncryptedBackupCreator({
                   data-testid="encrypted-backup-encrypting"
                 />
               ) : state.savedPassword ? (
-                "Download backup again"
+                tl("Download backup again")
               ) : (
-                "Save backup"
+                tl("Save backup")
               )}
             </Button>
           </div>
@@ -783,11 +787,13 @@ export function EncryptedBackupCreator({
           textureTone={variant === "spotlight" ? "dark" : "light"}
         >
           <AlertDialogHeader>
-            <AlertDialogTitle>Create a new backup password?</AlertDialogTitle>
+            <AlertDialogTitle>
+              {tl("Create a new backup password?")}
+            </AlertDialogTitle>
             <AlertDialogDescription>
-              Starting over lets you pick a new password and download a fresh
-              backup file. Backups you saved earlier will still work — just use
-              the password you created them with.
+              {tl(
+                "Starting over lets you pick a new password and download a fresh backup file. Backups you saved earlier will still work — just use the password you created them with.",
+              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -798,7 +804,7 @@ export function EncryptedBackupCreator({
                   : undefined
               }
             >
-              Keep current backup
+              {tl("Keep current backup")}
             </AlertDialogCancel>
             <AlertDialogAction
               className={
@@ -815,7 +821,7 @@ export function EncryptedBackupCreator({
                 setIsRevealed(false);
               }}
             >
-              Start with a new password
+              {tl("Start with a new password")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

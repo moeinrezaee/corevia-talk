@@ -42,7 +42,7 @@ export function SnapshotOptionMenu({
         <button
           aria-label={ariaLabel}
           className={cn(
-            "inline-flex h-8 w-auto shrink-0 items-center justify-end gap-1.5 rounded-md bg-transparent px-2 text-right text-sm text-muted-foreground outline-hidden transition-colors hover:bg-muted/50 hover:text-foreground focus-visible:bg-muted/50 focus-visible:text-foreground disabled:cursor-not-allowed disabled:opacity-60",
+            "inline-flex h-8 w-auto shrink-0 items-center justify-end gap-1.5 rounded-md bg-transparent px-2 text-end text-sm text-muted-foreground outline-hidden transition-colors hover:bg-muted/50 hover:text-foreground focus-visible:bg-muted/50 focus-visible:text-foreground disabled:cursor-not-allowed disabled:opacity-60",
             className,
           )}
           data-testid={testId}

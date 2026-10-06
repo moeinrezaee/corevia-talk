@@ -9,6 +9,7 @@ import {
   AlertDialogTitle,
 } from "@/shared/ui/alert-dialog";
 import { Button } from "@/shared/ui/button";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type WorkflowDeleteDialogProps = {
   error?: string | null;
@@ -36,11 +37,14 @@ export function WorkflowDeleteDialog({
     >
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete workflow?</AlertDialogTitle>
+          <AlertDialogTitle>{tl("Delete workflow?")}</AlertDialogTitle>
           <AlertDialogDescription>
             {workflow
-              ? `Delete "${workflow.name}". This removes the current workflow and stops new triggers. Publishing its definition again, even an older version, can recreate it.`
-              : "Delete this workflow."}
+              ? tlt(
+                  'Delete "{0}". This removes the current workflow and stops new triggers. Publishing its definition again, even an older version, can recreate it.',
+                  [workflow.name],
+                )
+              : tl("Delete this workflow.")}
           </AlertDialogDescription>
           {error ? (
             <p
@@ -48,15 +52,15 @@ export function WorkflowDeleteDialog({
               className="rounded-xl border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive"
               role="alert"
             >
-              Couldn’t delete workflow. {error} Try again or cancel to keep
-              editing.
+              {tl("Couldn’t delete workflow.")} {error}{" "}
+              {tl("Try again or cancel to keep editing.")}
             </p>
           ) : null}
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel asChild>
             <Button disabled={isPending} type="button" variant="outline">
-              Cancel
+              {tl("Cancel")}
             </Button>
           </AlertDialogCancel>
           <Button
@@ -69,7 +73,7 @@ export function WorkflowDeleteDialog({
             type="button"
             variant="destructive"
           >
-            {isPending ? "Deleting…" : "Delete"}
+            {isPending ? tl("Deleting…") : tl("Delete")}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

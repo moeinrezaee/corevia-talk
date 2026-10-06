@@ -7,6 +7,7 @@ import { Card } from "@/shared/ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { formatAgentModelLabel } from "@/features/agents/lib/formatAgentModelLabel";
 import { IdentityInitialsAvatar } from "./IdentityInitialsAvatar";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type TeamIdentityCardProps = {
   actions: ReactNode;
@@ -46,7 +47,7 @@ export function TeamIdentityCard({
       data-testid={dataTestId}
     >
       <div className="relative aspect-[4/5] min-w-0 overflow-hidden bg-muted/50">
-        <div className="absolute top-3 left-3 z-30 flex max-w-[calc(100%-4rem)] flex-wrap items-center gap-1.5">
+        <div className="absolute top-3 start-3 z-30 flex max-w-[calc(100%-4rem)] flex-wrap items-center gap-1.5">
           {isSymlink ? (
             <Tooltip>
               <TooltipTrigger asChild>
@@ -55,7 +56,9 @@ export function TeamIdentityCard({
                 </span>
               </TooltipTrigger>
               <TooltipContent side="bottom" className="max-w-xs">
-                <p>Linked from {symlinkTarget ?? sourceDir}</p>
+                <p>
+                  {tl("Linked from")} {symlinkTarget ?? sourceDir}
+                </p>
               </TooltipContent>
             </Tooltip>
           ) : null}
@@ -68,7 +71,7 @@ export function TeamIdentityCard({
             <Tooltip>
               <TooltipTrigger asChild>
                 <button
-                  aria-label={`${teamName} description`}
+                  aria-label={tlt("{0} description", [teamName])}
                   className="flex h-6 w-6 items-center justify-center rounded-full border border-border/65 bg-background/90 text-muted-foreground shadow-xs"
                   type="button"
                 >
@@ -82,7 +85,7 @@ export function TeamIdentityCard({
           ) : null}
         </div>
 
-        <div className="absolute top-3 right-3 z-40">{actions}</div>
+        <div className="absolute top-3 end-3 z-40">{actions}</div>
 
         <TeamAvatarRow
           memberCount={memberCount}
@@ -90,7 +93,7 @@ export function TeamIdentityCard({
           teamName={teamName}
         />
 
-        <div className="absolute right-3 bottom-3 left-3 z-30 flex min-w-0 flex-col gap-0.5 text-left text-sm leading-5">
+        <div className="absolute end-3 bottom-3 start-3 z-30 flex min-w-0 flex-col gap-0.5 text-start text-sm leading-5">
           <span className="min-w-0 truncate font-semibold tracking-normal text-foreground">
             {teamName}
           </span>
@@ -135,7 +138,7 @@ function TeamAvatarRow({
   return (
     <div className="absolute inset-x-0 top-0 bottom-12 flex items-center justify-center">
       <div
-        aria-label={`${teamName} member avatars`}
+        aria-label={tlt("{0} member avatars", [teamName])}
         className="flex max-w-full items-center justify-center px-4"
         role="img"
       >
@@ -144,7 +147,7 @@ function TeamAvatarRow({
         ))}
         {overflowCount > 0 ? (
           <div
-            className={visiblePersonas.length > 0 ? "-ml-5" : ""}
+            className={visiblePersonas.length > 0 ? "-ms-5" : ""}
             style={{ zIndex: stackItemCount }}
           >
             <span className="flex h-14 w-14 items-center justify-center rounded-squircle bg-card text-sm font-semibold text-muted-foreground ring-2 ring-card">
@@ -168,7 +171,7 @@ function TeamAvatarItem({
 
   return (
     <div
-      className={`relative h-14 w-14 before:rounded-squircle before:absolute before:-inset-0.5 before:bg-card before:content-[''] ${index > 0 ? "-ml-5" : ""}`}
+      className={`relative h-14 w-14 before:rounded-squircle before:absolute before:-inset-0.5 before:bg-card before:content-[''] ${index > 0 ? "-ms-5" : ""}`}
       data-team-member-avatar="avatar"
       style={{
         zIndex: index + 1,

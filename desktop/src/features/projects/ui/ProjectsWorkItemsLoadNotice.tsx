@@ -2,6 +2,7 @@ import { AlertCircle } from "lucide-react";
 
 import type { ProjectWorkItemSection } from "@/features/projects/projectWorkItems";
 import { Button } from "@/shared/ui/button";
+import { tl } from "@/shared/i18n/tl";
 
 const SECTION_LABELS: Record<ProjectWorkItemSection, string> = {
   assignments: "assignments",
@@ -67,7 +68,7 @@ export function ProjectsWorkItemsLoadNotice({
         size="sm"
         variant="outline"
       >
-        {isRetrying ? "Retrying..." : "Retry"}
+        {isRetrying ? tl("Retrying...") : tl("Retry")}
       </Button>
     </div>
   );

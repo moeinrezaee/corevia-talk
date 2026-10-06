@@ -97,7 +97,7 @@ function EntityMetadataTooltip({
         </TooltipTrigger>
         <TooltipContent
           ref={contentRef}
-          className="max-w-72 p-2 text-left"
+          className="max-w-72 p-2 text-start"
           side="top"
         >
           {context ? (

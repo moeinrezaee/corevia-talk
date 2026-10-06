@@ -21,6 +21,7 @@ import { StyledQrCode } from "@/shared/ui/styled-qr-code";
 import { SettingsOptionGroup, SettingsOptionRow } from "./SettingsOptionGroup";
 import { SettingsSectionHeader } from "./SettingsSectionHeader";
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type PairingStep =
   | "idle"
@@ -127,12 +128,14 @@ function PairingSteps({
           testId="mobile-pairing-scan-step-indicator"
         />
         <div className="min-w-0 pt-0.5">
-          <p className="text-base font-medium">Scan QR code</p>
+          <p className="text-base font-medium">{tl("Scan QR code")}</p>
           <p
             className="mt-1 text-sm text-muted-foreground/70"
             data-settings-subcopy
           >
-            Open Buzz on your mobile device and scan the code shown here.
+            {tl(
+              "Open Buzz on your mobile device and scan the code shown here.",
+            )}
           </p>
         </div>
       </li>
@@ -145,15 +148,21 @@ function PairingSteps({
         />
         <div className="min-w-0 pt-0.5">
           <p className="text-base font-medium">
-            {codeEntry ? "Enter code on your phone" : "Confirm mobile code"}
+            {codeEntry
+              ? tl("Enter code on your phone")
+              : tl("Confirm mobile code")}
           </p>
           <p
             className="mt-1 text-sm text-muted-foreground/70"
             data-settings-subcopy
           >
             {codeEntry
-              ? "Type the six-digit code shown here into the Buzz mobile app."
-              : "Check that the six-digit code matches on both devices, then confirm it."}
+              ? tl(
+                  "Type the six-digit code shown here into the Buzz mobile app.",
+                )
+              : tl(
+                  "Check that the six-digit code matches on both devices, then confirm it.",
+                )}
           </p>
         </div>
       </li>
@@ -169,15 +178,15 @@ function PairingSteps({
         />
         <div aria-live="polite" className="min-w-0 pt-0.5">
           <p className="text-base font-medium">
-            {isPaired ? "Paired" : "Pair your mobile app"}
+            {isPaired ? tl("Paired") : tl("Pair your mobile app")}
           </p>
           <p
             className="mt-1 text-sm text-muted-foreground/70"
             data-settings-subcopy
           >
             {isPaired
-              ? "Your mobile app is now connected to this relay."
-              : "Finish setup on your phone to connect your mobile app."}
+              ? tl("Your mobile app is now connected to this relay.")
+              : tl("Finish setup on your phone to connect your mobile app.")}
           </p>
         </div>
       </li>
@@ -207,13 +216,15 @@ function PairingCodeConfirmation({
         className="self-start text-base font-medium"
         data-testid="pairing-sas-title"
       >
-        {codeEntry ? "Enter code on your phone" : "Confirm mobile code"}
+        {codeEntry ? tl("Enter code on your phone") : tl("Confirm mobile code")}
       </p>
       <fieldset
         className="flex w-full self-center justify-center gap-[6px]"
         data-testid="pairing-sas-code"
       >
-        <legend className="sr-only">Confirmation code {formattedCode}</legend>
+        <legend className="sr-only">
+          {tl("Confirmation code")} {formattedCode}
+        </legend>
         {PAIRING_CODE_DIGIT_POSITIONS.map((position) => (
           <span
             aria-hidden="true"
@@ -225,7 +236,7 @@ function PairingCodeConfirmation({
               // step guidance. Freezing the box keeps the code block the same
               // width at every zoom level; a zoomed digit still fits inside.
               "flex w-[40px] shrink-0 items-center justify-center rounded-xl border border-input/60 bg-background py-3 font-mono text-2xl font-semibold text-foreground",
-              position === 3 && "ml-[8px]",
+              position === 3 && "ms-[8px]",
             )}
             data-testid={`pairing-sas-code-digit-${position + 1}`}
             key={position}
@@ -245,7 +256,7 @@ function PairingCodeConfirmation({
             onClick={onConfirm}
           >
             <Check />
-            Codes match
+            {tl("Codes match")}
           </Button>
         )}
         <Button
@@ -254,7 +265,7 @@ function PairingCodeConfirmation({
           onClick={onDeny}
           variant="outline"
         >
-          Cancel
+          {tl("Cancel")}
         </Button>
       </div>
     </div>
@@ -393,7 +404,7 @@ export function MobilePairingCard({
   async function handleCopy() {
     if (!qrUri) return;
     await writeTextToClipboard(qrUri);
-    toast.success("Copied to clipboard");
+    toast.success(tl("Copied to clipboard"));
   }
 
   async function handleConfirmSas() {
@@ -421,14 +432,10 @@ export function MobilePairingCard({
   return (
     <section className="min-w-0" data-testid="settings-mobile">
       <SettingsSectionHeader
-        title="Mobile"
-        description={
-          <>
-            Connect the Buzz mobile app to this relay by scanning a QR code. The
-            connection is secured with end-to-end encryption and a verification
-            code.
-          </>
-        }
+        title={tl("Mobile")}
+        description={tl(
+          "Connect the Buzz mobile app to this relay by scanning a QR code. The connection is secured with end-to-end encryption and a verification code.",
+        )}
       />
 
       <SettingsOptionGroup
@@ -444,11 +451,17 @@ export function MobilePairingCard({
             and is visually hidden, so it changes nothing on screen. */}
         <p aria-live="polite" className="sr-only" data-testid="pairing-status">
           {step === "sas" && sasCode
-            ? `Verification code ${sasCode.slice(0, 3)} ${sasCode.slice(3, 6)} ready. ${codeEntry ? "Enter this code in the Buzz app on your phone." : "Check that it matches on your mobile device, then confirm the codes match."}`
+            ? tlt("Verification code {0} {1} ready. {2}", [
+                sasCode.slice(0, 3),
+                sasCode.slice(3, 6),
+                codeEntry
+                  ? "Enter this code in the Buzz app on your phone."
+                  : "Check that it matches on your mobile device, then confirm the codes match.",
+              ])
             : step === "transferring"
-              ? "Codes confirmed. Pairing your mobile device."
+              ? tl("Codes confirmed. Pairing your mobile device.")
               : step === "done"
-                ? "Your mobile app is now paired."
+                ? tl("Your mobile app is now paired.")
                 : ""}
         </p>
         <SettingsOptionRow
@@ -486,7 +499,7 @@ export function MobilePairingCard({
                     data-testid="pairing-transfer-spinner"
                   />
                   <p className="text-sm text-muted-foreground">
-                    Pairing mobile device...
+                    {tl("Pairing mobile device...")}
                   </p>
                 </div>
               ) : step === "qr" && qrUri ? (
@@ -495,13 +508,13 @@ export function MobilePairingCard({
                   centerImageSrc="/app-icon@2x.png"
                   data-testid="mobile-pairing-qr"
                   size={240}
-                  title="Mobile pairing QR code"
+                  title={tl("Mobile pairing QR code")}
                   value={qrUri}
                 />
               ) : step === "expired" ? (
                 <div className="flex max-w-52 origin-center animate-in flex-col items-center gap-3 text-center fade-in-0 zoom-in-95 duration-[250ms] ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:animate-none">
                   <p className="text-sm text-muted-foreground">
-                    Pairing code expired.
+                    {tl("Pairing code expired.")}
                   </p>
                   <Button
                     data-testid="regenerate-pairing-button"
@@ -510,15 +523,15 @@ export function MobilePairingCard({
                     type="button"
                     variant="outline"
                   >
-                    <RefreshCw className="mr-1.5 h-4 w-4" />
-                    Generate new pairing code
+                    <RefreshCw className="me-1.5 h-4 w-4" />
+                    {tl("Generate new pairing code")}
                   </Button>
                 </div>
               ) : step === "error" ? (
                 <div className="flex max-w-52 flex-col items-center gap-3 text-center">
                   <TriangleAlert className="h-6 w-6 text-destructive" />
                   <p className="text-sm text-destructive">
-                    {error ?? "Pairing session ended."}
+                    {error ?? tl("Pairing session ended.")}
                   </p>
                   <Button
                     data-testid="retry-pairing-button"
@@ -526,7 +539,7 @@ export function MobilePairingCard({
                     size="sm"
                     variant="outline"
                   >
-                    Try again
+                    {tl("Try again")}
                   </Button>
                 </div>
               ) : step === "idle" ? (
@@ -536,11 +549,11 @@ export function MobilePairingCard({
                     onClick={beginPairing}
                     type="button"
                   >
-                    Start pairing
+                    {tl("Start pairing")}
                   </Button>
                 ) : (
                   <p className="max-w-44 text-center text-sm text-muted-foreground">
-                    Sign in to generate a mobile pairing code.
+                    {tl("Sign in to generate a mobile pairing code.")}
                   </p>
                 )
               ) : step === "done" ? (
@@ -548,7 +561,7 @@ export function MobilePairingCard({
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
                     <Check className="h-6 w-6 text-green-600 dark:text-green-400" />
                   </div>
-                  <p className="text-base font-medium">Paired</p>
+                  <p className="text-base font-medium">{tl("Paired")}</p>
                 </div>
               ) : (
                 <div className="flex flex-col items-center justify-center gap-3">
@@ -558,7 +571,7 @@ export function MobilePairingCard({
                     data-testid="pairing-loading-spinner"
                   />
                   <p className="text-sm text-muted-foreground">
-                    Starting pairing...
+                    {tl("Starting pairing...")}
                   </p>
                 </div>
               )}
@@ -574,8 +587,8 @@ export function MobilePairingCard({
                   type="button"
                   variant="outline"
                 >
-                  <Copy className="mr-1.5 h-4 w-4" />
-                  Copy pairing code
+                  <Copy className="me-1.5 h-4 w-4" />
+                  {tl("Copy pairing code")}
                 </Button>
               ) : null}
             </div>

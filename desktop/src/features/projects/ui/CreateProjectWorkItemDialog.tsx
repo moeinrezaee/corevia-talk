@@ -10,6 +10,7 @@ import { ChooserDialogContent } from "@/shared/ui/chooser-dialog-content";
 import { Dialog } from "@/shared/ui/dialog";
 import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const FIELD_SHELL_CLASS =
   "rounded-xl border border-input bg-muted/40 transition-colors hover:border-muted-foreground/40 focus-within:border-muted-foreground/50";
@@ -119,7 +120,7 @@ export function CreateProjectWorkItemDialog({
               form={`${testIdPrefix}-form`}
               type="submit"
             >
-              {isCreating ? "Creating…" : `Create ${itemLabel}`}
+              {isCreating ? tl("Creating…") : tlt("Create {0}", [itemLabel])}
             </Button>
           </div>
         }
@@ -139,7 +140,7 @@ export function CreateProjectWorkItemDialog({
                 className="text-sm font-medium text-foreground"
                 htmlFor={`${testIdPrefix}-category`}
               >
-                Category
+                {tl("Category")}
               </label>
               <div className={FIELD_SHELL_CLASS}>
                 <select
@@ -169,7 +170,7 @@ export function CreateProjectWorkItemDialog({
               className="text-sm font-medium text-foreground"
               htmlFor={`${testIdPrefix}-title`}
             >
-              Title
+              {tl("Title")}
             </label>
             <div
               className={cn(
@@ -198,9 +199,9 @@ export function CreateProjectWorkItemDialog({
               className="text-sm font-medium text-foreground"
               htmlFor={`${testIdPrefix}-body`}
             >
-              Description
-              <span className="ml-1 text-xs font-normal text-muted-foreground/50">
-                Optional
+              {tl("Description")}
+              <span className="ms-1 text-xs font-normal text-muted-foreground/50">
+                {tl("Optional")}
               </span>
             </label>
             <div className={FIELD_SHELL_CLASS}>

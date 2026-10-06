@@ -89,6 +89,11 @@ export async function setup({ lifecycle = false } = {}) {
   };
   const stubs = {
     react: React,
+    "@/shared/i18n/tl": {
+      tl: (text) => text,
+      tlt: (text, args) =>
+        text.replace(/\{(\d+)\}/g, (_m, i) => String(args[Number(i)] ?? "")),
+    },
     "@/features/messages/lib/useDrafts": draftStore,
     sonner: { toast: { error: (error) => calls.push(["error", error]) } },
     "@/features/agents/hooks": new Proxy(

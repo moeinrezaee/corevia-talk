@@ -60,7 +60,7 @@ export const AUXILIARY_PANEL_DEFAULT_SURFACE_CLASS =
 const AUXILIARY_PANEL_CLOSE_LABEL = "Close panel";
 const AUXILIARY_PANEL_CLOSE_TEST_ID = "auxiliary-panel-close";
 const AUXILIARY_PANEL_RESIZE_BORDER_CLASS =
-  "after:absolute after:bottom-0 after:-left-px after:top-0 after:w-px after:bg-border/45 after:transition-colors peer-hover/auxiliary-panel-resize:after:bg-border/80 peer-focus-visible/auxiliary-panel-resize:after:bg-border/80";
+  "after:absolute after:bottom-0 after:-start-px after:top-0 after:w-px after:bg-border/45 after:transition-colors peer-hover/auxiliary-panel-resize:after:bg-border/80 peer-focus-visible/auxiliary-panel-resize:after:bg-border/80";
 
 export function getAuxiliaryPanelMode(
   isSplitLayout: boolean,
@@ -137,8 +137,8 @@ export function AuxiliaryPanelHeader({
             "flex cursor-default select-none items-center",
             isSinglePanel
               ? cn(
-                  "relative z-41 -mb-13 min-h-13 shrink-0 gap-2.5 px-4 py-2 sm:pr-3",
-                  inset === "wide" && "sm:pl-6",
+                  "relative z-41 -mb-13 min-h-13 shrink-0 gap-2.5 px-4 py-2 sm:pe-3",
+                  inset === "wide" && "sm:ps-6",
                   resizeBorder && AUXILIARY_PANEL_RESIZE_BORDER_CLASS,
                   getAuxiliaryPanelSurfaceClass(effectiveSurface),
                 )
@@ -150,9 +150,9 @@ export function AuxiliaryPanelHeader({
                 : cn(
                     "relative z-50 shrink-0 gap-3",
                     density === "compact"
-                      ? "min-h-11 px-3 py-1.5 text-left shadow-none"
+                      ? "min-h-11 px-3 py-1.5 text-start shadow-none"
                       : "min-h-13 px-5 py-2",
-                    inset === "wide" && "sm:pl-6",
+                    inset === "wide" && "sm:ps-6",
                     bordered && "border-b border-border/35",
                     getAuxiliaryPanelSurfaceClass(effectiveSurface),
                   ),
@@ -182,7 +182,7 @@ export function AuxiliaryPanelHeader({
         {...props}
       >
         <div
-          className="pointer-events-auto relative z-40 shrink-0 cursor-default select-none py-2 pl-5 pr-3"
+          className="pointer-events-auto relative z-40 shrink-0 cursor-default select-none py-2 ps-5 pe-3"
           data-tauri-drag-region
         >
           <div className="flex h-9 min-w-0 items-center gap-2.5">
@@ -288,7 +288,7 @@ export function AuxiliaryPanelHeaderGroup({
           // Header text needs a comfortable left inset in split layouts, but a
           // leading icon should visually sit closer to the panel edge. Overlay
           // headers already use compact row padding, so keep that button flush.
-          className={cn("shrink-0", isOverlayLayout ? "ml-0" : "-ml-2")}
+          className={cn("shrink-0", isOverlayLayout ? "ms-0" : "-ms-2")}
           data-testid={backButtonTestId}
           onClick={onBack}
           size="icon"
@@ -321,7 +321,7 @@ export function AuxiliaryPanelHeaderActions({
   }
 
   return (
-    <div className="ml-auto flex shrink-0 items-center gap-0.5">
+    <div className="ms-auto flex shrink-0 items-center gap-0.5">
       {children}
       {includeCloseAction ? <AuxiliaryPanelHeaderCloseAction /> : null}
     </div>

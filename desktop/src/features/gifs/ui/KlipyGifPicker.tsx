@@ -7,6 +7,7 @@ import type { KlipyGif } from "@/features/gifs/api";
 import { fetchKlipyGifs } from "@/features/gifs/relay";
 import { Input } from "@/shared/ui/input";
 import { Skeleton } from "@/shared/ui/skeleton";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type KlipyGifPickerProps = {
   onSelect: (gif: KlipyGif) => void;
@@ -58,21 +59,21 @@ export const KlipyGifPicker = React.memo(function KlipyGifPicker({
         <div className="relative">
           <Search
             aria-hidden
-            className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+            className="pointer-events-none absolute start-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
           />
           <Input
-            aria-label="Search KLIPY"
+            aria-label={tl("Search KLIPY")}
             autoFocus
-            className="h-9 bg-background/75 pl-8 pr-8 hover:bg-background/85 focus-visible:bg-background focus-visible:ring-ring/40"
+            className="h-9 bg-background/75 ps-8 pe-8 hover:bg-background/85 focus-visible:bg-background focus-visible:ring-ring/40"
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Search KLIPY"
+            placeholder={tl("Search KLIPY")}
             type="search"
             value={search}
           />
           {gifsQuery.isFetching ? (
             <LoaderCircle
               aria-hidden
-              className="absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-muted-foreground"
+              className="absolute end-2.5 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-muted-foreground"
             />
           ) : null}
         </div>
@@ -81,7 +82,7 @@ export const KlipyGifPicker = React.memo(function KlipyGifPicker({
       <div className="min-h-0 flex-1 overflow-y-auto p-2">
         {gifsQuery.isPending ? (
           <div className="grid grid-cols-2 gap-1.5">
-            <span className="sr-only">Loading GIFs</span>
+            <span className="sr-only">{tl("Loading GIFs")}</span>
             {LOADING_SKELETONS.map((id) => (
               <Skeleton
                 className={id.startsWith("tall") ? "h-28" : "h-20"}
@@ -99,12 +100,12 @@ export const KlipyGifPicker = React.memo(function KlipyGifPicker({
               onClick={() => void gifsQuery.refetch()}
               type="button"
             >
-              Try again
+              {tl("Try again")}
             </button>
           </div>
         ) : gifsQuery.data.length === 0 ? (
           <div className="flex h-full items-center justify-center px-8 text-center text-sm text-muted-foreground">
-            No GIFs found.
+            {tl("No GIFs found.")}
           </div>
         ) : (
           <div className="columns-2 gap-1.5" data-testid="klipy-gif-grid">
@@ -113,7 +114,7 @@ export const KlipyGifPicker = React.memo(function KlipyGifPicker({
               const showAnimated = !prefersReducedMotion;
               return (
                 <button
-                  aria-label={`Choose ${gif.title}`}
+                  aria-label={tlt("Choose {0}", [gif.title])}
                   className="mb-1.5 block w-full break-inside-avoid overflow-hidden rounded-lg bg-muted outline-hidden ring-offset-background transition-[filter,transform] hover:brightness-110 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-[0.98]"
                   key={gif.slug}
                   onClick={() => onSelect(gif)}
@@ -154,7 +155,7 @@ export const KlipyGifPicker = React.memo(function KlipyGifPicker({
       </div>
 
       <div className="border-t border-border/60 px-3 py-2 text-center text-2xs text-muted-foreground">
-        Powered by KLIPY
+        {tl("Powered by KLIPY")}
       </div>
     </div>
   );

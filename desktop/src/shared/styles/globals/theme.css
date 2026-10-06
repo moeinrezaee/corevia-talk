@@ -1,5 +1,10 @@
 @layer base {
   :root {
+    --buzz-font-sans:
+      "Inter Variable", Inter, "Avenir Next", "Segoe UI", sans-serif;
+  }
+
+  :root {
     /* Catppuccin Latte (mauve accent) */
     --radius: 0.625rem;
     --background: 220 23.08% 94.9%;
@@ -152,7 +157,7 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: "Inter Variable", Inter, "Avenir Next", "Segoe UI", sans-serif;
+    font-family: var(--buzz-font-sans);
   }
 
   /*

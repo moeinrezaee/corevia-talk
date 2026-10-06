@@ -37,6 +37,7 @@ import {
   toggleGroup,
   toggleKind,
 } from "./localArchiveKinds";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -78,20 +79,23 @@ function ObserverArchiveSection({
   const toggleDisabled = toggling;
   return (
     <div data-testid="local-archive-observer-section">
-      <SettingsOptionGroup title="Agent observer feed">
+      <SettingsOptionGroup title={tl("Agent observer feed")}>
         <SettingsOptionRow>
           <div className="min-w-0 flex-1">
             <label
               className="text-sm font-medium"
               htmlFor="local-archive-observer-toggle"
             >
-              Archive my agents' observer frames
+              {tl("Archive my agents' observer frames")}
             </label>
             <p
               className="text-sm font-normal text-muted-foreground/70"
               data-settings-subcopy
             >
-              {`Saves kind ${KIND_AGENT_OBSERVER_FRAME} observer frames addressed to your pubkey. These are ephemeral — not stored by the relay — so local archiving is the only way to retain them.`}
+              {tlt(
+                "Saves kind {0} observer frames addressed to your pubkey. These are ephemeral — not stored by the relay — so local archiving is the only way to retain them.",
+                [KIND_AGENT_OBSERVER_FRAME],
+              )}
             </p>
           </div>
           <Switch
@@ -122,22 +126,23 @@ function AgentMetricArchiveSection({
 }: AgentMetricSectionProps) {
   return (
     <div data-testid="local-archive-agent-metric-section">
-      <SettingsOptionGroup title="Agent turn metrics">
+      <SettingsOptionGroup title={tl("Agent turn metrics")}>
         <SettingsOptionRow>
           <div className="min-w-0 flex-1">
             <label
               className="text-sm font-medium"
               htmlFor="local-archive-agent-metric-toggle"
             >
-              Archive my agents' turn metrics
+              {tl("Archive my agents' turn metrics")}
             </label>
             <p
               className="text-sm font-normal text-muted-foreground/70"
               data-settings-subcopy
             >
-              Saves kind {KIND_AGENT_TURN_METRIC} turn-metric events addressed
-              to your pubkey. Stored as plaintext in your local archive so
-              token-usage calculators can read them directly.
+              {tl("Saves kind")} {KIND_AGENT_TURN_METRIC}{" "}
+              {tl(
+                "turn-metric events addressed to your pubkey. Stored as plaintext in your local archive so token-usage calculators can read them directly.",
+              )}
             </p>
           </div>
           <Switch
@@ -186,7 +191,7 @@ function KindChecklist({ checkedKinds, onChange }: KindChecklistProps) {
               </label>
             </div>
             {/* Individual kind checkboxes */}
-            <div className="ml-6 space-y-1.5">
+            <div className="ms-6 space-y-1.5">
               {group.items.map(({ kind, label }) => (
                 <div key={kind} className="flex items-center gap-2">
                   <Checkbox
@@ -229,7 +234,7 @@ function CustomKindsInput({ value, onChange }: CustomKindsInputProps) {
         className="mb-1.5 block text-sm font-medium"
         htmlFor="local-archive-custom-kinds"
       >
-        Advanced: custom kinds
+        {tl("Advanced: custom kinds")}
       </label>
       <input
         className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -244,15 +249,16 @@ function CustomKindsInput({ value, onChange }: CustomKindsInputProps) {
         className="mt-1 text-xs text-muted-foreground/70"
         data-settings-subcopy
       >
-        Space- or comma-separated non-negative integers. Kinds already in the
-        checklist above are ignored.
+        {tl(
+          "Space- or comma-separated non-negative integers. Kinds already in the checklist above are ignored.",
+        )}
       </p>
       {hasInvalid && (
         <p
           className="mt-1 text-xs text-destructive"
           data-testid="local-archive-custom-kinds-error"
         >
-          Invalid tokens (ignored):{" "}
+          {tl("Invalid tokens (ignored):")}{" "}
           {invalid.map((t, i) => (
             <React.Fragment key={t}>
               {i > 0 && ", "}
@@ -307,7 +313,7 @@ function AddSubscriptionForm({
         request.kinds,
       );
       onSaved();
-      toast.success("Archive subscription created.");
+      toast.success(tl("Archive subscription created."));
     } catch (err) {
       toast.error(
         err instanceof Error ? err.message : "Failed to create subscription.",
@@ -333,7 +339,7 @@ function AddSubscriptionForm({
             className="mb-1.5 block text-sm font-medium"
             htmlFor="local-archive-channel-select"
           >
-            Channel
+            {tl("Channel")}
           </label>
           <select
             className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -342,7 +348,7 @@ function AddSubscriptionForm({
             onChange={(e) => setSelectedChannelId(e.target.value)}
             value={selectedChannelId}
           >
-            <option value="">Select a channel…</option>
+            <option value="">{tl("Select a channel…")}</option>
             {channels.map((ch) => (
               <option key={ch.id} value={ch.id}>
                 {ch.name}
@@ -353,7 +359,7 @@ function AddSubscriptionForm({
 
         {/* Event types (per-kind checklist) */}
         <div>
-          <p className="mb-3 text-sm font-medium">Event types</p>
+          <p className="mb-3 text-sm font-medium">{tl("Event types")}</p>
           <KindChecklist
             checkedKinds={checkedKinds}
             onChange={setCheckedKinds}
@@ -370,7 +376,7 @@ function AddSubscriptionForm({
             type="button"
             variant="outline"
           >
-            Cancel
+            {tl("Cancel")}
           </Button>
           <Button
             data-testid="local-archive-confirm-add"
@@ -378,7 +384,7 @@ function AddSubscriptionForm({
             onClick={() => void handleAdd()}
             type="button"
           >
-            {isAdding ? "Saving…" : "Save"}
+            {isAdding ? tl("Saving…") : tl("Save")}
           </Button>
         </div>
       </div>
@@ -435,7 +441,7 @@ export function LocalArchiveSettingsCard() {
       try {
         await deleteSaveSubscription(scopeType, scopeValue);
         await reload();
-        toast.success("Archive subscription removed.");
+        toast.success(tl("Archive subscription removed."));
       } catch (err) {
         toast.error(
           err instanceof Error ? err.message : "Failed to remove subscription.",
@@ -524,8 +530,10 @@ export function LocalArchiveSettingsCard() {
   return (
     <section className="min-w-0" data-testid="settings-local-archive">
       <SettingsSectionHeader
-        title="Local archive"
-        description="Save copies of relay messages to a local SQLite database in your Buzz nest. Events are re-verified against the relay at archive time."
+        title={tl("Local archive")}
+        description={tl(
+          "Save copies of relay messages to a local SQLite database in your Buzz nest. Events are re-verified against the relay at archive time.",
+        )}
       />
 
       <div className="space-y-6">
@@ -546,20 +554,20 @@ export function LocalArchiveSettingsCard() {
         {/* Channel subscriptions */}
         <div data-testid="local-archive-subscriptions">
           {isLoading ? (
-            <SettingsOptionGroup title="Channel subscriptions">
+            <SettingsOptionGroup title={tl("Channel subscriptions")}>
               <div className="px-4 py-3 text-sm font-normal text-muted-foreground">
-                Loading…
+                {tl("Loading…")}
               </div>
             </SettingsOptionGroup>
           ) : channelSubs.length === 0 ? (
-            <SettingsOptionGroup title="Channel subscriptions">
+            <SettingsOptionGroup title={tl("Channel subscriptions")}>
               <div className="px-4 py-3 text-sm font-normal text-muted-foreground">
-                No channel subscriptions yet. Add one below.
+                {tl("No channel subscriptions yet. Add one below.")}
               </div>
             </SettingsOptionGroup>
           ) : (
             <SettingsOptionGroup
-              title={`Channel subscriptions (${channelSubs.length})`}
+              title={tlt("Channel subscriptions ({0})", [channelSubs.length])}
             >
               {channelSubs.map((sub) => {
                 const key = `${sub.scopeType}:${sub.scopeValue}`;
@@ -578,11 +586,14 @@ export function LocalArchiveSettingsCard() {
                         className="text-xs text-muted-foreground/70"
                         data-settings-subcopy
                       >
-                        {sub.scopeType} · kinds: {kindSummary(sub.kinds)}
+                        {sub.scopeType} {tl("· kinds:")}{" "}
+                        {kindSummary(sub.kinds)}
                       </p>
                     </div>
                     <Button
-                      aria-label={`Remove archive subscription for ${scopeLabel(sub, channelNameById)}`}
+                      aria-label={tlt("Remove archive subscription for {0}", [
+                        scopeLabel(sub, channelNameById),
+                      ])}
                       disabled={deletingKey === key}
                       onClick={() =>
                         void handleDelete(sub.scopeType, sub.scopeValue)
@@ -609,18 +620,22 @@ export function LocalArchiveSettingsCard() {
                 setIsAddingOpen(false);
                 void reload();
               }}
-              title="Add channel subscription"
+              title={tl("Add channel subscription")}
             />
           ) : (
-            <SettingsOptionGroup title="Add channel subscription">
+            <SettingsOptionGroup title={tl("Add channel subscription")}>
               <SettingsOptionRow>
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium">Subscribe to a channel</p>
+                  <p className="text-sm font-medium">
+                    {tl("Subscribe to a channel")}
+                  </p>
                   <p
                     className="text-xs text-muted-foreground/70"
                     data-settings-subcopy
                   >
-                    Choose a channel and select which event types to archive.
+                    {tl(
+                      "Choose a channel and select which event types to archive.",
+                    )}
                   </p>
                 </div>
                 <Button
@@ -629,7 +644,7 @@ export function LocalArchiveSettingsCard() {
                   size="sm"
                   variant="outline"
                 >
-                  Add
+                  {tl("Add")}
                 </Button>
               </SettingsOptionRow>
             </SettingsOptionGroup>

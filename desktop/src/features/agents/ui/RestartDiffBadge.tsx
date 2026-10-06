@@ -4,6 +4,7 @@ import { Badge } from "@/shared/ui/badge";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import type { RestartDiffEntry, RestartChange } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
+import { tl } from "@/shared/i18n/tl";
 
 // ── Auto-restart copy ─────────────────────────────────────────────────────────
 
@@ -59,7 +60,7 @@ function ChangeDescription({ change }: { change: RestartChange }) {
       const after = change.after_chars ?? 0;
       return (
         <span>
-          {before} chars → {after} chars
+          {before} {tl("chars →")} {after} {tl("chars")}
         </span>
       );
     }
@@ -74,9 +75,9 @@ function ChangeDescription({ change }: { change: RestartChange }) {
         </span>
       );
     case "added":
-      return <span>added</span>;
+      return <span>{tl("added")}</span>;
     case "removed":
-      return <span>removed</span>;
+      return <span>{tl("removed")}</span>;
     default:
       // Unknown kind — render nothing, remain type-safe at runtime
       return null;
@@ -126,7 +127,9 @@ function DiffList({
         </li>
       ))}
       {overflow > 0 ? (
-        <li className={overflowClass}>and {overflow} more</li>
+        <li className={overflowClass}>
+          {tl("and")} {overflow} {tl("more")}
+        </li>
       ) : null}
     </ul>
   );
@@ -153,7 +156,7 @@ export function RestartDiffBadge({
   const badge = (
     <Badge className={cn("cursor-default gap-1", className)} variant="warning">
       <RefreshCw className="h-3 w-3" />
-      Restart required
+      {tl("Restart required")}
     </Badge>
   );
 
@@ -174,11 +177,13 @@ export function RestartDiffBadge({
           data-testid="restart-diff-badge"
         >
           <RefreshCw className="h-3 w-3" />
-          Restart required
+          {tl("Restart required")}
         </Badge>
       </TooltipTrigger>
       <TooltipContent className="max-w-72 text-xs" side="bottom">
-        <p className="mb-1.5 font-semibold">Config changed since last start:</p>
+        <p className="mb-1.5 font-semibold">
+          {tl("Config changed since last start:")}
+        </p>
         <DiffList cap={TOOLTIP_CAP} entries={restartDiff} />
         <p className="mt-1.5 text-secondary-foreground/70">
           {autoRestartEnabled ? AUTO_RESTART_ON_BLURB : AUTO_RESTART_OFF_BLURB}

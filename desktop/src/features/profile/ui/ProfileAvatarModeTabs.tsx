@@ -7,6 +7,7 @@ import type {
 import { cn } from "@/shared/lib/cn";
 import { SegmentedControl } from "@/shared/ui/segmented-control";
 import { Tabs, TabsList, TabsTrigger } from "@/shared/ui/tabs";
+import { tl } from "@/shared/i18n/tl";
 
 const MODE_TAB_ORDER: AvatarMode[] = ["image", "emoji", "animated"];
 const MODE_TAB_LABELS: Record<AvatarMode, string> = {
@@ -57,7 +58,7 @@ export function ProfileAvatarModeTabs({
       value={mode}
     >
       <TabsList
-        aria-label="Avatar type"
+        aria-label={tl("Avatar type")}
         className={cn(
           isOnboardingModal
             ? "relative isolate grid h-10 w-full max-w-[320px] grid-cols-3 overflow-hidden rounded-full bg-[color:rgb(var(--buzz-onboarding-avatar-control-fg)_/_0.12)] p-1 text-muted-foreground"
@@ -68,7 +69,7 @@ export function ProfileAvatarModeTabs({
           aria-hidden="true"
           className={cn(
             "absolute z-0 rounded-full transition-transform motion-reduce:transition-none",
-            "bottom-1 left-1 top-1 shadow duration-[250ms] ease-out",
+            "bottom-1 start-1 top-1 shadow duration-[250ms] ease-out",
             isOnboardingModal
               ? "bg-[rgb(var(--buzz-onboarding-avatar-action-bg))]"
               : "bg-background",

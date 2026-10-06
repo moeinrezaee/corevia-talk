@@ -27,6 +27,7 @@ import {
 } from "./OnboardingSlideTransition";
 import { ONBOARDING_KEY_TEXT_CLASS } from "./NsecMaskedDisplay";
 import { ONBOARDING_CARD_NEUTRAL_SURFACE_CLASS } from "./onboardingCardStyles";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * How long the "Creating your identity key" loader holds the stage before the
@@ -46,7 +47,7 @@ const REVEAL_ANIMATION_CLASS =
   "animate-in fade-in duration-700 motion-reduce:animate-none";
 
 const BACKUP_OPTION_CLASS =
-  "flex min-h-48 w-full flex-col items-start justify-start px-6 py-5 text-left text-foreground";
+  "flex min-h-48 w-full flex-col items-start justify-start px-6 py-5 text-start text-foreground";
 
 /** Viewing the key never blocks onboarding — Next is always actionable. */
 export function backupNextDisabled(): boolean {
@@ -178,11 +179,11 @@ export function BackupStep({
         <div
           className={cn(
             "flex w-full shrink-0 flex-col",
-            cardLayout ? "text-left" : "max-w-140 text-center",
+            cardLayout ? "text-start" : "max-w-140 text-center",
           )}
         >
           <h1 className="text-title font-normal text-foreground">
-            Backup options
+            {tl("Backup options")}
           </h1>
           <p
             className={cn(
@@ -190,9 +191,9 @@ export function BackupStep({
               cardLayout ? "mt-2 text-base" : "mt-5 text-sm",
             )}
           >
-            Your identity key works like a password for your Buzz account. Keep
-            a copy somewhere safe. You can create a backup file and lock it with
-            a password you can remember.
+            {tl(
+              "Your identity key works like a password for your Buzz account. Keep a copy somewhere safe. You can create a backup file and lock it with a password you can remember.",
+            )}
           </p>
         </div>
 
@@ -233,11 +234,12 @@ export function BackupStep({
               data-testid="backup-option-panel"
             >
               <span className="text-lg font-medium">
-                Saved in your password manager
+                {tl("Saved in your password manager")}
               </span>
               <span className="mt-3 block text-sm leading-6 text-foreground/65">
-                Copy your identity key, then save it in a password manager like
-                1Password.
+                {tl(
+                  "Copy your identity key, then save it in a password manager like 1Password.",
+                )}
               </span>
               <Button
                 className={cn(
@@ -258,10 +260,10 @@ export function BackupStep({
                   <Copy className="h-4 w-4" aria-hidden="true" />
                 )}
                 {copyState === "copying"
-                  ? "Copying…"
+                  ? tl("Copying…")
                   : copyState === "copied"
-                    ? "Copied to clipboard"
-                    : "Copy to clipboard"}
+                    ? tl("Copied to clipboard")
+                    : tl("Copy to clipboard")}
               </Button>
             </div>
 
@@ -274,11 +276,12 @@ export function BackupStep({
               data-testid="backup-option-panel"
             >
               <span className="text-lg font-medium">
-                Locked in a backup file
+                {tl("Locked in a backup file")}
               </span>
               <span className="mt-3 block text-sm leading-6 text-foreground/65">
-                Create a backup file and choose a password you can remember.
-                You’ll need both to restore your account.
+                {tl(
+                  "Create a backup file and choose a password you can remember. You’ll need both to restore your account.",
+                )}
               </span>
               <Button
                 className={cn(
@@ -291,7 +294,7 @@ export function BackupStep({
                 variant="ghost"
               >
                 <ShieldCheck className="h-5 w-5" aria-hidden="true" />
-                Create locked backup
+                {tl("Create locked backup")}
               </Button>
             </div>
           </div>
@@ -301,8 +304,10 @@ export function BackupStep({
               className="mt-4 text-center text-sm text-destructive"
               data-testid="backup-copy-error"
             >
-              Could not retrieve your private key: {copyError}. You can continue
-              and find it later in Settings &gt; Profile &gt; Identity.
+              {tl("Could not retrieve your private key:")} {copyError}
+              {tl(
+                ". You can continue and find it later in Settings > Profile > Identity.",
+              )}
             </p>
           ) : null}
         </div>
@@ -323,7 +328,7 @@ export function BackupStep({
       <div
         className={cn(
           "flex w-full shrink-0 flex-col",
-          cardLayout ? "text-left" : "max-w-[500px] text-center",
+          cardLayout ? "text-start" : "max-w-[500px] text-center",
         )}
       >
         {/* Plain string concat: cn()'s tailwind-merge misreads the custom
@@ -332,7 +337,9 @@ export function BackupStep({
           className={`text-title font-normal text-foreground ${REVEAL_ANIMATION_CLASS}`}
           key={created ? "created" : "creating"}
         >
-          {created ? "Your private identity key" : "Creating your identity key"}
+          {created
+            ? tl("Your private identity key")
+            : tl("Creating your identity key")}
         </h1>
         {created ? (
           <p
@@ -343,7 +350,9 @@ export function BackupStep({
               REVEAL_ANIMATION_CLASS,
             )}
           >
-            Don’t share this key. Anyone who has it can access your account.
+            {tl(
+              "Don’t share this key. Anyone who has it can access your account.",
+            )}
           </p>
         ) : null}
       </div>
@@ -403,10 +412,10 @@ export function BackupStep({
                   <Copy aria-hidden className="h-4 w-4" />
                 )}
                 {copyState === "copying"
-                  ? "Copying…"
+                  ? tl("Copying…")
                   : copyState === "copied"
-                    ? "Copied to clipboard"
-                    : "Copy to clipboard"}
+                    ? tl("Copied to clipboard")
+                    : tl("Copy to clipboard")}
               </Button>
             </div>
 
@@ -420,7 +429,7 @@ export function BackupStep({
             >
               <span className="flex min-w-0 items-center gap-3">
                 <FileLock2 aria-hidden className="size-6" />
-                <span>Create locked backup</span>
+                <span>{tl("Create locked backup")}</span>
               </span>
               <ChevronRight aria-hidden className="size-5 text-primary" />
             </Button>
@@ -429,13 +438,14 @@ export function BackupStep({
               <p
                 className={cn(
                   "mt-4 text-sm text-destructive",
-                  cardLayout ? "text-left" : "text-center",
+                  cardLayout ? "text-start" : "text-center",
                 )}
                 data-testid="backup-copy-error"
               >
-                Could not retrieve your private key: {copyError}. You can
-                continue and find it later in Settings &gt; Profile &gt;
-                Identity.
+                {tl("Could not retrieve your private key:")} {copyError}
+                {tl(
+                  ". You can continue and find it later in Settings > Profile > Identity.",
+                )}
               </p>
             ) : null}
           </div>
@@ -450,7 +460,7 @@ export function BackupStep({
           onClick={onNext}
           type="button"
         >
-          Continue
+          {tl("Continue")}
         </Button>
       </OnboardingFooter>
     </OnboardingSlideTransition>

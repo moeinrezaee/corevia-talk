@@ -16,6 +16,7 @@ import { DropdownMenuItem } from "@/shared/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { useHuddle } from "../HuddleContext";
 import { formatHuddleActionError } from "../lib/huddleError";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 /** Huddle lifecycle event kinds */
 const KIND_HUDDLE_STARTED = 48100;
@@ -277,7 +278,7 @@ export function HuddleIndicator({
           onSelect={() => onStart()}
         >
           <Headphones />
-          <span>Start huddle</span>
+          <span>{tl("Start huddle")}</span>
         </DropdownMenuItem>
       );
     }
@@ -290,7 +291,7 @@ export function HuddleIndicator({
             data-testid="channel-huddle-tooltip-trigger"
           >
             <Button
-              aria-label="Start huddle"
+              aria-label={tl("Start huddle")}
               className={className}
               data-testid="channel-start-huddle-trigger"
               disabled={startDisabled || isStarting}
@@ -303,7 +304,7 @@ export function HuddleIndicator({
             </Button>
           </span>
         </TooltipTrigger>
-        <TooltipContent>Huddle</TooltipContent>
+        <TooltipContent>{tl("Huddle")}</TooltipContent>
       </Tooltip>
     );
   }
@@ -341,8 +342,8 @@ export function HuddleIndicator({
         onSelect={() => void doJoin()}
       >
         <Headphones />
-        <span>Join huddle</span>
-        <span className="ml-auto text-xs text-muted-foreground">
+        <span>{tl("Join huddle")}</span>
+        <span className="ms-auto text-xs text-muted-foreground">
           {participantCount}
         </span>
       </DropdownMenuItem>
@@ -353,7 +354,10 @@ export function HuddleIndicator({
     <Tooltip>
       <TooltipTrigger asChild>
         <Button
-          aria-label={`Join active huddle (${participantCount} participant${participantCount !== 1 ? "s" : ""})`}
+          aria-label={tlt("Join active huddle ({0} participant{1})", [
+            participantCount,
+            participantCount !== 1 ? "s" : "",
+          ])}
           className={cn("relative", className)}
           disabled={isJoining || isStarting}
           onClick={() => void doJoin()}
@@ -365,14 +369,17 @@ export function HuddleIndicator({
           <span className="absolute inset-0 animate-pulse rounded-lg ring-2 ring-border/70" />
           {/* Participant count badge */}
           {participantCount > 0 && (
-            <span className="absolute -right-1 -top-1 flex h-3.5 min-w-3.5 items-center justify-center rounded-full border border-border bg-background px-0.5 text-2xs font-bold text-muted-foreground">
+            <span className="absolute -end-1 -top-1 flex h-3.5 min-w-3.5 items-center justify-center rounded-full border border-border bg-background px-0.5 text-2xs font-bold text-muted-foreground">
               {participantCount}
             </span>
           )}
         </Button>
       </TooltipTrigger>
       <TooltipContent>
-        {`Huddle active — ${participantCount} participant${participantCount !== 1 ? "s" : ""}`}
+        {tlt("Huddle active — {0} participant{1}", [
+          participantCount,
+          participantCount !== 1 ? "s" : "",
+        ])}
       </TooltipContent>
     </Tooltip>
   );

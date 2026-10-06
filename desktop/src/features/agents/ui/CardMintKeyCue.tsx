@@ -1,3 +1,4 @@
+import { tl } from "@/shared/i18n/tl";
 /**
  * Always-visible cue shown in Agent Defaults when a global `OPENAI_API_KEY`
  * row exists (nonblank).  The Advanced section is collapsed by default, so
@@ -22,8 +23,9 @@ export function CardMintKeyCue({
       className="text-xs text-muted-foreground"
       data-testid="card-mint-key-cue"
     >
-      Card-minting key <span className="font-mono">OPENAI_API_KEY</span> is set
-      under Advanced → Environment variables.
+      {tl("Card-minting key")}{" "}
+      <span className="font-mono">{tl("OPENAI_API_KEY")}</span>{" "}
+      {tl("is set under Advanced → Environment variables.")}
     </p>
   );
 }

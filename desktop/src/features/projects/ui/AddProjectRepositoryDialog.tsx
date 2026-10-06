@@ -8,6 +8,7 @@ import { Button } from "@/shared/ui/button";
 import { ChooserDialogContent } from "@/shared/ui/chooser-dialog-content";
 import { Dialog } from "@/shared/ui/dialog";
 import { Input } from "@/shared/ui/input";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const FIELD_SHELL_CLASS =
   "flex min-h-11 items-center rounded-xl border border-input bg-muted/40 px-3 transition-colors hover:border-muted-foreground/40 focus-within:border-muted-foreground/50";
@@ -98,8 +99,8 @@ export function AddProjectRepositoryDialog({
         data-testid="add-project-repository-dialog"
         description={
           selectedProject
-            ? `Add another repository to ${selectedProject.name}.`
-            : "Choose a project for this repository."
+            ? tlt("Add another repository to {0}.", [selectedProject.name])
+            : tl("Choose a project for this repository.")
         }
         footer={
           <Button
@@ -113,12 +114,12 @@ export function AddProjectRepositoryDialog({
             form="add-project-repository-form"
             type="submit"
           >
-            {isCreating ? "Adding..." : "Add repository"}
+            {isCreating ? tl("Adding...") : tl("Add repository")}
           </Button>
         }
         footerClassName="border-t-0 pt-0"
         headerClassName="pb-2"
-        title="Add repository"
+        title={tl("Add repository")}
       >
         <form
           className="space-y-5"
@@ -131,7 +132,7 @@ export function AddProjectRepositoryDialog({
                 className="text-sm font-medium text-foreground"
                 htmlFor="add-project-repository-project"
               >
-                Project
+                {tl("Project")}
               </label>
               <div className={FIELD_SHELL_CLASS}>
                 <select
@@ -161,7 +162,7 @@ export function AddProjectRepositoryDialog({
               className="text-sm font-medium text-foreground"
               htmlFor="add-project-repository-name"
             >
-              Name
+              {tl("Name")}
             </label>
             <div className={FIELD_SHELL_CLASS}>
               <Input
@@ -176,7 +177,7 @@ export function AddProjectRepositoryDialog({
                   setName(event.target.value);
                   setErrorMessage(null);
                 }}
-                placeholder="mobile-app"
+                placeholder={tl("mobile-app")}
                 ref={nameInputRef}
                 spellCheck={false}
                 value={name}
@@ -188,7 +189,7 @@ export function AddProjectRepositoryDialog({
               className="text-sm font-medium text-foreground"
               htmlFor="add-project-repository-channel"
             >
-              Access channel
+              {tl("Access channel")}
             </label>
             <div className={FIELD_SHELL_CLASS}>
               <select
@@ -203,7 +204,7 @@ export function AddProjectRepositoryDialog({
                 required
                 value={selectedChannelId}
               >
-                <option value="">Select a channel</option>
+                <option value="">{tl("Select a channel")}</option>
                 {channels.map((channel) => (
                   <option key={channel.id} value={channel.id}>
                     {channel.name}
@@ -212,7 +213,7 @@ export function AddProjectRepositoryDialog({
               </select>
             </div>
             <p className="text-xs text-muted-foreground">
-              Members of this channel can access the repository.
+              {tl("Members of this channel can access the repository.")}
             </p>
           </div>
           <div className="space-y-1.5">
@@ -220,9 +221,9 @@ export function AddProjectRepositoryDialog({
               className="text-sm font-medium text-foreground"
               htmlFor="add-project-repository-clone-url"
             >
-              Clone URL
-              <span className="ml-1 text-xs font-normal text-muted-foreground/50">
-                Optional
+              {tl("Clone URL")}
+              <span className="ms-1 text-xs font-normal text-muted-foreground/50">
+                {tl("Optional")}
               </span>
             </label>
             <div className={FIELD_SHELL_CLASS}>
@@ -238,7 +239,7 @@ export function AddProjectRepositoryDialog({
                   setCloneUrl(event.target.value);
                   setErrorMessage(null);
                 }}
-                placeholder="https://relay.example.com/git/mobile-app.git"
+                placeholder={tl("https://relay.example.com/git/mobile-app.git")}
                 spellCheck={false}
                 value={cloneUrl}
               />

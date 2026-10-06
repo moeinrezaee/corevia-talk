@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 import type { BuzzToolInfo, ToolStatus } from "./agentSessionTypes";
+import { tl } from "@/shared/i18n/tl";
 
 export function normalizeToolStatus(status: string): ToolStatus {
   const normalized = status.toLowerCase();
@@ -34,7 +35,7 @@ export function normalizeToolStatus(status: string): ToolStatus {
 export function getToolStatusDisplay(status: ToolStatus, isError: boolean) {
   if (isError || status === "failed") {
     return {
-      label: "Error",
+      label: tl("Error"),
       Icon: XCircle,
       state: "output-error" as const,
       variant: "destructive" as const,
@@ -42,7 +43,7 @@ export function getToolStatusDisplay(status: ToolStatus, isError: boolean) {
   }
   if (status === "completed") {
     return {
-      label: "Done",
+      label: tl("Done"),
       Icon: CheckCircle2,
       state: "output-available" as const,
       variant: "secondary" as const,
@@ -50,14 +51,14 @@ export function getToolStatusDisplay(status: ToolStatus, isError: boolean) {
   }
   if (status === "pending") {
     return {
-      label: "Pending",
+      label: tl("Pending"),
       Icon: CircleDot,
       state: "input-streaming" as const,
       variant: "secondary" as const,
     };
   }
   return {
-    label: "Running",
+    label: tl("Running"),
     Icon: Clock3,
     state: "input-available" as const,
     variant: "secondary" as const,
@@ -182,7 +183,7 @@ export function getBuzzToolInfo(title: string): BuzzToolInfo | null {
   if (name.includes("search") || name === "get_feed") {
     return {
       icon: Search,
-      label: "Searches relay-visible Buzz history.",
+      label: tl("Searches relay-visible Buzz history."),
       tone: "read",
     };
   }
@@ -193,7 +194,7 @@ export function getBuzzToolInfo(title: string): BuzzToolInfo | null {
   ) {
     return {
       icon: Send,
-      label: "Publishes relay-visible Buzz activity.",
+      label: tl("Publishes relay-visible Buzz activity."),
       tone: "write",
     };
   }

@@ -12,6 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
+import { tl } from "@/shared/i18n/tl";
 
 export function ConfirmRemoveDialog({
   member,
@@ -41,9 +42,11 @@ export function ConfirmRemoveDialog({
         data-testid="confirm-remove-member-dialog"
       >
         <DialogHeader>
-          <DialogTitle>Remove {label}?</DialogTitle>
+          <DialogTitle>
+            {tl("Remove")} {label}?
+          </DialogTitle>
           <DialogDescription>
-            This will immediately revoke their access to the relay.
+            {tl("This will immediately revoke their access to the relay.")}
           </DialogDescription>
           {member ? (
             <PubKey
@@ -59,7 +62,7 @@ export function ConfirmRemoveDialog({
             size="sm"
             variant="outline"
           >
-            Cancel
+            {tl("Cancel")}
           </Button>
           <Button
             data-testid="confirm-remove-member"
@@ -68,7 +71,7 @@ export function ConfirmRemoveDialog({
               if (!member) return;
               removeMutation.mutate(member.pubkey, {
                 onSuccess: () => {
-                  toast.success("Member removed");
+                  toast.success(tl("Member removed"));
                   handleOpenChange(false);
                 },
                 onError: (error) => {
@@ -83,7 +86,7 @@ export function ConfirmRemoveDialog({
             size="sm"
             variant="destructive"
           >
-            {removeMutation.isPending ? "Removing..." : "Remove"}
+            {removeMutation.isPending ? tl("Removing...") : tl("Remove")}
           </Button>
         </div>
       </DialogContent>

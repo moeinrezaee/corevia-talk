@@ -1,4 +1,5 @@
 import { hasMissingRequiredEnvKey } from "./personaRuntimeModel";
+import { tl } from "@/shared/i18n/tl";
 
 export function AdvancedRequiredBadge({
   envVars,
@@ -20,7 +21,7 @@ export function AdvancedRequiredBadge({
       className="rounded-full bg-destructive/10 px-2 py-0.5 text-xs text-destructive"
       data-testid={testId}
     >
-      Required
+      {tl("Required")}
     </span>
   );
 }

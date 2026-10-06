@@ -22,6 +22,7 @@ import {
   type LinkEditorInitialFocus,
 } from "./linkEditorFocus";
 import { openPopoverLink } from "./openPopoverLink";
+import { tl } from "@/shared/i18n/tl";
 
 type DraftState = {
   text: string;
@@ -322,7 +323,7 @@ export function useLinkEditor(richText: UseRichTextEditorResult) {
             </a>
             <div className="flex items-center justify-end gap-0.5">
               <Button
-                aria-label="Edit link"
+                aria-label={tl("Edit link")}
                 onClick={editFromCard}
                 size="icon-xs"
                 type="button"
@@ -331,7 +332,7 @@ export function useLinkEditor(richText: UseRichTextEditorResult) {
                 <Pencil />
               </Button>
               <Button
-                aria-label="Unlink"
+                aria-label={tl("Unlink")}
                 onClick={removeFromCard}
                 size="icon-xs"
                 type="button"
@@ -356,7 +357,7 @@ export function useLinkEditor(richText: UseRichTextEditorResult) {
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>
-            {draft?.isExistingLink ? "Edit link" : "Add link"}
+            {draft?.isExistingLink ? tl("Edit link") : tl("Add link")}
           </DialogTitle>
         </DialogHeader>
         <form
@@ -370,11 +371,11 @@ export function useLinkEditor(richText: UseRichTextEditorResult) {
             className="flex flex-col gap-1 text-sm font-medium"
             htmlFor={textId}
           >
-            Display text
+            {tl("Display text")}
             <Input
               id={textId}
               autoFocus={draft?.initialFocus === "text"}
-              placeholder="Text to display"
+              placeholder={tl("Text to display")}
               value={draft?.text ?? ""}
               onChange={(event) =>
                 setDraft((prev) =>
@@ -387,11 +388,11 @@ export function useLinkEditor(richText: UseRichTextEditorResult) {
             className="flex flex-col gap-1 text-sm font-medium"
             htmlFor={urlId}
           >
-            URL
+            {tl("URL")}
             <Input
               id={urlId}
               autoFocus={draft?.initialFocus === "url"}
-              placeholder="https://example.com"
+              placeholder={tl("https://example.com")}
               value={draft?.url ?? ""}
               onChange={(event) =>
                 setDraft((prev) =>
@@ -403,17 +404,17 @@ export function useLinkEditor(richText: UseRichTextEditorResult) {
           <div className="mt-2 flex items-center justify-between gap-2">
             {draft?.isExistingLink ? (
               <Button type="button" variant="destructive" onClick={remove}>
-                Remove
+                {tl("Remove")}
               </Button>
             ) : (
               <span />
             )}
             <div className="flex items-center gap-2">
               <Button type="button" variant="ghost" onClick={close}>
-                Cancel
+                {tl("Cancel")}
               </Button>
               <Button type="submit" disabled={!draft?.url.trim()}>
-                Save
+                {tl("Save")}
               </Button>
             </div>
           </div>

@@ -9,6 +9,7 @@ import {
   AlertDialogTitle,
 } from "@/shared/ui/alert-dialog";
 import { Button, buttonVariants } from "@/shared/ui/button";
+import { tl } from "@/shared/i18n/tl";
 
 // Archive is relay-scoped + reversible (NIP-IA), so this gates with a calm,
 // reassuring confirmation rather than a destructive warning. The confirm action
@@ -39,33 +40,38 @@ export function ArchiveConfirmDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
           <AlertDialogDescription>
-            Archiving hides {subject} from the space.
+            {tl("Archiving hides")} {subject} {tl("from the space.")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         {/* The list + closing paragraph sit outside AlertDialogDescription on
             purpose — that component renders a <p>, which can't legally contain
             a <ul> or another block <p>. */}
-        <ul className="list-disc space-y-1.5 pl-5 text-sm text-muted-foreground">
+        <ul className="list-disc space-y-1.5 ps-5 text-sm text-muted-foreground">
           <li>
-            They won't appear in search, autocomplete, or when adding members
+            {tl(
+              "They won't appear in search, autocomplete, or when adding members",
+            )}
           </li>
           <li>
-            This only affects{" "}
-            <span className="font-medium text-foreground">this space</span> —
-            not their account anywhere else
+            {tl("This only affects")}{" "}
+            <span className="font-medium text-foreground">
+              {tl("this space")}
+            </span>{" "}
+            {tl("— not their account anywhere else")}
           </li>
-          <li>You can unarchive them at any time to restore them</li>
+          <li>{tl("You can unarchive them at any time to restore them")}</li>
         </ul>
         {isBot ? (
           <p className="text-sm text-muted-foreground">
-            You can also delete this agent from the profile settings menu if you
-            want to remove the agent instead of hiding it.
+            {tl(
+              "You can also delete this agent from the profile settings menu if you want to remove the agent instead of hiding it.",
+            )}
           </p>
         ) : null}
         <AlertDialogFooter>
           <AlertDialogCancel asChild>
             <Button type="button" variant="outline">
-              Cancel
+              {tl("Cancel")}
             </Button>
           </AlertDialogCancel>
           <AlertDialogAction
@@ -74,7 +80,7 @@ export function ArchiveConfirmDialog({
             disabled={isPending}
             onClick={onConfirm}
           >
-            {isPending ? "Archiving…" : "Archive"}
+            {isPending ? tl("Archiving…") : tl("Archive")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

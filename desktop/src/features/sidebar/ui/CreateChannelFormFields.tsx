@@ -23,9 +23,10 @@ import {
 import { ChannelPermissionsSettings } from "@/features/channels/ui/ChannelPermissionsSettings";
 import { ChannelTypeSettings } from "@/features/channels/ui/ChannelTypeSettings";
 import type { CreateChannelFormState } from "@/features/sidebar/lib/useCreateChannelForm";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const CREATE_LABEL_OPTIONAL_CLASS =
-  "ml-1 text-xs font-normal text-muted-foreground/50";
+  "ms-1 text-xs font-normal text-muted-foreground/50";
 const NO_TEMPLATE_VALUE = "__no-template__";
 
 export const CREATE_CHANNEL_FORM_ID = "create-channel-form";
@@ -71,7 +72,7 @@ export function CreateChannelFormFields({
           className="text-sm font-medium text-foreground"
           htmlFor="create-channel-name"
         >
-          Name
+          {tl("Name")}
         </label>
         <div
           className={cn(
@@ -106,8 +107,8 @@ export function CreateChannelFormFields({
           className="text-sm font-medium text-foreground"
           htmlFor="create-channel-description"
         >
-          Description
-          <span className={CREATE_LABEL_OPTIONAL_CLASS}>Optional</span>
+          {tl("Description")}
+          <span className={CREATE_LABEL_OPTIONAL_CLASS}>{tl("Optional")}</span>
         </label>
         <div className={CHANNEL_FORM_FIELD_SHELL_CLASS}>
           <Textarea
@@ -119,7 +120,7 @@ export function CreateChannelFormFields({
             disabled={isCreating}
             id="create-channel-description"
             onChange={(event) => form.setDescription(event.target.value)}
-            placeholder={`What this ${kindLabel} is for`}
+            placeholder={tlt("What this {0} is for", [kindLabel])}
             rows={2}
             value={form.description}
           />
@@ -128,7 +129,7 @@ export function CreateChannelFormFields({
 
       <ChannelTypeSettings
         disabled={isCreating}
-        label="Type"
+        label={tl("Type")}
         onTemporaryChange={form.setEphemeral}
         onTtlSecondsChange={form.setTtlSeconds}
         temporary={form.ephemeral}
@@ -155,22 +156,24 @@ export function CreateChannelFormFields({
             isCreating && "opacity-50",
           )}
         >
-          Template
-          <span className={CREATE_LABEL_OPTIONAL_CLASS}>Optional</span>
+          {tl("Template")}
+          <span className={CREATE_LABEL_OPTIONAL_CLASS}>{tl("Optional")}</span>
         </span>
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button
-              aria-label={`Template: ${selectedTemplate?.name ?? "None"}`}
-              className="-mr-2.5 ml-auto h-9 min-w-0 max-w-[60%] justify-end px-2.5 text-right text-sm font-medium text-foreground hover:bg-muted/50"
+              aria-label={tlt("Template: {0}", [
+                selectedTemplate?.name ?? "None",
+              ])}
+              className="-me-2.5 ms-auto h-9 min-w-0 max-w-[60%] justify-end px-2.5 text-end text-sm font-medium text-foreground hover:bg-muted/50"
               data-testid="create-channel-template"
               disabled={isCreating}
               id="create-channel-template"
               type="button"
               variant="ghost"
             >
-              <span className="truncate text-right">
-                {selectedTemplate?.name ?? "None"}
+              <span className="truncate text-end">
+                {selectedTemplate?.name ?? tl("None")}
               </span>
               <ChevronDown className="size-4 shrink-0 text-muted-foreground/70" />
             </Button>
@@ -191,7 +194,7 @@ export function CreateChannelFormFields({
               value={form.selectedTemplateId ?? NO_TEMPLATE_VALUE}
             >
               <DropdownMenuRadioItem value={NO_TEMPLATE_VALUE}>
-                None
+                {tl("None")}
               </DropdownMenuRadioItem>
               {form.templates.map((template) => (
                 <DropdownMenuRadioItem key={template.id} value={template.id}>
@@ -202,7 +205,7 @@ export function CreateChannelFormFields({
             <DropdownMenuSeparator />
             <DropdownMenuItem onSelect={() => setIsCreateTemplateOpen(true)}>
               <Plus className="size-4" />
-              Create new channel template…
+              {tl("Create new channel template…")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -250,7 +253,9 @@ export function CreateChannelFormFooter({
         form={CREATE_CHANNEL_FORM_ID}
         type="submit"
       >
-        {isCreating ? "Creating..." : (submitLabel ?? `Create ${kindLabel}`)}
+        {isCreating
+          ? tl("Creating...")
+          : (submitLabel ?? tlt("Create {0}", [kindLabel]))}
       </Button>
     </div>
   );

@@ -44,6 +44,7 @@ import { useNow } from "@/shared/lib/useNow";
 import { Button } from "@/shared/ui/button";
 import { Spinner } from "@/shared/ui/spinner";
 import { resolveModelLabel } from "@/features/agents/lib/formatAgentModelLabel";
+import { tl } from "@/shared/i18n/tl";
 
 type UserProfilePopoverProps = {
   children: React.ReactNode;
@@ -427,7 +428,7 @@ function UserProfilePopoverBody({
             className="mt-0.5 truncate text-xs leading-4 text-muted-foreground"
             data-testid={`user-profile-popover-owner-${pubkey}`}
           >
-            managed by {ownerLabel}
+            {tl("managed by")} {ownerLabel}
           </p>
         ) : null}
         {profileSubheader ? (
@@ -460,14 +461,14 @@ function UserProfilePopoverBody({
       <div className="flex flex-col gap-3">
         {canOpenProfilePanel ? (
           <button
-            className="flex w-full min-w-0 cursor-pointer items-center gap-3 rounded-lg text-left text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring [&_*]:cursor-pointer"
+            className="flex w-full min-w-0 cursor-pointer items-center gap-3 rounded-lg text-start text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring [&_*]:cursor-pointer"
             onClick={onTriggerClick}
             type="button"
           >
             {profileHeaderContent}
           </button>
         ) : (
-          <div className="flex w-full min-w-0 items-center gap-3 text-left text-foreground">
+          <div className="flex w-full min-w-0 items-center gap-3 text-start text-foreground">
             {profileHeaderContent}
           </div>
         )}
@@ -489,7 +490,9 @@ function UserProfilePopoverBody({
               </InfoBadge>
             ) : null}
             {managedAgent?.acpCommand ? (
-              <InfoBadge>ACP: {managedAgent.acpCommand}</InfoBadge>
+              <InfoBadge>
+                {tl("ACP:")} {managedAgent.acpCommand}
+              </InfoBadge>
             ) : null}
           </div>
         ) : null}
@@ -508,7 +511,7 @@ function UserProfilePopoverBody({
 
         {canViewActivity ? (
           <button
-            className="flex w-full items-center gap-2 rounded-lg border border-border/60 px-3 py-2 text-left text-xs font-medium text-foreground transition-colors hover:bg-muted/50"
+            className="flex w-full items-center gap-2 rounded-lg border border-border/60 px-3 py-2 text-start text-xs font-medium text-foreground transition-colors hover:bg-muted/50"
             data-testid={`user-profile-view-activity-${pubkey}`}
             onClick={() => {
               setOpen(false);
@@ -517,7 +520,7 @@ function UserProfilePopoverBody({
             type="button"
           >
             <Activity className="h-4 w-4 text-muted-foreground" />
-            View activity log
+            {tl("View activity log")}
           </button>
         ) : null}
 
@@ -544,7 +547,7 @@ function UserProfilePopoverBody({
               <div className="flex gap-2">
                 {showHumanProfileActions ? (
                   <Button
-                    aria-label="Wave"
+                    aria-label={tl("Wave")}
                     className="buzz-wave-hover-trigger shrink-0 px-3 transition-transform duration-100 ease-out motion-reduce:transition-none motion-safe:active:scale-[0.97]"
                     data-testid={`user-profile-popover-wave-${pubkey}`}
                     disabled={pendingAction !== null || isOpeningDm}
@@ -590,7 +593,7 @@ function UserProfilePopoverBody({
                     ) : (
                       <MessageSquare />
                     )}
-                    Message
+                    {tl("Message")}
                   </Button>
                 ) : null}
                 {showHuddleAction ? (
@@ -615,7 +618,7 @@ function UserProfilePopoverBody({
                     ) : (
                       <Headphones />
                     )}
-                    Huddle
+                    {tl("Huddle")}
                   </Button>
                 ) : null}
               </div>
@@ -638,7 +641,8 @@ function PopoverWorkingBadge({
 
   return (
     <span className="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary motion-safe:animate-pulse">
-      Working in #{name} · {formatElapsed(now - anchorAt)}
+      {tl("Working in #")}
+      {name} · {formatElapsed(now - anchorAt)}
     </span>
   );
 }

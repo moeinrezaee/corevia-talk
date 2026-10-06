@@ -17,6 +17,7 @@ import { cn } from "@/shared/lib/cn";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
 import { PortalledScrollArea } from "@/shared/ui/PortalledScrollArea";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 function ChannelPrivacyIcon({ channel }: { channel: Channel }) {
   const Icon =
@@ -188,7 +189,7 @@ export function ChannelCombobox({
         <TooltipTrigger asChild>
           <button
             aria-disabled="true"
-            aria-label={`${ariaLabel}: ${selectedLabel}. Read only.`}
+            aria-label={tlt("{0}: {1}. Read only.", [ariaLabel, selectedLabel])}
             className={cn(
               "flex w-full cursor-default items-center rounded-lg px-3 py-2 text-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring",
               variant === "header" &&
@@ -244,7 +245,7 @@ export function ChannelCombobox({
             ) : null}
             <span className="truncate">{selectedLabel}</span>
           </span>
-          <ChevronDown className="ml-1 h-5 w-5 shrink-0 text-muted-foreground opacity-50 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100" />
+          <ChevronDown className="ms-1 h-5 w-5 shrink-0 text-muted-foreground opacity-50 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100" />
         </button>
       </PopoverTrigger>
       <PopoverContent
@@ -259,7 +260,7 @@ export function ChannelCombobox({
             aria-autocomplete="list"
             aria-controls={listboxId}
             aria-expanded={open}
-            aria-label={`Search ${ariaLabel.toLowerCase()}s`}
+            aria-label={tlt("Search {0}s", [ariaLabel.toLowerCase()])}
             autoCapitalize="none"
             autoComplete="off"
             autoCorrect="off"
@@ -270,14 +271,14 @@ export function ChannelCombobox({
               setHighlightedIndex(0);
             }}
             onKeyDown={handleKeyDown}
-            placeholder="Search channels..."
+            placeholder={tl("Search channels...")}
             role="combobox"
             spellCheck={false}
             value={query}
           />
         </div>
         <PortalledScrollArea
-          aria-label={`${ariaLabel} options`}
+          aria-label={tlt("{0} options", [ariaLabel])}
           className="max-h-60 overflow-y-auto p-1"
           data-testid="channel-combobox-list"
           id={listboxId}
@@ -287,7 +288,7 @@ export function ChannelCombobox({
             <button
               aria-selected={!value}
               className={cn(
-                "flex w-full cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground",
+                "flex w-full cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-start text-sm transition-colors hover:bg-accent hover:text-accent-foreground",
                 !value && "bg-accent/50",
               )}
               onClick={() => selectChannel("")}
@@ -298,7 +299,7 @@ export function ChannelCombobox({
               <span className="truncate">{emptyLabel}</span>
               <Check
                 className={cn(
-                  "ml-auto h-4 w-4 shrink-0",
+                  "ms-auto h-4 w-4 shrink-0",
                   !value ? "opacity-100" : "opacity-0",
                 )}
               />
@@ -306,7 +307,7 @@ export function ChannelCombobox({
           ) : null}
           {filtered.length === 0 ? (
             <p className="px-3 py-4 text-center text-xs text-muted-foreground">
-              No channels found.
+              {tl("No channels found.")}
             </p>
           ) : (
             filtered.map((channel) => {
@@ -315,7 +316,7 @@ export function ChannelCombobox({
                 <button
                   aria-selected={channel.id === value}
                   className={cn(
-                    "flex w-full cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:bg-transparent disabled:hover:text-foreground",
+                    "flex w-full cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-start text-sm transition-colors hover:bg-accent hover:text-accent-foreground disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:bg-transparent disabled:hover:text-foreground",
                     channel.id === value && "bg-accent/50",
                     channel.id === selectable[highlightedIndex]?.id &&
                       !optionDisabled &&
@@ -332,12 +333,15 @@ export function ChannelCombobox({
                   <span className="truncate">
                     {channelLabels.get(channel.id) ?? channel.name}
                     {channel.channelType === "dm" ? (
-                      <span className="text-muted-foreground"> · dm</span>
+                      <span className="text-muted-foreground">
+                        {" "}
+                        {tl("· dm")}
+                      </span>
                     ) : null}
                   </span>
                   <Check
                     className={cn(
-                      "ml-auto h-4 w-4 shrink-0",
+                      "ms-auto h-4 w-4 shrink-0",
                       channel.id === value ? "opacity-100" : "opacity-0",
                     )}
                   />

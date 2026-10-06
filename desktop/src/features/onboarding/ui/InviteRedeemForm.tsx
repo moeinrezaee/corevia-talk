@@ -25,6 +25,7 @@ import {
 } from "./NsecMaskedDisplay";
 import { ONBOARDING_PRIMARY_CTA_CLASS } from "./OnboardingChrome";
 import { OnboardingFooter } from "./OnboardingFooter";
+import { tl } from "@/shared/i18n/tl";
 
 const POLICY_DISCOVERY_DELAY_MS = 250;
 const POLICY_REVEAL_EASE = [0.23, 1, 0.32, 1] as const;
@@ -308,21 +309,23 @@ export function InviteRedeemForm({
     >
       {isRedeeming || isLoadingPolicy ? (
         <Spinner
-          aria-label={isRedeeming ? "Redeeming invite" : "Loading policy"}
+          aria-label={
+            isRedeeming ? tl("Redeeming invite") : tl("Loading policy")
+          }
           className="h-4 w-4 border-2"
         />
       ) : isOnboardingSpotlight ? (
-        "Next"
+        tl("Next")
       ) : isAddCommunity ? (
         joinPolicy ? (
-          "Accept and join"
+          tl("Accept and join")
         ) : (
-          "Join community"
+          tl("Join community")
         )
       ) : joinPolicy ? (
-        "Accept and redeem invite"
+        tl("Accept and redeem invite")
       ) : (
-        "Redeem invite"
+        tl("Redeem invite")
       )}
     </Button>
   );
@@ -339,7 +342,7 @@ export function InviteRedeemForm({
       type="button"
       variant="ghost"
     >
-      {isOnboardingSpotlight ? "Back" : "Cancel"}
+      {isOnboardingSpotlight ? tl("Back") : tl("Cancel")}
     </Button>
   );
 
@@ -367,7 +370,7 @@ export function InviteRedeemForm({
             style={SPOTLIGHT_OVERFLOW_FADE}
           >
             <label className="block w-full" htmlFor="invite-input">
-              <span className="sr-only">Invite link or code</span>
+              <span className="sr-only">{tl("Invite link or code")}</span>
               <span className={ONBOARDING_KEY_ROW_CLASS}>
                 <input
                   autoCapitalize="none"
@@ -393,14 +396,14 @@ export function InviteRedeemForm({
           </div>
         </Card>
       ) : (
-        <div className="space-y-1.5 text-left">
+        <div className="space-y-1.5 text-start">
           <label
             className="text-sm font-medium text-foreground"
             htmlFor="invite-input"
           >
             {isAddCommunity
-              ? "Community URL or invite link"
-              : "Invite link or code"}
+              ? tl("Community URL or invite link")
+              : tl("Invite link or code")}
           </label>
           <Input
             autoComplete="off"
@@ -437,14 +440,14 @@ export function InviteRedeemForm({
           )}
           data-testid="invalid-invite-tip"
         >
-          Please enter a valid invite link or community URL
+          {tl("Please enter a valid invite link or community URL")}
         </p>
       ) : null}
 
       {needsRelayField ? (
         <div
           className={cn(
-            "space-y-1.5 text-left",
+            "space-y-1.5 text-start",
             isOnboardingSpotlight && "w-full max-w-[500px]",
           )}
         >
@@ -452,14 +455,14 @@ export function InviteRedeemForm({
             className="text-sm font-medium text-foreground"
             htmlFor="invite-relay-url"
           >
-            Relay URL
+            {tl("Relay URL")}
           </label>
           <Input
             className="h-10 bg-background"
             disabled={isRedeeming}
             id="invite-relay-url"
             onChange={handleRelayInputChange}
-            placeholder="wss://relay.example.com"
+            placeholder={tl("wss://relay.example.com")}
             type="text"
             value={bareCodeRelayUrl}
           />

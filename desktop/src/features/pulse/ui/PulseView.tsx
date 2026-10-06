@@ -31,6 +31,7 @@ import { Skeleton } from "@/shared/ui/skeleton";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
 import { VirtualizedList } from "@/shared/ui/VirtualizedList";
 import { truncateNpub } from "@/shared/lib/pubkey";
+import { tl } from "@/shared/i18n/tl";
 
 export type PulseTab =
   | "search"
@@ -350,22 +351,22 @@ export function PulseView({ currentPubkey }: PulseViewProps) {
             <div className="flex min-h-[calc(100vh-96px)] items-center justify-center">
               <div className="relative flex w-full max-w-xl flex-col items-center px-2">
                 <h2 className="mb-5 text-center text-2xl font-semibold tracking-tight text-foreground">
-                  What are you looking for?
+                  {tl("What are you looking for?")}
                 </h2>
                 <div className="relative w-full max-w-lg">
                   <div className="relative rounded-full border border-foreground/10 bg-background/80 p-1 shadow-[0_12px_48px_rgba(0,0,0,0.12)] backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.04] dark:shadow-[0_16px_70px_rgba(0,0,0,0.55)]">
-                    <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground dark:text-white/55" />
+                    <Search className="pointer-events-none absolute start-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground dark:text-white/55" />
                     <Input
                       autoFocus
-                      className="h-9 rounded-full border-0 bg-transparent pl-10 pr-12 text-sm shadow-none placeholder:text-muted-foreground/80 focus-visible:ring-0 dark:text-white dark:placeholder:text-white/60"
+                      className="h-9 rounded-full border-0 bg-transparent ps-10 pe-12 text-sm shadow-none placeholder:text-muted-foreground/80 focus-visible:ring-0 dark:text-white dark:placeholder:text-white/60"
                       onChange={(event) => setSearchQuery(event.target.value)}
-                      placeholder="What would you like to know?"
+                      placeholder={tl("What would you like to know?")}
                       type="search"
                       value={searchQuery}
                     />
                     <button
-                      aria-label="Search Pulse"
-                      className="absolute right-1.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-foreground/10 text-foreground transition-colors hover:bg-foreground/15 dark:bg-white/85 dark:text-black dark:hover:bg-white"
+                      aria-label={tl("Search Pulse")}
+                      className="absolute end-1.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-foreground/10 text-foreground transition-colors hover:bg-foreground/15 dark:bg-white/85 dark:text-black dark:hover:bg-white"
                       type="button"
                     >
                       <Search className="h-4 w-4" />
@@ -384,7 +385,7 @@ export function PulseView({ currentPubkey }: PulseViewProps) {
                 <div className="mb-2 rounded-lg bg-destructive/10 px-3 py-2 text-xs text-destructive">
                   {publishMutation.error instanceof Error
                     ? publishMutation.error.message
-                    : "Failed to publish note"}
+                    : tl("Failed to publish note")}
                 </div>
               )}
               <ForumComposer
@@ -407,7 +408,7 @@ export function PulseView({ currentPubkey }: PulseViewProps) {
                   </div>
                 }
                 members={pulseMentionMembers}
-                placeholder="What's on your mind?"
+                placeholder={tl("What's on your mind?")}
                 isSending={publishMutation.isPending}
                 onSubmit={(content, mentionPubkeys, mediaTags) =>
                   publishMutation.mutateAsync({

@@ -22,6 +22,7 @@ import {
 import { ForumComposer } from "./ForumComposer";
 import { ForumPostCard } from "./ForumPostCard";
 import { ForumThreadPanel } from "./ForumThreadPanel";
+import { tl } from "@/shared/i18n/tl";
 
 type ForumViewProps = {
   channel: Channel;
@@ -189,21 +190,21 @@ export function ForumView({
               });
               setIsComposerOpen(false);
             }}
-            placeholder="Write your post..."
+            placeholder={tl("Write your post...")}
             profiles={profiles}
           />
         ) : (
           <button
-            className="w-full rounded-xl border border-dashed border-border/80 px-4 py-3 text-left text-sm text-muted-foreground transition-colors hover:border-border hover:bg-accent/30 hover:text-foreground"
+            className="w-full rounded-xl border border-dashed border-border/80 px-4 py-3 text-start text-sm text-muted-foreground transition-colors hover:border-border hover:bg-accent/30 hover:text-foreground"
             disabled={!channel.isMember || channel.archivedAt !== null}
             onClick={() => setIsComposerOpen(true)}
             type="button"
           >
             {channel.archivedAt
-              ? "This forum is archived."
+              ? tl("This forum is archived.")
               : !channel.isMember
-                ? "Join this forum to create posts."
-                : "Start a new post..."}
+                ? tl("Join this forum to create posts.")
+                : tl("Start a new post...")}
           </button>
         )}
       </div>
@@ -225,10 +226,10 @@ export function ForumView({
             <MessageSquareText className="h-10 w-10 text-muted-foreground/40" />
             <div>
               <p className="text-sm font-medium text-foreground/70">
-                No posts yet
+                {tl("No posts yet")}
               </p>
               <p className="mt-1 text-xs text-muted-foreground">
-                Start a discussion by creating the first post.
+                {tl("Start a discussion by creating the first post.")}
               </p>
             </div>
           </div>

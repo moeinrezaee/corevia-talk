@@ -5,6 +5,7 @@ import type { Editor } from "@tiptap/react";
 import { cn } from "@/shared/lib/cn";
 import { FormattingToolbar } from "./FormattingToolbar";
 import { getMountedEditorDom } from "./selectionFormattingTrayEditorDom";
+import { tl } from "@/shared/i18n/tl";
 
 type SelectionFormattingTrayProps = {
   editor: Editor | null;
@@ -254,7 +255,7 @@ export function SelectionFormattingTray({
       data-testid="selection-formatting-tray"
       onMouseDown={(event) => event.preventDefault()}
       role="toolbar"
-      aria-label="Selection formatting"
+      aria-label={tl("Selection formatting")}
       style={{ left: position.left, top: position.top }}
     >
       <div className="max-w-full overflow-x-auto">

@@ -14,6 +14,7 @@ import {
   PANEL_ENTER_BASE_CLASS,
   PANEL_OVERLAY_CLASS,
 } from "@/shared/ui/OverlayPanelBackdrop";
+import { tl } from "@/shared/i18n/tl";
 
 export type {
   AuxiliaryPanelContextValue,
@@ -113,14 +114,14 @@ export function AuxiliaryPanel({
     onResizeStart != null ? (
       <button
         aria-label={resizeHandleAriaLabel}
-        className="peer/auxiliary-panel-resize group/auxiliary-panel-resize absolute inset-y-0 left-0 z-40 w-3 -translate-x-1/2 cursor-col-resize"
+        className="peer/auxiliary-panel-resize group/auxiliary-panel-resize absolute inset-y-0 left-0 rtl:left-auto rtl:right-0 z-40 w-3 -translate-x-1/2 rtl:translate-x-1/2 cursor-col-resize"
         data-testid={resizeHandleTestId}
         onDoubleClick={canResetWidth ? onResetWidth : undefined}
         onPointerDown={onResizeStart}
         title={
           canResetWidth
-            ? "Drag to resize. Double-click to reset width."
-            : "Drag to resize."
+            ? tl("Drag to resize. Double-click to reset width.")
+            : tl("Drag to resize.")
         }
         type="button"
       >
@@ -147,7 +148,7 @@ export function AuxiliaryPanel({
       <aside
         className={cn(
           enterMotion ? PANEL_ENTER_BASE_CLASS : PANEL_BASE_CLASS,
-          isSinglePanelView && "border-l-0",
+          isSinglePanelView && "border-s-0",
           isFloatingOverlay && PANEL_OVERLAY_CLASS,
           className,
         )}

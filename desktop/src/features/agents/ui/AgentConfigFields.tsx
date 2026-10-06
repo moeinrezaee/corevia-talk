@@ -63,6 +63,7 @@ import { SettingsOptionGroup } from "@/features/settings/ui/SettingsOptionGroup"
 import { AdvancedRequiredBadge } from "./AdvancedRequiredBadge";
 import { CardMintKeyCue } from "./CardMintKeyCue";
 import { getGlobalAgentCredentialState } from "./globalAgentCredentialState";
+import { tl } from "@/shared/i18n/tl";
 
 export const EMPTY_GLOBAL_CONFIG: GlobalAgentConfig = {
   env_vars: {},
@@ -676,7 +677,7 @@ export function AgentConfigFields({
   const blockClassName = unstyled ? "" : "p-3";
   const fieldLabelClassName =
     unstyled && !progressiveDefaults && !stackModelAndEffortHorizontally
-      ? "pl-3"
+      ? "ps-3"
       : undefined;
   const providerDropdownOptions = [
     ...providerOptions
@@ -696,7 +697,12 @@ export function AgentConfigFields({
         value: opt.id || AUTO_PROVIDER_DROPDOWN_VALUE,
       })),
     ...(showCustomProviderOption
-      ? [{ label: "Custom provider…", value: CUSTOM_PROVIDER_DROPDOWN_VALUE }]
+      ? [
+          {
+            label: tl("Custom provider…"),
+            value: CUSTOM_PROVIDER_DROPDOWN_VALUE,
+          },
+        ]
       : []),
   ];
   const providerSelect = useCustomSelect ? (
@@ -707,7 +713,7 @@ export function AgentConfigFields({
       options={providerDropdownOptions}
       placeholder={
         showProviderPlaceholderOption
-          ? "Select provider"
+          ? tl("Select provider")
           : compactProviderZeroLabel
       }
       placeholderClassName={placeholderClassName}
@@ -723,7 +729,7 @@ export function AgentConfigFields({
     <select
       className={cn(
         "flex h-9 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs",
-        useChevronSelectIcon && "appearance-none pr-10",
+        useChevronSelectIcon && "appearance-none pe-10",
         selectClassName,
       )}
       id="global-agent-provider"
@@ -744,14 +750,14 @@ export function AgentConfigFields({
         className={cn("text-sm font-medium", fieldLabelClassName)}
         htmlFor="global-agent-provider"
       >
-        Provider
+        {tl("Provider")}
       </label>
       {!useCustomSelect && useChevronSelectIcon ? (
         <div className="relative">
           {providerSelect}
           <ChevronDown
             aria-hidden="true"
-            className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground"
+            className="pointer-events-none absolute end-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground"
           />
         </div>
       ) : (
@@ -759,10 +765,10 @@ export function AgentConfigFields({
       )}
       {isCustomProvider ? (
         <AgentConfigTextInput
-          aria-label="Custom global provider ID"
+          aria-label={tl("Custom global provider ID")}
           autoCorrect="off"
           onChange={(e) => handleCustomProviderInput(e.target.value)}
-          placeholder="Custom provider ID"
+          placeholder={tl("Custom provider ID")}
           usePersonaInputStyle={progressiveDefaults}
           value={providerValue}
         />
@@ -781,7 +787,7 @@ export function AgentConfigFields({
         inheritedRows={bakedGenericRows}
         inheritedRowsLabel="build"
         keyAnnotations={CARD_MINT_KEY_ANNOTATIONS}
-        label="Environment variables"
+        label={tl("Environment variables")}
         onChange={handleEnvVarsChange}
         requiredKeys={advancedRequiredEnvKeys}
         value={config.env_vars}
@@ -833,7 +839,7 @@ export function AgentConfigFields({
             onIsCustomModelEditingChange={onCustomModelEditingChange}
             onModelChange={handleModelChange}
             placeholderClassName={placeholderClassName}
-            placeholder="Select a model"
+            placeholder={tl("Select a model")}
             provider={providerForDiscovery}
             fieldClassName={unstyled ? fieldClassName : undefined}
             labelClassName={fieldLabelClassName}
@@ -875,7 +881,7 @@ export function AgentConfigFields({
                 : undefined
             }
             inheritedEffort={bakedEffort ?? undefined}
-            label="Effort"
+            label={tl("Effort")}
             labelClassName={fieldLabelClassName}
             onChange={(value) => {
               const nextEnvVars = { ...config.env_vars };
@@ -914,7 +920,7 @@ export function AgentConfigFields({
             isInherited={apiKeyInherited}
             isRequired={!apiKeyInherited && apiKeyValue.length === 0}
             isValidating={apiKeyValidationPending}
-            label={getProviderApiKeyLabel(effectiveProvider) ?? "API Key"}
+            label={getProviderApiKeyLabel(effectiveProvider) ?? tl("API Key")}
             onValueChange={(value) =>
               onConfigChange({
                 ...config,
@@ -948,13 +954,13 @@ export function AgentConfigFields({
             aria-expanded={advancedOpen}
             className={cn(
               "inline-flex h-9 items-center gap-1.5 text-sm font-medium text-foreground transition-colors hover:text-foreground/80 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring",
-              unstyled && "ml-3",
+              unstyled && "ms-3",
             )}
             data-testid="global-agent-advanced-toggle"
             onClick={() => setAdvancedOpen((current) => !current)}
             type="button"
           >
-            <span>Advanced</span>
+            <span>{tl("Advanced")}</span>
             <AdvancedRequiredBadge
               show={advancedCredentialMissing}
               testId="global-agent-advanced-required-badge"

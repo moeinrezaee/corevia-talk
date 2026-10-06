@@ -69,7 +69,7 @@ export function ComposerUploadProgressPill({
           >
             <motion.div
               animate={{ width: `${percentage}%` }}
-              className="absolute inset-y-0 left-0 bg-primary-foreground/20"
+              className="absolute inset-y-0 start-0 bg-primary-foreground/20"
               data-testid="composer-upload-progress-fill"
               initial={false}
               transition={
@@ -78,7 +78,7 @@ export function ComposerUploadProgressPill({
                   : { duration: 0.15, ease: "easeOut" }
               }
             />
-            <div className="relative flex h-full items-center gap-2 pl-3 pr-1">
+            <div className="relative flex h-full items-center gap-2 ps-3 pe-1">
               <span className="min-w-0 flex-1 truncate text-sm font-semibold text-primary-foreground">
                 <span className="inline-flex items-baseline">
                   <AnimatePresence initial={false} mode="popLayout">
@@ -101,7 +101,7 @@ export function ComposerUploadProgressPill({
                     </motion.span>
                   </AnimatePresence>
                   <motion.span
-                    className="ml-1 inline-flex items-center text-primary-foreground/80"
+                    className="ms-1 inline-flex items-center text-primary-foreground/80"
                     data-testid="composer-upload-status"
                     layout="position"
                     transition={phaseTransition}
@@ -110,7 +110,7 @@ export function ComposerUploadProgressPill({
                       {isTransferring ? (
                         <motion.span
                           animate={{ opacity: 1, y: 0 }}
-                          className="ml-1"
+                          className="ms-1"
                           data-testid="composer-upload-percentage"
                           exit={{
                             opacity: reducedMotion ? 1 : 0,
@@ -129,7 +129,7 @@ export function ComposerUploadProgressPill({
                       ) : (
                         <motion.span
                           animate={{ opacity: 1, y: 0 }}
-                          className="ml-1 inline-flex"
+                          className="ms-1 inline-flex"
                           data-testid="composer-upload-spinner"
                           exit={{
                             opacity: reducedMotion ? 1 : 0,

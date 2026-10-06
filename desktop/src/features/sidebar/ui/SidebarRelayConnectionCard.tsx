@@ -5,6 +5,7 @@ import {
   type SidebarActionCardSurface,
 } from "@/shared/ui/sidebar-action-card";
 import { Spinner } from "@/shared/ui/spinner";
+import { tl } from "@/shared/i18n/tl";
 
 type SidebarRelayConnectionCardProps = {
   isActionDisabled?: boolean;
@@ -77,7 +78,7 @@ export function SidebarRelayConnectionCompactCard({
           ? undefined
           : isReconnectPending
             ? reconnectDescription
-            : "Click to connect"
+            : tl("Click to connect")
       }
       dismissClassName={dismissClassName}
       dismissLabel="Dismiss relay notification"
@@ -101,10 +102,10 @@ export function SidebarRelayConnectionCompactCard({
       testId={testId}
       title={
         isConnected
-          ? "Connected"
+          ? tl("Connected")
           : isReconnectPending
             ? reconnectTitle
-            : "Can't reach the relay"
+            : tl("Can't reach the relay")
       }
       tone={isConnected ? "success" : "neutral"}
     />

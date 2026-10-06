@@ -14,17 +14,18 @@ import {
   DialogTitle,
 } from "@/shared/ui/dialog";
 import { Textarea } from "@/shared/ui/textarea";
+import { tl } from "@/shared/i18n/tl";
 
 /** NIP-56 report categories, in the order shown to the reporter. `other` is
  *  last so it reads as the fallback rather than a first-class choice. */
 const REPORT_CATEGORIES: { value: ReportType; label: string }[] = [
-  { value: "spam", label: "Spam" },
-  { value: "profanity", label: "Profanity or hate speech" },
-  { value: "nudity", label: "Nudity or sexual content" },
-  { value: "impersonation", label: "Impersonation" },
-  { value: "malware", label: "Malware or scam" },
-  { value: "illegal", label: "Illegal content" },
-  { value: "other", label: "Other" },
+  { value: "spam", label: tl("Spam") },
+  { value: "profanity", label: tl("Profanity or hate speech") },
+  { value: "nudity", label: tl("Nudity or sexual content") },
+  { value: "impersonation", label: tl("Impersonation") },
+  { value: "malware", label: tl("Malware or scam") },
+  { value: "illegal", label: tl("Illegal content") },
+  { value: "other", label: tl("Other") },
 ];
 
 /**
@@ -81,7 +82,7 @@ export function ReportMessageDialog({
       },
       {
         onSuccess: () => {
-          toast.success("Report submitted to community moderators");
+          toast.success(tl("Report submitted to community moderators"));
           onOpenChange(false);
         },
         onError: (error) => toast.error(reportErrorMessage(error)),
@@ -95,11 +96,12 @@ export function ReportMessageDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Flag className="h-4 w-4" />
-            Report message
+            {tl("Report message")}
           </DialogTitle>
           <DialogDescription>
-            Reports go to this community's moderators for review. The author is
-            not notified of who reported them.
+            {tl(
+              "Reports go to this community's moderators for review. The author is not notified of who reported them.",
+            )}
           </DialogDescription>
         </DialogHeader>
 
@@ -122,11 +124,11 @@ export function ReportMessageDialog({
             htmlFor="report-note"
             className="text-sm font-medium text-muted-foreground"
           >
-            Additional context (optional)
+            {tl("Additional context (optional)")}
           </label>
           <Textarea
             id="report-note"
-            placeholder="Add anything that helps moderators..."
+            placeholder={tl("Add anything that helps moderators...")}
             value={note}
             onChange={(e) => setNote(e.target.value)}
             rows={3}
@@ -140,14 +142,14 @@ export function ReportMessageDialog({
             onClick={() => onOpenChange(false)}
             disabled={submitReport.isPending}
           >
-            Cancel
+            {tl("Cancel")}
           </Button>
           <Button
             variant="default"
             onClick={submit}
             disabled={!category || submitReport.isPending}
           >
-            Submit report
+            {tl("Submit report")}
           </Button>
         </DialogFooter>
       </DialogContent>

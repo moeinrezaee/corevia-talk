@@ -31,6 +31,7 @@ import { StatusEmoji } from "@/features/user-status/ui/StatusEmoji";
 import type { WorkflowCardAuthorPresentation } from "./useWorkflowListAuthorPresentations";
 import type { WorkflowMessagePresentation } from "./useWorkflowListMessagePresentations";
 import { workflowTriggerDescription } from "./workflowTriggerDescription";
+import { tl } from "@/shared/i18n/tl";
 
 type WorkflowCardProps = {
   workflow: Workflow;
@@ -93,7 +94,7 @@ function StatusToggle({
 }) {
   return (
     <Switch
-      aria-label={enabled ? "Disable workflow" : "Enable workflow"}
+      aria-label={enabled ? tl("Disable workflow") : tl("Enable workflow")}
       checked={enabled}
       disabled={disabled}
       onCheckedChange={(checked) => {
@@ -179,9 +180,9 @@ function ActionTileStack({
             action={action.action}
             animationSequence={animationSequence}
             className={cn(
-              index === 0 && "left-0 z-10",
-              index === 1 && "left-1.5 z-[5] scale-90 opacity-60",
-              index === 2 && "left-3 scale-75 opacity-35",
+              index === 0 && "start-0 z-10",
+              index === 1 && "start-1.5 z-[5] scale-90 opacity-60",
+              index === 2 && "start-3 scale-75 opacity-35",
             )}
             emoji={action.emoji}
             index={index}
@@ -229,7 +230,7 @@ export function WorkflowCard({
   return (
     <div
       className={cn(
-        "group relative flex min-h-60 w-full flex-col overflow-hidden rounded-2xl bg-muted/50 p-5 text-left text-foreground shadow-xs transition-colors hover:bg-muted/65",
+        "group relative flex min-h-60 w-full flex-col overflow-hidden rounded-2xl bg-muted/50 p-5 text-start text-foreground shadow-xs transition-colors hover:bg-muted/65",
       )}
       data-testid={`workflow-card-${workflow.id}`}
     >
@@ -238,7 +239,9 @@ export function WorkflowCard({
         onClick={() => onView(workflow)}
         type="button"
       >
-        <span className="sr-only">View {workflow.name}</span>
+        <span className="sr-only">
+          {tl("View")} {workflow.name}
+        </span>
       </button>
 
       <div className="pointer-events-none relative z-10 flex min-h-48 flex-1 flex-col">

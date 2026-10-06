@@ -18,6 +18,7 @@ import { useSmoothCorners } from "@/shared/ui/smoothCorners";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 
 import { getReactNodeText } from "./utils";
+import { tl } from "@/shared/i18n/tl";
 
 let shikiHighlighter: HighlighterGeneric<BundledLanguage, BundledTheme> | null =
   null;
@@ -85,10 +86,10 @@ export function MarkdownCodeBlock({
 
       try {
         await copyCodeBlockToClipboard(code);
-        toast.success("Copied code to clipboard");
+        toast.success(tl("Copied code to clipboard"));
       } catch (error) {
         console.error("Failed to copy code block", error);
-        toast.error("Failed to copy code");
+        toast.error(tl("Failed to copy code"));
       } finally {
         setIsCopying(false);
       }
@@ -100,7 +101,7 @@ export function MarkdownCodeBlock({
     <div className="group relative" data-code-block="">
       <pre
         ref={codeBlockRef}
-        className="max-h-[400px] overflow-x-auto overflow-y-auto rounded-2xl border border-border/70 bg-muted/60 px-3 py-1.5 pr-12 shadow-xs"
+        className="max-h-[400px] overflow-x-auto overflow-y-auto rounded-2xl border border-border/70 bg-muted/60 px-3 py-1.5 pe-12 shadow-xs"
         style={{ borderRadius: "1rem" }}
       >
         {language && (
@@ -113,8 +114,8 @@ export function MarkdownCodeBlock({
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
-            aria-label="Copy code block"
-            className="absolute right-2 top-2 h-7 w-7 bg-background/80 text-muted-foreground opacity-0 shadow-xs ring-1 ring-border/60 backdrop-blur-sm transition-opacity hover:bg-background hover:text-foreground hover:opacity-100 focus-visible:opacity-100 group-hover:opacity-100 group-focus-within:opacity-100 disabled:opacity-60"
+            aria-label={tl("Copy code block")}
+            className="absolute end-2 top-2 h-7 w-7 bg-background/80 text-muted-foreground opacity-0 shadow-xs ring-1 ring-border/60 backdrop-blur-sm transition-opacity hover:bg-background hover:text-foreground hover:opacity-100 focus-visible:opacity-100 group-hover:opacity-100 group-focus-within:opacity-100 disabled:opacity-60"
             disabled={isCopying}
             onClick={handleCopy}
             size="icon"
@@ -122,10 +123,10 @@ export function MarkdownCodeBlock({
             variant="ghost"
           >
             <Copy className="h-4 w-4" />
-            <span className="sr-only">Copy code block</span>
+            <span className="sr-only">{tl("Copy code block")}</span>
           </Button>
         </TooltipTrigger>
-        <TooltipContent>Copy code</TooltipContent>
+        <TooltipContent>{tl("Copy code")}</TooltipContent>
       </Tooltip>
     </div>
   );

@@ -25,6 +25,7 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
+import { tl } from "@/shared/i18n/tl";
 
 const PRESETS = [
   { text: "In a meeting", emoji: "\uD83D\uDDE3\uFE0F" },
@@ -179,7 +180,7 @@ function StatusSection({
 }
 
 const ROW_CLASS =
-  "flex min-h-11 w-full items-center gap-3 px-3 py-2.5 text-left text-sm transition-colors hover:bg-muted/50 focus:outline-none focus-visible:bg-muted/50";
+  "flex min-h-11 w-full items-center gap-3 px-3 py-2.5 text-start text-sm transition-colors hover:bg-muted/50 focus:outline-none focus-visible:bg-muted/50";
 
 export function SetStatusDialog({
   open,
@@ -358,33 +359,33 @@ export function SetStatusDialog({
                 type="button"
                 variant="ghost"
               >
-                Clear status
+                {tl("Clear status")}
               </Button>
             ) : (
               <span />
             )}
             <Button
-              aria-label="Save status"
+              aria-label={tl("Save status")}
               data-testid="set-status-save"
               disabled={!canSave}
               onClick={handleSave}
               type="button"
             >
-              Save status
+              {tl("Save status")}
             </Button>
           </div>
         }
         footerClassName="border-t-0 pt-0"
         headerClassName="pb-2"
         headerSubtitle="Let others know what you're up to."
-        title="Set a status"
+        title={tl("Set a status")}
       >
         <div className="flex min-h-12 items-stretch rounded-xl border border-input focus-within:ring-1 focus-within:ring-ring">
           <Popover onOpenChange={setPickerOpen} open={pickerOpen}>
             <div className="shrink-0">
               <PopoverTrigger asChild>
                 <button
-                  aria-label="Choose a status emoji"
+                  aria-label={tl("Choose a status emoji")}
                   className="flex h-12 w-12 items-center justify-center rounded-xl transition-colors hover:bg-accent"
                   type="button"
                 >
@@ -405,16 +406,16 @@ export function SetStatusDialog({
             </PopoverContent>
           </Popover>
           <input
-            className="min-w-0 flex-1 bg-transparent px-1 pr-3 text-base outline-none placeholder:text-muted-foreground"
+            className="min-w-0 flex-1 bg-transparent px-1 pe-3 text-base outline-none placeholder:text-muted-foreground"
             data-testid="set-status-input"
             onChange={(event) => setText(event.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="What’s your status?"
+            placeholder={tl("What’s your status?")}
             value={text}
           />
         </div>
 
-        <StatusSection label="Duration">
+        <StatusSection label={tl("Duration")}>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
@@ -423,7 +424,7 @@ export function SetStatusDialog({
                 type="button"
               >
                 <Clock3 className="h-5 w-5 text-muted-foreground" />
-                <span className="flex-1">Duration</span>
+                <span className="flex-1">{tl("Duration")}</span>
                 <span className="text-muted-foreground">{duration}</span>
                 <ChevronDown className="h-4 w-4 text-muted-foreground" />
               </button>
@@ -448,18 +449,18 @@ export function SetStatusDialog({
           {duration === "Custom" ? (
             <div className={ROW_CLASS}>
               <CalendarClock className="h-5 w-5 text-muted-foreground" />
-              <span>Until</span>
+              <span>{tl("Until")}</span>
               <Popover onOpenChange={setCalendarOpen} open={calendarOpen}>
                 <PopoverTrigger asChild>
                   <button
-                    aria-label="Status expiration date"
+                    aria-label={tl("Status expiration date")}
                     className="flex h-9 min-w-0 flex-1 items-center rounded-md border border-input bg-background px-2 text-sm outline-none focus:ring-1 focus:ring-ring"
                     type="button"
                   >
                     <span className="truncate">
                       {formattedDate(customUntil)}
                     </span>
-                    <ChevronDown className="ml-auto h-4 w-4 shrink-0 text-muted-foreground" />
+                    <ChevronDown className="ms-auto h-4 w-4 shrink-0 text-muted-foreground" />
                   </button>
                 </PopoverTrigger>
                 <PopoverContent align="start" className="w-auto p-0">
@@ -482,7 +483,7 @@ export function SetStatusDialog({
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button
-                    aria-label="Status expiration time"
+                    aria-label={tl("Status expiration time")}
                     className="flex h-9 w-28 shrink-0 items-center rounded-md border border-input bg-background px-2 text-sm outline-none focus:ring-1 focus:ring-ring"
                     type="button"
                   >
@@ -491,7 +492,7 @@ export function SetStatusDialog({
                         (time) => time.value === toLocalTimeValue(customUntil),
                       )?.label ?? formattedTime(customUntil)}
                     </span>
-                    <ChevronDown className="ml-auto h-4 w-4 shrink-0 text-muted-foreground" />
+                    <ChevronDown className="ms-auto h-4 w-4 shrink-0 text-muted-foreground" />
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
@@ -526,13 +527,13 @@ export function SetStatusDialog({
           ) : null}
           {saveError || (!expirationIsFuture && isDirty) ? (
             <p className="px-3 py-2 text-xs text-destructive" role="alert">
-              {saveError || "Choose a duration in the future."}
+              {saveError || tl("Choose a duration in the future.")}
             </p>
           ) : null}
         </StatusSection>
 
         {!baseline.hasExistingStatus ? (
-          <StatusSection label="Quick statuses">
+          <StatusSection label={tl("Quick statuses")}>
             {PRESETS.map((preset) => (
               <button
                 className={ROW_CLASS}

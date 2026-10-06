@@ -31,6 +31,7 @@ import { SettingsSectionHeader } from "./SettingsSectionHeader";
 import { SignOutSection } from "./SignOutSection";
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
 import { canonicalNpub, UNAVAILABLE_KEY_LABEL } from "@/shared/lib/pubkey";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type ProfileSettingsCardProps = {
   currentPubkey?: string;
@@ -76,18 +77,18 @@ function IdentityRow({
       </div>
       {copyValue ? (
         <button
-          aria-label={`Copy ${label}`}
+          aria-label={tlt("Copy {0}", [label])}
           className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-muted/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           data-testid={`copy-${testId}`}
           onClick={async () => {
             await writeTextToClipboard(copyValue);
-            toast.success("Copied to clipboard");
+            toast.success(tl("Copied to clipboard"));
           }}
-          title={`Copy ${label}`}
+          title={tlt("Copy {0}", [label])}
           type="button"
         >
           <Copy className="h-4 w-4 shrink-0" />
-          Copy
+          {tl("Copy")}
         </button>
       ) : null}
     </div>
@@ -406,7 +407,7 @@ export function ProfileSettingsCard({
     setDisplayNameDraft(updatePayload.displayName ?? currentDisplayName);
     setAvatarUrlDraft(updatePayload.avatarUrl ?? currentAvatarUrl);
     setAboutDraft(updatePayload.about ?? currentAbout);
-    toast.success("Profile saved");
+    toast.success(tl("Profile saved"));
     return true;
   }, [
     canSave,
@@ -489,8 +490,10 @@ export function ProfileSettingsCard({
     >
       <div>
         <SettingsSectionHeader
-          title="Profile"
-          description="Update how your name, avatar, and bio appear across Buzz."
+          title={tl("Profile")}
+          description={tl(
+            "Update how your name, avatar, and bio appear across Buzz.",
+          )}
         />
 
         <div className="space-y-3">
@@ -565,8 +568,8 @@ export function ProfileSettingsCard({
                                 aria-expanded={isAvatarEditorOpen}
                                 aria-label={
                                   isAvatarEditorSaving
-                                    ? "Saving profile photo"
-                                    : "Edit profile photo"
+                                    ? tl("Saving profile photo")
+                                    : tl("Edit profile photo")
                                 }
                                 className={avatarEditButtonClassName}
                                 data-testid="profile-avatar-edit"
@@ -574,14 +577,14 @@ export function ProfileSettingsCard({
                                 onClick={openAvatarEditor}
                                 title={
                                   isAvatarEditorSaving
-                                    ? "Saving profile photo"
-                                    : "Edit profile photo"
+                                    ? tl("Saving profile photo")
+                                    : tl("Edit profile photo")
                                 }
                                 type="button"
                               >
                                 {isAvatarEditorSaving && !isAvatarEditorOpen ? (
                                   <Spinner
-                                    aria-label="Saving avatar"
+                                    aria-label={tl("Saving avatar")}
                                     className="h-4 w-4 border-2"
                                   />
                                 ) : (
@@ -610,7 +613,7 @@ export function ProfileSettingsCard({
                           />
                           {shouldShowAnimatedPreview ? null : emojiAvatarPreview ? (
                             <div
-                              aria-label={`${resolvedName} avatar`}
+                              aria-label={tlt("{0} avatar", [resolvedName])}
                               className="relative flex h-full w-full shrink-0 items-center justify-center overflow-hidden rounded-full shadow-xs"
                               data-testid="profile-avatar-preview"
                               role="img"
@@ -682,13 +685,13 @@ export function ProfileSettingsCard({
                             <EditProfileMetadataButton
                               disabled={updateProfileMutation.isPending}
                               isEditing={isEditingProfileMetadata}
-                              label="profile info"
+                              label={tl("profile info")}
                               onClick={handleProfileMetadataEdit}
                               testId="profile-metadata-edit"
                             />
                           }
                           data-testid="profile-metadata-card"
-                          title="Profile info"
+                          title={tl("Profile info")}
                         >
                           <div className="flex min-h-16 items-center gap-4 px-4 py-3">
                             <div className="min-w-0 flex-1 space-y-1">
@@ -696,7 +699,7 @@ export function ProfileSettingsCard({
                                 className="block text-sm font-medium"
                                 htmlFor="profile-display-name"
                               >
-                                Display name
+                                {tl("Display name")}
                               </label>
                               {isEditingProfileMetadata ? (
                                 <Input
@@ -707,7 +710,7 @@ export function ProfileSettingsCard({
                                   onChange={(event) =>
                                     setDisplayNameDraft(event.target.value)
                                   }
-                                  placeholder="Display name"
+                                  placeholder={tl("Display name")}
                                   ref={displayNameInputRef}
                                   value={displayNameDraft}
                                 />
@@ -715,9 +718,9 @@ export function ProfileSettingsCard({
                                 <p
                                   className="min-w-0 truncate text-sm text-muted-foreground"
                                   data-testid="profile-display-name-value"
-                                  title={displayNameDraft || "Not set"}
+                                  title={displayNameDraft || tl("Not set")}
                                 >
-                                  {displayNameDraft || "Not set"}
+                                  {displayNameDraft || tl("Not set")}
                                 </p>
                               )}
                             </div>
@@ -729,7 +732,7 @@ export function ProfileSettingsCard({
                                 className="block text-sm font-medium"
                                 htmlFor="profile-about"
                               >
-                                Profile description
+                                {tl("Profile description")}
                               </label>
                               {isEditingProfileMetadata ? (
                                 <Textarea
@@ -740,7 +743,7 @@ export function ProfileSettingsCard({
                                   onChange={(event) =>
                                     setAboutDraft(event.target.value)
                                   }
-                                  placeholder="Profile description"
+                                  placeholder={tl("Profile description")}
                                   ref={aboutTextareaRef}
                                   value={aboutDraft}
                                 />
@@ -753,16 +756,16 @@ export function ProfileSettingsCard({
                                       : "text-muted-foreground/55",
                                   )}
                                   data-testid="profile-about-value"
-                                  title={aboutDraft || "Not set"}
+                                  title={aboutDraft || tl("Not set")}
                                 >
-                                  {aboutDraft || "Not set"}
+                                  {aboutDraft || tl("Not set")}
                                 </p>
                               )}
                             </div>
                           </div>
                         </SettingsOptionGroup>
 
-                        <SettingsOptionGroup title="Identity">
+                        <SettingsOptionGroup title={tl("Identity")}>
                           <details
                             className="group divide-y divide-border/55"
                             data-testid="profile-identity-card"
@@ -773,14 +776,15 @@ export function ProfileSettingsCard({
                             >
                               <div className="min-w-0">
                                 <p className="text-sm font-medium">
-                                  Identity details
+                                  {tl("Identity details")}
                                 </p>
                                 <p
                                   className="text-sm font-normal text-muted-foreground/70"
                                   data-settings-subcopy
                                 >
-                                  Your keypair and NIP-05 handle are fixed for
-                                  this device.
+                                  {tl(
+                                    "Your keypair and NIP-05 handle are fixed for this device.",
+                                  )}
                                 </p>
                               </div>
                               <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-[color,transform] duration-150 ease-out group-open:rotate-180 group-hover/identity:text-foreground group-focus-visible/identity:text-foreground" />
@@ -791,13 +795,13 @@ export function ProfileSettingsCard({
                             >
                               <IdentityRow
                                 copyValue={identityNpub ?? undefined}
-                                label="Public key"
+                                label={tl("Public key")}
                                 testId="profile-pubkey"
                                 value={resolvedPubkey}
                               />
                               <IdentityRow
                                 copyValue={profile?.nip05Handle ?? undefined}
-                                label="NIP-05 handle"
+                                label={tl("NIP-05 handle")}
                                 testId="profile-nip05"
                                 value={nip05Handle}
                               />
@@ -851,8 +855,9 @@ export function ProfileSettingsCard({
                 <div className="mx-auto w-full max-w-[576px] space-y-2">
                   {hasPendingClearRequest ? (
                     <p className="text-sm text-muted-foreground">
-                      Clearing existing profile fields is not supported yet.
-                      Blank display name and avatar values are ignored for now.
+                      {tl(
+                        "Clearing existing profile fields is not supported yet. Blank display name and avatar values are ignored for now.",
+                      )}
                     </p>
                   ) : null}
                 </div>

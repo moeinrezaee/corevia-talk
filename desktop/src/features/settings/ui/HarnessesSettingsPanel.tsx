@@ -14,6 +14,7 @@ import { HarnessCatalogDialog } from "./HarnessCatalogDialog";
 import { HarnessRow } from "./HarnessRow";
 import { stableRowOrder, yourHarnessEntries } from "./harnessCatalogLogic";
 import { SettingsOptionGroup } from "./SettingsOptionGroup";
+import { tl } from "@/shared/i18n/tl";
 
 function GitBashCard({
   prerequisite,
@@ -33,7 +34,7 @@ function GitBashCard({
       <div className="min-w-0">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex min-w-0 flex-wrap items-center gap-2">
-            <p className="text-sm font-medium">Git Bash</p>
+            <p className="text-sm font-medium">{tl("Git Bash")}</p>
             <span aria-hidden="true" className="text-muted-foreground/50">
               ·
             </span>
@@ -45,7 +46,7 @@ function GitBashCard({
                   : "bg-amber-500/15 text-amber-600 dark:text-amber-400",
               )}
             >
-              {prerequisite.available ? "Available" : "Action needed"}
+              {prerequisite.available ? tl("Available") : tl("Action needed")}
             </span>
           </div>
           {!prerequisite.available ? (
@@ -54,7 +55,8 @@ function GitBashCard({
               onClick={() => void openUrl(prerequisite.installInstructionsUrl)}
               type="button"
             >
-              <ExternalLink className="h-4 w-4" /> Install Git for Windows
+              <ExternalLink className="h-4 w-4" />{" "}
+              {tl("Install Git for Windows")}
             </button>
           ) : null}
         </div>
@@ -63,7 +65,7 @@ function GitBashCard({
             className="mt-3 space-y-1 text-sm text-muted-foreground/70"
             data-settings-subcopy
           >
-            <p>Required for buzz-agent shell tools on Windows.</p>
+            <p>{tl("Required for buzz-agent shell tools on Windows.")}</p>
             <p>{prerequisite.installHint}</p>
           </div>
         ) : null}
@@ -113,7 +115,7 @@ export function HarnessesSettingsPanel() {
   return (
     <SettingsOptionGroup
       data-testid="settings-harnesses"
-      description="Choose which agent tools Buzz can use on this device."
+      description={tl("Choose which agent tools Buzz can use on this device.")}
       headerAction={
         <Button
           disabled={isRefreshing}
@@ -129,50 +131,50 @@ export function HarnessesSettingsPanel() {
           <RefreshCw
             className={cn("h-4 w-4", isRefreshing && "animate-spin")}
           />
-          Check again
+          {tl("Check again")}
         </Button>
       }
-      title="Agent runtimes"
+      title={tl("Agent runtimes")}
     >
       <div className="divide-y divide-border/55">
         {gitBashQuery.data ? (
           <section>
             <div className="px-4 py-3 text-sm">
               <h2 className="text-lg font-semibold tracking-tight">
-                System prerequisites
+                {tl("System prerequisites")}
               </h2>
               <p
                 className="mt-1 text-sm font-normal text-muted-foreground/70"
                 data-settings-subcopy
               >
-                Windows tools required by supported agents.
+                {tl("Windows tools required by supported agents.")}
               </p>
             </div>
             <GitBashCard prerequisite={gitBashQuery.data} />
           </section>
         ) : null}
 
-        <section aria-label="Your runtimes">
+        <section aria-label={tl("Your runtimes")}>
           {/* The sub-header only earns its keep when another section (System
               prerequisites, Windows-only) shares the page; otherwise it just
               restates the page header. */}
           {gitBashQuery.data ? (
             <div className="border-b border-border/55 px-4 py-3 text-sm">
               <h2 className="text-lg font-semibold tracking-tight">
-                Your runtimes
+                {tl("Your runtimes")}
               </h2>
               <p
                 className="mt-1 text-sm font-normal text-muted-foreground/70"
                 data-settings-subcopy
               >
-                Ready to use, or one click from installed.
+                {tl("Ready to use, or one click from installed.")}
               </p>
             </div>
           ) : null}
 
           {runtimesQuery.isLoading ? (
             <div className="px-4 py-4 text-sm font-normal text-muted-foreground">
-              Checking agent runtimes...
+              {tl("Checking agent runtimes...")}
             </div>
           ) : rows.length > 0 ? (
             <div
@@ -190,7 +192,7 @@ export function HarnessesSettingsPanel() {
             </div>
           ) : (
             <div className="bg-amber-500/10 px-4 py-4 text-sm text-warning">
-              No agent runtimes ready yet — add one below.
+              {tl("No agent runtimes ready yet — add one below.")}
             </div>
           )}
 
@@ -210,7 +212,7 @@ export function HarnessesSettingsPanel() {
               variant="outline"
             >
               <Plus className="h-4 w-4" />
-              Add runtimes
+              {tl("Add runtimes")}
             </Button>
           </div>
         </section>

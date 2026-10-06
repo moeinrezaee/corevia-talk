@@ -104,7 +104,7 @@ export function TypingIndicatorRow({
                     "relative shrink-0 ring-1 ring-background",
                     profile?.isAgent ? "rounded-squircle" : "rounded-full",
                     isActivityVariant ? "h-4 w-4" : "h-5 w-5",
-                    index > 0 && "-ml-1.5",
+                    index > 0 && "-ms-1.5",
                   )}
                   data-testid="message-typing-avatar"
                 >

@@ -15,6 +15,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 function sortedSounds(recommended: SoundName): SoundName[] {
   const others = SOUND_NAMES.filter((n) => n !== recommended)
@@ -114,7 +115,7 @@ export function SoundPicker({
                   <span className="flex items-center gap-2">
                     {name === recommended ? (
                       <span className="text-2xs font-semibold uppercase tracking-wide text-muted-foreground">
-                        rec.
+                        {tl("rec.")}
                       </span>
                     ) : null}
                     <Waveform className="h-6 w-15 opacity-70" name={name} />
@@ -126,7 +127,9 @@ export function SoundPicker({
         </DropdownMenuContent>
       </DropdownMenu>
       <Button
-        aria-label={isPlaying ? `Pause ${value}` : `Preview ${value}`}
+        aria-label={
+          isPlaying ? tlt("Pause {0}", [value]) : tlt("Preview {0}", [value])
+        }
         className="h-7 w-7 rounded-full border border-border/50 bg-muted/45 p-0 text-foreground shadow-none hover:bg-muted/70"
         disabled={disabled}
         onClick={togglePreview}

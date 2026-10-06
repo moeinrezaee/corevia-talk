@@ -29,6 +29,7 @@ import {
   ONBOARDING_SECONDARY_CTA_CLASS,
 } from "./OnboardingChrome";
 import { useOnboardingCardLayout } from "./OnboardingCard";
+import { tl } from "@/shared/i18n/tl";
 
 type BackupTestStage = "drop" | "password" | "success";
 
@@ -420,13 +421,14 @@ export function BackupTestFlow({
           {isCeremony ? (
             <div className="w-full max-w-140">
               <p className="text-lg font-medium text-foreground">
-                Your backup works!
+                {tl("Your backup works!")}
               </p>
               <p className="mt-1.5 text-sm leading-6 text-muted-foreground">
-                File and password verified. Keep them both somewhere safe —
-                that&apos;s all you need to restore your identity.
+                {tl(
+                  "File and password verified. Keep them both somewhere safe — that's all you need to restore your identity.",
+                )}
               </p>
-              <div className="mx-auto mt-4 flex max-w-110 min-w-0 items-center gap-2 text-left">
+              <div className="mx-auto mt-4 flex max-w-110 min-w-0 items-center gap-2 text-start">
                 <p
                   className={cn(
                     "min-w-0 flex-1 break-all font-mono text-base leading-6 wrap-anywhere",
@@ -443,8 +445,8 @@ export function BackupTestFlow({
                 <Button
                   aria-label={
                     isSuccessNsecRevealed
-                      ? "Hide unlocked private key"
-                      : "Reveal unlocked private key"
+                      ? tl("Hide unlocked private key")
+                      : tl("Reveal unlocked private key")
                   }
                   className="size-9 shrink-0 text-muted-foreground hover:text-foreground"
                   data-testid="backup-success-nsec-toggle"
@@ -476,12 +478,14 @@ export function BackupTestFlow({
           ) : (
             <>
               <p className="text-lg font-medium text-foreground">
-                This backup works
+                {tl("This backup works")}
               </p>
               <p className="mt-1.5 text-sm leading-6 text-muted-foreground">
                 {result.matchesCurrentIdentity
-                  ? "It restores your current Buzz identity."
-                  : "It restores a different identity than the one signed in here."}
+                  ? tl("It restores your current Buzz identity.")
+                  : tl(
+                      "It restores a different identity than the one signed in here.",
+                    )}
               </p>
               <div className="mt-3 flex justify-center">
                 <PubKey
@@ -504,7 +508,7 @@ export function BackupTestFlow({
             type="button"
             variant="ghost"
           >
-            Test another backup
+            {tl("Test another backup")}
           </Button>
         )}
       </div>
@@ -544,7 +548,7 @@ export function BackupTestFlow({
           {cardLayout ? (
             <div className="-mx-2 flex w-[calc(100%+1rem)] flex-col gap-2">
               <Button
-                className="group h-auto min-h-14 w-full justify-start gap-3 rounded-xl px-2 py-2 text-left text-sm font-medium text-foreground shadow-none hover:bg-foreground/[0.04] hover:text-foreground focus-visible:ring-2 focus-visible:ring-foreground/20"
+                className="group h-auto min-h-14 w-full justify-start gap-3 rounded-xl px-2 py-2 text-start text-sm font-medium text-foreground shadow-none hover:bg-foreground/[0.04] hover:text-foreground focus-visible:ring-2 focus-visible:ring-foreground/20"
                 data-testid="backup-test-dropzone"
                 onClick={() => fileInputRef.current?.click()}
                 type="button"
@@ -554,9 +558,9 @@ export function BackupTestFlow({
                   <FileCheck2 aria-hidden className="!size-6" />
                 </span>
                 <span className="min-w-0 flex-1 truncate">
-                  Test your backup
+                  {tl("Test your backup")}
                 </span>
-                <span className="ml-auto flex size-10 shrink-0 items-center justify-end">
+                <span className="ms-auto flex size-10 shrink-0 items-center justify-end">
                   <ChevronRight
                     aria-hidden
                     className="size-4 text-muted-foreground transition-colors duration-150 ease-out group-hover:text-foreground motion-reduce:transition-none"
@@ -565,7 +569,7 @@ export function BackupTestFlow({
               </Button>
               {onSaveCopy ? (
                 <Button
-                  className="group h-auto min-h-14 w-full justify-start gap-3 rounded-xl px-2 py-2 text-left text-sm font-medium text-foreground shadow-none hover:bg-foreground/[0.04] hover:text-foreground focus-visible:ring-2 focus-visible:ring-foreground/20"
+                  className="group h-auto min-h-14 w-full justify-start gap-3 rounded-xl px-2 py-2 text-start text-sm font-medium text-foreground shadow-none hover:bg-foreground/[0.04] hover:text-foreground focus-visible:ring-2 focus-visible:ring-foreground/20"
                   data-testid="encrypted-backup-save-copy"
                   disabled={isSaving}
                   onClick={onSaveCopy}
@@ -576,9 +580,9 @@ export function BackupTestFlow({
                     <Download aria-hidden className="!size-6" />
                   </span>
                   <span className="min-w-0 flex-1 truncate">
-                    Download backup again
+                    {tl("Download backup again")}
                   </span>
-                  <span className="ml-auto flex size-10 shrink-0 items-center justify-end">
+                  <span className="ms-auto flex size-10 shrink-0 items-center justify-end">
                     <ChevronRight
                       aria-hidden
                       className="size-4 text-muted-foreground transition-colors duration-150 ease-out group-hover:text-foreground motion-reduce:transition-none"
@@ -600,7 +604,7 @@ export function BackupTestFlow({
                 type="button"
               >
                 <span className="font-medium text-sm">
-                  Select your backup file
+                  {tl("Select your backup file")}
                 </span>
               </Button>
             </div>
@@ -630,7 +634,7 @@ export function BackupTestFlow({
                 variant="textured"
               >
                 <FileUp aria-hidden="true" className="size-4" />
-                <span>Drop your backup file here</span>
+                <span>{tl("Drop your backup file here")}</span>
               </Card>
             </div>
           ) : null}
@@ -659,7 +663,7 @@ export function BackupTestFlow({
                 variant="ghost"
               >
                 {isSaving ? <Spinner className="h-4 w-4 border-2" /> : null}
-                Re-download backup
+                {tl("Re-download backup")}
               </Button>
             </div>
           ) : null}
@@ -698,13 +702,13 @@ export function BackupTestFlow({
             const passwordField = (
               <div className="relative w-full">
                 <Input
-                  aria-label="Backup password"
+                  aria-label={tl("Backup password")}
                   autoComplete="off"
                   className={cn(
                     "font-mono",
                     isSpotlight
                       ? "h-14 rounded-2xl border-black/20 bg-white px-14 text-center text-lg text-black/80 shadow-none placeholder:text-black/55 focus-visible:ring-black/35"
-                      : "h-10 bg-background pr-10",
+                      : "h-10 bg-background pe-10",
                   )}
                   data-testid="backup-test-password"
                   disabled={isVerifying}
@@ -715,15 +719,17 @@ export function BackupTestFlow({
                       void handleVerify();
                     }
                   }}
-                  placeholder="Your backup password"
+                  placeholder={tl("Your backup password")}
                   ref={passwordInputRef}
                   type={isRevealed ? "text" : "password"}
                   value={attempt}
                 />
                 <Button
-                  aria-label={isRevealed ? "Hide password" : "Reveal password"}
+                  aria-label={
+                    isRevealed ? tl("Hide password") : tl("Reveal password")
+                  }
                   className={cn(
-                    "absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground hover:text-foreground",
+                    "absolute end-1 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground hover:text-foreground",
                     isSpotlight &&
                       "text-black/55 hover:bg-black/5 hover:text-black/80",
                   )}
@@ -742,7 +748,7 @@ export function BackupTestFlow({
                 </Button>
                 {error ? (
                   <p
-                    className="absolute left-1 top-full mt-1 text-xs text-destructive animate-in fade-in duration-200 motion-reduce:animate-none"
+                    className="absolute start-1 top-full mt-1 text-xs text-destructive animate-in fade-in duration-200 motion-reduce:animate-none"
                     data-testid="backup-test-error"
                     role="alert"
                   >
@@ -756,7 +762,9 @@ export function BackupTestFlow({
                 <>
                   {fileRow}
                   <p className="text-center text-sm leading-6 text-muted-foreground">
-                    Enter the password to prove you can unlock this backup.
+                    {tl(
+                      "Enter the password to prove you can unlock this backup.",
+                    )}
                   </p>
                   {passwordField}
                 </>
@@ -798,10 +806,10 @@ export function BackupTestFlow({
                 {isVerifying ? (
                   <>
                     <Spinner className="h-4 w-4 border-2" />
-                    Checking…
+                    {tl("Checking…")}
                   </>
                 ) : (
-                  "Verify backup"
+                  tl("Verify backup")
                 )}
               </Button>
             );

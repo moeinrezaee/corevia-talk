@@ -40,7 +40,7 @@ export function ChannelComposerActivityAccessory({
       testId="channel-composer-activity-row"
       visible={visible}
     >
-      <div className="flex w-full items-center gap-2 overflow-visible pl-2">
+      <div className="flex w-full items-center gap-2 overflow-visible ps-2">
         {cardMintJobs.length > 0 ? <CardMintComposerChip /> : null}
         {workingBotPubkeys.length > 0 ? (
           <div className="flex min-w-0 flex-1 overflow-visible">
@@ -58,7 +58,7 @@ export function ChannelComposerActivityAccessory({
         {typingPubkeys.length > 0 ? (
           <TypingIndicatorRow
             channel={channel}
-            className="min-w-0 flex-1 py-0 pl-[calc(0.75rem+1px)] pr-0 sm:pl-[calc(1rem+1px)]"
+            className="min-w-0 flex-1 py-0 ps-[calc(0.75rem+1px)] pe-0 sm:ps-[calc(1rem+1px)]"
             currentPubkey={currentPubkey}
             profiles={profiles}
             typingPubkeys={typingPubkeys}

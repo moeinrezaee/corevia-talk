@@ -47,6 +47,7 @@ import {
   MembershipAvatarStack,
   SystemMessageAvatar,
 } from "./SystemMessageAvatars";
+import { tl } from "@/shared/i18n/tl";
 
 const SYSTEM_ACTION_BUTTON_CLASS = "h-6 w-6 rounded-full p-0";
 const SYSTEM_ACTION_ICON_CLASS = "!h-4 !w-4";
@@ -305,18 +306,18 @@ function MemberNamesInlineList({
       })}
       {hiddenTargets.length > 0 ? (
         <>
-          , and{" "}
+          {tl(", and")}{" "}
           <Tooltip>
             <TooltipTrigger asChild>
               <button
                 className="cursor-help rounded-xs hover:underline focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
                 type="button"
               >
-                {hiddenTargets.length} others
+                {hiddenTargets.length} {tl("others")}
               </button>
             </TooltipTrigger>
-            <TooltipContent className="max-w-72 p-2 text-left" side="top">
-              <div className="max-h-56 space-y-1 overflow-y-auto pr-1">
+            <TooltipContent className="max-w-72 p-2 text-start" side="top">
+              <div className="max-h-56 space-y-1 overflow-y-auto pe-1">
                 {hiddenTargets.map((pubkey) => (
                   <div className="flex items-center gap-2" key={pubkey}>
                     <UserAvatar
@@ -434,7 +435,7 @@ function describeGroupedArrivals({
           <ProfileName pubkey={sharedActor} underlineOnHover>
             {resolveInlineDisplayLabel(sharedActor, currentPubkey, profiles)}
           </ProfileName>
-          , along with{" "}
+          {tl(", along with")}{" "}
           <MemberNamesInlineList
             agentPubkeys={agentPubkeys}
             currentPubkey={currentPubkey}
@@ -452,7 +453,7 @@ function describeGroupedArrivals({
       title: membershipTitle,
       action: (
         <>
-          {addedActionPrefix(isTargetCurrentUser)} along with{" "}
+          {addedActionPrefix(isTargetCurrentUser)} {tl("along with")}{" "}
           <MemberNamesInlineList
             agentPubkeys={agentPubkeys}
             currentPubkey={currentPubkey}
@@ -470,7 +471,7 @@ function describeGroupedArrivals({
       title: membershipTitle,
       action: (
         <>
-          joined along with{" "}
+          {tl("joined along with")}{" "}
           <MemberNamesInlineList
             agentPubkeys={agentPubkeys}
             currentPubkey={currentPubkey}
@@ -487,7 +488,7 @@ function describeGroupedArrivals({
     title: membershipTitle,
     action: (
       <>
-        arrived along with{" "}
+        {tl("arrived along with")}{" "}
         <MemberNamesInlineList
           agentPubkeys={agentPubkeys}
           currentPubkey={currentPubkey}
@@ -599,7 +600,11 @@ function describeSystemEvent(
     case "member_removed":
       return {
         title: actorName,
-        action: <>removed {targetName} from the channel</>,
+        action: (
+          <>
+            {tl("removed")} {targetName} {tl("from the channel")}
+          </>
+        ),
       };
     case "topic_changed":
       return {
@@ -632,7 +637,7 @@ function describeSystemEvent(
       // content and the reporter are never disclosed here.
       if (payload.public_reason) {
         return {
-          title: "Removed by community moderators",
+          title: tl("Removed by community moderators"),
           action: payload.public_reason,
         };
       }
@@ -827,7 +832,7 @@ export const SystemMessageRow = React.memo(function SystemMessageRow({
             <TooltipTrigger asChild>
               <PopoverTrigger asChild>
                 <Button
-                  aria-label="Open reactions"
+                  aria-label={tl("Open reactions")}
                   className={SYSTEM_ACTION_BUTTON_CLASS}
                   size="sm"
                   type="button"
@@ -837,7 +842,7 @@ export const SystemMessageRow = React.memo(function SystemMessageRow({
                 </Button>
               </PopoverTrigger>
             </TooltipTrigger>
-            <TooltipContent>React</TooltipContent>
+            <TooltipContent>{tl("React")}</TooltipContent>
           </Tooltip>
           <PopoverContent
             align="end"
@@ -898,7 +903,7 @@ export const SystemMessageRow = React.memo(function SystemMessageRow({
                 profiles={profiles}
                 pubkeys={membershipPubkeys}
               />
-              <p className="min-w-0 text-left text-xs font-normal leading-4 text-muted-foreground/70">
+              <p className="min-w-0 text-start text-xs font-normal leading-4 text-muted-foreground/70">
                 {description.title} {description.action}
               </p>
             </div>
@@ -954,7 +959,7 @@ export const SystemMessageRow = React.memo(function SystemMessageRow({
       )}
       <div
         className={cn(
-          "absolute right-2 z-10",
+          "absolute end-2 z-10",
           isMembershipActivity ? "top-2" : "top-1 sm:top-0 sm:-translate-y-1/2",
         )}
       >

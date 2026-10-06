@@ -20,6 +20,7 @@ import {
   formatRecipientName,
   useNewMessageRecipients,
 } from "./useNewMessageRecipients";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * Conversation-shaped compose surface for starting a direct message. The
@@ -350,7 +351,7 @@ export function NewMessageScreen() {
                 ref={toFieldRef}
               >
                 <span className="shrink-0 text-base font-semibold tracking-tight">
-                  To:
+                  {tl("To:")}
                 </span>
                 {selectedUsers.map((user) => (
                   <SelectedRecipientChip
@@ -381,7 +382,7 @@ export function NewMessageScreen() {
                   }
                   aria-controls="new-dm-results"
                   aria-expanded={showRecipientPicker}
-                  aria-label="To"
+                  aria-label={tl("To")}
                   autoComplete="off"
                   autoCorrect="off"
                   className="h-7 min-w-32 flex-1 bg-transparent text-base outline-hidden placeholder:text-muted-foreground"
@@ -545,7 +546,7 @@ export function NewMessageScreen() {
                 ) : isDirectoryLoading || isSearchTransitionPending ? (
                   <div
                     aria-busy="true"
-                    aria-label="Loading people and agents"
+                    aria-label={tl("Loading people and agents")}
                     className="space-y-3 px-4 py-3"
                     data-testid="new-dm-loading"
                     role="status"
@@ -566,8 +567,8 @@ export function NewMessageScreen() {
                     data-testid="new-dm-empty"
                   >
                     {deferredSearchQuery.length === 0
-                      ? "No people or agents available to message."
-                      : "No matching users."}
+                      ? tl("No people or agents available to message.")
+                      : tl("No matching users.")}
                   </p>
                 )}
               </div>
@@ -576,10 +577,10 @@ export function NewMessageScreen() {
 
           {isPending ? (
             <span
-              className="shrink-0 pl-2 text-sm text-muted-foreground"
+              className="shrink-0 ps-2 text-sm text-muted-foreground"
               data-testid="new-dm-opening"
             >
-              Opening…
+              {tl("Opening…")}
             </span>
           ) : null}
         </div>
@@ -595,7 +596,7 @@ export function NewMessageScreen() {
           className="px-5 pb-2 text-sm text-muted-foreground"
           data-testid="new-dm-limit"
         >
-          DMs support up to nine people, including you.
+          {tl("DMs support up to nine people, including you.")}
         </p>
       ) : null}
       {searchError ? (

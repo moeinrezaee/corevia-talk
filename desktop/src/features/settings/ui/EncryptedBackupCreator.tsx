@@ -14,6 +14,7 @@ import {
 import { Input } from "@/shared/ui/input";
 import { Popover, PopoverAnchor, PopoverContent } from "@/shared/ui/popover";
 import { downloadDisabled, MIN_PASSPHRASE_LEN } from "../lib/encryptedBackup";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 /** Word-count bounds mirroring `key_backup.rs` (Rust clamps regardless). */
 const MIN_GENERATED_WORDS = 3;
@@ -21,10 +22,10 @@ const MAX_GENERATED_WORDS = 10;
 const DEFAULT_GENERATED_WORDS = 3;
 
 const SEPARATOR_OPTIONS = [
-  { label: "Spaces", value: " " },
-  { label: "Hyphens", value: "-" },
-  { label: "Periods", value: "." },
-  { label: "Commas", value: "," },
+  { label: tl("Spaces"), value: " " },
+  { label: tl("Hyphens"), value: "-" },
+  { label: tl("Periods"), value: "." },
+  { label: tl("Commas"), value: "," },
 ] as const;
 
 const DEFAULT_SEPARATOR = SEPARATOR_OPTIONS[0].value;
@@ -57,7 +58,7 @@ function FakeKdfProgressBar() {
 
   return (
     <div
-      aria-label="Encrypting your key"
+      aria-label={tl("Encrypting your key")}
       aria-valuemax={100}
       aria-valuemin={0}
       aria-valuenow={Math.round(progress)}
@@ -142,8 +143,8 @@ function PassphraseGeneratorPopover({
           open. Only click-outside or Esc closes it. */}
       <PopoverAnchor asChild>
         <Button
-          aria-label="Generate a password"
-          className="absolute right-9 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+          aria-label={tl("Generate a password")}
+          className="absolute end-9 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground hover:text-foreground"
           data-testid="backup-passphrase-generate"
           disabled={disabled}
           onClick={() => {
@@ -184,7 +185,7 @@ function PassphraseGeneratorPopover({
             className="text-sm text-muted-foreground"
             htmlFor="backup-passphrase-words"
           >
-            Words
+            {tl("Words")}
           </label>
           <div className="flex flex-1 items-center justify-end gap-3">
             <input
@@ -197,7 +198,7 @@ function PassphraseGeneratorPopover({
               type="range"
               value={words}
             />
-            <span className="w-6 text-right text-sm tabular-nums text-foreground">
+            <span className="w-6 text-end text-sm tabular-nums text-foreground">
               {words}
             </span>
           </div>
@@ -208,7 +209,7 @@ function PassphraseGeneratorPopover({
             className="text-sm text-muted-foreground"
             htmlFor="backup-passphrase-separator"
           >
-            Separator
+            {tl("Separator")}
           </label>
           <select
             className="h-8 rounded-lg border border-border bg-background px-2 text-sm text-foreground outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
@@ -274,15 +275,16 @@ export function EncryptedBackupCreator({
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>
       <DialogContent className="max-w-lg" data-testid="encrypted-backup-dialog">
-        <DialogHeader className="pr-8">
-          <DialogTitle>Create a key backup</DialogTitle>
+        <DialogHeader className="pe-8">
+          <DialogTitle>{tl("Create a key backup")}</DialogTitle>
           <DialogDescription>
-            You can close this window while Buzz finishes the backup in the
-            background.
+            {tl(
+              "You can close this window while Buzz finishes the backup in the background.",
+            )}
           </DialogDescription>
         </DialogHeader>
         <div
-          className="w-full space-y-3 text-left"
+          className="w-full space-y-3 text-start"
           data-testid="encrypted-backup-creator"
         >
           {state.downloadPending ? (
@@ -290,9 +292,9 @@ export function EncryptedBackupCreator({
           ) : !state.savedPassword ? (
             <div className="relative">
               <Input
-                aria-label="Encryption password"
+                aria-label={tl("Encryption password")}
                 autoComplete="new-password"
-                className="h-10 bg-background pr-19"
+                className="h-10 bg-background pe-19"
                 data-testid="backup-passphrase-input"
                 onChange={(event) =>
                   dispatch({
@@ -300,13 +302,17 @@ export function EncryptedBackupCreator({
                     value: event.target.value,
                   })
                 }
-                placeholder={`Password (min ${MIN_PASSPHRASE_LEN} characters)`}
+                placeholder={tlt("Password (min {0} characters)", [
+                  MIN_PASSPHRASE_LEN,
+                ])}
                 type={isRevealed ? "text" : "password"}
                 value={state.passphrase}
               />
               <Button
-                aria-label={isRevealed ? "Hide password" : "Reveal password"}
-                className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                aria-label={
+                  isRevealed ? tl("Hide password") : tl("Reveal password")
+                }
+                className="absolute end-1 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 data-testid="backup-passphrase-reveal-toggle"
                 onClick={() => setIsRevealed((revealed) => !revealed)}
                 size="icon"
@@ -331,9 +337,9 @@ export function EncryptedBackupCreator({
 
           {!state.downloadPending && !state.savedPassword ? (
             <p className="text-xs leading-5 text-muted-foreground">
-              Keep the file private and save its password somewhere safe — Buzz
-              cannot reset it. Once ready, the backup remains available to
-              download for 5 minutes.
+              {tl(
+                "Keep the file private and save its password somewhere safe — Buzz cannot reset it. Once ready, the backup remains available to download for 5 minutes.",
+              )}
             </p>
           ) : null}
 
@@ -364,7 +370,7 @@ export function EncryptedBackupCreator({
                 onClick={() => dispatch({ type: "download-clicked" })}
                 type="button"
               >
-                Backup key
+                {tl("Backup key")}
               </Button>
             </div>
           ) : null}

@@ -9,6 +9,7 @@ import {
 } from "@/shared/ui/alert-dialog";
 import { Button } from "@/shared/ui/button";
 import { PRIVATE_CHANNEL_ADD_DENIED_MESSAGE } from "@/features/channels/lib/channelMemberAdmission";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type NonMemberMentionDialogProps = {
   /** False in a private channel the viewer doesn't own/administer. */
@@ -63,17 +64,23 @@ export function NonMemberMentionDialog({
       >
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Mention people outside this channel?
+            {tl("Mention people outside this channel?")}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            {names.join(", ")} {names.length === 1 ? "is" : "are"} not in this
-            channel.{" "}
+            {names.join(", ")} {names.length === 1 ? "is" : "are"}{" "}
+            {tl("not in this channel.")}{" "}
             {onDoNothing
               ? canInvite
-                ? "Invite them to the channel, or send without inviting them."
-                : `${PRIVATE_CHANNEL_ADD_DENIED_MESSAGE} You can still send without inviting them.`
+                ? tl(
+                    "Invite them to the channel, or send without inviting them.",
+                  )
+                : tlt("{0} You can still send without inviting them.", [
+                    PRIVATE_CHANNEL_ADD_DENIED_MESSAGE,
+                  ])
               : canInvite
-                ? "Invite them to the channel, or cancel to keep your draft."
+                ? tl(
+                    "Invite them to the channel, or cancel to keep your draft.",
+                  )
                 : PRIVATE_CHANNEL_ADD_DENIED_MESSAGE}
           </AlertDialogDescription>
         </AlertDialogHeader>
@@ -96,9 +103,9 @@ export function NonMemberMentionDialog({
           >
             {onDoNothing
               ? canInvite
-                ? "Do nothing"
-                : "Send anyway"
-              : "Cancel"}
+                ? tl("Do nothing")
+                : tl("Send anyway")
+              : tl("Cancel")}
           </Button>
           {canInvite ? (
             <Button
@@ -107,7 +114,7 @@ export function NonMemberMentionDialog({
               size="sm"
               type="button"
             >
-              {isInvitePending ? "Inviting..." : "Invite"}
+              {isInvitePending ? tl("Inviting...") : tl("Invite")}
             </Button>
           ) : null}
         </AlertDialogFooter>

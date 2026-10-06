@@ -22,6 +22,7 @@ import { Skeleton } from "@/shared/ui/skeleton";
 import { formatRelativeTime } from "../lib/time";
 import { DeleteActionMenu } from "./DeleteActionMenu";
 import { ForumComposer } from "./ForumComposer";
+import { tl } from "@/shared/i18n/tl";
 
 type ForumThreadPanelProps = {
   thread: ForumThreadResponse | undefined;
@@ -119,12 +120,12 @@ function ReplyRow({
         {showDelete ? (
           <DeleteActionMenu
             iconSize="sm"
-            label="reply"
+            label={tl("reply")}
             onConfirm={() => onDelete(reply.eventId)}
           />
         ) : null}
       </div>
-      <div className="mt-1.5 pl-8">
+      <div className="mt-1.5 ps-8">
         <Markdown
           channelNames={channelNames}
           className="text-sm"
@@ -196,7 +197,7 @@ export function ForumThreadPanel({
             variant="ghost"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to posts
+            {tl("Back to posts")}
           </Button>
         </div>
         <div className="flex-1 space-y-4 p-4">
@@ -234,7 +235,7 @@ export function ForumThreadPanel({
           variant="ghost"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to posts
+          {tl("Back to posts")}
         </Button>
       </div>
 
@@ -277,7 +278,7 @@ export function ForumThreadPanel({
 
             {canDeletePost && onDeletePost ? (
               <DeleteActionMenu
-                label="post"
+                label={tl("post")}
                 onConfirm={() => onDeletePost(post.eventId)}
               />
             ) : null}
@@ -326,7 +327,7 @@ export function ForumThreadPanel({
 
           {replies.length === 0 ? (
             <div className="px-4 py-6 text-center text-sm text-muted-foreground">
-              No replies yet. Be the first to respond.
+              {tl("No replies yet. Be the first to respond.")}
             </div>
           ) : null}
         </div>
@@ -339,7 +340,7 @@ export function ForumThreadPanel({
           draftKey={`thread:${postId}`}
           isSending={isSendingReply}
           onSubmit={onReply}
-          placeholder="Reply to this post..."
+          placeholder={tl("Reply to this post...")}
           profiles={profiles}
         />
       </div>

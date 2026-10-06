@@ -22,10 +22,10 @@ export const PROJECT_LIST_ROW_SUBTEXT_CLASS =
 export const PROJECT_LIST_ROW_PREVIEW_CLASS = `line-clamp-1 ${PROJECT_LIST_ROW_SUBTEXT_CLASS}`;
 
 export const PROJECT_LIST_ROW_TRAILING_CLASS =
-  "relative z-10 ml-auto flex shrink-0 items-center gap-3";
+  "relative z-10 ms-auto flex shrink-0 items-center gap-3";
 
 export const PROJECT_LIST_ROW_STATUS_CLASS =
-  "hidden w-20 shrink-0 text-left text-2xs leading-3 text-muted-foreground md:block";
+  "hidden w-20 shrink-0 text-start text-2xs leading-3 text-muted-foreground md:block";
 
 export const PROJECT_LIST_ROW_DATE_CLASS =
-  "hidden w-24 shrink-0 text-right text-xs leading-4 text-muted-foreground/70 sm:block";
+  "hidden w-24 shrink-0 text-end text-xs leading-4 text-muted-foreground/70 sm:block";

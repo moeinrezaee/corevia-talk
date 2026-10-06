@@ -1,3 +1,4 @@
+import { tlt } from "@/shared/i18n/tl";
 type ImageGalleryStatusProps = {
   currentIndex: number;
   itemCount: number;
@@ -19,7 +20,7 @@ export function ImageGalleryStatus({
         className="h-5 w-px shrink-0 bg-muted-foreground/15"
       />
       <span
-        aria-label={`Image ${position} of ${itemCount}`}
+        aria-label={tlt("Image {0} of {1}", [position, itemCount])}
         aria-live="polite"
         className="min-w-9 text-center text-xs font-medium tabular-nums text-muted-foreground"
         role="status"

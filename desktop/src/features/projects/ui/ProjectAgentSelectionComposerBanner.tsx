@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import { tl } from "@/shared/i18n/tl";
 
 type SelectionItem = NonNullable<
   ProjectDetailAgentContext["selection"]
@@ -60,7 +61,7 @@ export function ProjectAgentSelectionComposerBanner({
       <section className="relative z-0 -mb-4 rounded-t-2xl border border-b-0 border-border/60 bg-muted/55 px-3 pb-6 pt-2.5 text-muted-foreground backdrop-blur-sm">
         <button
           aria-expanded={expanded}
-          className="flex w-full min-w-0 items-center gap-2 text-left text-xs font-medium text-foreground"
+          className="flex w-full min-w-0 items-center gap-2 text-start text-xs font-medium text-foreground"
           data-testid="projects-agent-selection-toggle"
           onClick={() => setExpanded((current) => !current)}
           type="button"
@@ -74,7 +75,7 @@ export function ProjectAgentSelectionComposerBanner({
           <span className="truncate">{summary}</span>
         </button>
         {expanded ? (
-          <div className="mt-2 space-y-1.5 pl-5.5">
+          <div className="mt-2 space-y-1.5 ps-5.5">
             {visibleItems.map((item) => (
               <SelectionItemRow item={item} key={item.id} />
             ))}
@@ -88,7 +89,7 @@ export function ProjectAgentSelectionComposerBanner({
                     type="button"
                     variant="ghost"
                   >
-                    {overflowItems.length} more
+                    {overflowItems.length} {tl("more")}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent

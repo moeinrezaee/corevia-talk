@@ -3,6 +3,7 @@ import { Plus, Workflow as WorkflowIcon } from "lucide-react";
 import type { Workflow } from "@/shared/api/types";
 import { Button } from "@/shared/ui/button";
 import { FieldGroup } from "./ChannelManagementSheetRows";
+import { tl } from "@/shared/i18n/tl";
 
 export function ChannelWorkflowsSection({
   error,
@@ -23,20 +24,20 @@ export function ChannelWorkflowsSection({
     <div className="space-y-4 pt-3" data-testid="channel-workflows-section">
       {loading ? (
         <p className="py-8 text-center text-sm text-muted-foreground">
-          Loading workflows...
+          {tl("Loading workflows...")}
         </p>
       ) : error instanceof Error ? (
         <div className="space-y-3 rounded-xl border border-destructive/30 bg-destructive/10 p-4">
           <p className="text-sm text-destructive">{error.message}</p>
           <Button onClick={onRetry} size="sm" variant="outline">
-            Retry
+            {tl("Retry")}
           </Button>
         </div>
       ) : workflows.length > 0 ? (
         <FieldGroup testId="channel-workflows-list">
           {workflows.map((workflow) => (
             <button
-              className="flex min-h-16 w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/40 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
+              className="flex min-h-16 w-full items-center gap-3 px-4 py-3 text-start transition-colors hover:bg-muted/40 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
               data-testid={`channel-workflow-${workflow.id}`}
               key={workflow.id}
               onClick={() => onOpen(workflow)}
@@ -58,7 +59,7 @@ export function ChannelWorkflowsSection({
         </FieldGroup>
       ) : (
         <p className="py-8 text-center text-sm text-muted-foreground">
-          No workflows in this channel yet.
+          {tl("No workflows in this channel yet.")}
         </p>
       )}
 
@@ -70,7 +71,7 @@ export function ChannelWorkflowsSection({
         variant="outline"
       >
         <Plus />
-        New workflow
+        {tl("New workflow")}
       </Button>
     </div>
   );

@@ -17,6 +17,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { safeNpub } from "@/shared/lib/nostrUtils";
 import { truncateNpub } from "@/shared/lib/pubkey";
 import { getPlatformKeysById } from "@/shared/lib/keyboard-shortcuts";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export type MentionSuggestion = {
   pubkey?: string;
@@ -174,7 +175,7 @@ export const MentionAutocomplete = React.memo(function MentionAutocomplete({
     // biome-ignore lint/a11y/noStaticElementInteractions: the overlay's controls own keyboard interaction; Escape returns focus to the editor.
     <div
       className={cn(
-        "absolute left-0 right-0 z-50 px-3 sm:px-4",
+        "absolute start-0 end-0 z-50 px-3 sm:px-4",
         position === "below" ? "top-full mt-1" : "bottom-full mb-1",
       )}
       data-testid="mention-autocomplete-layer"
@@ -208,14 +209,14 @@ export const MentionAutocomplete = React.memo(function MentionAutocomplete({
                   }}
                 >
                   <span className="whitespace-nowrap text-sm font-medium">
-                    Automatically mention agents
+                    {tl("Automatically mention agents")}
                   </span>
                   <span className="text-2xs text-muted-foreground">
-                    Address selected agents in thread replies
+                    {tl("Address selected agents in thread replies")}
                   </span>
                 </label>
                 <Switch
-                  aria-label="Automatically mention agents"
+                  aria-label={tl("Automatically mention agents")}
                   checked={keepMentionedAgentsPinned}
                   className="shrink-0 shadow-none [&>span]:shadow-none"
                   data-testid="mention-keep-agents-pinned-toggle"
@@ -283,7 +284,7 @@ export const MentionAutocomplete = React.memo(function MentionAutocomplete({
             return (
               <div
                 className={cn(
-                  "relative flex w-full items-stretch rounded-lg text-left text-sm",
+                  "relative flex w-full items-stretch rounded-lg text-start text-sm",
                   index === selectedIndex
                     ? "bg-accent text-accent-foreground"
                     : "text-popover-foreground hover:bg-accent/50",
@@ -293,10 +294,10 @@ export const MentionAutocomplete = React.memo(function MentionAutocomplete({
                 key={suggestionKey}
               >
                 <button
-                  aria-label={`Mention ${suggestion.displayName}`}
+                  aria-label={tlt("Mention {0}", [suggestion.displayName])}
                   className={cn(
-                    "flex min-w-0 flex-1 items-center gap-2 rounded-lg px-3 py-1.5 text-left",
-                    canAlwaysAddress && "pr-11",
+                    "flex min-w-0 flex-1 items-center gap-2 rounded-lg px-3 py-1.5 text-start",
+                    canAlwaysAddress && "pe-11",
                   )}
                   onMouseDown={(event) => {
                     event.preventDefault();
@@ -341,7 +342,8 @@ export const MentionAutocomplete = React.memo(function MentionAutocomplete({
                         {suggestion.kind === "team" ? (
                           <span className="inline-flex shrink-0 items-center gap-1">
                             <Users aria-hidden="true" className="h-3.5 w-3.5" />
-                            team · {suggestion.teamMembers?.length ?? 0} agents
+                            {tl("team ·")} {suggestion.teamMembers?.length ?? 0}{" "}
+                            {tl("agents")}
                           </span>
                         ) : suggestion.isAgent ? (
                           <span className="inline-flex shrink-0 items-center gap-1">
@@ -350,7 +352,7 @@ export const MentionAutocomplete = React.memo(function MentionAutocomplete({
                               className="h-3.5 w-3.5"
                               data-testid="mention-agent-icon"
                             />
-                            agent
+                            {tl("agent")}
                             {showAgentProvenanceMarker ? (
                               <OtherSetupAgentMarker testId="mention-agent-provenance" />
                             ) : null}
@@ -368,17 +370,21 @@ export const MentionAutocomplete = React.memo(function MentionAutocomplete({
                             className="min-w-0 truncate"
                             title={
                               ownerLabel && suggestion.notInChannel
-                                ? `managed by ${ownerLabel} · not in channel`
+                                ? tlt("managed by {0} · not in channel", [
+                                    ownerLabel,
+                                  ])
                                 : ownerLabel
-                                  ? `managed by ${ownerLabel}`
-                                  : "not in channel"
+                                  ? tlt("managed by {0}", [ownerLabel])
+                                  : tl("not in channel")
                             }
                           >
                             {ownerLabel && suggestion.notInChannel
-                              ? `managed by ${ownerLabel} · not in channel`
+                              ? tlt("managed by {0} · not in channel", [
+                                  ownerLabel,
+                                ])
                               : ownerLabel
-                                ? `managed by ${ownerLabel}`
-                                : "not in channel"}
+                                ? tlt("managed by {0}", [ownerLabel])
+                                : tl("not in channel")}
                           </span>
                         ) : null}
                         {collisionNpub ? (
@@ -397,7 +403,7 @@ export const MentionAutocomplete = React.memo(function MentionAutocomplete({
                 {canAlwaysAddress ? (
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <span className="absolute right-3 top-1/2 inline-flex -translate-y-1/2">
+                      <span className="absolute end-3 top-1/2 inline-flex -translate-y-1/2">
                         <Toggle
                           aria-label={`${isAlwaysAddressed ? "Don't automatically mention" : "Automatically mention"} ${suggestion.displayName}${isAlwaysAddressed ? " in this thread" : ""}`}
                           className="h-6 w-6 p-0 data-[state=on]:bg-primary/15 data-[state=on]:text-primary"
@@ -430,8 +436,8 @@ export const MentionAutocomplete = React.memo(function MentionAutocomplete({
                     >
                       <span>
                         {isAlwaysAddressed
-                          ? "Don't automatically mention in this thread"
-                          : "Automatically mention"}
+                          ? tl("Don't automatically mention in this thread")
+                          : tl("Automatically mention")}
                       </span>
                       {alwaysAddressShortcut ? (
                         <kbd className="flex items-center gap-0.5 rounded border border-secondary-foreground/20 bg-secondary-foreground/10 px-1 py-0 font-mono text-sm text-secondary-foreground">

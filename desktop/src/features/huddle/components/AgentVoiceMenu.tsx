@@ -19,6 +19,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
 import { Separator } from "@/shared/ui/separator";
 import { Switch } from "@/shared/ui/switch";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export type HuddleAgentVoiceSettings = {
   enabled: boolean;
@@ -87,8 +88,8 @@ export function AgentVoiceMenu({
       <PopoverTrigger asChild>
         {trigger ?? (
           <Button
-            aria-label={`Voice settings for ${displayName}`}
-            className="absolute right-1.5 top-1.5 z-20 h-7 w-7 rounded-md bg-transparent text-muted-foreground shadow-none hover:bg-muted/70 hover:text-foreground"
+            aria-label={tlt("Voice settings for {0}", [displayName])}
+            className="absolute end-1.5 top-1.5 z-20 h-7 w-7 rounded-md bg-transparent text-muted-foreground shadow-none hover:bg-muted/70 hover:text-foreground"
             data-testid="huddle-agent-voice-menu-trigger"
             size="icon"
             type="button"
@@ -110,7 +111,7 @@ export function AgentVoiceMenu({
             className="text-sm font-medium"
             htmlFor={`agent-tts-${agentPubkey}`}
           >
-            Agent text-to-speech
+            {tl("Agent text-to-speech")}
           </label>
           <Switch
             checked={settings?.enabled ?? true}
@@ -125,11 +126,11 @@ export function AgentVoiceMenu({
 
         {settings?.enabled ? (
           <div className="flex items-center justify-between gap-4">
-            <span className="text-sm font-medium">Agent voice</span>
+            <span className="text-sm font-medium">{tl("Agent voice")}</span>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
-                  aria-label="Choose agent voice"
+                  aria-label={tl("Choose agent voice")}
                   className="h-8 shrink-0 gap-1.5 px-2 text-sm text-muted-foreground"
                   data-testid="huddle-agent-voice-selector"
                   disabled={busy || voices.length === 0}
@@ -139,7 +140,7 @@ export function AgentVoiceMenu({
                 >
                   {selectedVoice
                     ? voiceOptionLabel(selectedVoice, voices)
-                    : "Unavailable"}
+                    : tl("Unavailable")}
                   <ChevronDown aria-hidden="true" className="h-3.5 w-3.5" />
                 </Button>
               </DropdownMenuTrigger>
@@ -168,13 +169,13 @@ export function AgentVoiceMenu({
           <>
             <Separator />
             <Button
-              aria-label={`Remove ${displayName} from huddle`}
+              aria-label={tlt("Remove {0} from huddle", [displayName])}
               className="w-full justify-start text-destructive hover:bg-destructive/10 hover:text-destructive"
               onClick={onRemoveAgent}
               type="button"
               variant="ghost"
             >
-              Remove from huddle
+              {tl("Remove from huddle")}
             </Button>
           </>
         ) : null}

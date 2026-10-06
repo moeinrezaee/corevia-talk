@@ -61,16 +61,17 @@ import { cn } from "@/shared/lib/cn";
 import { getPlatformKeysById } from "@/shared/lib/keyboard-shortcuts";
 import { HashSearch } from "@/shared/ui/icons";
 import { StatusEmoji } from "@/features/user-status/ui/StatusEmoji";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const SECTION_LABEL_BUTTON_CLASS =
-  "group/section-label flex w-fit max-w-[calc(100%-3rem)] cursor-pointer appearance-none items-center gap-1 text-left transition-colors hover:text-sidebar-foreground focus-visible:text-sidebar-foreground";
+  "group/section-label flex w-fit max-w-[calc(100%-3rem)] cursor-pointer appearance-none items-center gap-1 text-start transition-colors hover:text-sidebar-foreground focus-visible:text-sidebar-foreground";
 const SECTION_LABEL_CHEVRON_CLASS =
   "relative size-2.5 shrink-0 text-current opacity-0 transition-[color,opacity] group-hover/sidebar-section:opacity-100 group-hover/section-label:opacity-100 group-focus-within/sidebar-section:opacity-100 group-focus-visible/section-label:opacity-100 group-data-[section-actions-open=true]/sidebar-section:opacity-100";
 const SECTION_LABEL_CHEVRON_ICON_CLASS =
   "absolute left-1/2 top-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2";
 
 const SORT_OPTIONS: { value: ChannelSortMode; label: string }[] = [
-  { value: "recent", label: "Recent" },
+  { value: "recent", label: tl("Recent") },
   { value: "alpha", label: "A–Z" },
 ];
 
@@ -168,7 +169,7 @@ export function SectionActionsMenu({
     <DropdownMenu onOpenChange={onOpenChange}>
       <DropdownMenuTrigger asChild>
         <button
-          aria-label={`More actions for ${sectionLabel}`}
+          aria-label={tlt("More actions for {0}", [sectionLabel])}
           className={cn(SECTION_ICON_BUTTON_CLASS, visibilityClassName)}
           data-testid={testId}
           onClick={(event) => event.stopPropagation()}
@@ -189,19 +190,19 @@ export function SectionActionsMenu({
         {hasUnread && onMarkAllRead ? (
           <DropdownMenuItem onSelect={() => deferMenuAction(onMarkAllRead)}>
             <CheckCheck className="h-4 w-4" />
-            <span>Mark all as read</span>
+            <span>{tl("Mark all as read")}</span>
           </DropdownMenuItem>
         ) : null}
         {onNewMessage ? (
           <DropdownMenuItem onSelect={() => deferMenuAction(onNewMessage)}>
             <Plus className="h-4 w-4" />
-            <span>{newMessageLabel ?? "New message"}</span>
+            <span>{newMessageLabel ?? tl("New message")}</span>
           </DropdownMenuItem>
         ) : null}
         {onBrowse ? (
           <DropdownMenuItem onSelect={() => deferMenuAction(onBrowse)}>
             <HashSearch className="h-4 w-4" />
-            <span>{browseLabel ?? "Browse channels"}</span>
+            <span>{browseLabel ?? tl("Browse channels")}</span>
             <DropdownMenuShortcut>
               {getPlatformKeysById("browse-channels")}
             </DropdownMenuShortcut>
@@ -210,7 +211,7 @@ export function SectionActionsMenu({
         {onCreate ? (
           <DropdownMenuItem onSelect={() => deferMenuAction(onCreate)}>
             <Plus className="h-4 w-4" />
-            <span>{createLabel ?? "Create channel"}</span>
+            <span>{createLabel ?? tl("Create channel")}</span>
           </DropdownMenuItem>
         ) : null}
         {showSectionManagement ? (
@@ -220,7 +221,7 @@ export function SectionActionsMenu({
                 onSelect={() => deferMenuAction(onRenameSection)}
               >
                 <Pencil className="h-4 w-4" />
-                <span>Rename section</span>
+                <span>{tl("Rename section")}</span>
               </DropdownMenuItem>
             ) : null}
             {onMoveSectionUp ? (
@@ -229,7 +230,7 @@ export function SectionActionsMenu({
                 onSelect={() => deferMenuAction(onMoveSectionUp)}
               >
                 <ArrowUp className="h-4 w-4" />
-                <span>Move up</span>
+                <span>{tl("Move up")}</span>
               </DropdownMenuItem>
             ) : null}
             {onMoveSectionDown ? (
@@ -238,7 +239,7 @@ export function SectionActionsMenu({
                 onSelect={() => deferMenuAction(onMoveSectionDown)}
               >
                 <ArrowDown className="h-4 w-4" />
-                <span>Move down</span>
+                <span>{tl("Move down")}</span>
               </DropdownMenuItem>
             ) : null}
           </>
@@ -249,7 +250,7 @@ export function SectionActionsMenu({
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
                 <ArrowUpDown className="h-4 w-4" />
-                <span>Sort</span>
+                <span>{tl("Sort")}</span>
               </DropdownMenuSubTrigger>
               <DropdownMenuSubContent>
                 <DropdownMenuRadioGroup
@@ -279,7 +280,7 @@ export function SectionActionsMenu({
               onSelect={() => deferMenuAction(onDeleteSection)}
             >
               <Trash2 className="h-4 w-4" />
-              <span>Delete section</span>
+              <span>{tl("Delete section")}</span>
             </DropdownMenuItem>
           </>
         ) : null}
@@ -325,7 +326,7 @@ function ChannelSectionHeader({
           </span>
         </button>
       </SidebarGroupLabel>
-      <div className="absolute right-1 top-1/2 z-10 flex -translate-y-1/2 items-center gap-0.5">
+      <div className="absolute end-1 top-1/2 z-10 flex -translate-y-1/2 items-center gap-0.5">
         {actions}
       </div>
     </div>
@@ -500,7 +501,7 @@ export function ChannelGroupSection({
           <>
             {showQuickCreate && (onQuickCreateClick ?? onCreateClick) ? (
               <SectionQuickAction
-                label={quickCreateLabel ?? createLabel ?? "Create channel"}
+                label={quickCreateLabel ?? createLabel ?? tl("Create channel")}
                 onClick={(onQuickCreateClick ?? onCreateClick) as () => void}
                 testId={
                   actionsTestId ? `${actionsTestId}-quick-create` : undefined
@@ -632,7 +633,7 @@ export function CustomChannelSection({
                 <div className="relative" {...dragHandleProps}>
                   <SidebarGroupLabel
                     asChild
-                    className={section.icon ? undefined : "pl-8"}
+                    className={section.icon ? undefined : "ps-8"}
                   >
                     <button
                       aria-controls={contentId}
@@ -676,9 +677,9 @@ export function CustomChannelSection({
                       </span>
                     </button>
                   </SidebarGroupLabel>
-                  <div className="absolute right-1 top-1/2 z-10 flex -translate-y-1/2 items-center gap-0.5">
+                  <div className="absolute end-1 top-1/2 z-10 flex -translate-y-1/2 items-center gap-0.5">
                     <SectionQuickAction
-                      label={`Add channel to ${section.name}`}
+                      label={tlt("Add channel to {0}", [section.name])}
                       onClick={onCreateChannel}
                       testId={`section-actions-${section.id}-quick-create`}
                     />
@@ -703,15 +704,15 @@ export function CustomChannelSection({
               <ContextMenuContent>
                 <ContextMenuItem onClick={onRenameSection}>
                   <Pencil className="h-4 w-4" />
-                  Rename section
+                  {tl("Rename section")}
                 </ContextMenuItem>
                 <ContextMenuItem disabled={isFirst} onClick={onMoveSectionUp}>
                   <ArrowUp className="h-4 w-4" />
-                  Move up
+                  {tl("Move up")}
                 </ContextMenuItem>
                 <ContextMenuItem disabled={isLast} onClick={onMoveSectionDown}>
                   <ArrowDown className="h-4 w-4" />
-                  Move down
+                  {tl("Move down")}
                 </ContextMenuItem>
                 <ContextMenuSeparator />
                 <ContextMenuItem
@@ -719,7 +720,7 @@ export function CustomChannelSection({
                   onClick={onDeleteSection}
                 >
                   <Trash2 className="h-4 w-4" />
-                  Delete section
+                  {tl("Delete section")}
                 </ContextMenuItem>
               </ContextMenuContent>
             </ContextMenu>

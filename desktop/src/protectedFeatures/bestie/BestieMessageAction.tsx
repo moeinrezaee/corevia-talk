@@ -20,7 +20,7 @@ export function BestieMessageAction({
         <TooltipTrigger asChild>
           <PopoverTrigger asChild>
             <Button
-              aria-label="Ask Bestie about this message"
+              aria-label={tl("Ask Bestie about this message")}
               className="h-8 w-8 rounded-full p-0"
               data-testid={`bestie-message-${message.id}`}
               size="sm"
@@ -31,7 +31,7 @@ export function BestieMessageAction({
             </Button>
           </PopoverTrigger>
         </TooltipTrigger>
-        <TooltipContent>Ask Bestie</TooltipContent>
+        <TooltipContent>{tl("Ask Bestie")}</TooltipContent>
       </Tooltip>
       <PopoverContent align="end" className="w-80" side="top" sideOffset={10}>
         <BestiePopover
@@ -44,3 +44,4 @@ export function BestieMessageAction({
   );
 }
 import * as React from "react";
+import { tl } from "@/shared/i18n/tl";

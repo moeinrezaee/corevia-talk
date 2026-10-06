@@ -4,6 +4,7 @@ import { Skeleton } from "@/shared/ui/skeleton";
 import { cn } from "@/shared/lib/cn";
 import { channelChrome } from "@/shared/layout/chromeLayout";
 import { TopChromeInsetHeader } from "@/shared/layout/TopChromeInsetHeader";
+import { tl } from "@/shared/i18n/tl";
 
 type ViewLoadingFallbackKind =
   | "agents"
@@ -171,7 +172,7 @@ function AgentGroupSkeleton({
             <Skeleton className={cn("h-4", titleWidth)} />
             <Skeleton className={cn("h-5 rounded-full", badgeWidth)} />
           </div>
-          <Skeleton className={cn("ml-1 h-3 shrink-0", instanceWidth)} />
+          <Skeleton className={cn("ms-1 h-3 shrink-0", instanceWidth)} />
         </div>
         <Skeleton className="h-7 w-7 shrink-0 rounded-md" />
       </div>
@@ -341,7 +342,7 @@ function ChannelLoadingBody({ hasHeader = false }: { hasHeader?: boolean }) {
                 <Skeleton className="h-8 w-8 rounded-lg" />
                 <Skeleton className="h-8 w-8 rounded-lg" />
                 <Skeleton className="h-8 w-8 rounded-lg" />
-                <Skeleton className="ml-auto h-8 w-8 rounded-full" />
+                <Skeleton className="ms-auto h-8 w-8 rounded-full" />
               </div>
             </div>
           </div>
@@ -404,7 +405,7 @@ export function ViewLoadingFallback({
       {kind === "agents" ? <AgentsLoadingBody /> : null}
       {kind === "workflows" ? <CardListLoadingBody /> : null}
       {kind === "projects" ? (
-        <BuzzLoadingState fill label="Loading projects" />
+        <BuzzLoadingState fill label={tl("Loading projects")} />
       ) : null}
       {kind === "channel" ? (
         <ChannelLoadingBody hasHeader={shouldShowChannelHeader} />

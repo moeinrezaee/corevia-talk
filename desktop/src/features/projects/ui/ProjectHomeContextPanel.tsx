@@ -28,9 +28,10 @@ import { Button } from "@/shared/ui/button";
 import { ProjectChannelManagement } from "./ProjectChannelManagement";
 import { ProjectRepositoryManagement } from "./ProjectRepositoryManagement";
 import { SECTION_ACTION_VISIBILITY_CLASS } from "@/features/sidebar/ui/sidebarSectionStyles";
+import { tl } from "@/shared/i18n/tl";
 
 const PROJECT_HOME_SIDEBAR_ROW_CLASS =
-  "h-8 w-full justify-start gap-2 rounded-md px-2 py-1.5 text-left text-sm font-normal text-sidebar-foreground/80 transition-[background-color,color] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50";
+  "h-8 w-full justify-start gap-2 rounded-md px-2 py-1.5 text-start text-sm font-normal text-sidebar-foreground/80 transition-[background-color,color] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50";
 
 function ContextSection({
   children,
@@ -53,7 +54,7 @@ function ContextSection({
           {title && collapsible ? (
             <button
               aria-expanded={expanded}
-              className="group/section-label flex min-w-0 items-center gap-1 text-left text-xs font-medium text-sidebar-foreground/70"
+              className="group/section-label flex min-w-0 items-center gap-1 text-start text-xs font-medium text-sidebar-foreground/70"
               onClick={() => setExpanded((current) => !current)}
               type="button"
             >
@@ -99,8 +100,8 @@ function ContextRowContent({
       <span className="flex size-4 shrink-0 items-center justify-center text-current">
         {icon}
       </span>
-      <span className="min-w-0 flex-1 truncate text-left">{children}</span>
-      <span className="w-8 shrink-0 text-right tabular-nums text-current opacity-60">
+      <span className="min-w-0 flex-1 truncate text-start">{children}</span>
+      <span className="w-8 shrink-0 text-end tabular-nums text-current opacity-60">
         {count ?? ""}
       </span>
     </>
@@ -271,7 +272,7 @@ export function ProjectHomeContextPanel({
           testId="project-home-context-tasks"
           title={addRepositoryTitle}
         >
-          Tasks
+          {tl("Tasks")}
         </ContextNavButton>
         <ContextNavButton
           count={presentContextCount(activity?.prCount)}
@@ -282,7 +283,7 @@ export function ProjectHomeContextPanel({
           testId="project-home-context-reviews"
           title={addRepositoryTitle}
         >
-          Reviews
+          {tl("Reviews")}
         </ContextNavButton>
         <ContextNavButton
           count={presentContextCount(activity?.commitCount)}
@@ -293,7 +294,7 @@ export function ProjectHomeContextPanel({
           testId="project-home-context-commits"
           title={addRepositoryTitle}
         >
-          Commits
+          {tl("Commits")}
         </ContextNavButton>
         <ContextNavButton
           count={presentContextCount(snapshotQuery.data?.files.length)}
@@ -304,7 +305,7 @@ export function ProjectHomeContextPanel({
           testId="project-home-context-files"
           title={addRepositoryTitle}
         >
-          Files
+          {tl("Files")}
         </ContextNavButton>
         <ContextNavButton
           count={presentContextCount(peopleCount)}
@@ -318,7 +319,7 @@ export function ProjectHomeContextPanel({
           testId="project-home-context-people"
           title={addRepositoryTitle}
         >
-          People
+          {tl("People")}
         </ContextNavButton>
       </ContextSection>
       <ContextSection
@@ -330,7 +331,7 @@ export function ProjectHomeContextPanel({
           />
         }
         testId="project-home-context-channel"
-        title="Channels"
+        title={tl("Channels")}
       >
         {listedChannels.length > 0 ? (
           listedChannels.map((binding) => {
@@ -357,7 +358,9 @@ export function ProjectHomeContextPanel({
           <p
             className={`${PROJECT_HOME_SIDEBAR_ROW_CLASS} pointer-events-none flex items-center`}
           >
-            <ContextRowContent icon={<Hash />}>Unavailable</ContextRowContent>
+            <ContextRowContent icon={<Hash />}>
+              {tl("Unavailable")}
+            </ContextRowContent>
           </p>
         )}
       </ContextSection>
@@ -373,7 +376,7 @@ export function ProjectHomeContextPanel({
           />
         }
         testId="project-home-context-codebase"
-        title="Codebase"
+        title={tl("Codebase")}
       >
         {project.repositories.length > 0 ? (
           project.repositories.map((repository) => (
@@ -388,7 +391,7 @@ export function ProjectHomeContextPanel({
           ))
         ) : (
           <p className="px-2 py-1 text-sm text-sidebar-foreground/60">
-            None yet
+            {tl("None yet")}
           </p>
         )}
       </ContextSection>

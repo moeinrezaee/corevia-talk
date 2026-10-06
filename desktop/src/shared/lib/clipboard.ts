@@ -1,6 +1,7 @@
 import { toast } from "sonner";
 
 import { copyTextToSystemClipboard } from "@/shared/api/tauriMedia";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * Write text through the native clipboard integration.
@@ -27,6 +28,6 @@ export function copyTextToClipboard(
       toast.success(successMessage);
     })
     .catch(() => {
-      toast.error("Failed to copy to clipboard");
+      toast.error(tl("Failed to copy to clipboard"));
     });
 }

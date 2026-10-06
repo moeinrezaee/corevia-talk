@@ -1,3 +1,4 @@
+import { tl } from "@/shared/i18n/tl";
 /**
  * Reactive detection of a community timeout from a send rejection.
  *
@@ -22,9 +23,9 @@ export const TIMEOUT_PRESETS: ReadonlyArray<{
   label: string;
   seconds: number;
 }> = [
-  { label: "1 hour", seconds: 60 * 60 },
-  { label: "24 hours", seconds: 24 * 60 * 60 },
-  { label: "7 days", seconds: 7 * 24 * 60 * 60 },
+  { label: tl("1 hour"), seconds: 60 * 60 },
+  { label: tl("24 hours"), seconds: 24 * 60 * 60 },
+  { label: tl("7 days"), seconds: 7 * 24 * 60 * 60 },
 ];
 
 /**

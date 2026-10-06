@@ -53,6 +53,8 @@ import {
   withAccentPreviewVars,
 } from "@/shared/theme/useThemePreviewVars";
 import { appearanceCommunityLabel } from "../lib/appearanceScopeCopy";
+import { useTranslation } from "@/shared/i18n/useTranslation";
+import { LanguageSettingsCard } from "./LanguageSettingsCard";
 import {
   AccentPickerContent,
   ConversationDisplaySettings,
@@ -80,6 +82,7 @@ import { ProfileSettingsCard } from "./ProfileSettingsCard";
 import { UpdateChecker } from "../UpdateChecker";
 import { SettingsSectionHeader } from "./SettingsSectionHeader";
 import { VoiceSettingsCard } from "./VoiceSettingsCard";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export type SettingsSection =
   | "profile"
@@ -153,85 +156,85 @@ export type SettingsPanelProps = {
 export const settingsSections: SettingsSectionDescriptor[] = [
   {
     value: "appearance",
-    label: "Appearance",
+    label: tl("Appearance"),
     icon: MonitorCog,
   },
   {
     value: "profile",
-    label: "Profile",
+    label: tl("Profile"),
     icon: UserRound,
   },
   {
     value: "notifications",
-    label: "Notifications",
+    label: tl("Notifications"),
     icon: BellRing,
   },
   {
     value: "voice",
-    label: "Voice",
+    label: tl("Voice"),
     icon: Volume2,
   },
   {
     value: "experimental",
-    label: "Experiments",
+    label: tl("Experiments"),
     icon: FlaskConical,
   },
   {
     value: "agents",
-    label: "Agents",
+    label: tl("Agents"),
     icon: Bot,
     featureGate: "managed-agents",
   },
   {
     value: "channel-templates",
-    label: "Channel templates",
+    label: tl("Channel templates"),
     icon: LayoutTemplate,
     featureGate: "channel-templates",
   },
   {
     value: "compute",
-    label: "Compute",
+    label: tl("Compute"),
     icon: Cpu,
   },
   {
     value: "shortcuts",
-    label: "Shortcuts",
+    label: tl("Shortcuts"),
     icon: Keyboard,
   },
   {
     value: "hosted-communities",
-    label: "Hosted communities",
+    label: tl("Hosted communities"),
     icon: MessagesSquare,
   },
   {
     value: "community-members",
-    label: "Invites",
+    label: tl("Invites"),
     icon: Ticket,
   },
   {
     value: "relay-admin",
-    label: "Admin",
+    label: tl("Admin"),
     icon: ServerCog,
   },
   {
     value: "custom-emoji",
-    label: "Custom emoji",
+    label: tl("Custom emoji"),
     icon: Smile,
     featureGate: "custom-emoji",
   },
   {
     value: "local-archive",
-    label: "Local archive",
+    label: tl("Local archive"),
     icon: Archive,
   },
   {
     value: "mobile",
-    label: "Mobile",
+    label: tl("Mobile"),
     icon: Smartphone,
   },
   {
     value: "updates",
-    label: "Updates",
+    label: tl("Updates"),
     icon: Download,
   },
 ];
@@ -401,9 +404,21 @@ function SingleThemeTile({
 type AppearanceMode = "system" | "light" | "dark";
 
 const APPEARANCE_MODE_OPTIONS = [
-  { mode: "system" as const, label: "System", Icon: SunMoon },
-  { mode: "light" as const, label: "Light", Icon: Sun },
-  { mode: "dark" as const, label: "Dark", Icon: Moon },
+  {
+    mode: "system" as const,
+    labelKey: "settings.colorMode.system" as const,
+    Icon: SunMoon,
+  },
+  {
+    mode: "light" as const,
+    labelKey: "settings.colorMode.light" as const,
+    Icon: Sun,
+  },
+  {
+    mode: "dark" as const,
+    labelKey: "settings.colorMode.dark" as const,
+    Icon: Moon,
+  },
 ] as const;
 
 // Reveal/hide motion for the accent picker: a small translate + opacity fade.
@@ -419,6 +434,7 @@ const ACCENT_PICKER_TRANSITION = {
 };
 
 function ThemeSettingsCard() {
+  const { t } = useTranslation();
   const {
     setTheme,
     selectedThemeName,
@@ -637,11 +653,12 @@ function ThemeSettingsCard() {
       data-testid="settings-theme"
     >
       <SettingsSectionHeader
-        title="Appearance"
-        description="Choose how Buzz looks and feels."
+        title={t("settings.appearance")}
+        description={t("settings.appearance.description")}
       />
 
       <SettingsOptionGroupList>
+        <LanguageSettingsCard />
         <SettingsOptionGroup
           data-testid="appearance-theme-card"
           headerAction={
@@ -657,10 +674,10 @@ function ThemeSettingsCard() {
           }
           title={
             <>
-              Theme
+              {tl("Theme")}
               {showCommunityScope ? (
-                <span className="ml-1 font-normal text-muted-foreground">
-                  (per community)
+                <span className="ms-1 font-normal text-muted-foreground">
+                  {tl("(per community)")}
                 </span>
               ) : null}
             </>
@@ -668,24 +685,26 @@ function ThemeSettingsCard() {
         >
           <SettingsOptionRow data-testid="appearance-color-mode-row">
             <div className="min-w-0">
-              <p className="text-sm font-medium">Color mode</p>
+              <p className="text-sm font-medium">{t("settings.colorMode")}</p>
               <p
                 className="text-sm font-normal text-muted-foreground/70"
                 data-settings-subcopy
               >
-                Follow your system or choose a light or dark appearance.
+                {t("settings.colorMode.description")}
               </p>
             </div>
             <SegmentedControl
               indicatorTestId="appearance-color-mode-indicator"
-              legend="Color mode"
+              legend={t("settings.colorMode")}
               onValueChange={handleModeSelect}
               optionTestIdPrefix="appearance-mode"
-              options={APPEARANCE_MODE_OPTIONS.map(({ mode, label, Icon }) => ({
-                value: mode,
-                label,
-                Icon,
-              }))}
+              options={APPEARANCE_MODE_OPTIONS.map(
+                ({ mode, labelKey, Icon }) => ({
+                  value: mode,
+                  label: t(labelKey),
+                  Icon,
+                }),
+              )}
               testId="appearance-color-mode-control"
               value={selectedMode}
             />
@@ -693,16 +712,16 @@ function ThemeSettingsCard() {
 
           <SettingsOptionRow data-testid="theme-style-row">
             <div className="min-w-0">
-              <p className="text-sm font-medium">Theme style</p>
+              <p className="text-sm font-medium">{t("settings.themeStyle")}</p>
               <p
                 className="text-sm font-normal text-muted-foreground/70"
                 data-settings-subcopy
               >
-                Choose the colors used throughout Buzz.
+                {t("settings.themeStyle.description")}
               </p>
             </div>
             <button
-              aria-label={`Theme style, ${selectedThemeLabel}`}
+              aria-label={tlt("Theme style, {0}", [selectedThemeLabel])}
               aria-controls="theme-style-options"
               aria-expanded={themeStyleExpanded}
               className="flex h-auto min-w-0 items-center gap-2 rounded-md bg-transparent p-0 text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
@@ -788,7 +807,7 @@ function ThemeSettingsCard() {
 
         <SettingsOptionGroup
           data-testid="appearance-preferences-card"
-          title="Preferences"
+          title={tl("Preferences")}
         >
           <ConversationDisplaySettings />
           <LinkPreviewStyleSetting />

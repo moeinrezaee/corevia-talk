@@ -1,6 +1,7 @@
 import type { ManagedAgentBackend } from "@/shared/api/types";
 
 import { summarizeRunOn } from "./runOnSummary";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * Read-only "Run on" summary for the edit-agent dialog.
@@ -25,13 +26,15 @@ export function RunOnSummarySection({
 
   return (
     <div className="space-y-1.5" data-testid="edit-agent-run-on">
-      <span className="text-sm font-medium text-foreground">Run on</span>
+      <span className="text-sm font-medium text-foreground">
+        {tl("Run on")}
+      </span>
       {summary.location === "local" ? (
         <p
           className="text-sm text-muted-foreground"
           data-testid="edit-agent-run-on-location"
         >
-          This computer
+          {tl("This computer")}
         </p>
       ) : (
         <div className="space-y-2 rounded-2xl border border-border bg-muted/30 px-4 py-3">
@@ -58,15 +61,15 @@ export function RunOnSummarySection({
             </dl>
           ) : (
             <p className="text-xs text-muted-foreground">
-              No saved settings — the provider applies its defaults.
+              {tl("No saved settings — the provider applies its defaults.")}
             </p>
           )}
         </div>
       )}
       <p className="text-xs text-muted-foreground">
-        These are the settings saved when the agent was created. Where an agent
-        runs can&apos;t be changed afterwards — create a new agent to run
-        somewhere else.
+        {tl(
+          "These are the settings saved when the agent was created. Where an agent runs can't be changed afterwards — create a new agent to run somewhere else.",
+        )}
       </p>
     </div>
   );

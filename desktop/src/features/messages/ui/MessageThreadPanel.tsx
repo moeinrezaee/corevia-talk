@@ -51,6 +51,7 @@ import { useStableSendToChannel } from "./useStableSendToChannel";
 import { useAnchoredScroll } from "./useAnchoredScroll";
 import { selectDeferredListRenderState } from "@/features/messages/lib/timelineSnapshot";
 import { selectThreadRowHighlight } from "@/features/messages/lib/threadReplyHighlight";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type MessageThreadPanelProps = ThreadPanelLayoutProps & {
   channel: Channel | null;
@@ -807,8 +808,11 @@ export function MessageThreadPanel({
           >
             <ArrowDown aria-hidden />
             {newMessageCount > 0
-              ? `${newMessageCount} new message${newMessageCount === 1 ? "" : "s"}`
-              : "Jump to latest"}
+              ? tlt("{0} new message{1}", [
+                  newMessageCount,
+                  newMessageCount === 1 ? "" : "s",
+                ])
+              : tl("Jump to latest")}
           </Button>
         </div>
       ) : null}
@@ -858,8 +862,8 @@ export function MessageThreadPanel({
               onSend={onSend}
               placeholder={
                 isHuddleTranscript
-                  ? "Message the huddle"
-                  : `Reply in thread to ${threadHead.author}`
+                  ? tl("Message the huddle")
+                  : tlt("Reply in thread to {0}", [threadHead.author])
               }
               profiles={profiles}
               recentMentionPubkeys={recentMentionPubkeys}
@@ -874,7 +878,7 @@ export function MessageThreadPanel({
               className={THREAD_PANEL_COMPOSER_GUTTER_CLASS}
               visible={hasComposerBottomActivity}
             >
-              <div className="mx-auto flex w-full max-w-4xl items-center gap-2 overflow-visible pl-2">
+              <div className="mx-auto flex w-full max-w-4xl items-center gap-2 overflow-visible ps-2">
                 {activityAccessoryVisible && activityAccessoryContent ? (
                   <div className="flex min-w-0 flex-1 overflow-visible">
                     {activityAccessoryContent}
@@ -883,7 +887,7 @@ export function MessageThreadPanel({
                 {threadTypingPubkeys.length > 0 ? (
                   <TypingIndicatorRow
                     channel={channel}
-                    className="min-w-0 flex-1 py-0 pl-[calc(0.75rem+1px)] pr-0 sm:pl-[calc(1rem+1px)]"
+                    className="min-w-0 flex-1 py-0 ps-[calc(0.75rem+1px)] pe-0 sm:ps-[calc(1rem+1px)]"
                     currentPubkey={currentPubkey}
                     profiles={profiles}
                     typingPubkeys={threadTypingPubkeys}

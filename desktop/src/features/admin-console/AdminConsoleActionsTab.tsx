@@ -48,6 +48,7 @@ import {
   useAsyncLoad,
 } from "./AdminConsolePanelHelpers";
 import { reasonAudienceCopy } from "./AdminConsoleReportsTab";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const HEX64 = /^[0-9a-f]{64}$/;
 
@@ -300,7 +301,7 @@ export function ActionsTab({
           data-testid="direct-host"
         >
           <span>
-            Community: <code>{host}</code>
+            {tl("Community:")} <code>{host}</code>
           </span>
           <Button
             className="h-auto p-0 text-xs"
@@ -311,7 +312,7 @@ export function ActionsTab({
             type="button"
             variant="link"
           >
-            Change
+            {tl("Change")}
           </Button>
         </p>
       )}
@@ -340,7 +341,7 @@ export function ActionsTab({
           className="text-xs text-muted-foreground"
           data-testid="direct-pending"
         >
-          Accepted; the relay is still applying it. Retry to check.
+          {tl("Accepted; the relay is still applying it. Retry to check.")}
         </p>
       )}
       {error && (
@@ -367,8 +368,11 @@ export function ActionsTab({
                 </code>
               </span>
             )}{" "}
-            in <code>{frozen.communityHost}</code>
-            {frozen.expirationSecs ? ` for ${frozen.expirationSecs}s` : ""}?
+            {tl("in")} <code>{frozen.communityHost}</code>
+            {frozen.expirationSecs
+              ? tlt(" for {0}s", [frozen.expirationSecs])
+              : ""}
+            ?
           </p>
           {frozen.action !== "delete" && (
             <PubKey
@@ -378,7 +382,7 @@ export function ActionsTab({
             />
           )}
           <p data-testid="direct-confirm-reason">
-            Reason: {frozen.reason ?? "(none)"}
+            {tl("Reason:")} {frozen.reason ?? "(none)"}
           </p>
           <div className="flex gap-1.5">
             <Button
@@ -389,7 +393,7 @@ export function ActionsTab({
               type="button"
               variant="destructive"
             >
-              {error || pending ? "Retry" : "Confirm"}
+              {error || pending ? tl("Retry") : tl("Confirm")}
             </Button>
             <Button
               data-testid="direct-discard-btn"
@@ -403,7 +407,7 @@ export function ActionsTab({
               type="button"
               variant="ghost"
             >
-              Discard
+              {tl("Discard")}
             </Button>
           </div>
         </div>
@@ -415,7 +419,7 @@ export function ActionsTab({
           size="sm"
           type="button"
         >
-          Review
+          {tl("Review")}
         </Button>
       )}
     </div>
@@ -468,7 +472,7 @@ function MemberPicker({
       className="text-xs text-muted-foreground"
       data-testid="direct-member-search-hint"
     >
-      Name search only works in the community you're connected to.
+      {tl("Name search only works in the community you're connected to.")}
     </p>
   );
   if (member) {
@@ -501,8 +505,8 @@ function MemberPicker({
         onChange={(e) => setQuery(e.target.value)}
         placeholder={
           searchEnabled
-            ? "Search by name, or paste an npub or hex key"
-            : "npub or hex key"
+            ? tl("Search by name, or paste an npub or hex key")
+            : tl("npub or hex key")
         }
         value={query}
       />
@@ -511,7 +515,7 @@ function MemberPicker({
           className="text-xs text-destructive"
           data-testid="direct-member-secret"
         >
-          That's a secret key. Never paste it here.
+          {tl("That's a secret key. Never paste it here.")}
         </p>
       )}
       {hint}
@@ -519,7 +523,7 @@ function MemberPicker({
         <div className="rounded-md border border-border/60" role="listbox">
           {results.map((user) => (
             <button
-              className="flex w-full items-center gap-2 px-2 py-1.5 text-left text-xs hover:bg-muted/50"
+              className="flex w-full items-center gap-2 px-2 py-1.5 text-start text-xs hover:bg-muted/50"
               data-testid={`direct-member-result-${user.pubkey}`}
               disabled={disabled}
               key={user.pubkey}
@@ -541,7 +545,9 @@ function MemberPicker({
                 {memberLabel(user)}
               </span>
               {parsed ? (
-                <span className="text-muted-foreground">public key</span>
+                <span className="text-muted-foreground">
+                  {tl("public key")}
+                </span>
               ) : (
                 <PubKey
                   className="text-muted-foreground"

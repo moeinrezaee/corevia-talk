@@ -39,7 +39,7 @@ export function ProjectContextRail({
     >
       <div
         className={cn(
-          "absolute inset-y-0 left-2 overflow-hidden",
+          "absolute inset-y-0 start-2 overflow-hidden",
           rounded && "rounded-2xl",
         )}
         data-testid={`${testId}-panel`}

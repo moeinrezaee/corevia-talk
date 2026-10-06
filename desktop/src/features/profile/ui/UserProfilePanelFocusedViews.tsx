@@ -12,6 +12,7 @@ import type { ProfileChannelLink } from "@/features/profile/ui/UserProfilePanelU
 import type { ManagedAgent } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
 import { Alert, AlertDescription, AlertTitle } from "@/shared/ui/alert";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export function MemoryFocusedView({
   agentPubkey,
@@ -64,7 +65,7 @@ export function ChannelsFocusedView({
             disabled={isActionPending}
             grouped
             icon={UserPlus}
-            label="Add to channel"
+            label={tl("Add to channel")}
             onClick={onAddToChannel}
             testId="user-profile-agent-add-channel"
             trailing={isActionPending ? "Working…" : undefined}
@@ -72,7 +73,7 @@ export function ChannelsFocusedView({
         ) : null}
         {isLoading ? (
           <p className="px-4 py-3 text-sm leading-6 text-muted-foreground">
-            Loading channels…
+            {tl("Loading channels…")}
           </p>
         ) : channels.length === 0 ? (
           <div
@@ -85,13 +86,15 @@ export function ChannelsFocusedView({
             <UserPlus className="mx-auto h-4 w-4 text-muted-foreground" />
             <p className="mt-3 text-sm font-medium">
               {canAddToChannel
-                ? "Add this agent to a channel"
-                : "Channels appear here"}
+                ? tl("Add this agent to a channel")
+                : tl("Channels appear here")}
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
               {canAddToChannel
-                ? "Choose a channel above so it can join the conversation."
-                : "Visible memberships appear as this agent joins channels."}
+                ? tl("Choose a channel above so it can join the conversation.")
+                : tl(
+                    "Visible memberships appear as this agent joins channels.",
+                  )}
             </p>
           </div>
         ) : (
@@ -102,8 +105,8 @@ export function ChannelsFocusedView({
             {channels.map((channel) => (
               <li key={channel.id}>
                 <button
-                  aria-label={`Open #${channel.name}`}
-                  className="group flex min-h-16 w-full items-center gap-3 px-4 py-3 text-left text-sm font-medium text-foreground transition-colors hover:bg-muted/40"
+                  aria-label={tlt("Open #{0}", [channel.name])}
+                  className="group flex min-h-16 w-full items-center gap-3 px-4 py-3 text-start text-sm font-medium text-foreground transition-colors hover:bg-muted/40"
                   data-testid={`user-profile-channel-link-${channel.name}`}
                   onClick={() => onOpenChannel(channel.id)}
                   type="button"
@@ -136,7 +139,7 @@ export function AgentInfoFocusedView({
 
   return (
     <div className="pt-4">
-      <ProfileFieldGroup fields={metadataFields} title="Info" />
+      <ProfileFieldGroup fields={metadataFields} title={tl("Info")} />
     </div>
   );
 }
@@ -176,7 +179,7 @@ export function DiagnosticsFocusedView({
         >
           <CircleAlert className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
           <div className="min-w-0">
-            <AlertTitle>Last error</AlertTitle>
+            <AlertTitle>{tl("Last error")}</AlertTitle>
             <AlertDescription className="wrap-break-word">
               {lastErrorField.displayValue}
             </AlertDescription>

@@ -9,6 +9,7 @@ import {
 } from "@/features/profile/ui/AnimatedAvatarCapture.helpers";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
+import { tl } from "@/shared/i18n/tl";
 
 type AnimatedAvatarCameraControlsProps = {
   activeCameraSource: CameraSource | null;
@@ -60,7 +61,7 @@ export function AnimatedAvatarCameraControls({
           onClick={onRetry}
           type="button"
         >
-          Try camera again
+          {tl("Try camera again")}
         </Button>
       ) : isLive ? (
         <Button
@@ -80,8 +81,8 @@ export function AnimatedAvatarCameraControls({
             initial={{ opacity: 0 }}
             transition={ENTRANCE_TRANSITION}
           >
-            <Video aria-hidden="true" className="mr-2 h-4 w-4" />
-            Capture {RECORD_SECONDS} sec video
+            <Video aria-hidden="true" className="me-2 h-4 w-4" />
+            {tl("Capture")} {RECORD_SECONDS} {tl("sec video")}
           </motion.button>
         </Button>
       ) : null}

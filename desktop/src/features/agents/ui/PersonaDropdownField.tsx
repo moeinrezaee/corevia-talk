@@ -45,7 +45,7 @@ export function PersonaDropdownField({
           <button
             aria-describedby={ariaDescribedBy}
             className={cn(
-              "flex h-11 w-full items-center justify-between gap-3 px-3 py-2 text-left text-sm leading-6",
+              "flex h-11 w-full items-center justify-between gap-3 px-3 py-2 text-start text-sm leading-6",
               PERSONA_FIELD_CONTROL_CLASS,
               disabled && "cursor-default opacity-60",
             )}

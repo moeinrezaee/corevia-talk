@@ -58,6 +58,7 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
+import { tl } from "@/shared/i18n/tl";
 
 export function ChannelTemplatesSettingsCard() {
   const templatesQuery = useChannelTemplatesQuery();
@@ -103,13 +104,10 @@ export function ChannelTemplatesSettingsCard() {
   return (
     <section className="min-w-0" data-testid="settings-channel-templates">
       <SettingsSectionHeader
-        title="Channel templates"
-        description={
-          <>
-            Save reusable channel configurations and apply them when creating
-            new channels.
-          </>
-        }
+        title={tl("Channel templates")}
+        description={tl(
+          "Save reusable channel configurations and apply them when creating new channels.",
+        )}
         action={
           <Button
             onClick={() => setIsCreateOpen(true)}
@@ -117,27 +115,28 @@ export function ChannelTemplatesSettingsCard() {
             type="button"
             variant="outline"
           >
-            <Plus className="mr-1.5 h-4 w-4" />
-            Create
+            <Plus className="me-1.5 h-4 w-4" />
+            {tl("Create")}
           </Button>
         }
       />
 
       {templatesQuery.isLoading ? (
-        <SettingsOptionGroup title="Templates">
+        <SettingsOptionGroup title={tl("Templates")}>
           <p className="px-4 py-6 text-center text-sm text-muted-foreground">
-            Loading templates...
+            {tl("Loading templates...")}
           </p>
         </SettingsOptionGroup>
       ) : templates.length === 0 ? (
-        <SettingsOptionGroup title="Templates">
+        <SettingsOptionGroup title={tl("Templates")}>
           <div className="px-4 py-8 text-center text-sm text-muted-foreground">
-            No templates yet. Create one to save a reusable channel
-            configuration.
+            {tl(
+              "No templates yet. Create one to save a reusable channel configuration.",
+            )}
           </div>
         </SettingsOptionGroup>
       ) : (
-        <SettingsOptionGroup title="Templates">
+        <SettingsOptionGroup title={tl("Templates")}>
           {templates.map((template) => (
             <TemplateRow
               key={template.id}
@@ -174,19 +173,20 @@ export function ChannelTemplatesSettingsCard() {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete template</AlertDialogTitle>
+            <AlertDialogTitle>{tl("Delete template")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete &quot;{deleteTarget?.name}&quot;?
-              This action cannot be undone.
+              {tl('Are you sure you want to delete "')}
+              {deleteTarget?.name}
+              {tl('"? This action cannot be undone.')}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{tl("Cancel")}</AlertDialogCancel>
             <AlertDialogAction
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               onClick={handleDelete}
             >
-              Delete
+              {tl("Delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -216,7 +216,7 @@ function TemplateRow({
           <span className="truncate text-sm font-medium">{template.name}</span>
           {template.isBuiltin ? (
             <Badge className="shrink-0 text-2xs uppercase" variant="outline">
-              built-in
+              {tl("built-in")}
             </Badge>
           ) : null}
         </div>
@@ -247,7 +247,7 @@ function TemplateRow({
           {template.canvasTemplate ? (
             <span className="flex items-center gap-1">
               <MessageSquare className="h-4 w-4" />
-              canvas
+              {tl("canvas")}
             </span>
           ) : null}
         </div>
@@ -266,20 +266,20 @@ function TemplateRow({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={onEdit}>
-            <Pencil className="mr-2 h-4 w-4" />
-            Edit
+            <Pencil className="me-2 h-4 w-4" />
+            {tl("Edit")}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={onDuplicate}>
-            <Copy className="mr-2 h-4 w-4" />
-            Duplicate
+            <Copy className="me-2 h-4 w-4" />
+            {tl("Duplicate")}
           </DropdownMenuItem>
           {!template.isBuiltin ? (
             <DropdownMenuItem
               className="text-destructive focus:text-destructive"
               onClick={onDelete}
             >
-              <Trash2 className="mr-2 h-4 w-4" />
-              Delete
+              <Trash2 className="me-2 h-4 w-4" />
+              {tl("Delete")}
             </DropdownMenuItem>
           ) : null}
         </DropdownMenuContent>
@@ -448,11 +448,11 @@ export function TemplateFormDialog({
     <Dialog onOpenChange={onOpenChange} open={open}>
       <ChooserDialogContent
         className="max-w-lg"
-        title={isEditing ? "Edit template" : "Create template"}
+        title={isEditing ? tl("Edit template") : tl("Create template")}
         description={
           isEditing
-            ? "Update this channel template configuration."
-            : "Save a reusable channel configuration."
+            ? tl("Update this channel template configuration.")
+            : tl("Save a reusable channel configuration.")
         }
         footer={
           <div className="flex w-full items-center justify-end gap-2">
@@ -462,7 +462,7 @@ export function TemplateFormDialog({
               type="button"
               variant="ghost"
             >
-              Cancel
+              {tl("Cancel")}
             </Button>
             <Button
               disabled={isPending || name.trim().length === 0}
@@ -471,11 +471,11 @@ export function TemplateFormDialog({
             >
               {isPending
                 ? isEditing
-                  ? "Saving..."
-                  : "Creating..."
+                  ? tl("Saving...")
+                  : tl("Creating...")
                 : isEditing
-                  ? "Save"
-                  : "Create"}
+                  ? tl("Save")
+                  : tl("Create")}
             </Button>
           </div>
         }
@@ -487,14 +487,14 @@ export function TemplateFormDialog({
               className="text-sm font-medium text-foreground"
               htmlFor="template-name"
             >
-              Name
+              {tl("Name")}
             </label>
             <Input
               autoComplete="off"
               disabled={isPending}
               id="template-name"
               onChange={(e) => setName(e.target.value)}
-              placeholder="Sprint Planning"
+              placeholder={tl("Sprint Planning")}
               value={name}
             />
           </div>
@@ -505,9 +505,9 @@ export function TemplateFormDialog({
               className="text-sm font-medium text-foreground"
               htmlFor="template-description"
             >
-              Description{" "}
+              {tl("Description")}{" "}
               <span className="font-normal text-muted-foreground">
-                (optional)
+                {tl("(optional)")}
               </span>
             </label>
             <Textarea
@@ -515,7 +515,7 @@ export function TemplateFormDialog({
               disabled={isPending}
               id="template-description"
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="What this template is for"
+              placeholder={tl("What this template is for")}
               rows={2}
               value={description}
             />
@@ -527,9 +527,9 @@ export function TemplateFormDialog({
               className="text-sm font-medium text-foreground"
               htmlFor="template-canvas"
             >
-              Canvas template{" "}
+              {tl("Canvas template")}{" "}
               <span className="font-normal text-muted-foreground">
-                (optional)
+                {tl("(optional)")}
               </span>
             </label>
             <Textarea
@@ -537,7 +537,7 @@ export function TemplateFormDialog({
               disabled={isPending}
               id="template-canvas"
               onChange={(e) => setCanvasTemplate(e.target.value)}
-              placeholder="Canvas content here..."
+              placeholder={tl("Canvas content here...")}
               rows={4}
               value={canvasTemplate}
             />
@@ -545,7 +545,8 @@ export function TemplateFormDialog({
               className="text-xs text-muted-foreground/70"
               data-settings-subcopy
             >
-              Use {"{channel.name}"} and {"{template.name}"} as placeholders.
+              {tl("Use")} {"{channel.name}"} {tl("and")} {"{template.name}"}{" "}
+              {tl("as placeholders.")}
             </p>
           </div>
 
@@ -617,12 +618,12 @@ function TemplateTeamSelector({
   return (
     <div className="space-y-3">
       <div>
-        <div className="text-sm font-medium">Teams</div>
+        <div className="text-sm font-medium">{tl("Teams")}</div>
         <p
           className="text-sm font-normal text-muted-foreground/70"
           data-settings-subcopy
         >
-          Select teams to include in this template.
+          {tl("Select teams to include in this template.")}
         </p>
       </div>
       <div className="flex flex-wrap gap-2">
@@ -695,20 +696,22 @@ function RuntimeAssignments({
   return (
     <div className="space-y-3">
       <div>
-        <div className="text-sm font-medium">Runtimes</div>
+        <div className="text-sm font-medium">{tl("Runtimes")}</div>
         <p
           className="text-sm font-normal text-muted-foreground/70"
           data-settings-subcopy
         >
-          Choose which runtime to use for each agent.
+          {tl("Choose which runtime to use for each agent.")}
         </p>
       </div>
 
       {providersLoading ? (
-        <p className="text-xs text-muted-foreground">Discovering runtimes...</p>
+        <p className="text-xs text-muted-foreground">
+          {tl("Discovering runtimes...")}
+        </p>
       ) : providers.length === 0 ? (
         <p className="text-xs text-muted-foreground">
-          No ACP runtimes detected. Install one to assign runtimes.
+          {tl("No ACP runtimes detected. Install one to assign runtimes.")}
         </p>
       ) : (
         <div className="space-y-2">
@@ -779,7 +782,7 @@ function RuntimeRow({
         onChange={(e) => onChange(e.target.value)}
         value={value}
       >
-        <option value="">Default</option>
+        <option value="">{tl("Default")}</option>
         {providers.map((runtime) => (
           <option key={runtime.id} value={runtime.id}>
             {runtime.label}

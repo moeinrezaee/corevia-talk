@@ -9,6 +9,7 @@ import { relativeTime } from "@/features/projects/lib/projectsViewHelpers";
 import type { UserProfileLookup } from "@/features/profile/lib/identity";
 import { normalizePubkey, truncateNpub } from "@/shared/lib/pubkey";
 import { ProjectRichContent } from "./ProjectRichContent";
+import { tl } from "@/shared/i18n/tl";
 
 function commentAuthor(
   pubkey: string,
@@ -104,7 +105,7 @@ export function ProjectPullRequestInlineCommentThread({
               : undefined
           }
           onSubmit={onSubmit}
-          placeholder="Leave a comment on this line…"
+          placeholder={tl("Leave a comment on this line…")}
           profiles={profiles}
           secondarySubmitLabel="Request changes"
         />

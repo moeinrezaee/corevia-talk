@@ -7,6 +7,7 @@ import {
 import { ToolActivity } from "./ToolActivity";
 import { formatTranscriptTimestampTitle } from "../agentSessionUtils";
 import type { ActivityRenderClassItemProps } from "./types";
+import { tl } from "@/shared/i18n/tl";
 
 export function ThoughtActivity(props: ActivityRenderClassItemProps) {
   if (props.item.type === "tool") {
@@ -29,7 +30,7 @@ export function ThoughtActivity(props: ActivityRenderClassItemProps) {
       <ActivityRow testId="transcript-thought-item" title={title}>
         {label}
         <span className="text-xs text-muted-foreground/70">
-          No readable reasoning tokens
+          {tl("No readable reasoning tokens")}
         </span>
       </ActivityRow>
     );

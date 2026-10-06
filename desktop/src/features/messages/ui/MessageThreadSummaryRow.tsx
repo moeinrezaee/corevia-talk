@@ -18,6 +18,7 @@ import {
 } from "@/features/messages/lib/threadTreeLayout";
 import { cn } from "@/shared/lib/cn";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { tl } from "@/shared/i18n/tl";
 
 const THREAD_SUMMARY_CONTENT_OFFSET_REM =
   THREAD_REPLY_BODY_OFFSET_REM - THREAD_REPLY_ROW_MARGIN_INLINE_REM;
@@ -55,7 +56,7 @@ function ParticipantAvatar({
 
   return (
     <div
-      className={cn("relative", index > 0 && "-ml-1")}
+      className={cn("relative", index > 0 && "-ms-1")}
       data-testid="message-thread-summary-participant"
       style={{
         zIndex: index + 1,
@@ -141,7 +142,7 @@ export function MessageThreadSummaryRow({
             collapseDepthGuideActionsByDepth.size > 0 ? undefined : true
           }
           className={cn(
-            "absolute left-0",
+            "absolute start-0",
             collapseDepthGuideActionsByDepth.size === 0 &&
               "pointer-events-none",
           )}
@@ -161,7 +162,7 @@ export function MessageThreadSummaryRow({
                   <div
                     aria-hidden
                     className={cn(
-                      "pointer-events-none absolute bottom-0 top-0 border-l transition-[border-color]",
+                      "pointer-events-none absolute bottom-0 top-0 border-s transition-[border-color]",
                       isHighlighted ? "border-primary" : "border-border/45",
                     )}
                     style={{
@@ -216,7 +217,7 @@ export function MessageThreadSummaryRow({
               <div
                 aria-hidden
                 className={cn(
-                  "pointer-events-none absolute bottom-0 top-0 border-l transition-[border-color]",
+                  "pointer-events-none absolute bottom-0 top-0 border-s transition-[border-color]",
                   isHighlighted ? "border-primary" : "border-border/45",
                 )}
                 key={`${message.id}-summary-depth-guide-${offset}`}
@@ -234,7 +235,7 @@ export function MessageThreadSummaryRow({
 
       <button
         aria-label={summaryAriaLabel}
-        className="group relative isolate inline-flex h-[1.875rem] w-fit max-w-full cursor-pointer items-center gap-1.5 rounded-full py-0 pr-3 text-left text-xs font-medium text-muted-foreground transition-[color,opacity] hover:text-foreground hover:opacity-90 focus-visible:outline-hidden"
+        className="group relative isolate inline-flex h-[1.875rem] w-fit max-w-full cursor-pointer items-center gap-1.5 rounded-full py-0 pe-3 text-start text-xs font-medium text-muted-foreground transition-[color,opacity] hover:text-foreground hover:opacity-90 focus-visible:outline-hidden"
         data-thread-head-id={message.id}
         data-testid="message-thread-summary"
         onClick={() => onOpenThread(message)}
@@ -273,8 +274,8 @@ export function MessageThreadSummaryRow({
               {summary.replyCount} {replyLabel}
             </span>
             {unreadCount != null && unreadCount > 0 ? (
-              <span className="ml-1" data-testid="thread-unread-badge">
-                ({unreadCount} new)
+              <span className="ms-1" data-testid="thread-unread-badge">
+                ({unreadCount} {tl("new)")}
               </span>
             ) : null}
             {summary.lastReplyAt ? (
@@ -287,14 +288,14 @@ export function MessageThreadSummaryRow({
                     className="col-start-1 row-start-1 transition-opacity group-hover:opacity-0 group-focus-visible:opacity-0"
                     data-testid="message-thread-summary-last-reply"
                   >
-                    last reply{" "}
+                    {tl("last reply")}{" "}
                     {formatThreadSummaryLastReplyTime(summary.lastReplyAt)}
                   </span>
                   <span
                     className="col-start-1 row-start-1 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
                     data-testid="message-thread-summary-hover-action"
                   >
-                    View thread
+                    {tl("View thread")}
                   </span>
                 </span>
               </>

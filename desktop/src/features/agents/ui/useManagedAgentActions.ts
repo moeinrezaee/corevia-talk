@@ -39,6 +39,7 @@ import {
   buildInstanceInputForDefinition,
   resolveStartRuntimeForDefinition,
 } from "../lib/instanceInputForDefinition";
+import { tl } from "@/shared/i18n/tl";
 
 export function useManagedAgentActions() {
   const queryClient = useQueryClient();
@@ -246,7 +247,7 @@ export function useManagedAgentActions() {
       const input = await buildInstanceInputForDefinition(persona, runtime);
 
       const created = await createAgentMutation.mutateAsync(input);
-      toast.success("Agent created");
+      toast.success(tl("Agent created"));
       const notices = [...warnings];
 
       if (created.spawnError && !isRelayRemovedError(created.spawnError)) {

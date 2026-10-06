@@ -33,6 +33,7 @@ import {
   PROJECT_PANEL_ACTION_BUTTON_CLASS,
   PROJECT_PICKER_TRIGGER_CLASS,
 } from "./projectPanelStyles";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 /** Branch picker shared by the readme and files panel headers. */
 export function RepositoryBranchDropdown({
@@ -82,7 +83,7 @@ export function RepositoryBranchDropdown({
           variant="outline"
         >
           <RefIcon className="h-4 w-4 shrink-0 text-muted-foreground" />
-          <span className="min-w-0 flex-1 truncate text-left">
+          <span className="min-w-0 flex-1 truncate text-start">
             {selectedTag ?? branch}
           </span>
           <ChevronDown className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
@@ -99,25 +100,25 @@ export function RepositoryBranchDropdown({
           }}
           value={selectedValue}
         >
-          <DropdownMenuLabel>Branches</DropdownMenuLabel>
+          <DropdownMenuLabel>{tl("Branches")}</DropdownMenuLabel>
           {selectableBranches.map((option) => (
             <DropdownMenuRadioItem key={option} value={`branch:${option}`}>
-              <GitBranch className="mr-1.5 h-3.5 w-3.5 text-muted-foreground" />
+              <GitBranch className="me-1.5 h-3.5 w-3.5 text-muted-foreground" />
               <span className="min-w-0 flex-1 truncate">{option}</span>
             </DropdownMenuRadioItem>
           ))}
           {tagOptions.length > 0 ? (
             <>
               <DropdownMenuSeparator />
-              <DropdownMenuLabel>Tags</DropdownMenuLabel>
+              <DropdownMenuLabel>{tl("Tags")}</DropdownMenuLabel>
               {tagOptions.map((option) => (
                 <DropdownMenuRadioItem
                   key={option.name}
                   value={`tag:${option.name}`}
                 >
-                  <Tag className="mr-1.5 h-3.5 w-3.5 text-muted-foreground" />
+                  <Tag className="me-1.5 h-3.5 w-3.5 text-muted-foreground" />
                   <span className="min-w-0 flex-1 truncate">{option.name}</span>
-                  <span className="ml-auto font-mono text-xs text-muted-foreground">
+                  <span className="ms-auto font-mono text-xs text-muted-foreground">
                     {option.commit.slice(0, 7)}
                   </span>
                 </DropdownMenuRadioItem>
@@ -137,7 +138,7 @@ export function RepositoryBranchDropdown({
                   title={createBranchTitle}
                 >
                   <Plus className="h-4 w-4" />
-                  Create branch…
+                  {tl("Create branch…")}
                 </DropdownMenuItem>
                 {createBranchDisabled && createBranchTitle ? (
                   <p className="max-w-56 px-2 py-1 text-xs text-muted-foreground">
@@ -155,7 +156,7 @@ export function RepositoryBranchDropdown({
                 title={deleteBranchTitle}
               >
                 <Trash2 className="h-4 w-4" />
-                Delete {branch}
+                {tl("Delete")} {branch}
               </DropdownMenuItem>
             ) : null}
           </>
@@ -242,7 +243,7 @@ export function RepoSourceDropdown({
         >
           <SourceIcon className="h-4 w-4 shrink-0 text-muted-foreground" />
           <span
-            className="flex min-w-0 flex-1 items-center gap-2 text-left"
+            className="flex min-w-0 flex-1 items-center gap-2 text-start"
             title={isLocal && localPath ? localPath : undefined}
           >
             <span className="shrink-0">
@@ -268,7 +269,7 @@ export function RepoSourceDropdown({
           value={controls.source}
         >
           <DropdownMenuRadioItem value="remote">
-            <RemoteIcon className="mr-1.5 h-3.5 w-3.5 text-muted-foreground" />
+            <RemoteIcon className="me-1.5 h-3.5 w-3.5 text-muted-foreground" />
             {controls.remoteLabel}
           </DropdownMenuRadioItem>
           {!cloneLocal ? (
@@ -276,11 +277,11 @@ export function RepoSourceDropdown({
               disabled={controls.localDisabled}
               value="local"
             >
-              <HardDrive className="mr-1.5 h-3.5 w-3.5 text-muted-foreground" />
+              <HardDrive className="me-1.5 h-3.5 w-3.5 text-muted-foreground" />
               <span>{controls.localLabel}</span>
               {shortLocalPath ? (
                 <span
-                  className="ml-auto max-w-48 truncate text-xs text-muted-foreground"
+                  className="ms-auto max-w-48 truncate text-xs text-muted-foreground"
                   title={localPath ?? undefined}
                 >
                   {shortLocalPath}
@@ -301,8 +302,8 @@ export function RepoSourceDropdown({
               <DownloadCloud className="text-muted-foreground" />
             )}
             <span className="text-muted-foreground">{controls.localLabel}</span>
-            <span className="ml-auto rounded-md border border-input/60 bg-background px-2 py-0.5 text-xs font-medium text-foreground shadow-xs group-focus:border-input">
-              {controls.clonePending ? "Cloning…" : "Clone"}
+            <span className="ms-auto rounded-md border border-input/60 bg-background px-2 py-0.5 text-xs font-medium text-foreground shadow-xs group-focus:border-input">
+              {controls.clonePending ? tl("Cloning…") : tl("Clone")}
             </span>
           </DropdownMenuItem>
         ) : null}
@@ -328,12 +329,12 @@ export function RepoSyncActionButton({
         asChild
         className={PROJECT_PANEL_ACTION_BUTTON_CLASS}
         size="sm"
-        title={`Open repository on ${controls.remoteLabel}`}
+        title={tlt("Open repository on {0}", [controls.remoteLabel])}
         variant="ghost"
       >
         <a href={externalOpenUrl} rel="noreferrer" target="_blank">
           <ExternalLink className="h-4 w-4" />
-          Open
+          {tl("Open")}
         </a>
       </Button>
     ) : null;
@@ -350,7 +351,7 @@ export function RepoSyncActionButton({
         disabled={controls.pullDisabled}
         onClick={controls.onPull}
         size="sm"
-        title={controls.pullTitle ?? "Pull remote commits"}
+        title={controls.pullTitle ?? tl("Pull remote commits")}
         variant="ghost"
       >
         {controls.pullPending ? (
@@ -358,7 +359,8 @@ export function RepoSyncActionButton({
         ) : (
           <DownloadCloud className="h-4 w-4" />
         )}
-        Pull{count > 0 ? ` ${count}` : ""}
+        {tl("Pull")}
+        {count > 0 ? ` ${count}` : ""}
       </Button>
     );
   }
@@ -370,7 +372,7 @@ export function RepoSyncActionButton({
         disabled={controls.pushDisabled}
         onClick={controls.onPush}
         size="sm"
-        title={controls.pushTitle ?? "Push local commits"}
+        title={controls.pushTitle ?? tl("Push local commits")}
         variant="ghost"
       >
         {controls.pushPending ? (
@@ -378,7 +380,7 @@ export function RepoSyncActionButton({
         ) : (
           <UploadCloud className="h-4 w-4" />
         )}
-        Push
+        {tl("Push")}
       </Button>
     );
   }
@@ -390,7 +392,7 @@ export function RepoSyncActionButton({
       disabled={controls.fetchPending}
       onClick={controls.onFetch}
       size="sm"
-      title={controls.fetchTitle ?? "Check for remote changes"}
+      title={controls.fetchTitle ?? tl("Check for remote changes")}
       variant="ghost"
     >
       {controls.fetchPending ? (
@@ -398,7 +400,7 @@ export function RepoSyncActionButton({
       ) : (
         <RefreshCw className="h-4 w-4" />
       )}
-      Fetch
+      {tl("Fetch")}
     </Button>
   );
 }

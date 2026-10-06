@@ -11,10 +11,11 @@ import { relativeTime } from "@/features/projects/lib/projectsViewHelpers";
 import { useProjectSelection } from "@/features/projects/lib/useProjectSelection";
 import { cn } from "@/shared/lib/cn";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { tlt } from "@/shared/i18n/tl";
 
 /** One-line list row: title, optional description column, then trailing metadata. */
 export const PROJECT_ENTITY_LIST_ROW_CLASS =
-  "mx-2 flex min-h-9 min-w-0 items-center gap-3 rounded-md px-2 py-1.5 text-left transition-colors hover:bg-muted/30";
+  "mx-2 flex min-h-9 min-w-0 items-center gap-3 rounded-md px-2 py-1.5 text-start transition-colors hover:bg-muted/30";
 
 export function ProjectEntityFacepile({
   interactive = false,
@@ -50,7 +51,7 @@ export function ProjectEntityFacepile({
         if (!interactive) {
           return (
             <span
-              className={cn(separatorClassName, index > 0 && "-ml-1.5")}
+              className={cn(separatorClassName, index > 0 && "-ms-1.5")}
               key={pubkey}
               title={label}
             >
@@ -65,7 +66,7 @@ export function ProjectEntityFacepile({
             triggerClassName={cn(
               separatorClassName,
               "rounded-full focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:before:opacity-0",
-              index > 0 && "-ml-1.5",
+              index > 0 && "-ms-1.5",
             )}
             triggerElement="span"
             triggerAriaLabel={`View ${label}'s profile`}
@@ -77,7 +78,7 @@ export function ProjectEntityFacepile({
         );
       })}
       {overflow > 0 ? (
-        <span className="-ml-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-muted text-3xs text-muted-foreground/65 ring-2 ring-background">
+        <span className="-ms-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-muted text-3xs text-muted-foreground/65 ring-2 ring-background">
           +{overflow}
         </span>
       ) : null}
@@ -238,7 +239,7 @@ export function ProjectEntityListRow({
           >
             <ProjectEntitySelectControl
               checked={selected}
-              label={`Select ${selection.item.title}`}
+              label={tlt("Select {0}", [selection.item.title])}
               onToggle={({ shiftKey }) =>
                 projectSelection.toggle(selection.item, {
                   rangeItems: selection.rangeItems,
@@ -265,7 +266,7 @@ export function ProjectEntityListRow({
               {title}
             </span>
             <span
-              className="min-w-0 flex-1 truncate text-left font-normal text-muted-foreground/65"
+              className="min-w-0 flex-1 truncate text-start font-normal text-muted-foreground/65"
               data-projects-text-priority="secondary"
               data-testid={titleSecondaryTestId}
               title={titleSecondary}
@@ -300,7 +301,7 @@ export function ProjectEntityListRow({
       {affiliation ? (
         <span
           className={cn(
-            "hidden w-36 shrink-0 truncate text-left text-xs text-muted-foreground/65 md:block",
+            "hidden w-36 shrink-0 truncate text-start text-xs text-muted-foreground/65 md:block",
             affiliationClassName,
           )}
           data-projects-text-priority="secondary"
@@ -347,7 +348,7 @@ export function ProjectEntityListRow({
       ) : null}
       {dateSeconds ? (
         <span
-          className="hidden w-24 shrink-0 whitespace-nowrap text-right text-xs text-muted-foreground/55 sm:block"
+          className="hidden w-24 shrink-0 whitespace-nowrap text-end text-xs text-muted-foreground/55 sm:block"
           data-projects-text-priority="secondary"
           data-testid={dateTestId}
           title={new Date(dateSeconds * 1_000).toLocaleString()}

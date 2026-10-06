@@ -55,6 +55,7 @@ import {
   yamlWithWorkflowEnabled,
   yamlWithWorkflowName,
 } from "./workflowYamlDocument";
+import { tl } from "@/shared/i18n/tl";
 
 type DialogMode = "create" | "edit" | "duplicate";
 
@@ -151,7 +152,7 @@ function WorkflowNameEditor({
     return (
       <div className="flex h-6 items-center gap-1.5">
         <Input
-          aria-label="Workflow name"
+          aria-label={tl("Workflow name")}
           autoCapitalize="off"
           autoCorrect="off"
           className="h-6 w-72 px-2 font-mono text-sm"
@@ -171,7 +172,7 @@ function WorkflowNameEditor({
           defaultValue={name}
         />
         <Button
-          aria-label="Save workflow name"
+          aria-label={tl("Save workflow name")}
           className="text-muted-foreground"
           disabled={disabled || !draft.trim()}
           onClick={commit}
@@ -182,7 +183,7 @@ function WorkflowNameEditor({
             commit();
           }}
           size="icon-xs"
-          title="Save workflow name"
+          title={tl("Save workflow name")}
           type="button"
           variant="ghost"
         >
@@ -195,15 +196,15 @@ function WorkflowNameEditor({
   return (
     <div className="inline-flex h-6 max-w-full min-w-0 items-center gap-1.5 font-mono text-sm text-muted-foreground">
       <span className="min-w-0 truncate">
-        {generating ? "Generating name…" : name || "Untitled workflow"}
+        {generating ? tl("Generating name…") : name || tl("Untitled workflow")}
       </span>
       <Button
-        aria-label="Edit workflow name"
+        aria-label={tl("Edit workflow name")}
         className="text-muted-foreground [&_svg]:size-3"
         disabled={disabled || generating}
         onClick={() => changeEditing(true)}
         size="icon-xs"
-        title="Edit workflow name"
+        title={tl("Edit workflow name")}
         type="button"
         variant="ghost"
       >
@@ -571,17 +572,19 @@ export function WorkflowDialog({
           }}
           showCloseButton={false}
         >
-          <DialogHeader className="flex flex-shrink-0 flex-row items-center justify-between gap-6 space-y-0 px-6 pt-3 pb-2 text-left">
+          <DialogHeader className="flex flex-shrink-0 flex-row items-center justify-between gap-6 space-y-0 px-6 pt-3 pb-2 text-start">
             <div className="space-y-0">
               <DialogTitle className="text-lg leading-tight">
                 {TITLES[mode]}
               </DialogTitle>
               <DialogDescription className="sr-only">
                 {mode === "edit"
-                  ? "Update when this workflow runs and what it does."
+                  ? tl("Update when this workflow runs and what it does.")
                   : mode === "duplicate"
-                    ? "Copy this workflow and adjust its details."
-                    : "Automate actions when something happens in a channel."}
+                    ? tl("Copy this workflow and adjust its details.")
+                    : tl(
+                        "Automate actions when something happens in a channel.",
+                      )}
               </DialogDescription>
               <div className="flex items-center gap-2">
                 <WorkflowNameEditor
@@ -613,16 +616,18 @@ export function WorkflowDialog({
                     */}
                     <PopoverContent
                       align="end"
-                      aria-label="Run history"
+                      aria-label={tl("Run history")}
                       className="flex max-h-[min(32rem,var(--radix-popover-content-available-height))] w-96 max-w-[calc(100vw-2rem)] flex-col overflow-hidden p-0"
                       data-testid="workflow-history-dropdown"
                       sideOffset={8}
                     >
                       <div className="flex-shrink-0 border-b px-5 py-3">
                         <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                          Workflow
+                          {tl("Workflow")}
                         </p>
-                        <h3 className="text-base font-semibold">Run history</h3>
+                        <h3 className="text-base font-semibold">
+                          {tl("Run history")}
+                        </h3>
                       </div>
                       <div className="min-h-0 flex-1">
                         <WorkflowDetailPanel
@@ -656,7 +661,7 @@ export function WorkflowDialog({
               ) : null}
               <DialogClose asChild>
                 <Button
-                  aria-label="Close"
+                  aria-label={tl("Close")}
                   className="h-8 w-8 text-muted-foreground"
                   size="icon"
                   type="button"
@@ -707,7 +712,9 @@ export function WorkflowDialog({
                     />
                     {channels.length === 0 ? (
                       <p className="text-center text-xs text-muted-foreground">
-                        Join or create a channel before adding a workflow.
+                        {tl(
+                          "Join or create a channel before adding a workflow.",
+                        )}
                       </p>
                     ) : null}
                   </div>
@@ -742,13 +749,16 @@ export function WorkflowDialog({
 
           <div className="flex flex-shrink-0 items-center justify-between gap-4 px-6 pt-2 pb-4">
             <Tabs onValueChange={handleEditorModeChange} value={editorMode}>
-              <TabsList aria-label="Workflow editor mode" className="h-8 p-0.5">
+              <TabsList
+                aria-label={tl("Workflow editor mode")}
+                className="h-8 p-0.5"
+              >
                 <TabsTrigger
                   className="h-7 px-3 text-xs"
                   disabled={mutation.isPending}
                   value="form"
                 >
-                  Form
+                  {tl("Form")}
                 </TabsTrigger>
                 <TabsTrigger
                   className="h-7 gap-1.5 px-3 text-xs"
@@ -756,7 +766,7 @@ export function WorkflowDialog({
                   value="yaml"
                 >
                   <Code className="h-3.5 w-3.5" />
-                  YAML
+                  {tl("YAML")}
                 </TabsTrigger>
               </TabsList>
             </Tabs>
@@ -766,17 +776,17 @@ export function WorkflowDialog({
                 type="button"
                 variant="outline"
               >
-                Cancel
+                {tl("Cancel")}
               </Button>
               {isAddingFirstStep ? (
                 <Button
-                  aria-label="Add first step"
+                  aria-label={tl("Add first step")}
                   data-testid="workflow-dialog-primary-action"
                   disabled={!selectedChannelId || mutation.isPending}
                   onClick={() => formBuilderRef.current?.addFirstStep()}
                   type="button"
                 >
-                  Add step
+                  {tl("Add step")}
                 </Button>
               ) : (
                 <Button
@@ -810,17 +820,19 @@ export function WorkflowDialog({
         <AlertDialogContent data-testid="workflow-activation-confirmation">
           <AlertDialogHeader>
             <AlertDialogTitle>
-              {activationWarning?.title ?? "Turn on this workflow?"}
+              {activationWarning?.title ?? tl("Turn on this workflow?")}
             </AlertDialogTitle>
             <AlertDialogDescription>
               {activationWarning?.description ??
-                "Turn it on to let it run immediately, or keep it off until you’re ready."}
+                tl(
+                  "Turn it on to let it run immediately, or keep it off until you’re ready.",
+                )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel asChild>
               <Button type="button" variant="ghost">
-                Back
+                {tl("Back")}
               </Button>
             </AlertDialogCancel>
             <Button
@@ -828,14 +840,14 @@ export function WorkflowDialog({
               type="button"
               variant="outline"
             >
-              Keep off
+              {tl("Keep off")}
             </Button>
             <AlertDialogAction asChild>
               <Button
                 onClick={() => handleCreateActivation(true)}
                 type="button"
               >
-                Turn on
+                {tl("Turn on")}
               </Button>
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -860,15 +872,15 @@ export function WorkflowDialog({
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Discard changes?</AlertDialogTitle>
+            <AlertDialogTitle>{tl("Discard changes?")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Your unsaved workflow changes will be lost.
+              {tl("Your unsaved workflow changes will be lost.")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel asChild>
               <Button type="button" variant="outline">
-                Keep editing
+                {tl("Keep editing")}
               </Button>
             </AlertDialogCancel>
             <AlertDialogAction asChild>
@@ -894,7 +906,7 @@ export function WorkflowDialog({
                 type="button"
                 variant="destructive"
               >
-                Discard changes
+                {tl("Discard changes")}
               </Button>
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -916,16 +928,19 @@ export function WorkflowDialog({
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Continue without this secret?</AlertDialogTitle>
+            <AlertDialogTitle>
+              {tl("Continue without this secret?")}
+            </AlertDialogTitle>
             <AlertDialogDescription>
-              This private webhook secret cannot be recovered. Copy and store it
-              before continuing, or explicitly leave it behind.
+              {tl(
+                "This private webhook secret cannot be recovered. Copy and store it before continuing, or explicitly leave it behind.",
+              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel asChild>
               <Button type="button" variant="outline">
-                Go back
+                {tl("Go back")}
               </Button>
             </AlertDialogCancel>
             <AlertDialogAction asChild>
@@ -943,7 +958,7 @@ export function WorkflowDialog({
                 type="button"
                 variant="destructive"
               >
-                Continue
+                {tl("Continue")}
               </Button>
             </AlertDialogAction>
           </AlertDialogFooter>

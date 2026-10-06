@@ -1,0 +1,51 @@
+/*
+ * Peyda FaNum: the Persian interface font. "FaNum" builds draw Latin digits as
+ * Persian digits, so numbers read in Persian wherever this font is active
+ * (`lang="fa"` only; see rtl.css).
+ *
+ * Only ExtraLight, Bold, ExtraBold, Black and ExtraBlack are bundled, so each
+ * CSS weight is mapped to the nearest shipped file instead of leaving it to
+ * the browser's fallback (or faux bolding):
+ *   100-500 -> ExtraLight (200)   600-700 -> Bold (700)
+ *   800 -> ExtraBold              900 -> Black    950+ -> ExtraBlack
+ * Add Regular/Medium/SemiBold files and narrow these ranges for a finer match.
+ */
+@font-face {
+  font-family: "Peyda FaNum";
+  font-weight: 100 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("../../fonts/peyda/PeydaFaNumWeb-ExtraLight.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Peyda FaNum";
+  font-weight: 600 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("../../fonts/peyda/PeydaFaNumWeb-Bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Peyda FaNum";
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url("../../fonts/peyda/PeydaFaNumWeb-ExtraBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Peyda FaNum";
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url("../../fonts/peyda/PeydaFaNumWeb-Black.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Peyda FaNum";
+  font-weight: 950 1000;
+  font-style: normal;
+  font-display: swap;
+  src: url("../../fonts/peyda/PeydaFaNumWeb-ExtraBlack.woff2") format("woff2");
+}

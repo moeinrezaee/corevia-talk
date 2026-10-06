@@ -4,6 +4,7 @@ import type { ProjectSelectionItem } from "@/features/projects/lib/projectSelect
 import { useProjectSelection } from "@/features/projects/lib/useProjectSelection";
 import { cn } from "@/shared/lib/cn";
 import { ProjectEntitySelectControl } from "./ProjectEntityListRow";
+import { tlt } from "@/shared/i18n/tl";
 
 export function ProjectWorkItemRow({
   eventId,
@@ -73,7 +74,7 @@ export function ProjectWorkItemRow({
           >
             <ProjectEntitySelectControl
               checked={selected}
-              label={`Select ${selection.item.title}`}
+              label={tlt("Select {0}", [selection.item.title])}
               onToggle={({ shiftKey }) =>
                 projectSelection.toggle(selection.item, {
                   rangeItems: selection.rangeItems,
@@ -86,7 +87,7 @@ export function ProjectWorkItemRow({
       </span>
       {onOpen ? (
         <button
-          className="min-w-0 flex-1 truncate rounded-sm text-left text-sm font-normal text-foreground transition-colors hover:text-primary focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+          className="min-w-0 flex-1 truncate rounded-sm text-start text-sm font-normal text-foreground transition-colors hover:text-primary focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
           data-projects-text-priority="primary"
           onClick={onOpen}
           title={title}
@@ -105,7 +106,7 @@ export function ProjectWorkItemRow({
       {onOpen ? (
         <button
           className={cn(
-            "w-[4.75rem] shrink-0 truncate rounded-sm text-left text-xs font-medium tabular-nums text-muted-foreground/55 transition-colors hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring",
+            "w-[4.75rem] shrink-0 truncate rounded-sm text-start text-xs font-medium tabular-nums text-muted-foreground/55 transition-colors hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring",
             identifierClassName,
           )}
           data-projects-text-priority="secondary"
@@ -139,7 +140,7 @@ export function ProjectWorkItemRow({
       ) : null}
       {trailing ? (
         <div
-          className="ml-auto flex shrink-0 items-center gap-2 pl-2 text-muted-foreground/60"
+          className="ms-auto flex shrink-0 items-center gap-2 ps-2 text-muted-foreground/60"
           data-projects-text-priority="secondary"
         >
           {trailing}

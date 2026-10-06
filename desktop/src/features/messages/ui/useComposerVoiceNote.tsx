@@ -9,6 +9,7 @@ import {
 import { useVoiceNoteRecorder } from "@/features/messages/lib/useVoiceNoteRecorder";
 import type { MediaUploadController } from "@/features/messages/lib/useMediaUpload";
 import { VoiceNoteRecorder } from "./VoiceNoteRecorder";
+import { tl } from "@/shared/i18n/tl";
 
 export function useComposerVoiceNote({
   draftKey,
@@ -87,7 +88,7 @@ export function useComposerVoiceNote({
     }
     const attachments = getAttachmentsRef.current();
     if (attachments.pending.length > 0 || attachments.queued.length > 0) {
-      toast.error("A voice note must be the only attachment.");
+      toast.error(tl("A voice note must be the only attachment."));
       return;
     }
     recordingContextRef.current = currentContextRef.current;

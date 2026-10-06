@@ -31,6 +31,7 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { Input } from "@/shared/ui/input";
 import { Popover, PopoverAnchor, PopoverContent } from "@/shared/ui/popover";
+import { tl } from "@/shared/i18n/tl";
 
 const ROLE_OPTIONS: Array<{
   value: RelayMemberRole;
@@ -38,11 +39,11 @@ const ROLE_OPTIONS: Array<{
 }> = [
   {
     value: "member",
-    label: "Member",
+    label: tl("Member"),
   },
   {
     value: "admin",
-    label: "Admin",
+    label: tl("Admin"),
   },
 ];
 
@@ -204,7 +205,7 @@ export function DirectAddMemberForm({
       <div className="space-y-1.5">
         {showLabel ? (
           <label className="text-sm font-medium" htmlFor="member-search">
-            Person
+            {tl("Person")}
           </label>
         ) : null}
         <div className="flex gap-2">
@@ -272,7 +273,7 @@ export function DirectAddMemberForm({
                       }}
                       placeholder={
                         selectedUsers.length === 0
-                          ? "Search people or paste an npub"
+                          ? tl("Search people or paste an npub")
                           : ""
                       }
                       ref={searchInputRef}
@@ -293,7 +294,7 @@ export function DirectAddMemberForm({
                         <DropdownMenu modal={false}>
                           <DropdownMenuTrigger asChild>
                             <button
-                              aria-label="Choose member role"
+                              aria-label={tl("Choose member role")}
                               className="inline-flex items-center gap-1.5 bg-transparent text-sm text-muted-foreground outline-hidden transition-colors hover:text-foreground focus-visible:text-foreground disabled:cursor-not-allowed disabled:opacity-60"
                               data-testid="member-role"
                               disabled={addMutation.isPending}
@@ -348,7 +349,7 @@ export function DirectAddMemberForm({
               >
                 {userSearchQuery.isLoading ? (
                   <p className="px-3 py-3 text-sm text-muted-foreground">
-                    Searching…
+                    {tl("Searching…")}
                   </p>
                 ) : searchResults.length > 0 || directResult ? (
                   <>
@@ -368,8 +369,9 @@ export function DirectAddMemberForm({
                   </>
                 ) : (
                   <p className="px-3 py-3 text-sm text-muted-foreground">
-                    No people found. Paste a full npub or hex public key to add
-                    someone directly.
+                    {tl(
+                      "No people found. Paste a full npub or hex public key to add someone directly.",
+                    )}
                   </p>
                 )}
               </div>
@@ -391,7 +393,7 @@ export function DirectAddMemberForm({
                   size="sm"
                   type="submit"
                 >
-                  {addMutation.isPending ? "Inviting…" : submitLabel}
+                  {addMutation.isPending ? tl("Inviting…") : submitLabel}
                 </Button>
               </motion.div>
             ) : null}
@@ -399,7 +401,7 @@ export function DirectAddMemberForm({
         </div>
         {isAlreadyMember ? (
           <p className="text-xs text-destructive">
-            This person is already a community member.
+            {tl("This person is already a community member.")}
           </p>
         ) : null}
         {userSearchQuery.error instanceof Error ? (
@@ -430,7 +432,7 @@ function SearchResult({
 
   return (
     <button
-      className="flex min-h-11 w-full items-center gap-3 px-3 py-2 text-left transition-colors hover:bg-muted/50 focus-visible:bg-muted/50 focus-visible:outline-hidden"
+      className="flex min-h-11 w-full items-center gap-3 px-3 py-2 text-start transition-colors hover:bg-muted/50 focus-visible:bg-muted/50 focus-visible:outline-hidden"
       data-testid={`member-search-result-${user.pubkey}`}
       onClick={onSelect}
       role="option"
@@ -448,7 +450,7 @@ function SearchResult({
       </span>
       {isDirectPubkey ? (
         <span className="shrink-0 text-xs text-muted-foreground">
-          public key
+          {tl("public key")}
         </span>
       ) : null}
     </button>
@@ -471,10 +473,10 @@ export function AddMemberDialog({
         data-testid="add-relay-member-dialog"
       >
         <div className="flex max-h-[85vh] flex-col">
-          <DialogHeader className="border-b border-border/60 px-6 py-5 pr-14">
-            <DialogTitle>Add member</DialogTitle>
+          <DialogHeader className="border-b border-border/60 px-6 py-5 pe-14">
+            <DialogTitle>{tl("Add member")}</DialogTitle>
             <DialogDescription>
-              Add a person to this community by their public key.
+              {tl("Add a person to this community by their public key.")}
             </DialogDescription>
           </DialogHeader>
           <div className="px-6 py-4">

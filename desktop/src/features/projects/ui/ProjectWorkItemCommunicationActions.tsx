@@ -6,6 +6,7 @@ import { Button } from "@/shared/ui/button";
 import { PROJECT_CONTEXT_ACTION_BUTTON_CLASS } from "./projectContextActionStyles";
 import { ProjectSelectionDiscussAction } from "./ProjectSelectionDiscussAction";
 import { useProjectDiscussInChannel } from "./useProjectDiscussInChannel";
+import { tl } from "@/shared/i18n/tl";
 
 export function ProjectWorkItemCommunicationActions({
   item,
@@ -31,7 +32,7 @@ export function ProjectWorkItemCommunicationActions({
         variant="ghost"
       >
         <Bot className="h-3.5 w-3.5" />
-        Chat with an agent
+        {tl("Chat with an agent")}
       </Button>
       <ProjectSelectionDiscussAction
         items={items}

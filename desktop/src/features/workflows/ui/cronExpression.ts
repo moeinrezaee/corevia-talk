@@ -1,7 +1,8 @@
+import { tl } from "@/shared/i18n/tl";
 export const CRON_FIELD_DEFINITIONS = [
-  { label: "Minute", max: 59, min: 0 },
-  { label: "Hour", max: 23, min: 0 },
-  { label: "Day", max: 31, min: 1 },
+  { label: tl("Minute"), max: 59, min: 0 },
+  { label: tl("Hour"), max: 23, min: 0 },
+  { label: tl("Day"), max: 31, min: 1 },
   {
     aliases: [
       "JAN",
@@ -17,13 +18,13 @@ export const CRON_FIELD_DEFINITIONS = [
       "NOV",
       "DEC",
     ],
-    label: "Month",
+    label: tl("Month"),
     max: 12,
     min: 1,
   },
   {
     aliases: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
-    label: "Weekday",
+    label: tl("Weekday"),
     max: 7,
     min: 0,
   },

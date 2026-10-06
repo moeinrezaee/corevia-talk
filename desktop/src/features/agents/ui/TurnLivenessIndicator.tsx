@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/shared/lib/cn";
 import { FuzzyLogo } from "@/shared/ui/buzz-logo/FuzzyLogo";
 import { useTranscriptAnimationEnabled } from "./transcriptAnimationPreference";
+import { tl } from "@/shared/i18n/tl";
 
 const MARKS = ["first", "second", "third"] as const;
 const STAGGER_SECONDS = 0.25;
@@ -23,7 +24,7 @@ export function TurnLivenessIndicator({
   if (!showStaggeredRow) {
     return (
       <div
-        aria-label="Agent turn in progress"
+        aria-label={tl("Agent turn in progress")}
         className={cn("opacity-25", className)}
         data-testid="turn-liveness-indicator"
         role="status"
@@ -41,7 +42,7 @@ export function TurnLivenessIndicator({
 
   return (
     <div
-      aria-label="Agent turn in progress"
+      aria-label={tl("Agent turn in progress")}
       className={cn("flex items-center gap-1.5 opacity-25", className)}
       data-testid="turn-liveness-indicator"
       role="status"

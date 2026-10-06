@@ -31,6 +31,7 @@ import { Textarea } from "@/shared/ui/textarea";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
 import { buildBestieMessageContext } from "./bestieMessageContext";
 import { useBestie } from "./useBestie";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export function BestieTriggerVisual({
   agent,
@@ -96,8 +97,8 @@ export function BestieAgentLockup({
           className={cn(
             "absolute flex items-center justify-center rounded-full",
             compact
-              ? "-bottom-0.5 -right-0.5 h-2.5 w-2.5 bg-sidebar"
-              : "-bottom-0.5 -right-0.5 h-3.5 w-3.5 bg-popover",
+              ? "-bottom-0.5 -end-0.5 h-2.5 w-2.5 bg-sidebar"
+              : "-bottom-0.5 -end-0.5 h-3.5 w-3.5 bg-popover",
           )}
         >
           <PresenceDot
@@ -120,9 +121,9 @@ function EmptyBestie() {
         <Plus aria-hidden="true" className="h-5 w-5" />
       </div>
       <div>
-        <h2 className="text-sm font-semibold">Choose a Bestie</h2>
+        <h2 className="text-sm font-semibold">{tl("Choose a Bestie")}</h2>
         <p className="mt-1 text-xs text-muted-foreground">
-          Open one of your local agents and turn on Bestie.
+          {tl("Open one of your local agents and turn on Bestie.")}
         </p>
       </div>
     </div>
@@ -346,7 +347,9 @@ export function BestiePopover({
     [],
   );
   if (bestie.isLoading) {
-    return <p className="text-sm text-muted-foreground">Loading Bestie…</p>;
+    return (
+      <p className="text-sm text-muted-foreground">{tl("Loading Bestie…")}</p>
+    );
   }
   if (!agent) return <EmptyBestie />;
 
@@ -405,7 +408,7 @@ export function BestiePopover({
         />
         <div className="flex-1" />
         <Button
-          aria-label="Close Bestie"
+          aria-label={tl("Close Bestie")}
           onClick={onRequestClose}
           size="icon-xs"
           variant="ghost"
@@ -452,14 +455,14 @@ export function BestiePopover({
             </p>
           </div>
           <div className="w-fit rounded-2xl bg-muted px-3 py-2 text-sm">
-            How can I help?
+            {tl("How can I help?")}
           </div>
         </div>
       ) : null}
 
       <div className="relative shrink-0">
         <Textarea
-          aria-label={`Message ${agent.name}`}
+          aria-label={tlt("Message {0}", [agent.name])}
           className="min-h-24 resize-none rounded-2xl pb-11"
           data-bloom-autofocus
           data-testid="bestie-composer"
@@ -478,12 +481,12 @@ export function BestiePopover({
             event.preventDefault();
             sendMessage();
           }}
-          placeholder={`Message ${agent.name}`}
+          placeholder={tlt("Message {0}", [agent.name])}
           value={draft}
         />
         <Button
-          aria-label="Send in Bestie conversation"
-          className="absolute bottom-2 right-2 rounded-full"
+          aria-label={tl("Send in Bestie conversation")}
+          className="absolute bottom-2 end-2 rounded-full"
           disabled={!draft.trim() || bestie.isOpening || sendMutation.isPending}
           onClick={sendMessage}
           size="icon"

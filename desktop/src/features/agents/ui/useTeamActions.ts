@@ -42,6 +42,7 @@ import type {
 } from "@/shared/api/types";
 import { deriveImportToast } from "./teamSnapshotImport.lib";
 import { teamShareNotice } from "./teamLibraryCopy";
+import { tl } from "@/shared/i18n/tl";
 
 type TeamDialogState = {
   description: string;
@@ -195,8 +196,10 @@ export function useTeamActions(
     actions.setActionNoticeMessage(null);
     actions.setActionErrorMessage(null);
     setTeamDialogState({
-      title: "Create team",
-      description: "Group agents together for quick deployment to channels.",
+      title: tl("Create team"),
+      description: tl(
+        "Group agents together for quick deployment to channels.",
+      ),
       submitLabel: "Create team",
       initialValues: {
         name: "",
@@ -211,7 +214,7 @@ export function useTeamActions(
     actions.setActionErrorMessage(null);
     setTeamDialogState({
       title: `Duplicate ${team.name}`,
-      description: "Create a new team by copying this one.",
+      description: tl("Create a new team by copying this one."),
       submitLabel: "Create team",
       initialValues: {
         name: `${team.name} copy`,
@@ -239,7 +242,7 @@ export function useTeamActions(
     actions.setActionNoticeMessage(null);
     actions.setActionErrorMessage(null);
     setTeamDialogState({
-      title: "Edit team",
+      title: tl("Edit team"),
       description: "",
       submitLabel: "Save changes",
       initialValues: {

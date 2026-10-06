@@ -42,6 +42,7 @@ import {
   MergePullRequestButton,
   type OpenMergeRecoveryTerminal,
 } from "./MergePullRequestButton";
+import { tl } from "@/shared/i18n/tl";
 
 /** Available pull-request actions rendered beside the latest review activity. */
 export function PullRequestReviewCard({
@@ -200,7 +201,7 @@ export function PullRequestReviewCard({
               type="button"
             >
               <Check className="h-3.5 w-3.5" />
-              Approve
+              {tl("Approve")}
             </Button>
           ) : null}
           {canMerge ? (
@@ -222,7 +223,7 @@ export function PullRequestReviewCard({
               variant="secondary"
             >
               <GitPullRequest className="h-3.5 w-3.5" />
-              Ready for review
+              {tl("Ready for review")}
             </Button>
           ) : null}
           {canReopen ? (
@@ -237,15 +238,15 @@ export function PullRequestReviewCard({
               variant="secondary"
             >
               <RotateCcw className="h-3.5 w-3.5" />
-              Reopen review
+              {tl("Reopen review")}
             </Button>
           ) : null}
           {hasOverflowAction ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
-                  aria-label="More review actions"
-                  className="ml-auto h-8 w-8"
+                  aria-label={tl("More review actions")}
+                  className="ms-auto h-8 w-8"
                   disabled={isUpdatingStatus}
                   size="icon-xs"
                   type="button"
@@ -262,7 +263,7 @@ export function PullRequestReviewCard({
                     }}
                   >
                     <GitPullRequestDraft className="h-4 w-4" />
-                    Convert to draft
+                    {tl("Convert to draft")}
                   </DropdownMenuItem>
                 ) : null}
                 {canClose ? (
@@ -273,7 +274,7 @@ export function PullRequestReviewCard({
                     }}
                   >
                     <X className="h-4 w-4" />
-                    Close review
+                    {tl("Close review")}
                   </DropdownMenuItem>
                 ) : null}
               </DropdownMenuContent>
@@ -291,16 +292,18 @@ export function PullRequestReviewCard({
       >
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle>Approve review</DialogTitle>
+            <DialogTitle>{tl("Approve review")}</DialogTitle>
             <DialogDescription>
-              Add an optional summary for the author and other reviewers.
+              {tl(
+                "Add an optional summary for the author and other reviewers.",
+              )}
             </DialogDescription>
           </DialogHeader>
           <Textarea
-            aria-label="Approval summary"
+            aria-label={tl("Approval summary")}
             disabled={isApproving}
             onChange={(event) => setApprovalSummary(event.target.value)}
-            placeholder="What looks good?"
+            placeholder={tl("What looks good?")}
             value={approvalSummary}
           />
           <DialogFooter>
@@ -310,7 +313,7 @@ export function PullRequestReviewCard({
               type="button"
               variant="ghost"
             >
-              Cancel
+              {tl("Cancel")}
             </Button>
             <Button
               className="bg-green-600 text-white hover:bg-green-700"
@@ -321,7 +324,7 @@ export function PullRequestReviewCard({
               type="button"
             >
               <Check className="h-4 w-4" />
-              Approve
+              {tl("Approve")}
             </Button>
           </DialogFooter>
         </DialogContent>

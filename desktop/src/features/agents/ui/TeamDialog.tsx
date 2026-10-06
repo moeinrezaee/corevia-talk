@@ -26,6 +26,7 @@ import {
   filterAvailablePersonaIds,
   orderPersonasByInitiallySelected,
 } from "./teamDialogSelection";
+import { tl } from "@/shared/i18n/tl";
 
 type TeamDialogProps = {
   open: boolean;
@@ -177,7 +178,7 @@ export function TeamDialog({
       <Dialog onOpenChange={handleOpenChange} open={open}>
         <DialogContent className="max-w-2xl overflow-hidden p-0">
           <div className="flex max-h-[85vh] flex-col">
-            <DialogHeader className="shrink-0 border-b border-border/60 px-6 py-5 pr-14">
+            <DialogHeader className="shrink-0 border-b border-border/60 px-6 py-5 pe-14">
               <DialogTitle>{title}</DialogTitle>
               {description.trim().length > 0 ? (
                 <DialogDescription>{description}</DialogDescription>
@@ -187,14 +188,14 @@ export function TeamDialog({
             <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-6 py-5">
               <div className="space-y-1.5">
                 <label className="text-sm font-medium" htmlFor="team-name">
-                  Name
+                  {tl("Name")}
                 </label>
                 <Input
                   autoCorrect="off"
                   disabled={isPending}
                   id="team-name"
                   onChange={(event) => setName(event.target.value)}
-                  placeholder="Engineering Squad"
+                  placeholder={tl("Engineering Squad")}
                   value={name}
                 />
               </div>
@@ -204,14 +205,14 @@ export function TeamDialog({
                   className="text-sm font-medium"
                   htmlFor="team-description"
                 >
-                  Description
+                  {tl("Description")}
                 </label>
                 <Textarea
                   className="min-h-20"
                   disabled={isPending}
                   id="team-description"
                   onChange={(event) => setTeamDescription(event.target.value)}
-                  placeholder="Optional description for this team."
+                  placeholder={tl("Optional description for this team.")}
                   value={teamDescription}
                 />
               </div>
@@ -221,30 +222,34 @@ export function TeamDialog({
                   className="text-sm font-medium"
                   htmlFor="team-instructions"
                 >
-                  Team Instructions
+                  {tl("Team Instructions")}
                 </label>
                 <Textarea
                   className="min-h-24"
                   disabled={isPending}
                   id="team-instructions"
                   onChange={(event) => setInstructions(event.target.value)}
-                  placeholder="Optional instructions applied to every deployed team member."
+                  placeholder={tl(
+                    "Optional instructions applied to every deployed team member.",
+                  )}
                   value={instructions}
                 />
               </div>
 
               <div className="space-y-2">
-                <span className="text-sm font-medium">Agents</span>
+                <span className="text-sm font-medium">{tl("Agents")}</span>
                 <p className="text-xs text-muted-foreground">
-                  Select the agents to include in this team.
+                  {tl("Select the agents to include in this team.")}
                 </p>
                 {missingInitialPersonaCount > 0 ? (
                   <p className="rounded-2xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
-                    This team references {missingInitialPersonaCount} agent
-                    {missingInitialPersonaCount === 1 ? "" : "s"} that{" "}
-                    {missingInitialPersonaCount === 1 ? "is" : "are"} no longer
-                    in My Agents. Save to remove them, or add them back to My
-                    Agents first.
+                    {tl("This team references")} {missingInitialPersonaCount}{" "}
+                    {tl("agent")}
+                    {missingInitialPersonaCount === 1 ? "" : "s"} {tl("that")}{" "}
+                    {missingInitialPersonaCount === 1 ? "is" : "are"}{" "}
+                    {tl(
+                      "no longer in My Agents. Save to remove them, or add them back to My Agents first.",
+                    )}
                   </p>
                 ) : null}
                 {personas.length === 0 ? (
@@ -255,7 +260,7 @@ export function TeamDialog({
                   <div
                     className="max-h-60 space-y-1 overflow-y-auto rounded-lg border border-border/70 p-2"
                     role="listbox"
-                    aria-label="Agents"
+                    aria-label={tl("Agents")}
                     aria-multiselectable="true"
                   >
                     {orderedPersonas.map((persona) => {
@@ -299,7 +304,7 @@ export function TeamDialog({
                           />
                           <span className="text-sm">{persona.displayName}</span>
                           {persona.isBuiltIn ? (
-                            <Badge variant="secondary">Built-in</Badge>
+                            <Badge variant="secondary">{tl("Built-in")}</Badge>
                           ) : null}
                         </div>
                       );
@@ -323,7 +328,7 @@ export function TeamDialog({
                   type="button"
                   variant="outline"
                 >
-                  Cancel
+                  {tl("Cancel")}
                 </Button>
                 <Button
                   disabled={
@@ -335,7 +340,7 @@ export function TeamDialog({
                   size="sm"
                   type="button"
                 >
-                  {isPending ? "Saving..." : submitLabel}
+                  {isPending ? tl("Saving...") : submitLabel}
                 </Button>
               </div>
             </div>

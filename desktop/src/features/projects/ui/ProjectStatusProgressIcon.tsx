@@ -1,6 +1,7 @@
 import type * as React from "react";
 
 import { cn } from "@/shared/lib/cn";
+import { tlt } from "@/shared/i18n/tl";
 
 export type ProjectStatusProgressState =
   | "queued"
@@ -20,7 +21,7 @@ export function ProjectStatusProgressIcon({
 }) {
   return (
     <svg
-      aria-label={ariaLabel ?? `${state} status`}
+      aria-label={ariaLabel ?? tlt("{0} status", [state])}
       className={cn("shrink-0", className)}
       data-project-status-progress={state}
       fill="none"

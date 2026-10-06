@@ -6,6 +6,7 @@ import type { Project } from "@/features/projects/hooks";
 import { hasLocalRepositoryCheckout } from "@/features/projects/lib/projectLocalRepos";
 import { selectProjectRepository } from "@/features/projects/projectModels";
 import type { useOpenProjectTerminal } from "@/features/projects/ui/useOpenProjectTerminal";
+import { tl } from "@/shared/i18n/tl";
 
 // Split from ProjectsView.tsx to keep that file under the per-file line cap.
 
@@ -49,7 +50,7 @@ export function useDeleteProjectHandler(
     async (project: Project) => {
       try {
         await mutateAsync(project);
-        toast.success("Project deleted");
+        toast.success(tl("Project deleted"));
       } catch (error) {
         toast.error(
           error instanceof Error ? error.message : "Failed to delete project",

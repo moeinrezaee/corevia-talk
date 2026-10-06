@@ -8,6 +8,7 @@ import {
   PERSONA_FIELD_CONTROL_CLASS,
   PERSONA_FIELD_SHELL_CLASS,
 } from "./agentConfigOptions";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * Top-level API key pseudo-field for providers that require a secret
@@ -100,12 +101,12 @@ export function PersonaProviderApiKeyField({
           disabled={disabled}
           id={inputId}
           onChange={(event) => onValueChange(event.target.value)}
-          placeholder={isInherited ? inheritedLabel : "Paste API key…"}
+          placeholder={isInherited ? inheritedLabel : tl("Paste API key…")}
           type={showValue ? "text" : "password"}
           value={value}
         />
         <button
-          aria-label={showValue ? "Hide API key" : "Show API key"}
+          aria-label={showValue ? tl("Hide API key") : tl("Show API key")}
           className="shrink-0 text-muted-foreground hover:text-foreground"
           onClick={() => setShowValue((v) => !v)}
           type="button"
@@ -119,7 +120,7 @@ export function PersonaProviderApiKeyField({
       </div>
       {isValidating ? (
         <p className="text-xs text-muted-foreground" id={validationId}>
-          Checking API key…
+          {tl("Checking API key…")}
         </p>
       ) : validationMessage ? (
         <p className="text-xs text-destructive" id={validationId} role="alert">

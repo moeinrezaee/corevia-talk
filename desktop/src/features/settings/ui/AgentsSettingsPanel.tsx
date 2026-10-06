@@ -12,6 +12,7 @@ import {
   SettingsOptionRow,
 } from "./SettingsOptionGroup";
 import { SettingsSectionHeader } from "./SettingsSectionHeader";
+import { tl } from "@/shared/i18n/tl";
 
 export function AgentsSettingsPanel() {
   const automaticallyMentionAgents = useKeepMentionedAgentsPinned();
@@ -19,29 +20,31 @@ export function AgentsSettingsPanel() {
   return (
     <section className="min-w-0" data-testid="settings-agents">
       <SettingsSectionHeader
-        title="Agents"
-        description="Control how agents behave in conversations and run on this machine."
+        title={tl("Agents")}
+        description={tl(
+          "Control how agents behave in conversations and run on this machine.",
+        )}
       />
 
       <SettingsOptionGroupList>
-        <SettingsOptionGroup title="Conversations">
+        <SettingsOptionGroup title={tl("Conversations")}>
           <SettingsOptionRow data-testid="settings-automatic-agent-mentions">
             <div className="min-w-0">
               <label
                 className="font-medium text-foreground"
                 htmlFor="settings-automatic-agent-mentions-switch"
               >
-                Automatically mention agents
+                {tl("Automatically mention agents")}
               </label>
               <p
                 className="mt-0.5 text-sm text-muted-foreground/70"
                 data-settings-subcopy
               >
-                Address selected agents in thread replies
+                {tl("Address selected agents in thread replies")}
               </p>
             </div>
             <Switch
-              aria-label="Automatically mention agents"
+              aria-label={tl("Automatically mention agents")}
               checked={automaticallyMentionAgents}
               id="settings-automatic-agent-mentions-switch"
               onCheckedChange={setKeepMentionedAgentsPinned}

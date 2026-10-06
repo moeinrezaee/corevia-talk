@@ -2,6 +2,7 @@ import { AlertCircle } from "lucide-react";
 
 import { useRetryBootWarm } from "@/features/agents/hooks";
 import { Button } from "@/shared/ui/button";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * Inline error affordance shown when the launch runtime-catalog warm failed
@@ -15,9 +16,9 @@ export function HarnessCatalogRetryNotice() {
   return (
     <div className="flex flex-wrap items-center gap-2 text-sm text-destructive">
       <AlertCircle className="size-4 shrink-0" />
-      <span>Couldn't detect agent harnesses.</span>
+      <span>{tl("Couldn't detect agent harnesses.")}</span>
       <Button onClick={retryBootWarm} size="sm" variant="outline">
-        Try again
+        {tl("Try again")}
       </Button>
     </div>
   );

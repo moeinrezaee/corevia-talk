@@ -47,6 +47,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 import { PanelSectionGroup } from "@/shared/ui/PanelSectionGroup";
 import { Switch } from "@/shared/ui/switch";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export function ProfileIngressRow({
   disabled,
@@ -82,7 +83,7 @@ export function ProfileIngressRow({
       </span>
       {trailing ? (
         <span
-          className="max-w-[45%] truncate text-right text-sm text-muted-foreground"
+          className="max-w-[45%] truncate text-end text-sm text-muted-foreground"
           title={trailingTitle}
         >
           {trailing}
@@ -94,7 +95,7 @@ export function ProfileIngressRow({
     </>
   );
   const className = cn(
-    "flex min-h-16 w-full items-center gap-3 px-4 py-3 text-left",
+    "flex min-h-16 w-full items-center gap-3 px-4 py-3 text-start",
     onClick &&
       "transition-colors hover:bg-muted/40 disabled:cursor-not-allowed disabled:opacity-50",
   );
@@ -159,7 +160,7 @@ export function ProfileTabBar({
       value={activeTab}
     >
       <TabsList
-        aria-label="Profile sections"
+        aria-label={tl("Profile sections")}
         className="relative isolate grid h-9 w-full overflow-hidden rounded-lg bg-muted p-0.5"
         data-testid="user-profile-tab-list"
         style={{
@@ -168,7 +169,7 @@ export function ProfileTabBar({
       >
         <div
           aria-hidden="true"
-          className="absolute bottom-0.5 left-0.5 top-0.5 z-0 rounded-md bg-background shadow-sm transition-transform duration-[220ms] ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none"
+          className="absolute bottom-0.5 start-0.5 top-0.5 z-0 rounded-md bg-background shadow-sm transition-transform duration-[220ms] ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none"
           data-testid="user-profile-tab-indicator"
           style={{
             transform: `translateX(${activeIndex * 100}%)`,
@@ -245,7 +246,7 @@ export function ProfileInfoTabContent({
         {
           displayValue: "Archived",
           icon: Archive,
-          label: "Visibility",
+          label: tl("Visibility"),
           testId: "user-profile-archived-flair",
           trailingNode: <ArchiveStatusTooltip />,
         },
@@ -285,7 +286,7 @@ export function ProfileInfoTabContent({
         ) : (
           <ProfileIngressRow
             icon={Wrench}
-            label="Activity log"
+            label={tl("Activity log")}
             onClick={() => onOpenActivity(null)}
             testId={`user-profile-view-activity-${pubkey}`}
             trailing="View"
@@ -293,12 +294,15 @@ export function ProfileInfoTabContent({
         )
       ) : null}
       {hasInfoFields || showInstructionBlock ? (
-        <ProfileSectionGroup testId="user-profile-info-section" title="Info">
+        <ProfileSectionGroup
+          testId="user-profile-info-section"
+          title={tl("Info")}
+        >
           {showInstructionBlock ? (
             <ProfileIngressRow
               grouped
               icon={MessageSquare}
-              label="Agent instructions"
+              label={tl("Agent instructions")}
               onClick={onEditAgent}
               testId="user-profile-agent-instruction-row"
             />
@@ -440,12 +444,16 @@ function ProfileLiveActivityEmbed({
   if (slides.length === 0) {
     return (
       <section
-        aria-label={`Open activity feed. Last live ${formatLastLiveLabel(lastLiveAt, Date.now())}.`}
-        className="relative flex h-56 cursor-pointer flex-col overflow-hidden rounded-2xl border bg-background text-left shadow-none transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        aria-label={tlt("Open activity feed. Last live {0}.", [
+          formatLastLiveLabel(lastLiveAt, Date.now()),
+        ])}
+        className="relative flex h-56 cursor-pointer flex-col overflow-hidden rounded-2xl border bg-background text-start shadow-none transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         data-testid={`user-profile-live-activity-${activityAgent.pubkey}`}
       >
         <button
-          aria-label={`Open activity feed. Last live ${formatLastLiveLabel(lastLiveAt, Date.now())}.`}
+          aria-label={tlt("Open activity feed. Last live {0}.", [
+            formatLastLiveLabel(lastLiveAt, Date.now()),
+          ])}
           className="absolute inset-0 z-10 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           onClick={openSelectedActivity}
           type="button"
@@ -473,7 +481,7 @@ function ProfileLiveActivityEmbed({
           <div className="absolute inset-x-0 bottom-0 flex flex-col items-start bg-linear-to-t from-background via-background/90 to-transparent px-3 pb-3 pt-24">
             <div className="min-w-0">
               <span className="block text-sm font-semibold text-muted-foreground">
-                Latest Activity
+                {tl("Latest Activity")}
               </span>
             </div>
           </div>
@@ -485,12 +493,16 @@ function ProfileLiveActivityEmbed({
   return (
     <div>
       <section
-        aria-label={`Open activity feed. Last live ${formatLastLiveLabel(lastLiveAt, Date.now())}.`}
-        className="relative flex h-56 cursor-pointer flex-col overflow-hidden rounded-2xl border bg-background text-left shadow-none transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        aria-label={tlt("Open activity feed. Last live {0}.", [
+          formatLastLiveLabel(lastLiveAt, Date.now()),
+        ])}
+        className="relative flex h-56 cursor-pointer flex-col overflow-hidden rounded-2xl border bg-background text-start shadow-none transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         data-testid={`user-profile-live-activity-${activityAgent.pubkey}`}
       >
         <button
-          aria-label={`Open activity feed. Last live ${formatLastLiveLabel(lastLiveAt, Date.now())}.`}
+          aria-label={tlt("Open activity feed. Last live {0}.", [
+            formatLastLiveLabel(lastLiveAt, Date.now()),
+          ])}
           className="absolute inset-0 z-10 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           onClick={openSelectedActivity}
           type="button"
@@ -510,13 +522,13 @@ function ProfileLiveActivityEmbed({
           }}
           setApi={setCarouselApi}
         >
-          <CarouselContent className="ml-0 h-full flex-1">
+          <CarouselContent className="ms-0 h-full flex-1">
             {slides.map((channelId) => {
               const isMounted = mountedChannelIds.has(channelId);
 
               return (
                 <CarouselItem
-                  className="h-full basis-full pl-0"
+                  className="h-full basis-full ps-0"
                   data-mounted={isMounted ? "true" : "false"}
                   data-testid={`user-profile-activity-slide-${channelId}`}
                   key={channelId}
@@ -548,7 +560,7 @@ function ProfileLiveActivityEmbed({
           <div className="absolute inset-x-0 bottom-0 flex flex-col items-start bg-linear-to-t from-background via-background/80 to-transparent px-3 pb-3 pt-16">
             <div className="min-w-0">
               <span className="block text-xs font-semibold text-muted-foreground">
-                Latest Activity
+                {tl("Latest Activity")}
               </span>
               {activeChannelName ? (
                 <span
@@ -590,7 +602,7 @@ function ActivityCarouselDots({
 
   return (
     <div
-      aria-label="Choose active channel feed"
+      aria-label={tl("Choose active channel feed")}
       className="mt-2 flex items-center justify-center gap-1.5"
       role="tablist"
     >
@@ -600,7 +612,7 @@ function ActivityCarouselDots({
 
         return (
           <button
-            aria-label={`Show #${channelName} activity`}
+            aria-label={tlt("Show #{0} activity", [channelName])}
             aria-selected={isSelected}
             className="group relative flex items-center justify-center before:absolute before:-inset-2 before:content-['']"
             data-testid={`user-profile-activity-dot-${channelId}`}
@@ -642,14 +654,14 @@ function LiveActivityOpenButton({
 
   return (
     <Button
-      aria-label={`Open full activity. Last live ${label}.`}
-      className="absolute right-3 top-3 z-40 rounded-full bg-primary px-2.5 text-xs font-semibold text-primary-foreground hover:bg-primary/90"
+      aria-label={tlt("Open full activity. Last live {0}.", [label])}
+      className="absolute end-3 top-3 z-40 rounded-full bg-primary px-2.5 text-xs font-semibold text-primary-foreground hover:bg-primary/90"
       onClick={(event) => {
         event.stopPropagation();
         onOpenActivity(activeChannelId);
       }}
       size="xs"
-      title={`Last live ${label}`}
+      title={tlt("Last live {0}", [label])}
       type="button"
     >
       {label}
@@ -692,7 +704,7 @@ function ArchiveStatusTooltip() {
     <Tooltip>
       <TooltipTrigger asChild>
         <button
-          aria-label="What archived means"
+          aria-label={tl("What archived means")}
           className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           data-testid="user-profile-archived-info"
           type="button"
@@ -700,10 +712,11 @@ function ArchiveStatusTooltip() {
           <Info className="h-4 w-4" />
         </button>
       </TooltipTrigger>
-      <TooltipContent align="end" className="max-w-72 text-left" side="top">
+      <TooltipContent align="end" className="max-w-72 text-start" side="top">
         <p className="text-sm">
-          Archived agents do not appear in search, autocomplete, or member-add
-          flows in this space. You can unarchive them at any time.
+          {tl(
+            "Archived agents do not appear in search, autocomplete, or member-add flows in this space. You can unarchive them at any time.",
+          )}
         </p>
       </TooltipContent>
     </Tooltip>
@@ -794,7 +807,7 @@ export function ProfileRuntimeTabContent({
           <RefreshCw className="mt-0.5 h-4 w-4 shrink-0 text-amber-600 dark:text-amber-400" />
           <div className="min-w-0 text-sm">
             <p className="font-medium text-amber-600 dark:text-amber-400">
-              Restart required
+              {tl("Restart required")}
             </p>
             <p className="mt-0.5 text-xs text-muted-foreground">
               {autoRestartEnabled
@@ -810,7 +823,7 @@ export function ProfileRuntimeTabContent({
       {hasActivityRows ? (
         <ProfileSectionGroup
           testId="user-profile-runtime-activity-section"
-          title="Activity"
+          title={tl("Activity")}
         >
           {statusDiagnosticsFields.length > 0 ? (
             <ProfileFieldRows
@@ -862,7 +875,7 @@ export function ProfileRuntimeTabContent({
             <ProfileIngressRow
               grouped
               icon={ScrollText}
-              label="Harness log"
+              label={tl("Harness log")}
               onClick={onOpenDiagnostics}
               testId="user-profile-diagnostics-ingress"
               trailing={diagnosticsSummary}
@@ -873,7 +886,7 @@ export function ProfileRuntimeTabContent({
       {hasConfigurationRows ? (
         <ProfileSectionGroup
           testId="user-profile-agent-configuration-section"
-          title="Agent configuration"
+          title={tl("Agent configuration")}
         >
           <ProfileFieldRows
             fields={remainingConfigurationFields}

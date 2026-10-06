@@ -70,6 +70,7 @@ import {
 import { EditRespondToDialog } from "./EditRespondToDialog";
 import { useMembersSidebarActions } from "./useMembersSidebarActions";
 import { useMembersSidebarModeration } from "./useMembersSidebarModeration";
+import { tl, tlt } from "@/shared/i18n/tl";
 const MEMBER_ADD_RESULT_LIMIT = 50;
 const MEMBER_SEARCH_MIN_QUERY_LENGTH = 2;
 const MEMBER_ROW_ESTIMATE_PX = 60;
@@ -705,10 +706,10 @@ export function MembersSidebar({
         >
           <DialogHeader className="space-y-0 pb-5">
             <div className="flex items-center justify-between gap-4">
-              <DialogTitle>Channel members</DialogTitle>
+              <DialogTitle>{tl("Channel members")}</DialogTitle>
               <DialogClose className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors duration-150 ease-out hover:bg-accent hover:text-accent-foreground focus:outline-hidden focus:ring-1 focus:ring-ring">
                 <X className="h-4 w-4" />
-                <span className="sr-only">Close</span>
+                <span className="sr-only">{tl("Close")}</span>
               </DialogClose>
             </div>
             <label
@@ -736,8 +737,8 @@ export function MembersSidebar({
                 }}
                 placeholder={
                   canAddMembers
-                    ? "Add people and agents"
-                    : "Search people and agents"
+                    ? tl("Add people and agents")
+                    : tl("Search people and agents")
                 }
                 ref={searchInputRef}
                 spellCheck={false}
@@ -764,8 +765,8 @@ export function MembersSidebar({
               >
                 <SearchResultSectionTitle>
                   {normalizedSearchQuery
-                    ? "Members"
-                    : `Members · ${activeMembers.length}`}
+                    ? tl("Members")
+                    : tlt("Members · {0}", [activeMembers.length])}
                 </SearchResultSectionTitle>
                 {normalizedSearchQuery ? (
                   <div>
@@ -776,7 +777,7 @@ export function MembersSidebar({
                       <>
                         {addSearchResults.length > 0 || isAddSearchLoading ? (
                           <SearchResultSectionTitle>
-                            Not in this channel
+                            {tl("Not in this channel")}
                           </SearchResultSectionTitle>
                         ) : null}
                         {addSearchResults.map((user) => (
@@ -798,7 +799,7 @@ export function MembersSidebar({
                         ))}
                         {isAddSearchLoading ? (
                           <p className="px-4 py-3 text-sm text-muted-foreground">
-                            Searching...
+                            {tl("Searching...")}
                           </p>
                         ) : null}
                       </>
@@ -807,7 +808,7 @@ export function MembersSidebar({
                     addSearchResults.length === 0 &&
                     !isAddSearchLoading ? (
                       <p className="px-4 py-3 text-sm text-muted-foreground">
-                        No matching people or agents.
+                        {tl("No matching people or agents.")}
                       </p>
                     ) : null}
                   </div>
@@ -824,10 +825,10 @@ export function MembersSidebar({
                 ) : (
                   <p className="px-4 py-3 text-sm text-muted-foreground">
                     {membersQuery.isLoading
-                      ? "Loading members..."
+                      ? tl("Loading members...")
                       : normalizedSearchQuery
-                        ? "No members match your search."
-                        : "No members found."}
+                        ? tl("No members match your search.")
+                        : tl("No members found.")}
                   </p>
                 )}
               </div>
@@ -841,7 +842,7 @@ export function MembersSidebar({
                 >
                   <summary className="flex cursor-pointer items-center gap-2 list-none [&::-webkit-details-marker]:hidden">
                     <h2 className="text-sm font-semibold tracking-tight text-muted-foreground">
-                      Archived
+                      {tl("Archived")}
                     </h2>
                     <span
                       className="text-muted-foreground"
@@ -849,7 +850,7 @@ export function MembersSidebar({
                     >
                       ({archived.length})
                     </span>
-                    <span className="ml-auto text-xs text-muted-foreground transition-transform group-open/archived:rotate-90">
+                    <span className="ms-auto text-xs text-muted-foreground transition-transform group-open/archived:rotate-90">
                       ▸
                     </span>
                   </summary>
@@ -862,7 +863,7 @@ export function MembersSidebar({
                     )}
                     {filteredArchivedMembers.length === 0 ? (
                       <p className="text-sm text-muted-foreground">
-                        No archived members match your search.
+                        {tl("No archived members match your search.")}
                       </p>
                     ) : null}
                   </div>
@@ -917,7 +918,7 @@ function SearchResultSectionTitle({
   children: React.ReactNode;
 }) {
   return (
-    <div className="sticky top-0 z-10 mr-3 flex min-h-9 items-center gap-2 bg-background/95 px-4 pb-1.5 pt-3 text-xs font-medium text-muted-foreground/75 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+    <div className="sticky top-0 z-10 me-3 flex min-h-9 items-center gap-2 bg-background/95 px-4 pb-1.5 pt-3 text-xs font-medium text-muted-foreground/75 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <span>{children}</span>
       {action ? <span>{action}</span> : null}
     </div>

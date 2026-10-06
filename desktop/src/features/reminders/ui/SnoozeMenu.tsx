@@ -16,6 +16,7 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { Input } from "@/shared/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * Clock-icon dropdown of snooze presets plus a "Custom…" popover with a native
@@ -43,7 +44,7 @@ export function SnoozeMenu({
           className="h-7 w-7 p-0"
           disabled={disabled}
           size="sm"
-          title="Snooze"
+          title={tl("Snooze")}
           type="button"
           variant="ghost"
         >
@@ -69,14 +70,14 @@ export function SnoozeMenu({
                 setCustomOpen(true);
               }}
             >
-              Custom…
+              {tl("Custom…")}
             </DropdownMenuItem>
           </PopoverTrigger>
           <PopoverContent align="end" className="w-auto space-y-3">
-            <p className="text-sm font-medium">Snooze until</p>
+            <p className="text-sm font-medium">{tl("Snooze until")}</p>
             <div className="flex gap-2">
               <Input
-                aria-label="Snooze date"
+                aria-label={tl("Snooze date")}
                 className="flex-1"
                 min={todayDateString()}
                 onChange={(event) => setCustomDate(event.target.value)}
@@ -84,7 +85,7 @@ export function SnoozeMenu({
                 value={customDate}
               />
               <Input
-                aria-label="Snooze time"
+                aria-label={tl("Snooze time")}
                 className="w-[120px]"
                 onChange={(event) => setCustomTime(event.target.value)}
                 type="time"
@@ -101,7 +102,7 @@ export function SnoozeMenu({
               }}
               type="button"
             >
-              Snooze
+              {tl("Snooze")}
             </Button>
           </PopoverContent>
         </Popover>

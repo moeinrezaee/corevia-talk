@@ -6,6 +6,7 @@ import { cn } from "@/shared/lib/cn";
 import { getInitials } from "@/shared/lib/initials";
 import { rewriteRelayUrl } from "@/shared/lib/mediaUrl";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar";
+import { tlt } from "@/shared/i18n/tl";
 
 type UserAvatarSize = "xs" | "sm" | "md";
 
@@ -100,7 +101,7 @@ export function UserAvatar({
     >
       {src ? (
         <AvatarImage
-          alt={`${displayName} avatar`}
+          alt={tlt("{0} avatar", [displayName])}
           className={cn("object-cover", !animated && "bg-secondary")}
           data-testid={testId ? `${testId}-image` : undefined}
           draggable={imageDraggable}

@@ -5,6 +5,7 @@ import { useState } from "react";
 import type { ResolvedLinkPreview } from "@/shared/lib/useResolvedLinkPreviews";
 import { cn } from "@/shared/lib/cn";
 import { LinkPreviewControls } from "@/shared/ui/link-preview-controls";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export type LinkPreviewImageLightboxProps = {
   alt: string;
@@ -172,7 +173,7 @@ function TweetPreview({
   return (
     <div
       className={cn(
-        "relative w-lg max-w-full shrink-0 border-l-[3px] border-border py-1 pl-3",
+        "relative w-lg max-w-full shrink-0 border-s-[3px] border-border py-1 ps-3",
         className,
       )}
       data-image-state={preview.imageState}
@@ -222,7 +223,7 @@ function TweetPreview({
           ) : (
             <ChevronDown aria-hidden="true" className="size-3" />
           )}
-          {contentExpanded ? "Show less" : "Show more"}
+          {contentExpanded ? tl("Show less") : tl("Show more")}
         </button>
       ) : null}
       {showControls ? (
@@ -271,7 +272,7 @@ export function RichLinkPreviewAttachment({
   return (
     <div
       className={cn(
-        "relative w-lg max-w-full shrink-0 border-l-[3px] border-border py-1 pl-3",
+        "relative w-lg max-w-full shrink-0 border-s-[3px] border-border py-1 ps-3",
         className,
       )}
       data-image-state={preview.imageState}
@@ -301,7 +302,11 @@ export function RichLinkPreviewAttachment({
           <span className="truncate">{hostname}</span>
         </a>
         <a
-          aria-label={`Open ${preview.provider} ${preview.typeLabel}: ${preview.title}`}
+          aria-label={tlt("Open {0} {1}: {2}", [
+            preview.provider,
+            preview.typeLabel,
+            preview.title,
+          ])}
           className="mt-0.5 block text-sm font-semibold leading-5 text-foreground hover:underline"
           href={preview.href}
           onClick={
@@ -344,7 +349,7 @@ export function RichLinkPreviewAttachment({
           ) : (
             <ChevronDown aria-hidden="true" className="size-3" />
           )}
-          {contentExpanded ? "Show less" : "Show more"}
+          {contentExpanded ? tl("Show less") : tl("Show more")}
         </button>
       ) : null}
       {showControls ? (

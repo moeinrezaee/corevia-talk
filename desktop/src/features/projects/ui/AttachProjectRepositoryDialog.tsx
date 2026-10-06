@@ -5,6 +5,7 @@ import type { Project, Repository } from "@/features/projects/hooks";
 import { Button } from "@/shared/ui/button";
 import { ChooserDialogContent } from "@/shared/ui/chooser-dialog-content";
 import { Dialog } from "@/shared/ui/dialog";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export function AttachProjectRepositoryDialog({
   isAttaching,
@@ -51,18 +52,20 @@ export function AttachProjectRepositoryDialog({
         className="max-w-lg"
         contentClassName="max-h-96 overflow-y-auto pt-3"
         data-testid="attach-project-repository-dialog"
-        description={`Choose an existing repository to add to ${project.name}.`}
-        title="Add existing repository"
+        description={tlt("Choose an existing repository to add to {0}.", [
+          project.name,
+        ])}
+        title={tl("Add existing repository")}
       >
         <div className="space-y-2">
           {repositories.length === 0 ? (
             <p className="py-6 text-center text-sm text-muted-foreground">
-              Every available repository is already in this project.
+              {tl("Every available repository is already in this project.")}
             </p>
           ) : (
             repositories.map((repository) => (
               <Button
-                className="h-auto w-full justify-start gap-3 px-3 py-2.5 text-left"
+                className="h-auto w-full justify-start gap-3 px-3 py-2.5 text-start"
                 data-testid={`attach-existing-repository-${repository.dtag}`}
                 disabled={isAttaching}
                 key={repository.repoAddress}

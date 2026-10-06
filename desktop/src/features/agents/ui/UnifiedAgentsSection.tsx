@@ -27,6 +27,7 @@ import { AgentRuntimeAvatarControl } from "./AgentRuntimeAvatarControl";
 import { CreateIdentityCard } from "./CreateIdentityCard";
 import { PersonaActionsMenu } from "./PersonaActionsMenu";
 import { buildUnifiedGroups } from "./unifiedAgentGroups";
+import { tl } from "@/shared/i18n/tl";
 
 type UnifiedAgentsSectionProps = {
   defaultModel: string;
@@ -187,7 +188,7 @@ export function UnifiedAgentsSection(props: UnifiedAgentsSectionProps) {
               defaultModel={defaultModel}
               groupKey="__unknown__"
               bestiePubkey={bestiePubkey}
-              label="Unknown agents"
+              label={tl("Unknown agents")}
               restartingAgentPubkey={restartingAgentPubkey}
               startingAgentPubkey={startingAgentPubkey}
               onToggle={toggle}
@@ -204,7 +205,7 @@ export function UnifiedAgentsSection(props: UnifiedAgentsSectionProps) {
               defaultModel={defaultModel}
               groupKey="__ungrouped__"
               bestiePubkey={bestiePubkey}
-              label="Custom agents"
+              label={tl("Custom agents")}
               restartingAgentPubkey={restartingAgentPubkey}
               startingAgentPubkey={startingAgentPubkey}
               onToggle={toggle}
@@ -359,7 +360,7 @@ function AgentPersonaCard({
         agent?.personaOrphaned ? (
           <Badge className="gap-1" variant="warning">
             <AlertTriangle className="h-3 w-3" />
-            Configuration missing
+            {tl("Configuration missing")}
           </Badge>
         ) : null
       }
@@ -453,7 +454,7 @@ function StandaloneAgentCard({
         agent.personaOrphaned ? (
           <Badge className="gap-1" variant="warning">
             <AlertTriangle className="h-3 w-3" />
-            Configuration missing
+            {tl("Configuration missing")}
           </Badge>
         ) : null
       }
@@ -516,7 +517,7 @@ function CollapsibleAgentGroup({
   return (
     <div className={`${AGENT_CARD_COLUMN_CLASS} space-y-2`}>
       <button
-        className="group flex items-center gap-2 rounded-md px-1 py-1 text-left transition-colors hover:bg-muted/50"
+        className="group flex items-center gap-2 rounded-md px-1 py-1 text-start transition-colors hover:bg-muted/50"
         onClick={() => onToggle(groupKey)}
         type="button"
       >

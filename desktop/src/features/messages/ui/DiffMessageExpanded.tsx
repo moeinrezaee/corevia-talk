@@ -10,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
+import { tl } from "@/shared/i18n/tl";
 
 type DiffMessageExpandedProps = {
   content: string;
@@ -37,17 +38,17 @@ export default function DiffMessageExpanded({
       open
     >
       <DialogContent className="max-w-5xl w-full h-[80vh] flex flex-col p-0 gap-0">
-        <DialogHeader className="shrink-0 border-b border-border/50 px-4 py-3 pr-14">
+        <DialogHeader className="shrink-0 border-b border-border/50 px-4 py-3 pe-14">
           <div className="flex flex-wrap items-center gap-2">
             <DialogTitle className="min-w-0 truncate font-mono text-sm font-medium">
-              {filePath ?? "Diff Viewer"}
+              {filePath ?? tl("Diff Viewer")}
             </DialogTitle>
             {titleBadge && (
               <span className="shrink-0 rounded-md border border-border/60 px-1.5 py-0.5 text-2xs uppercase tracking-[0.14em] text-muted-foreground">
                 {titleBadge}
               </span>
             )}
-            <div className="ml-auto flex items-center gap-1 rounded-lg border border-border/60 bg-muted/30 p-1">
+            <div className="ms-auto flex items-center gap-1 rounded-lg border border-border/60 bg-muted/30 p-1">
               <Button
                 className="h-7 px-2"
                 onClick={() => {
@@ -58,7 +59,7 @@ export default function DiffMessageExpanded({
                 variant={viewType === "unified" ? "secondary" : "ghost"}
               >
                 <Rows3 className="h-4 w-4" />
-                Unified
+                {tl("Unified")}
               </Button>
               <Button
                 className="h-7 px-2"
@@ -70,7 +71,7 @@ export default function DiffMessageExpanded({
                 variant={viewType === "split" ? "secondary" : "ghost"}
               >
                 <SplitSquareVertical className="h-4 w-4" />
-                Split
+                {tl("Split")}
               </Button>
             </div>
           </div>

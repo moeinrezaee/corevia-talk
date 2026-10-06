@@ -15,6 +15,7 @@ import {
   AttachmentMedia,
   AttachmentTitle,
 } from "@/shared/ui/attachment";
+import { tl } from "@/shared/i18n/tl";
 
 type WaveMessageAttachmentProps = {
   channelId?: string | null;
@@ -78,7 +79,7 @@ export function WaveMessageAttachment({
           />
         </AttachmentTitle>
         <AttachmentDescription>
-          Start a huddle to talk to them.
+          {tl("Start a huddle to talk to them.")}
         </AttachmentDescription>
       </AttachmentContent>
       <AttachmentActions>
@@ -88,7 +89,7 @@ export function WaveMessageAttachment({
           size="xs"
           type="button"
         >
-          Start huddle
+          {tl("Start huddle")}
         </AttachmentAction>
       </AttachmentActions>
     </Attachment>

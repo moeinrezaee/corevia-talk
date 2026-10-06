@@ -52,6 +52,7 @@ import {
 import { SnapshotOptionMenu } from "./SnapshotOptionMenu";
 import { resolveSnapshotAvatarPng } from "./snapshotAvatarPng";
 import { useSnapshotSendController } from "./useSnapshotSendController";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type PersonaShareDialogProps = {
   catalogShareLevel: CatalogPersonaShareLevel;
@@ -166,19 +167,25 @@ function MemoryShareConfirmation({
     >
       <AlertDialogContent data-testid={`${testIdPrefix}-memory-confirmation`}>
         <AlertDialogHeader>
-          <AlertDialogTitle>Share memories?</AlertDialogTitle>
+          <AlertDialogTitle>{tl("Share memories?")}</AlertDialogTitle>
           <AlertDialogDescription>
-            This {itemLabel} includes <strong>plaintext {memoryLabel}</strong>.{" "}
+            {tl("This")} {itemLabel} {tl("includes")}{" "}
+            <strong>
+              {tl("plaintext")} {memoryLabel}
+            </strong>
+            .{" "}
             {isLinkShare
-              ? "Anyone with the link can view it."
-              : `${recipientAudience}—and anyone with the file link—can view it.`}{" "}
-            Only share with people you trust.
+              ? tl("Anyone with the link can view it.")
+              : tlt("{0}—and anyone with the file link—can view it.", [
+                  recipientAudience,
+                ])}{" "}
+            {tl("Only share with people you trust.")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel asChild>
             <Button type="button" variant="outline">
-              Cancel
+              {tl("Cancel")}
             </Button>
           </AlertDialogCancel>
           <AlertDialogAction asChild>
@@ -189,7 +196,7 @@ function MemoryShareConfirmation({
               }}
               type="button"
             >
-              {isLinkShare ? "Copy link" : "Send"}
+              {isLinkShare ? tl("Copy link") : tl("Send")}
             </Button>
           </AlertDialogAction>
         </AlertDialogFooter>
@@ -368,7 +375,7 @@ export function SnapshotShareDialog({
       setCopyStatus("copied");
     } catch {
       setCopyStatus("idle");
-      toast.error("Couldn’t copy link. Try again.");
+      toast.error(tl("Couldn’t copy link. Try again."));
     }
   }
 
@@ -450,22 +457,24 @@ export function SnapshotShareDialog({
           data-testid={`${testIdPrefix}-main-card`}
         >
           <DialogHeader>
-            <DialogTitle className="min-w-0 truncate pr-10">
-              Share {displayName}
+            <DialogTitle className="min-w-0 truncate pe-10">
+              {tl("Share")} {displayName}
             </DialogTitle>
             <DialogDescription
               data-testid={`${testIdPrefix}-share-description`}
             >
-              Anyone you share this {itemLabel} with will receive a copy they
-              can add and use. Changes you make later won’t sync.
+              {tl("Anyone you share this")} {itemLabel}{" "}
+              {tl(
+                "with will receive a copy they can add and use. Changes you make later won’t sync.",
+              )}
             </DialogDescription>
           </DialogHeader>
           <DialogClose
-            className="absolute right-4 top-4 flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors duration-150 ease-out hover:bg-accent hover:text-accent-foreground focus:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-100"
+            className="absolute end-4 top-4 flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors duration-150 ease-out hover:bg-accent hover:text-accent-foreground focus:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-100"
             disabled={isActionPending}
           >
             <X className="h-4 w-4" />
-            <span className="sr-only">Close</span>
+            <span className="sr-only">{tl("Close")}</span>
           </DialogClose>
 
           <div className="space-y-4 pt-4">
@@ -509,7 +518,7 @@ export function SnapshotShareDialog({
                         onClick={() => requestMemoryShare("send", shareLevel)}
                         type="button"
                       >
-                        {isSending ? "Sending…" : "Send"}
+                        {isSending ? tl("Sending…") : tl("Send")}
                       </Button>
                     </motion.div>
                   ) : null}
@@ -523,14 +532,14 @@ export function SnapshotShareDialog({
                 data-testid={`${testIdPrefix}-link-settings`}
               >
                 <h3 className="text-xs font-medium text-secondary-foreground/75">
-                  Share settings
+                  {tl("Share settings")}
                 </h3>
                 <div
                   className="flex items-center gap-3"
                   data-testid={`${testIdPrefix}-share-level-row`}
                 >
                   <h4 className="min-w-0 flex-1 text-sm font-medium">
-                    What’s included
+                    {tl("What’s included")}
                   </h4>
                   <ShareLevelControl
                     ariaLabel="What to include"
@@ -643,8 +652,11 @@ export function SnapshotShareDialog({
                   >
                     <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
                     <p>
-                      Memory is stored as <strong>plaintext</strong> in the
-                      snapshot. Only share it with people you trust.
+                      {tl("Memory is stored as")}{" "}
+                      <strong>{tl("plaintext")}</strong>{" "}
+                      {tl(
+                        "in the snapshot. Only share it with people you trust.",
+                      )}
                     </p>
                   </div>
                 </motion.div>
@@ -654,14 +666,16 @@ export function SnapshotShareDialog({
         </div>
         {beforeExport}
         <button
-          className="relative flex min-h-14 w-full items-center gap-3 rounded-2xl bg-background px-5 py-4 text-left text-sm font-medium shadow-2xl outline-hidden transition-colors hover:bg-muted focus-visible:bg-muted disabled:cursor-default disabled:opacity-100"
+          className="relative flex min-h-14 w-full items-center gap-3 rounded-2xl bg-background px-5 py-4 text-start text-sm font-medium shadow-2xl outline-hidden transition-colors hover:bg-muted focus-visible:bg-muted disabled:cursor-default disabled:opacity-100"
           data-testid={`${testIdPrefix}-export`}
           disabled={isActionPending}
           onClick={onExport}
           type="button"
         >
           <Download className="h-4 w-4 shrink-0 text-muted-foreground" />
-          <span className="min-w-0 flex-1">Export {itemLabel}</span>
+          <span className="min-w-0 flex-1">
+            {tl("Export")} {itemLabel}
+          </span>
           <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
         </button>
       </DialogContent>
@@ -715,15 +729,15 @@ export function PersonaShareDialog({
           >
             <BookUser className="h-4 w-4 shrink-0 text-muted-foreground" />
             <div className="min-w-0 flex-1">
-              <h3 className="text-sm font-medium">Share to catalog</h3>
+              <h3 className="text-sm font-medium">{tl("Share to catalog")}</h3>
               <p className="text-xs text-secondary-foreground/75">
-                Anyone in this community can find and use a copy. Your agent
-                instruction is shared as plaintext. Memories and secrets aren’t
-                included.
+                {tl(
+                  "Anyone in this community can find and use a copy. Your agent instruction is shared as plaintext. Memories and secrets aren’t included.",
+                )}
               </p>
             </div>
             <Switch
-              aria-label="Share to catalog"
+              aria-label={tl("Share to catalog")}
               checked={catalogShareLevel !== "not-shared"}
               data-testid="persona-share-catalog-access"
               disabled={isPending}

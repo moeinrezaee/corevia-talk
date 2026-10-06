@@ -60,7 +60,7 @@ export function ProviderConfigFields({
           >
             {typeof prop.title === "string" ? prop.title : key}
             {required.has(key) ? (
-              <span className="ml-1 text-destructive">*</span>
+              <span className="ms-1 text-destructive">*</span>
             ) : null}
           </label>
           <Input

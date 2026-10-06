@@ -5,7 +5,7 @@
 
 /** Base classes for every side panel `<aside>`. */
 export const PANEL_BASE_CLASS =
-  "relative flex h-full shrink-0 flex-col border-l border-border/80 bg-background";
+  "relative flex h-full shrink-0 flex-col border-s border-border/80 bg-background";
 
 /**
  * Extra classes applied when the panel is rendered as a floating overlay.
@@ -19,7 +19,7 @@ export const PANEL_BASE_CLASS =
  * the panel hangs below the viewport (100vh tall, but starting 44px down).
  */
 export const PANEL_OVERLAY_CLASS =
-  "fixed bottom-0 right-0 top-11 z-40 h-auto shadow-xl max-w-[calc(100vw-2rem)]";
+  "fixed bottom-0 end-0 top-11 z-40 h-auto shadow-xl max-w-[calc(100vw-2rem)]";
 
 export const PANEL_ENTER_MOTION_CLASS = "buzz-side-panel-enter";
 

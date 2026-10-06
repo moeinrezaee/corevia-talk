@@ -20,6 +20,7 @@ import {
   AgentVoiceMenu,
   type HuddleAgentVoiceSettings,
 } from "./AgentVoiceMenu";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type ParticipantListProps = {
   /** Pubkey hex strings from the Rust huddle state. */
@@ -248,7 +249,7 @@ export function HuddleParticipantsControl({
       sideOffset={10}
     >
       <div className="mb-3 flex items-center justify-between gap-3">
-        <h2 className="text-sm font-medium">Participants</h2>
+        <h2 className="text-sm font-medium">{tl("Participants")}</h2>
         <span className="shrink-0 text-xs text-foreground/60">
           {participantLabel}
         </span>
@@ -275,13 +276,17 @@ export function HuddleParticipantsControl({
                   {displayName}
                 </div>
                 <div className="truncate text-xs text-foreground/60">
-                  {isActive ? "Speaking" : isAgent ? "Agent" : "In huddle"}
+                  {isActive
+                    ? tl("Speaking")
+                    : isAgent
+                      ? tl("Agent")
+                      : tl("In huddle")}
                 </div>
               </div>
 
               {isAgent && onRemoveAgent && (
                 <Button
-                  aria-label={`Remove ${displayName} from huddle`}
+                  aria-label={tlt("Remove {0} from huddle", [displayName])}
                   className="h-7 w-7 shrink-0 text-foreground/65 hover:bg-destructive/15 hover:text-destructive"
                   onClick={() => void onRemoveAgent(pubkey)}
                   size="icon"
@@ -342,14 +347,16 @@ export function HuddleParticipantsControl({
               participant.isActive &&
               onInterruptAgentSpeech ? (
                 <Button
-                  aria-label={`Stop ${participant.displayName} speaking`}
+                  aria-label={tlt("Stop {0} speaking", [
+                    participant.displayName,
+                  ])}
                   className="h-5 min-h-0 w-full rounded-sm bg-destructive/15 px-0 py-0 text-xs font-medium leading-none text-destructive hover:bg-destructive/20 hover:text-destructive"
                   onClick={() => onInterruptAgentSpeech(participant.pubkey)}
                   size="sm"
                   type="button"
                   variant="ghost"
                 >
-                  Stop
+                  {tl("Stop")}
                 </Button>
               ) : (
                 <span className="w-full truncate text-center text-xs font-medium leading-none text-foreground/80">
@@ -381,7 +388,9 @@ export function HuddleParticipantsControl({
             settings={resolvedAgentVoiceSettings[participant.pubkey]}
             trigger={
               <button
-                aria-label={`Voice settings for ${participant.displayName}`}
+                aria-label={tlt("Voice settings for {0}", [
+                  participant.displayName,
+                ])}
                 className="inline-flex shrink-0 cursor-pointer rounded-[30%] outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 data-testid="huddle-agent-voice-menu-trigger"
                 type="button"
@@ -406,7 +415,9 @@ export function HuddleParticipantsControl({
       {hiddenParticipantCount > 0 ? (
         <PopoverTrigger asChild>
           <Button
-            aria-label={`Show all huddle participants (${participants.length})`}
+            aria-label={tlt("Show all huddle participants ({0})", [
+              participants.length,
+            ])}
             className={cn(
               "relative z-10 shrink-0 px-1 text-2xs font-semibold shadow-none tabular-nums",
               appearance === "room"

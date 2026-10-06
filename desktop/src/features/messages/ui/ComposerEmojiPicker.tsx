@@ -13,6 +13,7 @@ import { Button } from "@/shared/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
+import { tl } from "@/shared/i18n/tl";
 
 type ComposerEmojiPickerProps = {
   disabled?: boolean;
@@ -90,7 +91,7 @@ export const ComposerEmojiPicker = React.memo(function ComposerEmojiPicker({
           <PopoverTrigger asChild>
             <Button
               aria-label={
-                gifsAvailable ? "Insert emoji or GIF" : "Insert emoji"
+                gifsAvailable ? tl("Insert emoji or GIF") : tl("Insert emoji")
               }
               data-testid="composer-emoji-button"
               disabled={disabled}
@@ -104,7 +105,7 @@ export const ComposerEmojiPicker = React.memo(function ComposerEmojiPicker({
           </PopoverTrigger>
         </TooltipTrigger>
         <TooltipContent>
-          {gifsAvailable ? "Emoji and GIFs" : "Emoji"}
+          {gifsAvailable ? tl("Emoji and GIFs") : tl("Emoji")}
         </TooltipContent>
       </Tooltip>
       <PopoverContent
@@ -138,7 +139,7 @@ export const ComposerEmojiPicker = React.memo(function ComposerEmojiPicker({
                   transform: `translateX(${PICKER_TAB_ORDER.indexOf(pickerTab) * 100}%)`,
                 }}
                 aria-hidden="true"
-                className="absolute bottom-1.5 left-1.5 top-1.5 z-0 rounded-md bg-background shadow"
+                className="absolute bottom-1.5 start-1.5 top-1.5 z-0 rounded-md bg-background shadow"
                 initial={false}
                 style={{
                   borderTopLeftRadius:
@@ -165,7 +166,7 @@ export const ComposerEmojiPicker = React.memo(function ComposerEmojiPicker({
                 value="emoji"
               >
                 <Smile aria-hidden className="h-4 w-4" />
-                Emoji
+                {tl("Emoji")}
               </TabsTrigger>
               <TabsTrigger
                 className="relative z-10 h-8 gap-1.5 bg-transparent shadow-none transition-colors data-[state=active]:bg-transparent data-[state=active]:shadow-none"
@@ -173,7 +174,7 @@ export const ComposerEmojiPicker = React.memo(function ComposerEmojiPicker({
                 value="gifs"
               >
                 <Images aria-hidden className="h-4 w-4" />
-                GIFs
+                {tl("GIFs")}
               </TabsTrigger>
             </TabsList>
             <TabsContent className="m-0" value="emoji">

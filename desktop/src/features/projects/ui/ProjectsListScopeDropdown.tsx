@@ -28,7 +28,7 @@ export function ProjectsListScopeDropdown<T extends string>({
       <DropdownMenuTrigger asChild>
         <Button
           aria-label={label}
-          className="-ml-2 h-8 gap-1.5 px-2 text-xs font-medium"
+          className="-ms-2 h-8 gap-1.5 px-2 text-xs font-medium"
           variant="ghost"
         >
           {selectedLabel}

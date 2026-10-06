@@ -8,6 +8,7 @@ import {
   PERSONA_FIELD_CONTROL_CLASS,
   PERSONA_FIELD_SHELL_CLASS,
 } from "./agentConfigOptions";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export type EnvVarsValue = Record<string, string>;
 
@@ -371,9 +372,9 @@ export function EnvVarsEditor({
                     {key}
                   </span>
                   {isMissing ? (
-                    <span className="ml-1 flex items-center gap-0.5 rounded-sm bg-amber-100 px-1 py-0.5 text-2xs font-medium text-amber-700 dark:bg-amber-900/40 dark:text-amber-400">
+                    <span className="ms-1 flex items-center gap-0.5 rounded-sm bg-amber-100 px-1 py-0.5 text-2xs font-medium text-amber-700 dark:bg-amber-900/40 dark:text-amber-400">
                       <AlertCircle className="h-2.5 w-2.5" aria-hidden />
-                      Required
+                      {tl("Required")}
                     </span>
                   ) : null}
                 </div>
@@ -384,7 +385,7 @@ export function EnvVarsEditor({
                   )}
                 >
                   <Input
-                    aria-label={`Value for ${key}`}
+                    aria-label={tlt("Value for {0}", [key])}
                     className={cn(
                       "h-8 px-0 py-0 font-mono leading-6",
                       PERSONA_FIELD_CONTROL_CLASS,
@@ -394,7 +395,7 @@ export function EnvVarsEditor({
                     onChange={(event) =>
                       updateRequiredValue(key, event.target.value)
                     }
-                    placeholder="value"
+                    placeholder={tl("value")}
                     ref={(el) => {
                       if (el) {
                         requiredValueRefs.current.set(key, el);
@@ -418,8 +419,8 @@ export function EnvVarsEditor({
                 // record has no entry for this key (global/persona satisfies it).
                 const verb = key in value ? "Overrides" : "Inherited from";
                 return (
-                  <p className="ml-1 text-xs text-muted-foreground">
-                    {verb} {inheritedLabel} value{" "}
+                  <p className="ms-1 text-xs text-muted-foreground">
+                    {verb} {inheritedLabel} {tl("value")}{" "}
                     <span className="font-mono">
                       {maskInherited(inheritedValue)}
                     </span>
@@ -428,7 +429,7 @@ export function EnvVarsEditor({
               })()}
               {keyAnnotations?.[key] ? (
                 <p
-                  className="ml-1 text-xs text-muted-foreground"
+                  className="ms-1 text-xs text-muted-foreground"
                   data-testid="env-vars-key-annotation"
                 >
                   {keyAnnotations[key]}
@@ -459,8 +460,8 @@ export function EnvVarsEditor({
                 >
                   {key}
                 </span>
-                <span className="ml-1 rounded-sm bg-muted px-1 py-0.5 text-2xs font-medium text-muted-foreground">
-                  Set in goose config
+                <span className="ms-1 rounded-sm bg-muted px-1 py-0.5 text-2xs font-medium text-muted-foreground">
+                  {tl("Set in goose config")}
                 </span>
               </div>
               {/* Spacer columns to align with required-key rows */}
@@ -504,8 +505,8 @@ export function EnvVarsEditor({
                   >
                     {irow.key}
                   </span>
-                  <span className="ml-1 rounded-sm bg-muted px-1 py-0.5 text-2xs font-medium text-muted-foreground">
-                    Inherited from {inheritedRowsLabel}
+                  <span className="ms-1 rounded-sm bg-muted px-1 py-0.5 text-2xs font-medium text-muted-foreground">
+                    {tl("Inherited from")} {inheritedRowsLabel}
                   </span>
                 </div>
                 <div
@@ -539,7 +540,7 @@ export function EnvVarsEditor({
         fileSatisfiedKeys.length === 0 &&
         inheritedRows.length === 0 ? (
           <p className="text-xs italic text-muted-foreground">
-            No variables set.
+            {tl("No variables set.")}
           </p>
         ) : null}
         {rows.map((row) => {
@@ -556,7 +557,7 @@ export function EnvVarsEditor({
                   )}
                 >
                   <Input
-                    aria-label="Variable name"
+                    aria-label={tl("Variable name")}
                     className={cn(
                       "h-8 px-0 py-0 font-mono leading-6",
                       PERSONA_FIELD_CONTROL_CLASS,
@@ -566,7 +567,7 @@ export function EnvVarsEditor({
                     onChange={(event) =>
                       updateRow(row.id, { key: event.target.value })
                     }
-                    placeholder="VARIABLE_NAME"
+                    placeholder={tl("VARIABLE_NAME")}
                     value={row.key}
                   />
                 </div>
@@ -577,7 +578,7 @@ export function EnvVarsEditor({
                   )}
                 >
                   <Input
-                    aria-label="Variable value"
+                    aria-label={tl("Variable value")}
                     className={cn(
                       "h-8 px-0 py-0 font-mono leading-6",
                       PERSONA_FIELD_CONTROL_CLASS,
@@ -587,12 +588,12 @@ export function EnvVarsEditor({
                     onChange={(event) =>
                       updateRow(row.id, { value: event.target.value })
                     }
-                    placeholder="value"
+                    placeholder={tl("value")}
                     value={row.value}
                   />
                 </div>
                 <Button
-                  aria-label="Remove variable"
+                  aria-label={tl("Remove variable")}
                   data-testid="env-vars-remove"
                   disabled={disabled}
                   onClick={() => removeRow(row.id)}
@@ -604,8 +605,8 @@ export function EnvVarsEditor({
                 </Button>
               </div>
               {showsInherited ? (
-                <p className="ml-1 text-xs text-muted-foreground">
-                  Overrides {inheritedLabel} value{" "}
+                <p className="ms-1 text-xs text-muted-foreground">
+                  {tl("Overrides")} {inheritedLabel} {tl("value")}{" "}
                   <span className="font-mono">
                     {maskInherited(inheritedValue)}
                   </span>
@@ -618,15 +619,15 @@ export function EnvVarsEditor({
                 );
                 if (!override) return null;
                 return (
-                  <p className="ml-1 text-xs text-muted-foreground">
-                    Overrides {inheritedRowsLabel} default{" "}
+                  <p className="ms-1 text-xs text-muted-foreground">
+                    {tl("Overrides")} {inheritedRowsLabel} {tl("default")}{" "}
                     <span className="font-mono">{override.value}</span>
                   </p>
                 );
               })()}
               {row.key.length > 0 && keyAnnotations?.[row.key] ? (
                 <p
-                  className="ml-1 text-xs text-muted-foreground"
+                  className="ms-1 text-xs text-muted-foreground"
                   data-testid="env-vars-key-annotation"
                 >
                   {keyAnnotations[row.key]}
@@ -643,8 +644,8 @@ export function EnvVarsEditor({
           type="button"
           variant="outline"
         >
-          <Plus className="mr-1 h-4 w-4" />
-          Add variable
+          <Plus className="me-1 h-4 w-4" />
+          {tl("Add variable")}
         </Button>
       </div>
     </div>

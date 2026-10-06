@@ -21,6 +21,7 @@ import {
   type ParsedConditionExpression,
 } from "./workflowConditionExpression";
 import type { TriggerType } from "./workflowFormTypes";
+import { tl } from "@/shared/i18n/tl";
 
 const OPERATOR_LABELS: Record<ConditionOperator, string> = {
   contains: "contains",
@@ -99,7 +100,7 @@ function AuthorConditionSummary({
         {excluded ? <ExclusionStrike /> : null}
       </span>
       <span className="sr-only">
-        {excluded ? "Excluded author: " : "Selected author: "}
+        {excluded ? tl("Excluded author: ") : tl("Selected author: ")}
         {label}
       </span>
     </span>
@@ -120,7 +121,9 @@ function EmojiConditionSummary({
       </span>
       {excluded ? <ExclusionStrike /> : null}
       <span className="sr-only">
-        {excluded ? "Excluded reaction emoji: " : "Selected reaction emoji: "}
+        {excluded
+          ? tl("Excluded reaction emoji: ")
+          : tl("Selected reaction emoji: ")}
         {emoji}
       </span>
     </span>
@@ -215,21 +218,21 @@ export function WorkflowTriggerConditions({
       value={mode}
     >
       <TabsList
-        aria-label="Condition editor mode"
+        aria-label={tl("Condition editor mode")}
         className="grid h-9 w-full grid-cols-2 p-0.5"
       >
         <TabsTrigger className="h-8" disabled={disabled} value="basic">
-          Basic
+          {tl("Basic")}
         </TabsTrigger>
         <TabsTrigger className="h-8" disabled={disabled} value="advanced">
-          Advanced
+          {tl("Advanced")}
         </TabsTrigger>
       </TabsList>
 
       {mode === "advanced" ? (
         <div className="space-y-2">
           <Input
-            aria-label="Advanced expression"
+            aria-label={tl("Advanced expression")}
             autoCapitalize="off"
             autoCorrect="off"
             disabled={disabled}
@@ -238,19 +241,21 @@ export function WorkflowTriggerConditions({
               localValue.current = event.target.value;
               onChange(event.target.value.trim());
             }}
-            placeholder='e.g. trigger_author == "…"'
+            placeholder={tl('e.g. trigger_author == "…"')}
             value={value}
           />
           <p className="text-xs text-muted-foreground">
-            Use an evalexpr expression. Existing custom expressions stay
-            unchanged.
+            {tl(
+              "Use an evalexpr expression. Existing custom expressions stay unchanged.",
+            )}
           </p>
         </div>
       ) : parsedValue === null && value.trim() ? (
         <div className="space-y-3 rounded-md border border-border/70 p-3">
           <p className="text-xs text-muted-foreground">
-            An advanced expression is active. Replacing it with basic filters
-            cannot be undone.
+            {tl(
+              "An advanced expression is active. Replacing it with basic filters cannot be undone.",
+            )}
           </p>
           <button
             className="text-sm font-medium text-destructive hover:underline"
@@ -262,7 +267,7 @@ export function WorkflowTriggerConditions({
             }}
             type="button"
           >
-            Replace with basic filters
+            {tl("Replace with basic filters")}
           </button>
         </div>
       ) : (
@@ -310,7 +315,7 @@ export function WorkflowTriggerConditions({
               >
                 <button
                   aria-expanded={expanded}
-                  className="flex min-h-12 w-full items-center gap-3 py-3 text-left transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring disabled:opacity-50"
+                  className="flex min-h-12 w-full items-center gap-3 py-3 text-start transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring disabled:opacity-50"
                   disabled={disabled}
                   onClick={() =>
                     setExpandedField(expanded ? null : field.value)
@@ -369,7 +374,7 @@ export function WorkflowTriggerConditions({
                     )}
                   >
                     <fieldset>
-                      <legend className="sr-only">Match</legend>
+                      <legend className="sr-only">{tl("Match")}</legend>
                       <div className="grid grid-cols-2 gap-2.5">
                         {conditionOperatorsForField(field.value).map(
                           (operator) => {
@@ -520,7 +525,7 @@ export function WorkflowTriggerConditions({
                         }
                         type="button"
                       >
-                        Clear filter
+                        {tl("Clear filter")}
                       </button>
                     ) : null}
                   </div>

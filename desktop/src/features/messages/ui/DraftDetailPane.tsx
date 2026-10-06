@@ -25,6 +25,7 @@ import { Button } from "@/shared/ui/button";
 import { Markdown } from "@/shared/ui/markdown";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { tl } from "@/shared/i18n/tl";
 
 type DraftDetailPaneProps = {
   item: DraftViewItem | null;
@@ -50,9 +51,9 @@ export function DraftDetailPane({
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-muted text-muted-foreground">
             <FileText className="h-6 w-6" />
           </div>
-          <p className="mt-4 text-base font-semibold">Select a draft</p>
+          <p className="mt-4 text-base font-semibold">{tl("Select a draft")}</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Pick a draft to preview it and choose what to do next.
+            {tl("Pick a draft to preview it and choose what to do next.")}
           </p>
         </div>
       </section>
@@ -84,7 +85,7 @@ export function DraftDetailPane({
             <div className="flex min-w-0 items-center gap-1">
               {onBack ? (
                 <Button
-                  aria-label="Back to drafts list"
+                  aria-label={tl("Back to drafts list")}
                   className="rounded-full text-muted-foreground hover:bg-muted/60 hover:text-foreground"
                   onClick={onBack}
                   size="icon"
@@ -115,8 +116,9 @@ export function DraftDetailPane({
           >
             <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
             <span>
-              The original thread was deleted. This draft can no longer be
-              opened or sent.
+              {tl(
+                "The original thread was deleted. This draft can no longer be opened or sent.",
+              )}
             </span>
           </div>
         ) : null}
@@ -141,10 +143,10 @@ export function DraftDetailPane({
             <div className="min-w-0 flex-1">
               <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-0">
                 <span className="text-sm font-semibold text-foreground">
-                  You
+                  {tl("You")}
                 </span>
                 <span className="text-xs font-medium text-muted-foreground">
-                  Draft
+                  {tl("Draft")}
                 </span>
                 <span className="shrink-0 text-xs font-normal tabular-nums text-muted-foreground/55">
                   {formatDraftCreatedAt(entry.draft)}
@@ -159,7 +161,7 @@ export function DraftDetailPane({
                 />
                 {attachmentCount > 0 && content ? (
                   <p className="mt-2 text-sm text-muted-foreground">
-                    {attachmentCount} attachment
+                    {attachmentCount} {tl("attachment")}
                     {attachmentCount === 1 ? "" : "s"}
                   </p>
                 ) : null}
@@ -199,7 +201,7 @@ function DraftActionBar({
   onSend: () => void;
 }) {
   return (
-    <div className="absolute right-2 top-1 z-10">
+    <div className="absolute end-2 top-1 z-10">
       <div
         className="-m-1 p-1 opacity-100 transition-opacity duration-150 ease-out sm:pointer-events-none sm:opacity-0 sm:group-hover/message:pointer-events-auto sm:group-hover/message:opacity-100 sm:group-focus-within/message:pointer-events-auto sm:group-focus-within/message:opacity-100"
         data-testid="home-inbox-draft-action-bar"
@@ -208,19 +210,23 @@ function DraftActionBar({
           <div className="flex items-center gap-0.5 p-1">
             <DraftActionButton
               disabled={!canOpen}
-              label="Open draft"
+              label={tl("Open draft")}
               onClick={onOpen}
             >
               <Pencil className="h-4 w-4" />
             </DraftActionButton>
             <DraftActionButton
               disabled={!canSend}
-              label="Send"
+              label={tl("Send")}
               onClick={onSend}
             >
               <Send className="h-4 w-4" />
             </DraftActionButton>
-            <DraftActionButton destructive label="Delete" onClick={onDelete}>
+            <DraftActionButton
+              destructive
+              label={tl("Delete")}
+              onClick={onDelete}
+            >
               <Trash2 className="h-4 w-4" />
             </DraftActionButton>
           </div>

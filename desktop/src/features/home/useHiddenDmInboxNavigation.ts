@@ -8,6 +8,7 @@ import type { InboxItem } from "@/features/home/lib/inbox";
 import { getThreadReference } from "@/features/messages/lib/threading";
 import { getChannelMembers } from "@/shared/api/tauriChannels";
 import { openHiddenDmInboxContext } from "./hiddenDmInboxAction";
+import { tl } from "@/shared/i18n/tl";
 
 type UseHiddenDmInboxNavigationOptions = {
   availableChannelIds: ReadonlySet<string>;
@@ -80,7 +81,7 @@ export function useHiddenDmInboxNavigation({
           if (generationRef.current === generation) {
             errorChannelIdsRef.current.add(channelId);
           }
-          toast.error("Could not reopen conversation. Try again.");
+          toast.error(tl("Could not reopen conversation. Try again."));
         },
         onPendingChange: () => setPendingVersion((version) => version + 1),
       });

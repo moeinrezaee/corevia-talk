@@ -22,6 +22,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
+import { tl } from "@/shared/i18n/tl";
 
 export function AgentDefaultsDialog({
   open,
@@ -86,11 +87,11 @@ export function AgentDefaultsDialog({
           }}
         >
           <DialogHeader>
-            <DialogTitle>Agent defaults</DialogTitle>
+            <DialogTitle>{tl("Agent defaults")}</DialogTitle>
             <DialogDescription>
-              These settings apply to all agents unless you override them.
-              Agent-specific settings always take priority. Changes may restart
-              running agents.
+              {tl(
+                "These settings apply to all agents unless you override them. Agent-specific settings always take priority. Changes may restart running agents.",
+              )}
             </DialogDescription>
           </DialogHeader>
           <AgentDefaultsEditor
@@ -109,7 +110,7 @@ export function AgentDefaultsDialog({
                 type="button"
                 variant="outline"
               >
-                {restartFailures > 0 ? "Done" : "Cancel"}
+                {restartFailures > 0 ? tl("Done") : tl("Cancel")}
               </Button>
             }
           />
@@ -128,10 +129,10 @@ export function AgentDefaultsDialog({
         >
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Discard changes to agent defaults?
+              {tl("Discard changes to agent defaults?")}
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Unsaved changes made to agent defaults will be lost.
+              {tl("Unsaved changes made to agent defaults will be lost.")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -140,7 +141,7 @@ export function AgentDefaultsDialog({
                 restoreDefaultsFocusRef.current = true;
               }}
             >
-              Keep editing
+              {tl("Keep editing")}
             </AlertDialogCancel>
             <AlertDialogAction asChild>
               <Button
@@ -150,7 +151,7 @@ export function AgentDefaultsDialog({
                 }}
                 variant="destructive"
               >
-                Discard changes
+                {tl("Discard changes")}
               </Button>
             </AlertDialogAction>
           </AlertDialogFooter>

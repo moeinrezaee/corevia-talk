@@ -34,6 +34,7 @@ import {
   type ProjectsOverviewSection,
   projectsOverviewContext,
 } from "./projectsOverviewContext";
+import { tl } from "@/shared/i18n/tl";
 
 export type { ProjectsOverviewSection };
 
@@ -132,7 +133,7 @@ function OverviewStatRow({
 }) {
   return (
     <button
-      className="-mx-2 flex h-7 w-[calc(100%+1rem)] items-center justify-between gap-3 rounded-md px-2 text-left text-sm hover:bg-muted/70 [&_svg]:h-4 [&_svg]:w-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
+      className="-mx-2 flex h-7 w-[calc(100%+1rem)] items-center justify-between gap-3 rounded-md px-2 text-start text-sm hover:bg-muted/70 [&_svg]:h-4 [&_svg]:w-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
       data-testid="projects-overview-stat"
       onClick={onClick}
       type="button"
@@ -165,14 +166,14 @@ export function ProjectsActivityIntro({
 }) {
   return (
     <section
-      className="pb-6 pt-8 text-left"
+      className="pb-6 pt-8 text-start"
       data-testid="projects-activity-intro"
     >
       <h2
         className="text-xl font-semibold tracking-tight text-foreground"
         data-testid="projects-page-header"
       >
-        Projects Activity
+        {tl("Projects Activity")}
       </h2>
       <p
         className="mt-2 max-w-2xl text-sm text-muted-foreground"
@@ -183,7 +184,7 @@ export function ProjectsActivityIntro({
           <span key={highlight}>
             {index > 0
               ? index === digest.highlights.length - 1
-                ? ", and "
+                ? tl(", and ")
                 : ", "
               : null}
             <strong className="font-medium text-foreground/90">

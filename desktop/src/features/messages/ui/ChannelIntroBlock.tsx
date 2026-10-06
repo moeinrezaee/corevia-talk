@@ -2,6 +2,7 @@ import type * as React from "react";
 import { Hash } from "lucide-react";
 
 import { cn } from "@/shared/lib/cn";
+import { tl } from "@/shared/i18n/tl";
 
 export type ChannelIntroAction = {
   description?: string;
@@ -37,7 +38,7 @@ export function ChannelIntroBlock({
   return (
     <div
       className={cn(
-        "flex w-full flex-col items-start px-3 text-left",
+        "flex w-full flex-col items-start px-3 text-start",
         className,
       )}
       data-testid="message-channel-intro"
@@ -53,7 +54,7 @@ export function ChannelIntroBlock({
       </p>
       {intro.hideBeginning ? null : (
         <p className="mt-1 max-w-2xl text-sm leading-5 text-muted-foreground">
-          This is the beginning of the{" "}
+          {tl("This is the beginning of the")}{" "}
           <span className="font-medium text-foreground">
             {intro.channelKindLabel}
           </span>
@@ -73,7 +74,7 @@ export function ChannelIntroBlock({
             return (
               <button
                 className={cn(
-                  "flex shrink-0 border border-border/70 bg-background/70 text-left transition-colors hover:bg-muted/60 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring",
+                  "flex shrink-0 border border-border/70 bg-background/70 text-start transition-colors hover:bg-muted/60 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring",
                   hasDescription
                     ? "h-52 w-48 flex-col rounded-2xl p-3"
                     : "h-24 w-56 flex-col rounded-2xl p-3",

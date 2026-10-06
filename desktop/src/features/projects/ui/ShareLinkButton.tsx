@@ -4,6 +4,7 @@ import * as React from "react";
 import { cn } from "@/shared/lib/cn";
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * Copies a `buzz://` share link for the surrounding entity. Renders nothing
@@ -62,7 +63,7 @@ export function ShareLinkButton({
           )}
         </button>
       </TooltipTrigger>
-      <TooltipContent>{copied ? "Link copied" : label}</TooltipContent>
+      <TooltipContent>{copied ? tl("Link copied") : label}</TooltipContent>
     </Tooltip>
   );
 }

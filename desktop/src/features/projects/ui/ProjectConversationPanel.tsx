@@ -25,6 +25,7 @@ import { getEventById } from "@/shared/api/tauri";
 import type { RelayEvent, RespondToMode } from "@/shared/api/types";
 import { useIsThreadPanelOverlay } from "@/shared/hooks/use-mobile";
 import { Button } from "@/shared/ui/button";
+import { tl } from "@/shared/i18n/tl";
 
 const EMPTY_PERSONA_LOOKUP = new Map<string, string>();
 const EMPTY_RESPOND_TO_LOOKUP = new Map<string, RespondToMode>();
@@ -317,10 +318,10 @@ export function ProjectConversationPanel({
   return wrapProjectConversationPane(
     <div className="flex h-full flex-col items-center justify-center gap-3 bg-background p-6 text-center">
       <p className="text-sm text-muted-foreground">
-        This conversation could not be loaded.
+        {tl("This conversation could not be loaded.")}
       </p>
       <Button onClick={onClose} size="sm" variant="outline">
-        Close
+        {tl("Close")}
       </Button>
     </div>,
     {
@@ -358,7 +359,7 @@ function wrapProjectConversationPane(
       testId="project-conversation-panel"
       widthPx={widthPx}
     >
-      <div className="flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden [&>aside]:!h-full [&>aside]:!w-full [&>aside]:!max-w-none [&>aside]:!border-l-0">
+      <div className="flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden [&>aside]:!h-full [&>aside]:!w-full [&>aside]:!max-w-none [&>aside]:!border-s-0">
         {panel}
       </div>
     </RightAuxiliaryPane>

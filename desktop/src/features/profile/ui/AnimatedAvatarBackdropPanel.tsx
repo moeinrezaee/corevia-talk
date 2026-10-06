@@ -5,6 +5,7 @@ import {
   CUSTOM_AVATAR_COLOR_SWATCH,
   contrastColorForBackground,
 } from "@/features/profile/ui/ProfileAvatarEditor.utils";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type AnimatedAvatarBackdropPanelProps = {
   backdropColor: string | null;
@@ -46,8 +47,8 @@ export function AnimatedAvatarBackdropPanel({
           <button
             aria-label={
               isCustomSwatch
-                ? "Choose custom backdrop color"
-                : `Use ${swatch} backdrop`
+                ? tl("Choose custom backdrop color")
+                : tlt("Use {0} backdrop", [swatch])
             }
             aria-pressed={isSelected}
             className={cn(

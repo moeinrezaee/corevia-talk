@@ -20,6 +20,9 @@ export default defineConfig({
       name: "smoke",
       testMatch: [
         "**/smoke.spec.ts",
+        "**/language-rtl-screenshots.spec.ts",
+        "**/language-fa-tour.spec.ts",
+        "**/language-fa-weights.spec.ts",
         "**/mock-subscription-readiness.spec.ts",
         "**/owned-agent-discovery.spec.ts",
         "**/thread-head-stale-edit.spec.ts",

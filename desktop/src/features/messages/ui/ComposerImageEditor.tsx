@@ -5,6 +5,7 @@ import { fetchMediaBytes } from "@/shared/api/tauriMedia";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type EditorPoint = { x: number; y: number };
 
@@ -17,12 +18,12 @@ type EditorStroke = {
 };
 
 const PEN_COLORS = [
-  { label: "Red", value: "#ef4444" },
-  { label: "Yellow", value: "#f59e0b" },
-  { label: "Green", value: "#22c55e" },
-  { label: "Blue", value: "#3b82f6" },
-  { label: "White", value: "#ffffff" },
-  { label: "Black", value: "#111111" },
+  { label: tl("Red"), value: "#ef4444" },
+  { label: tl("Yellow"), value: "#f59e0b" },
+  { label: tl("Green"), value: "#22c55e" },
+  { label: tl("Blue"), value: "#3b82f6" },
+  { label: tl("White"), value: "#ffffff" },
+  { label: tl("Black"), value: "#111111" },
 ] as const;
 
 /** Pen stroke width range, in CSS pixels: five whole-pixel slider stops. */
@@ -344,7 +345,7 @@ export function ComposerImageEditor({
         {naturalSize ? (
           <>
             <canvas
-              aria-label="Drawing canvas"
+              aria-label={tl("Drawing canvas")}
               className="absolute inset-0 h-full w-full cursor-none touch-none rounded-lg"
               data-testid="composer-image-editor-canvas"
               height={naturalSize.height}
@@ -362,7 +363,7 @@ export function ComposerImageEditor({
             />
             <div
               aria-hidden
-              className="pointer-events-none absolute left-0 top-0 rounded-full opacity-0 ring-1 ring-white/60"
+              className="pointer-events-none absolute start-0 top-0 rounded-full opacity-0 ring-1 ring-white/60"
               ref={brushPreviewRef}
               style={{
                 backgroundColor: activeColor,
@@ -374,13 +375,13 @@ export function ComposerImageEditor({
         ) : null}
       </div>
 
-      <div className="fixed right-4 top-4 z-20 flex items-center gap-3">
+      <div className="fixed end-4 top-4 z-20 flex items-center gap-3">
         <div
           className="flex items-center gap-3 animate-in fade-in slide-in-from-right-12 duration-300"
           data-testid="composer-image-editor-toolbar"
         >
           <input
-            aria-label="Stroke width"
+            aria-label={tl("Stroke width")}
             className="h-1 w-12 cursor-pointer appearance-none rounded-full bg-white/25 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
             max={PEN_WIDTH_MAX_CSS}
             min={PEN_WIDTH_MIN_CSS}
@@ -393,7 +394,7 @@ export function ComposerImageEditor({
           <div className="flex items-center gap-1.5">
             {PEN_COLORS.map((color) => (
               <button
-                aria-label={`${color.label} pen`}
+                aria-label={tlt("{0} pen", [color.label])}
                 aria-pressed={activeColor === color.value}
                 className={cn(
                   "flex h-5 w-5 items-center justify-center rounded-full transition-transform",
@@ -421,7 +422,7 @@ export function ComposerImageEditor({
           <Tooltip disableHoverableContent>
             <TooltipTrigger asChild>
               <button
-                aria-label="Undo last stroke"
+                aria-label={tl("Undo last stroke")}
                 className="flex h-7 w-7 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10 disabled:opacity-40 disabled:hover:bg-transparent"
                 disabled={!hasStrokes}
                 onClick={undo}
@@ -430,12 +431,12 @@ export function ComposerImageEditor({
                 <Undo2 className="h-4 w-4" />
               </button>
             </TooltipTrigger>
-            <TooltipContent>Undo (⌘Z)</TooltipContent>
+            <TooltipContent>{tl("Undo (⌘Z)")}</TooltipContent>
           </Tooltip>
           <Tooltip disableHoverableContent>
             <TooltipTrigger asChild>
               <button
-                aria-label="Redo stroke"
+                aria-label={tl("Redo stroke")}
                 className="flex h-7 w-7 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10 disabled:opacity-40 disabled:hover:bg-transparent"
                 disabled={history.undone.length === 0}
                 onClick={redo}
@@ -444,7 +445,7 @@ export function ComposerImageEditor({
                 <Redo2 className="h-4 w-4" />
               </button>
             </TooltipTrigger>
-            <TooltipContent>Redo (⇧⌘Z)</TooltipContent>
+            <TooltipContent>{tl("Redo (⇧⌘Z)")}</TooltipContent>
           </Tooltip>
         </div>
 
@@ -456,7 +457,7 @@ export function ComposerImageEditor({
           type="button"
           variant="ghost"
         >
-          Cancel
+          {tl("Cancel")}
         </Button>
         <Button
           data-testid="composer-image-editor-save"
@@ -466,7 +467,7 @@ export function ComposerImageEditor({
           type="button"
         >
           {saving ? <Loader2 className="animate-spin" /> : null}
-          Save
+          {tl("Save")}
         </Button>
       </div>
 

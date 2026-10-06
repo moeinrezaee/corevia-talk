@@ -62,6 +62,7 @@ import {
   CreateIssueDialog,
   type CreateIssueDialogInput,
 } from "./CreateIssueDialog";
+import { tl } from "@/shared/i18n/tl";
 
 type CreatePullRequestAction = {
   projects: Project[];
@@ -356,24 +357,24 @@ export function WorkspaceTabs({
       <ProjectSectionHeader
         className={PROJECT_SECTION_HEADER_CLASS}
         icon={FilesIcon}
-        title="Files"
+        title={tl("Files")}
       />
     ) : selectedTab === "activity" && !selectedCommitHash ? (
       <ProjectSectionHeader
         className={PROJECT_SECTION_HEADER_CLASS}
         icon={GitCommitHorizontal}
-        title="Commits"
+        title={tl("Commits")}
       />
     ) : selectedTab === "issues" && !selectedIssueId ? (
       <ProjectSectionHeader
         action={{
           disabled: createIssueAction.pending,
-          label: "Create task",
+          label: tl("Create task"),
           onClick: () => setCreateIssueOpen(true),
         }}
         className={PROJECT_SECTION_HEADER_CLASS}
         icon={CircleDot}
-        title="Tasks"
+        title={tl("Tasks")}
       />
     ) : selectedTab === "prs" && !selectedPullRequestId ? (
       <ProjectSectionHeader
@@ -381,25 +382,27 @@ export function WorkspaceTabs({
           disabled:
             !createPullRequestAction ||
             createPullRequestAction.projects.length === 0,
-          label: "Create review",
+          label: tl("Create review"),
           onClick: () => setCreatePullRequestOpen(true),
-          title: "Create review — choose a repository and branches to compare",
+          title: tl(
+            "Create review — choose a repository and branches to compare",
+          ),
         }}
         className={PROJECT_SECTION_HEADER_CLASS}
         icon={GitPullRequest}
-        title="Reviews"
+        title={tl("Reviews")}
       />
     ) : selectedTab === "channels" ? (
       <ProjectSectionHeader
         className={PROJECT_SECTION_HEADER_CLASS}
         icon={Hash}
-        title="Channels"
+        title={tl("Channels")}
       />
     ) : selectedTab === "contributors" ? (
       <ProjectSectionHeader
         className={PROJECT_SECTION_HEADER_CLASS}
         icon={Users}
-        title="Contributors"
+        title={tl("Contributors")}
       />
     ) : null;
 
@@ -417,20 +420,20 @@ export function WorkspaceTabs({
           data-testid="project-workspace-tab-menu"
         >
           <ProjectTabsList onBack={onBack} prsActive={isPullRequestSelected} />
-          <div className="ml-auto flex shrink-0 items-center gap-1">
+          <div className="ms-auto flex shrink-0 items-center gap-1">
             {updatePullRequestAction ? (
               <Button
                 className="h-8 shrink-0 gap-1.5"
                 disabled={updatePullRequestAction.pending}
                 onClick={updatePullRequestAction.onUpdate}
                 size="sm"
-                title="Publish the pushed commit to this review"
+                title={tl("Publish the pushed commit to this review")}
                 variant="outline"
               >
                 <RefreshCw className="h-4 w-4" />
                 {updatePullRequestAction.pending
-                  ? "Updating…"
-                  : "Update review"}
+                  ? tl("Updating…")
+                  : tl("Update review")}
               </Button>
             ) : null}
           </div>
@@ -575,8 +578,10 @@ export function WorkspaceTabs({
             !localSnapshot &&
             !localSnapshotLoading ? (
               <ProjectPanelState
-                description="Switch to the remote source or clone this repository locally."
-                title="No local checkout found"
+                description={tl(
+                  "Switch to the remote source or clone this repository locally.",
+                )}
+                title={tl("No local checkout found")}
               />
             ) : (
               <RepositoryFilesPanel
@@ -608,7 +613,7 @@ export function WorkspaceTabs({
 
         <TabsContent className="m-0" value="contributors">
           {displayedSnapshotLoading ? (
-            <BuzzLoadingState label="Loading contributors" />
+            <BuzzLoadingState label={tl("Loading contributors")} />
           ) : (
             <ContributorsPanel
               activityCounts={contributorActivityCounts}

@@ -4,7 +4,7 @@ export function HomeLoadingState() {
   return (
     <div className="min-h-0 flex-1 overflow-hidden">
       <div className="grid h-full min-h-0 w-full lg:grid-cols-[320px_minmax(0,1fr)]">
-        <div className="relative overflow-hidden bg-background/60 after:absolute after:bottom-0 after:right-0 after:top-10 after:w-px after:bg-border/70 after:content-['']">
+        <div className="relative overflow-hidden bg-background/60 after:absolute after:bottom-0 after:end-0 after:top-10 after:w-px after:bg-border/70 after:content-['']">
           <div className="px-5 py-2">
             <div className="flex min-h-9 min-w-0 items-center justify-between gap-3">
               <div className="flex min-w-0 items-center gap-[6px]">
@@ -24,7 +24,7 @@ export function HomeLoadingState() {
                 <div className="relative shrink-0">
                   <Skeleton className="h-9 w-9 rounded-full" />
                   {row === "first" || row === "third" ? (
-                    <Skeleton className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full" />
+                    <Skeleton className="absolute -end-1 -top-1 h-2.5 w-2.5 rounded-full" />
                   ) : null}
                 </div>
                 <div className="min-w-0 flex-1">
@@ -104,7 +104,7 @@ export function HomeLoadingState() {
                 <div className="mt-4 flex items-center gap-2">
                   <Skeleton className="h-8 w-8 rounded-lg" />
                   <Skeleton className="h-8 w-8 rounded-lg" />
-                  <Skeleton className="ml-auto h-8 w-20 rounded-full" />
+                  <Skeleton className="ms-auto h-8 w-20 rounded-full" />
                 </div>
               </div>
             </div>

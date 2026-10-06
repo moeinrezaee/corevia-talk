@@ -22,12 +22,12 @@ export function IdentityCardSkeleton({
       )}
     >
       {showAction ? (
-        <Skeleton className="absolute top-3 right-3 z-30 h-7 w-7 rounded-md bg-background/70" />
+        <Skeleton className="absolute top-3 end-3 z-30 h-7 w-7 rounded-md bg-background/70" />
       ) : null}
 
       <SingleAvatarSkeleton />
 
-      <div className="absolute right-3 bottom-3 left-3 z-30 flex min-w-0 flex-col gap-1 text-left">
+      <div className="absolute end-3 bottom-3 start-3 z-30 flex min-w-0 flex-col gap-1 text-start">
         <Skeleton className={cn("h-4 max-w-full", footerTitleWidthClass)} />
         <Skeleton className={cn("h-4 max-w-full", footerSubtitleWidthClass)} />
       </div>

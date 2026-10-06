@@ -28,6 +28,7 @@ import { cn } from "@/shared/lib/cn";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import { Button } from "@/shared/ui/button";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { tl } from "@/shared/i18n/tl";
 
 const UNKNOWN_CHANNEL_LABEL = "Unknown channel";
 
@@ -139,8 +140,8 @@ function ReminderRow({
 
   const handleComplete = () => {
     complete.mutate(reminder, {
-      onSuccess: () => toast.success("Reminder completed"),
-      onError: () => toast.error("Failed to complete reminder"),
+      onSuccess: () => toast.success(tl("Reminder completed")),
+      onError: () => toast.error(tl("Failed to complete reminder")),
     });
   };
 
@@ -148,16 +149,16 @@ function ReminderRow({
     snooze.mutate(
       { reminder, notBefore },
       {
-        onSuccess: () => toast.success("Reminder snoozed"),
-        onError: () => toast.error("Failed to snooze reminder"),
+        onSuccess: () => toast.success(tl("Reminder snoozed")),
+        onError: () => toast.error(tl("Failed to snooze reminder")),
       },
     );
   };
 
   const handleCancel = () => {
     cancel.mutate(reminder, {
-      onSuccess: () => toast.success("Reminder cancelled"),
-      onError: () => toast.error("Failed to cancel reminder"),
+      onSuccess: () => toast.success(tl("Reminder cancelled")),
+      onError: () => toast.error(tl("Failed to cancel reminder")),
     });
   };
 
@@ -184,7 +185,7 @@ function ReminderRow({
         </span>
       ) : null}
       <button
-        className="flex min-w-0 flex-1 flex-col items-start gap-1 text-left enabled:hover:opacity-80 disabled:cursor-default"
+        className="flex min-w-0 flex-1 flex-col items-start gap-1 text-start enabled:hover:opacity-80 disabled:cursor-default"
         disabled={!isInboxList && !isNavigable}
         onClick={() => {
           if (isInboxList) onSelect?.(reminder);
@@ -204,7 +205,7 @@ function ReminderRow({
             <span className="truncate font-medium text-foreground">
               {source.authorLabel}
             </span>
-            <span className="shrink-0">in</span>
+            <span className="shrink-0">{tl("in")}</span>
             <span className="truncate">
               {formatReminderSourceLocation(source)}
             </span>
@@ -213,7 +214,7 @@ function ReminderRow({
         <p className="max-w-full truncate text-sm font-medium">
           {reminder.content.target?.preview ||
             reminder.content.note ||
-            "Reminder"}
+            tl("Reminder")}
         </p>
         {reminder.content.target && reminder.content.note ? (
           <p className="max-w-full truncate text-xs text-muted-foreground">
@@ -224,7 +225,7 @@ function ReminderRow({
           <p
             className={`text-xs ${isOverdue ? "font-medium text-destructive" : "text-muted-foreground"}`}
           >
-            <Clock className="mr-1 inline h-3 w-3" />
+            <Clock className="me-1 inline h-3 w-3" />
             {formatRelativeTime(reminder.notBefore)}
           </p>
         ) : null}
@@ -236,7 +237,7 @@ function ReminderRow({
             disabled={isActing}
             onClick={handleComplete}
             size="sm"
-            title="Complete"
+            title={tl("Complete")}
             type="button"
             variant="ghost"
           >
@@ -248,7 +249,7 @@ function ReminderRow({
             disabled={isActing}
             onClick={handleCancel}
             size="sm"
-            title="Cancel"
+            title={tl("Cancel")}
             type="button"
             variant="ghost"
           >
@@ -310,7 +311,9 @@ export function RemindersPanel({
   if (remindersQuery.isLoading) {
     return (
       <div className="flex h-full items-center justify-center">
-        <p className="text-sm text-muted-foreground">Loading reminders...</p>
+        <p className="text-sm text-muted-foreground">
+          {tl("Loading reminders...")}
+        </p>
       </div>
     );
   }
@@ -319,9 +322,9 @@ export function RemindersPanel({
     return (
       <div className="flex h-full flex-col items-center justify-center gap-2 p-8">
         <Bell className="h-8 w-8 text-muted-foreground/50" />
-        <p className="text-sm text-muted-foreground">No reminders</p>
+        <p className="text-sm text-muted-foreground">{tl("No reminders")}</p>
         <p className="text-xs text-muted-foreground/70">
-          Use "Remind me later" on any message to create one.
+          {tl('Use "Remind me later" on any message to create one.')}
         </p>
       </div>
     );
@@ -390,11 +393,11 @@ export function ReminderDetailPane({
       <section className="flex min-h-0 min-w-0 flex-col bg-background">
         <TopChromeInsetHeader flush>
           <div className="flex min-h-9 items-center px-4 py-2">
-            <span className="text-sm font-semibold">Reminder</span>
+            <span className="text-sm font-semibold">{tl("Reminder")}</span>
           </div>
         </TopChromeInsetHeader>
         <div className="flex flex-1 items-center justify-center p-8 text-sm text-muted-foreground">
-          Select a reminder
+          {tl("Select a reminder")}
         </div>
       </section>
     );
@@ -427,7 +430,7 @@ export function ReminderDetailPane({
         <div className="flex min-h-9 items-center gap-2 px-4 py-2">
           {onBack ? (
             <Button
-              aria-label="Back to reminders"
+              aria-label={tl("Back to reminders")}
               className="h-8 w-8 p-0"
               onClick={onBack}
               size="icon"
@@ -437,7 +440,7 @@ export function ReminderDetailPane({
               <ArrowLeft className="h-4 w-4" />
             </Button>
           ) : null}
-          <span className="text-sm font-semibold">Reminder</span>
+          <span className="text-sm font-semibold">{tl("Reminder")}</span>
         </div>
       </TopChromeInsetHeader>
 
@@ -455,7 +458,7 @@ export function ReminderDetailPane({
               <span className="font-medium text-foreground">
                 {source.authorLabel}
               </span>
-              <span>in</span>
+              <span>{tl("in")}</span>
               <span>{formatReminderSourceLocation(source)}</span>
             </div>
           ) : null}
@@ -464,9 +467,9 @@ export function ReminderDetailPane({
             {preview}
           </p>
           {reminder.content.target && reminder.content.note ? (
-            <div className="mt-5 border-l-2 border-border pl-4">
+            <div className="mt-5 border-s-2 border-border ps-4">
               <p className="text-xs font-medium uppercase text-muted-foreground">
-                Note
+                {tl("Note")}
               </p>
               <p className="mt-1 whitespace-pre-wrap text-sm text-foreground">
                 {reminder.content.note}
@@ -490,7 +493,7 @@ export function ReminderDetailPane({
               variant="outline"
             >
               <ExternalLink className="h-4 w-4" />
-              Open message
+              {tl("Open message")}
             </Button>
             {isDone ? null : (
               <>
@@ -498,15 +501,16 @@ export function ReminderDetailPane({
                   disabled={isActing}
                   onClick={() =>
                     complete.mutate(reminder, {
-                      onSuccess: () => toast.success("Reminder completed"),
-                      onError: () => toast.error("Failed to complete reminder"),
+                      onSuccess: () => toast.success(tl("Reminder completed")),
+                      onError: () =>
+                        toast.error(tl("Failed to complete reminder")),
                     })
                   }
                   size="sm"
                   type="button"
                 >
                   <Check className="h-4 w-4" />
-                  Complete
+                  {tl("Complete")}
                 </Button>
                 <SnoozeMenu
                   disabled={isActing}
@@ -514,8 +518,9 @@ export function ReminderDetailPane({
                     snooze.mutate(
                       { reminder, notBefore },
                       {
-                        onSuccess: () => toast.success("Reminder snoozed"),
-                        onError: () => toast.error("Failed to snooze reminder"),
+                        onSuccess: () => toast.success(tl("Reminder snoozed")),
+                        onError: () =>
+                          toast.error(tl("Failed to snooze reminder")),
                       },
                     )
                   }
@@ -524,8 +529,9 @@ export function ReminderDetailPane({
                   disabled={isActing}
                   onClick={() =>
                     cancel.mutate(reminder, {
-                      onSuccess: () => toast.success("Reminder cancelled"),
-                      onError: () => toast.error("Failed to cancel reminder"),
+                      onSuccess: () => toast.success(tl("Reminder cancelled")),
+                      onError: () =>
+                        toast.error(tl("Failed to cancel reminder")),
                     })
                   }
                   size="sm"
@@ -533,7 +539,7 @@ export function ReminderDetailPane({
                   variant="ghost"
                 >
                   <X className="h-4 w-4" />
-                  Cancel
+                  {tl("Cancel")}
                 </Button>
               </>
             )}

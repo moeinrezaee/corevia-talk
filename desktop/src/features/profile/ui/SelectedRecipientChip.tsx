@@ -11,6 +11,7 @@ import { PubKey } from "@/shared/ui/PubKey";
 import { Popover, PopoverAnchor, PopoverContent } from "@/shared/ui/popover";
 
 import { ProfileAvatar } from "./ProfileAvatar";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type SelectedRecipientChipTestIds = {
   chip?: string;
@@ -46,9 +47,9 @@ export function SelectedRecipientChip({
   user: UserSearchResult;
 }) {
   return (
-    <div className="inline-flex h-7 max-w-56 items-center gap-1.5 rounded-full bg-muted px-1 pr-2.5 text-sm transition-colors hover:bg-muted/80">
+    <div className="inline-flex h-7 max-w-56 items-center gap-1.5 rounded-full bg-muted px-1 pe-2.5 text-sm transition-colors hover:bg-muted/80">
       <button
-        aria-label={`Remove ${label}`}
+        aria-label={tlt("Remove {0}", [label])}
         className={cn(
           "group/remove-recipient relative h-5 w-5 shrink-0 rounded-full focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-60",
           poofOnRemove && POOF_TRIGGER_CLASS,
@@ -93,7 +94,7 @@ export function SelectedRecipientChip({
             <button
               aria-expanded={inspectionOpen}
               aria-haspopup="dialog"
-              aria-label={`Verify ${label} public key`}
+              aria-label={tlt("Verify {0} public key", [label])}
               className="min-w-0 cursor-pointer truncate rounded font-medium hover:underline focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
               data-testid={testIds?.name}
               onClick={(event) => {
@@ -112,7 +113,9 @@ export function SelectedRecipientChip({
             data-testid={testIds?.keyPopover}
             onOpenAutoFocus={(event) => event.preventDefault()}
           >
-            <p className="text-sm font-medium">Verify {label}</p>
+            <p className="text-sm font-medium">
+              {tl("Verify")} {label}
+            </p>
             <PubKey
               pubkey={user.pubkey}
               testId={testIds?.pubkey}
@@ -125,7 +128,7 @@ export function SelectedRecipientChip({
       )}
       {user.isAgent ? (
         <Bot
-          aria-label="agent"
+          aria-label={tl("agent")}
           className="h-3.5 w-3.5 shrink-0 text-muted-foreground"
         />
       ) : null}

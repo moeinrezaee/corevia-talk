@@ -77,6 +77,7 @@ import { BuzzMark } from "@/shared/ui/buzz-logo/BuzzMark";
 import { FlappingBee } from "@/shared/ui/buzz-logo/FlappingBee";
 import { FuzzyLogo } from "@/shared/ui/buzz-logo/FuzzyLogo";
 import { StartupWindowDragRegion } from "@/shared/ui/StartupWindowDragRegion";
+import { tl } from "@/shared/i18n/tl";
 
 const LOADING_TEXT = "Setting up your community...";
 
@@ -203,7 +204,7 @@ function CommunitySwitchGate() {
       role="status"
     >
       <StartupWindowDragRegion />
-      <span className="sr-only">Switching community…</span>
+      <span className="sr-only">{tl("Switching community…")}</span>
       {showSpinner ? (
         <BeeLoader
           ariaLabel="Switching community…"

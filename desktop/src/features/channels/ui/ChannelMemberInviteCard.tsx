@@ -14,6 +14,7 @@ import type {
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 function formatSearchUserName(user: UserSearchResult) {
   return (
@@ -170,17 +171,17 @@ export function ChannelMemberInviteCard({
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2 text-sm font-medium">
           <UserPlus className="h-4 w-4" />
-          <span>Add members</span>
+          <span>{tl("Add members")}</span>
         </div>
         {inviteTargets.length > 0 ? (
           <span className="rounded-full bg-background px-2 py-1 text-2xs font-medium leading-none text-muted-foreground">
-            {inviteTargets.length} selected
+            {inviteTargets.length} {tl("selected")}
           </span>
         ) : null}
       </div>
       <div className="space-y-2">
         <label className="sr-only" htmlFor="channel-management-search-users">
-          Search people
+          {tl("Search people")}
         </label>
         <div className="rounded-lg border border-border/80 bg-background">
           <div className="flex items-center gap-2 px-2.5 py-2">
@@ -191,7 +192,7 @@ export function ChannelMemberInviteCard({
               disabled={isPending}
               id="channel-management-search-users"
               onChange={(event) => setInviteQuery(event.target.value)}
-              placeholder="Search people, or paste a public key"
+              placeholder={tl("Search people, or paste a public key")}
               value={inviteQuery}
             />
           </div>
@@ -213,7 +214,9 @@ export function ChannelMemberInviteCard({
                     {formatSearchUserName(invitee)}
                   </span>
                   <button
-                    aria-label={`Remove ${formatSearchUserName(invitee)}`}
+                    aria-label={tlt("Remove {0}", [
+                      formatSearchUserName(invitee),
+                    ])}
                     className="text-muted-foreground transition-colors hover:text-foreground"
                     onClick={() => {
                       setSelectedInvitees((current) =>
@@ -250,13 +253,13 @@ export function ChannelMemberInviteCard({
             <div className="border-t border-border/70 px-2 py-2">
               {userSearchQuery.isLoading && !directInvitee ? (
                 <p className="px-2 py-1 text-sm text-muted-foreground">
-                  Searching…
+                  {tl("Searching…")}
                 </p>
               ) : inviteSearchResults.length > 0 || directInvitee ? (
                 <div className="max-h-44 space-y-1 overflow-y-auto">
                   {directInvitee ? (
                     <button
-                      className="flex w-full items-center justify-between rounded-md px-2.5 py-1.5 text-left transition-colors hover:bg-accent hover:text-accent-foreground"
+                      className="flex w-full items-center justify-between rounded-md px-2.5 py-1.5 text-start transition-colors hover:bg-accent hover:text-accent-foreground"
                       data-testid={`channel-direct-invite-${directInvitee.pubkey}`}
                       onClick={() => {
                         setSelectedInvitees((current) => [
@@ -277,15 +280,17 @@ export function ChannelMemberInviteCard({
                           {truncateNpub(directInvitee.pubkey)}
                         </p>
                         <span className="shrink-0 text-xs text-muted-foreground">
-                          by public key
+                          {tl("by public key")}
                         </span>
                       </div>
-                      <span className="text-xs text-muted-foreground">Add</span>
+                      <span className="text-xs text-muted-foreground">
+                        {tl("Add")}
+                      </span>
                     </button>
                   ) : null}
                   {inviteSearchResults.map((result) => (
                     <button
-                      className="flex w-full items-center justify-between rounded-md px-2.5 py-1.5 text-left transition-colors hover:bg-accent hover:text-accent-foreground"
+                      className="flex w-full items-center justify-between rounded-md px-2.5 py-1.5 text-start transition-colors hover:bg-accent hover:text-accent-foreground"
                       data-testid={`channel-user-search-result-${result.pubkey}`}
                       key={result.pubkey}
                       onClick={() => {
@@ -306,17 +311,19 @@ export function ChannelMemberInviteCard({
                         </p>
                         {result.isAgent ? (
                           <span className="shrink-0 text-xs text-muted-foreground">
-                            agent
+                            {tl("agent")}
                           </span>
                         ) : null}
                       </div>
-                      <span className="text-xs text-muted-foreground">Add</span>
+                      <span className="text-xs text-muted-foreground">
+                        {tl("Add")}
+                      </span>
                     </button>
                   ))}
                 </div>
               ) : (
                 <p className="px-2 py-1 text-sm text-muted-foreground">
-                  No matching users.
+                  {tl("No matching users.")}
                 </p>
               )}
             </div>
@@ -330,10 +337,10 @@ export function ChannelMemberInviteCard({
       </div>
       <div className="flex flex-wrap items-center justify-between gap-2">
         <label className="sr-only" htmlFor="channel-member-role">
-          Role
+          {tl("Role")}
         </label>
         <div className="flex items-center gap-2">
-          <span className="text-xs text-muted-foreground">Role</span>
+          <span className="text-xs text-muted-foreground">{tl("Role")}</span>
           <select
             className="h-8 rounded-md border border-input bg-background px-2.5 text-sm"
             data-testid="channel-management-add-role"
@@ -360,7 +367,7 @@ export function ChannelMemberInviteCard({
           size="sm"
           type="submit"
         >
-          {isPending ? "Adding..." : "Add members"}
+          {isPending ? tl("Adding...") : tl("Add members")}
         </Button>
       </div>
       {requestErrorMessage ? (

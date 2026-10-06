@@ -586,7 +586,7 @@ export function ThemePreviewFrame({
         borderColor: hsl(vars, "--border"),
       }}
     >
-      <div className="absolute -bottom-1 -right-1 h-[90%] w-[90%]">
+      <div className="absolute -bottom-1 -end-1 h-[90%] w-[90%]">
         <ThemePreviewSvg vars={vars} sidebarGradient={sidebarGradient} />
       </div>
     </div>
@@ -620,7 +620,7 @@ export function SystemPreferencePreviewFrame({
         backgroundColor: "hsl(var(--muted))",
       }}
     >
-      <div className="absolute -bottom-1 -right-1 h-[90%] w-[90%]">
+      <div className="absolute -bottom-1 -end-1 h-[90%] w-[90%]">
         <SystemPreferencePreviewSvg
           darkGradient={darkGradient}
           darkVars={darkVars}

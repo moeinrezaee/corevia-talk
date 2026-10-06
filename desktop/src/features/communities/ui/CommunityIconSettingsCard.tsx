@@ -10,6 +10,7 @@ import {
 } from "@/features/communities/useCommunityIcons";
 import { useCommunities } from "@/features/communities/useCommunities";
 import { setCommunityIcon } from "@/shared/api/communityProfile";
+import { tl } from "@/shared/i18n/tl";
 
 /**
  * Community icon editor using the same image/emoji picker as agent creation.
@@ -107,7 +108,7 @@ export function CommunityIconSettingsCard({
       <AgentCreationPreview
         assetLabel="community icon"
         avatarUrl={draftIcon || null}
-        label={activeCommunity?.name ?? "Community"}
+        label={activeCommunity?.name ?? tl("Community")}
         onClearAvatar={clearIconPreview}
         onCommitAvatar={persistIcon}
         onSelectAvatar={previewIcon}

@@ -4,6 +4,7 @@ import type { ProjectSelectionItem } from "@/features/projects/lib/projectSelect
 import { useProjectSelection } from "@/features/projects/lib/useProjectSelection";
 import { cn } from "@/shared/lib/cn";
 import { ProjectEntitySelectControl } from "./ProjectEntityListRow";
+import { tlt } from "@/shared/i18n/tl";
 
 export function ProjectSelectableGroup({
   children,
@@ -81,7 +82,10 @@ export function ProjectSelectableGroup({
               <ProjectEntitySelectControl
                 checked={allSelected}
                 indeterminate={partiallySelected}
-                label={`${allSelected ? "Clear" : "Select"} all ${label}`}
+                label={tlt("{0} all {1}", [
+                  allSelected ? "Clear" : "Select",
+                  label,
+                ])}
                 onToggle={() => selection.toggleGroup(items)}
                 testId="projects-group-select"
               />
@@ -90,7 +94,7 @@ export function ProjectSelectableGroup({
         </span>
         <button
           aria-expanded={expanded}
-          className="flex min-w-0 flex-1 cursor-pointer items-center gap-1.5 text-left"
+          className="flex min-w-0 flex-1 cursor-pointer items-center gap-1.5 text-start"
           onClick={() => setExpanded((current) => !current)}
           type="button"
         >

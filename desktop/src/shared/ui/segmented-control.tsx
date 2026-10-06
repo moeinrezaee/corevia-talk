@@ -58,10 +58,13 @@ export function SegmentedControl<Value extends string>({
   const getValueAtPointer = React.useCallback(
     (element: HTMLFieldSetElement, clientX: number): Value => {
       const bounds = element.getBoundingClientRect();
-      const position = Math.max(
-        0,
-        Math.min(bounds.width - 1, clientX - bounds.left),
-      );
+      // Options run right to left under `dir="rtl"`, so measure from the
+      // inline-start edge rather than always from the left.
+      const offset =
+        getComputedStyle(element).direction === "rtl"
+          ? bounds.right - clientX
+          : clientX - bounds.left;
+      const position = Math.max(0, Math.min(bounds.width - 1, offset));
       const index = Math.min(
         options.length - 1,
         Math.floor((position / bounds.width) * options.length),
@@ -180,14 +183,16 @@ export function SegmentedControl<Value extends string>({
       <div
         aria-hidden="true"
         className={cn(
-          "absolute bottom-0.5 left-0.5 top-0.5 z-0 rounded-md bg-background shadow-sm transition-transform duration-200 ease-in-out motion-reduce:transition-none",
+          "absolute bottom-0.5 start-0.5 top-0.5 z-0 translate-x-(--segment-shift) rounded-md bg-background shadow-sm transition-transform duration-200 ease-in-out motion-reduce:transition-none rtl:-translate-x-(--segment-shift)",
           previewValue && "duration-0",
         )}
         data-testid={indicatorTestId ?? `${testId}-indicator`}
-        style={{
-          transform: `translateX(${selectedIndex * 100}%)`,
-          width: `calc((100% - 0.25rem) / ${options.length})`,
-        }}
+        style={
+          {
+            "--segment-shift": `${selectedIndex * 100}%`,
+            width: `calc((100% - 0.25rem) / ${options.length})`,
+          } as React.CSSProperties
+        }
       />
       {/* Legends escape grid/flex layout on a fieldset, so the columns live
           on an inner wrapper the legend is not part of. */}

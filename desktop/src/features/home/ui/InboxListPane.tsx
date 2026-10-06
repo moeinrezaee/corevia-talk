@@ -51,6 +51,7 @@ import { Switch } from "@/shared/ui/switch";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
 import { VirtualizedList } from "@/shared/ui/VirtualizedList";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const INBOX_EMPTY_STATE_TITLES: Record<InboxFilter, string> = {
   all: "No activity yet",
@@ -77,7 +78,7 @@ const INBOX_UNREAD_EMPTY_STATE_TITLES: Record<InboxFilter, string> = {
 const INBOX_HEADER_ICON_BUTTON_CLASS =
   "inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring data-[state=open]:bg-muted/70 data-[state=open]:text-foreground disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0";
 const INBOX_PANE_RIGHT_DIVIDER_CLASS =
-  "after:pointer-events-none after:absolute after:inset-y-0 after:right-0 after:z-40 after:w-px after:bg-border/35 after:content-['']";
+  "after:pointer-events-none after:absolute after:inset-y-0 after:end-0 after:z-40 after:w-px after:bg-border/35 after:content-['']";
 
 function InboxLabel({
   isDone,
@@ -92,7 +93,7 @@ function InboxLabel({
     <div
       className={cn(
         MESSAGE_MARKDOWN_CLASS,
-        "mt-0 flex min-h-[var(--inline-chip-min-height)] min-w-0 items-center gap-1.5 text-2xs leading-3 group-hover/inbox-item:pr-[6.75rem] group-focus-within/inbox-item:pr-[6.75rem]",
+        "mt-0 flex min-h-[var(--inline-chip-min-height)] min-w-0 items-center gap-1.5 text-2xs leading-3 group-hover/inbox-item:pe-[6.75rem] group-focus-within/inbox-item:pe-[6.75rem]",
         isActionRequired && !isDone
           ? "font-medium text-amber-600/80 dark:text-amber-300/80"
           : isDone
@@ -178,7 +179,7 @@ function PersonalItemRow({
     <button
       aria-current={selected ? "true" : undefined}
       className={cn(
-        "flex w-full items-center gap-3 border-b border-border/45 px-4 py-3 text-left transition-colors hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:outline-hidden",
+        "flex w-full items-center gap-3 border-b border-border/45 px-4 py-3 text-start transition-colors hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:outline-hidden",
         selected && "bg-muted/40",
       )}
       data-testid={`home-all-reminders-${id}`}
@@ -190,7 +191,7 @@ function PersonalItemRow({
       </span>
       <span className="min-w-0 flex-1">
         <span className="block text-sm font-semibold text-foreground">
-          Reminder
+          {tl("Reminder")}
         </span>
         {location ? (
           <InboxLabel
@@ -353,15 +354,15 @@ export function InboxListPane({
         }
       >
         <button
-          aria-label={`Open inbox item from ${item.senderLabel}`}
-          className="absolute inset-0 z-0 block w-full border-l border-l-transparent text-left"
+          aria-label={tlt("Open inbox item from {0}", [item.senderLabel])}
+          className="absolute inset-0 z-0 block w-full border-s border-s-transparent text-start"
           onClick={() => onSelect(item.id)}
           type="button"
         >
           <span
             aria-hidden="true"
             className={cn(
-              "pointer-events-none absolute inset-y-0 left-0 right-0 transition-colors",
+              "pointer-events-none absolute inset-y-0 start-0 end-0 transition-colors",
               isSelected
                 ? "bg-[var(--inbox-row-highlight-bg)]"
                 : "group-hover/inbox-item:bg-[var(--inbox-row-highlight-bg)] group-focus-within/inbox-item:bg-[var(--inbox-row-highlight-bg)] group-active/inbox-item:bg-muted/40",
@@ -371,7 +372,7 @@ export function InboxListPane({
 
         {/* biome-ignore lint/a11y: The sibling full-row button provides keyboard/screen-reader row activation; this wrapper delegates pointer selection while allowing nested profile triggers. */}
         <div
-          className="relative z-10 block w-full cursor-pointer px-3 py-4 text-left"
+          className="relative z-10 block w-full cursor-pointer px-3 py-4 text-start"
           onClick={handleRowContentClick}
         >
           <div className="flex min-w-0 items-start gap-2.5">
@@ -433,7 +434,7 @@ export function InboxListPane({
                   ) : null}
                   {item.unreadCount > 1 ? (
                     <span data-testid="home-inbox-unread-count">
-                      {item.unreadCount} unread
+                      {item.unreadCount} {tl("unread")}
                     </span>
                   ) : null}
                   {item.timestampLabel}
@@ -450,7 +451,7 @@ export function InboxListPane({
                   data-testid="home-inbox-reminder-due"
                 >
                   <Bell className="h-3 w-3" />
-                  Reminder due
+                  {tl("Reminder due")}
                 </div>
               ) : null}
 
@@ -469,15 +470,15 @@ export function InboxListPane({
                   {isReopening ? (
                     <>
                       <LoaderCircle className="h-3 w-3 shrink-0 animate-spin" />
-                      Reopening…
+                      {tl("Reopening…")}
                     </>
                   ) : (
                     <>
                       <AlertCircle className="h-3 w-3 shrink-0" />
-                      Couldn’t reopen
+                      {tl("Couldn’t reopen")}
                       {canOpen ? (
                         <button
-                          className="ml-0.5 rounded font-semibold underline underline-offset-2 hover:no-underline focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+                          className="ms-0.5 rounded font-semibold underline underline-offset-2 hover:no-underline focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
                           data-testid={`home-inbox-reopen-retry-${item.id}`}
                           onClick={(event) => {
                             // The row wrapper selects on click; stop it so
@@ -487,7 +488,7 @@ export function InboxListPane({
                           }}
                           type="button"
                         >
-                          Retry
+                          {tl("Retry")}
                         </button>
                       ) : null}
                     </>
@@ -515,17 +516,17 @@ export function InboxListPane({
           </div>
         </div>
 
-        <div className="pointer-events-none absolute right-3 top-2 z-10 flex items-center gap-0.5 rounded-full bg-[var(--inbox-row-highlight-bg)] p-1 opacity-0 transition-opacity duration-150 ease-out group-hover/inbox-item:pointer-events-auto group-hover/inbox-item:opacity-100 group-focus-within/inbox-item:pointer-events-auto group-focus-within/inbox-item:opacity-100">
+        <div className="pointer-events-none absolute end-3 top-2 z-10 flex items-center gap-0.5 rounded-full bg-[var(--inbox-row-highlight-bg)] p-1 opacity-0 transition-opacity duration-150 ease-out group-hover/inbox-item:pointer-events-auto group-hover/inbox-item:opacity-100 group-focus-within/inbox-item:pointer-events-auto group-focus-within/inbox-item:opacity-100">
           {isDone ? (
             <InboxRowActionButton
-              label="Mark unread"
+              label={tl("Mark unread")}
               onClick={() => onMarkUnread(item.id)}
             >
               <MailOpen className="!h-4 !w-4" />
             </InboxRowActionButton>
           ) : (
             <InboxRowActionButton
-              label="Mark as read"
+              label={tl("Mark as read")}
               onClick={() => onMarkRead(item.id)}
             >
               <MailOpen className="!h-4 !w-4" />
@@ -544,9 +545,9 @@ export function InboxListPane({
             label={
               hasChannelTarget
                 ? hasActiveReminder
-                  ? "Reminder set"
-                  : "Remind me later"
-                : "Cannot remind without a channel"
+                  ? tl("Reminder set")
+                  : tl("Remind me later")
+                : tl("Cannot remind without a channel")
             }
             onClick={() => onRemindLater(item)}
           >
@@ -563,12 +564,12 @@ export function InboxListPane({
           {isDone ? (
             <ContextMenuItem onClick={() => onMarkUnread(item.id)}>
               <MailOpen className="h-4 w-4" />
-              Mark unread
+              {tl("Mark unread")}
             </ContextMenuItem>
           ) : (
             <ContextMenuItem onClick={() => onMarkRead(item.id)}>
               <MailOpen className="h-4 w-4" />
-              Mark as read
+              {tl("Mark as read")}
             </ContextMenuItem>
           )}
           <ContextMenuSeparator />
@@ -592,7 +593,7 @@ export function InboxListPane({
             }}
           >
             <Clock className="h-4 w-4" />
-            {hasActiveReminder ? "Reminder set" : "Remind me later"}
+            {hasActiveReminder ? tl("Reminder set") : tl("Remind me later")}
           </ContextMenuItem>
         </ContextMenuContent>
       </ContextMenu>
@@ -609,12 +610,12 @@ export function InboxListPane({
       <TopChromeInsetHeader flush transparent>
         <div className="px-5 py-2">
           <div className="flex min-h-9 w-full min-w-0 items-center justify-between gap-3">
-            <div className="order-2 ml-auto flex shrink-0 items-center justify-end">
+            <div className="order-2 ms-auto flex shrink-0 items-center justify-end">
               <Popover>
                 <PopoverTrigger asChild>
                   <button
-                    aria-label="Inbox options"
-                    className={cn(INBOX_HEADER_ICON_BUTTON_CLASS, "-mr-4")}
+                    aria-label={tl("Inbox options")}
+                    className={cn(INBOX_HEADER_ICON_BUTTON_CLASS, "-me-4")}
                     data-testid="inbox-options-trigger"
                     type="button"
                   >
@@ -632,7 +633,7 @@ export function InboxListPane({
                       className="text-sm font-medium text-foreground"
                       htmlFor="inbox-unread-only-switch"
                     >
-                      Show unread only
+                      {tl("Show unread only")}
                     </label>
                     <Switch
                       checked={unreadOnly}
@@ -645,14 +646,14 @@ export function InboxListPane({
                   </div>
                   <Separator className="my-1 bg-muted" />
                   <button
-                    className="flex min-h-9 w-full items-center rounded-lg px-2 py-2 text-left text-sm transition-colors hover:bg-muted/50 disabled:pointer-events-none disabled:opacity-50"
+                    className="flex min-h-9 w-full items-center rounded-lg px-2 py-2 text-start text-sm transition-colors hover:bg-muted/50 disabled:pointer-events-none disabled:opacity-50"
                     disabled={unreadVisibleItemCount === 0}
                     onClick={handleMarkAllRead}
                     type="button"
                   >
-                    <span>Mark all as read</span>
+                    <span>{tl("Mark all as read")}</span>
                     {unreadVisibleItemCount > 0 ? (
-                      <span className="ml-auto text-xs text-muted-foreground">
+                      <span className="ms-auto text-xs text-muted-foreground">
                         {unreadVisibleItemCount}
                       </span>
                     ) : null}
@@ -754,10 +755,10 @@ export function InboxListPane({
                 </p>
                 <p className="mt-1 text-sm text-muted-foreground">
                   {unreadOnly
-                    ? "Turn off Show unread only to see read activity."
+                    ? tl("Turn off Show unread only to see read activity.")
                     : filter === "all"
-                      ? "New activity will appear here."
-                      : "Switch back to All to see other activity."}
+                      ? tl("New activity will appear here.")
+                      : tl("Switch back to All to see other activity.")}
                 </p>
               </div>
             </div>

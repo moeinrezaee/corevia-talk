@@ -14,6 +14,7 @@ import {
 } from "@/features/messages/lib/parseDiff";
 import { cn } from "@/shared/lib/cn";
 import "./DiffViewer.css";
+import { tl } from "@/shared/i18n/tl";
 
 type DiffViewerProps = {
   content: string;
@@ -70,7 +71,7 @@ export function DiffViewer({
   if (!files.length) {
     return (
       <div className="p-3 text-xs italic text-muted-foreground">
-        No diff content
+        {tl("No diff content")}
       </div>
     );
   }
@@ -118,7 +119,7 @@ export function DiffViewer({
                   <span className="rounded-md border border-border/60 px-1.5 py-0.5 text-2xs uppercase tracking-[0.14em] text-muted-foreground">
                     {DIFF_TYPE_LABELS[diffType]}
                   </span>
-                  <div className="ml-auto flex items-center gap-1.5">
+                  <div className="ms-auto flex items-center gap-1.5">
                     {additions > 0 ? (
                       <FileChangeBadge
                         tone="positive"
@@ -159,7 +160,7 @@ export function DiffViewer({
                 </Diff>
               ) : (
                 <div className="px-3 py-3 text-xs text-muted-foreground">
-                  No textual hunks in this diff.
+                  {tl("No textual hunks in this diff.")}
                 </div>
               )}
             </section>

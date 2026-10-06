@@ -1,6 +1,7 @@
 import type * as React from "react";
 
 import { cn } from "@/shared/lib/cn";
+import { tlt } from "@/shared/i18n/tl";
 
 const TIMECODE_ACCENT_CLASS =
   "bg-[hsl(var(--buzz-video-review-accent,var(--primary))/0.15)] text-[hsl(var(--buzz-video-review-accent-foreground,var(--buzz-video-review-accent,var(--primary))))]";
@@ -44,7 +45,7 @@ export function VideoReviewTimecodeButton({
 }) {
   return (
     <button
-      aria-label={`Jump to ${timecode}`}
+      aria-label={tlt("Jump to {0}", [timecode])}
       className={timecodeClasses({ className, interactive: true, surface })}
       data-testid="video-review-comment-timecode"
       type="button"

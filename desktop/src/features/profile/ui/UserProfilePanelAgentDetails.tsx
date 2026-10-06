@@ -5,6 +5,7 @@ import {
   type ProfileField,
   ProfileFieldRows,
 } from "@/features/profile/ui/UserProfilePanelFields";
+import { tl } from "@/shared/i18n/tl";
 
 export const AGENT_DETAILS_FIELD_LABELS = new Set([
   "Runtime",
@@ -117,21 +118,21 @@ export function AgentInstructionRow({
   const rowContent = (
     <>
       <MessageSquare className="h-4 w-4 shrink-0 text-muted-foreground" />
-      <div className="min-w-0 flex-1 text-left">
+      <div className="min-w-0 flex-1 text-start">
         <div className="text-xs font-medium text-foreground">
-          Agent instructions
+          {tl("Agent instructions")}
         </div>
         {trimmedInstruction ? (
           canOpenInstructions ? (
             <span
-              className="mt-1 line-clamp-2 whitespace-pre-wrap pr-1 text-sm leading-6"
+              className="mt-1 line-clamp-2 whitespace-pre-wrap pe-1 text-sm leading-6"
               data-testid="user-profile-agent-instruction"
             >
               {trimmedInstruction}
             </span>
           ) : (
             <div
-              className="mt-1 pr-1"
+              className="mt-1 pe-1"
               data-testid="user-profile-agent-instruction"
             >
               <Markdown
@@ -146,7 +147,7 @@ export function AgentInstructionRow({
             className="mt-0.5 text-sm leading-6 text-muted-foreground"
             data-testid="user-profile-agent-instruction-empty"
           >
-            No instruction set.
+            {tl("No instruction set.")}
           </p>
         )}
       </div>
@@ -159,7 +160,7 @@ export function AgentInstructionRow({
   if (canOpenInstructions) {
     return (
       <button
-        className="flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/40"
+        className="flex w-full items-start gap-3 px-4 py-3 text-start transition-colors hover:bg-muted/40"
         data-testid="user-profile-agent-instruction-row"
         onClick={onOpenInstructions}
         type="button"
@@ -193,7 +194,7 @@ export function AgentInstructionsFocusedView({
           />
         ) : (
           <p className="text-sm leading-6 text-muted-foreground">
-            No instruction set.
+            {tl("No instruction set.")}
           </p>
         )}
       </div>

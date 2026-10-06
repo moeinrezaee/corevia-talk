@@ -14,6 +14,7 @@ import type {
   ProjectPullRequest,
   Repository,
 } from "@/features/projects/hooks";
+import { tl } from "@/shared/i18n/tl";
 
 function ContextDetailRow({
   icon: Icon,
@@ -49,17 +50,17 @@ export function ProjectWorkItemContextDetails({
       <>
         <ContextDetailRow
           icon={CircleDot}
-          label="Status"
+          label={tl("Status")}
           value={issue.status}
         />
         <ContextDetailRow
           icon={Users}
-          label="Assignees"
+          label={tl("Assignees")}
           value={issue.assignees.length}
         />
         <ContextDetailRow
           icon={MessageCircle}
-          label="Comments"
+          label={tl("Comments")}
           value={issue.comments.length}
         />
       </>
@@ -75,7 +76,7 @@ export function ProjectWorkItemContextDetails({
       <>
         <ContextDetailRow
           icon={GitBranch}
-          label="Branch"
+          label={tl("Branch")}
           value={
             <span
               className="block max-w-40 truncate"
@@ -88,17 +89,17 @@ export function ProjectWorkItemContextDetails({
         />
         <ContextDetailRow
           icon={GitPullRequest}
-          label="Status"
+          label={tl("Status")}
           value={pullRequest.status}
         />
         <ContextDetailRow
           icon={Users}
-          label="Reviewers"
+          label={tl("Reviewers")}
           value={pullRequest.reviewers.length}
         />
         <ContextDetailRow
           icon={CheckCircle2}
-          label="Approvals"
+          label={tl("Approvals")}
           value={pullRequest.approvals.length}
         />
       </>

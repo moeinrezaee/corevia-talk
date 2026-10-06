@@ -48,6 +48,7 @@ import type {
   AvatarMode,
   ProfileAvatarEditorProps,
 } from "./ProfileAvatarEditor.types";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 const INITIAL_EMOJI_AVATAR_COLORS = AVATAR_COLORS.filter(
   (color) => color !== DEFAULT_EMOJI_AVATAR_COLOR,
@@ -527,9 +528,9 @@ export function ProfileAvatarEditor({
       className={cn(
         "mx-auto w-full border-0 p-0 text-sm",
         isOnboardingInline
-          ? "max-w-none md:ml-0 md:mr-auto"
+          ? "max-w-none md:ms-0 md:me-auto"
           : isOnboardingModal
-            ? "max-w-[456px] md:ml-0 md:mr-auto"
+            ? "max-w-[456px] md:ms-0 md:me-auto"
             : "max-w-[576px]",
       )}
       data-testid={`${testIdPrefix}-editor`}
@@ -584,7 +585,7 @@ export function ProfileAvatarEditor({
         void handleFiles(event.dataTransfer.files);
       }}
     >
-      <legend className="sr-only">Avatar image picker</legend>
+      <legend className="sr-only">{tl("Avatar image picker")}</legend>
       <div
         className="relative"
         style={
@@ -695,16 +696,16 @@ export function ProfileAvatarEditor({
                       )}
                     >
                       {isUploading ? (
-                        "Uploading..."
+                        tl("Uploading...")
                       ) : isImageDropActive ? (
-                        "Drop image here"
+                        tl("Drop image here")
                       ) : isOnboardingModal ? (
-                        "Drag or browse"
+                        tl("Drag or browse")
                       ) : (
                         <>
-                          Drop or{" "}
+                          {tl("Drop or")}{" "}
                           <span className="underline underline-offset-2">
-                            browse
+                            {tl("browse")}
                           </span>
                         </>
                       )}
@@ -755,8 +756,8 @@ export function ProfileAvatarEditor({
                       }}
                       placeholder={
                         isOnboardingModal
-                          ? "Paste a URL"
-                          : "Paste a URL (Slack profile, etc.)"
+                          ? tl("Paste a URL")
+                          : tl("Paste a URL (Slack profile, etc.)")
                       }
                       spellCheck={false}
                       type="url"
@@ -903,9 +904,11 @@ export function ProfileAvatarEditor({
                             aria-label={
                               isCustomSwatch
                                 ? selectedEmoji
-                                  ? "Choose custom avatar color"
-                                  : "Choose an emoji before custom avatar color"
-                                : `Use ${swatch} background`
+                                  ? tl("Choose custom avatar color")
+                                  : tl(
+                                      "Choose an emoji before custom avatar color",
+                                    )
+                                : tlt("Use {0} background", [swatch])
                             }
                             aria-pressed={isSelected}
                             className={cn(
@@ -1026,10 +1029,10 @@ export function ProfileAvatarEditor({
                           transition={DONE_BUTTON_CONTENT_TRANSITION}
                         >
                           <Spinner
-                            aria-label="Saving avatar"
+                            aria-label={tl("Saving avatar")}
                             className="h-4 w-4 border-2"
                           />
-                          <span>Saving</span>
+                          <span>{tl("Saving")}</span>
                         </motion.span>
                       ) : (
                         <motion.span
@@ -1048,7 +1051,7 @@ export function ProfileAvatarEditor({
                           key="ready"
                           transition={DONE_BUTTON_CONTENT_TRANSITION}
                         >
-                          {isOnboardingModal ? "Save" : "Done"}
+                          {isOnboardingModal ? tl("Save") : tl("Done")}
                         </motion.span>
                       )}
                     </AnimatePresence>

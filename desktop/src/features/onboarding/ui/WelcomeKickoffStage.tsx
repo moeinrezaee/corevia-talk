@@ -54,7 +54,7 @@ export function WelcomeKickoffStage({
     <div
       aria-hidden
       className={cn(
-        "pointer-events-none absolute bottom-full left-10 z-10 flex items-end gap-4",
+        "pointer-events-none absolute bottom-full start-10 z-10 flex items-end gap-4",
         isWelcomeKickoffStageExiting(phase) && "motion-kickoff-stage-exit",
       )}
       data-phase={phase}

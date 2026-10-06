@@ -53,6 +53,7 @@ import { CopyShareLinkMenuItem } from "./CopyShareLinkMenuItem";
 import { ProjectEntityListRow } from "./ProjectEntityListRow";
 import { PROJECT_GRID_CARD_BODY_CLASS } from "./projectGridCardStyles";
 import { ProjectListRowMenu } from "./ProjectListRowMenu";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export function ProjectPeopleStack({
   pubkeys,
@@ -84,7 +85,7 @@ export function ProjectPeopleStack({
           >
             <UserProfilePopover pubkey={pubkey} triggerElement="span">
               <button
-                aria-label={`View ${label}'s profile`}
+                aria-label={tlt("View {0}'s profile", [label])}
                 className={cn(
                   "inline-flex focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring",
                   profile?.isAgent ? "rounded-[30%]" : "rounded-full",
@@ -255,34 +256,36 @@ function RepositoryUnavailableIndicator({
   if (!reason) return null;
   const status = {
     authentication: {
-      description: "Buzz could not authenticate with this repository.",
-      label: "Access failed",
+      description: tl("Buzz could not authenticate with this repository."),
+      label: tl("Access failed"),
     },
     missing: {
-      description: "No git repository was found on the Buzz relay.",
-      label: "Uninitialized",
+      description: tl("No git repository was found on the Buzz relay."),
+      label: tl("Uninitialized"),
     },
     access: {
-      description:
+      description: tl(
         "You’re not a member of the channel that grants access to this repository.",
-      label: "No access",
+      ),
+      label: tl("No access"),
     },
     unbound: {
-      description:
+      description: tl(
         "The repository has no access channel binding, so the relay cannot authorize reads.",
-      label: "No access channel",
+      ),
+      label: tl("No access channel"),
     },
     network: {
-      description: "The Buzz git service could not be reached.",
-      label: "Unreachable",
+      description: tl("The Buzz git service could not be reached."),
+      label: tl("Unreachable"),
     },
     ref: {
-      description: "The advertised branch is missing from the git remote.",
-      label: "Branch missing",
+      description: tl("The advertised branch is missing from the git remote."),
+      label: tl("Branch missing"),
     },
     unknown: {
-      description: "Buzz could not load this repository.",
-      label: "Unavailable",
+      description: tl("Buzz could not load this repository."),
+      label: tl("Unavailable"),
     },
   } satisfies Record<
     ProjectRepoUnavailableReason,
@@ -294,7 +297,7 @@ function RepositoryUnavailableIndicator({
     <Tooltip>
       <TooltipTrigger asChild>
         <span
-          aria-label={`Repository ${label.toLowerCase()}`}
+          aria-label={tlt("Repository {0}", [label.toLowerCase()])}
           className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-amber-600 hover:bg-amber-500/10 dark:text-amber-300"
           role="img"
         >
@@ -318,14 +321,16 @@ export function EmptyState({
     <div className="flex flex-1 flex-col items-center justify-center gap-3 px-4 py-16 text-center">
       <Folders className="h-10 w-10 text-muted-foreground/40" />
       <div className="space-y-1">
-        <p className="text-sm font-medium text-foreground">No projects yet</p>
+        <p className="text-sm font-medium text-foreground">
+          {tl("No projects yet")}
+        </p>
         <p className="text-sm text-muted-foreground">
-          Projects published to this relay will appear here.
+          {tl("Projects published to this relay will appear here.")}
         </p>
       </div>
       <Button onClick={onCreateProject} size="sm" type="button">
         <Plus className="h-4 w-4" />
-        Create project
+        {tl("Create project")}
       </Button>
     </div>
   );
@@ -337,10 +342,10 @@ export function EmptyFilteredState() {
       <Folders className="h-9 w-9 text-muted-foreground/40" />
       <div className="space-y-1">
         <p className="text-sm font-medium text-foreground">
-          No matching projects
+          {tl("No matching projects")}
         </p>
         <p className="text-sm text-muted-foreground">
-          Try another owner filter or sort mode.
+          {tl("Try another owner filter or sort mode.")}
         </p>
       </div>
     </div>
@@ -360,7 +365,9 @@ function ProjectCardButton({
       onClick={() => onOpen(project)}
       type="button"
     >
-      <span className="sr-only">View {project.name}</span>
+      <span className="sr-only">
+        {tl("View")} {project.name}
+      </span>
     </button>
   );
 }
@@ -384,7 +391,7 @@ function ProjectActionsMenu({
 
   return (
     <AlertDialog onOpenChange={setConfirmOpen} open={confirmOpen}>
-      <ProjectListRowMenu label={`More options for ${project.name}`}>
+      <ProjectListRowMenu label={tlt("More options for {0}", [project.name])}>
         <CopyShareLinkMenuItem
           link={projectShareLink(project)}
           testId={`project-copy-link-${project.dtag}`}
@@ -411,23 +418,25 @@ function ProjectActionsMenu({
           }}
         >
           <Trash2 className="h-4 w-4" />
-          Delete project
+          {tl("Delete project")}
         </DropdownMenuItem>
       </ProjectListRowMenu>
       <AlertDialogContent
         data-testid={`project-delete-confirm-${project.dtag}`}
       >
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete project?</AlertDialogTitle>
+          <AlertDialogTitle>{tl("Delete project?")}</AlertDialogTitle>
           <AlertDialogDescription>
-            Delete {project.name} from Projects for everyone. This can only be
-            done for projects you own and cannot be undone.
+            {tl("Delete")} {project.name}{" "}
+            {tl(
+              "from Projects for everyone. This can only be done for projects you own and cannot be undone.",
+            )}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel asChild>
             <Button disabled={disabled} type="button" variant="outline">
-              Cancel
+              {tl("Cancel")}
             </Button>
           </AlertDialogCancel>
           <AlertDialogAction asChild>
@@ -443,7 +452,7 @@ function ProjectActionsMenu({
               type="button"
               variant="destructive"
             >
-              {disabled ? "Deleting..." : "Delete project"}
+              {disabled ? tl("Deleting...") : tl("Delete project")}
             </Button>
           </AlertDialogAction>
         </AlertDialogFooter>
@@ -539,7 +548,7 @@ export const ProjectGridCard = React.memo(function ProjectGridCard({
           )}
           data-testid="projects-grid-card-body"
         >
-          {project.description || "A shared space for internal git work."}
+          {project.description || tl("A shared space for internal git work.")}
         </p>
 
         <div className="relative z-10 flex items-center px-4 pb-1">

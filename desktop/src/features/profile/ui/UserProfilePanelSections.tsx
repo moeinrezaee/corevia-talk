@@ -52,6 +52,7 @@ import { cn } from "@/shared/lib/cn";
 import { observeElementBlockSize } from "@/shared/layout/observeElementBlockSize";
 import { useMeasuredCssVariable } from "@/shared/layout/useMeasuredCssVariable";
 import { Badge } from "@/shared/ui/badge";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 export { AgentInstructionsFocusedView } from "@/features/profile/ui/UserProfilePanelAgentDetails";
 
@@ -257,7 +258,7 @@ export function ProfileSummaryView({
         title={diagnosticsErrorField.displayValue}
         variant="destructive"
       >
-        Error
+        {tl("Error")}
       </Badge>
     ) : null;
   const tabs = React.useMemo(() => {
@@ -267,18 +268,18 @@ export function ProfileSummaryView({
       trailing?: React.ReactNode;
     }> = [];
     if (showInfoTab) {
-      items.push({ id: "info", label: "Info" });
+      items.push({ id: "info", label: tl("Info") });
     }
     if (showRuntimeTab) {
-      items.push({ id: "runtime", label: "Runtime" });
+      items.push({ id: "runtime", label: tl("Runtime") });
     }
     if (showChannelsTab) {
-      items.push({ id: "channels", label: "Channels" });
+      items.push({ id: "channels", label: tl("Channels") });
     }
     if (showMemoriesTab) {
       items.push({
         id: "memories",
-        label: "Memories",
+        label: tl("Memories"),
       });
     }
     return items;
@@ -670,7 +671,7 @@ function ProfileHero({
         {onEditAgent ? (
           <h3 className="max-w-full" data-testid="user-profile-name-row">
             <button
-              aria-label={`Edit ${displayName}`}
+              aria-label={tlt("Edit {0}", [displayName])}
               className="group relative flex max-w-full items-center justify-center gap-2 rounded-lg px-1 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
               data-testid="user-profile-edit-agent"
               onClick={onEditAgent}
@@ -683,7 +684,7 @@ function ProfileHero({
               {notManagedOnDevice ? <OtherSetupAgentMarker /> : null}
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute top-1/2 left-full ml-1 -translate-y-1/2 text-muted-foreground opacity-0 transition-[color,opacity] duration-150 ease-out group-hover:text-foreground group-hover:opacity-100 group-focus-visible:opacity-100"
+                className="pointer-events-none absolute top-1/2 start-full ms-1 -translate-y-1/2 text-muted-foreground opacity-0 transition-[color,opacity] duration-150 ease-out group-hover:text-foreground group-hover:opacity-100 group-focus-visible:opacity-100"
                 data-testid="user-profile-edit-agent-icon"
               >
                 <Pencil className="h-4 w-4" />
@@ -716,7 +717,7 @@ function ProfileHero({
           <p className="text-sm text-muted-foreground">
             {userStatus.emoji ? (
               <StatusEmoji
-                className="mr-1 inline h-3.5 w-3.5"
+                className="me-1 inline h-3.5 w-3.5"
                 value={userStatus.emoji}
               />
             ) : null}
@@ -782,7 +783,7 @@ function ProfileHeroDescription({ about }: { about: string }) {
           onClick={() => setExpanded(true)}
           type="button"
         >
-          more
+          {tl("more")}
           <ChevronDown className="h-4 w-4" />
         </button>
       ) : null}
@@ -793,7 +794,7 @@ function ProfileHeroDescription({ about }: { about: string }) {
           onClick={() => setExpanded(false)}
           type="button"
         >
-          less
+          {tl("less")}
           <ChevronUp className="h-4 w-4" />
         </button>
       ) : null}

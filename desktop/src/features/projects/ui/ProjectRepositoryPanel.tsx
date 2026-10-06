@@ -59,6 +59,7 @@ import {
   type RepositoryFilesContext,
   useRepositoryFilesNavigation,
 } from "./useRepositoryFilesNavigation";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 function normalizeAuthorLookupValue(value: string | null | undefined) {
   return value?.trim().toLowerCase() ?? "";
@@ -555,7 +556,7 @@ function FileContentPanel({
     <div className={PROJECT_DETAIL_PANEL_CLASS} data-project-detail-panel>
       <div className="flex min-h-14 items-center gap-1 border-border/50 border-b bg-muted/20 px-4 py-3">
         <BreadcrumbButton onClick={() => onOpenPath("")}>
-          Files
+          {tl("Files")}
         </BreadcrumbButton>
         {directorySegments.map((segment, index) => {
           const nextPath = directorySegments.slice(0, index + 1).join("/");
@@ -574,7 +575,9 @@ function FileContentPanel({
           {fileName}
         </span>
         <div className="hidden shrink-0 items-center gap-3 text-2xs text-muted-foreground sm:flex">
-          <span>Last changed {formatLastChangedAt(file.lastChangedAt)}</span>
+          <span>
+            {tl("Last changed")} {formatLastChangedAt(file.lastChangedAt)}
+          </span>
           <span>{formatFileSize(file.size)}</span>
         </div>
         <span className="shrink-0 text-2xs text-muted-foreground sm:hidden">
@@ -582,10 +585,10 @@ function FileContentPanel({
         </span>
       </div>
       <div className="border-border/50 border-b bg-muted/10 px-4 py-2 text-2xs text-muted-foreground sm:hidden">
-        Last changed {formatLastChangedAt(file.lastChangedAt)}
+        {tl("Last changed")} {formatLastChangedAt(file.lastChangedAt)}
       </div>
       {fileContent.isLoading ? (
-        <BuzzLoadingState label="Loading file" />
+        <BuzzLoadingState label={tl("Loading file")} />
       ) : fileContent.content ? (
         <pre className="overflow-x-auto bg-background/60 p-4">
           {language ? (
@@ -603,8 +606,12 @@ function FileContentPanel({
       ) : (
         <div className="p-6 text-sm text-muted-foreground">
           {fileContent.error
-            ? "Could not load this file. Try again after refreshing the repository."
-            : "Preview unavailable for this file. Large and binary files only show metadata."}
+            ? tl(
+                "Could not load this file. Try again after refreshing the repository.",
+              )
+            : tl(
+                "Preview unavailable for this file. Large and binary files only show metadata.",
+              )}
         </div>
       )}
     </div>
@@ -698,7 +705,7 @@ export function RepositoryFilesPanel({
   // remote/local toggle must stay reachable when one source fails to load.
   if (isLoading) {
     if (!sourceControls) {
-      return <BuzzLoadingState label="Loading repository files" />;
+      return <BuzzLoadingState label={tl("Loading repository files")} />;
     }
     return (
       <div className={PROJECT_DETAIL_PANEL_CLASS} data-project-detail-panel>
@@ -718,11 +725,11 @@ export function RepositoryFilesPanel({
             selectedTag={sourceControls.selectedTag}
             tagOptions={sourceControls.tagOptions}
           />
-          <div className="ml-auto flex shrink-0 items-center">
+          <div className="ms-auto flex shrink-0 items-center">
             <RepoSyncActionButton controls={sourceControls} />
           </div>
         </div>
-        <BuzzLoadingState label="Loading repository files" />
+        <BuzzLoadingState label={tl("Loading repository files")} />
       </div>
     );
   }
@@ -738,8 +745,8 @@ export function RepositoryFilesPanel({
       <ProjectPanelState
         description={
           error || unavailableMessage
-            ? "Refresh the repository or check its access settings."
-            : "Files pushed to this repository will appear here."
+            ? tl("Refresh the repository or check its access settings.")
+            : tl("Files pushed to this repository will appear here.")
         }
         error={Boolean(error || unavailableMessage)}
         panel={!sourceControls}
@@ -767,7 +774,7 @@ export function RepositoryFilesPanel({
             selectedTag={sourceControls.selectedTag}
             tagOptions={sourceControls.tagOptions}
           />
-          <div className="ml-auto flex shrink-0 items-center">
+          <div className="ms-auto flex shrink-0 items-center">
             <RepoSyncActionButton controls={sourceControls} />
           </div>
         </div>
@@ -810,14 +817,14 @@ export function RepositoryFilesPanel({
             </>
           ) : (
             <BreadcrumbButton onClick={() => openPath("")}>
-              Files
+              {tl("Files")}
             </BreadcrumbButton>
           )}
           {sourceControls && pathSegments.length > 0 ? (
             <>
               <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground/60" />
               <BreadcrumbButton onClick={() => openPath("")}>
-                Files
+                {tl("Files")}
               </BreadcrumbButton>
             </>
           ) : null}
@@ -833,7 +840,7 @@ export function RepositoryFilesPanel({
             );
           })}
           {sourceControls ? (
-            <div className="ml-auto flex shrink-0 items-center">
+            <div className="ms-auto flex shrink-0 items-center">
               <RepoSyncActionButton controls={sourceControls} />
             </div>
           ) : null}
@@ -851,7 +858,7 @@ export function RepositoryFilesPanel({
                   : undefined
               }
             >
-              <th className="px-4 py-3 text-left font-normal" colSpan={3}>
+              <th className="px-4 py-3 text-start font-normal" colSpan={3}>
                 {latestCommit ? (
                   <div
                     className="flex min-w-0 items-center justify-between gap-3 text-xs"
@@ -873,7 +880,7 @@ export function RepositoryFilesPanel({
                         </span>
                         <span className="text-muted-foreground">
                           {" "}
-                          committed
+                          {tl("committed")}
                         </span>
                         <span className="font-medium">
                           {" "}
@@ -891,7 +898,7 @@ export function RepositoryFilesPanel({
                       </p>
                     </div>
                     <time
-                      className="shrink-0 whitespace-nowrap text-right text-xs text-muted-foreground"
+                      className="shrink-0 whitespace-nowrap text-end text-xs text-muted-foreground"
                       dateTime={new Date(
                         latestCommit.timestamp * 1_000,
                       ).toISOString()}
@@ -901,7 +908,8 @@ export function RepositoryFilesPanel({
                   </div>
                 ) : (
                   <p className="truncate text-sm font-medium text-foreground">
-                    Repository files · {files.length} tracked files
+                    {tl("Repository files ·")} {files.length}{" "}
+                    {tl("tracked files")}
                   </p>
                 )}
               </th>
@@ -915,7 +923,7 @@ export function RepositoryFilesPanel({
 
               return (
                 <tr
-                  aria-label={`Open ${entry.type} ${entry.name}`}
+                  aria-label={tlt("Open {0} {1}", [entry.type, entry.name])}
                   className="group/repository-entry cursor-pointer text-xs focus-visible:outline-hidden"
                   data-testid="project-repository-entry-row"
                   key={`${entry.type}:${entry.path}`}
@@ -925,7 +933,7 @@ export function RepositoryFilesPanel({
                   }
                   tabIndex={0}
                 >
-                  <td className="min-w-52 px-3 py-2 align-middle transition-colors group-hover/repository-entry:rounded-l-md group-hover/repository-entry:bg-muted/35 group-focus-visible/repository-entry:rounded-l-md group-focus-visible/repository-entry:bg-muted/35">
+                  <td className="min-w-52 px-3 py-2 align-middle transition-colors group-hover/repository-entry:rounded-s-md group-hover/repository-entry:bg-muted/35 group-focus-visible/repository-entry:rounded-s-md group-focus-visible/repository-entry:bg-muted/35">
                     <div className="flex min-w-0 items-center gap-2">
                       <RepositoryEntryIcon entry={entry} />
                       <span className="truncate font-medium text-foreground">
@@ -939,7 +947,7 @@ export function RepositoryFilesPanel({
                       profiles={profiles}
                     />
                   </td>
-                  <td className="w-36 whitespace-nowrap p-2 text-right align-middle text-muted-foreground transition-colors group-hover/repository-entry:rounded-r-md group-hover/repository-entry:bg-muted/35 group-focus-visible/repository-entry:rounded-r-md group-focus-visible/repository-entry:bg-muted/35">
+                  <td className="w-36 whitespace-nowrap p-2 text-end align-middle text-muted-foreground transition-colors group-hover/repository-entry:rounded-e-md group-hover/repository-entry:bg-muted/35 group-focus-visible/repository-entry:rounded-e-md group-focus-visible/repository-entry:bg-muted/35">
                     {latestCommit ? (
                       <time
                         dateTime={new Date(
@@ -961,10 +969,15 @@ export function RepositoryFilesPanel({
       {entries.length > visibleEntries.length ? (
         <div className="flex items-center justify-between gap-3 border-border/50 border-t px-4 py-3 text-2xs text-muted-foreground">
           <span aria-live="polite">
-            Showing {visibleEntries.length} of {entries.length} entries.
+            {tl("Showing")} {visibleEntries.length} {tl("of")} {entries.length}{" "}
+            {tl("entries.")}
           </span>
           <button
-            aria-label={`Show next ${nextEntryCount} entries, ${nextVisibleEntryCount} of ${entries.length} total`}
+            aria-label={tlt("Show next {0} entries, {1} of {2} total", [
+              nextEntryCount,
+              nextVisibleEntryCount,
+              entries.length,
+            ])}
             className="shrink-0 font-medium text-foreground hover:underline"
             onClick={() =>
               setVisibleEntryCount((current) =>
@@ -973,7 +986,7 @@ export function RepositoryFilesPanel({
             }
             type="button"
           >
-            Show next {nextEntryCount}
+            {tl("Show next")} {nextEntryCount}
           </button>
         </div>
       ) : null}

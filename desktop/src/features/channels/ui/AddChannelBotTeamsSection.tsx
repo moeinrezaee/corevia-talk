@@ -11,6 +11,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/shared/ui/tooltip";
+import { tl, tlt } from "@/shared/i18n/tl";
 
 type SelectionChipButtonProps = {
   disabled: boolean;
@@ -72,9 +73,9 @@ export function AddChannelBotTeamsSection({
   return (
     <div className="space-y-3">
       <div>
-        <div className="text-sm font-medium">Teams</div>
+        <div className="text-sm font-medium">{tl("Teams")}</div>
         <p className="text-xs text-muted-foreground">
-          Select a team to toggle all its agents at once.
+          {tl("Select a team to toggle all its agents at once.")}
         </p>
       </div>
 
@@ -132,14 +133,14 @@ export function AddChannelBotTeamsSection({
                         >
                           <Check className="h-4 w-4" />
                           {allInChannel
-                            ? "All in channel"
-                            : `${inChannelCount} in channel`}
+                            ? tl("All in channel")
+                            : tlt("{0} in channel", [inChannelCount])}
                         </span>
                       ) : null}
                     </SelectionChipButton>
                   </div>
                 </TooltipTrigger>
-                <TooltipContent className="max-w-xs text-left">
+                <TooltipContent className="max-w-xs text-start">
                   <div className="space-y-1.5">
                     <p className="font-medium">{team.name}</p>
                     {team.description ? (

@@ -48,6 +48,7 @@ class _PairingCodeEntry extends HookConsumerWidget {
             opacity: 0,
             alwaysIncludeSemantics: true,
             child: TextField(
+              textAlign: uiStartTextAlign(context),
               key: const Key('pairing-code-input'),
               controller: controller,
               focusNode: focus,

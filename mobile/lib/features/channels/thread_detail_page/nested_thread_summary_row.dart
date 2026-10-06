@@ -42,18 +42,19 @@ class _NestedThreadSummaryRow extends ConsumerWidget {
       },
       child: Builder(
         builder: (context) {
-          final isOwn =
-              currentPubkey != null &&
-              currentPubkey!.toLowerCase() == replyMessage.pubkey.toLowerCase();
+          final atEnd =
+              currentPubkey == null ||
+              !(currentPubkey!.toLowerCase() ==
+                  replyMessage.pubkey.toLowerCase());
           return Align(
-            alignment: isOwn
+            alignment: atEnd
                 ? AlignmentDirectional.centerEnd
                 : AlignmentDirectional.centerStart,
             child: Padding(
               key: ValueKey('nested-thread-summary-${replyMessage.id}'),
               padding: EdgeInsetsDirectional.only(
-                start: isOwn ? 0 : messageAvatarSize + messageAvatarContentGap,
-                end: isOwn ? messageAvatarSize + messageAvatarContentGap : 0,
+                start: atEnd ? 0 : messageAvatarSize + messageAvatarContentGap,
+                end: atEnd ? messageAvatarSize + messageAvatarContentGap : 0,
                 top: Grid.half,
                 bottom: Grid.xs,
               ),

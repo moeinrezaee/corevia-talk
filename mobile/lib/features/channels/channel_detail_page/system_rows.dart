@@ -609,18 +609,18 @@ class _ThreadSummaryRow extends ConsumerWidget {
       },
       child: Builder(
         builder: (context) {
-          final isOwn =
-              currentPubkey != null &&
-              currentPubkey!.toLowerCase() == message.pubkey.toLowerCase();
+          final atEnd =
+              currentPubkey == null ||
+              !(currentPubkey!.toLowerCase() == message.pubkey.toLowerCase());
           return Align(
-            alignment: isOwn
+            alignment: atEnd
                 ? AlignmentDirectional.centerEnd
                 : AlignmentDirectional.centerStart,
             child: Padding(
               key: ValueKey('thread-summary-${message.id}'),
               padding: EdgeInsetsDirectional.only(
-                start: isOwn ? 0 : messageAvatarSize + messageAvatarContentGap,
-                end: isOwn ? messageAvatarSize + messageAvatarContentGap : 0,
+                start: atEnd ? 0 : messageAvatarSize + messageAvatarContentGap,
+                end: atEnd ? messageAvatarSize + messageAvatarContentGap : 0,
                 top: Grid.half,
                 bottom: Grid.xs,
               ),

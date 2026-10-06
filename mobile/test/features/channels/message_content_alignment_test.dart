@@ -159,8 +159,8 @@ void main() {
     expect(
       decoration.borderRadius,
       const BorderRadiusDirectional.only(
-        topStart: Radius.circular(6),
-        topEnd: Radius.circular(18),
+        topStart: Radius.circular(18),
+        topEnd: Radius.circular(6),
         bottomStart: Radius.circular(18),
         bottomEnd: Radius.circular(18),
       ),
@@ -184,26 +184,27 @@ void main() {
     expect(rect.right, closeTo(400, 0.5));
   });
 
-  testWidgets('own bubbles use the end-side tight corner and a primary tint', (
-    tester,
-  ) async {
-    await _pump(tester, AppLanguage.en, 'mine', bubble: true, own: true);
-    final bubble = find.byKey(const ValueKey('message-bubble'));
-    final decoration =
-        tester.widget<DecoratedBox>(bubble).decoration as BoxDecoration;
-    expect(
-      decoration.borderRadius,
-      const BorderRadiusDirectional.only(
-        topStart: Radius.circular(18),
-        topEnd: Radius.circular(6),
-        bottomStart: Radius.circular(18),
-        bottomEnd: Radius.circular(18),
-      ),
-    );
-    final primary = Theme.of(tester.element(bubble)).colorScheme.primary;
-    expect(
-      (decoration.color!).toARGB32() & 0x00FFFFFF,
-      primary.toARGB32() & 0x00FFFFFF,
-    );
-  });
+  testWidgets(
+    'own bubbles use the start-side tight corner and a primary tint',
+    (tester) async {
+      await _pump(tester, AppLanguage.en, 'mine', bubble: true, own: true);
+      final bubble = find.byKey(const ValueKey('message-bubble'));
+      final decoration =
+          tester.widget<DecoratedBox>(bubble).decoration as BoxDecoration;
+      expect(
+        decoration.borderRadius,
+        const BorderRadiusDirectional.only(
+          topStart: Radius.circular(6),
+          topEnd: Radius.circular(18),
+          bottomStart: Radius.circular(18),
+          bottomEnd: Radius.circular(18),
+        ),
+      );
+      expect(decoration.border, isNull, reason: 'bubbles have no outline');
+      expect(
+        decoration.color,
+        const HSLColor.fromAHSL(0.12, 214, 0.9, 0.52).toColor(),
+      );
+    },
+  );
 }

@@ -692,6 +692,7 @@ class _ProfileTextEditSheet extends HookWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
+              textAlign: uiStartTextAlign(context),
               key: const ValueKey('profile-field-input'),
               controller: controller,
               autofocus: true,

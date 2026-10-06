@@ -3883,7 +3883,21 @@ void main() {
         final imageCountRect = tester.getRect(imageCount);
 
         expect(carouselRect.left, imageCountRect.left);
-        expect(carouselRect.right, tester.view.physicalSize.width);
+        // Other people's messages sit on the UI end side with their avatar
+        // there, so the carousel ends at the avatar rather than the screen.
+        final rowRect = tester.getRect(
+          find.byKey(const ValueKey('message-row-gallery')),
+        );
+        final avatarRect = tester.getRect(
+          find
+              .descendant(
+                of: find.byKey(const ValueKey('message-row-gallery')),
+                matching: find.byType(CircleAvatar),
+              )
+              .first,
+        );
+        expect(rowRect.right, greaterThanOrEqualTo(avatarRect.right));
+        expect(carouselRect.right, avatarRect.left - messageAvatarContentGap);
         expect(carouselRect.top - imageCountRect.bottom, Grid.half + 2);
 
         final messageMaterial = find
@@ -3955,8 +3969,11 @@ void main() {
       );
       expect(
         summaryPadding.padding,
+        // Other people's messages sit on the UI end side, so their summary
+        // is inset from the end (avatar side).
         const EdgeInsetsDirectional.only(
-          start: messageAvatarSize + messageAvatarContentGap,
+          start: 0,
+          end: messageAvatarSize + messageAvatarContentGap,
           top: Grid.half,
           bottom: Grid.xs,
         ),

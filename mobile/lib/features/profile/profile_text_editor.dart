@@ -12,6 +12,7 @@ import '../../shared/widgets/modal_presentation.dart';
 import 'ios_profile_text_editor.dart';
 import 'profile_provider.dart';
 import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/text_direction.dart';
 
 /// Opens the current user's display-name editor from a profile action surface.
 Future<void> showProfileDisplayNameEditor(BuildContext context) async {
@@ -198,6 +199,7 @@ class _ProfileTextEditSheet extends HookWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
+              textAlign: uiStartTextAlign(context),
               key: const ValueKey('profile-field-input'),
               controller: controller,
               autofocus: true,

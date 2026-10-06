@@ -317,6 +317,7 @@ class _SectionNameDialog extends HookWidget {
     return AlertDialog(
       title: Text(title),
       content: TextField(
+        textAlign: uiStartTextAlign(context),
         controller: controller,
         autofocus: true,
         decoration: InputDecoration(labelText: tl('Name')),

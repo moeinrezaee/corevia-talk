@@ -44,6 +44,7 @@ import 'thread_follows/thread_follows_provider.dart';
 import 'timeline_message.dart';
 import 'unread_badge/is_high_priority_event.dart';
 import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/text_direction.dart';
 
 part 'message_actions/reaction_popover.dart';
 part 'message_actions/quick_reaction_row.dart';
@@ -900,6 +901,7 @@ void _showEditSheet({
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
+            textAlign: uiStartTextAlign(context),
             controller: controller,
             autofocus: true,
             minLines: 1,

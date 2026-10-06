@@ -134,9 +134,13 @@ class MessageContent extends HookConsumerWidget {
   /// Draws the text on a rounded, tinted bubble that hugs the message.
   final bool bubble;
 
-  /// The bubble belongs to the signed-in user: it sits at the UI end side with
-  /// a primary tint and its tight corner facing the end-side avatar.
+  /// The bubble belongs to the signed-in user: it sits at the UI start side with
+  /// a primary tint and its tight corner facing the start-side avatar.
   final bool bubbleIsOwn;
+
+  /// The message sits on the UI end side, so its text part aligns there while
+  /// a media carousel keeps spanning the row.
+  final bool alignEnd;
 
   final int? maxLines;
 
@@ -171,6 +175,7 @@ class MessageContent extends HookConsumerWidget {
     this.textAlign,
     this.bubble = false,
     this.bubbleIsOwn = false,
+    this.alignEnd = false,
     this.maxLines,
     this.scaleEmojiOnly = false,
     this.mediaCarouselLeadingOverflow = 0,
@@ -382,22 +387,31 @@ class MessageContent extends HookConsumerWidget {
     );
     if (trailingGallery == null) return markdown;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (trailingGallery.content.trim().isNotEmpty) markdown,
-        _MessageImageCarousel(
-          key: ValueKey(
-            trailingGallery.items.map((item) => item.url).join('\u0000'),
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (trailingGallery.content.trim().isNotEmpty)
+            Align(
+              alignment: alignEnd
+                  ? AlignmentDirectional.centerEnd
+                  : AlignmentDirectional.centerStart,
+              child: markdown,
+            ),
+          _MessageImageCarousel(
+            key: ValueKey(
+              trailingGallery.items.map((item) => item.url).join('\u0000'),
+            ),
+            items: trailingGallery.items,
+            leadingOverflow: mediaCarouselLeadingOverflow,
+            trailingOverflow: mediaCarouselTrailingOverflow,
+            onReply: onMediaReply,
+            onMore: onMediaMore,
           ),
-          items: trailingGallery.items,
-          leadingOverflow: mediaCarouselLeadingOverflow,
-          trailingOverflow: mediaCarouselTrailingOverflow,
-          onReply: onMediaReply,
-          onMore: onMediaMore,
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -1036,14 +1050,14 @@ class _MessageBubbleSurface extends StatelessWidget {
             key: const ValueKey('message-bubble'),
             decoration: BoxDecoration(
               color: isOwn
-                  ? context.colors.primary.withValues(alpha: 0.16)
+                  ? _ownBubbleColor(Theme.of(context).brightness)
                   : context.colors.onSurface.withValues(alpha: 0.07),
               borderRadius: BorderRadiusDirectional.only(
                 topStart: Radius.circular(
-                  isOwn ? kMessageBubbleRadius : kMessageBubbleTightRadius,
+                  isOwn ? kMessageBubbleTightRadius : kMessageBubbleRadius,
                 ),
                 topEnd: Radius.circular(
-                  isOwn ? kMessageBubbleTightRadius : kMessageBubbleRadius,
+                  isOwn ? kMessageBubbleRadius : kMessageBubbleTightRadius,
                 ),
                 bottomStart: const Radius.circular(kMessageBubbleRadius),
                 bottomEnd: const Radius.circular(kMessageBubbleRadius),
@@ -1063,10 +1077,16 @@ class _MessageBubbleSurface extends StatelessWidget {
   }
 }
 
-/// Orders a message row's children: avatar first for other people's messages,
-/// avatar last (the UI end side) for the signed-in user's own.
-List<Widget> messageRowOrder(bool isOwn, List<Widget> children) =>
-    isOwn ? children.reversed.toList() : children;
+/// Orders a message row's children: avatar first (UI start side) for the signed-in user's own messages,
+/// avatar last (UI end side) for other people's.
+List<Widget> messageRowOrder(bool atEnd, List<Widget> children) =>
+    atEnd ? children.reversed.toList() : children;
+
+/// Light-blue wash behind the signed-in user's own bubbles: hsl(214, 90%, 52%)
+/// at 12% in light themes, hsl(214, 90%, 60%) at 22% in dark ones.
+Color _ownBubbleColor(Brightness brightness) => brightness == Brightness.dark
+    ? const HSLColor.fromAHSL(0.22, 214, 0.9, 0.6).toColor()
+    : const HSLColor.fromAHSL(0.12, 214, 0.9, 0.52).toColor();
 
 /// Widest a message bubble grows, as a fraction of the screen width.
 const kMessageBubbleMaxWidthFactor = 0.78;

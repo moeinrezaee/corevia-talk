@@ -1,3 +1,4 @@
+import '../../shared/i18n/text_direction.dart';
 import 'dart:async';
 import 'dart:math';
 

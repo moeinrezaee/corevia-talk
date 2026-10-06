@@ -37,6 +37,8 @@ class _ThreadMessage extends HookConsumerWidget {
     final messageSnapshotKey = useMemoized(GlobalKey.new, const []);
     final pk = message.pubkey.toLowerCase();
     final isOwn = currentPubkey != null && currentPubkey!.toLowerCase() == pk;
+    // Own messages sit on the UI start side, everyone else's on the end side.
+    final atEnd = !isOwn;
     final profile =
         ref.watch(userCacheProvider.select((cache) => cache[pk])) ??
         ref.read(userCacheProvider.notifier).get(pk);
@@ -159,7 +161,7 @@ class _ThreadMessage extends HookConsumerWidget {
                     key: messageSnapshotKey,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: messageRowOrder(isOwn, [
+                      children: messageRowOrder(atEnd, [
                         if (showAuthor)
                           GestureDetector(
                             onTap: () => showUserProfileSheet(
@@ -182,7 +184,7 @@ class _ThreadMessage extends HookConsumerWidget {
                               top: showAuthor ? Grid.half : 0,
                             ),
                             child: Column(
-                              crossAxisAlignment: isOwn
+                              crossAxisAlignment: atEnd
                                   ? CrossAxisAlignment.end
                                   : CrossAxisAlignment.start,
                               children: [
@@ -192,12 +194,12 @@ class _ThreadMessage extends HookConsumerWidget {
                                       bottom: Grid.quarter,
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: isOwn
+                                      mainAxisAlignment: atEnd
                                           ? MainAxisAlignment.end
                                           : MainAxisAlignment.start,
                                       children: [
                                         Flexible(
-                                          fit: isOwn
+                                          fit: atEnd
                                               ? FlexFit.loose
                                               : FlexFit.tight,
                                           child: MessageAuthorMeta(
@@ -260,7 +262,10 @@ class _ThreadMessage extends HookConsumerWidget {
                                   scaleEmojiOnly: true,
                                   bubble: true,
                                   bubbleIsOwn: isOwn,
-                                  mediaCarouselTrailingOverflow: Grid.gutter,
+                                  alignEnd: atEnd,
+                                  mediaCarouselTrailingOverflow: atEnd
+                                      ? 0
+                                      : Grid.gutter,
                                   onMediaReply: allMessages == null
                                       ? null
                                       : () {
@@ -321,15 +326,15 @@ class _ThreadMessage extends HookConsumerWidget {
                   if (isThreadHead || message.reactions.isNotEmpty)
                     Padding(
                       padding: EdgeInsetsDirectional.only(
-                        start: isOwn
+                        start: atEnd
                             ? 0
                             : messageAvatarSize + messageAvatarContentGap,
-                        end: isOwn
+                        end: atEnd
                             ? messageAvatarSize + messageAvatarContentGap
                             : 0,
                       ),
                       child: Align(
-                        alignment: isOwn
+                        alignment: atEnd
                             ? AlignmentDirectional.centerEnd
                             : AlignmentDirectional.centerStart,
                         child: ReactionRow(

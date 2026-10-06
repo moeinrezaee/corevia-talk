@@ -19,6 +19,7 @@ import 'user_status.dart';
 import 'user_status_provider.dart';
 import '../../shared/i18n/app_language.dart';
 import '../../shared/i18n/persian_date.dart';
+import '../../shared/i18n/text_direction.dart';
 
 const _emojiWellSize = 48.0;
 const _emojiGlyphSize = 28.0;
@@ -337,6 +338,7 @@ class _StatusInput extends ConsumerWidget {
           ),
           Expanded(
             child: TextField(
+              textAlign: uiStartTextAlign(context),
               controller: controller,
               enabled: enabled,
               autofocus: false,

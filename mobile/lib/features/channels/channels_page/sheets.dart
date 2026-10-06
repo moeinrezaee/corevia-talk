@@ -95,6 +95,7 @@ class _CreateChannelSheet extends HookConsumerWidget {
               const SizedBox(height: Grid.xxs),
               _CreateChannelFieldShell(
                 child: TextField(
+                  textAlign: uiStartTextAlign(context),
                   key: const Key('create-channel-name'),
                   controller: nameController,
                   enabled: !isSubmitting.value,
@@ -130,6 +131,7 @@ class _CreateChannelSheet extends HookConsumerWidget {
               const SizedBox(height: Grid.xxs),
               _CreateChannelFieldShell(
                 child: TextField(
+                  textAlign: uiStartTextAlign(context),
                   key: const Key('create-channel-description'),
                   controller: descriptionController,
                   enabled: !isSubmitting.value,
@@ -608,6 +610,7 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                                 SizedBox(
                                   width: searchFieldWidth,
                                   child: TextField(
+                                    textAlign: uiStartTextAlign(context),
                                     key: const Key('new-dm-search'),
                                     controller: queryController,
                                     focusNode: queryFocusNode,

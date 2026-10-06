@@ -613,7 +613,11 @@ Future<String?> _showSectionNameDialog(BuildContext context) async {
     context: context,
     builder: (dialogContext) => AlertDialog(
       title: Text(tl('New Section')),
-      content: TextField(controller: controller, autofocus: true),
+      content: TextField(
+        textAlign: uiStartTextAlign(context),
+        controller: controller,
+        autofocus: true,
+      ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(dialogContext).pop(),

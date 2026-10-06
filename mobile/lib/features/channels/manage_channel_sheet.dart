@@ -7,6 +7,7 @@ import '../../shared/widgets/buzz_loading_indicator.dart';
 import 'channel.dart';
 import 'channel_management_provider.dart';
 import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/text_direction.dart';
 
 class ManageChannelSheet extends HookConsumerWidget {
   const ManageChannelSheet({
@@ -162,6 +163,7 @@ class ManageChannelSheet extends HookConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         TextField(
+                          textAlign: uiStartTextAlign(context),
                           key: const ValueKey('manage-channel-canvas'),
                           controller: canvasController,
                           maxLines: 8,
@@ -296,6 +298,7 @@ class _ManageChannelTextField extends StatelessWidget {
         label: hintText,
         textField: true,
         child: TextField(
+          textAlign: uiStartTextAlign(context),
           key: fieldKey,
           controller: controller,
           enabled: enabled,

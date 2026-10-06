@@ -101,6 +101,7 @@ class _EmojiMode extends HookConsumerWidget {
                               children: [
                                 Expanded(
                                   child: TextField(
+                                    textAlign: uiStartTextAlign(context),
                                     key: const ValueKey('emoji-avatar-search'),
                                     controller: searchController,
                                     textInputAction: TextInputAction.search,

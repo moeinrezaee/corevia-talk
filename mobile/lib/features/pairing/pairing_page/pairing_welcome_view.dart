@@ -133,6 +133,7 @@ class _PairingWelcomeView extends StatelessWidget {
                                   children: [
                                     const SizedBox(height: Grid.twelve),
                                     TextField(
+                                      textAlign: uiStartTextAlign(context),
                                       controller: codeController,
                                       style: context.textTheme.bodyMedium
                                           ?.copyWith(

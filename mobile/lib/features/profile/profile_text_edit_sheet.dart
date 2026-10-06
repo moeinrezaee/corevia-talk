@@ -9,6 +9,7 @@ import '../../shared/widgets/buzz_sheet_header.dart';
 import '../../shared/widgets/ios_glass_navigation_button.dart';
 import 'profile_provider.dart';
 import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/text_direction.dart';
 
 /// Flutter fallback sheet for editing one profile text field.
 class ProfileTextEditSheet extends HookWidget {
@@ -123,6 +124,7 @@ class ProfileTextEditSheet extends HookWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     TextField(
+                      textAlign: uiStartTextAlign(context),
                       key: const ValueKey('profile-field-input'),
                       controller: controller,
                       autofocus: true,

@@ -28,6 +28,7 @@ class _EmojiSearchField extends StatelessWidget {
       child: SizedBox(
         height: 44,
         child: TextField(
+          textAlign: uiStartTextAlign(context),
           key: const ValueKey('emoji-picker-search'),
           controller: controller,
           autocorrect: false,

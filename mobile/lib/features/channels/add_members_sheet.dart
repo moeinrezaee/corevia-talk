@@ -12,6 +12,7 @@ import '../../shared/widgets/buzz_loading_indicator.dart';
 import '../../shared/identity_names/identity_names_provider.dart';
 import 'channel_management_provider.dart';
 import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/text_direction.dart';
 
 /// Searchable multi-select used to add people or agents to a channel.
 class AddChannelMembersSheet extends HookConsumerWidget {
@@ -147,6 +148,7 @@ class AddChannelMembersSheet extends HookConsumerWidget {
           child: Column(
             children: [
               TextField(
+                textAlign: uiStartTextAlign(context),
                 key: const ValueKey('add-channel-members-search'),
                 controller: queryController,
                 autofocus: true,

@@ -17,6 +17,7 @@ import 'note_card.dart';
 import 'pulse_actions.dart';
 import 'pulse_models.dart';
 import '../../shared/i18n/app_language.dart';
+import '../../shared/i18n/text_direction.dart';
 
 /// Full-screen page for composing a new note or replying to one.
 ///
@@ -139,6 +140,7 @@ class ComposeNotePage extends HookConsumerWidget {
                     const SizedBox(width: Grid.xxs),
                     Expanded(
                       child: TextField(
+                        textAlign: uiStartTextAlign(context),
                         controller: controller,
                         focusNode: focusNode,
                         minLines: 3,

@@ -15,8 +15,10 @@ List<MentionCandidate> _resolveComposerMentions(
 ) {
   // A broken record cannot fall back to a same-name roster entry.
   if (selected.values.any((c) => c.pubkey.isEmpty)) {
-    throw const FormatException(
-      'Saved mention identity is invalid. Clear the draft and select again.',
+    throw FormatException(
+      tl(
+        'Saved mention identity is invalid. Clear the draft and select again.',
+      ),
     );
   }
   final candidates = <String, List<MentionCandidate>>{
@@ -34,7 +36,10 @@ List<MentionCandidate> _resolveComposerMentions(
     };
     if (identities.length > 1) {
       throw FormatException(
-        'The mention @${range.label} is ambiguous. Choose a recipient from the mention picker.',
+        tlt(
+          'The mention @{0} is ambiguous. Choose a recipient from the mention picker.',
+          [range.label],
+        ),
       );
     }
     for (final entry in identities.entries) {
@@ -43,8 +48,10 @@ List<MentionCandidate> _resolveComposerMentions(
           .where((c) => c.pubkey == entry.key)
           .firstOrNull;
       if (selected.requiresRevalidation && current == null) {
-        throw const FormatException(
-          'Saved mention is no longer available. Select it again from the picker.',
+        throw FormatException(
+          tl(
+            'Saved mention is no longer available. Select it again from the picker.',
+          ),
         );
       }
       winners[entry.key] = selected.requiresRevalidation ? current! : selected;

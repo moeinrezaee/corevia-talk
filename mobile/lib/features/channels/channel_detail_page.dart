@@ -565,8 +565,10 @@ class ChannelDetailPage extends HookConsumerWidget {
     final headerMembers = ref.watch(channelMembersProvider(resolvedChannel.id));
     final headerMemberCount =
         headerMembers.value?.length ?? resolvedChannel.memberCount;
-    final headerMemberLabel =
-        '$headerMemberCount ${headerMemberCount == 1 ? 'member' : 'members'}';
+    final headerMemberLabel = tlt(
+      headerMemberCount == 1 ? '{0} member' : '{0} members',
+      [headerMemberCount],
+    );
     Future<void> openChannelDetails() async {
       final shouldClose = await showChannelDetailsPage(
         context: context,

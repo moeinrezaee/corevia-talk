@@ -1,6 +1,7 @@
 import '../../shared/identity_names/identity_names.dart';
 import '../../shared/utils/string_utils.dart';
 import 'channel.dart';
+import '../../shared/i18n/app_language.dart';
 
 const int _dmParticipantPreviewLimit = 3;
 
@@ -19,7 +20,10 @@ String formatDmParticipantDisplayName(List<String> displayNames) {
   final visible = displayNames.take(_dmParticipantPreviewLimit).toList();
   final hiddenCount = displayNames.length - visible.length;
   return hiddenCount > 0
-      ? [...visible, '+$hiddenCount more'].join(', ')
+      ? [
+          ...visible,
+          tlt('+{0} more', [hiddenCount]),
+        ].join(', ')
       : visible.join(', ');
 }
 

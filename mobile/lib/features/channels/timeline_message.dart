@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import '../../shared/relay/relay.dart';
 import '../../shared/custom_emoji/custom_emoji.dart';
 import '../../shared/mentions/mention_tags.dart';
+import '../../shared/i18n/app_language.dart';
 import 'channel_window.dart';
 
 enum SystemEventType {
@@ -108,25 +109,35 @@ class SystemEvent {
     return switch (type) {
       SystemEventType.memberJoined => () {
         if (actorPubkey != null && actorPubkey == targetPubkey) {
-          return '$actor joined the channel';
+          return tlt('{0} joined the channel', [actor]);
         }
         final target = resolveLabel(targetPubkey);
-        return '$target was added by $actor';
+        return tlt('{0} was added by {1}', [target, actor]);
       }(),
-      SystemEventType.memberLeft => '$actor left the channel',
+      SystemEventType.memberLeft => tlt('{0} left the channel', [actor]),
       SystemEventType.memberRemoved => () {
         final target = resolveLabel(targetPubkey);
-        return '$actor removed $target from the channel';
+        return tlt('{0} removed {1} from the channel', [actor, target]);
       }(),
-      SystemEventType.topicChanged =>
-        '$actor ${_describeTextFieldChange('topic', topic)}',
-      SystemEventType.purposeChanged =>
-        '$actor ${_describeTextFieldChange('purpose', purpose)}',
-      SystemEventType.channelCreated => '$actor created this channel',
-      SystemEventType.channelArchived => '$actor archived this channel',
-      SystemEventType.channelUnarchived => '$actor unarchived this channel',
-      SystemEventType.huddleStarted => '$actor started a huddle',
-      SystemEventType.huddleEnded => '$actor ended the huddle',
+      SystemEventType.topicChanged => tlt('{0} {1}', [
+        actor,
+        _describeTextFieldChange('topic', topic),
+      ]),
+      SystemEventType.purposeChanged => tlt('{0} {1}', [
+        actor,
+        _describeTextFieldChange('purpose', purpose),
+      ]),
+      SystemEventType.channelCreated => tlt('{0} created this channel', [
+        actor,
+      ]),
+      SystemEventType.channelArchived => tlt('{0} archived this channel', [
+        actor,
+      ]),
+      SystemEventType.channelUnarchived => tlt('{0} unarchived this channel', [
+        actor,
+      ]),
+      SystemEventType.huddleStarted => tlt('{0} started a huddle', [actor]),
+      SystemEventType.huddleEnded => tlt('{0} ended the huddle', [actor]),
     };
   }
 }
@@ -145,9 +156,13 @@ class SystemEvent {
 String _describeTextFieldChange(String field, String? value) {
   final trimmed = value?.trim();
   if (trimmed == null || trimmed.isEmpty) {
-    return 'cleared the $field';
+    return field == 'topic'
+        ? tl('cleared the topic')
+        : tl('cleared the purpose');
   }
-  return 'changed the $field to "$trimmed"';
+  return field == 'topic'
+      ? tlt('changed the topic to "{0}"', [trimmed])
+      : tlt('changed the purpose to "{0}"', [trimmed]);
 }
 
 @immutable

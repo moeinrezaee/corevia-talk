@@ -51,7 +51,7 @@ List<AccentColor> get accentColors => [
     wireValue: '#f97316',
   ),
   AccentColor(
-    name: 'Red',
+    name: tl('Red'),
     light: Color(0xFFEF4444),
     dark: Color(0xFFF87171),
     wireValue: '#ef4444',

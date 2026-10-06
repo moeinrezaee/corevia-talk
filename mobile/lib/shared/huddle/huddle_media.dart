@@ -426,7 +426,8 @@ final class MethodChannelHuddleMedia implements HuddleMedia {
       final failure = error.code == 'microphone_permission_denied'
           ? HuddleMediaError(
               code: HuddleMediaErrorCode.permissionDenied,
-              message: error.message ?? 'Microphone permission is required.',
+              message:
+                  error.message ?? tl('Microphone permission is required.'),
               cause: error,
             )
           : _platformFailure(error);
@@ -744,7 +745,7 @@ final class MethodChannelHuddleMedia implements HuddleMedia {
   HuddleMediaError _platformFailure(PlatformException error) =>
       HuddleMediaError(
         code: HuddleMediaErrorCode.platformFailure,
-        message: error.message ?? 'Native Huddle media failed.',
+        message: error.message ?? tl('Native Huddle media failed.'),
         cause: error,
       );
 

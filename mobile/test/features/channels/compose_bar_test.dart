@@ -5,6 +5,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -29,6 +30,7 @@ import 'package:buzz/shared/mentions/agent_identity_provider.dart';
 import 'package:buzz/shared/relay/relay.dart';
 import 'package:buzz/shared/profile/user_cache_provider.dart';
 import 'package:buzz/shared/profile/user_profile.dart';
+import 'package:buzz/shared/i18n/app_language.dart';
 import 'package:buzz/shared/theme/theme.dart';
 import 'package:buzz/shared/utils/string_utils.dart';
 import 'package:buzz/shared/widgets/anchored_popover_menu.dart';
@@ -204,6 +206,7 @@ Widget _buildComposeBar({
   VoiceNoteRecorder Function()? voiceNoteRecorderFactory,
   VoiceNotePlayerController Function()? voiceNotePlayerFactory,
   Future<List<UserProfile>> Function(String query)? searchPeople,
+  Locale? locale,
 }) {
   return ProviderScope(
     overrides: [
@@ -245,6 +248,11 @@ Widget _buildComposeBar({
     child: MaterialApp(
       navigatorObservers: [voiceNoteRouteObserver],
       theme: AppTheme.light(),
+      locale: locale,
+      supportedLocales: const [Locale('en'), Locale('fa', 'IR')],
+      localizationsDelegates: locale == null
+          ? null
+          : GlobalMaterialLocalizations.delegates,
       builder:
           supportsShowingSystemContextMenu == null &&
               disableAnimations == null &&
@@ -766,6 +774,44 @@ void main() {
       expect(find.byIcon(LucideIcons.hash), findsOneWidget);
       expect(find.byIcon(LucideIcons.smilePlus), findsOneWidget);
       expect(find.byIcon(LucideIcons.aLargeSmall), findsOneWidget);
+    });
+
+    testWidgets('aligns typed text by UI mode and orders runs by script', (
+      tester,
+    ) async {
+      Future<TextField> typed(Locale locale, String text) async {
+        setActiveLanguage(
+          locale.languageCode == 'fa' ? AppLanguage.fa : AppLanguage.en,
+        );
+        await tester.pumpWidget(const SizedBox());
+        await tester.pumpWidget(
+          _buildComposeBar(
+            locale: locale,
+            uploadService: _testUploadService(nostr.Keys.generate().nsec),
+            onSend:
+                (
+                  content,
+                  mentionPubkeys, {
+                  mediaTags = const <List<String>>[],
+                }) async {},
+          ),
+        );
+        await tester.tap(find.text(tl('Message\u2026')));
+        await tester.pump();
+        await tester.pump();
+        await tester.enterText(find.byType(TextField), text);
+        await tester.pump();
+        return tester.widget<TextField>(find.byType(TextField));
+      }
+
+      addTearDown(() => setActiveLanguage(AppLanguage.en));
+      final english = await typed(const Locale('fa', 'IR'), 'hello team');
+      expect(english.textAlign, TextAlign.right);
+      expect(english.textDirection, TextDirection.ltr);
+
+      final persian = await typed(const Locale('en'), 'سلام تیم');
+      expect(persian.textAlign, TextAlign.left);
+      expect(persian.textDirection, TextDirection.rtl);
     });
 
     testWidgets('notifies focus intent before attaching the focused field', (

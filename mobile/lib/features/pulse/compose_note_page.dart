@@ -75,9 +75,9 @@ class ComposeNotePage extends HookConsumerWidget {
         nativeActions: [
           IosNavigationAction(
             label: isSending.value
-                ? 'Sending…'
+                ? tl('Sending…')
                 : _isReply
-                ? 'Reply'
+                ? tl('Reply')
                 : tl('Post'),
             onPressed: hasText && !isSending.value ? submit : null,
           ),
@@ -103,7 +103,7 @@ class ComposeNotePage extends HookConsumerWidget {
                       child: BuzzLoadingIndicator(
                         size: 16,
                         semanticLabel: _isReply
-                            ? 'Sending reply'
+                            ? tl('Sending reply')
                             : tl('Publishing post'),
                       ),
                     )
@@ -149,7 +149,7 @@ class ComposeNotePage extends HookConsumerWidget {
                         style: context.textTheme.bodyLarge,
                         decoration: InputDecoration(
                           hintText: _isReply
-                              ? 'Post your reply'
+                              ? tl('Post your reply')
                               : tl('What’s on your mind?'),
                           border: InputBorder.none,
                           enabledBorder: InputBorder.none,

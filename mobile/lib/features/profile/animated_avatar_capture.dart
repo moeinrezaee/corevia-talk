@@ -194,7 +194,7 @@ class AnimatedAvatarCapture extends HookConsumerWidget {
             candidateRef.value = null;
             await reservation?.dispose(next.dispose);
           }
-          if (!disposed) error.value = 'Could not access the camera.';
+          if (!disposed) error.value = tl('Could not access the camera.');
         } finally {
           if (!disposed) isInitializing.value = false;
         }
@@ -227,7 +227,7 @@ class AnimatedAvatarCapture extends HookConsumerWidget {
           poster: result.poster,
         );
       } catch (_) {
-        error.value = "We couldn't create that animation. Try again.";
+        error.value = tl("We couldn't create that animation. Try again.");
         return null;
       } finally {
         if (context.mounted) isProcessing.value = false;
@@ -364,7 +364,7 @@ class AnimatedAvatarCapture extends HookConsumerWidget {
         await releaseCamera();
         if (context.mounted) {
           cameraGeneration.value++;
-          error.value = 'Recording failed. Try again.';
+          error.value = tl('Recording failed. Try again.');
         }
       } finally {
         timer.cancel();
@@ -638,9 +638,9 @@ class AnimatedAvatarCapture extends HookConsumerWidget {
         const SizedBox(height: Grid.xs),
         Text(
           isRecording.value
-              ? 'Recording…'
+              ? tl('Recording…')
               : isPreparingFrames.value
-              ? 'Cutting you out of the background…'
+              ? tl('Cutting you out of the background…')
               : tl('Line up your shot.'),
           textAlign: TextAlign.center,
           style: context.textTheme.bodyMedium?.copyWith(

@@ -174,7 +174,7 @@ class _JoinableChannelTile extends HookConsumerWidget {
           trailing: FilledButton.tonal(
             key: Key('browse-channel-join-${channel.id}'),
             onPressed: isJoining.value ? null : () => unawaited(join()),
-            child: Text(isJoining.value ? 'Joining…' : tl('Join')),
+            child: Text(isJoining.value ? tl('Joining…') : tl('Join')),
           ),
         ),
         if (actionError.value case final error?)

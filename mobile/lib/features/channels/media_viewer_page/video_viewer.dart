@@ -99,7 +99,7 @@ class MediaVideoViewerPage extends HookConsumerWidget {
             // waiting for the full response body [F2r(b)].
             await _cancelVideoResponse(response);
             throw HttpException(
-              'Video download failed (${response.statusCode})',
+              tlt('Video download failed ({0})', [response.statusCode]),
               uri: uri,
             );
           }

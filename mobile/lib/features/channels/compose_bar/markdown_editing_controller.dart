@@ -397,12 +397,15 @@ class _MarkdownEditingController extends TextEditingController {
       ChannelDeepLink(:final channelId) => (
         LucideIcons.hash,
         _resolvedChannelName(channelId),
-        'Channel ${_resolvedChannelName(channelId)}',
+        tlt('Channel {0}', [_resolvedChannelName(channelId)]),
       ),
       MessageDeepLink(:final channelId, :final messageId) => (
         LucideIcons.messageSquare,
         '${_resolvedChannelName(channelId)} · ${messageId.substring(0, 8)}',
-        'Message ${messageId.substring(0, 8)} in channel ${_resolvedChannelName(channelId)}',
+        tlt('Message {0} in channel {1}', [
+          messageId.substring(0, 8),
+          _resolvedChannelName(channelId),
+        ]),
       ),
       EntityDeepLink(:final type, :final repository, :final eventId) => (
         switch (type) {
@@ -415,8 +418,10 @@ class _MarkdownEditingController extends TextEditingController {
             : '$repository · ${eventId!.substring(0, 8)}',
         switch (type) {
           'repo' => tlt('Repository {0}', [repository]),
-          'pr' =>
-            'Pull request ${eventId!.substring(0, 8)} in repository $repository',
+          'pr' => tlt('Pull request {0} in repository {1}', [
+            eventId!.substring(0, 8),
+            repository,
+          ]),
           _ => tlt('Issue {0} in repository {1}', [
             eventId!.substring(0, 8),
             repository,

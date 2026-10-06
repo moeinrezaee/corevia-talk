@@ -109,7 +109,7 @@ class _PairingWelcomeView extends StatelessWidget {
                           onPressed: isBusy ? null : onTogglePairingCode,
                           child: Text(
                             pairingCodeExpanded
-                                ? 'Hide pairing code'
+                                ? tl('Hide pairing code')
                                 : tl('Use pairing code'),
                           ),
                         ),

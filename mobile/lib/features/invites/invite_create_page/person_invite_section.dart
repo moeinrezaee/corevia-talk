@@ -34,12 +34,12 @@ class _PersonInviteSection extends HookConsumerWidget {
       final normalized = pubkey.toLowerCase();
       if (normalized == currentPubkey) {
         candidatePubkey.value = null;
-        submitError.value = 'You cannot invite yourself.';
+        submitError.value = tl('You cannot invite yourself.');
         return;
       }
       if (existingMemberPubkeys.contains(normalized)) {
         candidatePubkey.value = null;
-        submitError.value = 'This person is already in the community.';
+        submitError.value = tl('This person is already in the community.');
         return;
       }
       candidatePubkey.value = normalized;
@@ -122,7 +122,7 @@ class _PersonInviteSection extends HookConsumerWidget {
               onSubmitted: (value) {
                 final pubkey = parseCommunityInvitePubkey(value);
                 if (pubkey == null && value.trim().isNotEmpty) {
-                  submitError.value = 'Paste a valid npub.';
+                  submitError.value = tl('Paste a valid npub.');
                 } else if (pubkey != null) {
                   selectCandidate(pubkey);
                 }

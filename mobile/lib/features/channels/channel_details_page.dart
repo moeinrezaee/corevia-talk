@@ -109,8 +109,9 @@ class ChannelDetailsPage extends HookConsumerWidget {
         membersAsync.hasError || agentOwnersAsync.hasError;
     final memberCount =
         membersAsync.value?.length ?? resolvedChannel.memberCount;
-    final memberLabel =
-        '$memberCount ${memberCount == 1 ? 'member' : 'members'}';
+    final memberLabel = tlt(memberCount == 1 ? '{0} member' : '{0} members', [
+      memberCount,
+    ]);
     final previewMembers = members.take(_channelMemberPreviewLimit).toList();
     final userCache = ref.watch(userCacheProvider);
     final memberLabels = watchChannelIdentityLabels(
@@ -549,7 +550,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
                   AppListRow(
                     icon: LucideIcons.logIn,
                     title: isJoining.value
-                        ? 'Joining channel…'
+                        ? tl('Joining channel…')
                         : tl('Join channel'),
                     onTap: isJoining.value ? null : joinChannel,
                   ),
@@ -785,9 +786,15 @@ class _ChannelMemberPreviewRow extends StatelessWidget {
 }
 
 String _channelMemberRoleLabel(String role) {
-  if (role == 'bot') return 'Agent';
+  if (role == 'bot') return tl('Agent');
   if (role.isEmpty) return tl('Member');
-  return '${role[0].toUpperCase()}${role.substring(1)}';
+  return switch (role) {
+    'owner' => tl('Owner'),
+    'admin' => tl('Admin'),
+    'member' => tl('Member'),
+    'guest' => tl('Guest'),
+    _ => '${role[0].toUpperCase()}${role.substring(1)}',
+  };
 }
 
 IconData _channelDetailsIcon(Channel channel) {

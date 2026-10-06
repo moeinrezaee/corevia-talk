@@ -412,7 +412,7 @@ class _ToolItemWidget extends HookWidget {
                 const SizedBox(height: Grid.quarter),
                 _CodeBlock(
                   text: item.result.length > 2000
-                      ? '${item.result.substring(0, 2000)}\n\n\u2026 (truncated)'
+                      ? '${item.result.substring(0, 2000)}\n\n\u2026 ${tl('(truncated)')}'
                       : item.result,
                   isError: item.isError,
                 ),
@@ -431,15 +431,19 @@ class _ToolItemWidget extends HookWidget {
   BuildContext context,
 ) {
   if (isError || status == ToolStatus.failed) {
-    return (context.colors.error, 'Error', LucideIcons.circleX);
+    return (context.colors.error, tl('Error'), LucideIcons.circleX);
   }
   if (status == ToolStatus.completed) {
     return (context.appColors.success, 'Done', LucideIcons.circleCheck);
   }
   if (status == ToolStatus.pending) {
-    return (context.colors.onSurfaceVariant, 'Pending', LucideIcons.circleDot);
+    return (
+      context.colors.onSurfaceVariant,
+      tl('Pending'),
+      LucideIcons.circleDot,
+    );
   }
-  return (context.appColors.warning, 'Running', LucideIcons.clock3);
+  return (context.appColors.warning, tl('Running'), LucideIcons.clock3);
 }
 
 String _formatToolName(String toolName) {

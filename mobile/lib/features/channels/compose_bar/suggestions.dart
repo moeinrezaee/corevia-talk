@@ -123,14 +123,14 @@ abstract final class _MentionSuggestionInfo {
         ? formatOwnerLabel(candidate.ownerPubkey, currentPubkey, userCache)
         : null;
     final notInChannel = !candidate.isMember;
-    final outside = isDmChannel ? 'not in DM' : 'not in channel';
+    final outside = isDmChannel ? tl('not in DM') : tl('not in channel');
     final isAdmin = !candidate.isAgent && candidate.role == 'admin';
 
     final String? detail;
     if (ownerLabel != null && notInChannel) {
-      detail = 'managed by $ownerLabel \u00b7 $outside';
+      detail = '${tlt('managed by {0}', [ownerLabel])} \u00b7 $outside';
     } else if (ownerLabel != null) {
-      detail = 'managed by $ownerLabel';
+      detail = tlt('managed by {0}', [ownerLabel]);
     } else if (notInChannel) {
       detail = outside;
     } else {
@@ -152,7 +152,7 @@ abstract final class _MentionSuggestionInfo {
             color: context.colors.onSurfaceVariant,
           ),
           const SizedBox(width: Grid.half),
-          Text('agent', style: style),
+          Text(tl('agent'), style: style),
         ] else if (isAdmin)
           Container(
             padding: const EdgeInsets.symmetric(
@@ -164,7 +164,7 @@ abstract final class _MentionSuggestionInfo {
               borderRadius: BorderRadius.circular(Radii.sm),
             ),
             child: Text(
-              'admin',
+              tl('admin'),
               style: style?.copyWith(
                 color: context.colors.onSecondaryContainer,
               ),

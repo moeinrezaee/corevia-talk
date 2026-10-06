@@ -47,7 +47,7 @@ class _InlineCameraPreview extends HookConsumerWidget {
           if (available.isEmpty) {
             throw camera.CameraException(
               'no-cameras',
-              'No cameras are available on this device.',
+              tl('No cameras are available on this device.'),
             );
           }
 
@@ -222,7 +222,7 @@ class _CameraPlaceholder extends StatelessWidget {
                     ),
                     const SizedBox(height: Grid.xxs),
                     Text(
-                      message ?? 'Camera isn’t available here.',
+                      message ?? tl('Camera isn’t available here.'),
                       textAlign: TextAlign.center,
                       style: context.textTheme.bodyMedium?.copyWith(
                         color: Colors.white,

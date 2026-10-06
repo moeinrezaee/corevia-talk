@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
+import '../../shared/i18n/app_language.dart';
 
 const Object _sentinel = Object();
 
 /// Shown when a private-channel add is refused, so a missing Invite action
 /// reads as a rule rather than a bug.
-const privateChannelAddDeniedMessage =
-    'Only channel members can add people to a private channel.';
+String get privateChannelAddDeniedMessage =>
+    tl('Only channel members can add people to a private channel.');
 
 @immutable
 class Channel {

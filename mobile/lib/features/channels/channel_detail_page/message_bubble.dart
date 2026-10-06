@@ -45,6 +45,7 @@ class _MessageBubble extends HookConsumerWidget {
     );
     // Watch only this user's profile to avoid rebuilding on unrelated cache changes.
     final pk = message.pubkey.toLowerCase();
+    final isOwn = currentPubkey != null && currentPubkey!.toLowerCase() == pk;
     final profile =
         ref.watch(userCacheProvider.select((cache) => cache[pk])) ??
         ref.read(userCacheProvider.notifier).get(pk);
@@ -163,7 +164,7 @@ class _MessageBubble extends HookConsumerWidget {
                   key: messageSnapshotKey,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: messageRowOrder(isOwn, [
                       if (showAuthor)
                         GestureDetector(
                           onTap: () => showUserProfileSheet(
@@ -188,7 +189,9 @@ class _MessageBubble extends HookConsumerWidget {
                             top: showAuthor ? Grid.half : 0,
                           ),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: isOwn
+                                ? CrossAxisAlignment.end
+                                : CrossAxisAlignment.start,
                             children: [
                               if (showAuthor)
                                 Padding(
@@ -196,8 +199,14 @@ class _MessageBubble extends HookConsumerWidget {
                                     bottom: Grid.quarter,
                                   ),
                                   child: Row(
+                                    mainAxisAlignment: isOwn
+                                        ? MainAxisAlignment.end
+                                        : MainAxisAlignment.start,
                                     children: [
-                                      Expanded(
+                                      Flexible(
+                                        fit: isOwn
+                                            ? FlexFit.loose
+                                            : FlexFit.tight,
                                         child: MessageAuthorMeta(
                                           displayName: displayName,
                                           username: messageUsernameLabel(
@@ -232,7 +241,7 @@ class _MessageBubble extends HookConsumerWidget {
                                       if (message.edited) ...[
                                         const SizedBox(width: Grid.half),
                                         Text(
-                                          '(edited)',
+                                          tl('(edited)'),
                                           style: context.textTheme.labelSmall
                                               ?.copyWith(
                                                 color: context
@@ -256,6 +265,8 @@ class _MessageBubble extends HookConsumerWidget {
                                   color: context.colors.onSurface,
                                 ),
                                 scaleEmojiOnly: true,
+                                bubble: true,
+                                bubbleIsOwn: isOwn,
                                 mediaCarouselTrailingOverflow: Grid.gutter,
                                 onMediaReply: allMessages == null
                                     ? null
@@ -310,24 +321,35 @@ class _MessageBubble extends HookConsumerWidget {
                           ),
                         ),
                       ),
-                    ],
+                    ]),
                   ),
                 ),
                 if (message.reactions.isNotEmpty)
                   Padding(
-                    padding: const EdgeInsetsDirectional.only(
-                      start: messageAvatarSize + messageAvatarContentGap,
+                    padding: EdgeInsetsDirectional.only(
+                      start: isOwn
+                          ? 0
+                          : messageAvatarSize + messageAvatarContentGap,
+                      end: isOwn
+                          ? messageAvatarSize + messageAvatarContentGap
+                          : 0,
                     ),
-                    child: ReactionRow(
-                      messageId: message.id,
-                      channelId: currentChannelId,
-                      reactions: message.reactions,
-                      onToggle: (emoji) => toggleReaction(ref, message, emoji),
-                      showAddButton: isMember && !isArchived,
-                      onAddReaction: () => showAddReactionPicker(
-                        context: context,
-                        ref: ref,
-                        message: message,
+                    child: Align(
+                      alignment: isOwn
+                          ? AlignmentDirectional.centerEnd
+                          : AlignmentDirectional.centerStart,
+                      child: ReactionRow(
+                        messageId: message.id,
+                        channelId: currentChannelId,
+                        reactions: message.reactions,
+                        onToggle: (emoji) =>
+                            toggleReaction(ref, message, emoji),
+                        showAddButton: isMember && !isArchived,
+                        onAddReaction: () => showAddReactionPicker(
+                          context: context,
+                          ref: ref,
+                          message: message,
+                        ),
                       ),
                     ),
                   ),

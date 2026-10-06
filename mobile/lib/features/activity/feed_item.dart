@@ -75,8 +75,8 @@ class FeedItem {
       case 43006:
         return tl('Job failed');
       default:
-        if (category == 'mention') return 'Mention';
-        if (category == 'agent_activity') return 'Agent update';
+        if (category == 'mention') return tl('Mention');
+        if (category == 'agent_activity') return tl('Agent update');
         return tl('Channel update');
     }
   }
@@ -85,7 +85,7 @@ class FeedItem {
   String get displayContent {
     final trimmed = content.trim();
     if (trimmed.isNotEmpty) return trimmed;
-    if (kind == 46010) return 'A workflow is waiting for approval.';
+    if (kind == 46010) return tl('A workflow is waiting for approval.');
     return tl('No additional details.');
   }
 }

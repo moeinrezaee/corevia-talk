@@ -250,7 +250,9 @@ class ProfileAvatarCropPage extends HookWidget {
                           ClipRect(
                             child: Semantics(
                               label: tl('Photo crop'),
-                              value: '${(currentScale * 100).round()}% zoom',
+                              value: tlt('{0}% zoom', [
+                                (currentScale * 100).round(),
+                              ]),
                               customSemanticsActions: {
                                 CustomSemanticsAction(
                                   label: tl('Move left'),

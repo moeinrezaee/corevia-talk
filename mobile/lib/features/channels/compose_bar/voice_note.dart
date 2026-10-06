@@ -64,7 +64,7 @@ _ComposerVoiceNote _useComposerVoiceNote({
 
   void start() {
     if (attachments.value.isNotEmpty) {
-      uploadError.value = 'A voice note must be the only attachment.';
+      uploadError.value = tl('A voice note must be the only attachment.');
       return;
     }
     attachmentSurface.value = _AttachmentSurface.closed;
@@ -72,7 +72,7 @@ _ComposerVoiceNote _useComposerVoiceNote({
     isComposerExpanded.value = false;
     _dismissComposerKeyboard(focusNode);
     if (ref.read(huddleSessionProvider).isInSession) {
-      uploadError.value = 'Leave the Huddle before recording a voice note.';
+      uploadError.value = tl('Leave the Huddle before recording a voice note.');
       return;
     }
     uploadError.value = null;

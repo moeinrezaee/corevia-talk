@@ -13,7 +13,7 @@ bool _rejectsNonVoiceAttachment(
     return false;
   }
   uploadError.value = voiceNote.recorder != null || voiceNote.isPreparing
-      ? 'Finish or discard the voice note before attaching a file.'
+      ? tl('Finish or discard the voice note before attaching a file.')
       : tl('A voice note must be the only attachment.');
   return true;
 }
@@ -540,11 +540,11 @@ class _AttachmentMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final items = <(IconData, String, VoidCallback)>[
-      (LucideIcons.camera, 'Camera', onCamera),
-      (LucideIcons.images, 'Photos', onPhotos),
-      (LucideIcons.video, 'Video', onVideo),
-      (LucideIcons.mic, 'Voice note', onVoiceNote),
-      (LucideIcons.file, 'Files', onFiles),
+      (LucideIcons.camera, tl('Camera'), onCamera),
+      (LucideIcons.images, tl('Photos'), onPhotos),
+      (LucideIcons.video, tl('Video'), onVideo),
+      (LucideIcons.mic, tl('Voice note'), onVoiceNote),
+      (LucideIcons.file, tl('Files'), onFiles),
     ];
     return SizedBox(
       key: const ValueKey('attachment-menu'),
@@ -728,7 +728,7 @@ class _AttachmentStrip extends StatelessWidget {
                                   const SizedBox(height: Grid.quarter),
                                   Text(
                                     attachment.file.name.isEmpty
-                                        ? 'File'
+                                        ? tl('File')
                                         : attachment.file.name,
                                     maxLines: 2,
                                     textAlign: TextAlign.center,

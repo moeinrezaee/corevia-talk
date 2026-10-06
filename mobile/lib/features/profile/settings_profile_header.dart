@@ -148,7 +148,7 @@ class SettingsProfileHeader extends HookConsumerWidget {
           ),
           const SizedBox(height: Grid.twelve),
           Text(
-            profile?.label ?? 'Your profile',
+            profile?.label ?? tl('Your profile'),
             style: context.textTheme.titleMedium,
             textAlign: TextAlign.center,
           ),

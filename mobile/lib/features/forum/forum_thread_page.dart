@@ -281,7 +281,9 @@ class _ThreadContent extends HookConsumerWidget {
                     ),
                     const SizedBox(width: Grid.half),
                     Text(
-                      '${replies.length} ${replies.length == 1 ? 'reply' : 'replies'}',
+                      tlt(replies.length == 1 ? '{0} reply' : '{0} replies', [
+                        replies.length,
+                      ]),
                       style: context.textTheme.labelMedium?.copyWith(
                         color: context.colors.onSurfaceVariant,
                         fontWeight: FontWeight.w600,

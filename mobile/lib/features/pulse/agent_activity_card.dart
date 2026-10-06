@@ -9,6 +9,7 @@ import '../../shared/widgets/avatar_image.dart';
 import '../../shared/profile/user_cache_provider.dart';
 import 'note_card.dart';
 import 'pulse_models.dart';
+import '../../shared/i18n/app_language.dart';
 
 class AgentActivityCard extends HookConsumerWidget {
   final AgentNoteGroup group;
@@ -101,7 +102,7 @@ class AgentActivityCard extends HookConsumerWidget {
                               borderRadius: BorderRadius.circular(Radii.sm),
                             ),
                             child: Text(
-                              'BOT',
+                              tl('BOT'),
                               style: context.textTheme.labelSmall?.copyWith(
                                 color: context.colors.primary,
                                 fontWeight: FontWeight.w800,
@@ -112,7 +113,7 @@ class AgentActivityCard extends HookConsumerWidget {
                         ],
                       ),
                       Text(
-                        '${group.notes.length} update${group.notes.length == 1 ? '' : 's'} · ${formatPulseRelativeTime(group.latestAt)}',
+                        '${tlt(group.notes.length == 1 ? '{0} update' : '{0} updates', [group.notes.length])} · ${formatPulseRelativeTime(group.latestAt)}',
                         style: context.textTheme.labelSmall?.copyWith(
                           color: context.colors.onSurfaceVariant,
                         ),

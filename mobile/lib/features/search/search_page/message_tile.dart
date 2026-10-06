@@ -94,9 +94,9 @@ class _MessageTile extends ConsumerWidget {
               Flexible(
                 child: Text(
                   isDm
-                      ? 'Direct message'
+                      ? tl('Direct message')
                       : hasChannelName
-                      ? 'Message in'
+                      ? tl('Message in')
                       : tl('Message'),
                   style: activityContextTextStyle.copyWith(
                     color: context.colors.onSurfaceVariant,

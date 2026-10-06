@@ -739,7 +739,10 @@ class _ChannelsSection extends StatelessWidget {
             ),
             subtitle: channel.isMember
                 ? Text(
-                    '${channel.memberCount} member${channel.memberCount == 1 ? '' : 's'}',
+                    tlt(
+                      channel.memberCount == 1 ? '{0} member' : '{0} members',
+                      [channel.memberCount],
+                    ),
                     style: contentListBodyTextStyle.copyWith(
                       color: context.colors.onSurfaceVariant,
                     ),
@@ -887,7 +890,7 @@ class _MessagesSection extends HookConsumerWidget {
 
 extension on _SearchFilter {
   String get label => switch (this) {
-    _SearchFilter.all => 'All',
+    _SearchFilter.all => tl('All'),
     _SearchFilter.messages => tl('Messages'),
     _SearchFilter.channels => tl('Channels'),
     _SearchFilter.people => tl('People'),

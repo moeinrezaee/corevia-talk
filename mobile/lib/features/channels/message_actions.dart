@@ -390,7 +390,7 @@ Future<_DownloadedImage> _downloadImage(WidgetRef ref, String imageUrl) async {
       );
   if (response.statusCode < 200 || response.statusCode >= 300) {
     throw HttpException(
-      'Image download failed (${response.statusCode})',
+      tlt('Image download failed ({0})', [response.statusCode]),
       uri: Uri.parse(imageUrl),
     );
   }
@@ -452,8 +452,8 @@ Future<void> _saveImage(
         ),
       );
       if (!permission.isAuth) {
-        throw const FileSystemException(
-          'Photo library permission was not granted.',
+        throw FileSystemException(
+          tl('Photo library permission was not granted.'),
         );
       }
     }

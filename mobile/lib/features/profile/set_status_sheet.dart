@@ -32,15 +32,21 @@ List<({String text, String emoji})> get _statusPresets => [
 ];
 
 enum _StatusDuration {
-  oneHour('1 hour', Duration(hours: 1)),
-  eightHours('8 hours', Duration(hours: 8)),
-  oneDay('1 day', Duration(days: 1)),
-  oneWeek('1 week', Duration(days: 7)),
-  custom('Custom', null);
+  oneHour(Duration(hours: 1)),
+  eightHours(Duration(hours: 8)),
+  oneDay(Duration(days: 1)),
+  oneWeek(Duration(days: 7)),
+  custom(null);
 
-  const _StatusDuration(this.label, this.duration);
+  const _StatusDuration(this.duration);
 
-  final String label;
+  String get label => switch (this) {
+    oneHour => tl('1 hour'),
+    eightHours => tl('8 hours'),
+    oneDay => tl('1 day'),
+    oneWeek => tl('1 week'),
+    custom => tl('Custom'),
+  };
   final Duration? duration;
 }
 

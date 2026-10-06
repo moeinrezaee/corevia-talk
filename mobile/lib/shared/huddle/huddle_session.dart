@@ -224,7 +224,7 @@ final class HuddleSessionNotifier extends Notifier<HuddleSessionState> {
     if (state.isInSession) {
       if (state.ephemeralChannelId == parameters.ephemeralChannelId) return;
       state = state.copyWith(
-        error: 'Leave the current Huddle before joining another one.',
+        error: tl('Leave the current Huddle before joining another one.'),
       );
       return;
     }
@@ -254,7 +254,7 @@ final class HuddleSessionNotifier extends Notifier<HuddleSessionState> {
         if (mediaState.phase == HuddleMediaPhase.failed) {
           unawaited(
             _fail(
-              mediaState.error?.message ?? 'Native Huddle audio failed.',
+              mediaState.error?.message ?? tl('Native Huddle audio failed.'),
               generation,
               microphonePermissionRequired:
                   mediaState.error?.code ==
@@ -462,7 +462,7 @@ final class HuddleSessionNotifier extends Notifier<HuddleSessionState> {
         );
       } else if (transportState.phase == HuddleTransportPhase.failed) {
         final message =
-            transportState.error?.message ?? 'Huddle connection failed.';
+            transportState.error?.message ?? tl('Huddle connection failed.');
         if (_wasConnected) {
           _scheduleReconnect(transport, generation, message);
         } else {
@@ -631,7 +631,9 @@ final class HuddleSessionNotifier extends Notifier<HuddleSessionState> {
     }
     final delays = ref.read(huddleReconnectDelaysProvider);
     if (_reconnectAttempt >= delays.length) {
-      unawaited(_fail('Huddle connection could not be restored.', generation));
+      unawaited(
+        _fail(tl('Huddle connection could not be restored.'), generation),
+      );
       return;
     }
     final attempt = ++_reconnectAttempt;
@@ -766,7 +768,7 @@ final class HuddleSessionNotifier extends Notifier<HuddleSessionState> {
   String _messageFor(Object error) => switch (error) {
     HuddleMediaError() => error.message,
     HuddleTransportError() => error.message,
-    _ => 'Unable to join the Huddle.',
+    _ => tl('Unable to join the Huddle.'),
   };
 
   bool _isPermissionDenied(Object error) =>

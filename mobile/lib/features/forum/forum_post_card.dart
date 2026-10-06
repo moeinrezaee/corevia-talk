@@ -218,7 +218,9 @@ class ForumPostCard extends HookConsumerWidget {
                   ),
                   const SizedBox(width: Grid.half),
                   Text(
-                    '${summary.replyCount} ${summary.replyCount == 1 ? 'reply' : 'replies'}',
+                    tlt(summary.replyCount == 1 ? '{0} reply' : '{0} replies', [
+                      summary.replyCount,
+                    ]),
                     style: context.textTheme.labelSmall?.copyWith(
                       color: context.colors.onSurfaceVariant,
                     ),

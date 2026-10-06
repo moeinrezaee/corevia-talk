@@ -76,7 +76,9 @@ class _SasVerificationView extends HookConsumerWidget {
             }
           } catch (_) {
             if (context.mounted) {
-              verificationError.value = 'Couldn’t check the code. Try again.';
+              verificationError.value = tl(
+                'Couldn’t check the code. Try again.',
+              );
             }
           } finally {
             if (context.mounted) checkingCode.value = false;
@@ -117,7 +119,7 @@ class _SasVerificationView extends HookConsumerWidget {
       children: [
         if (showProtection) ...[
           Icon(
-            biometricLabel == 'Use Face ID'
+            biometricLabel == tl('Use Face ID')
                 ? LucideIcons.scanFace
                 : LucideIcons.fingerprint,
             size: 64,

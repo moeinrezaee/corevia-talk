@@ -1,7 +1,7 @@
 part of '../activity_page.dart';
 
 Map<InboxFilter, String> get _filterLabels => <InboxFilter, String>{
-  InboxFilter.all: 'All',
+  InboxFilter.all: tl('All'),
   InboxFilter.mention: tl('Mentions'),
   InboxFilter.thread: tl('Threads'),
   InboxFilter.needsAction: tl('Needs Action'),

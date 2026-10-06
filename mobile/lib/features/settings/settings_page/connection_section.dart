@@ -108,7 +108,7 @@ class _IdentityRow extends StatelessWidget {
     return Semantics(
       button: true,
       label: tl('Copy identity public key'),
-      value: npub ?? 'Identity unavailable',
+      value: npub ?? tl('Identity unavailable'),
       child: AppListRow(
         title: tl('Copy public key (npub)'),
         trailing: Icon(

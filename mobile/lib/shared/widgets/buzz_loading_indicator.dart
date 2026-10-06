@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../theme/theme.dart';
+import '../i18n/app_language.dart';
 
 /// The shared mobile loading indicator, matching the desktop arc spinner.
 class BuzzLoadingIndicator extends HookConsumerWidget {
@@ -15,13 +16,13 @@ class BuzzLoadingIndicator extends HookConsumerWidget {
   final Color? color;
 
   /// The accessibility announcement for this loading state.
-  final String semanticLabel;
+  final String? semanticLabel;
 
   /// Creates a looping arc loading indicator.
   const BuzzLoadingIndicator({
     this.size = 40,
     this.color,
-    this.semanticLabel = 'Loading',
+    this.semanticLabel,
     super.key,
   });
 
@@ -48,7 +49,7 @@ class BuzzLoadingIndicator extends HookConsumerWidget {
 
     return Semantics(
       liveRegion: true,
-      label: semanticLabel,
+      label: semanticLabel ?? tl('Loading'),
       child: ExcludeSemantics(
         child: RotationTransition(
           key: const ValueKey('buzz-loading-indicator-spinner'),

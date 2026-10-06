@@ -62,7 +62,7 @@ class ProfileTextEditSheet extends HookWidget {
         if (context.mounted) await closeAfterSave();
       } catch (_) {
         if (context.mounted) {
-          error.value = "We couldn't save this change. Try again.";
+          error.value = tl("We couldn't save this change. Try again.");
         }
       } finally {
         if (context.mounted) isSaving.value = false;
@@ -152,7 +152,7 @@ class ProfileTextEditSheet extends HookWidget {
                     FilledButton(
                       key: const ValueKey('profile-field-save'),
                       onPressed: hasChanges && !isSaving.value ? save : null,
-                      child: Text(isSaving.value ? 'Saving…' : tl('Save')),
+                      child: Text(isSaving.value ? tl('Saving…') : tl('Save')),
                     ),
                   ],
                 ),

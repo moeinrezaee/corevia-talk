@@ -226,7 +226,7 @@ class _VideoTransportBar extends HookConsumerWidget {
     );
     final mute = IconButton(
       key: const ValueKey('message-media-video-viewer-mute'),
-      tooltip: value.volume == 0 ? 'Unmute video' : 'Mute video',
+      tooltip: value.volume == 0 ? tl('Unmute video') : tl('Mute video'),
       onPressed: () {
         onInteractionEnd();
         if (value.volume > 0) mutedVolume.value = value.volume;

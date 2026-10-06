@@ -223,7 +223,7 @@ class ProfileAvatarEditor extends HookConsumerWidget {
         onDraftChanged(ProfileImageAvatarDraft(cropped));
       } catch (_) {
         if (isCurrentOperation()) {
-          error.value = "We couldn't prepare that photo. Try again.";
+          error.value = tl("We couldn't prepare that photo. Try again.");
         }
       } finally {
         if (isCurrentOperation()) isPickingImage.value = false;

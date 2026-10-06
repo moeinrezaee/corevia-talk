@@ -366,7 +366,10 @@ final class HuddleTransport implements HuddleTransportClient {
       _handleBinaryMessage(Uint8List.fromList(raw), generation);
       return;
     }
-    _handleProtocolProblem('Unsupported Huddle WebSocket message.', generation);
+    _handleProtocolProblem(
+      tl('Unsupported Huddle WebSocket message.'),
+      generation,
+    );
   }
 
   void _handleTextMessage(String raw, int generation) {
@@ -376,7 +379,10 @@ final class HuddleTransport implements HuddleTransportClient {
       if (decoded is! Map) throw const FormatException('expected object');
       message = Map<String, dynamic>.from(decoded);
     } catch (error) {
-      _handleProtocolProblem('Malformed Huddle control message.', generation);
+      _handleProtocolProblem(
+        tl('Malformed Huddle control message.'),
+        generation,
+      );
       return;
     }
 
@@ -392,13 +398,19 @@ final class HuddleTransport implements HuddleTransportClient {
       case 'error':
         _handleRelayError(message, generation);
       default:
-        _handleProtocolProblem('Unknown Huddle control message.', generation);
+        _handleProtocolProblem(
+          tl('Unknown Huddle control message.'),
+          generation,
+        );
     }
   }
 
   void _handleChallenge(Map<String, dynamic> message, int generation) {
     if (_state.phase != HuddleTransportPhase.awaitingChallenge) {
-      _handleProtocolProblem('Unexpected Huddle auth challenge.', generation);
+      _handleProtocolProblem(
+        tl('Unexpected Huddle auth challenge.'),
+        generation,
+      );
       return;
     }
     final challenge = message['challenge'];
@@ -442,7 +454,10 @@ final class HuddleTransport implements HuddleTransportClient {
   void _handleJoined(Map<String, dynamic> message, int generation) {
     if (_state.phase != HuddleTransportPhase.authenticating &&
         _state.phase != HuddleTransportPhase.connected) {
-      _handleProtocolProblem('Unexpected Huddle joined message.', generation);
+      _handleProtocolProblem(
+        tl('Unexpected Huddle joined message.'),
+        generation,
+      );
       return;
     }
 
@@ -455,7 +470,10 @@ final class HuddleTransport implements HuddleTransportClient {
         peerIndex < 0 ||
         peerIndex > 255 ||
         epoch == null) {
-      _handleProtocolProblem('Malformed Huddle joined message.', generation);
+      _handleProtocolProblem(
+        tl('Malformed Huddle joined message.'),
+        generation,
+      );
       return;
     }
 
@@ -466,7 +484,10 @@ final class HuddleTransport implements HuddleTransportClient {
         : _state.peers;
     final revision = message['revision'];
     if (revision != null && (revision is! int || revision < 0)) {
-      _handleProtocolProblem('Malformed Huddle joined revision.', generation);
+      _handleProtocolProblem(
+        tl('Malformed Huddle joined revision.'),
+        generation,
+      );
       return;
     }
     final currentRevision = _state.rosterRevision;
@@ -481,7 +502,10 @@ final class HuddleTransport implements HuddleTransportClient {
     if (snapshot is List) {
       final parsed = _parsePeerSnapshot(snapshot);
       if (parsed == null) {
-        _handleProtocolProblem('Malformed Huddle joined roster.', generation);
+        _handleProtocolProblem(
+          tl('Malformed Huddle joined roster.'),
+          generation,
+        );
         return;
       }
       if (initialAdmission && !staleAdmission) {
@@ -592,7 +616,7 @@ final class HuddleTransport implements HuddleTransportClient {
 
   void _handleLeft(Map<String, dynamic> message, int generation) {
     if (_state.phase != HuddleTransportPhase.connected) {
-      _handleProtocolProblem('Unexpected Huddle left message.', generation);
+      _handleProtocolProblem(tl('Unexpected Huddle left message.'), generation);
       return;
     }
     final pubkey = message['pubkey'];
@@ -603,7 +627,7 @@ final class HuddleTransport implements HuddleTransportClient {
         peerIndex < 0 ||
         peerIndex > 255 ||
         (revision != null && (revision is! int || revision < 0))) {
-      _handleProtocolProblem('Malformed Huddle left message.', generation);
+      _handleProtocolProblem(tl('Malformed Huddle left message.'), generation);
       return;
     }
     if (!_acceptDeltaRevision(revision as int?, generation)) return;
@@ -636,20 +660,29 @@ final class HuddleTransport implements HuddleTransportClient {
       return;
     }
     if (_state.phase != HuddleTransportPhase.connected) {
-      _handleProtocolProblem('Unexpected Huddle roster message.', generation);
+      _handleProtocolProblem(
+        tl('Unexpected Huddle roster message.'),
+        generation,
+      );
       return;
     }
     final revision = message['revision'];
     final snapshot = message['peers'];
     if (revision is! int || revision < 0 || snapshot is! List) {
-      _handleProtocolProblem('Malformed Huddle roster message.', generation);
+      _handleProtocolProblem(
+        tl('Malformed Huddle roster message.'),
+        generation,
+      );
       return;
     }
     final previousRevision = _state.rosterRevision;
     if (previousRevision != null && revision <= previousRevision) return;
     final peers = _parsePeerSnapshot(snapshot);
     if (peers == null) {
-      _handleProtocolProblem('Malformed Huddle roster message.', generation);
+      _handleProtocolProblem(
+        tl('Malformed Huddle roster message.'),
+        generation,
+      );
       return;
     }
 
@@ -699,12 +732,18 @@ final class HuddleTransport implements HuddleTransportClient {
     final revision = message['revision'];
     final snapshot = message['peers'];
     if (revision is! int || revision < 0 || snapshot is! List) {
-      _handleProtocolProblem('Malformed Huddle roster message.', generation);
+      _handleProtocolProblem(
+        tl('Malformed Huddle roster message.'),
+        generation,
+      );
       return;
     }
     final peers = _parsePeerSnapshot(snapshot);
     if (peers == null) {
-      _handleProtocolProblem('Malformed Huddle roster message.', generation);
+      _handleProtocolProblem(
+        tl('Malformed Huddle roster message.'),
+        generation,
+      );
       return;
     }
     // Mesh owners may repair a snapshot-to-delta race before the admission
@@ -793,7 +832,7 @@ final class HuddleTransport implements HuddleTransportClient {
         : null;
     final relayMessage = message['message'] is String
         ? message['message'] as String
-        : 'Huddle audio relay rejected the connection.';
+        : tl('Huddle audio relay rejected the connection.');
     _fail(
       HuddleTransportError(
         code: HuddleTransportErrorCode.relayRejected,
@@ -807,7 +846,7 @@ final class HuddleTransport implements HuddleTransportClient {
   void _handleBinaryMessage(Uint8List bytes, int generation) {
     if (_state.phase != HuddleTransportPhase.connected) {
       _handleProtocolProblem(
-        'Received Huddle audio before room admission.',
+        tl('Received Huddle audio before room admission.'),
         generation,
       );
       return;

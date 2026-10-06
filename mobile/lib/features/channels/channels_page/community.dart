@@ -92,9 +92,10 @@ Future<void> _confirmRemoveCommunity(
     final confirmed = await showDestructiveConfirmation(
       context: context,
       title: tl('Remove community?'),
-      message:
-          'Are you sure you want to remove “${community.name}”? '
-          'You can pair with it again later.',
+      message: tlt(
+        'Are you sure you want to remove “{0}”? You can pair with it again later.',
+        [community.name],
+      ),
       confirmLabel: tl('Remove'),
     );
     if (!confirmed || !context.mounted) return;

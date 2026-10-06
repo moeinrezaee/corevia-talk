@@ -269,9 +269,9 @@ IosNavigationAction _huddleNavigationAction(
             }
           },
     label: disabledByOtherHuddle
-        ? 'Leave your current Huddle first'
+        ? tl('Leave your current Huddle first')
         : activeStart != null || isCurrentParent
-        ? 'Open Huddle'
+        ? tl('Open Huddle')
         : tl('Start Huddle'),
   );
 }
@@ -318,7 +318,7 @@ class _HuddleJoinSurface extends ConsumerWidget {
         isMember && !isArchived && !ended && !stale && !blockedByOtherHuddle;
 
     final label = unavailable
-        ? 'Start new'
+        ? tl('Start new')
         : switch ((isThisSession, session.phase, ended || stale)) {
             (true, HuddleSessionPhase.connected, _) => tl('Open'),
             (true, HuddleSessionPhase.interrupted, _) => tl('Open'),
@@ -357,7 +357,7 @@ class _HuddleJoinSurface extends ConsumerWidget {
                 children: [
                   Text(
                     ended || stale || unavailable
-                        ? 'Huddle ended'
+                        ? tl('Huddle ended')
                         : tl('Huddle in progress'),
                     style: context.textTheme.labelLarge?.copyWith(
                       color: context.colors.onSurface,
@@ -366,7 +366,7 @@ class _HuddleJoinSurface extends ConsumerWidget {
                   ),
                   Text(
                     isThisSession && session.isConnected
-                        ? '${session.participantCount} connected'
+                        ? tlt('{0} connected', [session.participantCount])
                         : tl('Foreground voice Huddle'),
                     style: context.textTheme.bodySmall?.copyWith(
                       color: context.colors.onSurfaceVariant,
@@ -645,7 +645,7 @@ class _MobileHuddleCallPage extends ConsumerWidget {
 
     final (retryTooltip, retryIcon, onRetry) = switch (true) {
       _ when unavailable => (
-        'Start a new Huddle',
+        tl('Start a new Huddle'),
         LucideIcons.headphones,
         () => unawaited(
           _startReplacementHuddle(
@@ -656,7 +656,7 @@ class _MobileHuddleCallPage extends ConsumerWidget {
         ),
       ),
       _ when needsMicrophoneSettings => (
-        'Open Settings',
+        tl('Open Settings'),
         LucideIcons.settings,
         () => unawaited(sessionController.openMicrophoneSettings()),
       ),
@@ -716,8 +716,8 @@ class _MobileHuddleCallPage extends ConsumerWidget {
                     connected: connected,
                     error: session.phase == HuddleSessionPhase.failed
                         ? unavailable
-                              ? 'This Huddle is no longer available.'
-                              : session.error ?? 'Huddle audio failed.'
+                              ? tl('This Huddle is no longer available.')
+                              : session.error ?? tl('Huddle audio failed.')
                         : null,
                     profiles: profiles,
                     fallbackLabels: directoryDisplayNames,

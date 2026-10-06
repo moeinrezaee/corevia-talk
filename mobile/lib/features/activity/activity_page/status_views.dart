@@ -124,21 +124,21 @@ class _EmptyFilterState extends StatelessWidget {
       );
     }
     final (icon, message) = switch (filter) {
-      InboxFilter.mention => (LucideIcons.atSign, 'No mentions yet'),
+      InboxFilter.mention => (LucideIcons.atSign, tl('No mentions yet')),
       InboxFilter.thread => (
         LucideIcons.messageSquare,
-        'No thread replies yet',
+        tl('No thread replies yet'),
       ),
       InboxFilter.needsAction => (
         LucideIcons.circleAlert,
-        'Nothing needs your action',
+        tl('Nothing needs your action'),
       ),
       InboxFilter.activity => (
         LucideIcons.activity,
-        'No recent channel activity',
+        tl('No recent channel activity'),
       ),
-      InboxFilter.agentActivity => (LucideIcons.bot, 'No agent updates'),
-      _ => (LucideIcons.bell, 'No activity yet'),
+      InboxFilter.agentActivity => (LucideIcons.bot, tl('No agent updates')),
+      _ => (LucideIcons.bell, tl('No activity yet')),
     };
     return _EmptySurface(icon: icon, message: message);
   }

@@ -20,6 +20,26 @@ TextDirection? detectTextDirection(String text) {
   return null;
 }
 
+/// Physical text alignment for message and composer text: the UI direction's
+/// start edge (right in Persian/RTL mode, left in English/LTR mode),
+/// regardless of the script the text is written in. Only the order of runs
+/// inside a paragraph follows the text's own direction ([detectTextDirection]).
+TextAlign uiStartTextAlign(BuildContext context) =>
+    Directionality.of(context) == TextDirection.rtl
+    ? TextAlign.right
+    : TextAlign.left;
+
+// Built from code points: a literal bidi control character in source trips the
+// text_direction_code_point_in_literal lint.
+final _firstStrongIsolate = String.fromCharCode(0x2068);
+final _popIsolate = String.fromCharCode(0x2069);
+
+/// Wraps [text] in a first-strong isolate (FSI ... PDI) so a run of opposite
+/// direction (a URL, @mention, #channel, code span or number) cannot reorder
+/// the words around it in a generated string.
+String isolateBidi(String text) =>
+    text.isEmpty ? text : '$_firstStrongIsolate$text$_popIsolate';
+
 /// Mirrors [child] horizontally in right-to-left layouts, for directional
 /// glyphs (chevrons, back arrows) that are not mirrored by their icon font.
 class BidiFlip extends StatelessWidget {

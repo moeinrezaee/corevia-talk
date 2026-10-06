@@ -39,7 +39,7 @@ class _ChannelLinkMd extends InlineMd {
       icon: LucideIcons.hash,
       interactive: opensChannel,
       semanticLabel: opensChannel
-          ? 'Open channel $channelName'
+          ? tlt('Open channel {0}', [channelName])
           : tlt('Channel {0}', [channelName]),
       text: channelName,
       textStyle: config.style?.copyWith(fontWeight: FontWeight.w500),
@@ -83,16 +83,19 @@ class _TokenPill extends StatelessWidget {
         color: context.colors.primary.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(Radii.sm),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          if (icon != null) ...[
-            Icon(icon, size: fontSize * 0.95, color: context.colors.primary),
-            const SizedBox(width: Grid.quarter + 1),
+      child: Directionality(
+        textDirection: detectTextDirection(text) ?? Directionality.of(context),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (icon != null) ...[
+              Icon(icon, size: fontSize * 0.95, color: context.colors.primary),
+              const SizedBox(width: Grid.quarter + 1),
+            ],
+            Text(text, style: style),
           ],
-          Text(text, style: style),
-        ],
+        ),
       ),
     );
     if (semanticLabel == null) return pill;

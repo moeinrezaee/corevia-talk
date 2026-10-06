@@ -143,7 +143,9 @@ class InboxItem {
 }) {
   if (isDm) {
     return (
-      text: senderLabel.isNotEmpty ? tlt('DM from {0}', [senderLabel]) : 'DM',
+      text: senderLabel.isNotEmpty
+          ? tlt('DM from {0}', [senderLabel])
+          : tl('DM'),
       channelLabel: null,
     );
   }
@@ -151,26 +153,26 @@ class InboxItem {
   final category = item.categories.firstOrNull ?? item.item.category;
   if (category == 'mention') {
     return (
-      text: channelName != null ? 'Mentioned in' : 'Mentioned',
+      text: channelName != null ? tl('Mentioned in') : tl('Mentioned'),
       channelLabel: channelName,
     );
   }
   if (category == 'needs_action') {
     return (
-      text: channelName != null ? 'Needs action in' : 'Needs action',
+      text: channelName != null ? tl('Needs action in') : tl('Needs action'),
       channelLabel: channelName,
     );
   }
   if (item.threadRootId != null) {
     return (
-      text: channelName != null ? 'Thread in' : 'Thread',
+      text: channelName != null ? tl('Thread in') : tl('Thread'),
       channelLabel: channelName,
     );
   }
 
   final headline = item.item.headline;
   return (
-    text: channelName != null ? '$headline in' : headline,
+    text: channelName != null ? tlt('{0} in', [headline]) : headline,
     channelLabel: channelName,
   );
 }

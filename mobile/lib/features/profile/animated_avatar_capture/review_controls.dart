@@ -16,9 +16,10 @@ class _RepositionablePreviewSemantics extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Semantics(
     label: tl('Avatar position'),
-    value:
-        '${(offset.dx * 100).round()} horizontal, '
-        '${(offset.dy * 100).round()} vertical',
+    value: tlt('{0} horizontal, {1} vertical', [
+      (offset.dx * 100).round(),
+      (offset.dy * 100).round(),
+    ]),
     customSemanticsActions: {
       if (offset.dx > -1)
         CustomSemanticsAction(label: tl('Move left')): () =>
@@ -342,7 +343,7 @@ class _AnimatedFrameControl extends HookWidget {
               return Semantics(
                 slider: true,
                 label: tl('Choose still frame'),
-                value: '${selectedIndex + 1} of ${frames.length}',
+                value: tlt('{0} of {1}', [selectedIndex + 1, frames.length]),
                 increasedValue: selectedIndex < frames.length - 1
                     ? '${selectedIndex + 2} of ${frames.length}'
                     : null,

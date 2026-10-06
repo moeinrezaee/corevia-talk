@@ -21,8 +21,12 @@ class _ReadOnlyNotice extends StatelessWidget {
       ),
       child: Text(
         channel.isArchived
-            ? 'This ${channel.isForum ? 'forum' : 'channel'} is archived and read-only on mobile.'
-            : 'Join this ${channel.isForum ? 'forum' : 'channel'} from Manage to participate.',
+            ? (channel.isForum
+                  ? tl('This forum is archived and read-only on mobile.')
+                  : tl('This channel is archived and read-only on mobile.'))
+            : (channel.isForum
+                  ? tl('Join this forum from Manage to participate.')
+                  : tl('Join this channel from Manage to participate.')),
         style: context.textTheme.bodySmall?.copyWith(
           color: context.colors.onSurfaceVariant,
         ),

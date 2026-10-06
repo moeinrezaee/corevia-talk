@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/theme.dart';
 import '../widgets/buzz_loading_indicator.dart';
 import 'community_avatar.dart';
+import '../i18n/app_language.dart';
 
 /// Holds the incoming community at the switch animation's centered position.
 class CommunityLoadingSurface extends StatelessWidget {
@@ -28,7 +29,9 @@ class CommunityLoadingSurface extends StatelessWidget {
             child: BuzzLoadingIndicator(
               size: 18,
               color: context.colors.onSecondaryContainer,
-              semanticLabel: name == null ? 'Connecting' : 'Loading $name',
+              semanticLabel: name == null
+                  ? tl('Connecting')
+                  : tlt('Loading {0}', [name]),
             ),
           ),
         ),

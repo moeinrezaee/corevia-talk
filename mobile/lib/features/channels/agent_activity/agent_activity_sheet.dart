@@ -161,7 +161,7 @@ class _EmptyState extends StatelessWidget {
             Icon(LucideIcons.circleX, size: 24, color: context.colors.error),
             const SizedBox(height: Grid.xxs),
             Text(
-              'Error: ${errorMessage ?? 'Unknown error'}',
+              tlt('Error: {0}', [errorMessage ?? tl('Unknown error')]),
               style: context.textTheme.bodySmall?.copyWith(
                 color: context.colors.error,
               ),
@@ -214,13 +214,16 @@ class _ConnectionBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (color, label) = switch (connection) {
-      ObserverConnectionState.idle => (context.colors.onSurfaceVariant, 'Idle'),
+      ObserverConnectionState.idle => (
+        context.colors.onSurfaceVariant,
+        tl('Idle'),
+      ),
       ObserverConnectionState.connecting => (
         context.appColors.warning,
-        'Connecting',
+        tl('Connecting'),
       ),
-      ObserverConnectionState.open => (context.appColors.success, 'Live'),
-      ObserverConnectionState.error => (context.colors.error, 'Error'),
+      ObserverConnectionState.open => (context.appColors.success, tl('Live')),
+      ObserverConnectionState.error => (context.colors.error, tl('Error')),
     };
 
     return Container(

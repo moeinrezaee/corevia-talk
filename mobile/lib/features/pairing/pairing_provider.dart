@@ -194,8 +194,9 @@ class PairingNotifier extends Notifier<PairingState> {
       _userConfirmedSas = false;
       state = state.copyWith(
         userConfirmedSas: false,
-        errorMessage:
-            'The active community changed. Start identity export again.',
+        errorMessage: tl(
+          'The active community changed. Start identity export again.',
+        ),
       );
       return;
     }
@@ -273,28 +274,36 @@ class PairingNotifier extends Notifier<PairingState> {
   static String _biometricProtectionError(
     DeviceAuthResult result,
   ) => switch (result) {
-    DeviceAuthResult.cancelled =>
+    DeviceAuthResult.cancelled => tl(
       'Biometric setup was cancelled. Nothing was transferred.',
-    DeviceAuthResult.unavailable =>
+    ),
+    DeviceAuthResult.unavailable => tl(
       'Biometrics are unavailable. Enroll Face ID or biometrics and try again, or turn this option off.',
-    DeviceAuthResult.lockedOut =>
+    ),
+    DeviceAuthResult.lockedOut => tl(
       'Biometrics are locked. Unlock them in system settings and try again.',
-    DeviceAuthResult.failed =>
+    ),
+    DeviceAuthResult.failed => tl(
       'Biometric confirmation failed. Nothing was transferred.',
+    ),
     DeviceAuthResult.success => '',
   };
 
   static String _authorizationError(
     DeviceAuthResult result,
   ) => switch (result) {
-    DeviceAuthResult.cancelled =>
+    DeviceAuthResult.cancelled => tl(
       'Identity confirmation was cancelled. Nothing was transferred.',
-    DeviceAuthResult.unavailable =>
+    ),
+    DeviceAuthResult.unavailable => tl(
       'Device authentication is unavailable. Configure a device passcode or biometrics and try again.',
-    DeviceAuthResult.lockedOut =>
+    ),
+    DeviceAuthResult.lockedOut => tl(
       'Device authentication is locked. Unlock it in system settings and try again.',
-    DeviceAuthResult.failed =>
+    ),
+    DeviceAuthResult.failed => tl(
       'Identity confirmation failed. Nothing was transferred.',
+    ),
     DeviceAuthResult.success => '',
   };
 
@@ -479,10 +488,11 @@ class PairingNotifier extends Notifier<PairingState> {
         state.status != PairingStatus.success &&
         state.status != PairingStatus.error) {
       _cleanup();
-      state = const PairingState(
+      state = PairingState(
         status: PairingStatus.error,
-        errorMessage:
-            'Pairing couldn’t continue. Scan a new desktop QR code and try again.',
+        errorMessage: tl(
+          'Pairing couldn’t continue. Scan a new desktop QR code and try again.',
+        ),
       );
       return;
     }
@@ -552,10 +562,11 @@ class PairingNotifier extends Notifier<PairingState> {
             _codeResult!.complete(false);
             if (msg['remaining_attempts'] == 0) {
               _cleanup();
-              state = const PairingState(
+              state = PairingState(
                 status: PairingStatus.error,
-                errorMessage:
-                    'Too many incorrect codes. Scan a new desktop QR code and try again.',
+                errorMessage: tl(
+                  'Too many incorrect codes. Scan a new desktop QR code and try again.',
+                ),
               );
             }
           }
@@ -598,10 +609,11 @@ class PairingNotifier extends Notifier<PairingState> {
       // NIP-AB §Step 3: target MUST send abort with reason "sas_mismatch".
       _sendAbort('sas_mismatch');
       _cleanup();
-      state = const PairingState(
+      state = PairingState(
         status: PairingStatus.error,
-        errorMessage:
-            'Security verification failed — possible attack. Pairing aborted.',
+        errorMessage: tl(
+          'Security verification failed — possible attack. Pairing aborted.',
+        ),
       );
       return;
     }
@@ -633,10 +645,11 @@ class PairingNotifier extends Notifier<PairingState> {
     if (!_exportIdentityIsCurrent()) {
       _sendAbort('identity_changed');
       _cleanup();
-      state = const PairingState(
+      state = PairingState(
         status: PairingStatus.error,
-        errorMessage:
-            'The active community changed. Start identity export again.',
+        errorMessage: tl(
+          'The active community changed. Start identity export again.',
+        ),
       );
       return;
     }
@@ -888,17 +901,18 @@ class PairingNotifier extends Notifier<PairingState> {
       if (generation != _pairingGeneration) return;
       state = PairingState(
         status: PairingStatus.error,
-        errorMessage:
-            'Could not connect to relay (${e.statusCode}). '
-            'Check that the pairing code is valid.',
+        errorMessage: tlt(
+          'Could not connect to relay ({0}). Check that the pairing code is valid.',
+          [e.statusCode],
+        ),
       );
     } catch (e) {
       if (generation != _pairingGeneration) return;
       state = PairingState(
         status: PairingStatus.error,
-        errorMessage:
-            'Connection failed. Make sure your device can reach the '
-            'relay server.',
+        errorMessage: tl(
+          'Connection failed. Make sure your device can reach the relay server.',
+        ),
       );
     }
   }

@@ -96,9 +96,9 @@ class _RecentPhotoGalleryPicker extends HookConsumerWidget {
 
     final selectedCount = selection.value.length;
     final actionLabel = selectedCount == 0
-        ? 'All photos'
+        ? tl('All photos')
         : selectedCount == 1
-        ? 'Add 1 photo'
+        ? tl('Add 1 photo')
         : tlt('Add {0} photos', [selectedCount]);
 
     Widget buildGalleryBody() {
@@ -293,7 +293,7 @@ class _RecentPhotoTile extends StatelessWidget {
       button: true,
       selected: isSelected,
       label: isSelected
-          ? 'Photo ${selectionIndex + 1} selected'
+          ? tlt('Photo {0} selected', [selectionIndex + 1])
           : tl('Select photo'),
       child: GestureDetector(
         key: ValueKey('recent-photo-${photo.id}'),

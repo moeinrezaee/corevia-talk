@@ -277,7 +277,7 @@ class UserProfileSheet extends HookConsumerWidget {
                                   ? null
                                   : LucideIcons.messageSquare,
                               label: isOpeningDirectMessage.value
-                                  ? 'Opening…'
+                                  ? tl('Opening…')
                                   : tl('Message'),
                               isLoading: isOpeningDirectMessage.value,
                               loadingSemanticLabel: tl(

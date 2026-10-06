@@ -160,7 +160,7 @@ class ImageAvatarCapture extends HookConsumerWidget {
           if (available.isEmpty) {
             throw CameraException(
               'no-cameras',
-              'No cameras are available on this device.',
+              tl('No cameras are available on this device.'),
             );
           }
           final description = available.firstWhere(
@@ -210,7 +210,7 @@ class ImageAvatarCapture extends HookConsumerWidget {
             if (active != null) {
               selectedLens.value = active.description.lensDirection;
             }
-            error.value = 'Could not access the camera.';
+            error.value = tl('Could not access the camera.');
           }
         } finally {
           if (!disposed && generation == cameraGeneration.value) {
@@ -252,7 +252,7 @@ class ImageAvatarCapture extends HookConsumerWidget {
         if (context.mounted) capturedBytes.value = cropped;
       } catch (_) {
         if (context.mounted) {
-          error.value = "We couldn't take that photo. Try again.";
+          error.value = tl("We couldn't take that photo. Try again.");
           try {
             await active.resumePreview();
           } on CameraException {
@@ -314,7 +314,7 @@ class ImageAvatarCapture extends HookConsumerWidget {
         if (context.mounted) selectedLens.value = nextLens;
         await active.lockCaptureOrientation(DeviceOrientation.portraitUp);
       } on CameraException {
-        if (context.mounted) error.value = 'Could not switch cameras.';
+        if (context.mounted) error.value = tl('Could not switch cameras.');
       } finally {
         if (context.mounted && flipMotion != null) {
           try {
@@ -503,10 +503,10 @@ class ImageAvatarCapture extends HookConsumerWidget {
                                   ? IosGlassNavigationIcon.camera
                                   : IosGlassNavigationIcon.close,
                               label: captured != null && !isClosing.value
-                                  ? 'Retry'
+                                  ? tl('Retry')
                                   : null,
                               transitionLabel: isClosing.value
-                                  ? 'Camera'
+                                  ? tl('Camera')
                                   : null,
                               transitionLabelMaxWidth: 96,
                               transitionProgress: isClosing.value
@@ -514,9 +514,9 @@ class ImageAvatarCapture extends HookConsumerWidget {
                                   : 0,
                               showEnabledAppearance: isClosing.value,
                               semanticLabel: isClosing.value
-                                  ? 'Camera'
+                                  ? tl('Camera')
                                   : captured == null
-                                  ? 'Close camera'
+                                  ? tl('Close camera')
                                   : tl('Retry'),
                               onTap:
                                   isFlipping.value ||
@@ -581,7 +581,7 @@ class ImageAvatarCapture extends HookConsumerWidget {
                                   ? 'Use Photo'
                                   : null,
                               transitionLabel: isClosing.value
-                                  ? 'Photo Library'
+                                  ? tl('Photo Library')
                                   : null,
                               transitionLabelMaxWidth: 104,
                               transitionProgress: isClosing.value
@@ -589,9 +589,9 @@ class ImageAvatarCapture extends HookConsumerWidget {
                                   : 0,
                               showEnabledAppearance: isClosing.value,
                               semanticLabel: isClosing.value
-                                  ? 'Photo Library'
+                                  ? tl('Photo Library')
                                   : captured == null
-                                  ? 'Flip camera'
+                                  ? tl('Flip camera')
                                   : tl('Use Photo'),
                               onTap: isClosing.value
                                   ? null

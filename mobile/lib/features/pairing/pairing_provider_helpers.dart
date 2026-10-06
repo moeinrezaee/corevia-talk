@@ -7,12 +7,14 @@ String _friendlyErrorMessage(Object error) {
       message.contains('Network is unreachable') ||
       message.contains('No route to host') ||
       message.contains('Failed to connect')) {
-    return 'Could not reach the pairing relay. Check your internet '
-        'connection and VPN, then try again.';
+    return tl(
+      'Could not reach the pairing relay. Check your internet connection and VPN, then try again.',
+    );
   }
   if (error is PairingAuthException) {
-    return 'The pairing relay rejected authentication. Try creating a new '
-        'pairing code.';
+    return tl(
+      'The pairing relay rejected authentication. Try creating a new pairing code.',
+    );
   }
   if (error is StateError ||
       message.contains('Null check operator used on a null value')) {
@@ -22,15 +24,18 @@ String _friendlyErrorMessage(Object error) {
   }
   if (message.contains('HandshakeException') ||
       message.contains('CERTIFICATE_VERIFY_FAILED')) {
-    return 'Secure connection failed. Check your network settings '
-        'and try again.';
+    return tl(
+      'Secure connection failed. Check your network settings and try again.',
+    );
   }
   if (message.contains('TimeoutException') || message.contains('timed out')) {
-    return 'Connection timed out. Check your internet connection and '
-        'try again.';
+    return tl(
+      'Connection timed out. Check your internet connection and try again.',
+    );
   }
-  return 'Connection failed. Please check your internet connection '
-      'and try again.';
+  return tl(
+    'Connection failed. Please check your internet connection and try again.',
+  );
 }
 
 void _validateRelayUrl(String url) {

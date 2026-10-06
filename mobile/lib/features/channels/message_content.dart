@@ -7,6 +7,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:gpt_markdown/custom_widgets/indent_widget.dart';
+import 'package:gpt_markdown/custom_widgets/unordered_ordered_list.dart';
 import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:open_filex/open_filex.dart';
@@ -57,7 +59,7 @@ final openDownloadedFileProvider = Provider<OpenDownloadedFile>((ref) {
     final response = await client.get(Uri.parse(url), headers: headers);
     if (response.statusCode < 200 || response.statusCode >= 300) {
       throw HttpException(
-        'Attachment download failed (${response.statusCode})',
+        tlt('Attachment download failed ({0})', [response.statusCode]),
         uri: Uri.parse(url),
       );
     }
@@ -129,6 +131,13 @@ class MessageContent extends HookConsumerWidget {
   /// Alignment applied to rendered markdown text.
   final TextAlign? textAlign;
 
+  /// Draws the text on a rounded, tinted bubble that hugs the message.
+  final bool bubble;
+
+  /// The bubble belongs to the signed-in user: it sits at the UI end side with
+  /// a primary tint and its tight corner facing the end-side avatar.
+  final bool bubbleIsOwn;
+
   final int? maxLines;
 
   /// Render a body that is nothing but emoji at [kEmojiOnlyFontSize], the way
@@ -160,6 +169,8 @@ class MessageContent extends HookConsumerWidget {
     this.onMediaMore,
     this.baseStyle,
     this.textAlign,
+    this.bubble = false,
+    this.bubbleIsOwn = false,
     this.maxLines,
     this.scaleEmojiOnly = false,
     this.mediaCarouselLeadingOverflow = 0,
@@ -316,9 +327,15 @@ class MessageContent extends HookConsumerWidget {
       onChannelTap: resolvedChannelTap,
     );
 
-    final contentDirection = detectTextDirection(finalContent);
-    final markdown = _ContentDirection(
-      direction: contentDirection,
+    // Alignment follows the UI mode (right in Persian, left in English),
+    // whatever script the message is written in. Only the order of the runs
+    // inside a paragraph follows the message's own first strong character.
+    final uiDirection = Directionality.of(context);
+    final contentDirection = detectTextDirection(finalContent) ?? uiDirection;
+    final resolvedTextAlign = textAlign ?? uiStartTextAlign(context);
+    final markdown = _MessageBubbleSurface(
+      enabled: bubble && !emojiOnly,
+      isOwn: bubbleIsOwn,
       child: KeyedSubtree(
         key: ValueKey(
           '$finalContent\u0000$mentionPresentationKey\u0000$channelPresentationKey',
@@ -326,6 +343,7 @@ class MessageContent extends HookConsumerWidget {
         child: GptMarkdown(
           finalContent,
           style: style,
+          textDirection: contentDirection,
           followLinkColor: false,
           // normalizeBareLinks() already turns bare URLs into Markdown links;
           // gpt_markdown 1.2.0 autolinks by default, so both would run.
@@ -350,7 +368,13 @@ class MessageContent extends HookConsumerWidget {
             onReply: onMediaReply == null ? null : mediaReply,
             onMore: onMediaMore == null ? null : mediaMore,
           ),
-          textAlign: textAlign,
+          textAlign: resolvedTextAlign,
+          blockQuoteBuilder: (context, content, quoteStyle) =>
+              _uiBlockQuote(context, content, quoteStyle, uiDirection),
+          unOrderedListBuilder: (context, child, config) =>
+              _uiBulletItem(context, child, config, uiDirection),
+          orderedListBuilder: (context, no, child, config) =>
+              _uiNumberedItem(context, no, child, config, uiDirection),
           maxLines: maxLines,
           inlineComponents: inlineComponents,
         ),
@@ -451,16 +475,21 @@ class MessageContent extends HookConsumerWidget {
         label:
             _channelNameForId(resolvedChannelNames, channelId) ??
             channelId.substring(0, math.min(8, channelId.length)),
-        semanticLabel:
-            'Open channel ${_channelNameForId(resolvedChannelNames, channelId) ?? channelId.substring(0, math.min(8, channelId.length))}',
+        semanticLabel: tlt('Open channel {0}', [
+          _channelNameForId(resolvedChannelNames, channelId) ??
+              channelId.substring(0, math.min(8, channelId.length)),
+        ]),
         interactive: true,
       ),
       MessageDeepLink(:final channelId, :final messageId) => (
         icon: LucideIcons.messageSquare,
         label:
             '${_channelNameForId(resolvedChannelNames, channelId) ?? channelId.substring(0, math.min(8, channelId.length))} · ${messageId.substring(0, math.min(8, messageId.length))}',
-        semanticLabel:
-            'Open message ${messageId.substring(0, math.min(8, messageId.length))} in channel ${_channelNameForId(resolvedChannelNames, channelId) ?? channelId.substring(0, math.min(8, channelId.length))}',
+        semanticLabel: tlt('Open message {0} in channel {1}', [
+          messageId.substring(0, math.min(8, messageId.length)),
+          _channelNameForId(resolvedChannelNames, channelId) ??
+              channelId.substring(0, math.min(8, channelId.length)),
+        ]),
         interactive: true,
       ),
       EntityDeepLink(:final type, :final repository, :final eventId) => (
@@ -474,8 +503,10 @@ class MessageContent extends HookConsumerWidget {
             : '$repository · ${eventId!.substring(0, 8)}',
         semanticLabel: switch (type) {
           'repo' => tlt('Repository {0}', [repository]),
-          'pr' =>
-            'Pull request ${eventId!.substring(0, 8)} in repository $repository',
+          'pr' => tlt('Pull request {0} in repository {1}', [
+            eventId!.substring(0, 8),
+            repository,
+          ]),
           _ => tlt('Issue {0} in repository {1}', [
             eventId!.substring(0, 8),
             repository,
@@ -942,26 +973,31 @@ class _MentionPill extends StatelessWidget {
         color: context.colors.primary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(Radii.sm),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          if (isAgent) ...[
-            Icon(
-              LucideIcons.bot,
-              size: fontSize * 0.95,
-              color: context.colors.primary,
+      // The "@" leads the name in the name's own reading direction, so an
+      // English name in a Persian message still reads "@name".
+      child: Directionality(
+        textDirection: detectTextDirection(label) ?? Directionality.of(context),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (isAgent) ...[
+              Icon(
+                LucideIcons.bot,
+                size: fontSize * 0.95,
+                color: context.colors.primary,
+              ),
+              const SizedBox(width: Grid.quarter + 1),
+            ] else
+              Transform.translate(
+                offset: const Offset(0, -Grid.quarter),
+                child: Text('@', style: style),
+              ),
+            Flexible(
+              child: Text(label, style: style, semanticsLabel: semanticsLabel),
             ),
-            const SizedBox(width: Grid.quarter + 1),
-          ] else
-            Transform.translate(
-              offset: const Offset(0, -Grid.quarter),
-              child: Text('@', style: style),
-            ),
-          Flexible(
-            child: Text(label, style: style, semanticsLabel: semanticsLabel),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -969,22 +1005,153 @@ class _MentionPill extends StatelessWidget {
 
 String _markdownMentionName(String name) => name.replaceAll(' ', '\u00A0');
 
-/// Gives a message the direction of its own text, whatever the UI direction:
-/// Persian/Arabic messages run right to left and sit on the right, English
-/// ones left to right on the left, and mixed text is ordered by the bidi
-/// algorithm. The box spans the available width so `start` is that edge.
-class _ContentDirection extends StatelessWidget {
-  const _ContentDirection({required this.direction, required this.child});
+/// The text bubble behind a chat message body: it hugs the message (up to
+/// [kMessageBubbleMaxWidthFactor] of the screen width), rounds all corners but
+/// the one on the avatar/start side, and tints itself from the foreground
+/// colour so it suits light, dark and system themes alike.
+class _MessageBubbleSurface extends StatelessWidget {
+  const _MessageBubbleSurface({
+    required this.enabled,
+    required this.isOwn,
+    required this.child,
+  });
 
-  final TextDirection? direction;
+  final bool enabled;
+  final bool isOwn;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    if (direction == null) return child;
-    return SizedBox(
-      width: double.infinity,
-      child: Directionality(textDirection: direction!, child: child),
+    if (!enabled) return child;
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final cap = screenWidth * kMessageBubbleMaxWidthFactor;
+        final maxWidth = constraints.maxWidth.isFinite
+            ? math.min(cap, constraints.maxWidth)
+            : cap;
+        return ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: maxWidth),
+          child: DecoratedBox(
+            key: const ValueKey('message-bubble'),
+            decoration: BoxDecoration(
+              color: isOwn
+                  ? context.colors.primary.withValues(alpha: 0.16)
+                  : context.colors.onSurface.withValues(alpha: 0.07),
+              borderRadius: BorderRadiusDirectional.only(
+                topStart: Radius.circular(
+                  isOwn ? kMessageBubbleRadius : kMessageBubbleTightRadius,
+                ),
+                topEnd: Radius.circular(
+                  isOwn ? kMessageBubbleTightRadius : kMessageBubbleRadius,
+                ),
+                bottomStart: const Radius.circular(kMessageBubbleRadius),
+                bottomEnd: const Radius.circular(kMessageBubbleRadius),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Grid.xs,
+                vertical: Grid.xxs,
+              ),
+              child: child,
+            ),
+          ),
+        );
+      },
     );
   }
+}
+
+/// Orders a message row's children: avatar first for other people's messages,
+/// avatar last (the UI end side) for the signed-in user's own.
+List<Widget> messageRowOrder(bool isOwn, List<Widget> children) =>
+    isOwn ? children.reversed.toList() : children;
+
+/// Widest a message bubble grows, as a fraction of the screen width.
+const kMessageBubbleMaxWidthFactor = 0.78;
+
+/// Corner radius of a message bubble.
+const kMessageBubbleRadius = 18.0;
+
+/// The tighter corner on the avatar (start) side of a message bubble.
+const kMessageBubbleTightRadius = 6.0;
+
+/// Block quote whose bar sits on the UI start side (right in Persian mode),
+/// not on the side the quoted text's own direction would pick.
+Widget _uiBlockQuote(
+  BuildContext context,
+  Widget content,
+  BlockQuoteStyle style,
+  TextDirection uiDirection,
+) {
+  final resolved = style.resolve(Theme.of(context).colorScheme);
+  Widget child = content;
+  final padding = resolved.padding;
+  if (padding != null) child = Padding(padding: padding, child: child);
+  child = BlockQuoteWidget(
+    color: resolved.barColor ?? context.colors.onSurfaceVariant,
+    direction: uiDirection,
+    width: resolved.barWidth ?? 3,
+    child: child,
+  );
+  final background = resolved.backgroundColor;
+  if (background != null) {
+    final radius = resolved.barRadius;
+    child = DecoratedBox(
+      decoration: BoxDecoration(
+        color: background,
+        borderRadius: radius == null ? null : BorderRadius.all(radius),
+      ),
+      child: child,
+    );
+  }
+  final margin = resolved.margin;
+  if (margin != null) child = Padding(padding: margin, child: child);
+  return Directionality(textDirection: uiDirection, child: child);
+}
+
+/// Bullet list item with the marker on the UI start side.
+Widget _uiBulletItem(
+  BuildContext context,
+  Widget child,
+  GptMarkdownConfig config,
+  TextDirection uiDirection,
+) {
+  final style = const ListStyle().resolve(Theme.of(context).colorScheme);
+  final fontSize =
+      config.style?.fontSize ??
+      DefaultTextStyle.of(context).style.fontSize ??
+      14;
+  return UnorderedListView(
+    bulletColor: style.bulletColor ?? config.style?.color,
+    padding: style.indent ?? 7,
+    spacing: style.gapAfterMarker ?? 10,
+    bulletSize: style.bulletSize ?? 0.3 * fontSize,
+    textDirection: uiDirection,
+    child: child,
+  );
+}
+
+/// Numbered list item with the marker on the UI start side.
+Widget _uiNumberedItem(
+  BuildContext context,
+  String no,
+  Widget child,
+  GptMarkdownConfig config,
+  TextDirection uiDirection,
+) {
+  final style = const ListStyle().resolve(Theme.of(context).colorScheme);
+  final marker = style.markerTextStyle;
+  final base = (config.style ?? const TextStyle()).copyWith(
+    fontWeight: FontWeight.w100,
+  );
+  return OrderedListView(
+    no: '$no.',
+    textDirection: uiDirection,
+    style: marker == null ? base : base.merge(marker),
+    padding: style.indent ?? 6,
+    spacing: style.gapAfterMarker ?? 6,
+    child: child,
+  );
 }

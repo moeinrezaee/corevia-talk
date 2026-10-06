@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../theme/theme.dart';
 import 'ios_glass_theme_pagination.dart';
+import '../i18n/app_language.dart';
 
 /// Appearance-style pagination with native Liquid Glass on iOS.
 class PageIndicator extends StatelessWidget {
@@ -80,7 +81,7 @@ class PageIndicator extends StatelessWidget {
     // UIKit owns its adjustable element and bridges it through UiKitView.
     if (native) return control;
     return Semantics(
-      label: '$semanticLabel ${selected + 1} of $count',
+      label: tlt('{0} {1} of {2}', [semanticLabel, selected + 1, count]),
       slider: true,
       value: '${selected + 1}',
       increasedValue: selected < count - 1 ? '${selected + 2}' : null,

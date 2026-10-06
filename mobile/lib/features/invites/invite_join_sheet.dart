@@ -42,7 +42,7 @@ class InviteJoinSheet extends ConsumerWidget {
     final state = ref.watch(inviteJoinProvider);
     final isClaiming = state.status == InviteJoinStatus.claiming;
     final isStarterSetupRecovery = state.isStarterSetupRecovery;
-    final host = state.host ?? 'unknown host';
+    final host = state.host ?? tl('unknown host');
     final derivedName = state.communityName;
     final primaryLabel = switch ((
       isClaiming,
@@ -50,7 +50,7 @@ class InviteJoinSheet extends ConsumerWidget {
       state.status,
     )) {
       (true, true, _) => tl('Finishing setup…'),
-      (true, false, _) => 'Joining…',
+      (true, false, _) => tl('Joining…'),
       (false, true, InviteJoinStatus.error) => tl('Retry setup'),
       (false, true, _) => tl('Finish setting up'),
       _ => tl('Join'),
@@ -174,7 +174,7 @@ class InviteJoinSheet extends ConsumerWidget {
                             child: BuzzLoadingIndicator(
                               size: 16,
                               semanticLabel: isStarterSetupRecovery
-                                  ? 'Finishing setup'
+                                  ? tl('Finishing setup')
                                   : tl('Joining community'),
                             ),
                           )
@@ -223,7 +223,7 @@ class _InviteJoinSuccess extends StatelessWidget {
             ),
             const SizedBox(height: Grid.sm),
             Text(
-              'You joined ${communityName ?? host}',
+              tlt('You joined {0}', [communityName ?? host]),
               style: context.textTheme.titleLarge,
             ),
             const SizedBox(height: Grid.xs),

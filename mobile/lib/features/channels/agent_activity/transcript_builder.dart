@@ -327,7 +327,10 @@ Map<String, dynamic> _extractToolArgs(Map<String, dynamic> update) {
     }
   }
   final title =
-      _asString(update['title']) ?? knownName ?? firstSpecific ?? 'Tool call';
+      _asString(update['title']) ??
+      knownName ??
+      firstSpecific ??
+      tl('Tool call');
   return (
     title: title,
     toolName: knownName ?? _normalizeToolName(firstSpecific ?? title),
@@ -377,7 +380,7 @@ String _describeTurnStarted(dynamic payload) {
   if (ids is List) {
     final stringIds = ids.whereType<String>().toList();
     if (stringIds.isNotEmpty) {
-      return 'Triggered by ${stringIds.map(_shorten).join(', ')}.';
+      return tlt('Triggered by {0}.', [stringIds.map(_shorten).join(', ')]);
     }
   }
   return tl('Heartbeat or internal turn.');
@@ -387,8 +390,10 @@ String _describeSessionResolved(dynamic payload) {
   final record = _asRecord(payload);
   final sessionId = _asString(record['sessionId']);
   final isNewSession = record['isNewSession'] == true;
-  if (sessionId == null) return 'Using existing ACP session.';
-  return '${isNewSession ? tl('Created') : 'Using'} session ${_shorten(sessionId)}.';
+  if (sessionId == null) return tl('Using existing ACP session.');
+  return tlt(isNewSession ? 'Created session {0}.' : 'Using session {0}.', [
+    _shorten(sessionId),
+  ]);
 }
 
 String _safeJsonEncode(dynamic value) {
@@ -558,7 +563,7 @@ List<TranscriptItem> buildTranscript(List<ObserverFrame> events) {
       upsertTextItem(
         'turn:${event.turnId ?? '${event.seq}'}',
         'lifecycle',
-        'Turn started',
+        tl('Turn started'),
         _describeTurnStarted(event.payload),
         event.timestamp,
       );
@@ -569,7 +574,7 @@ List<TranscriptItem> buildTranscript(List<ObserverFrame> events) {
       upsertTextItem(
         'session:${event.turnId ?? '${event.seq}'}',
         'lifecycle',
-        'Session ready',
+        tl('Session ready'),
         _describeSessionResolved(event.payload),
         event.timestamp,
       );
@@ -580,7 +585,7 @@ List<TranscriptItem> buildTranscript(List<ObserverFrame> events) {
       upsertTextItem(
         'parse-error:${event.seq}',
         'lifecycle',
-        'Wire parse error',
+        tl('Wire parse error'),
         _extractBlockText(event.payload),
         event.timestamp,
       );
@@ -610,7 +615,7 @@ List<TranscriptItem> buildTranscript(List<ObserverFrame> events) {
         if (parsedPrompt.sections.isNotEmpty) {
           upsertMetadata(
             'prompt-context:${event.turnId ?? '${event.seq}'}',
-            'Prompt context',
+            tl('Prompt context'),
             parsedPrompt.sections,
             event.timestamp,
           );
@@ -655,7 +660,7 @@ List<TranscriptItem> buildTranscript(List<ObserverFrame> events) {
       upsertTextItem(
         'thinking:${messageId ?? turnKey}',
         'thought',
-        'Thinking',
+        tl('Thinking'),
         _extractContentText(update['content']),
         event.timestamp,
       );
@@ -704,7 +709,7 @@ List<TranscriptItem> buildTranscript(List<ObserverFrame> events) {
       upsertTextItem(
         'plan:$turnKey',
         'thought',
-        'Plan',
+        tl('Plan'),
         content.isNotEmpty ? content : _safeJsonEncode(update),
         event.timestamp,
       );

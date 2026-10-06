@@ -323,8 +323,10 @@ class _ComposeBarLayout extends HookWidget {
   }
 
   Widget _buildTextField(BuildContext context) {
-    // The field takes the direction of what is typed (Persian right to left,
-    // English left to right), and falls back to the UI direction when empty.
+    // The order of runs follows what is typed (Persian right to left, English
+    // left to right) and falls back to the UI direction when empty. The text
+    // itself always sits on the UI start edge: right in Persian mode, left in
+    // English mode, whatever script is typed.
     return ListenableBuilder(
       listenable: controller,
       builder: (context, _) => _buildDirectedTextField(
@@ -340,6 +342,7 @@ class _ComposeBarLayout extends HookWidget {
   ) {
     return TextField(
       textDirection: textDirection,
+      textAlign: uiStartTextAlign(context),
       controller: controller,
       focusNode: focusNode,
       keyboardType: TextInputType.multiline,

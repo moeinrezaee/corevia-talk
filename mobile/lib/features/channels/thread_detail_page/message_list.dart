@@ -58,13 +58,14 @@ class _ThreadMessageList extends StatelessWidget {
   String get _replySummary {
     if (!relayReplyState.hasValue && replies.isEmpty) {
       return relayReplyState.isLoading
-          ? 'Loading replies…'
+          ? tl('Loading replies…')
           : tl('Couldn’t load replies');
     }
-    final count =
-        '${replies.length} ${replies.length == 1 ? 'reply' : 'replies'}';
+    final count = tlt(replies.length == 1 ? '{0} reply' : '{0} replies', [
+      replies.length,
+    ]);
     if (!relayReplyState.hasError) return count;
-    return '$count · ${relayReplyState.isLoading ? 'Retrying…' : 'Couldn’t refresh'}';
+    return '$count · ${relayReplyState.isLoading ? tl('Retrying…') : tl('Couldn’t refresh')}';
   }
 
   @override

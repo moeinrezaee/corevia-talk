@@ -13,6 +13,7 @@ import 'package:nostr/nostr.dart' as nostr;
 import 'package:pointycastle/digests/sha256.dart';
 
 import 'animated_image_sanitizer.dart';
+import '../i18n/app_language.dart';
 import 'media_auth.dart';
 import 'mp4_fast_start.dart';
 import 'relay_provider.dart';
@@ -58,7 +59,6 @@ const _allowedVideoMimeTypes = {'video/mp4'};
 const _allowedAudioMimeTypes = {'audio/mp4', 'audio/m4a', 'audio/aac'};
 const _maxVideoSizeBytes = 100 * 1024 * 1024; // 100MB
 const _maxFileSizeBytes = 100 * 1024 * 1024; // 100MB
-const _mediaPolicyUploadMessage = "We couldn't prepare this image for upload.";
 
 typedef PickGalleryImage = Future<XFile?> Function();
 
@@ -85,7 +85,7 @@ class MediaPolicyUploadException implements Exception {
   const MediaPolicyUploadException();
 
   @override
-  String toString() => _mediaPolicyUploadMessage;
+  String toString() => tl("We couldn't prepare this image for upload.");
 }
 
 /// Cancels a single user-initiated media upload without closing the shared
@@ -348,7 +348,7 @@ class MediaUploadService {
 
   Future<BlobDescriptor> readAndUploadClipboardImage() async {
     final image = await readClipboardImage();
-    if (image == null) throw Exception('Unable to read pasted image');
+    if (image == null) throw Exception(tl('Unable to read pasted image'));
     return uploadImage(image);
   }
 
@@ -372,7 +372,9 @@ class MediaUploadService {
     final length = await pickedVideo.length();
     if (length > _maxVideoSizeBytes) {
       throw Exception(
-        'Video is too large (${(length / 1024 / 1024).toStringAsFixed(0)}MB). Maximum is 100MB.',
+        tlt('Video is too large ({0}MB). Maximum is 100MB.', [
+          (length / 1024 / 1024).toStringAsFixed(0),
+        ]),
       );
     }
 
@@ -386,7 +388,9 @@ class MediaUploadService {
       final transcodedLength = await transcodedFile.length();
       if (transcodedLength > _maxVideoSizeBytes) {
         throw Exception(
-          'Transcoded video is too large (${(transcodedLength / 1024 / 1024).toStringAsFixed(0)}MB). Maximum is 100MB.',
+          tlt('Transcoded video is too large ({0}MB). Maximum is 100MB.', [
+            (transcodedLength / 1024 / 1024).toStringAsFixed(0),
+          ]),
         );
       }
       final bytes = await transcodedFile.readAsBytes();
@@ -481,9 +485,9 @@ class MediaUploadService {
       packagedPath = await _packageVoiceNoteForUpload(voiceNote.path);
       _throwIfCancelled(cancellationToken);
       final bytes = await File(packagedPath).readAsBytes();
-      if (bytes.isEmpty) throw Exception('Voice note is empty.');
+      if (bytes.isEmpty) throw Exception(tl('Voice note is empty.'));
       if (bytes.length > _maxFileSizeBytes) {
-        throw Exception('Voice note is too large. Maximum is 100MB.');
+        throw Exception(tl('Voice note is too large. Maximum is 100MB.'));
       }
       final descriptor = await _uploadPreparedBytes(
         bytes,
@@ -510,7 +514,7 @@ class MediaUploadService {
   Future<XFile?> pickAttachmentFile() async {
     final pickAttachmentFile = _pickAttachmentFile;
     if (pickAttachmentFile == null) {
-      throw Exception("File attachments aren't available on this device.");
+      throw Exception(tl("File attachments aren't available on this device."));
     }
     return pickAttachmentFile();
   }
@@ -524,11 +528,13 @@ class MediaUploadService {
     _throwIfCancelled(cancellationToken);
     final length = await pickedFile.length();
     if (length == 0) {
-      throw Exception('File is empty.');
+      throw Exception(tl('File is empty.'));
     }
     if (length > _maxFileSizeBytes) {
       throw Exception(
-        'File is too large (${(length / 1024 / 1024).toStringAsFixed(0)}MB). Maximum is 100MB.',
+        tlt('File is too large ({0}MB). Maximum is 100MB.', [
+          (length / 1024 / 1024).toStringAsFixed(0),
+        ]),
       );
     }
     final bytes = await pickedFile.readAsBytes();

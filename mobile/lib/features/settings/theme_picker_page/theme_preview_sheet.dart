@@ -576,8 +576,9 @@ class _AppearanceCycleAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final semanticLabel =
-        '${appearanceModeLabel(mode)} appearance. Double tap to change.';
+    final semanticLabel = tlt('{0} appearance. Double tap to change.', [
+      appearanceModeLabel(mode),
+    ]);
     if (defaultTargetPlatform == TargetPlatform.iOS) {
       return IosGlassNavigationButton(
         key: const ValueKey('theme-preview-appearance-action-button'),

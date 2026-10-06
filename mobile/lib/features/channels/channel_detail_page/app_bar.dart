@@ -38,7 +38,7 @@ class _ConversationAppBarTitle extends StatelessWidget {
       button: true,
       child: Tooltip(
         message: channel.isDm
-            ? 'Open conversation details'
+            ? tl('Open conversation details')
             : tl('Open channel settings'),
         child: InkWell(
           key: ValueKey('$prefix-header-settings-trigger'),

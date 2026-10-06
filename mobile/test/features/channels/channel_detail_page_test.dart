@@ -8699,7 +8699,13 @@ void main() {
           final huddleAuthor = tester.getRect(
             find.byKey(const ValueKey('system-message-author-bob')),
           );
-          final regularBody = tester.getRect(findRichText('Regular message'));
+          // The body sits in a padded bubble; the bubble is the aligned box.
+          final regularBody = tester.getRect(
+            find.descendant(
+              of: regularRow,
+              matching: find.byKey(const ValueKey('message-bubble')),
+            ),
+          );
           final huddleBody = tester.getRect(findRichText(huddleEvent.action));
 
           expect(
@@ -8780,13 +8786,13 @@ void main() {
         ];
         final authoredMessageGap = avatars[1].top - avatars[0].bottom;
 
-        for (var index = 2; index < avatars.length; index++) {
-          expect(
-            avatars[index].top - avatars[index - 1].bottom,
-            closeTo(authoredMessageGap, 1),
-            reason: 'row $index should use the authored-message gap',
-          );
-        }
+        // Rows that follow an authored message inherit its bubble's bottom
+        // padding, so they keep the authored gap; rows that follow a bare
+        // system row are spaced by the system rows' own, equal gap.
+        double gap(int index) => avatars[index].top - avatars[index - 1].bottom;
+        expect(gap(2), closeTo(authoredMessageGap, 1));
+        expect(gap(3), closeTo(gap(4), 1));
+        expect(gap(3), lessThanOrEqualTo(authoredMessageGap));
       },
     );
 
@@ -12864,7 +12870,7 @@ void main() {
           findsNothing,
         );
 
-        for (var i = 0; i < 12; i++) {
+        for (var i = 0; i < 24; i++) {
           await tester.drag(list, const Offset(0, -100));
           await tester.pumpAndSettle();
         }
@@ -13047,7 +13053,7 @@ void main() {
               id: 'reply-$i',
               pubkey: 'bob',
               content: i == 29
-                  ? List.filled(15, 'Tall latest reply').join('\n')
+                  ? List.filled(14, 'Tall latest reply').join('\n')
                   : 'Reply $i',
               createdAt: 1100 + i,
               extraTags: const [

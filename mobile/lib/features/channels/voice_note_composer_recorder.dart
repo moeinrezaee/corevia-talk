@@ -84,7 +84,7 @@ class VoiceNoteComposerRecorder extends HookConsumerWidget {
         }
       } catch (_) {
         if (context.mounted) {
-          error.value = 'Buzz could not finish the voice note.';
+          error.value = tl('Buzz could not finish the voice note.');
           isStopping.value = false;
         }
       }
@@ -117,8 +117,9 @@ class VoiceNoteComposerRecorder extends HookConsumerWidget {
           if (active) error.value = recordingError.message;
         } catch (_) {
           if (active) {
-            error.value =
-                'Buzz could not start recording. Check microphone access.';
+            error.value = tl(
+              'Buzz could not start recording. Check microphone access.',
+            );
           }
         }
       }());

@@ -479,7 +479,7 @@ class _FloatingTabDestination extends StatelessWidget {
       button: true,
       selected: selected,
       label: showVisibleUnreadBadge
-          ? '${destination.label}, unread'
+          ? tlt('{0}, unread', [destination.label])
           : destination.label,
       child: Tooltip(
         message: destination.label,

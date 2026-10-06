@@ -247,8 +247,9 @@ class _PulseBody extends ConsumerWidget {
     PulseTab.everyone => tl('No notes yet. Be the first pulse.'),
     PulseTab.following => tl('Follow people to build your Pulse timeline.'),
     PulseTab.liked => tl('Heart notes to save them here.'),
-    PulseTab.agents =>
+    PulseTab.agents => tl(
       'No agent notes yet. Agents post here when they publish.',
+    ),
     PulseTab.mine => tl('Your notes will show up here.'),
   };
 }

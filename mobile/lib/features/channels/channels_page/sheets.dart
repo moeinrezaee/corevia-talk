@@ -504,7 +504,9 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
         return;
       }
       if (previewDirectoryActive) {
-        submitError.value = 'Preview only — mock people cannot be messaged.';
+        submitError.value = tl(
+          'Preview only — mock people cannot be messaged.',
+        );
         return;
       }
 
@@ -726,7 +728,7 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                       child: Center(
                         child: Text(
                           normalizedQuery.isEmpty
-                              ? 'No people or agents available to message.'
+                              ? tl('No people or agents available to message.')
                               : tl('No matching users.'),
                         ),
                       ),

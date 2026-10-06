@@ -45,7 +45,7 @@ class _CommunityGridAction extends HookWidget {
         key: Key(
           'community-switcher-${isEditing ? 'remove' : 'selection'}-${community.id}',
         ),
-        tooltip: isEditing ? 'Remove ${community.name}' : null,
+        tooltip: isEditing ? tlt('Remove {0}', [community.name]) : null,
         padding: EdgeInsets.zero,
         onPressed: isEditing ? onRemove : null,
         icon: Opacity(

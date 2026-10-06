@@ -148,7 +148,7 @@ class ManageChannelSheet extends HookConsumerWidget {
                 key: const ValueKey('manage-channel-save-details'),
                 onPressed: canSaveDetails ? saveDetails : null,
                 child: Text(
-                  isSavingDetails.value ? 'Saving…' : tl('Save changes'),
+                  isSavingDetails.value ? tl('Saving…') : tl('Save changes'),
                 ),
               ),
             ),
@@ -193,7 +193,7 @@ class ManageChannelSheet extends HookConsumerWidget {
                                   : saveCanvas,
                               child: Text(
                                 isSavingCanvas.value
-                                    ? 'Saving…'
+                                    ? tl('Saving…')
                                     : tl('Save canvas'),
                               ),
                             ),
@@ -223,7 +223,7 @@ class ManageChannelSheet extends HookConsumerWidget {
                               : null,
                           child: Text(
                             canvas.content?.trim().isNotEmpty == true
-                                ? 'Edit canvas'
+                                ? tl('Edit canvas')
                                 : tl('Create canvas'),
                           ),
                         ),

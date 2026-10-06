@@ -188,7 +188,9 @@ class AddChannelMembersSheet extends HookConsumerWidget {
                       ? Center(
                           child: Text(
                             normalizedQuery.isEmpty
-                                ? 'Everyone available is already in this channel.'
+                                ? tl(
+                                    'Everyone available is already in this channel.',
+                                  )
                                 : tl('No matching people or agents.'),
                             textAlign: TextAlign.center,
                           ),
@@ -212,7 +214,7 @@ class AddChannelMembersSheet extends HookConsumerWidget {
                                 button: true,
                                 selected: selected,
                                 label: selected
-                                    ? '${labelFor(user)}, selected'
+                                    ? tlt('{0}, selected', [labelFor(user)])
                                     : labelFor(user),
                                 child: ListTile(
                                   leading: AvatarImage(
@@ -283,9 +285,9 @@ class AddChannelMembersSheet extends HookConsumerWidget {
                       : addSelectedMembers,
                   child: Text(
                     isSubmitting.value
-                        ? 'Adding…'
+                        ? tl('Adding…')
                         : selectedUsers.value.length == 1
-                        ? 'Add member'
+                        ? tl('Add member')
                         : tlt('Add {0} members', [selectedUsers.value.length]),
                   ),
                 ),

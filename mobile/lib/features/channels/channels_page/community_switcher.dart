@@ -215,8 +215,10 @@ class _CommunitySwitcherPage extends HookConsumerWidget {
         onFlightChanged(false);
         onTransitionProgress(1);
         error.value = e is TimeoutException
-            ? 'This community is taking longer to load. Select it to try again, or choose another.'
-            : 'Could not switch communities. Please try again.';
+            ? tl(
+                'This community is taking longer to load. Select it to try again, or choose another.',
+              )
+            : tl('Could not switch communities. Please try again.');
       }
     }
 

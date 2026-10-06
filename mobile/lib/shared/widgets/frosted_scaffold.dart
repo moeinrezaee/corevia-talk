@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/foundation.dart';
 import 'ios_navigation_bar.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -152,6 +153,20 @@ class FrostedScaffold extends HookWidget {
             null) {
           return false;
         }
+        // Scroll notifications can fire while a viewport lays out (a dimension
+        // change starting a ballistic activity); rebuilding listeners then
+        // would schedule a build during the frame, so defer to after it.
+        void setOffset(double value) {
+          if (SchedulerBinding.instance.schedulerPhase ==
+              SchedulerPhase.persistentCallbacks) {
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              if (context.mounted) scrollOffset.value = value;
+            });
+          } else {
+            scrollOffset.value = value;
+          }
+        }
+
         // Reversed chats start at zero at the newest message. Older content
         // behind the top bar is measured by extentAfter, not scroll pixels.
         final topContentDepth = metrics.axisDirection == AxisDirection.up
@@ -161,17 +176,18 @@ class FrostedScaffold extends HookWidget {
             metrics.axis == Axis.vertical &&
             pinnedController.hasClients) {
           final inner = pinnedKey.currentState?.innerController;
-          scrollOffset.value =
-              (pinnedController.offset +
-                      (inner != null && inner.hasClients ? inner.offset : 0))
-                  .clamp(0.0, double.infinity);
+          setOffset(
+            (pinnedController.offset +
+                    (inner != null && inner.hasClients ? inner.offset : 0))
+                .clamp(0.0, double.infinity),
+          );
         }
         if (!nativePinned && depth == 0 && metrics.axis == Axis.vertical) {
           // Keep real depth so a later UIKit metrics update (Dynamic Type or
           // rotation) can apply its new collapse range without another scroll.
           final next = topContentDepth.clamp(0.0, double.infinity);
           if ((scrollOffset.value - next).abs() > 0.1) {
-            scrollOffset.value = next;
+            setOffset(next);
           }
         }
         final next = topContentDepth > 0.5;

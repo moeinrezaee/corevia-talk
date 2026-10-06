@@ -128,14 +128,14 @@ class VoiceNoteAttachment extends HookConsumerWidget {
           };
     final playbackControlLabel = state.isLoading
         ? state.isPlaying
-              ? 'Pause voice note'
+              ? tl('Pause voice note')
               : canCancelLoading
-              ? 'Cancel voice note loading'
-              : 'Loading voice note'
+              ? tl('Cancel voice note loading')
+              : tl('Loading voice note')
         : state.hasError && isRemote
-        ? 'Retry voice note'
+        ? tl('Retry voice note')
         : state.isPlaying
-        ? 'Pause voice note'
+        ? tl('Pause voice note')
         : tl('Play voice note');
 
     return Container(
@@ -233,7 +233,7 @@ class VoiceNoteAttachment extends HookConsumerWidget {
                 Text(
                   key: const ValueKey('voice-note-duration'),
                   state.hasError
-                      ? 'Voice note unavailable'
+                      ? tl('Voice note unavailable')
                       : formatVoiceNoteDuration(
                           state.position > Duration.zero
                               ? state.position
@@ -296,8 +296,9 @@ class _VoiceNotePlaybackRateButton extends StatelessWidget {
   Widget build(BuildContext context) => Semantics(
     button: true,
     label: tlt('Playback speed {0}', [formatVoiceNotePlaybackRate(rate)]),
-    hint:
-        'Double tap to change to ${formatVoiceNotePlaybackRate(nextVoiceNotePlaybackRate(rate))}.',
+    hint: tlt('Double tap to change to {0}.', [
+      formatVoiceNotePlaybackRate(nextVoiceNotePlaybackRate(rate)),
+    ]),
     child: Tooltip(
       message: tl('Playback speed'),
       child: Material(

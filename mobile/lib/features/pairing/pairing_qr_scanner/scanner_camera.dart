@@ -13,12 +13,12 @@ class _QrScannerCamera extends StatelessWidget {
       fit: BoxFit.cover,
       errorBuilder: (context, error) {
         final message = switch (error.errorCode) {
-          MobileScannerErrorCode.permissionDenied =>
-            'Camera permission is required to scan QR codes.\n\n'
-                'Please grant camera access in your device settings.',
-          _ =>
-            'Could not start camera: '
-                "${error.errorDetails?.message ?? 'unknown error'}",
+          MobileScannerErrorCode.permissionDenied => tl(
+            'Camera permission is required to scan QR codes.\n\nPlease grant camera access in your device settings.',
+          ),
+          _ => tlt('Could not start camera: {0}', [
+            error.errorDetails?.message ?? tl('unknown error'),
+          ]),
         };
         return ColoredBox(
           color: Colors.black,

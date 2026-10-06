@@ -194,8 +194,9 @@ class InviteJoinNotifier extends Notifier<InviteJoinState> {
       if (state.isStarterSetupRecovery) {
         state = state.copyWith(
           status: InviteJoinStatus.error,
-          errorMessage:
-              'This community is no longer available. Re-open the invite link to try again.',
+          errorMessage: tl(
+            'This community is no longer available. Re-open the invite link to try again.',
+          ),
         );
         return;
       }
@@ -435,11 +436,13 @@ bool _requiresFreshInvite(Object error) {
 
 String _friendlyInviteError(Object error) {
   final message = error.toString();
-  if (message.contains('invite_expired')) return 'This invite has expired.';
+  if (message.contains('invite_expired')) return tl('This invite has expired.');
   if (message.contains('invite_exhausted')) {
     return tl('This invite has reached its use limit. Ask for a new invite.');
   }
-  if (message.contains('invite_invalid')) return 'This invite is not valid.';
+  if (message.contains('invite_invalid')) {
+    return tl('This invite is not valid.');
+  }
   if (message.contains('join_policy_required')) {
     return tl(
       'This invite approval has expired. Re-open the invite link to try again.',

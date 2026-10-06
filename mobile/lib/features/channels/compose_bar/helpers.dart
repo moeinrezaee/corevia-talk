@@ -336,18 +336,26 @@ Future<_NonMemberMentionChoice?> _promptNonMemberMention(
   required List<String> names,
   required bool canInvite,
 }) {
-  final verb = names.length == 1 ? 'is' : 'are';
+  final single = names.length == 1;
+  final joinedNames = names.join(', ');
   return showBuzzDialog<_NonMemberMentionChoice>(
     context: context,
     builder: (dialogContext) => AlertDialog(
       title: Text(tl('Mention people outside this channel?')),
       content: Text(
         canInvite
-            ? '${names.join(', ')} $verb not in this channel. Invite them to '
-                  'the channel, or send without inviting them.'
-            : '${names.join(', ')} $verb not in this channel. '
-                  '$privateChannelAddDeniedMessage You can still send without '
-                  'inviting them.',
+            ? tlt(
+                single
+                    ? '{0} is not in this channel. Invite them to the channel, or send without inviting them.'
+                    : '{0} are not in this channel. Invite them to the channel, or send without inviting them.',
+                [joinedNames],
+              )
+            : tlt(
+                single
+                    ? '{0} is not in this channel. {1} You can still send without inviting them.'
+                    : '{0} are not in this channel. {1} You can still send without inviting them.',
+                [joinedNames, privateChannelAddDeniedMessage],
+              ),
       ),
       actions: [
         TextButton(
@@ -461,7 +469,7 @@ Future<_NonMemberAddOutcome> _addMentionedNonMembers(
   if (!canAddMembers) {
     return _NonMemberAddOutcome(
       notAdded: [for (final (pubkeys, _) in pending) ...pubkeys],
-      errors: const [privateChannelAddDeniedMessage],
+      errors: [privateChannelAddDeniedMessage],
     );
   }
 

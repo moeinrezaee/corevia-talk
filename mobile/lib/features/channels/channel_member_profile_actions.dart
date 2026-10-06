@@ -130,7 +130,7 @@ class ChannelMemberProfileActions extends HookConsumerWidget {
       } catch (_) {
         if (context.mounted) {
           error.value = role == null
-              ? 'Could not remove this person. Please try again.'
+              ? tl('Could not remove this person. Please try again.')
               : tl('Could not change this role. Please try again.');
         }
       } finally {
@@ -155,7 +155,7 @@ class ChannelMemberProfileActions extends HookConsumerWidget {
                 AppListRow(
                   icon: LucideIcons.user,
                   title: member.role == 'guest'
-                      ? 'Make member'
+                      ? tl('Make member')
                       : tl('Change to member'),
                   onTap: busy.value ? null : () => perform(role: 'member'),
                 ),

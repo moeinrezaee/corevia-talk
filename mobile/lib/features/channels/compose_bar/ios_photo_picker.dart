@@ -59,7 +59,7 @@ class _IOSInlinePhotoPicker extends HookWidget {
               SnackBar(
                 content: Text(
                   call.arguments as String? ??
-                      'Unable to prepare the selected photos.',
+                      tl('Unable to prepare the selected photos.'),
                 ),
               ),
             );
@@ -185,9 +185,13 @@ class _IOSInlinePhotoPicker extends HookWidget {
                       )
                     : Text(
                         selectedCount.value == 0
-                            ? 'All Photos'
-                            : 'Add ${selectedCount.value} '
-                                  '${selectedCount.value == 1 ? 'photo' : 'photos'}',
+                            ? tl('All Photos')
+                            : tlt(
+                                selectedCount.value == 1
+                                    ? 'Add {0} photo'
+                                    : 'Add {0} photos',
+                                [selectedCount.value],
+                              ),
                       ),
               ),
             ),

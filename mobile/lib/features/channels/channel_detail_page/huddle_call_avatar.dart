@@ -133,15 +133,15 @@ class _HuddleCallAvatar extends HookConsumerWidget {
 
     final semanticStates = [
       label,
-      if (showPreparingResponse) 'preparing a response',
-      if (active) 'speaking',
+      if (showPreparingResponse) tl('preparing a response'),
+      if (active) tl('speaking'),
     ].join(', ');
 
     return SizedBox(
       width: frameSize,
       child: Semantics(
         label: semanticStates,
-        hint: onTap == null ? null : 'Tap to focus participant',
+        hint: onTap == null ? null : tl('Tap to focus participant'),
         button: onTap != null,
         // The outer node excludes descendant semantics, so the child
         // indicator's live region never reaches assistive tech. Promote this
@@ -280,5 +280,5 @@ String _huddleParticipantLabel({
   final directoryName = fallbackLabel?.trim();
   return (profileName?.isNotEmpty == true ? profileName : null) ??
       (directoryName?.isNotEmpty == true ? directoryName : null) ??
-      (pubkey.isEmpty ? 'Participant' : shortPubkey(pubkey));
+      (pubkey.isEmpty ? tl('Participant') : shortPubkey(pubkey));
 }

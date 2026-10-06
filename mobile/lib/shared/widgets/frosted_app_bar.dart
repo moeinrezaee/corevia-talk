@@ -642,7 +642,7 @@ IosNavigationAction? _nativeAction(Widget? widget) {
         ? 'person.2'
         : 'ellipsis';
     return IosNavigationAction(
-      label: widget.tooltip ?? 'Action',
+      label: widget.tooltip ?? tl('Action'),
       symbol: symbol,
       onPressed: widget.onPressed,
     );

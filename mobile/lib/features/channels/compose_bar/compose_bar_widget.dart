@@ -157,7 +157,7 @@ class ComposeBar extends HookConsumerWidget {
         hintText ??
         (channelName.isNotEmpty
             ? tlt('Message #{0}', [channelName])
-            : 'Message\u2026');
+            : tl('Message\u2026'));
     useEffect(
       () {
         final target =
@@ -777,7 +777,7 @@ class ComposeBar extends HookConsumerWidget {
           if (image != null && context.mounted) {
             queueAttachment(image, _PendingAttachmentKind.image);
           } else if (context.mounted) {
-            uploadError.value = 'Unable to read pasted image';
+            uploadError.value = tl('Unable to read pasted image');
           }
         } catch (error) {
           if (context.mounted) uploadError.value = _formatUploadError(error);
@@ -824,7 +824,7 @@ class ComposeBar extends HookConsumerWidget {
     void uploadPastedImage(KeyboardInsertedContent content) {
       final bytes = content.data;
       if (bytes == null || bytes.isEmpty) {
-        uploadError.value = 'Unable to read pasted image';
+        uploadError.value = tl('Unable to read pasted image');
         return;
       }
 

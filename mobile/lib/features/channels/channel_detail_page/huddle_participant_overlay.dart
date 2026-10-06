@@ -178,7 +178,7 @@ class _HuddleParticipantSpotlight extends ConsumerWidget {
     final isAgent = profile?.isAgent == true || fallbackLabel != null;
 
     return Semantics(
-      label: active ? '$label, speaking' : label,
+      label: active ? tlt('{0}, speaking', [label]) : label,
       hint: tl('Tap to close participant'),
       button: true,
       excludeSemantics: true,
@@ -311,7 +311,12 @@ class _HuddleParticipantRoster extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      '${pubkeys.length} more ${pubkeys.length == 1 ? 'person' : 'people'}',
+                      tlt(
+                        pubkeys.length == 1
+                            ? '{0} more person'
+                            : '{0} more people',
+                        [pubkeys.length],
+                      ),
                       textAlign: TextAlign.center,
                       style: context.textTheme.titleMedium?.copyWith(
                         color: context.colors.onSurface,
@@ -343,7 +348,9 @@ class _HuddleParticipantRoster extends ConsumerWidget {
                             isSelf: false,
                           );
                           return Semantics(
-                            label: active ? '$label, speaking' : label,
+                            label: active
+                                ? tlt('{0}, speaking', [label])
+                                : label,
                             excludeSemantics: true,
                             child: SizedBox(
                               key: ValueKey(

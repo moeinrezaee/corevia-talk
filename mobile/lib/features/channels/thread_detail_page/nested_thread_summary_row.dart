@@ -40,75 +40,99 @@ class _NestedThreadSummaryRow extends ConsumerWidget {
           ),
         );
       },
-      child: Padding(
-        key: ValueKey('nested-thread-summary-${replyMessage.id}'),
-        padding: const EdgeInsetsDirectional.only(
-          start: messageAvatarSize + messageAvatarContentGap,
-          top: Grid.half,
-          bottom: Grid.xs,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Stacked participant avatars.
-            SizedBox(
-              width:
-                  32.0 +
-                  (summary.participantPubkeys.length - 1).clamp(0, 2) * 20.0,
-              height: 32,
-              child: Stack(
+      child: Builder(
+        builder: (context) {
+          final isOwn =
+              currentPubkey != null &&
+              currentPubkey!.toLowerCase() == replyMessage.pubkey.toLowerCase();
+          return Align(
+            alignment: isOwn
+                ? AlignmentDirectional.centerEnd
+                : AlignmentDirectional.centerStart,
+            child: Padding(
+              key: ValueKey('nested-thread-summary-${replyMessage.id}'),
+              padding: EdgeInsetsDirectional.only(
+                start: isOwn ? 0 : messageAvatarSize + messageAvatarContentGap,
+                end: isOwn ? messageAvatarSize + messageAvatarContentGap : 0,
+                top: Grid.half,
+                bottom: Grid.xs,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  for (var i = 0; i < summary.participantPubkeys.length; i++)
-                    PositionedDirectional(
-                      start: i * 20.0,
-                      child: SmallAvatar(
-                        pubkey: summary.participantPubkeys[i],
-                        userCache: userCache,
-                        size: 32,
-                      ),
+                  // Stacked participant avatars.
+                  SizedBox(
+                    width:
+                        32.0 +
+                        (summary.participantPubkeys.length - 1).clamp(0, 2) *
+                            20.0,
+                    height: 32,
+                    child: Stack(
+                      children: [
+                        for (
+                          var i = 0;
+                          i < summary.participantPubkeys.length;
+                          i++
+                        )
+                          PositionedDirectional(
+                            start: i * 20.0,
+                            child: SmallAvatar(
+                              pubkey: summary.participantPubkeys[i],
+                              userCache: userCache,
+                              size: 32,
+                            ),
+                          ),
+                      ],
                     ),
+                  ),
+                  const SizedBox(width: Grid.xxs),
+                  Flexible(
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: summary.isCountPending
+                                ? tl('Replies')
+                                : tlt(
+                                    summary.replyCount == 1
+                                        ? '{0} reply'
+                                        : '{0} replies',
+                                    [
+                                      '${summary.replyCount}${summary.isLowerBound ? '+' : ''}',
+                                    ],
+                                  ),
+                            style: replyPreviewTextStyle.copyWith(
+                              color: context.colors.primary,
+                            ),
+                          ),
+                          if (summary.lastReplyAt case final lastReplyAt?) ...[
+                            TextSpan(
+                              text: ' · ',
+                              style: replyPreviewTextStyle.copyWith(
+                                color: context.colors.onSurfaceVariant
+                                    .withValues(alpha: 0.5),
+                              ),
+                            ),
+                            TextSpan(
+                              text: tlt('last reply {0}', [
+                                formatThreadSummaryLastReplyTime(lastReplyAt),
+                              ]),
+                              style: replyPreviewTextStyle.copyWith(
+                                color: context.colors.onSurfaceVariant,
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ],
               ),
             ),
-            const SizedBox(width: Grid.xxs),
-            Flexible(
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: summary.isCountPending
-                          ? 'Replies'
-                          : '${summary.replyCount}${summary.isLowerBound ? '+' : ''} ${summary.replyCount == 1 ? 'reply' : 'replies'}',
-                      style: replyPreviewTextStyle.copyWith(
-                        color: context.colors.primary,
-                      ),
-                    ),
-                    if (summary.lastReplyAt case final lastReplyAt?) ...[
-                      TextSpan(
-                        text: ' · ',
-                        style: replyPreviewTextStyle.copyWith(
-                          color: context.colors.onSurfaceVariant.withValues(
-                            alpha: 0.5,
-                          ),
-                        ),
-                      ),
-                      TextSpan(
-                        text: tlt('last reply {0}', [
-                          formatThreadSummaryLastReplyTime(lastReplyAt),
-                        ]),
-                        style: replyPreviewTextStyle.copyWith(
-                          color: context.colors.onSurfaceVariant,
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

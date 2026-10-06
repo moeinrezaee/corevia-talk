@@ -11,6 +11,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 
 import '../../shared/relay/media_image.dart';
+import '../../shared/i18n/app_language.dart';
 
 /// Maximum duration accepted for a recorded voice note.
 const voiceNoteMaxDuration = Duration(minutes: 5);
@@ -621,7 +622,7 @@ class DeviceVoiceNotePlayerController extends VoiceNotePlayerController {
       if (response.statusCode < 200 || response.statusCode >= 300) {
         if (!requestAbort.isCompleted) requestAbort.complete();
         throw HttpException(
-          'Voice note download failed (${response.statusCode})',
+          tlt('Voice note download failed ({0})', [response.statusCode]),
           uri: uri,
         );
       }

@@ -222,9 +222,9 @@ class _EmptyState extends StatelessWidget {
             const SizedBox(height: Grid.half),
             Text(
               isArchived
-                  ? 'This forum is archived.'
+                  ? tl('This forum is archived.')
                   : isMember
-                  ? 'Start a discussion by creating the first post.'
+                  ? tl('Start a discussion by creating the first post.')
                   : tl('Join this forum to create posts.'),
               style: context.textTheme.bodySmall?.copyWith(
                 color: context.colors.onSurfaceVariant,

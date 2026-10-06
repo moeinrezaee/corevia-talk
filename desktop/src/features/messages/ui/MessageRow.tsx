@@ -934,7 +934,9 @@ export const MessageRow = React.memo(
             // You sit on the reading-start side (right in Persian, left in English);
             // everyone else sits on the opposite side.
             !isOwnMessage && "flex-row-reverse",
-            isDisplayedAsContinuation ? "items-center" : "items-start",
+            // A new author starts a little lower than a continuation, so the
+            // groups of messages from one person read as separate blocks.
+            isDisplayedAsContinuation ? "items-center" : "mt-3 items-start",
             hasActiveReminder ? "bg-blue-500/10" : "",
             highlighted
               ? "-mx-4 rounded-none px-6 before:absolute before:-inset-y-1.5 before:inset-x-0 before:animate-[route-target-highlight-fade_2s_ease-out_forwards] before:bg-primary/10 before:content-[''] motion-reduce:before:animate-none sm:-mx-6 sm:px-8"

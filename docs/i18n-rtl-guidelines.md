@@ -42,6 +42,11 @@ stays untouched: left-to-right, Latin digits, Gregorian dates, local time zone.
 14. Header: name next to the avatar, then time; the role line (agent owner,
     persona) sits under the name; the other person's header is the mirror image
     of yours. Names may use up to 80% of the room width.
+15. The composer has the same inset on the left, right and bottom.
+16. Message rhythm: messages from the same person sit close together; a new
+    person starts a clearly larger gap below the previous group.
+17. A quote box fills the bubble with the bubble's own inset on every side, and
+    the gap between the quote and the text under it equals that inset.
 
 ## Process
 Every change requested for one client applies to **all** clients (desktop,

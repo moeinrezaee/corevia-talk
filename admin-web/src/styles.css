@@ -1,6 +1,7 @@
 :root {
   --font-ui:
-    "Helvetica Neue", Helvetica, Arial, ui-sans-serif, system-ui, sans-serif;
+    "Helvetica Neue", Helvetica, Arial, "Peyda Script", ui-sans-serif, system-ui,
+    sans-serif;
   font-family: var(--font-ui);
   color: #231e1e;
   background: #d7e7f6;

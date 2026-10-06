@@ -121,3 +121,10 @@
 :root[lang="fa"] .brand b {
   font-weight: 600;
 }
+
+/* Persian text never gets letter-spacing: the negative/uppercase tracking tuned
+   for Latin breaks the joins between Persian letters. */
+:root[lang="fa"] * {
+  letter-spacing: 0;
+  text-transform: none;
+}

@@ -1,5 +1,8 @@
 /** Persian translations, keyed by the English UI string. */
 export const FA_PART_3: Record<string, string> = {
+  "Invite members.": "اعضا را دعوت کنید.",
+  "Invite settings are unavailable. Relay recovery may still be in progress.":
+    "تنظیمات دعوت در دسترس نیست. ممکن است بازیابی رله هنوز در جریان باشد.",
   "Invite settings could not be checked.": "تنظیمات دعوت بررسی نشد.",
   "Invite them to the channel, or cancel to keep your draft.":
     "آن‌ها را به کانال دعوت کنید، یا برای نگه داشتن پیش‌نویس لغو کنید.",
@@ -671,6 +674,7 @@ export const FA_PART_3: Record<string, string> = {
   "Pins this agent to a specific runtime command, overriding the template's runtime.":
     "این ایجنت را به یک دستور زمان‌اجرای مشخص می‌چسباند و زمان‌اجرای قالب را بازنویسی می‌کند.",
   "Plan updated": "طرح به‌روز شد",
+  "Platform Tools": "ابزارهای پلتفرم",
   "Play review video": "پخش ویدیوی بازبینی",
   "Play video": "پخش ویدیو",
   "Play voice note": "پخش پیام صوتی",
@@ -682,6 +686,7 @@ export const FA_PART_3: Record<string, string> = {
   "Pocket TTS voice": "صدای Pocket TTS",
   "Pocket TTS voice: {0}": "صدای Pocket TTS: {0}",
   "Point the agent's": "هدایت کن ایجنت را:",
+  "Polish overview cards": "بهبود ظاهر کارت‌های نمای کلی",
   "Position yourself": "خود را جای‌گذاری کنید",
   "Post your reply": "پاسخ خود را ارسال کنید",
   "Powered by KLIPY": "قدرت‌گرفته از KLIPY",

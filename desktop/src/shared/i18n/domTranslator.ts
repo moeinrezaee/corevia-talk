@@ -10,7 +10,7 @@ import { FA_MESSAGES } from "./fa";
 
 /** Containers whose text is user content or code and is never translated. */
 const SKIP_SELECTOR =
-  "script, style, code, pre, [contenteditable], .message-markdown, .ProseMirror, .xterm, [data-no-translate]";
+  "script, style, code, pre, [contenteditable], .message-markdown :is(p, li, blockquote, h1, h2, h3, h4, h5, h6, td, th), .ProseMirror, .xterm, [data-no-translate]";
 /** Form controls hold user input, but their placeholder text is still UI. */
 const CONTROL_SELECTOR = "textarea, input";
 const ATTRIBUTES = ["placeholder", "title", "aria-label", "alt"] as const;
@@ -71,6 +71,7 @@ type Rule = [RegExp, (match: RegExpMatchArray) => string];
 
 const RULES: Rule[] = [
   [/^just now$/i, () => "همین الان"],
+  [/^(\d+)([smhdw])$/, (m) => `${m[1]} ${UNITS[m[2]]}`],
   [
     /^(\d+)\s?(s|m|h|d|w|mo|y|second|minute|hour|day|week|month|year)s?\s+ago$/i,
     (m) => `${m[1]} ${UNITS[m[2].toLowerCase()]} پیش`,

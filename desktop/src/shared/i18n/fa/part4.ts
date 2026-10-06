@@ -101,6 +101,7 @@ export const FA_PART_4: Record<string, string> = {
   "Redeeming invite": "در حال استفاده از دعوت‌نامه",
   "Redo (⇧⌘Z)": "انجام مجدد (⇧⌘Z)",
   "Redo stroke": "انجام مجدد خط",
+  "Refactor filter matching": "بازنویسی تطبیق فیلتر",
   Refresh: "تازه‌سازی",
   "Refresh failed.": "تازه‌سازی ناموفق بود.",
   "Refresh memory": "تازه‌سازی حافظه",
@@ -125,6 +126,8 @@ export const FA_PART_4: Record<string, string> = {
   "Relaunch Buzz": "راه‌اندازی مجدد Buzz",
   "Relay URL": "نشانی رله",
   "Release check": "بررسی انتشار",
+  "Release checklist is ready for async feedback.":
+    "فهرست انتشار برای بازخورد غیرهم‌زمان آماده است.",
   Reload: "بارگذاری مجدد",
   "Reload Buzz to try again. If this keeps happening, check that Buzz can access website data, then contact support.":
     "برای تلاش دوباره Buzz را بارگذاری مجدد کنید. اگر این مشکل ادامه داشت، بررسی کنید Buzz به داده‌های وب‌سایت دسترسی دارد، سپس با پشتیبانی تماس بگیرید.",
@@ -235,6 +238,7 @@ export const FA_PART_4: Record<string, string> = {
   "Required for buzz-agent shell tools on Windows.":
     "برای ابزارهای شل buzz-agent در ویندوز لازم است.",
   Reroll: "تولید دوباره",
+  "Research Agents": "ایجنت‌های پژوهش",
   "Reset zoom": "بازنشانی بزرگ‌نمایی",
   "Reset zoom to default level": "بازنشانی بزرگ‌نمایی به سطح پیش‌فرض",
   "Resize Buzz Term": "تغییر اندازهٔ ترمینال Buzz",
@@ -492,6 +496,8 @@ export const FA_PART_4: Record<string, string> = {
     "یک گفتگو را بین همهٔ رشته‌های یک کانال به اشتراک می‌گذارد.",
   Sharing: "اشتراک‌گذاری",
   Shift: "Shift",
+  "Shipped the new desktop sidebar polish today.":
+    "امروز بهبود ظاهر نوار کناری جدید دسکتاپ منتشر شد.",
   Shortcuts: "میان‌برها",
   Show: "نمایش",
   "Show #{0} activity": "نمایش فعالیت #{0}",
@@ -559,6 +565,8 @@ export const FA_PART_4: Record<string, string> = {
   "Signing out": "در حال خروج",
   "Signing out…": "در حال خروج…",
   "Signing…": "در حال ورود…",
+  "Single-thread channel with the root past the history limit":
+    "کانال تک‌رشته‌ای که ریشهٔ آن از حد تاریخچه گذشته است",
   "Skip for now": "فعلاً رد کن",
   "Sleep prevention expired after 1 hour without agent activity. It will resume on the next agent activity, or toggle off and on to re-enable now.":
     "جلوگیری از خواب پس از ۱ ساعت بدون فعالیت ایجنت منقضی شد. با فعالیت بعدی ایجنت از سر گرفته می‌شود، یا برای فعال‌سازی فوری آن را خاموش و روشن کنید.",
@@ -593,6 +601,7 @@ export const FA_PART_4: Record<string, string> = {
   "Speaker settings": "تنظیمات بلندگو",
   Speaking: "در حال صحبت",
   Speed: "سرعت",
+  "Speed up event dedup": "سرعت‌دهی به حذف رویدادهای تکراری",
   Split: "تقسیم",
   Spoiler: "افشاگری داستان",
   "Sprint Planning": "برنامه‌ریزی اسپرینت",
@@ -748,8 +757,4 @@ export const FA_PART_4: Record<string, string> = {
     "کارت ایجنت را حمل می‌کند — هر کسی این PNG را وارد کند یک نسخهٔ کارا می‌گیرد (فقط پیکربندی، هویت تازه، بدون حافظه).",
   "The card carries the agent — anyone who imports this PNG gets a working copy (fresh identity) including its {0}, stored as plaintext.":
     "کارت ایجنت را حمل می‌کند — هر کسی این PNG را وارد کند یک نسخهٔ کارا (با هویت تازه) شامل {0} می‌گیرد که به‌صورت متن ساده ذخیره شده است.",
-  "The channel history didn't load. Check your connection and try again.":
-    "تاریخچهٔ کانال بارگذاری نشد. اتصال خود را بررسی کنید و دوباره تلاش کنید.",
-  "The download window will open when it’s ready.":
-    "پنجرهٔ دانلود وقتی آماده شد باز می‌شود.",
 };

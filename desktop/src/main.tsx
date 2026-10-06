@@ -24,11 +24,12 @@ import { recoverLocalStorageQuotaOnStartup } from "@/shared/lib/localStorageQuot
 import { startLocalStorageSweep } from "@/shared/lib/localStorageSweep";
 import { initializeConversationDensityPreference } from "@/shared/lib/conversationDensityPreference";
 import { initializeFontSizePreference } from "@/shared/lib/fontSizePreference";
+import { installContentAlignment } from "@/shared/i18n/contentAlignment";
 import { installDomTranslator } from "@/shared/i18n/domTranslator";
-import { installAutoDirection } from "@/shared/i18n/autoDirection";
 import {
   getLanguage,
   initializeLanguagePreference,
+  isRtlLanguage,
 } from "@/shared/i18n/languagePreference";
 
 type E2eWindow = Window & {
@@ -138,12 +139,13 @@ async function bootstrap() {
   initializeConversationDensityPreference();
   initializeFontSizePreference();
   initializeLanguagePreference();
-  installAutoDirection();
   startLocalStorageSweep();
   await installE2eBridgeIfConfigured();
   await migrateLegacyCommunityStorageBeforeRender();
   renderApp();
-  if (getLanguage() === "fa") installDomTranslator();
+  const language = getLanguage();
+  if (language === "fa") installDomTranslator();
+  installContentAlignment(isRtlLanguage(language));
 }
 
 void bootstrap();

@@ -123,6 +123,7 @@ export const FA_PART_1: Record<string, string> = {
   "Adapter needed": "نیازمند آداپتور",
   Add: "افزودن",
   "Add Member": "افزودن عضو",
+  "Add Trello board workflow details": "افزودن جزئیات گردش‌کار برد Trello",
   "Add a README to describe setup, usage, and project context.":
     "یک README اضافه کنید تا راه‌اندازی، استفاده و زمینهٔ پروژه را توضیح دهد.",
   "Add a comment…": "افزودن نظر…",
@@ -156,6 +157,7 @@ export const FA_PART_1: Record<string, string> = {
   "Add channel subscription": "افزودن اشتراک کانال",
   "Add channel to {0}": "افزودن کانال به {0}",
   "Add community": "افزودن انجمن",
+  "Add contribution heatmap": "افزودن نقشهٔ حرارتی مشارکت",
   "Add custom harness": "افزودن هارنس سفارشی",
   "Add custom harness…": "افزودن هارنس سفارشی…",
   "Add emoji": "افزودن ایموجی",
@@ -500,6 +502,7 @@ export const FA_PART_1: Record<string, string> = {
   Capabilities: "قابلیت‌ها",
   Capture: "ضبط",
   "Card-minting key": "کلید ساخت کارت",
+  "Casual forum for async discussions": "انجمن غیررسمی برای گفتگوهای غیرهم‌زمان",
   Category: "دسته‌بندی",
   Change: "تغییر",
   "Change community": "تغییر انجمن",
@@ -531,6 +534,8 @@ export const FA_PART_1: Record<string, string> = {
   "Channel templates": "قالب‌های کانال",
   "Channel type": "نوع کانال",
   "Channel type: {0}": "نوع کانال: {0}",
+  "Channel with paginated history for load-older tests":
+    "کانال با تاریخچهٔ صفحه‌بندی‌شده برای آزمایش بارگذاری قدیمی‌تر",
   "Channel {0}": "کانال {0}",
   Channels: "کانال‌ها",
   "Channels appear here": "کانال‌ها اینجا نمایش داده می‌شوند",
@@ -746,6 +751,7 @@ export const FA_PART_1: Record<string, string> = {
   "Community username": "نام کاربری انجمن",
   "Community:": "انجمن:",
   Compact: "فشرده",
+  "Company-wide updates": "به‌روزرسانی‌های سراسر شرکت",
   Compare: "مقایسه",
   Complete: "کامل",
   Completed: "تکمیل‌شده",
@@ -754,6 +760,4 @@ export const FA_PART_1: Record<string, string> = {
   "Condition editor mode": "حالت ویرایشگر شرط",
   "Config changed since last start:": "پیکربندی از آخرین شروع تغییر کرده:",
   "Config error:": "خطای پیکربندی:",
-  "Config-backed — cannot be removed via API":
-    "پشتیبانی‌شده با پیکربندی — از طریق API قابل حذف نیست",
 };

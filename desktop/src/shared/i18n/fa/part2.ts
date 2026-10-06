@@ -1,5 +1,7 @@
 /** Persian translations, keyed by the English UI string. */
 export const FA_PART_2: Record<string, string> = {
+  "Config-backed — cannot be removed via API":
+    "پشتیبانی‌شده با پیکربندی — از طریق API قابل حذف نیست",
   Configuration: "پیکربندی",
   "Configuration changed since this agent started. Restart to apply it.":
     "پیکربندی از زمان شروع این ایجنت تغییر کرده است. برای اعمال، راه‌اندازی مجدد کنید.",
@@ -434,6 +436,7 @@ export const FA_PART_2: Record<string, string> = {
   "Endpoint URL": "نشانی نقطهٔ پایانی",
   "Enforcement cancelled — report reopened":
     "اجرا لغو شد — گزارش دوباره باز شد",
+  Engineering: "مهندسی",
   "Engineering Squad": "تیم مهندسی",
   Enter: "Enter",
   "Enter a new name for this section.": "نام جدیدی برای این بخش وارد کنید.",
@@ -532,6 +535,7 @@ export const FA_PART_2: Record<string, string> = {
   "Finish signing in from the Terminal window, then click Check again to re-check":
     "ورود را از پنجرهٔ ترمینال کامل کنید، سپس برای بررسی دوباره روی «بررسی دوباره» کلیک کنید",
   "Finish voice note": "پایان پیام صوتی",
+  "Fix reconnect backoff jitter": "رفع لرزش backoff در اتصال دوباره",
   Fizz: "Fizz",
   Focus: "تمرکز",
   Follow: "دنبال کردن",
@@ -547,6 +551,8 @@ export const FA_PART_2: Record<string, string> = {
   "Forum posting is not wired in this pass.":
     "ارسال پست در انجمن گفتگو در این مرحله وصل نشده است.",
   "Forum posts": "پست‌های انجمن گفتگو",
+  "Forum threads feel like the right home for slower decisions.":
+    "رشته‌های انجمن جای مناسبی برای تصمیم‌های کندتر هستند.",
   "Forum-style threaded channels for long-form discussions":
     "کانال‌های رشته‌ای به سبک انجمن برای گفتگوهای طولانی",
   Forums: "انجمن‌های گفتگو",
@@ -565,6 +571,7 @@ export const FA_PART_2: Record<string, string> = {
     "پیش‌نمایش اندازهٔ کامل تصویر. برای بستن Escape را بزنید یا بیرون تصویر کلیک کنید. برای بزرگ‌نمایی روی تصویر کلیک کنید.",
   GET: "GET",
   GIFs: "گیف‌ها",
+  "General discussion for everyone": "گفتگوی عمومی برای همه",
   "Generate a password": "تولید گذرواژه",
   "Generate new pairing code": "تولید کد جفت‌سازی جدید",
   "Generating frame thumbnails": "در حال تولید تصویر بندانگشتی فریم‌ها",
@@ -594,6 +601,7 @@ export const FA_PART_2: Record<string, string> = {
   "Group agents together for quick deployment to channels.":
     "ایجنت‌ها را برای استقرار سریع در کانال‌ها گروه‌بندی کنید.",
   "HTTP method": "متد HTTP",
+  "Handle empty clone URLs": "مدیریت نشانی‌های کلون خالی",
   Harness: "هارنس",
   "Harness Log": "گزارش هارنس",
   "Harness default": "پیش‌فرض هارنس",
@@ -726,7 +734,4 @@ export const FA_PART_2: Record<string, string> = {
   "Invite link copied": "پیوند دعوت کپی شد",
   "Invite link or code": "پیوند یا کد دعوت",
   "Invite link or community URL": "پیوند دعوت یا نشانی انجمن",
-  "Invite members.": "اعضا را دعوت کنید.",
-  "Invite settings are unavailable. Relay recovery may still be in progress.":
-    "تنظیمات دعوت در دسترس نیست. ممکن است بازیابی رله هنوز در جریان باشد.",
 };

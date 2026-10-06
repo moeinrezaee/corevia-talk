@@ -33,15 +33,24 @@
 @layer base {
   /*
    * Messages and the composer mix Persian and English in either UI language.
-   * Resolve each block's direction from its own first strong character (like
-   * dir="auto") so an English sentence stays left-to-right with its punctuation
-   * at the end and a Persian one stays right-to-left, whatever the UI direction.
-   * English-only content resolves to left-to-right, so nothing changes there.
+   * Ordering follows each block's own first strong character (so an English
+   * sentence keeps its punctuation at its end and a Persian one reads right to
+   * left), while alignment and list markers follow the UI direction, so the
+   * right-to-left layout is an exact mirror of the left-to-right one.
    */
   :is(.message-markdown, .ProseMirror)
     :is(p, li, h1, h2, h3, h4, h5, h6, blockquote, td, th) {
     unicode-bidi: plaintext;
-    text-align: start;
+  }
+
+  /* The composer has no centered content, so it can align by UI direction
+     directly; rendered messages use the markers set by contentAlignment.ts. */
+  :root[dir="ltr"] .ProseMirror :is(p, h1, h2, h3, h4, h5, h6, blockquote) {
+    text-align: left;
+  }
+
+  :root[dir="rtl"] .ProseMirror :is(p, h1, h2, h3, h4, h5, h6, blockquote) {
+    text-align: right;
   }
 
   :is(input, textarea):not([type="checkbox"], [type="radio"]) {
@@ -112,5 +121,18 @@
       .lucide-redo-2
     ) {
     transform: scaleX(-1);
+  }
+}
+
+@layer base {
+  /* English-first blocks in the Persian UI sit against the right edge too
+     (see latinAlignment.ts). Explicit alignment utilities still win. */
+  :root[dir="rtl"] [data-ltr-text] {
+    text-align: right;
+  }
+
+  /* ...and the mirror case: Persian-first text in the English UI stays left. */
+  :root[dir="ltr"] [data-rtl-text] {
+    text-align: left;
   }
 }

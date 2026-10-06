@@ -1,5 +1,10 @@
 /** Persian translations, keyed by the English UI string. */
 export const FA_PART_5: Record<string, string> = {
+  "The channel history didn't load. Check your connection and try again.":
+    "تاریخچهٔ کانال بارگذاری نشد. اتصال خود را بررسی کنید و دوباره تلاش کنید.",
+  "The complete Buzz community platform.": "پلتفرم کامل انجمن Buzz.",
+  "The download window will open when it’s ready.":
+    "پنجرهٔ دانلود وقتی آماده شد باز می‌شود.",
   "The enforcement action already taken is not reversed — reopening does not un-ban, un-timeout, or restore a deleted message.":
     "اقدام اجرایی انجام‌شده برگردانده نمی‌شود — بازگشایی مسدودیت یا محدودیت زمانی را برنمی‌دارد و پیام حذف‌شده را بازنمی‌گرداند.",
   "The live feed is available for local agents started after this update.":
@@ -156,6 +161,7 @@ export const FA_PART_5: Record<string, string> = {
   "Threads open in a side panel next to the channel":
     "رشته‌ها در یک پنل کناری کنار کانال باز می‌شوند",
   "Threads open over the channel": "رشته‌ها روی کانال باز می‌شوند",
+  "Tighten p-gate checks": "سخت‌گیرانه‌تر کردن بررسی‌های p-gate",
   "Time out": "محدودیت زمانی",
   "Time out author": "محدودیت زمانی برای نویسنده",
   Timeout: "محدودیت زمانی",
@@ -197,6 +203,8 @@ export const FA_PART_5: Record<string, string> = {
   "Try camera again": "دوربین را دوباره امتحان کنید",
   "Try telling this agent to remember something for next time.":
     "به این ایجنت بگویید چیزی را برای دفعهٔ بعد به یاد بسپارد.",
+  "Trying a lighter forum layout for longer-form notes.":
+    "در حال امتحان چیدمان سبک‌تر انجمن برای یادداشت‌های بلندتر.",
   "Turn it on to let it run immediately, or keep it off until you’re ready.":
     "آن را روشن کنید تا بلافاصله اجرا شود، یا تا آماده شدن خاموش نگه دارید.",
   "Turn off": "خاموش کردن",
@@ -263,6 +271,7 @@ export const FA_PART_5: Record<string, string> = {
   "Update how your name, avatar, and bio appear across Buzz.":
     "نحوهٔ نمایش نام، آواتار و بیوگرافی شما در Buzz را به‌روز کنید.",
   "Update now": "الان به‌روزرسانی کن",
+  "Update onboarding copy": "به‌روزرسانی متن آغازین",
   "Update review": "به‌روزرسانی بازبینی",
   "Update status": "به‌روزرسانی وضعیت",
   "Update this channel template configuration.":

@@ -106,9 +106,16 @@
 .rich-text-composer .tiptap p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   float: left;
+  text-align: left;
   color: hsl(var(--muted-foreground) / 0.65);
   pointer-events: none;
   height: 0;
+}
+
+/* The placeholder sits on the same side as the text: right in the Persian UI. */
+:root[dir="rtl"] .rich-text-composer .tiptap p.is-editor-empty:first-child::before {
+  float: right;
+  text-align: right;
 }
 
 .pulse-composer

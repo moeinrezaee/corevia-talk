@@ -93,3 +93,31 @@
     text-align: left;
   }
 }
+
+/* The select chevron sits on the end side: left in the right-to-left page. */
+:root[dir="rtl"] select {
+  background-position: left 1rem center;
+}
+:root[dir="rtl"] .feedback-status select {
+  background-position: left 0.7rem center;
+}
+
+/*
+ * Persian titles are drawn one step heavier than English ones: Peyda's
+ * Regular is light at display sizes and next to Latin Inter. Negative tracking
+ * and very tight leading, tuned for Latin, break the joins between Persian
+ * letters, so they are reset here.
+ */
+:root[lang="fa"] h1 {
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+:root[lang="fa"] :is(h2, h3, .brand, .page-title > p, .record-primary strong, .detail-heading h2, .state h2) {
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+:root[lang="fa"] .brand b {
+  font-weight: 600;
+}

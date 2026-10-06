@@ -682,6 +682,9 @@ export const MessageRow = React.memo(
         />
       </MessageHeaderRow>
     );
+    const isOwnMessage =
+      !!currentPubkey &&
+      message.pubkey?.toLowerCase() === currentPubkey.toLowerCase();
     const bodyContainerClass = isDisplayedAsContinuation
       ? "mt-0"
       : bodyOffsetClass;
@@ -904,6 +907,8 @@ export const MessageRow = React.memo(
                 ? "mx-1 px-2"
                 : "px-2",
             "flex gap-2.5",
+            // Your own messages sit on the opposite side from everyone else's.
+            isOwnMessage && "flex-row-reverse",
             isDisplayedAsContinuation ? "items-center" : "items-start",
             hasActiveReminder ? "bg-blue-500/10" : "",
             highlighted
@@ -911,6 +916,7 @@ export const MessageRow = React.memo(
               : "",
           )}
           data-message-id={message.id}
+          data-own={isOwnMessage ? "true" : undefined}
           data-testid="message-row"
           onAnimationEnd={handleEntranceAnimationEnd}
           ref={articleRef}
@@ -918,7 +924,12 @@ export const MessageRow = React.memo(
           {isThreadReplyLayout ? (
             <>
               {avatarGutterNode}
-              <div className="flex min-w-0 flex-1 flex-col">
+              <div
+                className={cn(
+                  "flex min-w-0 flex-1 flex-col",
+                  isOwnMessage && "items-end",
+                )}
+              >
                 {headerNode}
                 <div className={bodyContainerClass} data-testid="message-body">
                   {messageBodyNode}
@@ -928,7 +939,12 @@ export const MessageRow = React.memo(
           ) : (
             <>
               {avatarGutterNode}
-              <div className="flex min-w-0 flex-1 flex-col">
+              <div
+                className={cn(
+                  "flex min-w-0 flex-1 flex-col",
+                  isOwnMessage && "items-end",
+                )}
+              >
                 {headerNode}
                 <div className={bodyContainerClass} data-testid="message-body">
                   {messageBodyNode}

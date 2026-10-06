@@ -405,3 +405,23 @@
   border-start-start-radius: 0.375rem;
   background-color: color-mix(in srgb, currentColor 6%, transparent);
 }
+
+/*
+ * Your own bubbles: tight corner on the outer edge and a blue wash, clearly
+ * apart from the neutral bubbles of the other person. It is a wash over the
+ * surface (not a solid fill), so text keeps its contrast and the tint sits
+ * naturally on light, dark and tinted community backgrounds.
+ */
+[data-own="true"]
+  [data-testid="message-body"]
+  .message-markdown:not(.message-markdown .message-markdown) {
+  border-start-start-radius: 1.125rem;
+  border-start-end-radius: 0.375rem;
+  background-color: color-mix(in srgb, hsl(214 90% 52%) 17%, transparent);
+}
+
+.dark [data-own="true"]
+  [data-testid="message-body"]
+  .message-markdown:not(.message-markdown .message-markdown) {
+  background-color: color-mix(in srgb, hsl(214 90% 60%) 30%, transparent);
+}

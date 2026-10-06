@@ -1,7 +1,8 @@
 @layer base {
   :root {
     --buzz-font-sans:
-      "Inter Variable", Inter, "Avenir Next", "Segoe UI", sans-serif;
+      "Inter Variable", Inter, "Peyda Script", "Avenir Next", "Segoe UI",
+      sans-serif;
   }
 
   :root {

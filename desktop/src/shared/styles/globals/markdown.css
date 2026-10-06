@@ -402,8 +402,17 @@
   max-width: min(100%, 44rem);
   padding: 0.5rem 0.875rem;
   border-radius: 1.125rem;
-  border-start-end-radius: 0.375rem;
+  /* The tight corner points at the avatar, which sits on the start side by
+     default and on the end side for the other person's rows (data-avatar-end). */
+  border-start-start-radius: 0.375rem;
   background-color: color-mix(in srgb, currentColor 6%, transparent);
+}
+
+[data-avatar-end="true"]
+  [data-testid="message-body"]
+  .message-markdown:not(.message-markdown .message-markdown) {
+  border-start-start-radius: 1.125rem;
+  border-start-end-radius: 0.375rem;
 }
 
 /*
@@ -415,8 +424,6 @@
 [data-own="true"]
   [data-testid="message-body"]
   .message-markdown:not(.message-markdown .message-markdown) {
-  border-start-start-radius: 0.375rem;
-  border-start-end-radius: 1.125rem;
   background-color: color-mix(in srgb, hsl(214 90% 52%) 12%, transparent);
 }
 

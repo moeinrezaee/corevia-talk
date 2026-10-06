@@ -942,6 +942,7 @@ export const MessageRow = React.memo(
           )}
           data-message-id={message.id}
           data-own={isOwnMessage ? "true" : undefined}
+          data-avatar-end={!isOwnMessage ? "true" : undefined}
           data-testid="message-row"
           onAnimationEnd={handleEntranceAnimationEnd}
           ref={articleRef}

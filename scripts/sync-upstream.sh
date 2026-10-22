@@ -68,7 +68,7 @@ echo "==> $BR -> $(git rev-parse --short "$COMMIT")"
 
 if [ "$BOOTSTRAP" = 1 ]; then
   # First run: the current branch already contains this upstream state.
-  git merge -s ours --no-edit -m "chore: record upstream baseline $TIP" "$BR"
+  git merge -s ours --allow-unrelated-histories --no-edit -m "chore: record upstream baseline $TIP" "$BR"
   echo "Baseline recorded. Future runs will merge upstream changes."
 else
   echo "==> Merging $BR into $(git branch --show-current)"

@@ -230,9 +230,7 @@ function ReportDetail({ id, authMode }: { id: string; authMode: AuthMode }) {
                       </div>
                     ) : (
                       <p className="message-unavailable">
-                        {tl(
-                          "Message content is unavailable. It may have expired or been removed from event storage.",
-                        )}
+                        Message content is unavailable.
                       </p>
                     )}
                   </dd>

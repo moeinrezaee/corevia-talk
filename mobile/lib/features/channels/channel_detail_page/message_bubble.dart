@@ -3,7 +3,12 @@ part of '../channel_detail_page.dart';
 class _MessageBubble extends HookConsumerWidget {
   final TimelineMessage message;
   final bool showAuthor;
+  final bool typingHandoff;
+  final bool showAvatar;
+  final bool startsDay;
+  final bool endsDay;
   final bool hasReplies;
+  final Widget? replyFooter;
   final Map<String, String> channelNames;
   final String currentChannelId;
   final String? currentPubkey;
@@ -16,7 +21,12 @@ class _MessageBubble extends HookConsumerWidget {
   const _MessageBubble({
     required this.message,
     required this.showAuthor,
+    this.typingHandoff = false,
+    this.showAvatar = true,
+    this.startsDay = false,
+    this.endsDay = false,
     required this.hasReplies,
+    this.replyFooter,
     required this.channelNames,
     required this.currentChannelId,
     required this.currentPubkey,
@@ -370,6 +380,23 @@ class _MessageBubble extends HookConsumerWidget {
                       ),
                     ),
                   ),
+                if (replyFooter != null)
+                  Padding(
+                    padding: EdgeInsetsDirectional.only(
+                      start: atEnd
+                          ? 0
+                          : messageAvatarSize + messageAvatarContentGap,
+                      end: atEnd
+                          ? messageAvatarSize + messageAvatarContentGap
+                          : 0,
+                    ),
+                    child: Align(
+                      alignment: atEnd
+                          ? AlignmentDirectional.centerEnd
+                          : AlignmentDirectional.centerStart,
+                      child: replyFooter!,
+                    ),
+                  ),
               ],
             ),
           ),
@@ -434,8 +461,8 @@ class _UserAvatar extends StatelessWidget {
 }
 
 IconData channelIcon(Channel channel) {
-  if (channel.isDm) return LucideIcons.messagesSquare;
-  if (channel.isPrivate) return LucideIcons.lock;
-  if (channel.isForum) return LucideIcons.messageSquareText;
-  return LucideIcons.hash;
+  if (channel.isDm) return BuzzIcons.messagesSquare;
+  if (channel.isPrivate) return BuzzIcons.lock;
+  if (channel.isForum) return BuzzIcons.messageSquareText;
+  return BuzzIcons.hash;
 }

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import 'message_media.dart';
 import '../../shared/i18n/app_language.dart';
+import 'message_content/link_normalizer.dart';
 
 /// Image metadata shared by carousel rendering and loading projection.
 @immutable
@@ -48,15 +49,13 @@ TrailingImageGallery? extractTrailingImageGallery(
     if (mediaKind != MessageMediaKind.image) {
       break;
     }
-    final markdownLabel = match.group(1)?.trim();
+    final markdownLabel = decodeMarkdownLabelSyntax(match.group(1)!).trim();
     items.add(
       MessageGalleryItem(
         url: url,
         semanticLabel:
             imeta?.alt ??
-            (markdownLabel?.isNotEmpty == true
-                ? markdownLabel!
-                : tl('Message image')),
+            (markdownLabel.isNotEmpty ? markdownLabel : tl('Message image')),
         aspectRatio: imeta?.aspectRatio,
       ),
     );

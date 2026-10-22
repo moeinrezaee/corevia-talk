@@ -795,6 +795,7 @@ const Map<String, String> faMessages = {
   'Scan the QR code from your desktop app\nor paste a pairing code to connect.':
       'کد QR را از برنامهٔ دسکتاپ اسکن کنید\nیا برای اتصال یک کد جفت‌سازی بچسبانید.',
   'Search': 'جستجو',
+  'Close search': 'بستن جستجو',
   'Search emoji': 'جستجوی ایموجی',
   'Search for a person': 'جستجوی یک فرد',
   'Search for people or agents': 'جستجوی افراد یا ایجنت‌ها',
@@ -1111,6 +1112,8 @@ const Map<String, String> faMessages = {
   '{0} update': '{0} به‌روزرسانی',
   '{0} updates': '{0} به‌روزرسانی',
   '{0} was added by {1}': '{0} را {1} اضافه کرد',
+  'View thread: {0}': 'مشاهده رشته: {0}',
+  '{0} added {1} to the channel': '{0} «{1}» را به کانال اضافه کرد',
   '{0} {1}': '{0} {1}',
   '{0} {1} of {2}': '{0} {1} از {2}',
   '{0}% zoom': 'بزرگ‌نمایی {0}٪',

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:buzz/shared/theme/buzz_icons.dart';
 
 import '../../shared/relay/relay_closed_policy.dart';
 import '../../shared/theme/theme.dart';
@@ -76,7 +76,7 @@ class ForumPostsView extends HookConsumerWidget {
                     onPressed: () => isComposing.value = true,
                     tooltip: tl('New post'),
                     shape: const CircleBorder(),
-                    child: const Icon(LucideIcons.plus),
+                    child: const Icon(BuzzIcons.plus),
                   )
                 : null,
             body: postsAsync.when(
@@ -149,7 +149,7 @@ class ForumPostsView extends HookConsumerWidget {
               padding: const EdgeInsetsDirectional.only(end: Grid.xxs),
               child: IconButton(
                 onPressed: () => isComposing.value = false,
-                icon: const Icon(LucideIcons.x, size: 18),
+                icon: const Icon(BuzzIcons.x, size: 18),
                 tooltip: tl('Dismiss'),
                 visualDensity: VisualDensity.compact,
               ),
@@ -208,7 +208,7 @@ class _EmptyState extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              LucideIcons.messageSquareText,
+              BuzzIcons.messageSquareText,
               size: Grid.xl,
               color: context.colors.onSurfaceVariant,
             ),

@@ -6,6 +6,9 @@ class _ThreadMessage extends HookConsumerWidget {
   final String channelId;
   final String? currentPubkey;
   final bool showAuthor;
+  final bool showAvatar;
+  final bool startsDay;
+  final bool endsDay;
   final bool isHighlighted;
   final List<TimelineMessage>? allMessages;
   final bool isMember;
@@ -23,6 +26,9 @@ class _ThreadMessage extends HookConsumerWidget {
     required this.channelId,
     required this.currentPubkey,
     required this.showAuthor,
+    this.showAvatar = true,
+    this.startsDay = false,
+    this.endsDay = false,
     this.isHighlighted = false,
     this.allMessages,
     this.isMember = false,

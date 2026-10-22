@@ -216,7 +216,7 @@ class _CameraPlaceholder extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Icon(
-                      LucideIcons.cameraOff,
+                      BuzzIcons.cameraOff,
                       color: Colors.white,
                       size: 28,
                     ),
@@ -310,7 +310,7 @@ class _CameraCloseButton extends StatelessWidget {
           foregroundColor: Colors.white,
         ),
         icon: BidiFlip(
-          child: Icon(LucideIcons.arrowLeft, size: emphasized ? 24 : 18),
+          child: Icon(BuzzIcons.arrowLeft, size: 24),
         ),
       ),
     );

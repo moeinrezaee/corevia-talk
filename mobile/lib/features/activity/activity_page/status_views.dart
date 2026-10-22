@@ -118,27 +118,24 @@ class _EmptyFilterState extends StatelessWidget {
   Widget build(BuildContext context) {
     if (unreadOnly) {
       return _EmptySurface(
-        icon: LucideIcons.mailOpen,
+        icon: BuzzIcons.mailOpen,
         message: tl('No unread messages'),
         detail: tl('Turn off the unread filter to see read messages.'),
       );
     }
     final (icon, message) = switch (filter) {
-      InboxFilter.mention => (LucideIcons.atSign, tl('No mentions yet')),
-      InboxFilter.thread => (
-        LucideIcons.messageSquare,
-        tl('No thread replies yet'),
-      ),
+      InboxFilter.mention => (BuzzIcons.atSign, tl('No mentions yet')),
+      InboxFilter.thread => (BuzzIcons.messageSquare, tl('No thread replies yet')),
       InboxFilter.needsAction => (
-        LucideIcons.circleAlert,
+        BuzzIcons.circleAlert,
         tl('Nothing needs your action'),
       ),
       InboxFilter.activity => (
-        LucideIcons.activity,
+        BuzzIcons.activity,
         tl('No recent channel activity'),
       ),
-      InboxFilter.agentActivity => (LucideIcons.bot, tl('No agent updates')),
-      _ => (LucideIcons.bell, tl('No activity yet')),
+      InboxFilter.agentActivity => (BuzzIcons.bot, tl('No agent updates')),
+      _ => (BuzzIcons.bell, tl('No activity yet')),
     };
     return _EmptySurface(icon: icon, message: message);
   }
@@ -156,21 +153,21 @@ class _ErrorView extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            LucideIcons.triangleAlert,
+            BuzzIcons.triangleAlert,
             size: Grid.lg,
             color: context.colors.error,
           ),
-          const SizedBox(height: Grid.xxs),
+          SizedBox(height: Grid.xxs),
           Text(
             tl('Failed to load activity'),
             style: context.textTheme.bodyMedium?.copyWith(
               color: context.colors.onSurfaceVariant,
             ),
           ),
-          const SizedBox(height: Grid.xs),
+          SizedBox(height: Grid.xs),
           FilledButton.icon(
             onPressed: () => unawaited(onRetry()),
-            icon: const Icon(LucideIcons.refreshCcw, size: 16),
+            icon: Icon(BuzzIcons.refreshCcw, size: 16),
             label: Text(tl('Retry')),
           ),
         ],

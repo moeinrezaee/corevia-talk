@@ -23,117 +23,47 @@ class _NestedThreadSummaryRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userCache = ref.watch(userCacheProvider);
-
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (_) => ThreadDetailPage(
-              threadHead: replyMessage,
-              allMessages: allMessages,
-              channelId: channelId,
-              currentPubkey: currentPubkey,
-              isMember: isMember,
-              isArchived: isArchived,
-            ),
+    final ownMessage =
+        currentPubkey?.toLowerCase() == replyMessage.pubkey.toLowerCase();
+    // Own messages sit on the UI start side, everyone else's on the end side.
+    final atEnd = !ownMessage;
+    return Align(
+      alignment: atEnd
+          ? AlignmentDirectional.centerEnd
+          : AlignmentDirectional.centerStart,
+      child: Directionality(
+        textDirection: Directionality.of(context),
+        child: Padding(
+          padding: EdgeInsetsDirectional.only(
+            start: atEnd
+                ? 0
+                : messageAvatarSize + messageAvatarContentGap + Grid.xxs,
+            end: atEnd
+                ? messageAvatarSize + messageAvatarContentGap + Grid.xxs
+                : 0,
+            bottom: Grid.xxs,
           ),
-        );
-      },
-      child: Builder(
-        builder: (context) {
-          final atEnd =
-              currentPubkey == null ||
-              !(currentPubkey!.toLowerCase() ==
-                  replyMessage.pubkey.toLowerCase());
-          return Align(
-            alignment: atEnd
-                ? AlignmentDirectional.centerEnd
-                : AlignmentDirectional.centerStart,
-            child: Padding(
-              key: ValueKey('nested-thread-summary-${replyMessage.id}'),
-              padding: EdgeInsetsDirectional.only(
-                start: atEnd ? 0 : messageAvatarSize + messageAvatarContentGap,
-                end: atEnd ? messageAvatarSize + messageAvatarContentGap : 0,
-                top: Grid.half,
-                bottom: Grid.xs,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Stacked participant avatars.
-                  SizedBox(
-                    width:
-                        32.0 +
-                        (summary.participantPubkeys.length - 1).clamp(0, 2) *
-                            20.0,
-                    height: 32,
-                    child: Stack(
-                      children: [
-                        for (
-                          var i = 0;
-                          i < summary.participantPubkeys.length;
-                          i++
-                        )
-                          PositionedDirectional(
-                            start: i * 20.0,
-                            child: SmallAvatar(
-                              pubkey: summary.participantPubkeys[i],
-                              userCache: userCache,
-                              size: 32,
-                            ),
-                          ),
-                      ],
-                    ),
+          child: ReplySummaryLink(
+            key: ValueKey('nested-thread-summary-${replyMessage.id}'),
+            summary: summary,
+            mirrored: atEnd,
+            hasReactions: replyMessage.reactions.isNotEmpty,
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => ThreadDetailPage(
+                    threadHead: replyMessage,
+                    allMessages: allMessages,
+                    channelId: channelId,
+                    currentPubkey: currentPubkey,
+                    isMember: isMember,
+                    isArchived: isArchived,
                   ),
-                  const SizedBox(width: Grid.xxs),
-                  Flexible(
-                    child: Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: summary.isCountPending
-                                ? tl('Replies')
-                                : tlt(
-                                    summary.replyCount == 1
-                                        ? '{0} reply'
-                                        : '{0} replies',
-                                    [
-                                      '${summary.replyCount}${summary.isLowerBound ? '+' : ''}',
-                                    ],
-                                  ),
-                            style: replyPreviewTextStyle.copyWith(
-                              color: context.colors.primary,
-                            ),
-                          ),
-                          if (summary.lastReplyAt case final lastReplyAt?) ...[
-                            TextSpan(
-                              text: ' · ',
-                              style: replyPreviewTextStyle.copyWith(
-                                color: context.colors.onSurfaceVariant
-                                    .withValues(alpha: 0.5),
-                              ),
-                            ),
-                            TextSpan(
-                              text: tlt('last reply {0}', [
-                                formatThreadSummaryLastReplyTime(lastReplyAt),
-                              ]),
-                              style: replyPreviewTextStyle.copyWith(
-                                color: context.colors.onSurfaceVariant,
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }

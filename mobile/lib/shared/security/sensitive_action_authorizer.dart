@@ -26,7 +26,7 @@ class LocalSensitiveActionAuthorizer implements SensitiveActionAuthorizer {
   Future<DeviceAuthResult> authorizeIdentityAction({
     required bool biometricOnly,
   }) => _authorize(
-    localizedReason: tl('Confirm sending your Buzz identity to desktop'),
+    localizedReason: 'Confirm exporting your Buzz identity',
     biometricOnly: biometricOnly,
   );
 
@@ -45,7 +45,7 @@ class LocalSensitiveActionAuthorizer implements SensitiveActionAuthorizer {
       final availableBiometrics = await _authentication
           .getAvailableBiometrics();
       if (availableBiometrics.isEmpty) return DeviceAuthResult.unavailable;
-      return _authorize(
+      return await _authorize(
         localizedReason: tl('Enable biometrics for secure actions'),
         biometricOnly: true,
       );

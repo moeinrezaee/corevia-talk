@@ -120,8 +120,8 @@ class _SasVerificationView extends HookConsumerWidget {
         if (showProtection) ...[
           Icon(
             biometricLabel == tl('Use Face ID')
-                ? LucideIcons.scanFace
-                : LucideIcons.fingerprint,
+                ? BuzzIcons.scanFace
+                : BuzzIcons.fingerprint,
             size: 64,
             color: context._onboardingInk,
           ),
@@ -146,11 +146,7 @@ class _SasVerificationView extends HookConsumerWidget {
             ),
           ),
         ] else if (codeAccepted.value) ...[
-          Icon(
-            LucideIcons.shieldCheck,
-            size: 64,
-            color: context._onboardingInk,
-          ),
+          Icon(BuzzIcons.shieldCheck, size: 64, color: context._onboardingInk),
           const SizedBox(height: Grid.sm),
           Text(tl('Code confirmed'), style: context.textTheme.headlineSmall),
         ] else ...[

@@ -17,6 +17,7 @@ import '../i18n/app_language.dart';
 import 'media_auth.dart';
 import 'mp4_fast_start.dart';
 import 'relay_provider.dart';
+import '../hosted/hosted_relay_auth.dart';
 
 part 'media_upload/platform_bindings.dart';
 part 'media_upload/helpers.dart';

@@ -13,6 +13,9 @@ class MessageAuthorMeta extends StatelessWidget {
   /// Timestamp label shown after the author metadata.
   final String timestamp;
 
+  /// Whether metadata includes the timestamp alongside the author.
+  final bool showTimestamp;
+
   /// Color applied to [displayName].
   final Color nameColor;
 
@@ -48,6 +51,12 @@ class MessageAuthorMeta extends StatelessWidget {
   /// Base text style for [timestamp], with [metadataColor] applied.
   final TextStyle timestampStyle;
 
+  /// Mirrors metadata order without changing text reading direction.
+  final bool reversed;
+
+  /// Positions the metadata within the available message width.
+  final MainAxisAlignment alignment;
+
   /// Creates an inline author row with optional username and tap handling.
   const MessageAuthorMeta({
     super.key,
@@ -56,6 +65,9 @@ class MessageAuthorMeta extends StatelessWidget {
     required this.nameColor,
     required this.metadataColor,
     this.username,
+    this.alignment = MainAxisAlignment.start,
+    this.reversed = false,
+    this.showTimestamp = true,
     this.onAuthorTap,
     this.displayNameKey,
     this.usernameKey,
@@ -123,24 +135,26 @@ class MessageAuthorMeta extends StatelessWidget {
               ),
             ),
           ],
-          const SizedBox(width: Grid.xxs),
-          ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: metadataMaxWidth),
-            child: Text(
-              timestamp,
-              key: timestampKey,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: resolvedTimestampStyle,
+          if (showTimestamp) ...[
+            const SizedBox(width: Grid.xxs),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: metadataMaxWidth),
+              child: Text(
+                timestamp,
+                key: timestampKey,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: resolvedTimestampStyle,
+              ),
             ),
-          ),
+          ],
         ];
         final header = Row(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: alignment,
           crossAxisAlignment: CrossAxisAlignment.center,
           // Mirrored headers list the items from the avatar outwards, which
           // is the reverse of the reading order on the end side.
-          children: mirrored ? items.reversed.toList() : items,
+          children: (mirrored != reversed) ? items.reversed.toList() : items,
         );
         if (role == null || role.isEmpty) return header;
         return Column(

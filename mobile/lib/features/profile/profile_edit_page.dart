@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:buzz/shared/theme/buzz_icons.dart';
 
 import '../../shared/profile/user_profile.dart';
 import '../../shared/relay/relay.dart';
@@ -315,7 +315,7 @@ class ProfileEditPage extends HookConsumerWidget {
                             ? null
                             : () => unawaited(closeAvatarEditor()),
                         icon: const BidiFlip(
-                          child: Icon(LucideIcons.arrowLeft),
+                          child: Icon(BuzzIcons.arrowLeft),
                         ),
                       )
               : null,
@@ -545,7 +545,7 @@ class _ProfilePhotoEditor extends ConsumerWidget {
           key: const ValueKey('profile-edit-avatar'),
           imageUrl: profile?.avatarUrl,
           radius: ProfileEditPage._avatarRadius,
-          backgroundColor: context.colors.primaryContainer,
+          backgroundColor: context.controlSurface,
           loadingImage: activeHandoff == null
               ? null
               : MemoryImage(activeHandoff.animation),
@@ -634,7 +634,7 @@ class _EditChevron extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BidiFlip(
     child: Icon(
-      LucideIcons.chevronRight,
+      BuzzIcons.chevronRight,
       size: 18,
       color: context.colors.onSurfaceVariant,
     ),

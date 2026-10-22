@@ -29,7 +29,7 @@ class _MediaViewerBottomControls extends StatelessWidget {
         children: [
           _MediaViewerCircleButton(
             key: const ValueKey('message-media-image-viewer-reply-thread'),
-            icon: LucideIcons.messageSquareReply,
+            icon: BuzzIcons.messageSquareReply,
             tooltip: tl('Reply in thread'),
             onPressed: onReply,
           ),
@@ -55,7 +55,7 @@ class _MediaViewerBottomControls extends StatelessWidget {
           const SizedBox(width: Grid.xxs),
           _MediaViewerCircleButton(
             key: const ValueKey('message-media-image-viewer-more-actions'),
-            icon: LucideIcons.ellipsis,
+            icon: BuzzIcons.ellipsis,
             tooltip: tl('More image actions'),
             onPressed: onMore,
           ),
@@ -83,9 +83,9 @@ class _MediaViewerCircleButton extends StatelessWidget {
       return Theme(
         data: ThemeData.dark(),
         child: IosGlassNavigationButton(
-          icon: icon == LucideIcons.x
+          icon: icon == BuzzIcons.x
               ? IosGlassNavigationIcon.close
-              : icon == LucideIcons.ellipsis
+              : icon == BuzzIcons.ellipsis
               ? IosGlassNavigationIcon.more
               : IosGlassNavigationIcon.reply,
           semanticLabel: tooltip,
@@ -107,7 +107,7 @@ class _MediaViewerCircleButton extends StatelessWidget {
               child: IconButton(
                 onPressed: onPressed,
                 tooltip: tooltip,
-                icon: Icon(icon, color: Colors.white, size: 20),
+                icon: Icon(icon, color: Colors.white, size: 24),
               ),
             ),
     );
@@ -135,7 +135,7 @@ class _MediaViewerCloseButton extends StatelessWidget {
       );
     }
     return _MediaViewerCircleButton(
-      icon: LucideIcons.x,
+      icon: BuzzIcons.x,
       tooltip: tooltip,
       onPressed: onPressed,
     );

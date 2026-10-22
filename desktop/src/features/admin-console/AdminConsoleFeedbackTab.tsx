@@ -23,6 +23,7 @@ import {
   type AdminFeedbackStatus,
   type AdminFeedbackSummaryDto,
 } from "./api";
+import { CommunityBadge } from "./AdminConsoleCommunityBadge";
 import {
   type AsyncState,
   type AttachmentMeta,
@@ -359,12 +360,15 @@ function FeedbackFields({ data }: { data: AdminFeedbackDto }) {
       className="space-y-1.5 rounded-md border border-border/60 px-3 py-2.5"
       data-testid="feedback-detail-fields"
     >
-      <DetailRow label={tl("ID")} value={data.id} mono />
-      <DetailRow label={tl("Body")} value={data.body} />
-      <DetailRow label={tl("Submitter")} value={data.submitterPubkey} mono />
-      <DetailRow label={tl("Category")} value={data.category ?? null} />
-      <DetailRow label={tl("Community")} value={data.communityId} mono />
-      <DetailRow label={tl("Host")} value={data.communityHost} />
+      <DetailRow label="ID" value={data.id} mono />
+      <DetailRow label="Body" value={data.body} />
+      <DetailRow label="Submitter" value={data.submitterPubkey} mono />
+      <DetailRow label="Category" value={data.category ?? null} />
+      <DetailRow label="Community" value={data.communityId} mono />
+      <div className="flex items-center gap-2 text-xs">
+        <span className="text-muted-foreground">Host</span>
+        <CommunityBadge host={data.communityHost} id={data.communityId} />
+      </div>
       <DetailRow label={tl("Event ID")} value={data.eventId} mono />
       <DetailRow
         label={tl("Event created")}

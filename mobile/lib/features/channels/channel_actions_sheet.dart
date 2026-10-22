@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:buzz/shared/theme/buzz_icons.dart';
 
 import '../../shared/clipboard_utils.dart';
 import '../../shared/identity_names/identity_names_provider.dart';
@@ -20,7 +20,7 @@ import '../../shared/widgets/buzz_loading_indicator.dart';
 import '../../shared/widgets/frosted_app_bar.dart';
 import '../../shared/widgets/frosted_scaffold.dart';
 import '../../shared/widgets/ios_glass_navigation_button.dart';
-import '../../shared/widgets/lucide_star_icon.dart';
+import '../../shared/widgets/tabler_star_icon.dart';
 import '../../shared/widgets/modal_presentation.dart';
 import 'channel.dart';
 import 'add_members_sheet.dart';
@@ -180,13 +180,13 @@ class ChannelActionsSheet extends HookConsumerWidget {
                     }
                   },
                 ),
-                const SizedBox(height: Grid.xs),
+                SizedBox(height: Grid.xs),
               ],
               SheetActionSection(
                 children: [
                   if (!channel.isDm)
                     ListTile(
-                      leading: const Icon(LucideIcons.folderInput),
+                      leading: Icon(BuzzIcons.folderInput),
                       title: Text(tl('Move to section…')),
                       onTap: () async {
                         final pageContext = Navigator.of(
@@ -203,9 +203,7 @@ class ChannelActionsSheet extends HookConsumerWidget {
                       },
                     ),
                   ListTile(
-                    leading: Icon(
-                      isMuted ? LucideIcons.bell : LucideIcons.bellOff,
-                    ),
+                    leading: Icon(isMuted ? BuzzIcons.bell : BuzzIcons.bellOff),
                     title: Text(
                       isMuted ? tl('Unmute channel') : tl('Mute channel'),
                     ),
@@ -219,29 +217,17 @@ class ChannelActionsSheet extends HookConsumerWidget {
                   ),
                   if (!channel.isDm)
                     ListTile(
-                      leading: const Icon(LucideIcons.settings),
+                      leading: Icon(BuzzIcons.settings),
                       title: Text(tl('Manage channel')),
                       onTap: () async {
-                        final shouldClose =
-                            await showBuzzModalBottomSheet<bool>(
-                              context: context,
-                              title: tl('Manage channel'),
-                              isScrollControlled: true,
-                              showDragHandle: true,
-                              constraints: BoxConstraints(
-                                maxWidth: 640,
-                                maxHeight:
-                                    MediaQuery.sizeOf(context).height * 0.9,
-                              ),
-                              builder: (_) => ManageChannelSheet(
-                                channel: currentChannel,
-                                canEditDetails:
-                                    canManageLifecycle &&
-                                    !currentChannel.isArchived,
-                                onChannelUpdated: (updated) =>
-                                    displayedChannel.value = updated,
-                              ),
-                            );
+                        final shouldClose = await showManageChannelSheet(
+                          context: context,
+                          channel: currentChannel,
+                          canEditDetails:
+                              canManageLifecycle && !currentChannel.isArchived,
+                          onChannelUpdated: (updated) =>
+                              displayedChannel.value = updated,
+                        );
                         if (shouldClose == true && context.mounted) {
                           Navigator.of(context).pop(true);
                         }
@@ -252,7 +238,7 @@ class ChannelActionsSheet extends HookConsumerWidget {
               SheetActionSection(
                 children: [
                   ListTile(
-                    leading: const Icon(LucideIcons.copy),
+                    leading: Icon(BuzzIcons.copy),
                     title: Text(tl('Copy channel name')),
                     onTap: () {
                       close();
@@ -264,7 +250,7 @@ class ChannelActionsSheet extends HookConsumerWidget {
                     },
                   ),
                   ListTile(
-                    leading: const Icon(LucideIcons.hash),
+                    leading: Icon(BuzzIcons.hash),
                     title: Text(tl('Copy channel ID')),
                     onTap: () {
                       close();
@@ -282,7 +268,7 @@ class ChannelActionsSheet extends HookConsumerWidget {
                   children: [
                     if (channel.isMember && !channel.isArchived)
                       _ActionTile(
-                        icon: LucideIcons.logOut,
+                        icon: BuzzIcons.logOut,
                         label: tl('Leave channel'),
                         destructive: true,
                         onTap: () => _confirmAndRun(
@@ -310,13 +296,13 @@ class ChannelActionsSheet extends HookConsumerWidget {
                     else if (lifecycleCapabilitiesUnavailable)
                       ListTile(
                         enabled: false,
-                        leading: Icon(LucideIcons.triangleAlert),
+                        leading: Icon(BuzzIcons.triangleAlert),
                         title: Text(tl('Channel actions unavailable')),
                       )
                     else ...[
                       if (canArchive)
                         _ActionTile(
-                          icon: LucideIcons.archive,
+                          icon: BuzzIcons.archive,
                           label: tl('Archive channel'),
                           onTap: () => _confirmAndRun(
                             context,
@@ -331,7 +317,7 @@ class ChannelActionsSheet extends HookConsumerWidget {
                         ),
                       if (canUnarchive)
                         _ActionTile(
-                          icon: LucideIcons.archiveRestore,
+                          icon: BuzzIcons.archiveRestore,
                           label: tl('Unarchive channel'),
                           onTap: () => _confirmAndRun(
                             context,
@@ -348,7 +334,7 @@ class ChannelActionsSheet extends HookConsumerWidget {
                         ),
                       if (canDelete)
                         _ActionTile(
-                          icon: LucideIcons.trash2,
+                          icon: BuzzIcons.trash2,
                           label: tl('Delete channel'),
                           destructive: true,
                           onTap: () => _confirmAndRun(
@@ -393,15 +379,19 @@ class _ChannelQuickActionsRow extends StatelessWidget {
     children: [
       Expanded(
         child: _ChannelQuickAction(
-          icon: isStarred ? LucideIcons.starOff : LucideIcons.star,
+          icon: BuzzIcons.star,
+          iconWidget: TablerStarIcon(
+            color: context.colors.onSurface,
+            filled: isStarred,
+          ),
           label: isStarred ? tl('Unstar') : tl('Star'),
           onTap: onToggleStar,
         ),
       ),
-      const SizedBox(width: Grid.twelve),
+      SizedBox(width: Grid.twelve),
       Expanded(
         child: _ChannelQuickAction(
-          icon: isUnread ? LucideIcons.checkCheck : LucideIcons.circleDot,
+          icon: isUnread ? BuzzIcons.checkCheck : BuzzIcons.circleDot,
           label: isUnread ? tl('Mark Read') : tl('Mark Unread'),
           onTap: onToggleRead,
         ),
@@ -413,11 +403,13 @@ class _ChannelQuickActionsRow extends StatelessWidget {
 class _ChannelQuickAction extends StatelessWidget {
   const _ChannelQuickAction({
     required this.icon,
+    this.iconWidget,
     required this.label,
     required this.onTap,
   });
 
   final IconData icon;
+  final Widget? iconWidget;
   final String label;
   final VoidCallback onTap;
 
@@ -441,7 +433,8 @@ class _ChannelQuickAction extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 22, color: context.colors.onSurface),
+              iconWidget ??
+                  Icon(icon, size: 22, color: context.colors.onSurface),
               const SizedBox(height: Grid.xxs),
               Text(
                 label,
@@ -553,11 +546,11 @@ Future<void> _showMoveSectionSheet(
             children: [
               for (final section in sections)
                 ListTile(
-                  leading: const Icon(LucideIcons.folder),
+                  leading: const Icon(BuzzIcons.folder),
                   title: Text(section.name),
                   trailing: sectionId == section.id
                       ? Icon(
-                          LucideIcons.check,
+                          BuzzIcons.check,
                           color: sheetContext.colors.primary,
                         )
                       : null,
@@ -569,7 +562,7 @@ Future<void> _showMoveSectionSheet(
                   },
                 ),
               ListTile(
-                leading: const Icon(LucideIcons.folderPlus),
+                leading: Icon(BuzzIcons.folderPlus),
                 title: Text(tl('New section…')),
                 onTap: () async {
                   Navigator.of(sheetContext).pop();
@@ -590,7 +583,7 @@ Future<void> _showMoveSectionSheet(
               ),
               if (sectionId != null)
                 ListTile(
-                  leading: const Icon(LucideIcons.folderMinus),
+                  leading: Icon(BuzzIcons.folderMinus),
                   title: Text(tl('Remove from section')),
                   onTap: () {
                     Navigator.of(sheetContext).pop();

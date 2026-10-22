@@ -32,6 +32,7 @@ class ComposeBar extends HookConsumerWidget {
   });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final sendSurfaceKey = useMemoized(GlobalKey.new);
     final controller = useMemoized(_MarkdownEditingController.new);
     final composerText = useListenableSelector(
       controller,
@@ -512,6 +513,15 @@ class ComposeBar extends HookConsumerWidget {
           uploadingCount.value > 0) {
         return;
       }
+      final submittedOrigin = ComposerSendOrigin.capture(sendSurfaceKey);
+      Future<void> sendWithOrigin(
+        String content,
+        List<String> mentionPubkeys, {
+        List<List<String>> mediaTags = const [],
+      }) => ComposerSendOrigin.run(
+        submittedOrigin,
+        () => onSend(content, mentionPubkeys, mediaTags: mediaTags),
+      );
       final submittedDraftRevision = draftRevision.value;
       // Resolved before any await: see
       // `_reportSendCancelledByCommunitySwitch`.
@@ -634,7 +644,7 @@ class ComposeBar extends HookConsumerWidget {
               customEmoji: customEmoji,
             ),
             outgoing: outgoing,
-            onSend: onSend,
+            onSend: sendWithOrigin,
             messenger: messenger,
           );
           return;
@@ -654,7 +664,7 @@ class ComposeBar extends HookConsumerWidget {
         final cancellation = UploadCancellationToken();
         final uploadService = ref.read(mediaUploadServiceProvider);
         activeUploadCancellation.value = cancellation;
-        final delivery = onSend;
+        final delivery = sendWithOrigin;
         unawaited(() async {
           var retainedForRetry = false;
           try {
@@ -1057,6 +1067,7 @@ class ComposeBar extends HookConsumerWidget {
               attachmentSurface.value = _AttachmentSurface.closed;
             },
             child: _ComposeBarLayout(
+              surfaceKey: sendSurfaceKey,
               voiceNoteRecorder: voiceNote.recorder,
               attachments: attachments.value,
               onRemoveAttachment: removeAttachment,

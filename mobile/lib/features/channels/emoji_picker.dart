@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:buzz/shared/theme/buzz_icons.dart';
 
 import '../../shared/custom_emoji/custom_emoji.dart';
 import '../../shared/custom_emoji/custom_emoji_provider.dart';
@@ -283,7 +283,7 @@ List<_EmojiSection> _buildSections({
       _EmojiSection(
         id: 'frequent',
         label: tl('Frequently used'),
-        icon: LucideIcons.clock,
+        icon: BuzzIcons.clock,
         itemCount: recentTiles.length,
         itemBuilder: (context, index) => recentTiles[index],
       ),
@@ -310,7 +310,7 @@ List<_EmojiSection> _buildSections({
       _EmojiSection(
         id: 'custom',
         label: tl('Custom'),
-        icon: LucideIcons.sparkles,
+        icon: BuzzIcons.sparkles,
         itemCount: customEmoji.length,
         itemBuilder: (context, index) {
           final entry = customEmoji[index];

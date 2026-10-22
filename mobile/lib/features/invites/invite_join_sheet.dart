@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:buzz/shared/theme/buzz_icons.dart';
 
 import '../../shared/theme/theme.dart';
 import '../../shared/widgets/buzz_loading_indicator.dart';
@@ -76,7 +76,7 @@ class InviteJoinSheet extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Icon(LucideIcons.userPlus, size: 40, color: context.colors.primary),
+            Icon(BuzzIcons.userPlus, size: 40, color: context.colors.primary),
             const SizedBox(height: Grid.sm),
             Text(
               isStarterSetupRecovery
@@ -178,7 +178,7 @@ class InviteJoinSheet extends ConsumerWidget {
                                   : tl('Joining community'),
                             ),
                           )
-                        : const Icon(LucideIcons.check),
+                        : const Icon(BuzzIcons.check),
                     label: Text(primaryLabel),
                   ),
                 ),
@@ -217,7 +217,7 @@ class _InviteJoinSuccess extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Icon(
-              LucideIcons.circleCheck,
+              BuzzIcons.circleCheck,
               size: 40,
               color: context.colors.primary,
             ),
@@ -245,7 +245,7 @@ class _InviteJoinSuccess extends StatelessWidget {
                   ),
                 );
               },
-              icon: const Icon(LucideIcons.scanLine),
+              icon: const Icon(BuzzIcons.scanLine),
               label: Text(tl('Back it up now')),
             ),
             const SizedBox(height: Grid.xs),

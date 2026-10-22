@@ -112,7 +112,7 @@ class _RecentPhotoGalleryPicker extends HookConsumerWidget {
       }
       if (recentSnapshot.hasError) {
         return _PhotoGalleryMessage(
-          icon: LucideIcons.images,
+          icon: BuzzIcons.images,
           title: tl('Recent photos aren’t available'),
           message: tl('Use All photos to choose with the system photo picker.'),
         );
@@ -121,7 +121,7 @@ class _RecentPhotoGalleryPicker extends HookConsumerWidget {
       final photos = recentSnapshot.data ?? const <RecentPhoto>[];
       if (photos.isEmpty) {
         return _PhotoGalleryMessage(
-          icon: LucideIcons.images,
+          icon: BuzzIcons.images,
           title: tl('No recent photos'),
           message: tl('Use All photos to browse your photo library.'),
         );
@@ -180,7 +180,7 @@ class _RecentPhotoGalleryPicker extends HookConsumerWidget {
                     tooltip: tl('Back to attachment options'),
                     visualDensity: VisualDensity.compact,
                     icon: const BidiFlip(
-                      child: Icon(LucideIcons.arrowLeft, size: 20),
+                      child: Icon(BuzzIcons.arrowLeft, size: 24),
                     ),
                   ),
                 const SizedBox(width: Grid.quarter),
@@ -247,7 +247,7 @@ class _RecentPhotoGalleryPicker extends HookConsumerWidget {
                             color: context.colors.primary,
                             semanticLabel: tl('Opening all photos'),
                           )
-                        : const Icon(LucideIcons.images, size: 18),
+                        : const Icon(BuzzIcons.images, size: 18),
                     label: Text(actionLabel),
                   )
                 : FilledButton.icon(
@@ -263,7 +263,7 @@ class _RecentPhotoGalleryPicker extends HookConsumerWidget {
                             color: Colors.white,
                             semanticLabel: tl('Preparing selected photos'),
                           )
-                        : const Icon(LucideIcons.plus, size: 18),
+                        : const Icon(BuzzIcons.plus, size: 18),
                     label: Text(actionLabel),
                   ),
           ),

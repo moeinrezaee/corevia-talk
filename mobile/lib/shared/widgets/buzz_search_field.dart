@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../i18n/text_direction.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:buzz/shared/theme/buzz_icons.dart';
 
 import '../theme/theme.dart';
 
@@ -161,7 +161,7 @@ class BuzzSearchField extends StatelessWidget {
                     ? _searchCompactIconSize / _searchIdleIconSize
                     : 1,
                 child: Icon(
-                  LucideIcons.search,
+                  BuzzIcons.search,
                   key: const Key('search-moving-icon'),
                   size: _searchIdleIconSize,
                   color: iconColor,

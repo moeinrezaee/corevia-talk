@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import '../../shared/i18n/app_language.dart';
 
+import '../../shared/relay/thread_reference.dart';
+
 @immutable
 class FeedItem {
   final String id;
@@ -44,14 +46,7 @@ class FeedItem {
 
   /// The message whose thread directly contains this item, when this event is
   /// a reply. For nested replies this is the direct parent, not the outer root.
-  String? get threadHeadId {
-    for (final tag in tags) {
-      if (tag.length >= 4 && tag[0] == 'e' && tag[3] == 'reply') {
-        return tag[1];
-      }
-    }
-    return null;
-  }
+  String? get threadHeadId => parseThreadReference(tags).parentId;
 
   /// Human-readable headline based on event kind and category.
   String get headline {

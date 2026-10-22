@@ -1,3 +1,4 @@
+import 'package:buzz/shared/theme/buzz_icons.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -230,45 +231,40 @@ class IosGlassNavigationButton extends HookWidget {
                         : _directionalIcon(
                             icon,
                             Icon(
-                              switch (icon) {
-                                IosGlassNavigationIcon.more => Icons.more_horiz,
-                                IosGlassNavigationIcon.reply => Icons.reply,
-                                IosGlassNavigationIcon.back =>
-                                  Icons.arrow_back_ios_new_rounded,
-                                IosGlassNavigationIcon.close =>
-                                  Icons.close_rounded,
-                                IosGlassNavigationIcon.camera =>
-                                  Icons.camera_alt_rounded,
-                                IosGlassNavigationIcon.photoLibrary =>
-                                  Icons.photo_library_rounded,
-                                IosGlassNavigationIcon.palette =>
-                                  Icons.palette_rounded,
-                                IosGlassNavigationIcon.droplet =>
-                                  Icons.water_drop_rounded,
-                                IosGlassNavigationIcon.emoji =>
-                                  Icons.emoji_emotions_rounded,
-                                IosGlassNavigationIcon.person =>
-                                  Icons.person_rounded,
-                                IosGlassNavigationIcon.frame =>
-                                  Icons.photo_size_select_actual_rounded,
-                                IosGlassNavigationIcon.rotateCamera =>
-                                  Icons.cameraswitch_rounded,
-                                IosGlassNavigationIcon.shutter => Icons.circle,
-                                IosGlassNavigationIcon.colorSwatch =>
-                                  Icons.circle,
-                                IosGlassNavigationIcon.sun =>
-                                  Icons.light_mode_rounded,
-                                IosGlassNavigationIcon.moon =>
-                                  Icons.dark_mode_rounded,
-                                IosGlassNavigationIcon.systemAppearance =>
-                                  Icons.brightness_auto_rounded,
-                              },
-                              size: icon == IosGlassNavigationIcon.shutter
-                                  ? controlSize * 0.72
-                                  : 22,
-                              color: icon == IosGlassNavigationIcon.colorSwatch
-                                  ? swatchColor
-                                  : effectiveForeground,
+                            switch (icon) {
+                              IosGlassNavigationIcon.more => BuzzIcons.ellipsis,
+                              IosGlassNavigationIcon.reply =>
+                                BuzzIcons.cornerUpLeft,
+                              IosGlassNavigationIcon.back =>
+                                BuzzIcons.chevronLeft,
+                              IosGlassNavigationIcon.close => BuzzIcons.x,
+                              IosGlassNavigationIcon.camera => BuzzIcons.camera,
+                              IosGlassNavigationIcon.photoLibrary =>
+                                BuzzIcons.images,
+                              IosGlassNavigationIcon.palette =>
+                                BuzzIcons.palette,
+                              IosGlassNavigationIcon.droplet =>
+                                BuzzIcons.droplet,
+                              IosGlassNavigationIcon.emoji => BuzzIcons.smile,
+                              IosGlassNavigationIcon.person => BuzzIcons.user,
+                              IosGlassNavigationIcon.frame => BuzzIcons.square,
+                              IosGlassNavigationIcon.rotateCamera =>
+                                BuzzIcons.switchCamera,
+                              IosGlassNavigationIcon.shutter =>
+                                BuzzIcons.circle,
+                              IosGlassNavigationIcon.colorSwatch =>
+                                BuzzIcons.circle,
+                              IosGlassNavigationIcon.sun => BuzzIcons.sun,
+                              IosGlassNavigationIcon.moon => BuzzIcons.moon,
+                              IosGlassNavigationIcon.systemAppearance =>
+                                BuzzIcons.sunMoon,
+                            },
+                            size: icon == IosGlassNavigationIcon.shutter
+                                ? controlSize * 0.72
+                                : 24,
+                            color: icon == IosGlassNavigationIcon.colorSwatch
+                                ? swatchColor
+                                : effectiveForeground,
                             ),
                           ),
                   ),

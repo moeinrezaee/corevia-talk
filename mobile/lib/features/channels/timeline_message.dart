@@ -7,6 +7,8 @@ import '../../shared/custom_emoji/custom_emoji.dart';
 import '../../shared/mentions/mention_tags.dart';
 import '../../shared/i18n/app_language.dart';
 import 'channel_window.dart';
+import 'message_media.dart';
+import 'message_content/bubble_segments.dart';
 
 enum SystemEventType {
   memberJoined,
@@ -88,7 +90,9 @@ class SystemEvent {
     try {
       final content = jsonDecode(event.content);
       if (content is Map) {
-        ephemeralChannelId = _readString(content, 'ephemeral_channel_id');
+        ephemeralChannelId = _canonicalHuddleRoomId(
+          content['ephemeral_channel_id'],
+        );
       }
     } catch (_) {
       // The row still renders, but joining requires the validated room ID.
@@ -112,7 +116,7 @@ class SystemEvent {
           return tlt('{0} joined the channel', [actor]);
         }
         final target = resolveLabel(targetPubkey);
-        return tlt('{0} was added by {1}', [target, actor]);
+        return tlt('{0} added {1} to the channel', [actor, target]);
       }(),
       SystemEventType.memberLeft => tlt('{0} left the channel', [actor]),
       SystemEventType.memberRemoved => () {
@@ -121,11 +125,11 @@ class SystemEvent {
       }(),
       SystemEventType.topicChanged => tlt('{0} {1}', [
         actor,
-        _describeTextFieldChange('topic', topic),
+        describeChannelTextFieldChange('topic', topic),
       ]),
       SystemEventType.purposeChanged => tlt('{0} {1}', [
         actor,
-        _describeTextFieldChange('purpose', purpose),
+        describeChannelTextFieldChange('purpose', purpose),
       ]),
       SystemEventType.channelCreated => tlt('{0} created this channel', [
         actor,
@@ -153,7 +157,7 @@ class SystemEvent {
 ///
 /// Mirrors `describeChannelTextFieldChange` in
 /// `desktop/src/features/messages/lib/systemEventCopy.ts`.
-String _describeTextFieldChange(String field, String? value) {
+String describeChannelTextFieldChange(String field, String? value) {
   final trimmed = value?.trim();
   if (trimmed == null || trimmed.isEmpty) {
     return field == 'topic'
@@ -227,7 +231,11 @@ class TimelineMessage {
   /// Attachment messages stay visually distinct from surrounding messages,
   /// even when several are sent by the same author in quick succession.
   bool get hasAttachments =>
-      tags.any((tag) => tag.isNotEmpty && tag.first == 'imeta');
+      tags.any((tag) => tag.isNotEmpty && tag.first == 'imeta') ||
+      messageBubbleSegments(
+        content,
+        parseImetaTags(tags),
+      ).any((segment) => segment.attachment);
 }
 
 @immutable
@@ -270,13 +278,20 @@ const _membershipGroupWindowSeconds = 5 * 60;
 class _MembershipChange {
   final String? actor;
   final bool isSelfJoin;
+  final SystemEventType type;
 
-  const _MembershipChange({required this.actor, required this.isSelfJoin});
+  const _MembershipChange({
+    required this.actor,
+    required this.isSelfJoin,
+    required this.type,
+  });
 }
 
 _MembershipChange? _membershipChange(MainTimelineEntry entry) {
   final event = entry.message.systemEvent;
-  if (!entry.message.isSystem || event?.type != SystemEventType.memberJoined) {
+  if (!entry.message.isSystem ||
+      (event?.type != SystemEventType.memberJoined &&
+          event?.type != SystemEventType.memberRemoved)) {
     return null;
   }
 
@@ -286,8 +301,10 @@ _MembershipChange? _membershipChange(MainTimelineEntry entry) {
     return null;
   }
 
-  final isSelfJoin = actor == target;
+  final isSelfJoin =
+      event!.type == SystemEventType.memberJoined && actor == target;
   return _MembershipChange(
+    type: event.type,
     actor: isSelfJoin ? null : actor,
     isSelfJoin: isSelfJoin,
   );
@@ -297,7 +314,8 @@ bool _membershipChangesCanGroup(
   _MembershipChange first,
   _MembershipChange second,
 ) {
-  return first.isSelfJoin == second.isSelfJoin &&
+  return first.type == second.type &&
+      first.isSelfJoin == second.isSelfJoin &&
       (first.isSelfJoin || first.actor == second.actor);
 }
 
@@ -309,10 +327,9 @@ bool _isSameLocalDay(int firstTimestamp, int secondTimestamp) {
       first.day == second.day;
 }
 
-/// Groups consecutive membership arrivals using the same display rule as
-/// desktop: matching additions (or self-joins) within a fixed five-minute
-/// window become one render item. Other events and local day boundaries break
-/// the group.
+/// Groups consecutive matching additions, removals, or self-joins within a
+/// five-minute window into one render item. Other events and local day
+/// boundaries break the group.
 ///
 /// Each inner list is one renderable timeline item. Non-grouped entries are
 /// returned as single-item lists.
@@ -477,6 +494,9 @@ List<TimelineMessage> formatTimeline(
 
     if (event.kind == EventKind.systemMessage) {
       final systemEvent = SystemEvent.fromContent(event.content);
+      // Purpose is legacy metadata with no mobile surface. Omit its activity
+      // before grouping so it cannot leave blank rows or split sender groups.
+      if (systemEvent?.type == SystemEventType.purposeChanged) continue;
       if (systemEvent != null) {
         result.add(
           TimelineMessage(
@@ -553,7 +573,13 @@ List<TimelineMessage> formatTimeline(
 List<MainTimelineEntry> buildMainTimelineEntries(
   List<TimelineMessage> messages, {
   Map<String, ChannelWindowThreadSummary>? relaySummaries,
+  bool flat = false,
 }) {
+  if (flat) {
+    return [
+      for (final message in messages) MainTimelineEntry(message: message),
+    ];
+  }
   // Index descendant stats by ancestor, so a nested reply updates every summary
   // above it and not only the summary of its direct parent.
   final descendantStats = _buildDescendantStats(messages);
@@ -783,4 +809,25 @@ String? _lastETag(List<List<String>> tags) {
 String? _readString(Map<dynamic, dynamic> json, String key) {
   final value = json[key];
   return value is String ? value : null;
+}
+
+// Match Rust Uuid::parse_str: simple, hyphenated, URN and braced forms.
+String? _canonicalHuddleRoomId(Object? value) {
+  if (value is! String) return null;
+  var text = value;
+  if (text.length == 45 && text.startsWith('urn:uuid:')) {
+    text = text.substring(9);
+  } else if (text.length == 38 && text.startsWith('{') && text.endsWith('}')) {
+    text = text.substring(1, 37);
+  }
+  if (RegExp(r'^[0-9a-fA-F]{32}$').hasMatch(text)) {
+    text =
+        '${text.substring(0, 8)}-${text.substring(8, 12)}-${text.substring(12, 16)}-${text.substring(16, 20)}-${text.substring(20)}';
+  }
+  if (!RegExp(
+    r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$',
+  ).hasMatch(text)) {
+    return null;
+  }
+  return text.toLowerCase();
 }

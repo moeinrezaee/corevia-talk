@@ -80,6 +80,12 @@ List<AccentColor> get accentColors => [
     dark: Color(0xFF818CF8),
     wireValue: '#6366f1',
   ),
+  AccentColor(
+    name: 'Chartreuse',
+    light: Color(0xFFD7D72E),
+    dark: Color(0xFFD7D72E),
+    wireValue: '#d7d72e',
+  ),
 ];
 
 Color accentColorForScheme(ColorScheme scheme, int accentIndex) {

@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image/image.dart' as image;
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:buzz/shared/theme/buzz_icons.dart';
 
 import '../../shared/relay/relay.dart';
 import '../../shared/theme/theme.dart';
@@ -438,7 +438,7 @@ class ImageAvatarCapture extends HookConsumerWidget {
                                   ? BuzzLoadingIndicator(
                                       semanticLabel: tl('Starting camera'),
                                     )
-                                  : const Icon(LucideIcons.cameraOff, size: 32),
+                                  : const Icon(BuzzIcons.cameraOff, size: 32),
                             ),
                     ),
                   ),
@@ -497,8 +497,8 @@ class ImageAvatarCapture extends HookConsumerWidget {
                               ),
                               width: sideWidth,
                               icon: isClosing.value
-                                  ? LucideIcons.camera
-                                  : LucideIcons.x,
+                                  ? BuzzIcons.camera
+                                  : BuzzIcons.x,
                               iosIcon: isClosing.value
                                   ? IosGlassNavigationIcon.camera
                                   : IosGlassNavigationIcon.close,
@@ -572,8 +572,8 @@ class ImageAvatarCapture extends HookConsumerWidget {
                               ),
                               width: sideWidth,
                               icon: isClosing.value
-                                  ? LucideIcons.images
-                                  : LucideIcons.switchCamera,
+                                  ? BuzzIcons.images
+                                  : BuzzIcons.switchCamera,
                               iosIcon: isClosing.value
                                   ? IosGlassNavigationIcon.photoLibrary
                                   : IosGlassNavigationIcon.rotateCamera,

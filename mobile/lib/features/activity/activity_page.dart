@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:buzz/shared/theme/buzz_icons.dart';
 
 import '../../shared/identity_names/identity_names_provider.dart';
 import '../../shared/mentions/agent_identity_provider.dart';
@@ -257,8 +257,9 @@ class ActivityPage extends HookConsumerWidget {
 
       // Deep-link to the represented message: oldest unread in the group,
       // falling back to the latest event.
-      final readAt = resolveInboxItemReadAt(item, markerOf: markerOf);
-      final target = item.deepLinkTarget(readAt);
+      final target = item.deepLinkTarget(
+        (event) => isInboxEventRead(event, markerOf: markerOf),
+      );
       final thread = threadReferenceOf(target.tags);
       final threadRootId = isBroadcastReply(target.tags)
           ? null
@@ -427,12 +428,22 @@ class ActivityPage extends HookConsumerWidget {
     return FrostedScaffold(
       backgroundColor: context.colors.surface,
       appBar: FrostedAppBar(
-        nativeTitle: tl('Activity'),
+        nativeTitle: 'Inbox',
+        nativeLeading: IosNavigationAction(
+          label: 'Close inbox',
+          symbol: 'xmark',
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        leading: IconButton(
+          tooltip: 'Close inbox',
+          icon: const Icon(BuzzIcons.x),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         nativeLargeTitle: true,
         nativeActions: [
           IosNavigationAction(
-            label: tl('Filter activity'),
-            symbol: 'line.3.horizontal.decrease',
+            label: 'Filter inbox',
+            icon: BuzzIcons.filter2,
             children: [
               for (final entry in _filterLabels.entries)
                 IosNavigationAction(
@@ -443,7 +454,7 @@ class ActivityPage extends HookConsumerWidget {
             ],
           ),
           IosNavigationAction(
-            label: tl('Activity options'),
+            label: 'Inbox options',
             symbol: 'ellipsis',
             children: [
               IosNavigationAction(
@@ -468,7 +479,7 @@ class ActivityPage extends HookConsumerWidget {
         horizontalInset: Grid.gutter,
         showBottomDivider: true,
         bottomDividerOpacity: 0.07,
-        title: Text(tl('Activity'), style: headerTitleStyle),
+        title: Text('Inbox', style: headerTitleStyle),
         titleStyle: headerTitleStyle,
         actions: [
           _ActivityActionsPill(

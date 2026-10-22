@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:buzz/shared/theme/buzz_icons.dart';
 
 import '../../shared/mentions/agent_identity_provider.dart';
 import '../../shared/theme/theme.dart';
@@ -169,7 +169,7 @@ class ForumPostCard extends HookConsumerWidget {
                   child: IconButton(
                     onPressed: () => _showActions(context),
                     icon: Icon(
-                      LucideIcons.ellipsis,
+                      BuzzIcons.ellipsis,
                       size: 16,
                       color: context.colors.onSurfaceVariant,
                     ),
@@ -212,7 +212,7 @@ class ForumPostCard extends HookConsumerWidget {
               Row(
                 children: [
                   Icon(
-                    LucideIcons.messageSquare,
+                    BuzzIcons.messageSquare,
                     size: 14,
                     color: context.colors.onSurfaceVariant,
                   ),
@@ -275,7 +275,7 @@ class ForumPostCard extends HookConsumerWidget {
             child: SheetActionSection(
               children: [
                 ListTile(
-                  leading: const Icon(LucideIcons.copy),
+                  leading: const Icon(BuzzIcons.copy),
                   title: Text(tl('Copy text')),
                   onTap: () {
                     Navigator.of(sheetContext).pop();
@@ -285,7 +285,7 @@ class ForumPostCard extends HookConsumerWidget {
                 if (isOwn && onDelete != null)
                   ListTile(
                     leading: Icon(
-                      LucideIcons.trash2,
+                      BuzzIcons.trash2,
                       color: sheetContext.colors.error,
                     ),
                     title: Text(
@@ -352,7 +352,7 @@ class _PostAvatar extends StatelessWidget {
     return AvatarImage(
       imageUrl: avatarUrl,
       radius: 14,
-      backgroundColor: context.colors.primaryContainer,
+      backgroundColor: context.controlSurface,
       fallback: Text(
         initial,
         style: context.textTheme.labelSmall?.copyWith(

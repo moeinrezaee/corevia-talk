@@ -49,7 +49,7 @@ class _HeaderEphemeralBadge extends StatelessWidget {
     return Tooltip(
       message: display.tooltipLabel,
       child: Icon(
-        LucideIcons.clockFading,
+        BuzzIcons.clockFading,
         key: const Key('chat-ephemeral-badge'),
         size: 16,
         color: context.colors.onSurfaceVariant,
@@ -70,7 +70,7 @@ class _MessageTimelineSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      cacheExtent: 0,
+      scrollCacheExtent: const ScrollCacheExtent.pixels(0),
       reverse: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsetsDirectional.fromSTEB(
@@ -181,7 +181,7 @@ class _ForumConnectionSkeleton extends StatelessWidget {
         child: IgnorePointer(
           child: ExcludeFocus(
             child: ListView.builder(
-              cacheExtent: 0,
+              scrollCacheExtent: const ScrollCacheExtent.pixels(0),
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (_, _) => Padding(

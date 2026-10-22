@@ -67,7 +67,6 @@ import '../../shared/i18n/app_language.dart';
 import '../../shared/i18n/text_direction.dart';
 
 part 'channels_page/body.dart';
-part 'channels_page/browse_channels_sheet.dart';
 part 'channels_page/sections.dart';
 part 'channels_page/channel_tile.dart';
 part 'channels_page/sheets.dart';

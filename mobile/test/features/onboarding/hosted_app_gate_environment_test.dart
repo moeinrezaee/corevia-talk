@@ -1,15 +1,15 @@
-import 'package:buzz/features/channels/deep_link_dispatcher.dart';
-import 'package:buzz/features/onboarding/self_hosted_entry_sheet.dart';
-import 'package:buzz/hosted_app_gate.dart';
-import 'package:buzz/shared/hosted/hosted_flow_provider.dart';
-import 'package:buzz/shared/deeplink/deep_link.dart';
-import 'package:buzz/shared/deeplink/pending_deep_link_provider.dart';
-import 'package:buzz/shared/hosted/account_identity_store.dart';
-import 'package:buzz/shared/hosted/browser_auth.dart';
-import 'package:buzz/shared/hosted/builderlab_account.dart';
-import 'package:buzz/shared/hosted/hosted_environment.dart';
-import 'package:buzz/shared/hosted/hosted_flow.dart';
-import 'package:buzz/shared/hosted/hosted_identity_service.dart';
+import 'package:corevia_talk/features/channels/deep_link_dispatcher.dart';
+import 'package:corevia_talk/features/onboarding/self_hosted_entry_sheet.dart';
+import 'package:corevia_talk/hosted_app_gate.dart';
+import 'package:corevia_talk/shared/hosted/hosted_flow_provider.dart';
+import 'package:corevia_talk/shared/deeplink/deep_link.dart';
+import 'package:corevia_talk/shared/deeplink/pending_deep_link_provider.dart';
+import 'package:corevia_talk/shared/hosted/account_identity_store.dart';
+import 'package:corevia_talk/shared/hosted/browser_auth.dart';
+import 'package:corevia_talk/shared/hosted/builderlab_account.dart';
+import 'package:corevia_talk/shared/hosted/hosted_environment.dart';
+import 'package:corevia_talk/shared/hosted/hosted_flow.dart';
+import 'package:corevia_talk/shared/hosted/hosted_identity_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -24,11 +24,11 @@ class _Flow extends HostedFlow {
         identity: HostedIdentityService(account: account, store: store),
         enterCommunity: (_, _, _, _) async {},
       );
-  BuzzDeepLink? started;
+  CoreviaTalkDeepLink? started;
   @override
   Future<void> initialize() async {}
   @override
-  Future<void> start(BuzzDeepLink target, {bool resumePairing = false}) async {
+  Future<void> start(CoreviaTalkDeepLink target, {bool resumePairing = false}) async {
     started = target;
   }
 }
@@ -76,29 +76,29 @@ void main() {
         final container = ProviderScope.containerOf(context);
         final queue = container.read(pendingDeepLinkProvider.notifier);
         final bind = Uri(
-          scheme: 'buzz',
+          scheme: 'corevia-talk',
           host: 'nostr-bind',
           queryParameters: {
             'challenge_id': '12345678-1234-1234-1234-123456789012',
             'nonce': 'a' * 43,
             'verification_code': '123456',
-            'audience': 'buzz:nostr-identity',
+            'audience': 'corevia-talk:nostr-identity',
             'action': 'bind_nostr_identity',
-            'protocol': 'buzz-nostr-identity',
+            'protocol': 'corevia-talk-nostr-identity',
             'version': '1',
             'origin': HostedEnvironment.origin.toString(),
             'expires_at': '2099-01-01T00:00:00Z',
             'return': 'browser_fragment_v1',
             'callback_url': HostedEnvironment.origin
-                .resolve('/buzz')
+                .resolve('/corevia-talk')
                 .toString(),
           },
         );
-        expect(parseBuzzDeepLink(bind), isA<NostrBindDeepLink>());
+        expect(parseCoreviaTalkDeepLink(bind), isA<NostrBindDeepLink>());
         queue.open(bind);
         queue.open(
           Uri.parse(
-            'buzz://add-community?relay=wss%3A%2F%2Fcommunity.example.org&name=Community',
+            'corevia-talk://add-community?relay=wss%3A%2F%2Fcommunity.example.org&name=Community',
           ),
         );
         await tester.pumpAndSettle();

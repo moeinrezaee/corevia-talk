@@ -54,7 +54,7 @@ Future<(Channel, String)?> _showNewMeChat(
       final theme = utilitySurfaceThemeData(Theme.of(context));
       Map<Object?, Object?>? draft;
       try {
-        draft = await const MethodChannel('buzz/profile_text_editor')
+        draft = await const MethodChannel('corevia-talk/profile_text_editor')
             .invokeMethod<Map<Object?, Object?>>('presentChat', {
               'title': 'New chat',
               'initialValue': name,
@@ -114,7 +114,7 @@ Future<(Channel, String)?> _showNewMeChat(
     }
   }
   if (!context.mounted) return null;
-  return showBuzzModalBottomSheet<(Channel, String)>(
+  return showCoreviaTalkModalBottomSheet<(Channel, String)>(
     context: context,
     title: 'New chat',
     isScrollControlled: true,
@@ -155,7 +155,7 @@ Future<Channel> _createMeChat(
       name: name,
       channelType: 'stream',
       visibility: 'private',
-      labels: const ['buzz.solo'],
+      labels: const ['corevia-talk.solo'],
     ),
     hasAgent: () async {
       ref.invalidate(channelMembersProvider(channelId));

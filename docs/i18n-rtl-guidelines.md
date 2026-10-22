@@ -8,7 +8,7 @@ stays untouched: left-to-right, Latin digits, Gregorian dates, local time zone.
    applied without a visible half-translated screen. English string is the
    dictionary key; strings built in code, plurals, relative times, tooltips,
    placeholders and aria labels are translated too. Brand/technical names
-   (Buzz, Nostr, npub) stay as is.
+   (Corevia Talk, Nostr, npub) stay as is.
 2. Persian uses **Peyda FaNum** with every shipped weight (ExtraLight, Regular,
    SemiBold, Bold, ExtraBold, Black, ExtraBlack). Digits are Persian in Persian
    text and Latin in English text.

@@ -7,7 +7,7 @@ import 'hosted_environment.dart';
 Future<List<AddCommunityDeepLink>> loadHostedCommunities(
   BuilderlabAccountClient account,
 ) async {
-  final response = await account.post('/v1/buzz/communities/joined', {});
+  final response = await account.post('/v1/corevia-talk/communities/joined', {});
   final rows = response['communities'];
   if (response['error'] != null || rows is! List) {
     throw AccountFailure.invalidResponse;

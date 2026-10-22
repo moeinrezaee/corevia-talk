@@ -8,7 +8,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:image/image.dart' as image;
 
 import '../../shared/theme/theme.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../shared/i18n/app_language.dart';
 
 const _cropOutputSize = 512;
@@ -173,7 +173,7 @@ class ProfileAvatarCropPage extends HookWidget {
             )
           : preparedBytes.value == null || dimensions == null
           ? Center(
-              child: BuzzLoadingIndicator(
+              child: CoreviaTalkLoadingIndicator(
                 color: Colors.white,
                 semanticLabel: tl('Preparing photo'),
               ),
@@ -371,7 +371,7 @@ class _CropHeaderButton extends StatelessWidget {
         ),
         onPressed: onPressed,
         child: loading
-            ? BuzzLoadingIndicator(
+            ? CoreviaTalkLoadingIndicator(
                 size: 18,
                 color: Colors.white,
                 semanticLabel: tl('Saving photo'),

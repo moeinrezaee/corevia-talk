@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:buzz/features/channels/message_content.dart';
-import 'package:buzz/features/channels/media_viewer_page.dart';
-import 'package:buzz/shared/relay/relay.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/widgets/media_loading_placeholder.dart';
+import 'package:corevia_talk/features/channels/message_content.dart';
+import 'package:corevia_talk/features/channels/media_viewer_page.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/widgets/media_loading_placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

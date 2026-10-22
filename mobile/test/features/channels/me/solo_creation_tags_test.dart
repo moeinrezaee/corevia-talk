@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channel_management_provider.dart';
-import 'package:buzz/features/channels/channels_provider.dart';
-import 'package:buzz/features/channels/me/me_page.dart';
-import 'package:buzz/shared/me/me_assistants.dart';
-import 'package:buzz/shared/me/me_groups.dart';
-import 'package:buzz/shared/me/me_sync.dart';
-import 'package:buzz/shared/relay/relay.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/widgets/frosted_app_bar.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channel_management_provider.dart';
+import 'package:corevia_talk/features/channels/channels_provider.dart';
+import 'package:corevia_talk/features/channels/me/me_page.dart';
+import 'package:corevia_talk/shared/me/me_assistants.dart';
+import 'package:corevia_talk/shared/me/me_groups.dart';
+import 'package:corevia_talk/shared/me/me_sync.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/widgets/frosted_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -88,7 +88,7 @@ void main() {
         nsec: owner.nsec,
       );
       final sync = MeSync(relay, config, prefs: prefs);
-      const bridge = MethodChannel('buzz/profile_text_editor');
+      const bridge = MethodChannel('corevia-talk/profile_text_editor');
       var forms = 0;
       tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(bridge, (
         call,
@@ -136,7 +136,7 @@ void main() {
       final command = relay.submitted.single;
       expect(command.kind, 9007);
       expect(command.pubkey, owner.public);
-      expect(command.tags, contains(equals(['t', 'buzz.solo'])));
+      expect(command.tags, contains(equals(['t', 'corevia-talk.solo'])));
       expect(command.tags, contains(equals(['channel_type', 'stream'])));
       expect(command.tags, contains(equals(['visibility', 'private'])));
       expect(command.tags.where((tag) => tag.first == 'P'), isEmpty);

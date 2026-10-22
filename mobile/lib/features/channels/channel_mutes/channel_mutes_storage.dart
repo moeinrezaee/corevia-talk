@@ -7,10 +7,10 @@ import '../../../shared/theme/community_theme_preference.dart';
 /// Channel ids belong to one community, so the cache is keyed by relay as
 /// well as identity. One identity can be paired with several communities.
 String channelMutesKey(String pubkey, String relayUrl) =>
-    'buzz.channel-mutes.v1:$pubkey:${Uri.encodeComponent(normalizeCommunityRelayUrl(relayUrl))}';
+    'corevia-talk.channel-mutes.v1:$pubkey:${Uri.encodeComponent(normalizeCommunityRelayUrl(relayUrl))}';
 
 /// The earlier key, shared by every community of the identity.
-String legacyChannelMutesKey(String pubkey) => 'buzz.channel-mutes.v1:$pubkey';
+String legacyChannelMutesKey(String pubkey) => 'corevia-talk.channel-mutes.v1:$pubkey';
 
 class ChannelMuteEntry {
   final bool muted;

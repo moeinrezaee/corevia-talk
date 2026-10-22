@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import '../theme/buzz_icons.dart';
+import '../theme/corevia_talk_icons.dart';
 
 /// Tabler plus/edit vectors share one reversible, clockwise quarter-turn.
 class ComposeMorphIcon extends StatelessWidget {
@@ -30,7 +30,7 @@ class ComposeMorphIcon extends StatelessWidget {
             ? Transform.rotate(
                 angle: -progress * math.pi / 2,
                 child: Icon(
-                  progress == 0 ? BuzzIcons.plus : BuzzIcons.edit,
+                  progress == 0 ? CoreviaTalkIcons.plus : CoreviaTalkIcons.edit,
                   size: 24,
                   color: color,
                 ),

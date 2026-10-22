@@ -101,7 +101,7 @@ test("hook relabels discovered models when the runtime switches", async () => {
 test("a missing Databricks host settles discovery instead of loading forever", async () => {
   discover = () =>
     Promise.reject(
-      "buzz-acp models failed (exit 1): config: DATABRICKS_MODEL required",
+      "corevia-talk-acp models failed (exit 1): config: DATABRICKS_MODEL required",
     );
   let state = null;
   function DatabricksProbe() {
@@ -111,7 +111,7 @@ test("a missing Databricks host settles discovery instead of loading forever", a
       modelFieldVisible: true,
       open: true,
       provider: "databricks_v2",
-      selectedRuntime: runtime("buzz-agent"),
+      selectedRuntime: runtime("corevia-talk-agent"),
     });
     return null;
   }

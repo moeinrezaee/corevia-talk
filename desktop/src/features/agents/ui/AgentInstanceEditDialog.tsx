@@ -576,13 +576,13 @@ export function AgentInstanceEditDialog({
   function handleProviderDropdownChange(nextValue: string) {
     const nextProvider =
       nextValue === AUTO_PROVIDER_DROPDOWN_VALUE ? "" : nextValue;
-    if (nextProvider === "relay-mesh" && selectedRuntimeId !== "buzz-agent") {
-      handleRuntimeDropdownChange("buzz-agent");
+    if (nextProvider === "relay-mesh" && selectedRuntimeId !== "corevia-talk-agent") {
+      handleRuntimeDropdownChange("corevia-talk-agent");
     }
     const nextSelection = selectionOnProviderDropdownChange(selection, {
       runtime:
         nextProvider === "relay-mesh"
-          ? "buzz-agent"
+          ? "corevia-talk-agent"
           : (selectedRuntime?.id ?? selectedRuntimeId),
       nextValue,
       clearModelWhenApiKeyMissing: false,
@@ -875,7 +875,7 @@ export function AgentInstanceEditDialog({
   const trimmedProvider = provider.trim();
   const hideProviderIds = React.useMemo(
     () =>
-      (bakedEnvKeys ?? []).includes("BUZZ_AGENT_PROVIDER")
+      (bakedEnvKeys ?? []).includes("COREVIA_TALK_AGENT_PROVIDER")
         ? BLOCK_BUILD_HIDDEN_PROVIDER_IDS
         : new Set<string>(),
     [bakedEnvKeys],

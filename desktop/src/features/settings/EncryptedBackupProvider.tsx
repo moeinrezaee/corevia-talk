@@ -116,7 +116,7 @@ export function EncryptedBackupProvider({
   React.useEffect(() => {
     if (state.downloadPending) {
       toast.loading(tl("Preparing backup…"), {
-        description: tl("You can close this window while Buzz finishes."),
+        description: tl("You can close this window while Corevia Talk finishes."),
         duration: Number.POSITIVE_INFINITY,
         id: BACKUP_READY_TOAST_ID,
       });

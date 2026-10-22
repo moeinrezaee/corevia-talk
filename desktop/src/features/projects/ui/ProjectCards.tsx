@@ -256,11 +256,11 @@ function RepositoryUnavailableIndicator({
   if (!reason) return null;
   const status = {
     authentication: {
-      description: tl("Buzz could not authenticate with this repository."),
+      description: tl("Corevia Talk could not authenticate with this repository."),
       label: tl("Access failed"),
     },
     missing: {
-      description: tl("No git repository was found on the Buzz relay."),
+      description: tl("No git repository was found on the Corevia Talk relay."),
       label: tl("Uninitialized"),
     },
     access: {
@@ -276,7 +276,7 @@ function RepositoryUnavailableIndicator({
       label: tl("No access channel"),
     },
     network: {
-      description: tl("The Buzz git service could not be reached."),
+      description: tl("The Corevia Talk git service could not be reached."),
       label: tl("Unreachable"),
     },
     ref: {
@@ -284,7 +284,7 @@ function RepositoryUnavailableIndicator({
       label: tl("Branch missing"),
     },
     unknown: {
-      description: tl("Buzz could not load this repository."),
+      description: tl("Corevia Talk could not load this repository."),
       label: tl("Unavailable"),
     },
   } satisfies Record<

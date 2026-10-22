@@ -101,7 +101,7 @@ void combinedReactionTests() {
         'mixed reaction glyphs stay centered, image=$loadCustom scale=$scale',
         (tester) async {
           final imageBytes = (await rootBundle.load(
-            'assets/images/buzz-icon.png',
+            'assets/images/corevia-talk-icon.png',
           )).buffer.asUint8List();
           final client = MockClient(
             (_) async => loadCustom
@@ -283,7 +283,7 @@ void combinedReactionTests() {
     await tester.tap(find.byKey(const ValueKey('combined-reaction-tray')));
     await tester.pump();
     expect(payload!['canAddReaction'], isTrue);
-    expect(payload!['addReactionIconCodePoint'], BuzzIcons.smilePlus.codePoint);
+    expect(payload!['addReactionIconCodePoint'], CoreviaTalkIcons.smilePlus.codePoint);
     await NativeMessagePresentation.present('updateProfiles', {
       'requestId': payload!['requestId'],
       'profiles': <String, Object?>{},

@@ -33,7 +33,7 @@ final hostedHttpClientFactoryProvider = Provider<http.Client Function()>((ref) {
 class HostedRelayAuth extends ChangeNotifier {
   HostedRelayAuth(
     this.account, {
-    this.enabled = const bool.fromEnvironment('BUZZ_HOSTED_RELAY_AUTH'),
+    this.enabled = const bool.fromEnvironment('COREVIA_TALK_HOSTED_RELAY_AUTH'),
     DateTime Function()? now,
   }) : _now = now ?? DateTime.now;
 

@@ -97,7 +97,7 @@ class ChannelQuickActionsLauncher extends HookConsumerWidget {
 
       switch (action) {
         case _QuickAction.createChannel:
-          final created = await showBuzzModalBottomSheet<Channel>(
+          final created = await showCoreviaTalkModalBottomSheet<Channel>(
             context: context,
             title: tl('Create a new channel'),
             constraints: _quickActionSheetConstraints(context),
@@ -109,7 +109,7 @@ class ChannelQuickActionsLauncher extends HookConsumerWidget {
             await openChannel(created);
           }
         case _QuickAction.newDm:
-          final opened = await showBuzzModalBottomSheet<Channel>(
+          final opened = await showCoreviaTalkModalBottomSheet<Channel>(
             context: context,
             title: tl('New message'),
             constraints: _quickActionSheetConstraints(context),
@@ -174,7 +174,7 @@ class ChannelQuickActionsLauncher extends HookConsumerWidget {
                 ),
                 child: _MorphingQuickActionsButton(
                   open: effectiveOpen,
-                  icon: newChatMode ? BuzzIcons.edit : BuzzIcons.plus,
+                  icon: newChatMode ? CoreviaTalkIcons.edit : CoreviaTalkIcons.plus,
                   openEdgeOffset: rightInset - Grid.gutter,
                   label: newChatMode
                       ? 'New chat'

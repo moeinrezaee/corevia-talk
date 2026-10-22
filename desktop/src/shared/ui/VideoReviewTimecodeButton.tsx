@@ -4,9 +4,9 @@ import { cn } from "@/shared/lib/cn";
 import { tlt } from "@/shared/i18n/tl";
 
 const TIMECODE_ACCENT_CLASS =
-  "bg-[hsl(var(--buzz-video-review-accent,var(--primary))/0.15)] text-[hsl(var(--buzz-video-review-accent-foreground,var(--buzz-video-review-accent,var(--primary))))]";
+  "bg-[hsl(var(--corevia-talk-video-review-accent,var(--primary))/0.15)] text-[hsl(var(--corevia-talk-video-review-accent-foreground,var(--corevia-talk-video-review-accent,var(--primary))))]";
 const TIMECODE_ACCENT_HOVER_CLASS =
-  "hover:bg-[hsl(var(--buzz-video-review-accent,var(--primary))/0.3)]";
+  "hover:bg-[hsl(var(--corevia-talk-video-review-accent,var(--primary))/0.3)]";
 const MESSAGE_TIMECODE_ACCENT_CLASS =
   "bg-primary/15 text-primary hover:bg-primary/30";
 

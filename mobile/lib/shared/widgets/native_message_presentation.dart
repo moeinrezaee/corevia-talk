@@ -9,7 +9,7 @@ class NativeMessagePresentation {
       !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
 
   /// Transport shared with the iOS presentation coordinator.
-  static const channel = MethodChannel('buzz/native_message_presentation');
+  static const channel = MethodChannel('corevia-talk/native_message_presentation');
 
   static final _presentedCallbacks = <String, VoidCallback>{};
   static var _nextRequest = 0;

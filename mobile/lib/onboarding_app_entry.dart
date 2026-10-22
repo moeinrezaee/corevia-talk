@@ -160,7 +160,7 @@ class OnboardingAppEntry extends HookConsumerWidget {
             ? 'Continue with Builderlab'
             : 'Connect to Builderlab',
         onWelcomeBack: back,
-        onAlreadyUseBuzz: () => existingUser.value = true,
+        onAlreadyUseCoreviaTalk: () => existingUser.value = true,
       ),
     );
   }

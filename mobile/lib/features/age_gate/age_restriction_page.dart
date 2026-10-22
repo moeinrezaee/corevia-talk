@@ -1,4 +1,4 @@
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'package:flutter/material.dart';
 
 import '../../shared/theme/theme.dart';
@@ -21,14 +21,14 @@ class AgeRestrictionPage extends StatelessWidget {
                 children: [
                   ExcludeSemantics(
                     child: Icon(
-                      BuzzIcons.lock,
+                      CoreviaTalkIcons.lock,
                       size: 48,
                       color: context.colors.primary,
                     ),
                   ),
                   const SizedBox(height: Grid.lg),
                   Text(
-                    tl('Buzz is for people 18 and older'),
+                    tl('Corevia Talk is for people 18 and older'),
                     textAlign: TextAlign.center,
                     style: context.textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.w600,
@@ -37,7 +37,7 @@ class AgeRestrictionPage extends StatelessWidget {
                   const SizedBox(height: Grid.sm),
                   Text(
                     tl(
-                      "You must be 18 or older to use Buzz under Buzz's Terms.",
+                      "You must be 18 or older to use Corevia Talk under Corevia Talk's Terms.",
                     ),
                     textAlign: TextAlign.center,
                     style: context.textTheme.bodyLarge?.copyWith(

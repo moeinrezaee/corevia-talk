@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/clipboard_utils.dart';
 import '../../shared/community/community_membership_provider.dart';
@@ -12,9 +12,9 @@ import '../../shared/theme/theme.dart';
 import '../../shared/utils/string_utils.dart';
 import '../../shared/widgets/app_list.dart';
 import '../../shared/widgets/app_list_card.dart';
-import '../../shared/widgets/buzz_action_tile.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
-import '../../shared/widgets/buzz_search_field.dart';
+import '../../shared/widgets/corevia_talk_action_tile.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_search_field.dart';
 import '../../shared/widgets/frosted_app_bar.dart';
 import '../../shared/widgets/frosted_scaffold.dart';
 import '../../shared/widgets/modal_presentation.dart';
@@ -42,7 +42,7 @@ class CommunityInvitePage extends ConsumerWidget {
       ),
       body: roleAsync.when(
         loading: () => Center(
-          child: BuzzLoadingIndicator(
+          child: CoreviaTalkLoadingIndicator(
             size: 48,
             semanticLabel: tl('Checking community permissions'),
           ),
@@ -108,7 +108,7 @@ class _InvitePermissionError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _InviteMessage(
-      icon: BuzzIcons.wifiOff,
+      icon: CoreviaTalkIcons.wifiOff,
       title: tl('Could not check permissions'),
       body: tl('Reconnect to this community and try again.'),
       action: TextButton(onPressed: onRetry, child: Text(tl('Retry'))),
@@ -122,7 +122,7 @@ class _InvitePermissionDenied extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _InviteMessage(
-      icon: BuzzIcons.shieldAlert,
+      icon: CoreviaTalkIcons.shieldAlert,
       title: tl('Invite access required'),
       body: tl('Only community owners and admins can invite people.'),
     );

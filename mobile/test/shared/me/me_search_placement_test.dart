@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/me/me_groups.dart';
-import 'package:buzz/shared/me/me_sync.dart';
-import 'package:buzz/shared/me/me_search_placement.dart';
+import 'package:corevia_talk/shared/me/me_groups.dart';
+import 'package:corevia_talk/shared/me/me_sync.dart';
+import 'package:corevia_talk/shared/me/me_search_placement.dart';
 
 void main() {
   for (final error in [

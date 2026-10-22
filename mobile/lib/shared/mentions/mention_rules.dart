@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 /// One key the user can mention. The fields are the inputs of the portable
-/// mention rules (buzz-app `src/bundled/mentions/README.md`, version 1).
+/// mention rules (corevia-talk-app `src/bundled/mentions/README.md`, version 1).
 @immutable
 class MentionChoice {
   /// Lowercase 64-hex public key.

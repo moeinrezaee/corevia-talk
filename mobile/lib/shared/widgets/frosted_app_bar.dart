@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../theme/theme.dart';
-import 'buzz_navigation_metrics.dart';
+import 'corevia_talk_navigation_metrics.dart';
 import 'directional_transition_scope.dart';
 import 'frosted_scroll_under_scope.dart';
 import 'ios_glass_navigation_button.dart';
@@ -16,7 +16,7 @@ import '../i18n/text_direction.dart';
 export 'ios_navigation_bar.dart' show IosNavigationAction;
 
 /// Minimum height of the frosted app bar content area below the safe area.
-const _kBarContentMinHeight = buzzNavigationRowHeight;
+const _kBarContentMinHeight = coreviaTalkNavigationRowHeight;
 const _kBottomBorderWidth = 1.0;
 
 TextStyle _effectiveTitleStyle(BuildContext context, TextStyle? titleStyle) {
@@ -136,8 +136,8 @@ class FrostedAppBar extends StatelessWidget {
   final Color? iconColor;
 
   /// Paints over the frosted fill instead of the default translucent surface.
-  /// Used by the Buzz themes to carry their branded gradient across the app's
-  /// top section — see [buzzTopSectionGradient].
+  /// Used by the Corevia Talk themes to carry their branded gradient across the app's
+  /// top section — see [coreviaTalkTopSectionGradient].
   final Gradient? gradient;
 
   /// Whether to apply the translucent blur treatment behind the app bar.
@@ -371,7 +371,7 @@ class FrostedAppBar extends StatelessWidget {
                         onPressed: () => Navigator.of(context).pop(),
                         color: effectiveIconColor,
                         icon: const BidiFlip(
-                          child: Icon(BuzzIcons.chevronLeft),
+                          child: Icon(CoreviaTalkIcons.chevronLeft),
                         ),
                         tooltip: tl('Back'),
                       ),
@@ -634,11 +634,11 @@ IosNavigationAction? _nativeAction(Widget? widget) {
   }
   if (widget is IconButton) {
     final icon = widget.icon is Icon ? (widget.icon as Icon).icon : null;
-    final symbol = icon == BuzzIcons.x
+    final symbol = icon == CoreviaTalkIcons.x
         ? 'xmark'
-        : icon == BuzzIcons.chevronLeft || icon == BuzzIcons.arrowLeft
+        : icon == CoreviaTalkIcons.chevronLeft || icon == CoreviaTalkIcons.arrowLeft
         ? 'chevron.backward'
-        : icon == BuzzIcons.users
+        : icon == CoreviaTalkIcons.users
         ? 'person.2'
         : 'ellipsis';
     return IosNavigationAction(

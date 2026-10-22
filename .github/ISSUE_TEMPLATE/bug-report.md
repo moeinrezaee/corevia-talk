@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a reproducible bug in Buzz
+about: Report a reproducible bug in Corevia Talk
 labels: bug
 ---
 
@@ -21,7 +21,7 @@ What did you expect to happen?
 
 **Version and platform**
 Find your version at the bottom of the Settings sidebar. Write "unknown" if you can't determine it.
-- Buzz version: 
+- Corevia Talk version: 
 - OS: 
 
 **Logs / additional context**

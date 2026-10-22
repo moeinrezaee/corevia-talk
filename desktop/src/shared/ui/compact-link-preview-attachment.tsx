@@ -12,12 +12,12 @@ import {
   AttachmentTrigger,
 } from "@/shared/ui/attachment";
 import { LinkPreviewControls } from "@/shared/ui/link-preview-controls";
-import { BuzzMark } from "@/shared/ui/buzz-logo/BuzzMark";
+import { CoreviaTalkMark } from "@/shared/ui/corevia-talk-logo/CoreviaTalkMark";
 import { useSmoothCorners } from "@/shared/ui/smoothCorners";
 import { tl, tlt } from "@/shared/i18n/tl";
 
 function getHostname(preview: ResolvedLinkPreview): string {
-  if (preview.href.startsWith("buzz://")) return preview.provider;
+  if (preview.href.startsWith("corevia-talk://")) return preview.provider;
   try {
     return new URL(preview.href).hostname.replace(/^www\./, "");
   } catch {
@@ -77,10 +77,10 @@ export function CompactLinkPreviewAttachment({
   const showFallback =
     preview.imageState === "fallback" || Boolean(imageSrc && !showImage);
   const hostname = getHostname(preview);
-  const showBuzzMark =
-    preview.kind === "buzz-pull-request" ||
-    preview.kind === "buzz-issue" ||
-    preview.kind === "buzz-repository";
+  const showCoreviaTalkMark =
+    preview.kind === "corevia-talk-pull-request" ||
+    preview.kind === "corevia-talk-issue" ||
+    preview.kind === "corevia-talk-repository";
 
   return (
     <div className={cn("relative w-96 max-w-full shrink-0", className)}>
@@ -136,13 +136,13 @@ export function CompactLinkPreviewAttachment({
             rel="noreferrer"
             target="_blank"
           >
-            {showBuzzMark ? (
+            {showCoreviaTalkMark ? (
               <span
                 aria-hidden="true"
                 className="flex size-3 shrink-0 items-center text-foreground/70"
-                data-link-preview-hostname-buzz-mark=""
+                data-link-preview-hostname-corevia-talk-mark=""
               >
-                <BuzzMark className="h-auto w-full" />
+                <CoreviaTalkMark className="h-auto w-full" />
               </span>
             ) : preview.faviconDataUrl ? (
               <img

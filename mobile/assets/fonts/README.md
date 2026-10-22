@@ -11,14 +11,14 @@ font metrics, or variation tables are removed. The license remains in
 To reproduce from the repository root:
 
 ```sh
-mkdir -p /tmp/buzz-inter-source
+mkdir -p /tmp/corevia-talk-inter-source
 for font in InterVariable.ttf InterVariable-Italic.ttf; do
-  git show ec7ea38f62ea917f15e85a678bc94f3bbee5bb64:mobile/assets/fonts/$font > /tmp/buzz-inter-source/$font
+  git show ec7ea38f62ea917f15e85a678bc94f3bbee5bb64:mobile/assets/fonts/$font > /tmp/corevia-talk-inter-source/$font
 done
-python3 -m venv /tmp/buzz-inter-tools
-/tmp/buzz-inter-tools/bin/pip install fonttools==4.60.1
-/tmp/buzz-inter-tools/bin/python mobile/scripts/prepare-inter.py /tmp/buzz-inter-source
-/tmp/buzz-inter-tools/bin/python mobile/scripts/prepare-inter.py /tmp/buzz-inter-source --check
+python3 -m venv /tmp/corevia-talk-inter-tools
+/tmp/corevia-talk-inter-tools/bin/pip install fonttools==4.60.1
+/tmp/corevia-talk-inter-tools/bin/python mobile/scripts/prepare-inter.py /tmp/corevia-talk-inter-source
+/tmp/corevia-talk-inter-tools/bin/python mobile/scripts/prepare-inter.py /tmp/corevia-talk-inter-source --check
 ```
 
 The script checks pristine source hashes and verifies every character mapping
@@ -54,11 +54,11 @@ transformation and native rendering before updating the expected digests.
 ## Tabler mobile preview
 
 `TablerIcons.ttf` is the unmodified outline webfont from
-`@tabler/icons-webfont@3.46.0`, matching buzz-app's Tabler dependency version.
+`@tabler/icons-webfont@3.46.0`, matching corevia-talk-app's Tabler dependency version.
 Source: https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.46.0/dist/fonts/tabler-icons.ttf
 The upstream MIT license is bundled in `TablerIcons-LICENSE.txt`.
 
-`lib/shared/theme/buzz_icons.dart` maps the existing mobile semantic names to
+`lib/shared/theme/corevia_talk_icons.dart` maps the existing mobile semantic names to
 Tabler glyphs using the package's `dist/tabler-icons.css` codepoints. Native
 UIKit controls retain SF Symbols. Lucide's 300/500 navigation weight variants
 both map to Tabler's standard outline; selection still uses the existing color

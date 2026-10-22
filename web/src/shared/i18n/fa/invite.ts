@@ -10,7 +10,7 @@ export const FA_INVITE: Record<string, string> = {
   "You're invited to": "شما دعوت شده‌اید به",
   "Joining…": "در حال پیوستن…",
   "Join in browser": "پیوستن در مرورگر",
-  "Accept invite in Buzz": "پذیرش دعوت در Buzz",
+  "Accept invite in Corevia Talk": "پذیرش دعوت در Corevia Talk",
   "Don't have the app?": "برنامه را ندارید؟",
   "Download it now": "همین حالا دانلود کنید",
   "Browse releases": "مشاهدهٔ نسخه‌ها",
@@ -29,9 +29,9 @@ export const FA_INVITE: Record<string, string> = {
   "{0} Open the Apple menu and choose {1}. “Chip: Apple M…” means Newer Mac. “Processor: Intel” means Older Mac.":
     "{0} منوی Apple را باز کنید و {1} را بزنید. اگر «Chip: Apple M…» نوشته شده بود، مک شما جدیدتر است. اگر «Processor: Intel» نوشته شده بود، مک شما قدیمی‌تر است.",
   "I am 18 years of age or older.": "من ۱۸ سال یا بیشتر سن دارم.",
-  "I agree to the Buzz Terms of Service and Privacy Policy.":
-    "با شرایط خدمات و سیاست حریم خصوصی Buzz موافقم.",
-  "I agree to the Buzz {0} and {1}.": "با {0} و {1} Buzz موافقم.",
+  "I agree to the Corevia Talk Terms of Service and Privacy Policy.":
+    "با شرایط خدمات و سیاست حریم خصوصی Corevia Talk موافقم.",
+  "I agree to the Corevia Talk {0} and {1}.": "با {0} و {1} Corevia Talk موافقم.",
   "Terms of Service": "شرایط خدمات",
   "Privacy Policy": "سیاست حریم خصوصی",
 };

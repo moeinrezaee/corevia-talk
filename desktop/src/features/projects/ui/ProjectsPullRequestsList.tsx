@@ -20,7 +20,7 @@ import {
   resolveUserLabel,
   type UserProfileLookup,
 } from "@/features/profile/lib/identity";
-import { BuzzLoadingState } from "@/shared/ui/BuzzLoadingState";
+import { CoreviaTalkLoadingState } from "@/shared/ui/CoreviaTalkLoadingState";
 import { Button } from "@/shared/ui/button";
 import { Card } from "@/shared/ui/card";
 import { DropdownMenuItem } from "@/shared/ui/dropdown-menu";
@@ -253,7 +253,7 @@ export function ProjectsPullRequestsList({
   );
 
   if (isLoading) {
-    return <BuzzLoadingState label={tl("Loading reviews")} />;
+    return <CoreviaTalkLoadingState label={tl("Loading reviews")} />;
   }
 
   const loadNotice = (

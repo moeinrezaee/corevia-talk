@@ -381,7 +381,7 @@ export function AnimatedAvatarCapture({
       } catch {
         releaseCamera();
         setErrorMessage(
-          "Could not access the camera. Check Buzz's camera permission and try again.",
+          "Could not access the camera. Check Corevia Talk's camera permission and try again.",
         );
         setPhase("idle");
       }

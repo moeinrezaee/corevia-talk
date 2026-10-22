@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/custom_emoji/custom_emoji.dart';
 import '../../shared/custom_emoji/custom_emoji_provider.dart';
@@ -17,7 +17,7 @@ import '../../shared/emoji/emoji_search.dart';
 import '../../shared/emoji/native_emoji_glyph.dart';
 import '../../shared/relay/relay.dart';
 import '../../shared/theme/theme.dart';
-import '../../shared/widgets/buzz_sheet_header.dart';
+import '../../shared/widgets/corevia_talk_sheet_header.dart';
 import '../../shared/widgets/modal_presentation.dart';
 import 'recent_emoji_provider.dart';
 import '../../shared/i18n/app_language.dart';
@@ -65,7 +65,7 @@ void _showFlutterEmojiPicker({
   required void Function(String emoji) onSelect,
   VoidCallback? onDismiss,
 }) {
-  showBuzzModalBottomSheet<void>(
+  showCoreviaTalkModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     showCloseButton: false,
@@ -213,7 +213,7 @@ class _EmojiPickerContent extends HookConsumerWidget {
     return Column(
       children: [
         LayoutBuilder(
-          builder: (context, constraints) => BuzzSheetHeader(
+          builder: (context, constraints) => CoreviaTalkSheetHeader(
             showDragHandle: true,
             leading: SizedBox(
               width: constraints.maxWidth - Grid.gutter * 2 - 44 - Grid.xxs,
@@ -283,7 +283,7 @@ List<_EmojiSection> _buildSections({
       _EmojiSection(
         id: 'frequent',
         label: tl('Frequently used'),
-        icon: BuzzIcons.clock,
+        icon: CoreviaTalkIcons.clock,
         itemCount: recentTiles.length,
         itemBuilder: (context, index) => recentTiles[index],
       ),
@@ -310,7 +310,7 @@ List<_EmojiSection> _buildSections({
       _EmojiSection(
         id: 'custom',
         label: tl('Custom'),
-        icon: BuzzIcons.sparkles,
+        icon: CoreviaTalkIcons.sparkles,
         itemCount: customEmoji.length,
         itemBuilder: (context, index) {
           final entry = customEmoji[index];

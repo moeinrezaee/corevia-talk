@@ -116,7 +116,7 @@ class MediaVideoViewerPage extends HookConsumerWidget {
           }
           final file = File(
             '${directory.path}${Platform.pathSeparator}'
-            'buzz-video-${DateTime.now().microsecondsSinceEpoch}'
+            'corevia-talk-video-${DateTime.now().microsecondsSinceEpoch}'
             '${_videoFileExtension(uri)}',
           );
           videoFile.value = file;
@@ -341,7 +341,7 @@ class MediaVideoViewerPage extends HookConsumerWidget {
                           if (error.value != null || snapshot.hasError) {
                             return _MediaLoadFailure(
                               message: tl('Failed to load video'),
-                              icon: BuzzIcons.videoOff,
+                              icon: CoreviaTalkIcons.videoOff,
                             );
                           }
 
@@ -467,7 +467,7 @@ class _VideoLoadingPoster extends StatelessWidget {
             _videoPlaceholder(context),
           const ColoredBox(color: Color.fromRGBO(0, 0, 0, 0.24)),
           Center(
-            child: BuzzLoadingIndicator(
+            child: CoreviaTalkLoadingIndicator(
               size: 44,
               color: Colors.white,
               semanticLabel: tl('Loading video'),
@@ -482,7 +482,7 @@ class _VideoLoadingPoster extends StatelessWidget {
     return ColoredBox(
       color: context.colors.surfaceContainerHighest,
       child: Icon(
-        BuzzIcons.video,
+        CoreviaTalkIcons.video,
         size: 40,
         color: context.colors.onSurfaceVariant,
       ),

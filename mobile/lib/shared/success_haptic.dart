@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 Future<void> successHaptic() async {
   try {
     if (!kIsWeb && defaultTargetPlatform == TargetPlatform.iOS) {
-      await const MethodChannel('buzz/haptics').invokeMethod<void>('success');
+      await const MethodChannel('corevia-talk/haptics').invokeMethod<void>('success');
     } else {
       await HapticFeedback.mediumImpact();
     }

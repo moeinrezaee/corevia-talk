@@ -1,6 +1,6 @@
-import 'package:buzz/features/channels/agent_reply_handoff.dart';
-import 'package:buzz/features/channels/agent_typing_bubble.dart';
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/features/channels/agent_reply_handoff.dart';
+import 'package:corevia_talk/features/channels/agent_typing_bubble.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

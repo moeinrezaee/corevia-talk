@@ -1,5 +1,5 @@
 -- Channel-TTL refresh is done by the application in the event transaction
--- (crates/buzz-db/src/store/event_follow_up.rs). Retire the trigger that
+-- (crates/corevia-talk-db/src/store/event_follow_up.rs). Retire the trigger that
 -- repeats that work, completing the follow-up trigger retirement begun by
 -- 0063. All event writers and rollback targets must support application TTL
 -- refresh before this migration runs. Published migrations remain

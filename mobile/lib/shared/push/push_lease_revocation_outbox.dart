@@ -21,13 +21,13 @@ const _maximumRetryDelay = Duration(hours: 6);
 const _lowercaseHex64Pattern = r'^[0-9a-f]{64}$';
 const _installationIdPattern = r'^[0-9a-f]{32}$';
 
-typedef BuzzPushLeaseRevocationPublisher =
-    Future<void> Function(BuzzPushLeaseRevocationRecord record);
-typedef BuzzPushLeaseRevocationClock = DateTime Function();
-typedef BuzzPushLeaseRevocationJitter = double Function();
-typedef BuzzPushLeaseRevocationErrorReporter =
+typedef CoreviaTalkPushLeaseRevocationPublisher =
+    Future<void> Function(CoreviaTalkPushLeaseRevocationRecord record);
+typedef CoreviaTalkPushLeaseRevocationClock = DateTime Function();
+typedef CoreviaTalkPushLeaseRevocationJitter = double Function();
+typedef CoreviaTalkPushLeaseRevocationErrorReporter =
     void Function(Object error, StackTrace stackTrace);
-typedef BuzzPushLeaseRevocationWakeScheduler =
+typedef CoreviaTalkPushLeaseRevocationWakeScheduler =
     void Function() Function(Duration delay, void Function() wake);
 
 /// Durable state for retracting one precise NIP-PL lease address.
@@ -35,7 +35,7 @@ typedef BuzzPushLeaseRevocationWakeScheduler =
 /// The signing key is intentionally retained in secure storage only until the
 /// relay accepts the tombstone or the old endpoint grant expires.
 @immutable
-class BuzzPushLeaseRevocationRecord {
+class CoreviaTalkPushLeaseRevocationRecord {
   final String relayUrl;
   final String relayOrigin;
   final String memberPubkey;
@@ -48,7 +48,7 @@ class BuzzPushLeaseRevocationRecord {
   final int attemptCount;
   final int nextAttemptAt;
 
-  BuzzPushLeaseRevocationRecord({
+  CoreviaTalkPushLeaseRevocationRecord({
     required this.relayUrl,
     required this.relayOrigin,
     required this.memberPubkey,
@@ -59,7 +59,7 @@ class BuzzPushLeaseRevocationRecord {
     required this.attemptCount,
     required this.nextAttemptAt,
   }) {
-    if (canonicalBuzzPushRelayOrigin(relayUrl) != relayOrigin) {
+    if (canonicalCoreviaTalkPushRelayOrigin(relayUrl) != relayOrigin) {
       throw const FormatException(
         'Push revocation relay URL and origin do not match.',
       );
@@ -92,12 +92,12 @@ class BuzzPushLeaseRevocationRecord {
 
   String get leaseAddress => '$memberPubkey|$relayOrigin|$installationId';
 
-  BuzzPushLeaseRevocationRecord copyWith({
+  CoreviaTalkPushLeaseRevocationRecord copyWith({
     int? generation,
     int? expiresAt,
     int? attemptCount,
     int? nextAttemptAt,
-  }) => BuzzPushLeaseRevocationRecord(
+  }) => CoreviaTalkPushLeaseRevocationRecord(
     relayUrl: relayUrl,
     relayOrigin: relayOrigin,
     memberPubkey: memberPubkey,
@@ -122,7 +122,7 @@ class BuzzPushLeaseRevocationRecord {
     'nextAttemptAt': nextAttemptAt,
   };
 
-  factory BuzzPushLeaseRevocationRecord.fromJson(Map<String, dynamic> json) {
+  factory CoreviaTalkPushLeaseRevocationRecord.fromJson(Map<String, dynamic> json) {
     const keys = {
       'version',
       'relayUrl',
@@ -149,7 +149,7 @@ class BuzzPushLeaseRevocationRecord {
         json['nextAttemptAt'] is! int) {
       throw const FormatException('Invalid push revocation record.');
     }
-    return BuzzPushLeaseRevocationRecord(
+    return CoreviaTalkPushLeaseRevocationRecord(
       relayUrl: json['relayUrl'] as String,
       relayOrigin: json['relayOrigin'] as String,
       memberPubkey: json['memberPubkey'] as String,
@@ -163,24 +163,24 @@ class BuzzPushLeaseRevocationRecord {
   }
 }
 
-class BuzzPushLeaseRevocationStorage {
-  static const _key = 'buzz_push_lease_revocations_v1';
+class CoreviaTalkPushLeaseRevocationStorage {
+  static const _key = 'corevia_talk_push_lease_revocations_v1';
 
   final FlutterSecureStorage _secure;
 
-  BuzzPushLeaseRevocationStorage({FlutterSecureStorage? secure})
+  CoreviaTalkPushLeaseRevocationStorage({FlutterSecureStorage? secure})
     : _secure = secure ?? communitySecureStorage;
 
-  Future<List<BuzzPushLeaseRevocationRecord>> loadAll() async {
+  Future<List<CoreviaTalkPushLeaseRevocationRecord>> loadAll() async {
     final raw = await _secure.read(key: _key);
-    if (raw == null) return <BuzzPushLeaseRevocationRecord>[];
+    if (raw == null) return <CoreviaTalkPushLeaseRevocationRecord>[];
     final decoded = jsonDecode(raw);
     if (decoded is! List<dynamic>) {
       throw const FormatException('Push revocation outbox must be a list.');
     }
     final records = [
       for (final value in decoded)
-        BuzzPushLeaseRevocationRecord.fromJson(
+        CoreviaTalkPushLeaseRevocationRecord.fromJson(
           Map<String, dynamic>.from(value as Map),
         ),
     ];
@@ -194,7 +194,7 @@ class BuzzPushLeaseRevocationStorage {
   }
 
   Future<void> replaceAll(
-    Iterable<BuzzPushLeaseRevocationRecord> records,
+    Iterable<CoreviaTalkPushLeaseRevocationRecord> records,
   ) async {
     final values = records.toList();
     final addresses = values.map((record) => record.leaseAddress).toSet();
@@ -220,23 +220,23 @@ class BuzzPushLeaseRevocationStorage {
 /// network I/O. A process death during an ambiguous publication therefore
 /// cannot cause an immediate replay or reuse a generation the relay may have
 /// accepted.
-class BuzzPushLeaseRevocationOutbox {
-  BuzzPushLeaseRevocationOutbox({
+class CoreviaTalkPushLeaseRevocationOutbox {
+  CoreviaTalkPushLeaseRevocationOutbox({
     required this.storage,
     required this.publisher,
     this.now = DateTime.now,
-    BuzzPushLeaseRevocationJitter? jitter,
+    CoreviaTalkPushLeaseRevocationJitter? jitter,
     this.reportError = reportPushLeaseCleanupError,
-    BuzzPushLeaseRevocationWakeScheduler? scheduleWake,
+    CoreviaTalkPushLeaseRevocationWakeScheduler? scheduleWake,
   }) : jitter = jitter ?? Random.secure().nextDouble,
        scheduleWake = scheduleWake ?? _scheduleTimer;
 
-  final BuzzPushLeaseRevocationStorage storage;
-  final BuzzPushLeaseRevocationPublisher publisher;
-  final BuzzPushLeaseRevocationClock now;
-  final BuzzPushLeaseRevocationJitter jitter;
-  final BuzzPushLeaseRevocationErrorReporter reportError;
-  final BuzzPushLeaseRevocationWakeScheduler scheduleWake;
+  final CoreviaTalkPushLeaseRevocationStorage storage;
+  final CoreviaTalkPushLeaseRevocationPublisher publisher;
+  final CoreviaTalkPushLeaseRevocationClock now;
+  final CoreviaTalkPushLeaseRevocationJitter jitter;
+  final CoreviaTalkPushLeaseRevocationErrorReporter reportError;
+  final CoreviaTalkPushLeaseRevocationWakeScheduler scheduleWake;
 
   Future<void> _storageTail = Future.value();
   Future<void>? _drain;
@@ -254,7 +254,7 @@ class BuzzPushLeaseRevocationOutbox {
     return result;
   }
 
-  Future<void> enqueue(BuzzPushLeaseRevocationRecord record) async {
+  Future<void> enqueue(CoreviaTalkPushLeaseRevocationRecord record) async {
     await _serialize(() async {
       final records = await storage.loadAll();
       final index = records.indexWhere(
@@ -273,7 +273,7 @@ class BuzzPushLeaseRevocationOutbox {
 
   Future<bool> enqueueCommunity(
     Community community, {
-    Future<List<BuzzPushEndpointGrant>> Function()? readGrants,
+    Future<List<CoreviaTalkPushEndpointGrant>> Function()? readGrants,
   }) async {
     final state = community.pushSubscriptionState;
     final highestGeneration =
@@ -291,9 +291,9 @@ class BuzzPushLeaseRevocationOutbox {
     }
     final decoded = nostr.Nip19.decode(payload: nsec);
     final memberPubkey = community.pubkey ?? nostr.Keys(decoded.data).public;
-    final relayUrl = canonicalBuzzPushRelayHttpUrl(community.relayUrl);
-    final relayOrigin = canonicalBuzzPushRelayOrigin(relayUrl);
-    final grants = await (readGrants ?? readBuzzPushEndpointGrants)();
+    final relayUrl = canonicalCoreviaTalkPushRelayHttpUrl(community.relayUrl);
+    final relayOrigin = canonicalCoreviaTalkPushRelayOrigin(relayUrl);
+    final grants = await (readGrants ?? readCoreviaTalkPushEndpointGrants)();
     final matching = grants
         .where((grant) => grant.relayOrigin == relayOrigin)
         .toList();
@@ -309,7 +309,7 @@ class BuzzPushLeaseRevocationOutbox {
       throw StateError('Push lease generation is exhausted.');
     }
     await enqueue(
-      BuzzPushLeaseRevocationRecord(
+      CoreviaTalkPushLeaseRevocationRecord(
         relayUrl: relayUrl,
         relayOrigin: relayOrigin,
         memberPubkey: memberPubkey,
@@ -361,7 +361,7 @@ class BuzzPushLeaseRevocationOutbox {
     }
   }
 
-  Future<BuzzPushLeaseRevocationRecord?> _reserveNextDueAttempt() => _serialize(
+  Future<CoreviaTalkPushLeaseRevocationRecord?> _reserveNextDueAttempt() => _serialize(
     () async {
       final currentSeconds = now().millisecondsSinceEpoch ~/ 1000;
       final records = await storage.loadAll();
@@ -418,7 +418,7 @@ class BuzzPushLeaseRevocationOutbox {
     return half + (jitter() * (maximumSeconds - half)).floor();
   }
 
-  Future<void> _removeAccepted(BuzzPushLeaseRevocationRecord attempted) =>
+  Future<void> _removeAccepted(CoreviaTalkPushLeaseRevocationRecord attempted) =>
       _serialize(() async {
         final records = await storage.loadAll();
         records.removeWhere(
@@ -473,8 +473,8 @@ void Function() _scheduleTimer(Duration delay, void Function() wake) {
   return timer.cancel;
 }
 
-String canonicalBuzzPushRelayOrigin(String relayUrl) {
-  final uri = _buzzPushRelayUri(relayUrl);
+String canonicalCoreviaTalkPushRelayOrigin(String relayUrl) {
+  final uri = _coreviaTalkPushRelayUri(relayUrl);
   final scheme = switch (uri.scheme) {
     'https' || 'wss' => 'wss',
     'http' || 'ws' => 'ws',
@@ -483,8 +483,8 @@ String canonicalBuzzPushRelayOrigin(String relayUrl) {
   return '$scheme://${uri.authority}';
 }
 
-String canonicalBuzzPushRelayHttpUrl(String relayUrl) {
-  final uri = _buzzPushRelayUri(relayUrl);
+String canonicalCoreviaTalkPushRelayHttpUrl(String relayUrl) {
+  final uri = _coreviaTalkPushRelayUri(relayUrl);
   final scheme = switch (uri.scheme) {
     'https' || 'wss' => 'https',
     'http' || 'ws' => 'http',
@@ -493,7 +493,7 @@ String canonicalBuzzPushRelayHttpUrl(String relayUrl) {
   return uri.replace(scheme: scheme, path: '/').toString();
 }
 
-Uri _buzzPushRelayUri(String relayUrl) {
+Uri _coreviaTalkPushRelayUri(String relayUrl) {
   final uri = Uri.tryParse(relayUrl);
   if (uri == null ||
       !const {'http', 'https', 'ws', 'wss'}.contains(uri.scheme) ||
@@ -507,10 +507,10 @@ Uri _buzzPushRelayUri(String relayUrl) {
   return uri;
 }
 
-Future<void> publishBuzzPushLeaseRevocation(
-  BuzzPushLeaseRevocationRecord record,
+Future<void> publishCoreviaTalkPushLeaseRevocation(
+  CoreviaTalkPushLeaseRevocationRecord record,
 ) async {
-  final descriptor = await fetchBuzzPushLeaseDescriptor(record.relayUrl);
+  final descriptor = await fetchCoreviaTalkPushLeaseDescriptor(record.relayUrl);
   if (descriptor.origin != record.relayOrigin) {
     throw StateError('Relay push origin changed while revocation was pending.');
   }
@@ -518,7 +518,7 @@ Future<void> publishBuzzPushLeaseRevocation(
   final wsUrl = uri
       .replace(scheme: uri.scheme == 'https' ? 'wss' : 'ws')
       .toString();
-  await publishBuzzPushLeaseTombstone(
+  await publishCoreviaTalkPushLeaseTombstone(
     descriptor: descriptor,
     installationId: record.installationId,
     generation: record.generation,
@@ -536,16 +536,16 @@ Future<void> publishBuzzPushLeaseRevocation(
   );
 }
 
-final buzzPushLeaseRevocationStorageProvider =
-    Provider<BuzzPushLeaseRevocationStorage>(
-      (ref) => BuzzPushLeaseRevocationStorage(),
+final coreviaTalkPushLeaseRevocationStorageProvider =
+    Provider<CoreviaTalkPushLeaseRevocationStorage>(
+      (ref) => CoreviaTalkPushLeaseRevocationStorage(),
     );
 
-final buzzPushLeaseRevocationOutboxProvider =
-    Provider<BuzzPushLeaseRevocationOutbox>((ref) {
-      final outbox = BuzzPushLeaseRevocationOutbox(
-        storage: ref.read(buzzPushLeaseRevocationStorageProvider),
-        publisher: publishBuzzPushLeaseRevocation,
+final coreviaTalkPushLeaseRevocationOutboxProvider =
+    Provider<CoreviaTalkPushLeaseRevocationOutbox>((ref) {
+      final outbox = CoreviaTalkPushLeaseRevocationOutbox(
+        storage: ref.read(coreviaTalkPushLeaseRevocationStorageProvider),
+        publisher: publishCoreviaTalkPushLeaseRevocation,
       );
       ref.onDispose(outbox.dispose);
       return outbox;

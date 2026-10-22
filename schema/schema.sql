@@ -25,7 +25,7 @@
 -- alter or drop a table or index, except `CREATE TABLE ... PARTITION OF` in
 -- `partitions/`. The layout test enforces both.
 
--- Buzz initial Postgres schema — multi-tenant.
+-- Corevia Talk initial Postgres schema — multi-tenant.
 --
 -- Source of truth for fresh database setup. This is a clean, from-scratch
 -- schema in which `community_id` is a first-class, server-resolved key on

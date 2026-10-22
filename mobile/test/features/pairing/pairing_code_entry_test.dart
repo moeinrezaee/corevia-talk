@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'package:buzz/features/pairing/pairing_page.dart';
-import 'package:buzz/features/pairing/pairing_provider.dart';
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/features/pairing/pairing_page.dart';
+import 'package:corevia_talk/features/pairing/pairing_provider.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -178,7 +178,7 @@ void main() {
     final notifier = await showEntry(tester);
     final haptics = <Object?>[];
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-        .setMockMethodCallHandler(const MethodChannel('buzz/haptics'), (
+        .setMockMethodCallHandler(const MethodChannel('corevia-talk/haptics'), (
           call,
         ) async {
           if (call.method == 'error') {
@@ -188,7 +188,7 @@ void main() {
         });
     addTearDown(
       () => TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-          .setMockMethodCallHandler(const MethodChannel('buzz/haptics'), null),
+          .setMockMethodCallHandler(const MethodChannel('corevia-talk/haptics'), null),
     );
     await tester.enterText(field, '999999');
     await tester.pump();
@@ -231,7 +231,7 @@ void main() {
       await showEntry(tester);
       var errorHaptics = 0;
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-          .setMockMethodCallHandler(const MethodChannel('buzz/haptics'), (
+          .setMockMethodCallHandler(const MethodChannel('corevia-talk/haptics'), (
             call,
           ) async {
             if (call.method == 'error') errorHaptics++;
@@ -240,7 +240,7 @@ void main() {
       addTearDown(
         () => TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
             .setMockMethodCallHandler(
-              const MethodChannel('buzz/haptics'),
+              const MethodChannel('corevia-talk/haptics'),
               null,
             ),
       );
@@ -339,7 +339,7 @@ void main() {
       expect(field, findsNothing);
       expect(find.text('Protect your identity'), findsOneWidget);
       expect(
-        find.textContaining('before sending your Buzz identity'),
+        find.textContaining('before sending your Corevia Talk identity'),
         findsOneWidget,
       );
       expect(notifier.confirmations, 0);

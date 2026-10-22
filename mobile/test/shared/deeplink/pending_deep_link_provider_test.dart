@@ -1,6 +1,6 @@
-import 'package:buzz/shared/deeplink/deep_link.dart';
-import 'package:buzz/shared/deeplink/pending_deep_link_provider.dart';
-import 'package:buzz/shared/push/push_bridge.dart';
+import 'package:corevia_talk/shared/deeplink/deep_link.dart';
+import 'package:corevia_talk/shared/deeplink/pending_deep_link_provider.dart';
+import 'package:corevia_talk/shared/push/push_bridge.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -25,7 +25,7 @@ void main() {
     addTearDown(container.dispose);
     container
         .read(pendingDeepLinkProvider.notifier)
-        .open(Uri.parse('buzz://auth?code=secret-code&state=secret-state'));
+        .open(Uri.parse('corevia-talk://auth?code=secret-code&state=secret-state'));
     expect(container.read(pendingDeepLinkProvider), isNull);
     expect(messages.join(), isNot(contains('secret-code')));
     expect(messages.join(), isNot(contains('secret-state')));

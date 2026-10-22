@@ -32,7 +32,7 @@ class IosAddMembersSheet extends StatefulWidget {
 }
 
 class _IosAddMembersSheetState extends State<IosAddMembersSheet> {
-  static const _channel = MethodChannel('buzz/add_members_sheet');
+  static const _channel = MethodChannel('corevia-talk/add_members_sheet');
   final _session = UniqueKey().toString();
   bool _presented = false;
   bool _closed = false;

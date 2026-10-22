@@ -21,7 +21,7 @@ Future<bool> showSelfHostedEntry(
   required String relay,
   required String name,
 }) async =>
-    await showBuzzModalBottomSheet<bool>(
+    await showCoreviaTalkModalBottomSheet<bool>(
       context: context,
       title: 'Join community',
       isScrollControlled: true,

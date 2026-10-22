@@ -265,7 +265,7 @@ export function BackupTestFlow({
           </p>
           <p className="mt-1.5 text-sm leading-6 text-muted-foreground">
             {result.matchesCurrentIdentity
-              ? tl("It restores your current Buzz identity.")
+              ? tl("It restores your current Corevia Talk identity.")
               : tl(
                   "It restores a different identity than the one signed in here.",
                 )}

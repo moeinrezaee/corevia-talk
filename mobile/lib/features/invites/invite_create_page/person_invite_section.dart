@@ -100,8 +100,8 @@ class _PersonInviteSection extends HookConsumerWidget {
           child: SizedBox(
             key: const Key('community-invite-recipient-field'),
             width: double.infinity,
-            height: buzzSearchIdleFieldHeight,
-            child: BuzzSearchField(
+            height: coreviaTalkSearchIdleFieldHeight,
+            child: CoreviaTalkSearchField(
               fieldKey: const Key('community-invite-search'),
               controller: searchController,
               focusNode: searchFocusNode,
@@ -192,7 +192,7 @@ class _InviteeResolutionCard extends StatelessWidget {
             leading: SizedBox.square(
               dimension: 40,
               child: Center(
-                child: BuzzLoadingIndicator(
+                child: CoreviaTalkLoadingIndicator(
                   size: 20,
                   semanticLabel: tl('Resolving profile'),
                 ),
@@ -236,7 +236,7 @@ class _InviteeResolutionCard extends StatelessWidget {
                 key: const Key('community-invite-submit'),
                 onPressed: isSubmitting ? null : () => onInvite(invitee),
                 child: isSubmitting
-                    ? BuzzLoadingIndicator(
+                    ? CoreviaTalkLoadingIndicator(
                         size: 16,
                         semanticLabel: tl('Inviting person'),
                       )

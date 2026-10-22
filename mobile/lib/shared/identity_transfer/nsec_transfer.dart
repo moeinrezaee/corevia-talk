@@ -20,7 +20,7 @@ abstract final class NsecTransfer {
   /// Reads a single small UTF-8 nsec file. Cancellation returns null.
   static Future<String?> pickFile() async {
     final text = await const MethodChannel(
-      'buzz/identity_file',
+      'corevia-talk/identity_file',
     ).invokeMethod<String>('import');
     if (text == null) return null;
     preview(text);
@@ -50,9 +50,9 @@ abstract final class NsecTransfer {
   static Future<bool> shareFile(String nsec, Rect origin) async {
     preview(nsec);
     if (defaultTargetPlatform == TargetPlatform.android) {
-      return await const MethodChannel('buzz/identity_file').invokeMethod<bool>(
+      return await const MethodChannel('corevia-talk/identity_file').invokeMethod<bool>(
             'export',
-            {'text': '${nsec.trim()}\n', 'name': 'buzz-identity.nsec'},
+            {'text': '${nsec.trim()}\n', 'name': 'corevia-talk-identity.nsec'},
           ) ??
           false;
     }
@@ -60,15 +60,15 @@ abstract final class NsecTransfer {
     final File file;
     if (defaultTargetPlatform == TargetPlatform.iOS) {
       final path = await const MethodChannel(
-        'buzz/identity_file',
+        'corevia-talk/identity_file',
       ).invokeMethod<String>('prepareExport', {'text': '${nsec.trim()}\n'});
       if (path == null) throw PlatformException(code: 'export_failed');
       file = File(path);
     } else {
       final directory = await (await getTemporaryDirectory()).createTemp(
-        'buzz-identity-',
+        'corevia-talk-identity-',
       );
-      file = File('${directory.path}/buzz-identity.nsec');
+      file = File('${directory.path}/corevia-talk-identity.nsec');
     }
     try {
       if (defaultTargetPlatform != TargetPlatform.iOS) {

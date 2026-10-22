@@ -15,7 +15,7 @@ class _OnboardingBackground extends StatelessWidget {
         image: isDark
             ? null
             : const DecorationImage(
-                // Same supplied artwork and full-image stretch as Buzz 2.0.
+                // Same supplied artwork and full-image stretch as Corevia Talk 2.0.
                 image: AssetImage('assets/images/shell-gradient.png'),
                 fit: BoxFit.fill,
               ),

@@ -427,7 +427,7 @@ BEGIN
     -- that concurrent insertions serialize here. The key is a stable hash of
     -- the namespace string and the community_id bytes.
     lock_key := hashtextextended(
-        'buzz:enrollment-policy-revision:v1:' || NEW.community_id::text,
+        'corevia_talk:enrollment-policy-revision:v1:' || NEW.community_id::text,
         0
     );
     PERFORM pg_advisory_xact_lock(lock_key);
@@ -480,7 +480,7 @@ DECLARE
 BEGIN
     IF locked_principal_fingerprint IS NOT NULL THEN
         principal_lock_key := hashtextextended(
-            'buzz:identity-lifecycle-coordinate:v1:principal:'
+            'corevia_talk:identity-lifecycle-coordinate:v1:principal:'
                 || locked_community_id::text || ':'
                 || encode(locked_principal_fingerprint, 'hex'),
             0
@@ -488,7 +488,7 @@ BEGIN
     END IF;
     IF locked_event_author_pubkey IS NOT NULL THEN
         event_author_lock_key := hashtextextended(
-            'buzz:identity-lifecycle-coordinate:v1:key:'
+            'corevia_talk:identity-lifecycle-coordinate:v1:key:'
                 || locked_community_id::text || ':'
                 || encode(locked_event_author_pubkey, 'hex'),
             0

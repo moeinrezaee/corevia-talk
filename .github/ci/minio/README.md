@@ -1,4 +1,4 @@
-# Buzz CI MinIO
+# Corevia Talk CI MinIO
 
 `ghcr.io/block/buzz-minio:latest` contains MinIO and `mc` for the disposable
 Linux AMD64 runners. Only the publisher smoke test selects it through
@@ -24,14 +24,14 @@ and [mc release](https://github.com/minio/mc/tree/RELEASE.2025-08-13T08-35-41Z).
 ## First publication
 
 The image must exist and be publicly pullable before the CI switch can pass.
-Use two separate PRs: Buzz only permits squash merges, so two commits in one
+Use two separate PRs: Corevia Talk only permits squash merges, so two commits in one
 PR cannot stage this rollout.
 
 1. Merge the publisher-only PR containing `.github/ci/minio/`,
    `.github/workflows/minio-image.yml`, and the opt-in `docker-compose.ci.yml`.
    Ordinary CI does not select the override yet, so it does not need this image
    to validate the publisher PR. The merge triggers the first publication.
-2. After publication succeeds, an org/package admin must make **buzz-minio**
+2. After publication succeeds, an org/package admin must make **corevia-talk-minio**
    public in its GitHub package settings (new GHCR packages default to private,
    even for public repositories). Verify an anonymous pull of
    `ghcr.io/block/buzz-minio:latest`.

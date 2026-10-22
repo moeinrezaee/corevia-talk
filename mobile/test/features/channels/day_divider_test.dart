@@ -1,5 +1,5 @@
-import 'package:buzz/features/channels/day_divider.dart';
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/features/channels/day_divider.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

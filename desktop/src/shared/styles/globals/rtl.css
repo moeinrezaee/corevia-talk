@@ -9,7 +9,7 @@
   /* Peyda FaNum goes first so digits come out as Persian numerals; Inter still
      covers Latin glyphs Peyda lacks. English keeps the default stack. */
   :root[lang="fa"] {
-    --buzz-font-sans:
+    --corevia-talk-font-sans:
       "Peyda FaNum", "Inter Variable", Inter, "Avenir Next", "Segoe UI",
       sans-serif;
   }

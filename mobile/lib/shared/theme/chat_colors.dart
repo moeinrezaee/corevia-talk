@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'accent_colors.dart';
 
-/// Desktop accent families in picker order. Fills are accent-9 from buzz-app's
+/// Desktop accent families in picker order. Fills are accent-9 from corevia-talk-app's
 /// design-system tokens (4ad00a8a).
 ///
 /// Wire values are desktop's v1 `community-theme` accents for the same color

@@ -237,7 +237,7 @@ export function CustomEmojiSettingsCard() {
                     data-settings-subcopy
                   >
                     {tl(
-                      "Choose an image first; Buzz will suggest a name from the filename.",
+                      "Choose an image first; Corevia Talk will suggest a name from the filename.",
                     )}
                   </p>
                 ) : ownDuplicate ? (

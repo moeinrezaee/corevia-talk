@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../shared/theme/buzz_icons.dart';
+import '../../shared/theme/corevia_talk_icons.dart';
 import '../../shared/theme/theme.dart';
 import 'thread_detail_page.dart';
 import 'timeline_message.dart';
@@ -191,7 +191,7 @@ class MessageSwipeReply extends HookConsumerWidget {
                                             backgroundColor: Colors.transparent,
                                           ),
                                           Icon(
-                                            BuzzIcons.messageSquareReply,
+                                            CoreviaTalkIcons.messageSquareReply,
                                             size: 22,
                                             color: progress == 1
                                                 ? filledForeground

@@ -186,7 +186,7 @@ class _HuddleButton extends ConsumerWidget {
       color: context.colors.primary,
       onPressed: action.onPressed,
       tooltip: action.label,
-      icon: const Icon(BuzzIcons.headphones, size: 22),
+      icon: const Icon(CoreviaTalkIcons.headphones, size: 22),
     );
   }
 }
@@ -343,7 +343,7 @@ class _HuddleJoinSurface extends ConsumerWidget {
         ),
         child: Row(
           children: [
-            Icon(BuzzIcons.headphones, size: 20, color: context.colors.primary),
+            Icon(CoreviaTalkIcons.headphones, size: 20, color: context.colors.primary),
             const SizedBox(width: Grid.xxs),
             Expanded(
               child: Column(
@@ -640,7 +640,7 @@ class _MobileHuddleCallPage extends ConsumerWidget {
     final (retryTooltip, retryIcon, onRetry) = switch (true) {
       _ when unavailable => (
         tl('Start a new Huddle'),
-        BuzzIcons.headphones,
+        CoreviaTalkIcons.headphones,
         () => unawaited(
           _startReplacementHuddle(
             context: context,
@@ -651,12 +651,12 @@ class _MobileHuddleCallPage extends ConsumerWidget {
       ),
       _ when needsMicrophoneSettings => (
         tl('Open Settings'),
-        BuzzIcons.settings,
+        CoreviaTalkIcons.settings,
         () => unawaited(sessionController.openMicrophoneSettings()),
       ),
       _ => (
         'Try again',
-        BuzzIcons.refreshCw,
+        CoreviaTalkIcons.refreshCw,
         () => unawaited(
           lifecycleController.join(
             parentChannelId: invite.parentChannelId,
@@ -827,13 +827,13 @@ class _HuddleCallHeader extends StatelessWidget {
               unawaited(HapticFeedback.selectionClick());
               onMinimize();
             },
-            icon: const Icon(BuzzIcons.chevronDown, size: 32),
+            icon: const Icon(CoreviaTalkIcons.chevronDown, size: 32),
           ),
           const Spacer(),
           _HuddleRoundControl(
             key: const ValueKey('huddle-leave'),
             tooltip: tl('Leave Huddle'),
-            icon: BuzzIcons.phoneOff,
+            icon: CoreviaTalkIcons.phoneOff,
             foregroundColor: context.colors.error,
             backgroundColor: context.colors.surfaceContainerHighest,
             useHapticFeedback: true,

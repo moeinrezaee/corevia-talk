@@ -29,7 +29,7 @@ class _MediaViewerBottomControls extends StatelessWidget {
         children: [
           _MediaViewerCircleButton(
             key: const ValueKey('message-media-image-viewer-reply-thread'),
-            icon: BuzzIcons.messageSquareReply,
+            icon: CoreviaTalkIcons.messageSquareReply,
             tooltip: tl('Reply in thread'),
             onPressed: onReply,
           ),
@@ -55,7 +55,7 @@ class _MediaViewerBottomControls extends StatelessWidget {
           const SizedBox(width: Grid.xxs),
           _MediaViewerCircleButton(
             key: const ValueKey('message-media-image-viewer-more-actions'),
-            icon: BuzzIcons.ellipsis,
+            icon: CoreviaTalkIcons.ellipsis,
             tooltip: tl('More image actions'),
             onPressed: onMore,
           ),
@@ -83,9 +83,9 @@ class _MediaViewerCircleButton extends StatelessWidget {
       return Theme(
         data: ThemeData.dark(),
         child: IosGlassNavigationButton(
-          icon: icon == BuzzIcons.x
+          icon: icon == CoreviaTalkIcons.x
               ? IosGlassNavigationIcon.close
-              : icon == BuzzIcons.ellipsis
+              : icon == CoreviaTalkIcons.ellipsis
               ? IosGlassNavigationIcon.more
               : IosGlassNavigationIcon.reply,
           semanticLabel: tooltip,
@@ -135,7 +135,7 @@ class _MediaViewerCloseButton extends StatelessWidget {
       );
     }
     return _MediaViewerCircleButton(
-      icon: BuzzIcons.x,
+      icon: CoreviaTalkIcons.x,
       tooltip: tooltip,
       onPressed: onPressed,
     );

@@ -1,19 +1,19 @@
-import 'package:buzz/shared/widgets/buzz_agent_icon.dart';
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channel_management_provider.dart';
-import 'package:buzz/features/channels/channels_provider.dart';
-import 'package:buzz/features/channels/message_content.dart';
-import 'package:buzz/features/channels/small_avatar.dart';
-import 'package:buzz/features/profile/profile_provider.dart';
-import 'package:buzz/shared/profile/user_cache_provider.dart';
-import 'package:buzz/shared/profile/user_profile.dart';
-import 'package:buzz/features/search/recent_searches_provider.dart';
-import 'package:buzz/features/search/search_page.dart';
-import 'package:buzz/features/search/search_provider.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/mentions/agent_identity_provider.dart';
-import 'package:buzz/shared/widgets/concentric_sheet_surface.dart';
-import 'package:buzz/shared/widgets/ios_glass_navigation_button.dart';
+import 'package:corevia_talk/shared/widgets/corevia_talk_agent_icon.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channel_management_provider.dart';
+import 'package:corevia_talk/features/channels/channels_provider.dart';
+import 'package:corevia_talk/features/channels/message_content.dart';
+import 'package:corevia_talk/features/channels/small_avatar.dart';
+import 'package:corevia_talk/features/profile/profile_provider.dart';
+import 'package:corevia_talk/shared/profile/user_cache_provider.dart';
+import 'package:corevia_talk/shared/profile/user_profile.dart';
+import 'package:corevia_talk/features/search/recent_searches_provider.dart';
+import 'package:corevia_talk/features/search/search_page.dart';
+import 'package:corevia_talk/features/search/search_provider.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/mentions/agent_identity_provider.dart';
+import 'package:corevia_talk/shared/widgets/concentric_sheet_surface.dart';
+import 'package:corevia_talk/shared/widgets/ios_glass_navigation_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
@@ -812,7 +812,7 @@ void main() {
     );
     expect(content.mentionNames, {agentPubkey: 'Helper Bot'});
     expect(content.agentMentionPubkeys, contains(agentPubkey));
-    expect(find.byType(BuzzAgentIcon), findsOneWidget);
+    expect(find.byType(CoreviaTalkAgentIcon), findsOneWidget);
   });
 
   testWidgets('does not label an unjoined channel as having zero members', (
@@ -866,7 +866,7 @@ Future<void> _pressNativeFilter(WidgetTester tester, String label) async {
   const viewId = 42;
   view.onPlatformViewCreated!(viewId);
   await tester.pump();
-  const channel = MethodChannel('buzz/navigation_glass/$viewId');
+  const channel = MethodChannel('corevia-talk/navigation_glass/$viewId');
   await tester.binding.defaultBinaryMessenger.handlePlatformMessage(
     channel.name,
     channel.codec.encodeMethodCall(const MethodCall('pressed')),

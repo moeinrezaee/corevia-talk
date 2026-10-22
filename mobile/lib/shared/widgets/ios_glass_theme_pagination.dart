@@ -22,7 +22,7 @@ class IosGlassThemePagination extends HookWidget {
     required this.inactiveColor,
   });
 
-  static const viewType = 'buzz/theme_pagination_glass';
+  static const viewType = 'corevia-talk/theme_pagination_glass';
 
   /// The kind of content being paged, announced by VoiceOver.
   final String? semanticLabel;

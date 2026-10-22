@@ -330,7 +330,7 @@ export function SettingsView({
           {appVersion ? (
             <p
               className="px-2 pb-1 text-xs text-sidebar-foreground/45"
-              data-buzz-sidebar-secondary
+              data-corevia-talk-sidebar-secondary
               data-testid="settings-version"
             >
               v{appVersion}
@@ -344,7 +344,7 @@ export function SettingsView({
           "isolate relative min-h-0 min-w-0 overflow-hidden bg-sidebar motion-safe:transition-opacity motion-safe:duration-200",
           isLoaded ? "opacity-100" : "opacity-0",
         )}
-        data-buzz-shadow-viewport
+        data-corevia-talk-shadow-viewport
         data-testid="settings-view"
       >
         <div
@@ -358,7 +358,7 @@ export function SettingsView({
         />
         <div
           className="relative z-10 mb-2 ms-px me-2 mt-px flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl bg-background shadow-content-edge"
-          data-buzz-content-surface
+          data-corevia-talk-content-surface
           data-testid="settings-content-surface"
         >
           <section

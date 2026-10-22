@@ -15,11 +15,11 @@ import '../../../shared/theme/community_theme_preference.dart';
 const threadFollowsMaxEntries = 500;
 
 String threadFollowsKey(String pubkey, String relayUrl) =>
-    'buzz-thread-follows.v1:$pubkey:${Uri.encodeComponent(normalizeCommunityRelayUrl(relayUrl))}';
+    'corevia-talk-thread-follows.v1:$pubkey:${Uri.encodeComponent(normalizeCommunityRelayUrl(relayUrl))}';
 
 /// The earlier key, shared by every community of the identity.
 String legacyThreadFollowsKey(String pubkey) =>
-    'buzz-thread-follows.v1:$pubkey';
+    'corevia-talk-thread-follows.v1:$pubkey';
 
 class ThreadFollowEntry {
   final String rootId;

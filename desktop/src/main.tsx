@@ -34,12 +34,12 @@ import {
 } from "@/shared/i18n/languagePreference";
 
 type E2eWindow = Window & {
-  __BUZZ_E2E__?: unknown;
+  __COREVIA_TALK_E2E__?: unknown;
 };
 
 const E2E_DEFAULT_PUBKEY = "deadbeef".repeat(8);
 const E2E_COMMUNITY_ID = "e2e-default-community";
-const ONBOARDING_COMPLETION_STORAGE_KEY_PREFIX = "buzz-onboarding-complete.v1:";
+const ONBOARDING_COMPLETION_STORAGE_KEY_PREFIX = "corevia-talk-onboarding-complete.v1:";
 const DEV_STATE_RESET_PARAM = "resetDevState";
 
 function resetDevWebviewStateFromUrl() {
@@ -52,7 +52,7 @@ function resetDevWebviewStateFromUrl() {
     return;
   }
 
-  // WebKit groups every Buzz binary under one disk directory, but storage is
+  // WebKit groups every Corevia Talk binary under one disk directory, but storage is
   // isolated by origin. Clearing here resets only this dev server's origin;
   // deleting the shared WebKit directory would also destroy installed-app state.
   window.localStorage.clear();
@@ -72,7 +72,7 @@ function configureDevE2eBridgeFromUrl() {
   }
 
   const e2eWindow = window as E2eWindow;
-  e2eWindow.__BUZZ_E2E__ ??= { mode: "mock" };
+  e2eWindow.__COREVIA_TALK_E2E__ ??= { mode: "mock" };
 
   const community = {
     addedAt: new Date().toISOString(),
@@ -80,8 +80,8 @@ function configureDevE2eBridgeFromUrl() {
     name: "E2E Test",
     relayUrl: "ws://localhost:3000",
   };
-  window.localStorage.setItem("buzz-communities", JSON.stringify([community]));
-  window.localStorage.setItem("buzz-active-community-id", E2E_COMMUNITY_ID);
+  window.localStorage.setItem("corevia-talk-communities", JSON.stringify([community]));
+  window.localStorage.setItem("corevia-talk-active-community-id", E2E_COMMUNITY_ID);
   window.localStorage.setItem(
     `${ONBOARDING_COMPLETION_STORAGE_KEY_PREFIX}${E2E_DEFAULT_PUBKEY}`,
     "true",
@@ -99,7 +99,7 @@ function renderApp() {
           <CommunityOnboardingProvider
             enabled={huddleWindowChannelId() === null}
           >
-            <ThemeProvider defaultTheme="buzz">
+            <ThemeProvider defaultTheme="corevia-talk">
               <TooltipProvider>
                 <EmojiBurstProvider>
                   <PoofBurstProvider>
@@ -124,7 +124,7 @@ async function installE2eBridgeIfConfigured() {
   // pre-bootstrap global alone must never activate mock IPC in production.
   if (
     !(import.meta.env.DEV || import.meta.env.MODE === "e2e") ||
-    !(window as E2eWindow).__BUZZ_E2E__
+    !(window as E2eWindow).__COREVIA_TALK_E2E__
   ) {
     return;
   }

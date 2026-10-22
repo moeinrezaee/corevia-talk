@@ -14,7 +14,7 @@ import { OnboardingFooter } from "./OnboardingFooter";
 import { tl } from "@/shared/i18n/tl";
 
 const IDENTITY_KEY_HELP_SEEN_STORAGE_KEY =
-  "buzz.machine-onboarding.identity-key-help-seen.v1";
+  "corevia-talk.machine-onboarding.identity-key-help-seen.v1";
 const IDENTITY_KEY_HELP_DELAY_MS = 2_000;
 
 function hasSeenIdentityKeyHelp(): boolean {
@@ -98,7 +98,7 @@ export function IdentityKeyHelpDialog({
         <OnboardingFooter className="max-w-none">{trigger}</OnboardingFooter>
       )}
       <DialogContent
-        className="buzz-onboarding-neutral-theme max-w-[47.5rem] -translate-y-5"
+        className="corevia-talk-onboarding-neutral-theme max-w-[47.5rem] -translate-y-5"
         closeButtonClassName={ONBOARDING_INK_ICON_CLASS}
         data-system-color-scheme="light"
         data-testid="identity-key-help-dialog"
@@ -111,7 +111,7 @@ export function IdentityKeyHelpDialog({
           </DialogTitle>
           <DialogDescription
             asChild
-            className="mt-6 space-y-4 text-pretty text-base leading-7 text-[color:var(--buzz-onboarding-backup-ink)]"
+            className="mt-6 space-y-4 text-pretty text-base leading-7 text-[color:var(--corevia-talk-onboarding-backup-ink)]"
           >
             <div>
               <IdentityKeyHelpBody />
@@ -128,12 +128,12 @@ function IdentityKeyHelpBody() {
     <>
       <p>
         {tl(
-          "Buzz will create a Nostr identity with two parts: a private key that signs you in and a public key you can safely share. You can find your public identity anytime in Buzz settings.",
+          "Corevia Talk will create a Nostr identity with two parts: a private key that signs you in and a public key you can safely share. You can find your public identity anytime in Corevia Talk settings.",
         )}
       </p>
       <p>
         {tl(
-          "This identity belongs to you, not Buzz, and can move with you to another device or compatible Nostr app. Because only you control the private key, Buzz can’t reset or recover it. Keep a backup somewhere safe, and never share it.",
+          "This identity belongs to you, not Corevia Talk, and can move with you to another device or compatible Nostr app. Because only you control the private key, Corevia Talk can’t reset or recover it. Keep a backup somewhere safe, and never share it.",
         )}
       </p>
     </>

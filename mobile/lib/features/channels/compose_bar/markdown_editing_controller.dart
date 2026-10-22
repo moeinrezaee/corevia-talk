@@ -323,7 +323,7 @@ class _MarkdownEditingController extends TextEditingController {
     TextStyle style,
   ) {
     final expression = RegExp(
-      r'''buzz://(?:message\?|channel/|(?:repo|pr|issue)\?)[^\s<>"']+''',
+      r'''corevia-talk://(?:message\?|channel/|(?:repo|pr|issue)\?)[^\s<>"']+''',
       caseSensitive: false,
     );
     final matches = expression.allMatches(source).toList();
@@ -353,7 +353,7 @@ class _MarkdownEditingController extends TextEditingController {
           WidgetSpan(
             alignment: PlaceholderAlignment.baseline,
             baseline: TextBaseline.alphabetic,
-            child: _ComposerBuzzLinkChip(
+            child: _ComposerCoreviaTalkLinkChip(
               icon: presentation.$1,
               label: presentation.$2,
               semanticLabel: presentation.$3,
@@ -392,15 +392,15 @@ class _MarkdownEditingController extends TextEditingController {
   (IconData, String, String)? _composerLinkPresentation(String raw) {
     final uri = Uri.tryParse(raw);
     if (uri == null) return null;
-    final link = parseBuzzDeepLink(uri) ?? parseEntityDeepLink(uri);
+    final link = parseCoreviaTalkDeepLink(uri) ?? parseEntityDeepLink(uri);
     return switch (link) {
       ChannelDeepLink(:final channelId) => (
-        BuzzIcons.hash,
+        CoreviaTalkIcons.hash,
         _resolvedChannelName(channelId),
         tlt('Channel {0}', [_resolvedChannelName(channelId)]),
       ),
       MessageDeepLink(:final channelId, :final messageId) => (
-        BuzzIcons.messageSquare,
+        CoreviaTalkIcons.messageSquare,
         '${_resolvedChannelName(channelId)} · ${messageId.substring(0, 8)}',
         tlt('Message {0} in channel {1}', [
           messageId.substring(0, 8),
@@ -409,9 +409,9 @@ class _MarkdownEditingController extends TextEditingController {
       ),
       EntityDeepLink(:final type, :final repository, :final eventId) => (
         switch (type) {
-          'repo' => BuzzIcons.folderGit2,
-          'pr' => BuzzIcons.gitPullRequest,
-          _ => BuzzIcons.circleDot,
+          'repo' => CoreviaTalkIcons.folderGit2,
+          'pr' => CoreviaTalkIcons.gitPullRequest,
+          _ => CoreviaTalkIcons.circleDot,
         },
         type == 'repo'
             ? repository
@@ -508,13 +508,13 @@ class _MarkdownEditingController extends TextEditingController {
   }
 }
 
-class _ComposerBuzzLinkChip extends StatelessWidget {
+class _ComposerCoreviaTalkLinkChip extends StatelessWidget {
   final IconData icon;
   final String label;
   final String semanticLabel;
   final TextStyle textStyle;
 
-  const _ComposerBuzzLinkChip({
+  const _ComposerCoreviaTalkLinkChip({
     required this.icon,
     required this.label,
     required this.semanticLabel,
@@ -533,7 +533,7 @@ class _ComposerBuzzLinkChip extends StatelessWidget {
       label: semanticLabel,
       excludeSemantics: true,
       child: Container(
-        key: ValueKey('composer-buzz-link-chip:$label'),
+        key: ValueKey('composer-corevia-talk-link-chip:$label'),
         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
         decoration: BoxDecoration(
           color: context.colors.primary.withValues(alpha: 0.16),
@@ -599,7 +599,7 @@ class _ComposerAgentMentionChip extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(
-              BuzzIcons.bot,
+              CoreviaTalkIcons.bot,
               size: fontSize * 0.95,
               color: context.colors.primary,
             ),

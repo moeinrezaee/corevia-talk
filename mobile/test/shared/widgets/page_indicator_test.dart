@@ -1,4 +1,4 @@
-import 'package:buzz/shared/widgets/page_indicator.dart';
+import 'package:corevia_talk/shared/widgets/page_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/semantics.dart';
@@ -12,7 +12,7 @@ void main() {
     tester,
   ) async {
     final updates = <Map<Object?, Object?>>[];
-    const channel = MethodChannel('buzz/theme_pagination_glass/54321');
+    const channel = MethodChannel('corevia-talk/theme_pagination_glass/54321');
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel, (
       call,
     ) async {

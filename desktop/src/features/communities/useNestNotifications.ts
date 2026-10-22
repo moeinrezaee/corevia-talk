@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 import { tl } from "@/shared/i18n/tl";
 
-const MIGRATION_TOAST_KEY = "buzz-legacy-nest-migrated-notified";
+const MIGRATION_TOAST_KEY = "corevia-talk-legacy-nest-migrated-notified";
 
 /**
  * Surface nest-related backend events as toasts.

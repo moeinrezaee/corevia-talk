@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../shared/theme/theme.dart';
@@ -17,7 +17,7 @@ part 'pairing_qr_scanner/dynamic_island_portal.dart';
 part 'pairing_qr_scanner/fallback_scanner.dart';
 part 'pairing_qr_scanner/scanner_camera.dart';
 
-const _qrScannerPlatformChannel = MethodChannel('buzz/qr_scanner');
+const _qrScannerPlatformChannel = MethodChannel('corevia-talk/qr_scanner');
 
 /// Returns whether the current iPhone should use the Dynamic Island scanner.
 ///

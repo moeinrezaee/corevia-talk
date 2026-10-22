@@ -3,7 +3,7 @@ import type { Language } from "./languagePreference";
 /** English is the source of truth; every other language mirrors its keys. */
 const en = {
   "settings.appearance": "Appearance",
-  "settings.appearance.description": "Choose how Buzz looks and feels.",
+  "settings.appearance.description": "Choose how Corevia Talk looks and feels.",
   "settings.profile": "Profile",
   "settings.notifications": "Notifications",
   "settings.voice": "Voice",
@@ -19,14 +19,14 @@ const en = {
   "settings.colorMode.light": "Light",
   "settings.colorMode.dark": "Dark",
   "settings.themeStyle": "Theme style",
-  "settings.themeStyle.description": "Choose the colors used throughout Buzz.",
+  "settings.themeStyle.description": "Choose the colors used throughout Corevia Talk.",
 } as const;
 
 export type MessageKey = keyof typeof en;
 
 const fa: Record<MessageKey, string> = {
   "settings.appearance": "ظاهر",
-  "settings.appearance.description": "ظاهر و حس‌وحال Buzz را انتخاب کنید.",
+  "settings.appearance.description": "ظاهر و حس‌وحال Corevia Talk را انتخاب کنید.",
   "settings.profile": "نمایه",
   "settings.notifications": "اعلان‌ها",
   "settings.voice": "صدا",
@@ -43,7 +43,7 @@ const fa: Record<MessageKey, string> = {
   "settings.colorMode.dark": "تیره",
   "settings.themeStyle": "سبک تم",
   "settings.themeStyle.description":
-    "رنگ‌های مورد استفاده در Buzz را انتخاب کنید.",
+    "رنگ‌های مورد استفاده در Corevia Talk را انتخاب کنید.",
 };
 
 export const MESSAGES: Record<Language, Record<MessageKey, string>> = {

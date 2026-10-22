@@ -109,7 +109,7 @@ export function DownloadKeyStep({
                     "Test your backup to make sure it works, or continue without testing.",
                   )
                 : tl(
-                    "This creates a password-protected file with your private key. Remember, Buzz can’t recover your key if you lose it.",
+                    "This creates a password-protected file with your private key. Remember, Corevia Talk can’t recover your key if you lose it.",
                   )}
         </p>
       </motion.div>

@@ -36,7 +36,7 @@ class HostedCreateCommunity extends AddCommunityDeepLink {
     check();
     final Map<String, dynamic> response;
     try {
-      response = await account.post('/v1/buzz/communities', {'name': name});
+      response = await account.post('/v1/corevia-talk/communities', {'name': name});
     } on AccountFailure catch (failure) {
       check();
       if (failure == AccountFailure.rejected) {

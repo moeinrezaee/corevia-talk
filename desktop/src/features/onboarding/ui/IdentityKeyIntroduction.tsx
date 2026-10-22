@@ -39,7 +39,7 @@ export function IdentityKeyIntroduction({
         </h1>
         <p className="mt-2 text-base leading-6 text-foreground/75">
           {tl(
-            "This key will be how you log into Buzz. You can use it across Buzz communities and other platforms.",
+            "This key will be how you log into Corevia Talk. You can use it across Corevia Talk communities and other platforms.",
           )}
         </p>
         <div className="mt-2">

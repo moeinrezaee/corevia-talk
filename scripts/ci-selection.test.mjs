@@ -18,7 +18,7 @@ const workflow = readFileSync(
   new URL("../.github/workflows/ci.yml", import.meta.url),
   "utf8",
 );
-const scratch = mkdtempSync(join(tmpdir(), "buzz-ci-selection-"));
+const scratch = mkdtempSync(join(tmpdir(), "corevia-talk-ci-selection-"));
 after(() => rmSync(scratch, { recursive: true, force: true }));
 const actionSha = workflow.match(/uses: dorny\/paths-filter@([a-f0-9]{40})/)[1];
 const filters = workflow
@@ -230,7 +230,7 @@ const scenarios = [
   ],
   ["desktop", ["desktop/src/main.tsx"], ["desktop"]],
   ["Tauri", ["desktop/src-tauri/src/main.rs"], ["desktop", "desktop-rust"]],
-  ["relay", ["crates/buzz-relay/src/main.rs"], ["rust"]],
+  ["relay", ["crates/corevia-talk-relay/src/main.rs"], ["rust"]],
   ["migration", ["migrations/123.sql"], ["rust"]],
   [
     "shared workflow",
@@ -248,7 +248,7 @@ const scenarios = [
   ["CI integration images", ["docker-compose.ci.yml"], ["rust"]],
   [
     "mixed mobile and relay",
-    ["mobile/lib/main.dart", "crates/buzz-core/src/lib.rs"],
+    ["mobile/lib/main.dart", "crates/corevia-talk-core/src/lib.rs"],
     ["rust", "mobile"],
   ],
   [
@@ -268,7 +268,7 @@ const scenarios = [
     ["docs/mobile/design.md", "docs/nips/NIP-FI.md"],
     [],
   ],
-  ["crate Markdown", ["crates/buzz-cli/README.md"], ["rust"]],
+  ["crate Markdown", ["crates/corevia-talk-cli/README.md"], ["rust"]],
   ["desktop Markdown", ["desktop/README.md"], ["desktop"]],
   [
     "Tauri Markdown",
@@ -286,10 +286,10 @@ const scenarios = [
   ],
   [
     "mixed documentation and relay",
-    ["docs/desktop/design.md", "crates/buzz-relay/src/lib.rs"],
+    ["docs/desktop/design.md", "crates/corevia-talk-relay/src/lib.rs"],
     ["rust"],
   ],
-  ["embedded ACP prompt", ["crates/buzz-acp/src/base_prompt.md"], ["rust"]],
+  ["embedded ACP prompt", ["crates/corevia-talk-acp/src/base_prompt.md"], ["rust"]],
   [
     "embedded Tauri skill",
     ["desktop/src-tauri/src/managed_agents/nest_skill.md"],

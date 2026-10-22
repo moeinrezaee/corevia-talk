@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:buzz/shared/community/community.dart';
-import 'package:buzz/shared/community/community_storage.dart';
-import 'package:buzz/shared/push/push_subscription.dart';
+import 'package:corevia_talk/shared/community/community.dart';
+import 'package:corevia_talk/shared/community/community_storage.dart';
+import 'package:corevia_talk/shared/push/push_subscription.dart';
 
 /// In-memory fake that extends Fake to satisfy all FlutterSecureStorage
 /// interface methods, but implements the core read/write/delete with real
@@ -123,7 +123,7 @@ void main() {
       expect(loaded.first.pubkey, 'abc123');
       expect(
         loaded.first.pushSubscriptionState.authority,
-        BuzzPushLeaseSubscriptionAuthority.desired,
+        CoreviaTalkPushLeaseSubscriptionAuthority.desired,
       );
     });
 
@@ -156,7 +156,7 @@ void main() {
 
     test('round-trips desired push subscription state', () async {
       final pubkey = 'a' * 64;
-      final subscriptions = buildDesiredBuzzPushSubscriptions(
+      final subscriptions = buildDesiredCoreviaTalkPushSubscriptions(
         myPubkey: pubkey,
         channelIds: const ['123e4567-e89b-42d3-a456-426614174000'],
       );
@@ -166,7 +166,7 @@ void main() {
             relayUrl: 'https://relay.example.com',
             pubkey: pubkey,
           ).copyWith(
-            pushSubscriptionState: BuzzPushLeaseSubscriptionState.desired(
+            pushSubscriptionState: CoreviaTalkPushLeaseSubscriptionState.desired(
               desired: subscriptions,
             ),
           );
@@ -181,12 +181,12 @@ void main() {
     });
 
     test('round-trips a pending push tombstone journal', () async {
-      final subscription = BuzzPushSubscription(
-        filter: BuzzPushFilter(kinds: const [9], pTags: ['a' * 64]),
+      final subscription = CoreviaTalkPushSubscription(
+        filter: CoreviaTalkPushFilter(kinds: const [9], pTags: ['a' * 64]),
         notificationClass: 'default',
       );
       final state =
-          BuzzPushLeaseSubscriptionState.desired(desired: [subscription])
+          CoreviaTalkPushLeaseSubscriptionState.desired(desired: [subscription])
               .withAccepted(subscriptions: [subscription], generation: 4)
               .withPendingTombstone(5);
       final community = Community.create(
@@ -211,7 +211,7 @@ void main() {
             ).copyWith(
               pushNotificationsEnabled: false,
               pushSubscriptionState:
-                  const BuzzPushLeaseSubscriptionState.desired(
+                  const CoreviaTalkPushLeaseSubscriptionState.desired(
                     acceptedGeneration: 4,
                     generationCursor: 5,
                   ),
@@ -279,23 +279,23 @@ void main() {
           name: 'Legacy',
           relayUrl: 'https://legacy.example.com',
         );
-        fakeSecure['buzz_workspaces'] = jsonEncode([legacy.toJson()]);
-        fakeSecure['buzz_active_workspace_id'] = legacy.id;
+        fakeSecure['corevia_talk_workspaces'] = jsonEncode([legacy.toJson()]);
+        fakeSecure['corevia_talk_active_workspace_id'] = legacy.id;
 
         final loaded = await storage.loadAll();
 
         expect(loaded.single.id, legacy.id);
         expect(await storage.loadActiveId(), legacy.id);
-        expect(fakeSecure['buzz_communities'], isNotNull);
-        expect(fakeSecure['buzz_workspaces'], isNull);
-        expect(fakeSecure['buzz_active_workspace_id'], isNull);
+        expect(fakeSecure['corevia_talk_communities'], isNotNull);
+        expect(fakeSecure['corevia_talk_workspaces'], isNull);
+        expect(fakeSecure['corevia_talk_active_workspace_id'], isNull);
       });
 
       test('migrates legacy keys to community on first load', () async {
-        fakeSecure['buzz_relay_url'] = 'https://legacy.example.com';
-        fakeSecure['buzz_token'] = 'legacy_token';
-        fakeSecure['buzz_pubkey'] = 'legacy_pub';
-        fakeSecure['buzz_nsec'] = 'legacy_nsec';
+        fakeSecure['corevia_talk_relay_url'] = 'https://legacy.example.com';
+        fakeSecure['corevia_talk_token'] = 'legacy_token';
+        fakeSecure['corevia_talk_pubkey'] = 'legacy_pub';
+        fakeSecure['corevia_talk_nsec'] = 'legacy_nsec';
 
         final loaded = await storage.loadAll();
 
@@ -310,10 +310,10 @@ void main() {
         );
 
         // Legacy keys should be deleted.
-        expect(fakeSecure['buzz_relay_url'], isNull);
-        expect(fakeSecure['buzz_token'], isNull);
-        expect(fakeSecure['buzz_pubkey'], isNull);
-        expect(fakeSecure['buzz_nsec'], isNull);
+        expect(fakeSecure['corevia_talk_relay_url'], isNull);
+        expect(fakeSecure['corevia_talk_token'], isNull);
+        expect(fakeSecure['corevia_talk_pubkey'], isNull);
+        expect(fakeSecure['corevia_talk_nsec'], isNull);
 
         // Active ID should be set.
         final activeId = await storage.loadActiveId();
@@ -326,8 +326,8 @@ void main() {
       });
 
       test('does not re-migrate after first load', () async {
-        fakeSecure['buzz_relay_url'] = 'https://legacy.example.com';
-        fakeSecure['buzz_token'] = 'legacy_token';
+        fakeSecure['corevia_talk_relay_url'] = 'https://legacy.example.com';
+        fakeSecure['corevia_talk_token'] = 'legacy_token';
 
         final first = await storage.loadAll();
         expect(first, hasLength(1));
@@ -338,8 +338,8 @@ void main() {
       });
 
       test('migration generates name from localhost URL', () async {
-        fakeSecure['buzz_relay_url'] = 'http://localhost:3000';
-        fakeSecure['buzz_token'] = 'tok';
+        fakeSecure['corevia_talk_relay_url'] = 'http://localhost:3000';
+        fakeSecure['corevia_talk_token'] = 'tok';
 
         final loaded = await storage.loadAll();
         expect(loaded.first.name, 'Local Dev');

@@ -1,14 +1,14 @@
-import 'package:buzz/features/activity/activity_page.dart';
-import 'package:buzz/shared/widgets/frosted_scaffold.dart';
-import 'package:buzz/shared/widgets/concentric_sheet_surface.dart';
-import 'package:buzz/shared/widgets/frosted_app_bar.dart';
-import 'package:buzz/features/home/home_page.dart';
-import 'package:buzz/features/search/search_page.dart';
-import 'package:buzz/features/profile/profile_avatar.dart';
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/features/activity/activity_page.dart';
+import 'package:corevia_talk/shared/widgets/frosted_scaffold.dart';
+import 'package:corevia_talk/shared/widgets/concentric_sheet_surface.dart';
+import 'package:corevia_talk/shared/widgets/frosted_app_bar.dart';
+import 'package:corevia_talk/features/home/home_page.dart';
+import 'package:corevia_talk/features/search/search_page.dart';
+import 'package:corevia_talk/features/profile/profile_avatar.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -55,7 +55,7 @@ void main() {
     addTearDown(() => debugDefaultTargetPlatformOverride = null);
     final messenger =
         TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
-    const support = MethodChannel('buzz/concentric_sheet_surface');
+    const support = MethodChannel('corevia-talk/concentric_sheet_surface');
     final created = <Map<Object?, Object?>>[];
     final initialHeaders = <Map<Object?, Object?>>[];
     messenger.setMockMethodCallHandler(support, (call) async => true);
@@ -64,7 +64,7 @@ void main() {
     ) async {
       if (call.method == 'create') {
         final args = call.arguments as Map<Object?, Object?>;
-        if (args['viewType'] == 'buzz/ios_navigation_bar') {
+        if (args['viewType'] == 'corevia-talk/ios_navigation_bar') {
           initialHeaders.add(
             const StandardMessageCodec().decodeMessage(
                   ByteData.sublistView(args['params'] as Uint8List),
@@ -72,7 +72,7 @@ void main() {
                 as Map<Object?, Object?>,
           );
         }
-        if (args['viewType'] == 'buzz/concentric_sheet_surface') {
+        if (args['viewType'] == 'corevia-talk/concentric_sheet_surface') {
           created.add(
             const StandardMessageCodec().decodeMessage(
                   ByteData.sublistView(args['params'] as Uint8List),
@@ -107,11 +107,11 @@ void main() {
     expect(tester.getSize(bar), const Size(148, 56));
     expect(created.where((params) => params['usesGlass'] == true), isNotEmpty);
     expect(
-      find.descendant(of: bar, matching: find.byIcon(BuzzIcons.house500)),
+      find.descendant(of: bar, matching: find.byIcon(CoreviaTalkIcons.house500)),
       findsOneWidget,
     );
     expect(
-      find.descendant(of: bar, matching: find.byIcon(BuzzIcons.inbox300)),
+      find.descendant(of: bar, matching: find.byIcon(CoreviaTalkIcons.inbox300)),
       findsNothing,
     );
     final headerActions = tester
@@ -127,8 +127,8 @@ void main() {
       true,
       false,
     ]);
-    expect(headerActions[0].icon, BuzzIcons.search300);
-    expect(headerActions[1].icon, BuzzIcons.inbox300);
+    expect(headerActions[0].icon, CoreviaTalkIcons.search300);
+    expect(headerActions[1].icon, CoreviaTalkIcons.inbox300);
     expect(headerActions[1].activityColor, isNotNull);
     expect(headerActions[1].activityLabel, 'Unread');
     expect(find.descendant(of: bar, matching: find.byType(Text)), findsNothing);
@@ -145,7 +145,7 @@ void main() {
           .widget<Icon>(
             find.descendant(
               of: launcherGlass,
-              matching: find.byIcon(BuzzIcons.plus),
+              matching: find.byIcon(CoreviaTalkIcons.plus),
             ),
           )
           .color,
@@ -156,7 +156,7 @@ void main() {
       greaterThanOrEqualTo(2),
     );
     expect(
-      find.descendant(of: launcherGlass, matching: find.byIcon(BuzzIcons.plus)),
+      find.descendant(of: launcherGlass, matching: find.byIcon(CoreviaTalkIcons.plus)),
       findsOneWidget,
     );
     await tester.tap(find.byTooltip('Create or start conversation'));
@@ -279,7 +279,7 @@ void main() {
     );
   });
 
-  testWidgets('keeps the Buzz backdrop behind the scalable Home screen', (
+  testWidgets('keeps the Corevia Talk backdrop behind the scalable Home screen', (
     tester,
   ) async {
     const gradient = LinearGradient(
@@ -563,7 +563,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byTooltip('Create or start conversation'), findsNothing);
     expect(tester.getCenter(find.byTooltip('New chat')), homePlusPosition);
-    expect(find.byIcon(BuzzIcons.edit), findsOneWidget);
+    expect(find.byIcon(CoreviaTalkIcons.edit), findsOneWidget);
     action!.value = () => newChats++;
     await tester.pump();
     await tester.tap(find.byTooltip('New chat'));

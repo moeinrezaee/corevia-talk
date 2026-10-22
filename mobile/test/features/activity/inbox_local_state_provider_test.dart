@@ -1,6 +1,6 @@
-import 'package:buzz/features/activity/inbox_local_state_provider.dart';
-import 'package:buzz/shared/relay/relay.dart';
-import 'package:buzz/shared/theme/theme_provider.dart';
+import 'package:corevia_talk/features/activity/inbox_local_state_provider.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/theme/theme_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';

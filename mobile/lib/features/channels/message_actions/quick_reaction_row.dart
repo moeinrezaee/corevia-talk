@@ -106,7 +106,7 @@ class _QuickReactionRow extends ConsumerWidget {
                 showEmojiPicker(context: pageContext, onSelect: react);
               },
               child: Icon(
-                BuzzIcons.plus,
+                CoreviaTalkIcons.plus,
                 size: 24,
                 color: context.colors.onSurfaceVariant,
               ),

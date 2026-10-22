@@ -35,8 +35,8 @@ export const FA_PART_4: Record<string, string> = {
   "Publish the pushed commit to this review":
     "کامیت ارسال‌شده را در این بازبینی منتشر کنید",
   "Published merged review status.": "وضعیت بازبینی ادغام‌شده منتشر شد.",
-  "Publishes relay-visible Buzz activity.":
-    "فعالیت Buzz قابل‌مشاهده در رله را منتشر می‌کند.",
+  "Publishes relay-visible Corevia Talk activity.":
+    "فعالیت Corevia Talk قابل‌مشاهده در رله را منتشر می‌کند.",
   "Publishing…": "در حال انتشار…",
   Pull: "دریافت",
   "Pull remote commits": "دریافت کامیت‌های راه‌دور",
@@ -123,14 +123,14 @@ export const FA_PART_4: Record<string, string> = {
   "Register any ACP-speaking agent tool as a selectable runtime.":
     "هر ابزار ایجنتی که ACP می‌فهمد را به‌عنوان یک زمان‌اجرای قابل‌انتخاب ثبت کنید.",
   "Related Conversations": "گفتگوهای مرتبط",
-  "Relaunch Buzz": "راه‌اندازی مجدد Buzz",
+  "Relaunch Corevia Talk": "راه‌اندازی مجدد Corevia Talk",
   "Relay URL": "نشانی رله",
   "Release check": "بررسی انتشار",
   "Release checklist is ready for async feedback.":
     "فهرست انتشار برای بازخورد غیرهم‌زمان آماده است.",
   Reload: "بارگذاری مجدد",
-  "Reload Buzz to try again. If this keeps happening, check that Buzz can access website data, then contact support.":
-    "برای تلاش دوباره Buzz را بارگذاری مجدد کنید. اگر این مشکل ادامه داشت، بررسی کنید Buzz به داده‌های وب‌سایت دسترسی دارد، سپس با پشتیبانی تماس بگیرید.",
+  "Reload Corevia Talk to try again. If this keeps happening, check that Corevia Talk can access website data, then contact support.":
+    "برای تلاش دوباره Corevia Talk را بارگذاری مجدد کنید. اگر این مشکل ادامه داشت، بررسی کنید Corevia Talk به داده‌های وب‌سایت دسترسی دارد، سپس با پشتیبانی تماس بگیرید.",
   "Remind me later": "بعداً یادآوری کن",
   Reminder: "یادآور",
   "Reminder cancelled": "یادآور لغو شد",
@@ -145,8 +145,8 @@ export const FA_PART_4: Record<string, string> = {
   "Remote deployment": "استقرار راه‌دور",
   "Remote state refreshed.": "وضعیت راه‌دور تازه‌سازی شد.",
   Remove: "حذف",
-  "Remove \"{0}\" from this device? Buzz won't contact the relay, so your membership isn't revoked. You can add the community again later.":
-    "«{0}» از این دستگاه حذف شود؟ Buzz با رله تماس نمی‌گیرد، پس عضویت شما لغو نمی‌شود. بعداً می‌توانید انجمن را دوباره اضافه کنید.",
+  "Remove \"{0}\" from this device? Corevia Talk won't contact the relay, so your membership isn't revoked. You can add the community again later.":
+    "«{0}» از این دستگاه حذف شود؟ Corevia Talk با رله تماس نمی‌گیرد، پس عضویت شما لغو نمی‌شود. بعداً می‌توانید انجمن را دوباره اضافه کنید.",
   "Remove :{0}:": "حذف :{0}:",
   "Remove Bestie": "حذف Bestie",
   "Remove all from channel": "حذف همه از کانال",
@@ -235,13 +235,13 @@ export const FA_PART_4: Record<string, string> = {
   "Request body (optional)": "بدنهٔ درخواست (اختیاری)",
   "Requesting...": "در حال درخواست...",
   Required: "الزامی",
-  "Required for buzz-agent shell tools on Windows.":
-    "برای ابزارهای شل buzz-agent در ویندوز لازم است.",
+  "Required for corevia-talk-agent shell tools on Windows.":
+    "برای ابزارهای شل corevia-talk-agent در ویندوز لازم است.",
   Reroll: "تولید دوباره",
   "Research Agents": "ایجنت‌های پژوهش",
   "Reset zoom": "بازنشانی بزرگ‌نمایی",
   "Reset zoom to default level": "بازنشانی بزرگ‌نمایی به سطح پیش‌فرض",
-  "Resize Buzz Term": "تغییر اندازهٔ ترمینال Buzz",
+  "Resize Corevia Talk Term": "تغییر اندازهٔ ترمینال Corevia Talk",
   "Resize inbox list": "تغییر اندازهٔ فهرست صندوق ورودی",
   "Resize panel": "تغییر اندازهٔ پنل",
   "Resize sidebar": "تغییر اندازهٔ نوار کناری",
@@ -256,8 +256,8 @@ export const FA_PART_4: Record<string, string> = {
   "Resolving workflow details.": "در حال حل جزئیات گردش‌کار.",
   "Respond-to allowlist": "فهرست مجاز پاسخ‌گویی",
   "Respond-to allowlist (": "فهرست مجاز پاسخ‌گویی (",
-  "Restart Buzz to finish recovery":
-    "برای تکمیل بازیابی، Buzz را دوباره راه‌اندازی کنید",
+  "Restart Corevia Talk to finish recovery":
+    "برای تکمیل بازیابی، Corevia Talk را دوباره راه‌اندازی کنید",
   "Restart agent": "راه‌اندازی مجدد ایجنت",
   "Restart required": "راه‌اندازی مجدد لازم است",
   "Restart this local agent to attach the observer feed.":
@@ -265,7 +265,7 @@ export const FA_PART_4: Record<string, string> = {
   "Restarts this agent automatically when its configuration changes, once it is idle and connected.":
     "وقتی پیکربندی این ایجنت تغییر کند و بیکار و متصل باشد، آن را خودکار دوباره راه‌اندازی می‌کند.",
   Restore: "بازیابی",
-  "Restore Buzz Term": "بازگرداندن ترمینال Buzz",
+  "Restore Corevia Talk Term": "بازگرداندن ترمینال Corevia Talk",
   "Restore from a backup file": "بازیابی از فایل پشتیبان",
   "Restore this revision": "بازیابی این نسخه",
   "Restore this revision?": "این نسخه بازیابی شود؟",
@@ -327,8 +327,8 @@ export const FA_PART_4: Record<string, string> = {
   "Save canvas": "ذخیرهٔ بوم",
   "Save card": "ذخیرهٔ کارت",
   "Save changes": "ذخیرهٔ تغییرات",
-  "Save copies of relay messages to a local SQLite database in your Buzz nest. Events are re-verified against the relay at archive time.":
-    "از پیام‌های رله نسخه‌هایی در یک پایگاه‌داده SQLite محلی در لانهٔ Buzz خود ذخیره کنید. رویدادها در زمان بایگانی دوباره با رله راستی‌آزمایی می‌شوند.",
+  "Save copies of relay messages to a local SQLite database in your Corevia Talk nest. Events are re-verified against the relay at archive time.":
+    "از پیام‌های رله نسخه‌هایی در یک پایگاه‌داده SQLite محلی در لانهٔ Corevia Talk خود ذخیره کنید. رویدادها در زمان بایگانی دوباره با رله راستی‌آزمایی می‌شوند.",
   "Save defaults": "ذخیرهٔ پیش‌فرض‌ها",
   "Save emoji": "ذخیرهٔ ایموجی",
   "Save key & continue": "ذخیرهٔ کلید و ادامه",
@@ -357,8 +357,8 @@ export const FA_PART_4: Record<string, string> = {
   "Saving...": "در حال ذخیره...",
   "Saving…": "در حال ذخیره…",
   "Scan QR code": "اسکن کد QR",
-  "Scan this code with a device where you’re currently signed in to Buzz.":
-    "این کد را با دستگاهی که اکنون در Buzz وارد شده‌اید اسکن کنید.",
+  "Scan this code with a device where you’re currently signed in to Corevia Talk.":
+    "این کد را با دستگاهی که اکنون در Corevia Talk وارد شده‌اید اسکن کنید.",
   "Scan to sign in": "برای ورود اسکن کنید",
   "Search KLIPY": "جستجو در KLIPY",
   "Search Pulse": "جستجو در پالس",
@@ -401,8 +401,8 @@ export const FA_PART_4: Record<string, string> = {
   "Search runtimes…": "جستجوی زمان‌اجراها…",
   "Search {0}": "جستجوی {0}",
   "Search {0}s": "جستجوی {0}",
-  "Searches relay-visible Buzz history.":
-    "تاریخچهٔ Buzz قابل‌مشاهده در رله را جستجو می‌کند.",
+  "Searches relay-visible Corevia Talk history.":
+    "تاریخچهٔ Corevia Talk قابل‌مشاهده در رله را جستجو می‌کند.",
   "Searching...": "در حال جستجو...",
   "Searching…": "در حال جستجو…",
   "Section name": "نام بخش",
@@ -545,8 +545,8 @@ export const FA_PART_4: Record<string, string> = {
   "Sign in": "ورود",
   "Sign in required": "ورود لازم است",
   "Sign in to connect": "برای اتصال وارد شوید",
-  "Sign in to connect a community you already own or create a new one. We’ll open Builderlab in your browser, then bring you back to Buzz.":
-    "وارد شوید تا انجمنی را که از قبل دارید وصل کنید یا انجمن جدیدی بسازید. Builderlab را در مرورگر شما باز می‌کنیم و سپس به Buzz برمی‌گردانیم.",
+  "Sign in to connect a community you already own or create a new one. We’ll open Builderlab in your browser, then bring you back to Corevia Talk.":
+    "وارد شوید تا انجمنی را که از قبل دارید وصل کنید یا انجمن جدیدی بسازید. Builderlab را در مرورگر شما باز می‌کنیم و سپس به Corevia Talk برمی‌گردانیم.",
   "Sign in to continue": "برای ادامه وارد شوید",
   "Sign in to generate a mobile pairing code.":
     "برای تولید کد جفت‌سازی موبایل وارد شوید.",
@@ -554,8 +554,8 @@ export const FA_PART_4: Record<string, string> = {
     "برای مدیریت انجمن‌های میزبانی‌شده وارد شوید",
   "Sign in to {0}": "ورود به {0}",
   "Sign in with Builderlab": "ورود با Builderlab",
-  "Sign in with Builderlab to create and host a community. Buzz will open your browser, then bring you back here.":
-    "با Builderlab وارد شوید تا یک انجمن بسازید و میزبانی کنید. Buzz مرورگر شما را باز می‌کند و سپس شما را به اینجا برمی‌گرداند.",
+  "Sign in with Builderlab to create and host a community. Corevia Talk will open your browser, then bring you back here.":
+    "با Builderlab وارد شوید تا یک انجمن بسازید و میزبانی کنید. Corevia Talk مرورگر شما را باز می‌کند و سپس شما را به اینجا برمی‌گرداند.",
   "Sign in with a different email": "ورود با ایمیل دیگر",
   "Sign out": "خروج",
   "Sign out and wipe all data?": "خروج و پاک کردن همهٔ داده‌ها؟",
@@ -592,8 +592,8 @@ export const FA_PART_4: Record<string, string> = {
   "Space- or comma-separated non-negative integers. Kinds already in the checklist above are ignored.":
     "اعداد صحیح نامنفیِ جداشده با فاصله یا ویرگول. انواعی که از قبل در فهرست بالا هستند نادیده گرفته می‌شوند.",
   Spaces: "فاصله‌ها",
-  "Spacing in conversations and Markdown content across Buzz":
-    "فاصله‌گذاری در گفتگوها و محتوای Markdown در سراسر Buzz",
+  "Spacing in conversations and Markdown content across Corevia Talk":
+    "فاصله‌گذاری در گفتگوها و محتوای Markdown در سراسر Corevia Talk",
   Spacious: "گشاد",
   Spam: "هرزنامه",
   "Spawn or respawn all": "راه‌اندازی یا راه‌اندازی مجدد همه",
@@ -690,7 +690,7 @@ export const FA_PART_4: Record<string, string> = {
   "System prompt override": "بازنویسی پرامپت سیستمی",
   "TTS model: {0}": "مدل TTS: {0}",
   Tags: "برچسب‌ها",
-  "Take me to Buzz": "مرا به Buzz ببر",
+  "Take me to Corevia Talk": "مرا به Corevia Talk ببر",
   "Talk through what you need.": "نیازتان را در گفتگو بگویید.",
   Target: "هدف",
   "Target kind": "نوع هدف",
@@ -745,10 +745,10 @@ export const FA_PART_4: Record<string, string> = {
     "این یک کلید محرمانه است. هرگز آن را اینجا نچسبانید.",
   "That's the one. Now enter your password to prove you can unlock it.":
     "همین است. حالا گذرواژه‌تان را وارد کنید تا ثابت شود می‌توانید آن را باز کنید.",
-  "The Buzz git service could not be reached.":
-    "به سرویس git در Buzz دسترسی پیدا نشد.",
-  "The Buzz git service could not be reached. Check your connection and try again.":
-    "به سرویس git در Buzz دسترسی پیدا نشد. اتصال خود را بررسی کنید و دوباره تلاش کنید.",
+  "The Corevia Talk git service could not be reached.":
+    "به سرویس git در Corevia Talk دسترسی پیدا نشد.",
+  "The Corevia Talk git service could not be reached. Check your connection and try again.":
+    "به سرویس git در Corevia Talk دسترسی پیدا نشد. اتصال خود را بررسی کنید و دوباره تلاش کنید.",
   "The advertised branch is missing from the git remote.":
     "شاخهٔ اعلام‌شده در راه‌دور git موجود نیست.",
   "The agents you have chosen for this app. Use them to create teams and launch agents.":

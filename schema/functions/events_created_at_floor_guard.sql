@@ -1,6 +1,6 @@
 -- Replica-fence floor guard (keep in sync with migrations/0021). A deferred
 -- constraint trigger re-checks, inside COMMIT processing, that channel-bearing
--- event rows are no older than `buzz.created_at_floor` seconds before commit
+-- event rows are no older than `corevia_talk.created_at_floor` seconds before commit
 -- time (clock_timestamp(), NOT the transaction-frozen now()). This turns the
 -- relay's ingest-time created_at envelope into a commit-time storage
 -- invariant, which is what lets keyset-cursor pages below the replica fence
@@ -12,7 +12,7 @@
 CREATE FUNCTION events_created_at_floor_guard() RETURNS trigger
 LANGUAGE plpgsql AS $$
 DECLARE
-    floor_secs numeric := nullif(current_setting('buzz.created_at_floor', true), '')::numeric;
+    floor_secs numeric := nullif(current_setting('corevia_talk.created_at_floor', true), '')::numeric;
 BEGIN
     IF floor_secs IS NOT NULL
        AND floor_secs > 0

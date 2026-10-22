@@ -1,6 +1,6 @@
 part of '../pairing_page.dart';
 
-// Flutter adaptation of Buzz 2.0's glass-primary-interactive and ghost button.
+// Flutter adaptation of Corevia Talk 2.0's glass-primary-interactive and ghost button.
 // Keep the material together: glass-2 fill, blur-md, directional rim, glass-3
 // interaction. Flutter's buttons retain focus, semantics, and disabled behavior.
 extension _OnboardingActionStyles on BuildContext {

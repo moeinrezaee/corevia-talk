@@ -73,7 +73,7 @@ import { channelChrome } from "@/shared/layout/chromeLayout";
 import { cn } from "@/shared/lib/cn";
 import { tl, tlt } from "@/shared/i18n/tl";
 const HUDDLE_TRANSCRIPT_ROOT_STYLE = {
-  "--buzz-channel-content-top-padding": "0rem",
+  "--corevia-talk-channel-content-top-padding": "0rem",
   "--channel-top-chrome-height": "0.25rem",
 } as React.CSSProperties;
 export const ChannelPane = React.memo(function ChannelPane({

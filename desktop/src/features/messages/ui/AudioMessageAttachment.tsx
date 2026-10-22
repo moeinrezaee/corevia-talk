@@ -30,7 +30,7 @@ import { useSmoothCorners } from "@/shared/ui/smoothCorners";
 import { MorphingPlayPauseIcon } from "./MorphingPlayPauseIcon";
 import { tl, tlt } from "@/shared/i18n/tl";
 
-const PLAY_EVENT = "buzz-voice-note-play";
+const PLAY_EVENT = "corevia-talk-voice-note-play";
 const INITIAL_BAR_COUNT = 38;
 const BAR_KEYS = Array.from(
   { length: 256 },

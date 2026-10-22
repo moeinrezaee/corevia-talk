@@ -3,7 +3,7 @@ import * as React from "react";
 /** Interface languages the desktop app ships translations for. */
 export type Language = "en" | "fa";
 
-export const LANGUAGE_STORAGE_KEY = "buzz.appearance.language";
+export const LANGUAGE_STORAGE_KEY = "corevia-talk.appearance.language";
 export const DEFAULT_LANGUAGE: Language = "en";
 
 /** Languages written right to left; the document direction follows these. */

@@ -1,24 +1,24 @@
-import BuzzPushKit
+import CoreviaTalkPushKit
 import Foundation
 import Intents
 import Security
 import UserNotifications
 
 final class NotificationService: UNNotificationServiceExtension {
-  private var handoff: BuzzNotificationHandoff<UNNotificationContent>?
-  private var resolvedScope: BuzzNotificationCacheScope?
+  private var handoff: CoreviaTalkNotificationHandoff<UNNotificationContent>?
+  private var resolvedScope: CoreviaTalkNotificationCacheScope?
   private var bestAttemptContent: UNMutableNotificationContent?
   private var restrictedFallbackContent: UNMutableNotificationContent?
-  private lazy var interactionCleanup = BuzzInteractionCleanupRetry(
+  private lazy var interactionCleanup = CoreviaTalkInteractionCleanupRetry(
     containerURL: ageRestrictionContainerURL, deletion: interactionDeletionDeadline)
-  private lazy var communicationPresenter = BuzzCommunicationNotificationPresenter(
+  private lazy var communicationPresenter = CoreviaTalkCommunicationNotificationPresenter(
     donate: { interaction, completion in interaction.donate(completion: completion) },
     deleteAllInteractions: { [cleanup = interactionCleanup] completion in
       cleanup.request(completion: completion)
     },
     updateContent: { content, intent in try content.updating(from: intent) }
   )
-  private let interactionDeletionDeadline = BuzzInteractionDeletionDeadline(
+  private let interactionDeletionDeadline = CoreviaTalkInteractionDeletionDeadline(
     timeout: 5,
     deleteAllInteractions: { completion in
       INInteraction.deleteAll(completion: completion)
@@ -32,14 +32,14 @@ final class NotificationService: UNNotificationServiceExtension {
   )
   private lazy var appGroupIdentifier =
     Bundle.main.object(
-      forInfoDictionaryKey: "BuzzAppGroupIdentifier"
+      forInfoDictionaryKey: "CoreviaTalkAppGroupIdentifier"
     ) as? String
-  private lazy var resolver: BuzzPushNotificationResolving = {
+  private lazy var resolver: CoreviaTalkPushNotificationResolving = {
     let keychainAccessGroup =
       Bundle.main.object(
-        forInfoDictionaryKey: "BuzzKeychainAccessGroup"
+        forInfoDictionaryKey: "CoreviaTalkKeychainAccessGroup"
       ) as? String
-    return BuzzPushNotificationResolver(
+    return CoreviaTalkPushNotificationResolver(
       session: .shared,
       loadCommunitiesData: { [self] in
         Self.loadPushSnapshotData(appGroupIdentifier: self.appGroupIdentifier)
@@ -60,30 +60,30 @@ final class NotificationService: UNNotificationServiceExtension {
       .appendingPathComponent("notification-enrichment-v1", isDirectory: true)
   }
 
-  private lazy var notificationCache: BuzzNotificationCache? = {
+  private lazy var notificationCache: CoreviaTalkNotificationCache? = {
     guard let directory = notificationCacheRoot else { return nil }
-    let cache = BuzzNotificationCache(directory: directory, isCurrent: { [weak self] scope in
+    let cache = CoreviaTalkNotificationCache(directory: directory, isCurrent: { [weak self] scope in
       self?.isCurrent(scope) == true
     })
     let scopes = Self.communities(appGroupIdentifier: appGroupIdentifier)
-      .compactMap(BuzzNotificationCacheScope.init(community:))
+      .compactMap(CoreviaTalkNotificationCacheScope.init(community:))
     do { try cache.removeRevokedScopes(keeping: scopes) }
     catch { NSLog("Notification cache cleanup failed: %@", String(describing: error)) }
     return cache
   }()
 
-  private lazy var notificationAvatarLoader: BuzzNotificationAvatarLoader? = {
+  private lazy var notificationAvatarLoader: CoreviaTalkNotificationAvatarLoader? = {
     guard let directory = notificationCacheRoot else { return nil }
-    let accessGroup = Bundle.main.object(forInfoDictionaryKey: "BuzzKeychainAccessGroup") as? String
-    return BuzzNotificationAvatarLoader(directory: directory,
+    let accessGroup = Bundle.main.object(forInfoDictionaryKey: "CoreviaTalkKeychainAccessGroup") as? String
+    return CoreviaTalkNotificationAvatarLoader(directory: directory,
       privateKey: { Self.loadPrivateKey(communityID: $0, keychainAccessGroup: accessGroup) },
       isCurrent: { [weak self] in self?.isCurrent($0) == true })
   }()
 
-  private func isCurrent(_ scope: BuzzNotificationCacheScope) -> Bool {
-    let accessGroup = Bundle.main.object(forInfoDictionaryKey: "BuzzKeychainAccessGroup") as? String
+  private func isCurrent(_ scope: CoreviaTalkNotificationCacheScope) -> Bool {
+    let accessGroup = Bundle.main.object(forInfoDictionaryKey: "CoreviaTalkKeychainAccessGroup") as? String
     return Self.communities(appGroupIdentifier: appGroupIdentifier).contains {
-      BuzzNotificationCacheScope(community: $0) == scope
+      CoreviaTalkNotificationCacheScope(community: $0) == scope
     } && scope.matchesAccountKey(
       Self.loadPrivateKey(communityID: scope.communityID, keychainAccessGroup: accessGroup))
   }
@@ -100,7 +100,7 @@ final class NotificationService: UNNotificationServiceExtension {
     withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
   ) {
     resolvedScope = nil
-    handoff = BuzzNotificationHandoff(handler: contentHandler)
+    handoff = CoreviaTalkNotificationHandoff(handler: contentHandler)
     guard let content = request.content.mutableCopy() as? UNMutableNotificationContent else {
       finish(request.content)
       return
@@ -110,7 +110,7 @@ final class NotificationService: UNNotificationServiceExtension {
     restrictedFallbackContent = Self.restrictedFallback(from: content)
     bestAttemptContent = content
     var cleanUserInfo = content.userInfo
-    cleanUserInfo.removeValue(forKey: BuzzPushNavigationTarget.userInfoKey)
+    cleanUserInfo.removeValue(forKey: CoreviaTalkPushNavigationTarget.userInfoKey)
     content.userInfo = cleanUserInfo
 
     resolver.resolve { [weak self] resolution in
@@ -131,7 +131,7 @@ final class NotificationService: UNNotificationServiceExtension {
         }
         if let navigationTarget = resolution.navigationTarget {
           var userInfo = content.userInfo
-          userInfo[BuzzPushNavigationTarget.userInfoKey] = navigationTarget.userInfoValue
+          userInfo[CoreviaTalkPushNavigationTarget.userInfoKey] = navigationTarget.userInfoValue
           content.userInfo = userInfo
         }
         self.bestAttemptContent = content
@@ -166,7 +166,7 @@ final class NotificationService: UNNotificationServiceExtension {
         ? Self.restrictedFallback(from: content) : content,
       restrictedFallback: restrictedFallbackContent ?? Self.restrictedFallback(from: content),
       handoffIfAllowed: { deliver in
-        BuzzAgeRestrictionSession.handoffIfAllowed(
+        CoreviaTalkAgeRestrictionSession.handoffIfAllowed(
           containerURL: ageRestrictionContainerURL, deliver: deliver)
       }
     ) { [self] in
@@ -190,7 +190,7 @@ final class NotificationService: UNNotificationServiceExtension {
   }
 
   private func isAgeRestricted() -> Bool {
-    BuzzAgeRestrictionSession.isRestricted(containerURL: ageRestrictionContainerURL)
+    CoreviaTalkAgeRestrictionSession.isRestricted(containerURL: ageRestrictionContainerURL)
   }
 
   private static func restrictedFallback(
@@ -199,12 +199,12 @@ final class NotificationService: UNNotificationServiceExtension {
     let fallback =
       (content.mutableCopy() as? UNMutableNotificationContent)
       ?? UNMutableNotificationContent()
-    fallback.title = "Buzz"
+    fallback.title = "Corevia Talk"
     fallback.subtitle = ""
-    fallback.body = "Open Buzz to view this message."
+    fallback.body = "Open Corevia Talk to view this message."
     fallback.threadIdentifier = ""
     var userInfo = fallback.userInfo
-    userInfo.removeValue(forKey: BuzzPushNavigationTarget.userInfoKey)
+    userInfo.removeValue(forKey: CoreviaTalkPushNavigationTarget.userInfoKey)
     fallback.userInfo = userInfo
     return fallback
   }
@@ -215,7 +215,7 @@ final class NotificationService: UNNotificationServiceExtension {
   ) -> String? {
     var query: [String: Any] = [
       kSecClass as String: kSecClassGenericPassword,
-      kSecAttrService as String: "buzz.push.nse.signing",
+      kSecAttrService as String: "corevia-talk.push.nse.signing",
       kSecAttrAccount as String: communityID,
       kSecReturnData as String: true,
       kSecMatchLimit as String: kSecMatchLimitOne,
@@ -232,9 +232,9 @@ final class NotificationService: UNNotificationServiceExtension {
 
   private static func loadPushSnapshotData(appGroupIdentifier: String?) -> Data? {
     loadAppGroupData(
-      fileName: BuzzPushPresentationCacheStore.fileName,
+      fileName: CoreviaTalkPushPresentationCacheStore.fileName,
       appGroupIdentifier: appGroupIdentifier,
-      maximumBytes: BuzzPushPresentationCacheStore.maximumSnapshotBytes
+      maximumBytes: CoreviaTalkPushPresentationCacheStore.maximumSnapshotBytes
     )
   }
 

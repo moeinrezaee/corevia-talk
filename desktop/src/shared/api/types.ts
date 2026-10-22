@@ -362,7 +362,7 @@ export type ManagedAgent = {
   autoRestartOnConfigChange: boolean;
   backend: ManagedAgentBackend;
   backendAgentId: string | null;
-  /** Who the agent should respond to. Maps to `buzz-acp --respond-to`. */
+  /** Who the agent should respond to. Maps to `corevia-talk-acp --respond-to`. */
   respondTo: RespondToMode;
   /**
    * Normalized 64-char lowercase hex pubkeys. Used only when `respondTo` is
@@ -371,7 +371,7 @@ export type ManagedAgent = {
   respondToAllowlist: string[];
 };
 
-/** Inbound author gate mode. Mirrors buzz-acp's --respond-to CLI flag. */
+/** Inbound author gate mode. Mirrors corevia-talk-acp's --respond-to CLI flag. */
 export type RespondToMode = "owner-only" | "allowlist" | "anyone";
 
 export type BackendProviderCandidate = {
@@ -460,7 +460,7 @@ export type ControlResultFrame = {
   modelId?: string;
   /** Opaque per-pick id echoed from the request; correlates late frames. */
   requestId?: string;
-  /** Buzz channel UUID from the observer envelope; disambiguates channels. */
+  /** Corevia Talk channel UUID from the observer envelope; disambiguates channels. */
   channelId?: string | null;
 };
 
@@ -507,7 +507,7 @@ export type AcpRuntimeCatalogEntry = {
    * Non-null only for runtimes with a static finite effort vocabulary
    * (currently Goose: `["off","low","medium","high","max"]`). The renderer
    * uses this instead of the TS-side `GOOSE_EFFORT_CANONICAL_VALUES` duplicate.
-   * Null for buzz-agent (provider/model catalog), Claude/Codex/unknown runtimes.
+   * Null for corevia-talk-agent (provider/model catalog), Claude/Codex/unknown runtimes.
    */
   effortCanonicalValues: string[] | null;
   maxTokensEnvVar: string | null;
@@ -594,7 +594,7 @@ export type AgentModelInfo = {
 
 // ── Config bridge types ──────────────────────────────────────────────────────
 export type ConfigOrigin =
-  | "buzzExplicit"
+  | "coreviaTalkExplicit"
   | "acpNativeRead"
   | "acpConfigOption"
   | "envVar"

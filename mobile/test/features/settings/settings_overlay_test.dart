@@ -2,18 +2,18 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart';
-import 'package:buzz/features/home/home_page.dart';
-import 'package:buzz/features/profile/profile_avatar.dart';
-import 'package:buzz/features/profile/profile_provider.dart';
-import 'package:buzz/features/profile/settings_profile_header.dart';
-import 'package:buzz/features/profile/user_status_provider.dart';
-import 'package:buzz/features/settings/settings_page.dart';
-import 'package:buzz/shared/custom_emoji/custom_emoji_provider.dart';
-import 'package:buzz/shared/relay/relay.dart';
-import 'package:buzz/shared/profile/user_profile.dart';
-import 'package:buzz/features/profile/user_status.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/widgets/frosted_app_bar.dart';
+import 'package:corevia_talk/features/home/home_page.dart';
+import 'package:corevia_talk/features/profile/profile_avatar.dart';
+import 'package:corevia_talk/features/profile/profile_provider.dart';
+import 'package:corevia_talk/features/profile/settings_profile_header.dart';
+import 'package:corevia_talk/features/profile/user_status_provider.dart';
+import 'package:corevia_talk/features/settings/settings_page.dart';
+import 'package:corevia_talk/shared/custom_emoji/custom_emoji_provider.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/profile/user_profile.dart';
+import 'package:corevia_talk/features/profile/user_status.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/widgets/frosted_app_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,7 +32,7 @@ void main() {
         await tester.runAsync(() async {
           for (final font in {
             'Inter': 'assets/fonts/InterVariable.ttf',
-            'BuzzTabler': 'assets/fonts/TablerIcons.ttf',
+            'CoreviaTalkTabler': 'assets/fonts/TablerIcons.ttf',
           }.entries) {
             await (FontLoader(
               font.key,
@@ -48,8 +48,8 @@ void main() {
       tester.view.viewPadding = FakeViewPadding(top: 47, bottom: 34);
       addTearDown(tester.view.reset);
       PackageInfo.setMockInitialValues(
-        appName: 'Buzz',
-        packageName: 'xyz.block.buzz',
+        appName: 'Corevia Talk',
+        packageName: 'xyz.block.coreviatalk',
         version: '0.16.0',
         buildNumber: '432',
         buildSignature: '',
@@ -163,10 +163,10 @@ void main() {
         final menu = tester.widget<UiKitView>(
           find.byKey(const ValueKey('settings-presence-menu')),
         );
-        expect(menu.viewType, 'buzz/presence_menu');
+        expect(menu.viewType, 'corevia-talk/presence_menu');
         expect(menu.creationParams, containsPair('presence', 'offline'));
         final nativeMenu = nativeChannels.singleWhere(
-          (channel) => channel.name.startsWith('buzz/presence_menu/'),
+          (channel) => channel.name.startsWith('corevia-talk/presence_menu/'),
         );
         await tester.binding.defaultBinaryMessenger.handlePlatformMessage(
           nativeMenu.name,

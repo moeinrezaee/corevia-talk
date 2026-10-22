@@ -6,7 +6,7 @@ mod cli_tests;
 
 #[test]
 fn appimage_binary_matches_truncated_linux_comm_name() {
-    assert!(super::is_desktop_binary("buzz-desktop.bi"));
+    assert!(super::is_desktop_binary("corevia-talk-desktop.bi"));
 }
 
 // ── buffer_contains_identifier tests ────────────────────────────────────
@@ -14,52 +14,52 @@ fn appimage_binary_matches_truncated_linux_comm_name() {
 #[test]
 fn identifier_prefix_does_not_match_longer_id() {
     // DMG identifier should NOT match inside a dev desktop's config JSON.
-    let buf = br#""identifier":"xyz.block.buzz.app.dev""#;
-    let id = b"xyz.block.buzz.app";
+    let buf = br#""identifier":"xyz.block.coreviatalk.app.dev""#;
+    let id = b"xyz.block.coreviatalk.app";
     assert!(!super::buffer_contains_identifier(buf, id));
 }
 
 #[test]
 fn identifier_prefix_does_not_match_worktree_slug() {
     // Main dev identifier should NOT match inside a worktree desktop's buffer.
-    let buf = br#""identifier":"xyz.block.buzz.app.dev.my-branch""#;
-    let id = b"xyz.block.buzz.app.dev";
+    let buf = br#""identifier":"xyz.block.coreviatalk.app.dev.my-branch""#;
+    let id = b"xyz.block.coreviatalk.app.dev";
     assert!(!super::buffer_contains_identifier(buf, id));
 }
 
 #[test]
 fn identifier_exact_match_with_quote_boundary() {
     // Exact match followed by closing quote — should match.
-    let buf = br#""identifier":"xyz.block.buzz.app.dev""#;
-    let id = b"xyz.block.buzz.app.dev";
+    let buf = br#""identifier":"xyz.block.coreviatalk.app.dev""#;
+    let id = b"xyz.block.coreviatalk.app.dev";
     assert!(super::buffer_contains_identifier(buf, id));
 }
 
 #[test]
 fn identifier_match_with_null_boundary() {
     // In KERN_PROCARGS2, entries are null-delimited.
-    let mut buf = b"BUZZ_MANAGED_AGENT=xyz.block.buzz.app.dev".to_vec();
+    let mut buf = b"COREVIA_TALK_MANAGED_AGENT=xyz.block.coreviatalk.app.dev".to_vec();
     buf.push(0);
     buf.extend_from_slice(b"OTHER_VAR=value");
-    let id = b"xyz.block.buzz.app.dev";
+    let id = b"xyz.block.coreviatalk.app.dev";
     assert!(super::buffer_contains_identifier(&buf, id));
 }
 
 #[test]
 fn identifier_exact_match_at_end_of_buffer() {
     // Exact match with end-of-buffer as the boundary — Thufir's case 1.
-    let buf = b"xyz.block.buzz.app.dev";
-    let id = b"xyz.block.buzz.app.dev";
+    let buf = b"xyz.block.coreviatalk.app.dev";
+    let id = b"xyz.block.coreviatalk.app.dev";
     assert!(super::buffer_contains_identifier(buf, id));
 }
 
 #[test]
 fn longer_id_matches_when_short_prefix_also_present() {
     // The longer ID still matches when a shorter prefix token appears earlier.
-    let mut buf = b"xyz.block.buzz.app".to_vec();
+    let mut buf = b"xyz.block.coreviatalk.app".to_vec();
     buf.push(0);
-    buf.extend_from_slice(br#""identifier":"xyz.block.buzz.app.dev""#);
-    let id = b"xyz.block.buzz.app.dev";
+    buf.extend_from_slice(br#""identifier":"xyz.block.coreviatalk.app.dev""#);
+    let id = b"xyz.block.coreviatalk.app.dev";
     assert!(super::buffer_contains_identifier(&buf, id));
 }
 
@@ -73,36 +73,36 @@ fn identifier_empty_returns_false() {
 
 #[test]
 fn marker_entry_is_namespaced_by_instance_id() {
-    // The spawn stamp and sweep matcher both go through buzz_marker_entry, pinning the on-the-wire
+    // The spawn stamp and sweep matcher both go through corevia_talk_marker_entry, pinning the on-the-wire
     // format and guards against a dev build (`...app.dev`) matching a
     // release build's (`...app`) agents.
     assert_eq!(
-        super::buzz_marker_entry("xyz.block.buzz.app"),
-        b"BUZZ_MANAGED_AGENT=xyz.block.buzz.app".to_vec()
+        super::corevia_talk_marker_entry("xyz.block.coreviatalk.app"),
+        b"COREVIA_TALK_MANAGED_AGENT=xyz.block.coreviatalk.app".to_vec()
     );
     assert_ne!(
-        super::buzz_marker_entry("xyz.block.buzz.app"),
-        super::buzz_marker_entry("xyz.block.buzz.app.dev")
+        super::corevia_talk_marker_entry("xyz.block.coreviatalk.app"),
+        super::corevia_talk_marker_entry("xyz.block.coreviatalk.app.dev")
     );
 }
 
 #[test]
-fn buzz_agent_has_mcp_hooks() {
-    let p = known_acp_runtime("buzz-agent").expect("should resolve");
+fn corevia_talk_agent_has_mcp_hooks() {
+    let p = known_acp_runtime("corevia-talk-agent").expect("should resolve");
     assert!(p.mcp_hooks);
-    assert_eq!(p.mcp_command, Some("buzz-dev-mcp"));
+    assert_eq!(p.mcp_command, Some("corevia-talk-dev-mcp"));
 }
 
 #[test]
-fn buzz_agent_resolved_via_path() {
-    assert!(known_acp_runtime("/usr/local/bin/buzz-agent").is_some_and(|p| p.mcp_hooks));
+fn corevia_talk_agent_resolved_via_path() {
+    assert!(known_acp_runtime("/usr/local/bin/corevia-talk-agent").is_some_and(|p| p.mcp_hooks));
 }
 
 #[test]
 fn codex_has_mcp_command() {
     let p = known_acp_runtime("codex-acp").expect("should resolve");
     assert!(!p.mcp_hooks, "codex-acp does not handle MCP_HOOK_SERVERS");
-    assert_eq!(p.mcp_command, Some("buzz-dev-mcp"));
+    assert_eq!(p.mcp_command, Some("corevia-talk-dev-mcp"));
 }
 
 #[test]
@@ -129,25 +129,25 @@ fn build_env_owner_only_sets_mode_and_removes_others() {
     let (set, remove) = build_respond_to_env(&rec, Some("owner")).unwrap();
     let set_map: std::collections::HashMap<_, _> = set.into_iter().collect();
     assert_eq!(
-        set_map.get("BUZZ_ACP_RESPOND_TO").map(String::as_str),
+        set_map.get("COREVIA_TALK_ACP_RESPOND_TO").map(String::as_str),
         Some("owner-only")
     );
-    assert!(!set_map.contains_key("BUZZ_ACP_RESPOND_TO_ALLOWLIST"));
-    assert!(remove.contains(&"BUZZ_ACP_RESPOND_TO_ALLOWLIST"));
+    assert!(!set_map.contains_key("COREVIA_TALK_ACP_RESPOND_TO_ALLOWLIST"));
+    assert!(remove.contains(&"COREVIA_TALK_ACP_RESPOND_TO_ALLOWLIST"));
     if expected_owner_only() {
         assert_eq!(
             set_map
-                .get("BUZZ_ACP_ALLOWED_RESPOND_TO")
+                .get("COREVIA_TALK_ACP_ALLOWED_RESPOND_TO")
                 .map(String::as_str),
             Some("owner-only")
         );
-        assert!(!remove.contains(&"BUZZ_ACP_ALLOWED_RESPOND_TO"));
+        assert!(!remove.contains(&"COREVIA_TALK_ACP_ALLOWED_RESPOND_TO"));
     } else {
-        assert!(!set_map.contains_key("BUZZ_ACP_ALLOWED_RESPOND_TO"));
-        assert!(remove.contains(&"BUZZ_ACP_ALLOWED_RESPOND_TO"));
+        assert!(!set_map.contains_key("COREVIA_TALK_ACP_ALLOWED_RESPOND_TO"));
+        assert!(remove.contains(&"COREVIA_TALK_ACP_ALLOWED_RESPOND_TO"));
     }
     // auth_tag is present → no AGENT_OWNER fallback fires.
-    assert!(remove.contains(&"BUZZ_ACP_AGENT_OWNER"));
+    assert!(remove.contains(&"COREVIA_TALK_ACP_AGENT_OWNER"));
 }
 
 // select_untracked_bundle_harnesses tests live in runtime/sweep.rs (mod tests).
@@ -164,16 +164,16 @@ fn build_env_allowlist_sets_both_envs_and_joins() {
     let (set, _remove) = build_respond_to_env(&rec, Some("owner")).unwrap();
     let set_map: std::collections::HashMap<_, _> = set.into_iter().collect();
     assert_eq!(
-        set_map.get("BUZZ_ACP_RESPOND_TO").map(String::as_str),
+        set_map.get("COREVIA_TALK_ACP_RESPOND_TO").map(String::as_str),
         Some(expected_mode("allowlist")),
         "runtime wrapper did not apply the declared build policy",
     );
     if expected_owner_only() {
-        assert!(!set_map.contains_key("BUZZ_ACP_RESPOND_TO_ALLOWLIST"));
+        assert!(!set_map.contains_key("COREVIA_TALK_ACP_RESPOND_TO_ALLOWLIST"));
     } else {
         assert_eq!(
             set_map
-                .get("BUZZ_ACP_RESPOND_TO_ALLOWLIST")
+                .get("COREVIA_TALK_ACP_RESPOND_TO_ALLOWLIST")
                 .map(String::as_str),
             Some(format!("{a},{b}").as_str()),
         );
@@ -186,12 +186,12 @@ fn build_env_anyone_omits_allowlist_var() {
     let (set, remove) = build_respond_to_env(&rec, Some("owner")).unwrap();
     let set_map: std::collections::HashMap<_, _> = set.into_iter().collect();
     assert_eq!(
-        set_map.get("BUZZ_ACP_RESPOND_TO").map(String::as_str),
+        set_map.get("COREVIA_TALK_ACP_RESPOND_TO").map(String::as_str),
         Some(expected_mode("anyone")),
         "runtime wrapper did not apply the declared build policy",
     );
-    assert!(!set_map.contains_key("BUZZ_ACP_RESPOND_TO_ALLOWLIST"));
-    assert!(remove.contains(&"BUZZ_ACP_RESPOND_TO_ALLOWLIST"));
+    assert!(!set_map.contains_key("COREVIA_TALK_ACP_RESPOND_TO_ALLOWLIST"));
+    assert!(remove.contains(&"COREVIA_TALK_ACP_RESPOND_TO_ALLOWLIST"));
 }
 
 #[test]
@@ -201,19 +201,19 @@ fn owner_only_access_policy_overrides_stale_anyone_record_at_runtime() {
     let set_map: std::collections::HashMap<_, _> = set.into_iter().collect();
 
     assert_eq!(
-        set_map.get("BUZZ_ACP_RESPOND_TO").map(String::as_str),
+        set_map.get("COREVIA_TALK_ACP_RESPOND_TO").map(String::as_str),
         Some("owner-only"),
         "owner-only-access runtime env widened stale access",
     );
     assert_eq!(
         set_map
-            .get("BUZZ_ACP_ALLOWED_RESPOND_TO")
+            .get("COREVIA_TALK_ACP_ALLOWED_RESPOND_TO")
             .map(String::as_str),
         Some("owner-only"),
         "owner-only-access runtime env omitted the owner-only guard",
     );
-    assert!(!set_map.contains_key("BUZZ_ACP_RESPOND_TO_ALLOWLIST"));
-    assert!(remove.contains(&"BUZZ_ACP_RESPOND_TO_ALLOWLIST"));
+    assert!(!set_map.contains_key("COREVIA_TALK_ACP_RESPOND_TO_ALLOWLIST"));
+    assert!(remove.contains(&"COREVIA_TALK_ACP_RESPOND_TO_ALLOWLIST"));
 }
 
 #[test]
@@ -222,10 +222,10 @@ fn build_env_legacy_record_without_auth_tag_emits_agent_owner() {
     let (set, remove) = build_respond_to_env(&rec, Some("ownerhex")).unwrap();
     let set_map: std::collections::HashMap<_, _> = set.into_iter().collect();
     assert_eq!(
-        set_map.get("BUZZ_ACP_AGENT_OWNER").map(String::as_str),
+        set_map.get("COREVIA_TALK_ACP_AGENT_OWNER").map(String::as_str),
         Some("ownerhex")
     );
-    assert!(!remove.contains(&"BUZZ_ACP_AGENT_OWNER"));
+    assert!(!remove.contains(&"COREVIA_TALK_ACP_AGENT_OWNER"));
 }
 
 #[test]
@@ -234,7 +234,7 @@ fn build_env_legacy_record_without_owner_hex_removes_agent_owner() {
     // env var from the parent.
     let rec = fixture(RespondTo::OwnerOnly, vec![], None);
     let (_set, remove) = build_respond_to_env(&rec, None).unwrap();
-    assert!(remove.contains(&"BUZZ_ACP_AGENT_OWNER"));
+    assert!(remove.contains(&"COREVIA_TALK_ACP_AGENT_OWNER"));
 }
 
 #[test]
@@ -254,7 +254,7 @@ fn build_env_rejects_empty_allowlist_in_allowlist_mode() {
         let (set, _) = build_respond_to_env(&rec, Some("owner")).unwrap();
         let set_map: std::collections::HashMap<_, _> = set.into_iter().collect();
         assert_eq!(
-            set_map.get("BUZZ_ACP_RESPOND_TO").map(String::as_str),
+            set_map.get("COREVIA_TALK_ACP_RESPOND_TO").map(String::as_str),
             Some("owner-only")
         );
     } else {
@@ -535,11 +535,11 @@ fn runtime_metadata_env_vars_skips_provider_when_locked() {
 
 #[test]
 fn runtime_metadata_env_vars_injects_model_even_with_acp_model_switching() {
-    // buzz-agent has supports_acp_model_switching=true but we still inject
+    // corevia-talk-agent has supports_acp_model_switching=true but we still inject
     // the model env var because ACP model switching is post-bootstrap
     let vars = runtime_metadata_env_vars(
-        Some("BUZZ_AGENT_MODEL"),
-        Some("BUZZ_AGENT_PROVIDER"),
+        Some("COREVIA_TALK_AGENT_MODEL"),
+        Some("COREVIA_TALK_AGENT_PROVIDER"),
         false,
         Some("goose-claude-4-6-opus"),
         Some("databricks"),
@@ -547,8 +547,8 @@ fn runtime_metadata_env_vars_injects_model_even_with_acp_model_switching() {
     assert_eq!(
         vars,
         vec![
-            ("BUZZ_AGENT_MODEL", "goose-claude-4-6-opus"),
-            ("BUZZ_AGENT_PROVIDER", "databricks"),
+            ("COREVIA_TALK_AGENT_MODEL", "goose-claude-4-6-opus"),
+            ("COREVIA_TALK_AGENT_PROVIDER", "databricks"),
         ]
     );
 }
@@ -587,7 +587,7 @@ fn name_matches_interpreter_rejects_node_prefix() {
 
 #[test]
 fn codex_spawn_does_not_set_a_claude_executable() {
-    let mut command = std::process::Command::new("buzz-acp");
+    let mut command = std::process::Command::new("corevia-talk-acp");
     super::configure_runtime_cli(&mut command, super::known_acp_runtime("codex-acp"));
     assert!(!command
         .get_envs()
@@ -596,7 +596,7 @@ fn codex_spawn_does_not_set_a_claude_executable() {
 
 #[test]
 fn custom_acp_command_keeps_relay_git_credentials() {
-    let helper = std::path::Path::new("/opt/buzz/git-credential-nostr");
+    let helper = std::path::Path::new("/opt/corevia-talk/git-credential-nostr");
     let mut custom = std::process::Command::new("custom-acp");
     super::apply_custom_acp_git_credentials(
         &mut custom,
@@ -617,11 +617,11 @@ fn custom_acp_command_keeps_relay_git_credentials() {
     );
     assert_eq!(
         env.get("GIT_CONFIG_VALUE_0"),
-        Some(&"/opt/buzz/git-credential-nostr")
+        Some(&"/opt/corevia-talk/git-credential-nostr")
     );
     assert_eq!(env.get("GIT_CONFIG_VALUE_1"), Some(&"true"));
 
-    let mut standard = std::process::Command::new("buzz-acp");
+    let mut standard = std::process::Command::new("corevia-talk-acp");
     super::apply_custom_acp_git_credentials(
         &mut standard,
         super::super::DEFAULT_ACP_COMMAND,
@@ -705,7 +705,7 @@ fn grandchild_inherits_pgid_of_process_group_leader() {
     // Spawn a "harness" process in its own process group (mirrors
     // `command.process_group(0)` in the real spawn path). The harness
     // spawns an intermediate child which in turn spawns a grandchild.
-    // This mirrors the real tree: buzz-acp → goose → buzz-dev-mcp.
+    // This mirrors the real tree: corevia-talk-acp → goose → corevia-talk-dev-mcp.
     //
     // The intermediate `sh` backgrounds the grandchild and echoes its PID,
     // so the grandchild's ppid is the intermediate (not the harness).
@@ -1043,13 +1043,13 @@ fn invalid_pubkey_resolves_no_pair_key() {
 // ── Custom-harness orphan sweep coverage ─────────────────────────────────────
 //
 // The sweep/receipt ownership gate must include any process carrying the
-// `BUZZ_MANAGED_AGENT` env marker, regardless of whether the binary name
+// `COREVIA_TALK_MANAGED_AGENT` env marker, regardless of whether the binary name
 // matches `KNOWN_AGENT_BINARIES`. Custom harnesses use arbitrary binary names
 // so name-match alone would silently leak their orphans on crash.
 //
 // Previously: macOS used a two-check OR+AND pattern (equivalent to just marker),
 //             Linux used an AND-gate (name + marker) — wrong for custom harnesses.
-// Fix: all platforms gate on `process_has_buzz_marker` alone; the receipt path
+// Fix: all platforms gate on `process_has_corevia_talk_marker` alone; the receipt path
 //      is verified below via `valid_agent_runtime_receipt_with` (injectable),
 //      which no longer takes a name-check predicate at all — reinstating an
 //      AND-gate would be a signature change these tests would catch.
@@ -1063,7 +1063,7 @@ fn invalid_pubkey_resolves_no_pair_key() {
 
 #[test]
 fn kill_stale_custom_harness_with_marker_is_terminated() {
-    // A record with a PID not in the live runtime map and with the Buzz marker
+    // A record with a PID not in the live runtime map and with the Corevia Talk marker
     // should be terminated even though the binary name is not in KNOWN_AGENT_BINARIES.
     let mut record = minimal_record("pubkey-custom");
     record.runtime_pid = Some(9001);
@@ -1226,8 +1226,8 @@ fn minimal_record(pubkey: &str) -> crate::managed_agents::ManagedAgentRecord {
             "name": "test",
             "private_key_nsec": "nsec1fake",
             "relay_url": "",
-            "acp_command": "buzz-acp",
-            "agent_command": "buzz-agent",
+            "acp_command": "corevia-talk-acp",
+            "agent_command": "corevia-talk-agent",
             "agent_args": [],
             "mcp_command": "",
             "turn_timeout_seconds": 320,

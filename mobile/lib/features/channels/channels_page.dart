@@ -15,7 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/physics.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/auth/auth.dart';
 import '../../shared/community/community_icon_provider.dart';
@@ -31,7 +31,7 @@ import '../../shared/widgets/avatar_image.dart';
 import '../../shared/widgets/anchored_popover_menu.dart';
 import '../../shared/widgets/bee_refresh_indicator.dart';
 import '../../shared/widgets/bottom_up_page_route.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../shared/widgets/concentric_sheet_surface.dart';
 import '../../shared/widgets/frosted_app_bar.dart';
 import '../../shared/widgets/ios_navigation_bar.dart';
@@ -425,7 +425,7 @@ class ChannelsPage extends HookConsumerWidget {
       final role = ref.read(currentCommunityRoleProvider).unwrapPrevious();
       final canInvite = role.hasError || canManageCommunityInvites(role.value);
       unawaited(HapticFeedback.selectionClick());
-      showBuzzModalBottomSheet<void>(
+      showCoreviaTalkModalBottomSheet<void>(
         context: context,
         showCloseButton: false,
         showDragHandle: true,
@@ -487,7 +487,7 @@ class ChannelsPage extends HookConsumerWidget {
               label: 'Search',
               symbol: 'magnifyingglass',
               sharesBackground: true,
-              icon: BuzzIcons.search300,
+              icon: CoreviaTalkIcons.search300,
               onPressed: onSearch,
             ),
           if (onInbox != null)
@@ -495,7 +495,7 @@ class ChannelsPage extends HookConsumerWidget {
               label: 'Inbox',
               symbol: 'tray',
               sharesBackground: true,
-              icon: BuzzIcons.inbox300,
+              icon: CoreviaTalkIcons.inbox300,
               activityColor: hasUnreadInbox ? context.colors.primary : null,
               activityLabel: hasUnreadInbox ? 'Unread' : null,
               onPressed: onInbox,
@@ -516,9 +516,9 @@ class ChannelsPage extends HookConsumerWidget {
           ),
         ],
         horizontalInset: _kTopSectionInset,
-        // Let the full Buzz gradient show at rest. Once the list begins to
+        // Let the full Corevia Talk gradient show at rest. Once the list begins to
         // move beneath this row, build up blur over the first 64dp of scroll
-        // without adding the usual white frosted wash. The Buzz list is
+        // without adding the usual white frosted wash. The Corevia Talk list is
         // transparent, so the blurred pixels remain a continuation of the
         // pinned gradient instead of turning into a white header.
         frosted: !usesPinnedGradient || headerFrostProgress.value > 0,

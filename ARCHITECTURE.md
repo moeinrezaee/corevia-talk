@@ -1,12 +1,12 @@
-# Buzz Architecture
+# Corevia Talk Architecture
 
 ## 1. Executive Summary
 
-Buzz is a self-hosted team communication platform built on the Nostr protocol (NIP-01 wire format), where AI agents and humans are first-class equals. Every action — a chat message, a reaction, a workflow step, a canvas update, a huddle event — is a cryptographically signed Nostr event identified by a `kind` integer. Adding a new feature means defining a new kind number; existing clients see nothing and break nothing.
+Corevia Talk is a self-hosted team communication platform built on the Nostr protocol (NIP-01 wire format), where AI agents and humans are first-class equals. Every action — a chat message, a reaction, a workflow step, a canvas update, a huddle event — is a cryptographically signed Nostr event identified by a `kind` integer. Adding a new feature means defining a new kind number; existing clients see nothing and break nothing.
 
 The relay is the single source of truth. All reads and writes flow through it. There is no peer-to-peer event exchange, no gossip, no replication — just clients connecting to one relay over WebSocket, and the relay enforcing auth, verifying signatures, persisting events, fanning out to subscribers, indexing for search, and triggering automation.
 
-A Buzz **community** is the tenant-visible workspace selected by the request host.
+A Corevia Talk **community** is the tenant-visible workspace selected by the request host.
 The self-hosted default remains one host, one relay process, one implicit
 community. Multi-community deployments move that semantic boundary one level up:
 `req.community = resolve_host(connection.host)` is established before AUTH,
@@ -41,12 +41,12 @@ archived — and closes from `drained` onward, when tenant-state destruction may
 have begun.
 
 Manual operator handoff converges on an admitted owner request only when
-`buzz-admin deletions submit --requested-by` repeats the owner pubkey recorded
+`corevia-talk-admin deletions submit --requested-by` repeats the owner pubkey recorded
 on the row. Owner provenance pins `requested_by` to `owner_pubkey`, so passing
 the operator's own pubkey does not converge — it conflicts with the existing
 one-active-request invariant instead.
 
-The privileged one-shot `buzz-admin deletions drain` process gives already-
+The privileged one-shot `corevia-talk-admin deletions drain` process gives already-
 approved work priority. When none is ready, it may claim only an
 operator-attested owner-origin `submitted` request under the same durable
 generation lease used for execution, inventory it with lease-loss cancellation,
@@ -65,7 +65,7 @@ same community-row lock as owner-deletion admission, then reject archived,
 quiescing, deleted, or deletion-pending rotation without changing membership.
 Initial owner bootstrap for a newly created community remains supported.
 
-Buzz is a Rust monorepo, licensed Apache 2.0 under Block, Inc.
+Corevia Talk is a Rust monorepo, licensed Apache 2.0 under Block, Inc.
 
 ---
 
@@ -75,14 +75,14 @@ Buzz is a Rust monorepo, licensed Apache 2.0 under Block, Inc.
 ┌─────────────────────────────────────────────────────────────────────┐
 │                           CLIENTS                                    │
 │                                                                      │
-│  Human (Nostr app, web, mobile)    Agent (CLI tools via buzz-cli)    │
+│  Human (Nostr app, web, mobile)    Agent (CLI tools via corevia-talk-cli)    │
 │           │                                    │                     │
 │           └──────────── WebSocket ─────────────┘                    │
 └─────────────────────────────────────────────────────────────────────┘
                                │
                                ▼
 ┌─────────────────────────────────────────────────────────────────────┐
-│                         buzz-relay (Axum)                          │
+│                         corevia-talk-relay (Axum)                          │
 │                                                                      │
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌─────────────────────┐ │
 │  │ NIP-42   │  │  EVENT   │  │   REQ    │  │  HTTP bridge       │ │
@@ -115,7 +115,7 @@ Buzz is a Rust monorepo, licensed Apache 2.0 under Block, Inc.
      (multi-node fan-out wired; local-echo dedup via AppState.local_event_ids).
 
      ┌──────────────┐
-     │  Postgres    │  ← buzz-search (FTS over the search_tsv
+     │  Postgres    │  ← corevia-talk-search (FTS over the search_tsv
      │ (full-text   │     generated column + GIN index)
      │   search)    │
      └──────────────┘
@@ -126,32 +126,32 @@ Buzz is a Rust monorepo, licensed Apache 2.0 under Block, Inc.
 ### Crate Dependency Hierarchy
 
 ```
-buzz-core    (zero I/O — types, verification, filter matching, kind registry)
+corevia-talk-core    (zero I/O — types, verification, filter matching, kind registry)
     │
-    ├── buzz-db          (Postgres: events, channels, tokens, workflows, audit)
-    ├── buzz-auth        (NIP-42, NIP-98, API tokens, scopes, rate limiting)
-    ├── buzz-pubsub      (Redis pub/sub, presence, typing indicators)
-    ├── buzz-search      (Postgres FTS: query, delete)
-    ├── buzz-audit       (hash-chain tamper-evident log)
-    └── buzz-workflow    (YAML-as-code automation engine)
+    ├── corevia-talk-db          (Postgres: events, channels, tokens, workflows, audit)
+    ├── corevia-talk-auth        (NIP-42, NIP-98, API tokens, scopes, rate limiting)
+    ├── corevia-talk-pubsub      (Redis pub/sub, presence, typing indicators)
+    ├── corevia-talk-search      (Postgres FTS: query, delete)
+    ├── corevia-talk-audit       (hash-chain tamper-evident log)
+    └── corevia-talk-workflow    (YAML-as-code automation engine)
          │
-         └── buzz-relay       (ties everything together — the server)
+         └── corevia-talk-relay       (ties everything together — the server)
 
-buzz-acp            (agent harness — bridges relay @mentions → AI agents via ACP/JSON-RPC)
-buzz-sdk            (typed Nostr event builders — used by buzz-acp and buzz-cli)
-buzz-media          (Blossom/S3 media storage)
-buzz-cli            (agent-first CLI)
-buzz-admin          (operator CLI: relay membership + key generation)
-buzz-test-client    (integration test harness + manual CLI)
+corevia-talk-acp            (agent harness — bridges relay @mentions → AI agents via ACP/JSON-RPC)
+corevia-talk-sdk            (typed Nostr event builders — used by corevia-talk-acp and corevia-talk-cli)
+corevia-talk-media          (Blossom/S3 media storage)
+corevia-talk-cli            (agent-first CLI)
+corevia-talk-admin          (operator CLI: relay membership + key generation)
+corevia-talk-test-client    (integration test harness + manual CLI)
 ```
 
-**Key architectural principle:** The relay is the single source of truth. `buzz-relay` orchestrates all subsystems by calling them directly — it imports `buzz-db`, `buzz-auth`, `buzz-pubsub`, `buzz-search`, `buzz-audit`, and `buzz-workflow`. However, those subsystems are isolated from each other: `buzz-workflow` never calls `buzz-pubsub`, `buzz-search` never calls `buzz-db`, etc. The one sanctioned exception is `buzz-audit`, which calls `buzz_db::deletion::guard_community_write` to admit each audit append into its community before taking the chain lock. Cross-subsystem coordination happens only through the relay. In multi-community mode, the relay also owns propagation of `TenantContext`; service crates should receive community-scoped inputs rather than independently deriving tenancy from client-controlled event tags.
+**Key architectural principle:** The relay is the single source of truth. `corevia-talk-relay` orchestrates all subsystems by calling them directly — it imports `corevia-talk-db`, `corevia-talk-auth`, `corevia-talk-pubsub`, `corevia-talk-search`, `corevia-talk-audit`, and `corevia-talk-workflow`. However, those subsystems are isolated from each other: `corevia-talk-workflow` never calls `corevia-talk-pubsub`, `corevia-talk-search` never calls `corevia-talk-db`, etc. The one sanctioned exception is `corevia-talk-audit`, which calls `corevia_talk_db::deletion::guard_community_write` to admit each audit append into its community before taking the chain lock. Cross-subsystem coordination happens only through the relay. In multi-community mode, the relay also owns propagation of `TenantContext`; service crates should receive community-scoped inputs rather than independently deriving tenancy from client-controlled event tags.
 
 ---
 
 ## 2. The Protocol
 
-Buzz uses Nostr NIP-01 on the wire. Every action is a JSON event with six fields:
+Corevia Talk uses Nostr NIP-01 on the wire. Every action is a JSON event with six fields:
 
 ```json
 {
@@ -174,9 +174,9 @@ The `kind` integer is the only dispatch switch. The relay routes, stores, and fa
 | 10000–19999 | Replaceable events (NIP-16) |
 | 20000–29999 | Ephemeral events — not stored, not audited |
 | 30000–39999 | Parameterized replaceable events |
-| 40000–49999 | Buzz custom kinds |
+| 40000–49999 | Corevia Talk custom kinds |
 
-### Buzz Custom Kinds (selected)
+### Corevia Talk Custom Kinds (selected)
 
 | Kind | Name | Description |
 |------|------|-------------|
@@ -191,9 +191,9 @@ The `kind` integer is the only dispatch switch. The relay routes, stores, and fa
 | 20001 | KIND_PRESENCE_UPDATE | Ephemeral presence heartbeat |
 | 20003 | KIND_AGENT_PRESENCE | Ephemeral presence heartbeat an owner sends for its agents |
 
-`buzz-core` defines each event kind as a `pub const u32` and exports the full registry as `ALL_KINDS: &[u32]` (127 kinds at the time of writing); `crates/buzz-core/src/kind.rs` is the source of truth for the current list. Kinds are `u32` (NIP-01 specifies unsigned integer; `u32` covers the full range). Buzz uses both standard Nostr kinds (e.g., kind 7 for reactions) and custom ranges (40000+).
+`corevia-talk-core` defines each event kind as a `pub const u32` and exports the full registry as `ALL_KINDS: &[u32]` (127 kinds at the time of writing); `crates/corevia-talk-core/src/kind.rs` is the source of truth for the current list. Kinds are `u32` (NIP-01 specifies unsigned integer; `u32` covers the full range). Corevia Talk uses both standard Nostr kinds (e.g., kind 7 for reactions) and custom ranges (40000+).
 
-Note: `KIND_AUTH` (22242) is `pub const KIND_AUTH: u32` in `buzz-core/src/kind.rs` and imported by `buzz-relay/src/handlers/event.rs`. `KIND_CANVAS` (40100) is likewise `pub const KIND_CANVAS: u32` in `buzz-core/src/kind.rs`.
+Note: `KIND_AUTH` (22242) is `pub const KIND_AUTH: u32` in `corevia-talk-core/src/kind.rs` and imported by `corevia-talk-relay/src/handlers/event.rs`. `KIND_CANVAS` (40100) is likewise `pub const KIND_CANVAS: u32` in `corevia-talk-core/src/kind.rs`.
 
 ### Wire Protocol (NIP-01 messages)
 
@@ -288,11 +288,11 @@ When the relay receives `["EVENT", <event>]`, the handler in `handlers/event.rs`
 11. WORKFLOW TRIGGER — wf.on_event (spawned async, excludes kinds 46001–46012)
 ```
 
-Steps 10–11 are fire-and-forget: audit and workflow triggers are spawned as independent async tasks. A failure in either does not fail the event submission. Search has no asynchronous indexing step: Postgres maintains the generated `events.search_tsv` column as part of step 7, and `buzz-search` only queries it. The client receives `["OK", <id>, true, ""]` at the end of the pipeline, not immediately after DB insert.
+Steps 10–11 are fire-and-forget: audit and workflow triggers are spawned as independent async tasks. A failure in either does not fail the event submission. Search has no asynchronous indexing step: Postgres maintains the generated `events.search_tsv` column as part of step 7, and `corevia-talk-search` only queries it. The client receives `["OK", <id>, true, ""]` at the end of the pipeline, not immediately after DB insert.
 
 Step 9 (fan-out) explicitly **excludes** global subscriptions (no `channel_id` constraint) from channel-scoped events — global subscriptions do NOT receive events from private channels, regardless of filter match. This is a deliberate security boundary: only subscriptions scoped to an accessible `channel_id` receive those events.
 
-Workflow loop prevention: workflow execution kinds (46001–46012), relay-signed messages with `buzz:workflow` tag, and `KIND_GIFT_WRAP` are excluded from triggering workflows. All other stored events (including kind 9 stream messages) trigger workflow evaluation.
+Workflow loop prevention: workflow execution kinds (46001–46012), relay-signed messages with `corevia-talk:workflow` tag, and `KIND_GIFT_WRAP` are excluded from triggering workflows. All other stored events (including kind 9 stream messages) trigger workflow evaluation.
 
 ### Ephemeral Sub-Pipeline (kinds 20000–29999)
 
@@ -393,7 +393,7 @@ subscribed (PR #6996).
 
 ## 6. Crate Reference
 
-### buzz-core — Shared Types and Verification
+### corevia-talk-core — Shared Types and Verification
 
 **Zero I/O.** The foundation every other crate builds on. Explicitly prohibits tokio, sqlx, redis, and axum in its `Cargo.toml`.
 
@@ -422,7 +422,7 @@ pub const ALL_KINDS: &[u32]  // 80 entries (KIND_AUTH excluded — never stored)
 
 ---
 
-### buzz-auth — Authentication and Authorization
+### corevia-talk-auth — Authentication and Authorization
 
 Handles authentication paths, scope enforcement, and token operations.
 
@@ -449,13 +449,13 @@ pub trait RateLimiter: Send + Sync { ... }
 **Security details:**
 - NIP-98 auth: Schnorr-signed `kind:27235` events with URL + method tags.
 - NIP-42 timestamp tolerance: ±60 seconds.
-- Dev-only key derivation: `SHA-256("buzz-test-key:{username}")` — gated behind `#[cfg(any(test, feature = "dev"))]`. The `dev` feature must not be enabled in production relay deployments.
+- Dev-only key derivation: `SHA-256("corevia-talk-test-key:{username}")` — gated behind `#[cfg(any(test, feature = "dev"))]`. The `dev` feature must not be enabled in production relay deployments.
 
 **Does NOT:** implement `RateLimiter` beyond a test stub (`AlwaysAllowRateLimiter`, gated behind `#[cfg(any(test, feature = "test-utils"))]`). No Redis-backed rate limiter exists anywhere in the codebase — rate limiting is not currently enforced. `RateLimitConfig` defines 4 tiers (human, agent-standard, agent-elevated, agent-platform) as a design target.
 
 ---
 
-### buzz-db — Postgres Event Store
+### corevia-talk-db — Postgres Event Store
 
 All database access. Uses `sqlx::query()` (runtime, not compile-time macros) — no `.sqlx/` offline cache required.
 
@@ -534,31 +534,31 @@ are in [docs/database.md](docs/database.md).
 
 ---
 
-### buzz-pubsub — Redis Pub/Sub, Presence, Typing
+### corevia-talk-pubsub — Redis Pub/Sub, Presence, Typing
 
-Manages Redis pub/sub fan-out, presence tracking, and typing indicators. In multi-community mode all tenant-visible keys are prefixed or otherwise partitioned by community (`buzz:{community}:...`) so channel fan-out, presence, typing, and cache invalidation cannot cross hosts.
+Manages Redis pub/sub fan-out, presence tracking, and typing indicators. In multi-community mode all tenant-visible keys are prefixed or otherwise partitioned by community (`corevia-talk:{community}:...`) so channel fan-out, presence, typing, and cache invalidation cannot cross hosts.
 
 **Architecture:**
 
 ```
-Publisher  → pool connection   → PUBLISH buzz:channel:{uuid}
-Subscriber → dedicated PubSub  → PSUBSCRIBE buzz:channel:*
+Publisher  → pool connection   → PUBLISH corevia-talk:channel:{uuid}
+Subscriber → dedicated PubSub  → PSUBSCRIBE corevia-talk:channel:*
                                   → broadcast::channel(4096)
 ```
 
 The subscriber uses a **dedicated** `redis::aio::PubSub` connection — not from the pool. This is intentional: pool connections cannot hold `PSUBSCRIBE` state.
 
-**Current state:** The subscriber loop is spawned in `buzz-relay/src/main.rs` and populates the broadcast channel. A consumer task subscribes via `pubsub.subscribe_local()`, calls `sub_registry.fan_out()` on each received event, and delivers matches to local WebSocket connections via `conn_manager.send_to()`. Multi-node fan-out is now wired end-to-end. Local-echo deduplication is implemented via `AppState.local_event_ids` — events published by the local relay instance are tracked and skipped when received via the Redis round-trip.
+**Current state:** The subscriber loop is spawned in `corevia-talk-relay/src/main.rs` and populates the broadcast channel. A consumer task subscribes via `pubsub.subscribe_local()`, calls `sub_registry.fan_out()` on each received event, and delivers matches to local WebSocket connections via `conn_manager.send_to()`. Multi-node fan-out is now wired end-to-end. Local-echo deduplication is implemented via `AppState.local_event_ids` — events published by the local relay instance are tracked and skipped when received via the Redis round-trip.
 
 **Reconnection:** exponential backoff 1s → 30s (`backoff_secs * 2`). Backoff resets to 1s only after a clean stream end, not on each reconnect attempt.
 
-**Presence:** `SET buzz:presence:{pubkey_hex} {status} EX 180` — 180-second TTL (3× the 60-second heartbeat interval). Single missed heartbeat does not cause presence flap.
+**Presence:** `SET corevia-talk:presence:{pubkey_hex} {status} EX 180` — 180-second TTL (3× the 60-second heartbeat interval). Single missed heartbeat does not cause presence flap.
 
 **Typing indicators:**
 ```
-ZADD buzz:typing:{channel_id} {now_unix} {pubkey_hex}
-ZREMRANGEBYSCORE buzz:typing:{channel_id} -inf {now - 5.0}
-EXPIRE buzz:typing:{channel_id} 60
+ZADD corevia-talk:typing:{channel_id} {now_unix} {pubkey_hex}
+ZREMRANGEBYSCORE corevia-talk:typing:{channel_id} -inf {now - 5.0}
+EXPIRE corevia-talk:typing:{channel_id} 60
 ```
 5-second activity window. 60-second key TTL prevents orphaned empty sets.
 
@@ -566,7 +566,7 @@ EXPIRE buzz:typing:{channel_id} 60
 
 ---
 
-### buzz-search — Postgres FTS Integration
+### corevia-talk-search — Postgres FTS Integration
 
 Full-text search via Postgres FTS. Events are searchable through the
 `events.search_tsv` generated `tsvector` column (populated on insert, indexed
@@ -586,7 +586,7 @@ re-authorizes every candidate hit before returning it.
   ambiguity the old `Option<Vec<Uuid>> + bool` matrix could not express.
 - Every query carries `community_id`; the FTS predicate is BitmapAnd-ed with
   the community-leading btree filters so a query never crosses tenants.
-- Permission filtering is **caller's responsibility** — `buzz-search` returns
+- Permission filtering is **caller's responsibility** — `corevia-talk-search` returns
   candidate hits; the relay re-authorizes each one (channel membership, `#p`,
   owner gates) before delivering it.
 
@@ -595,7 +595,7 @@ events (indexing is the `search_tsv` generated column on the `events` insert).
 
 ---
 
-### buzz-audit — Hash-Chain Audit Log
+### corevia-talk-audit — Hash-Chain Audit Log
 
 Tamper-evident append-only log with SHA-256 hash chaining.
 
@@ -603,7 +603,7 @@ Tamper-evident append-only log with SHA-256 hash chaining.
 
 **Hash covers:** seq (big-endian bytes), timestamp (RFC3339), event_id, event_kind (big-endian), actor_pubkey, action string, channel_id (16 bytes or 16 zero bytes if None), canonical metadata JSON (BTreeMap for deterministic key ordering), prev_hash.
 
-**Single-writer guarantee:** each append runs in one transaction that first passes community write admission (the shared community deletion lock plus the active/undeleted check, via `buzz-db`'s `DeletionStore::guard_transaction`), then takes a per-community `pg_advisory_xact_lock`. Both locks release on commit or rollback, including a dropped future.
+**Single-writer guarantee:** each append runs in one transaction that first passes community write admission (the shared community deletion lock plus the active/undeleted check, via `corevia-talk-db`'s `DeletionStore::guard_transaction`), then takes a per-community `pg_advisory_xact_lock`. Both locks release on commit or rollback, including a dropped future.
 
 **10 audit actions:** `EventCreated`, `EventDeleted`, `ChannelCreated`, `ChannelUpdated`, `ChannelDeleted`, `MemberAdded`, `MemberRemoved`, `AuthSuccess`, `AuthFailure`, `RateLimitExceeded`.
 
@@ -611,7 +611,7 @@ Tamper-evident append-only log with SHA-256 hash chaining.
 
 ---
 
-### buzz-workflow — YAML-as-Code Automation Engine
+### corevia-talk-workflow — YAML-as-Code Automation Engine
 
 Parses, validates, and executes channel-scoped workflow definitions. In multi-community mode workflow definitions, runs, approvals, webhook routes, and schedules inherit the host-derived community and evaluate triggers only against events in that community.
 
@@ -673,7 +673,7 @@ retains arrival-order recreation without a deletion watermark.
 
 ### Huddle Audio — WebSocket Opus Relay
 
-Real-time voice lives inside `buzz-relay` (`src/audio/`), not a separate crate. A WebSocket endpoint (`wss://.../huddle/{channel_id}/audio`) authenticates each participant with a NIP-42 challenge, checks channel membership, admits them to an in-memory room, and forwards opaque Opus frames between peers. No external SFU.
+Real-time voice lives inside `corevia-talk-relay` (`src/audio/`), not a separate crate. A WebSocket endpoint (`wss://.../huddle/{channel_id}/audio`) authenticates each participant with a NIP-42 challenge, checks channel membership, admits them to an in-memory room, and forwards opaque Opus frames between peers. No external SFU.
 
 **Frame protocol (v2):** 8-byte big-endian header (sequence `u16`, 48 kHz timestamp `u32`, level dBov `i8`, flags `u8`) followed by an opaque Opus payload. Invalid `level_dbov` values are clamped rather than dropped — losing a metric beats losing audio.
 
@@ -685,7 +685,7 @@ Real-time voice lives inside `buzz-relay` (`src/audio/`), not a separate crate. 
 
 ---
 
-### buzz-relay — The Server
+### corevia-talk-relay — The Server
 
 Axum WebSocket server. Ties all other crates together. The only crate that imports and orchestrates all subsystems.
 
@@ -711,12 +711,12 @@ pub struct AppState {
 
 Postgres pools use the closed physical role vocabulary `writer`, `reader`,
 `audit`, and `search`. The periodic sampler retains cheap SQLx pool handles and
-exports `buzz_db_pool_connections{pool_role,state}` for the bounded states
-`idle` and `active`, `buzz_db_pool_max_connections{pool_role}` for capacity,
-and `buzz_db_pool_configured{pool_role}`. All four roles are always present (16
+exports `corevia_talk_db_pool_connections{pool_role,state}` for the bounded states
+`idle` and `active`, `corevia_talk_db_pool_max_connections{pool_role}` for capacity,
+and `corevia_talk_db_pool_configured{pool_role}`. All four roles are always present (16
 raw gauge series total); absent optional pools report zero. Current pool size is
 exactly the sum of its idle and active connection gauges. The legacy
-`buzz_db_pool_*` writer gauges and `buzz_db_read_pool_*` reader gauges remain
+`corevia_talk_db_pool_*` writer gauges and `corevia_talk_db_read_pool_*` reader gauges remain
 for dashboard compatibility. Pool sizing and aggregate deployment connection
 budgets remain configuration/deployment concerns rather than a relay pool
 manager.
@@ -766,17 +766,17 @@ pub enum AuthState { Pending { challenge: String }, Authenticated(AuthContext), 
 
 ---
 
-### buzz-acp — Agent Communication Protocol Harness
+### corevia-talk-acp — Agent Communication Protocol Harness
 
-Standalone binary that bridges Buzz relay events to AI agents via the [Agent Communication Protocol](https://agentclientprotocol.com/) (ACP).
+Standalone binary that bridges Corevia Talk relay events to AI agents via the [Agent Communication Protocol](https://agentclientprotocol.com/) (ACP).
 
 **Architecture:**
 
 ```
-Buzz Relay ──WS──→ buzz-acp ──stdio (ACP/JSON-RPC)──→ Agent (goose/codex/claude)
+Corevia Talk Relay ──WS──→ corevia-talk-acp ──stdio (ACP/JSON-RPC)──→ Agent (goose/codex/claude)
 ```
 
-`buzz-acp` spawns AI agent subprocesses (1–32, default 1), connects to the relay via WebSocket with NIP-42 auth, discovers channels via REST API, and queues `@mention` events per channel. At most one prompt is in-flight per channel. Queued events are batched into a single prompt sent via `session/prompt` over ACP.
+`corevia-talk-acp` spawns AI agent subprocesses (1–32, default 1), connects to the relay via WebSocket with NIP-42 auth, discovers channels via REST API, and queues `@mention` events per channel. At most one prompt is in-flight per channel. Queued events are batched into a single prompt sent via `session/prompt` over ACP.
 
 **Key modules:**
 
@@ -794,13 +794,13 @@ Buzz Relay ──WS──→ buzz-acp ──stdio (ACP/JSON-RPC)──→ Agent 
 - Pool of 1–32 agent subprocesses with claim/return lifecycle.
 - Per-channel queuing: at most one prompt in-flight per channel; subsequent @mentions queue until the agent responds.
 - Crash recovery: agent subprocess crashes are detected and the agent is respawned.
-- Depends on `buzz-core` (kind constants) and `buzz-sdk` (relay/REST utilities).
+- Depends on `corevia-talk-core` (kind constants) and `corevia-talk-sdk` (relay/REST utilities).
 
 **Does NOT:** persist state.
 
 ---
 
-### buzz-admin — Operator CLI
+### corevia-talk-admin — Operator CLI
 
 Subcommands:
 
@@ -814,10 +814,10 @@ Subcommands:
 | `storage-snapshot` | Run one isolated S3 accounting scan and publish its complete Postgres snapshot |
 | `reconcile-channels` | Emit kind:39000/39002 discovery events for channels missing them (idempotent) |
 
-The `buzz-admin` binary is shipped in the relay Docker image (`/usr/local/bin/buzz-admin`) and is the recommended way to manage relay membership in production. Use `./run.sh add-member`, `./run.sh remove-member`, and `./run.sh list-members` in Docker Compose deployments.
+The `corevia-talk-admin` binary is shipped in the relay Docker image (`/usr/local/bin/corevia-talk-admin`) and is the recommended way to manage relay membership in production. Use `./run.sh add-member`, `./run.sh remove-member`, and `./run.sh list-members` in Docker Compose deployments.
 
 Kubernetes deployments may schedule the typed one-shot
-`buzz-admin deletions drain` command directly. The pod owns its bounded
+`corevia-talk-admin deletions drain` command directly. The pod owns its bounded
 Postgres/Redis clients and S3 client; it does not call relay HTTP. Durable
 requests, leases, retry timing, and checkpoints in Postgres are the handoff and
 execution authority, so Kubernetes uses `Forbid` concurrency and zero Job
@@ -829,9 +829,9 @@ records; there is no preparation worker, command, queue, or retry authority.
 
 ---
 
-### buzz-test-client — Integration Test Harness
+### corevia-talk-test-client — Integration Test Harness
 
-**`BuzzTestClient`** wraps a WebSocket connection with a `VecDeque<RelayMessage>` buffer for message interleaving. Methods: `connect`, `connect_unauthenticated`, `authenticate`, `send_event`, `send_text_message`, `subscribe`, `close_subscription`, `recv_event`, `collect_until_eose`, `disconnect`.
+**`CoreviaTalkTestClient`** wraps a WebSocket connection with a `VecDeque<RelayMessage>` buffer for message interleaving. Methods: `connect`, `connect_unauthenticated`, `authenticate`, `send_event`, `send_text_message`, `subscribe`, `close_subscription`, `recv_event`, `collect_until_eose`, `disconnect`.
 
 **Test coverage:**
 
@@ -844,7 +844,7 @@ records; there is no preparation worker, command, queue, or retry authority.
 
 All e2e tests are `#[ignore]` — require a running relay. Total: **134 e2e tests**.
 
-`src/main.rs` is a manual testing CLI (`buzz-test-cli`) with `--send`, `--subscribe`, `--channel`, `--url`, `--kind` flags.
+`src/main.rs` is a manual testing CLI (`corevia-talk-test-cli`) with `--send`, `--subscribe`, `--channel`, `--url`, `--kind` flags.
 
 Defines `parse_relay_message`, `OkResponse`, `RelayMessage` directly in `src/lib.rs`.
 
@@ -866,7 +866,7 @@ Every security-sensitive operation uses an explicit, verified pattern. No implic
 
 | Concern | Mechanism |
 |---------|-----------|
-| Schnorr signatures | `verify_event()` in `buzz-core` — every event verified before storage |
+| Schnorr signatures | `verify_event()` in `corevia-talk-core` — every event verified before storage |
 | Event ID | SHA-256 of canonical serialization verified independently of signature |
 | Frame size | `MAX_FRAME_BYTES = 65,536` — oversized frames rejected, connection closed |
 | Search event IDs | 64-char hex validation before URL construction — prevents path injection |
@@ -875,9 +875,9 @@ Every security-sensitive operation uses an explicit, verified pattern. No implic
 
 ### SSRF Protection
 
-`is_not_global_unicast(ip)` (compat alias `is_private_ip`) in `buzz-core` is an enumerated-deny policy: it blocks a specific set of non-public address classes and accepts everything else, including addresses not covered by an explicit deny rule (e.g. `fe00::1`). Blocked IPv4 classes: loopback (127.0.0.0/8), private RFC 1918 (10/8, 172.16/12, 192.168/16), link-local (169.254/16), unspecified (0/8), broadcast, CGNAT/RFC 6598 (100.64/10), benchmarking/RFC 2544 (198.18/15), IETF Protocol Assignments (192.0.0.0/24, globally reachable exceptions: 192.0.0.9 PCP anycast RFC 7723 and 192.0.0.10 TURN anycast RFC 8155), documentation/RFC 5737 (192.0.2/24, 198.51.100/24, 203.0.113/24), deprecated 6to4 relay anycast (192.88.99.0/24, RFC 7526, global=None/blank → conservative deny), multicast/RFC 5771 (224/4), and reserved class-E (240/4). Blocked IPv6 classes: loopback (::1), unspecified (::), ULA (fc00::/7), link-local (fe80::/10), deprecated site-local (fec0::/10, RFC 3879), multicast (ff00::/8), IETF Protocol Assignments envelope (2001::/23, global exceptions: 2001:1::1–::3 PCP/TURN/DNS-SD anycast, 2001:3::/32 AMT RFC 7450, 2001:4:112::/48 AS112-v6 RFC 7535, 2001:20::/28 ORCHIDv2 RFC 7343, 2001:30::/28 DETs RFC 9374), documentation (2001:db8::/32 RFC 3849, 3fff::/20 RFC 9637), 6to4 (2002::/16, RFC 3056), Discard-Only (100::/64, RFC 6666), Dummy IPv6 Prefix (100:0:0:1::/64, RFC 9780), SRv6 SIDs (5f00::/16, RFC 9252), and NAT64 local-use (64:ff9b:1::/48, RFC 8215). IPv4 embedded in IPv4-mapped, IPv4-compatible, and NAT64 well-known (64:ff9b::/96, RFC 6052) forms is checked recursively against the IPv4 table; SIIT IPv4-translated (::ffff:0:0:0/96) follows the same path.
+`is_not_global_unicast(ip)` (compat alias `is_private_ip`) in `corevia-talk-core` is an enumerated-deny policy: it blocks a specific set of non-public address classes and accepts everything else, including addresses not covered by an explicit deny rule (e.g. `fe00::1`). Blocked IPv4 classes: loopback (127.0.0.0/8), private RFC 1918 (10/8, 172.16/12, 192.168/16), link-local (169.254/16), unspecified (0/8), broadcast, CGNAT/RFC 6598 (100.64/10), benchmarking/RFC 2544 (198.18/15), IETF Protocol Assignments (192.0.0.0/24, globally reachable exceptions: 192.0.0.9 PCP anycast RFC 7723 and 192.0.0.10 TURN anycast RFC 8155), documentation/RFC 5737 (192.0.2/24, 198.51.100/24, 203.0.113/24), deprecated 6to4 relay anycast (192.88.99.0/24, RFC 7526, global=None/blank → conservative deny), multicast/RFC 5771 (224/4), and reserved class-E (240/4). Blocked IPv6 classes: loopback (::1), unspecified (::), ULA (fc00::/7), link-local (fe80::/10), deprecated site-local (fec0::/10, RFC 3879), multicast (ff00::/8), IETF Protocol Assignments envelope (2001::/23, global exceptions: 2001:1::1–::3 PCP/TURN/DNS-SD anycast, 2001:3::/32 AMT RFC 7450, 2001:4:112::/48 AS112-v6 RFC 7535, 2001:20::/28 ORCHIDv2 RFC 7343, 2001:30::/28 DETs RFC 9374), documentation (2001:db8::/32 RFC 3849, 3fff::/20 RFC 9637), 6to4 (2002::/16, RFC 3056), Discard-Only (100::/64, RFC 6666), Dummy IPv6 Prefix (100:0:0:1::/64, RFC 9780), SRv6 SIDs (5f00::/16, RFC 9252), and NAT64 local-use (64:ff9b:1::/48, RFC 8215). IPv4 embedded in IPv4-mapped, IPv4-compatible, and NAT64 well-known (64:ff9b::/96, RFC 6052) forms is checked recursively against the IPv4 table; SIIT IPv4-translated (::ffff:0:0:0/96) follows the same path.
 
-Applied in: `buzz-auth` (JWKS boundary), `buzz-workflow` (CallWebhook action),
+Applied in: `corevia-talk-auth` (JWKS boundary), `corevia-talk-workflow` (CallWebhook action),
 desktop `link_preview` (SSRF check).
 
 JWKS uses `public_https` by default and applies this public-address check to
@@ -944,9 +944,9 @@ Docker Compose provides the full local development stack. All services include h
 
 | Pattern | Type | TTL | Purpose |
 |---------|------|-----|---------|
-| `buzz:channel:{uuid}` | Pub/Sub channel | — | Event fan-out (single-community form; shared multi-community Redis must use `buzz:{community}:channel:{uuid}` or equivalent) |
-| `buzz:presence:{pubkey_hex}` | String | 180s | Online/away status (single-community form; shared multi-community Redis must scope by community) |
-| `buzz:typing:{channel_uuid}` | Sorted Set | 60s | Active typers (5s window; shared multi-community Redis must scope by community) |
+| `corevia-talk:channel:{uuid}` | Pub/Sub channel | — | Event fan-out (single-community form; shared multi-community Redis must use `corevia-talk:{community}:channel:{uuid}` or equivalent) |
+| `corevia-talk:presence:{pubkey_hex}` | String | 180s | Online/away status (single-community form; shared multi-community Redis must scope by community) |
+| `corevia-talk:typing:{channel_uuid}` | Sorted Set | 60s | Active typers (5s window; shared multi-community Redis must scope by community) |
 
 ### Full-Text Search (Postgres FTS)
 
@@ -968,7 +968,7 @@ These are verified gaps in the current implementation — not design aspirations
 | # | Limitation | Detail |
 |---|-----------|--------|
 | 1 | **No sqlx offline query cache** | Uses `sqlx::query()` (runtime) not `sqlx::query!()` (compile-time). No `.sqlx/` directory. Queries are not validated at compile time. |
-| 2 | **No rate limiting implementation** | `RateLimiter` trait exists in `buzz-auth`. Only implementation is `AlwaysAllowRateLimiter` (test stub, gated behind `#[cfg(any(test, feature = "test-utils"))]`). `RateLimitConfig` defines 4 tiers (human, agent-standard, agent-elevated, agent-platform) but none are enforced. |
+| 2 | **No rate limiting implementation** | `RateLimiter` trait exists in `corevia-talk-auth`. Only implementation is `AlwaysAllowRateLimiter` (test stub, gated behind `#[cfg(any(test, feature = "test-utils"))]`). `RateLimitConfig` defines 4 tiers (human, agent-standard, agent-elevated, agent-platform) but none are enforced. |
 | 3 | **No dedicated typing REST endpoint** | Typing indicators (kind 20002) are delivered via both local fan-out and Redis pub/sub (cross-node). There is no REST endpoint to query current typers — `/api/presence` returns online/away status only, not typing state. |
 | 4 | **Huddle recording/tracks not built** | Voice, room lifecycle, and join/leave/end events are wired (see Huddle Audio above). Recording and per-track publishing have reserved kinds but no producer yet. |
 | 5 | **Approval gates not wired end-to-end** | The executor returns `StepResult::Suspended` and the relay has grant/deny API endpoints with DB CRUD, but the engine intercepts before creating `WaitingApproval` rows — runs that hit an approval gate are marked as Failed (🚧 WF-08). |

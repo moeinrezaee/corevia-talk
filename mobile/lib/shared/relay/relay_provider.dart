@@ -67,18 +67,18 @@ class RelayConfig {
 /// Compile-time environment config via --dart-define.
 ///
 /// Run with:
-///   flutter run --dart-define=BUZZ_RELAY_URL=http://localhost:3000 \
-///     --dart-define=BUZZ_PUSH_GATEWAY_URL=http://localhost:8080
+///   flutter run --dart-define=COREVIA_TALK_RELAY_URL=http://localhost:3000 \
+///     --dart-define=COREVIA_TALK_PUSH_GATEWAY_URL=http://localhost:8080
 ///
 /// Or create a `.env.json` and use --dart-define-from-file=.env.json
 class Env {
   static const relayUrl = String.fromEnvironment(
-    'BUZZ_RELAY_URL',
+    'COREVIA_TALK_RELAY_URL',
     defaultValue: 'http://localhost:3000',
   );
 
   /// Optional gateway origin. Without it this artifact has no push capability.
-  static const pushGatewayUrl = String.fromEnvironment('BUZZ_PUSH_GATEWAY_URL');
+  static const pushGatewayUrl = String.fromEnvironment('COREVIA_TALK_PUSH_GATEWAY_URL');
 
   /// Whether this artifact can offer push notification enrollment.
   static const pushGatewayConfigured = pushGatewayUrl != '';

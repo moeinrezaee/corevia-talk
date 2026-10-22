@@ -38,7 +38,7 @@ class _ConnectionSection extends ConsumerWidget {
         ),
         AppListRow(
           title: tl('Send identity to desktop'),
-          subtitle: tl('Scan a recovery code shown by Buzz Desktop'),
+          subtitle: tl('Scan a recovery code shown by Corevia Talk Desktop'),
           trailing: const _RowChevron(),
           onTap: () async {
             final pairing = ref.read(pairingProvider.notifier);
@@ -64,7 +64,7 @@ class _ConnectionSection extends ConsumerWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        tl('Buzz did not return to the foreground. Try again.'),
+                        tl('Corevia Talk did not return to the foreground. Try again.'),
                       ),
                     ),
                   );
@@ -129,7 +129,7 @@ class _IdentityRow extends StatelessWidget {
       child: AppListRow(
         title: tl('Copy public key (npub)'),
         trailing: Icon(
-          BuzzIcons.copy,
+          CoreviaTalkIcons.copy,
           size: 18,
           color: context.colors.onSurfaceVariant,
         ),

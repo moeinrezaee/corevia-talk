@@ -1,4 +1,4 @@
-import 'package:buzz/shared/hosted/hosted_environment.dart';
+import 'package:corevia_talk/shared/hosted/hosted_environment.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

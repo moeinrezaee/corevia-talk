@@ -279,7 +279,7 @@ export function EncryptedBackupCreator({
           <DialogTitle>{tl("Create a key backup")}</DialogTitle>
           <DialogDescription>
             {tl(
-              "You can close this window while Buzz finishes the backup in the background.",
+              "You can close this window while Corevia Talk finishes the backup in the background.",
             )}
           </DialogDescription>
         </DialogHeader>
@@ -338,7 +338,7 @@ export function EncryptedBackupCreator({
           {!state.downloadPending && !state.savedPassword ? (
             <p className="text-xs leading-5 text-muted-foreground">
               {tl(
-                "Keep the file private and save its password somewhere safe — Buzz cannot reset it. Once ready, the backup remains available to download for 5 minutes.",
+                "Keep the file private and save its password somewhere safe — Corevia Talk cannot reset it. Once ready, the backup remains available to download for 5 minutes.",
               )}
             </p>
           ) : null}

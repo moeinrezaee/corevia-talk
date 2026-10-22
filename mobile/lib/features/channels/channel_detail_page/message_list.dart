@@ -890,7 +890,7 @@ class _MessageList extends HookConsumerWidget {
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: Grid.xs),
                     child: Center(
-                      child: BuzzLoadingIndicator(
+                      child: CoreviaTalkLoadingIndicator(
                         size: 24,
                         semanticLabel: tl('Loading older messages'),
                       ),
@@ -1056,7 +1056,7 @@ class _MessageList extends HookConsumerWidget {
                   backgroundColor: context.controlSurface,
                   foregroundColor: context.colors.onPrimaryContainer,
                 ),
-                icon: const Icon(BuzzIcons.chevronUp, size: 20),
+                icon: const Icon(CoreviaTalkIcons.chevronUp, size: 20),
               ),
             ),
           )

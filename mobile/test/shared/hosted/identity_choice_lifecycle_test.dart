@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:buzz/shared/deeplink/deep_link.dart';
-import 'package:buzz/shared/hosted/account_identity_store.dart';
-import 'package:buzz/shared/hosted/browser_auth.dart';
-import 'package:buzz/shared/hosted/device_identity_source.dart';
-import 'package:buzz/shared/hosted/hosted_flow.dart';
-import 'package:buzz/shared/hosted/hosted_identity_service.dart';
+import 'package:corevia_talk/shared/deeplink/deep_link.dart';
+import 'package:corevia_talk/shared/hosted/account_identity_store.dart';
+import 'package:corevia_talk/shared/hosted/browser_auth.dart';
+import 'package:corevia_talk/shared/hosted/device_identity_source.dart';
+import 'package:corevia_talk/shared/hosted/hosted_flow.dart';
+import 'package:corevia_talk/shared/hosted/hosted_identity_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nostr/nostr.dart' as nostr;
@@ -38,7 +38,7 @@ void main() {
   );
   setUp(() {
     FlutterSecureStorage.setMockInitialValues({
-      'buzz_communities': jsonEncode([
+      'corevia_talk_communities': jsonEncode([
         {'name': 'First', 'pubkey': first.public, 'nsec': first.nsec},
         {'name': 'Second', 'pubkey': second.public, 'nsec': second.nsec},
       ]),

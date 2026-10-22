@@ -120,8 +120,8 @@ class _SasVerificationView extends HookConsumerWidget {
         if (showProtection) ...[
           Icon(
             biometricLabel == tl('Use Face ID')
-                ? BuzzIcons.scanFace
-                : BuzzIcons.fingerprint,
+                ? CoreviaTalkIcons.scanFace
+                : CoreviaTalkIcons.fingerprint,
             size: 64,
             color: context._onboardingInk,
           ),
@@ -137,7 +137,7 @@ class _SasVerificationView extends HookConsumerWidget {
           const SizedBox(height: Grid.xxs),
           Text(
             tlt(
-              '{0} to confirm it’s you before sending your Buzz identity to another device.',
+              '{0} to confirm it’s you before sending your Corevia Talk identity to another device.',
               [biometricLabel],
             ),
             textAlign: TextAlign.center,
@@ -146,7 +146,7 @@ class _SasVerificationView extends HookConsumerWidget {
             ),
           ),
         ] else if (codeAccepted.value) ...[
-          Icon(BuzzIcons.shieldCheck, size: 64, color: context._onboardingInk),
+          Icon(CoreviaTalkIcons.shieldCheck, size: 64, color: context._onboardingInk),
           const SizedBox(height: Grid.sm),
           Text(tl('Code confirmed'), style: context.textTheme.headlineSmall),
         ] else ...[
@@ -209,7 +209,7 @@ class _SasVerificationView extends HookConsumerWidget {
         ? Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              BuzzLoadingIndicator(
+              CoreviaTalkLoadingIndicator(
                 size: 24,
                 color: context._onboardingInk,
                 semanticLabel: tl('Connecting'),

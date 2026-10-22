@@ -19,7 +19,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  BUZZ_TEST_POSTGRES_PASSWORD: buzz_dev
+  COREVIA_TALK_TEST_POSTGRES_PASSWORD: corevia_talk_dev
   PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/ms-playwright
 
 jobs:
@@ -133,13 +133,13 @@ jobs:
         run: cd mobile && flutter analyze
       - name: Test
         if: matrix.lane == 'test'
-        run: /bin/bash scripts/mobile-test-shard.sh ${{ matrix.shard }} 3 --dart-define=BUZZ_PUSH_GATEWAY_URL=https://push.example
+        run: /bin/bash scripts/mobile-test-shard.sh ${{ matrix.shard }} 3 --dart-define=COREVIA_TALK_PUSH_GATEWAY_URL=https://push.example
       - name: Test configured authentication domains
         if: matrix.lane == 'checks'
         run: >-
           cd mobile && flutter test
-          --dart-define=BUZZ_PUSH_GATEWAY_URL=https://push.example
-          --dart-define=BUZZ_AUTH_DOMAINS=buzz.xyz,builderlab.xyz,builderlabstaging.xyz
+          --dart-define=COREVIA_TALK_PUSH_GATEWAY_URL=https://push.example
+          --dart-define=COREVIA_TALK_AUTH_DOMAINS=buzz.xyz,builderlab.xyz,builderlabstaging.xyz
           test/shared/auth/community_entry_requirements_test.dart
           test/features/invites/invite_join_provider_test.dart
           test/features/onboarding/onboarding_entry_routes_test.dart
@@ -208,10 +208,10 @@ jobs:
       - uses: cashapp/activate-hermit@cea9af7913204a965fd488637a8d1811bba2e616 # v1
       - name: Install Flutter dependencies
         run: cd mobile && flutter pub get
-      # `swift test` builds BuzzPushKit; the Release lane covers its release build.
+      # `swift test` builds CoreviaTalkPushKit; the Release lane covers its release build.
       - name: Test
         if: matrix.lane == 'native'
-        run: swift test --package-path mobile/ios/BuzzPushKit
+        run: swift test --package-path mobile/ios/CoreviaTalkPushKit
       - name: Test native pagination geometry
         if: matrix.lane == 'native'
         run: /bin/bash scripts/test-mobile-pagination.sh

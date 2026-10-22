@@ -43,19 +43,19 @@ class _CommunityMenuSheet extends StatelessWidget {
                 children: [
                   if (canInvite && invitePageBuilder != null)
                     AppListRow(
-                      icon: BuzzIcons.userPlus,
+                      icon: CoreviaTalkIcons.userPlus,
                       title: tl('Invite'),
                       trailing: const BidiFlip(
-                        child: Icon(BuzzIcons.chevronRight, size: 18),
+                        child: Icon(CoreviaTalkIcons.chevronRight, size: 18),
                       ),
                       onTap: () => openPage(invitePageBuilder!),
                     ),
                   if (appearancePageBuilder != null)
                     AppListRow(
-                      icon: BuzzIcons.sunMoon,
+                      icon: CoreviaTalkIcons.sunMoon,
                       title: tl('Appearance'),
                       trailing: const BidiFlip(
-                        child: Icon(BuzzIcons.chevronRight, size: 18),
+                        child: Icon(CoreviaTalkIcons.chevronRight, size: 18),
                       ),
                       onTap: () => openPage(appearancePageBuilder!),
                     ),
@@ -65,10 +65,10 @@ class _CommunityMenuSheet extends StatelessWidget {
               children: [
                 AppListRow(
                   key: const Key('community-menu-switch'),
-                  icon: BuzzIcons.arrowLeftRight,
+                  icon: CoreviaTalkIcons.arrowLeftRight,
                   title: tl('Switch Community'),
                   trailing: const BidiFlip(
-                    child: Icon(BuzzIcons.chevronRight, size: 18),
+                    child: Icon(CoreviaTalkIcons.chevronRight, size: 18),
                   ),
                   onTap: openSwitcher,
                 ),

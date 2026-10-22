@@ -135,7 +135,7 @@ final class NativeReactionDetailsViewController: UIViewController, UITableViewDa
     }
   }
 
-  // Use the exact bundled Tabler font that backs BuzzIcons in Flutter.
+  // Use the exact bundled Tabler font that backs CoreviaTalkIcons in Flutter.
   private static let tablerFont: UIFont? = {
     guard let frameworks = Bundle.main.privateFrameworksURL,
       let provider = CGDataProvider(url: frameworks.appendingPathComponent(
@@ -355,7 +355,7 @@ private final class NativeReactionCloseButton: UIButton {
   }
 }
 
-/// Short-lived image loader. Auth is supplied for the specific URL by Buzz's
+/// Short-lived image loader. Auth is supplied for the specific URL by Corevia Talk's
 /// existing media auth service; redirects are refused to avoid forwarding it.
 final class NativeMessageGlyph: UIView {
   private var cancelLoad: (() -> Void)?

@@ -1,4 +1,4 @@
-import 'package:buzz/features/channels/message_footer_layout.dart';
+import 'package:corevia_talk/features/channels/message_footer_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

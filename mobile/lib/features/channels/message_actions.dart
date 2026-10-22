@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:share_plus/share_plus.dart';
@@ -89,7 +89,7 @@ Future<void> showMessageActions({
   final restoreFocusOnCancel = composerFocusNode?.hasFocus ?? false;
   composerFocusNode?.unfocus();
 
-  final selectedAction = await showBuzzModalBottomSheet<bool>(
+  final selectedAction = await showCoreviaTalkModalBottomSheet<bool>(
     context: context,
     isScrollControlled: true,
     showDragHandle: true,
@@ -154,7 +154,7 @@ Future<void> showMessageActions({
                       children: [
                         // Export: take the content out of the conversation.
                         ListTile(
-                          leading: const Icon(BuzzIcons.copy),
+                          leading: const Icon(CoreviaTalkIcons.copy),
                           title: Text(tl('Copy text')),
                           onTap: () {
                             if (!_selectMessageAction(sheetContext)) return;
@@ -170,7 +170,7 @@ Future<void> showMessageActions({
                     SheetActionSection(
                       children: [
                         ListTile(
-                          leading: const Icon(BuzzIcons.pencil),
+                          leading: const Icon(CoreviaTalkIcons.pencil),
                           title: Text(tl('Edit message')),
                           onTap: () {
                             if (!_selectMessageAction(sheetContext)) return;
@@ -184,7 +184,7 @@ Future<void> showMessageActions({
                         ),
                         ListTile(
                           leading: Icon(
-                            BuzzIcons.trash2,
+                            CoreviaTalkIcons.trash2,
                             color: sheetContext.colors.error,
                           ),
                           title: Text(
@@ -226,7 +226,7 @@ void showImageActions({
   required bool canManageMessage,
   VoidCallback? onDeleted,
 }) {
-  showBuzzModalBottomSheet<void>(
+  showCoreviaTalkModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     showDragHandle: true,
@@ -248,7 +248,7 @@ void showImageActions({
                 SheetActionSection(
                   children: [
                     ListTile(
-                      leading: const Icon(BuzzIcons.download),
+                      leading: const Icon(CoreviaTalkIcons.download),
                       title: Text(tl('Save image')),
                       onTap: () {
                         Navigator.of(sheetContext).pop();
@@ -256,7 +256,7 @@ void showImageActions({
                       },
                     ),
                     ListTile(
-                      leading: const Icon(BuzzIcons.share2),
+                      leading: const Icon(CoreviaTalkIcons.share2),
                       title: Text(tl('Share image')),
                       onTap: () {
                         final renderBox =
@@ -277,7 +277,7 @@ void showImageActions({
                       },
                     ),
                     ListTile(
-                      leading: const Icon(BuzzIcons.link2),
+                      leading: const Icon(CoreviaTalkIcons.link2),
                       title: Text(tl('Copy image link')),
                       onTap: () {
                         Navigator.of(sheetContext).pop();
@@ -295,7 +295,7 @@ void showImageActions({
                     children: [
                       ListTile(
                         leading: Icon(
-                          BuzzIcons.trash2,
+                          CoreviaTalkIcons.trash2,
                           color: sheetContext.colors.error,
                         ),
                         title: Text(
@@ -379,7 +379,7 @@ String downloadedImageFilename(String imageUrl, String? contentType) {
     'image/webp' => '.webp',
     _ => '.jpg',
   };
-  return 'buzz-${DateTime.now().millisecondsSinceEpoch}$extension';
+  return 'corevia-talk-${DateTime.now().millisecondsSinceEpoch}$extension';
 }
 
 Future<void> _saveImage(
@@ -479,7 +479,7 @@ bool messageActionShowsUnread(
   );
 }
 
-/// Canonical `buzz://message` link for a timeline message, including thread
+/// Canonical `corevia-talk://message` link for a timeline message, including thread
 /// context when the message is a reply.
 String messageLinkFor({
   required TimelineMessage message,
@@ -516,7 +516,7 @@ class _MarkReadUnreadTile extends ConsumerWidget {
     );
 
     return ListTile(
-      leading: Icon(unread ? BuzzIcons.mailCheck : BuzzIcons.mailOpen),
+      leading: Icon(unread ? CoreviaTalkIcons.mailCheck : CoreviaTalkIcons.mailOpen),
       title: Text(unread ? tl('Mark read') : tl('Mark unread')),
       onTap: () {
         if (!_selectMessageAction(context)) return;
@@ -557,7 +557,7 @@ class _FollowThreadTile extends ConsumerWidget {
     final following = follows.isFollowing(rootId);
 
     return ListTile(
-      leading: Icon(following ? BuzzIcons.bellOff : BuzzIcons.bellRing),
+      leading: Icon(following ? CoreviaTalkIcons.bellOff : CoreviaTalkIcons.bellRing),
       title: Text(following ? tl('Unfollow thread') : tl('Follow thread')),
       onTap: () {
         if (!_selectMessageAction(context)) return;
@@ -602,7 +602,7 @@ class _MessageQuickActionsRow extends ConsumerWidget {
     final tiles = <Widget>[
       if (messages != null)
         _MessageQuickActionTile(
-          icon: BuzzIcons.messageSquareReply,
+          icon: CoreviaTalkIcons.messageSquareReply,
           label: tl('Reply'),
           onTap: () {
             if (!_selectMessageAction(context)) return;
@@ -621,7 +621,7 @@ class _MessageQuickActionsRow extends ConsumerWidget {
           },
         ),
       _MessageQuickActionTile(
-        icon: BuzzIcons.link2,
+        icon: CoreviaTalkIcons.link2,
         label: tl('Copy link'),
         onTap: () {
           if (!_selectMessageAction(context)) return;
@@ -634,7 +634,7 @@ class _MessageQuickActionsRow extends ConsumerWidget {
       ),
       if (canRemind)
         _MessageQuickActionTile(
-          icon: BuzzIcons.clock,
+          icon: CoreviaTalkIcons.clock,
           label: tl('Remind me'),
           onTap: () {
             final rootContext = Navigator.of(
@@ -809,7 +809,7 @@ void _showEditSheet({
   required String channelId,
 }) {
   final controller = TextEditingController(text: message.content);
-  showBuzzModalBottomSheet<void>(
+  showCoreviaTalkModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     showDragHandle: true,
@@ -877,7 +877,7 @@ void _confirmDelete({
   required String messageId,
   VoidCallback? onDeleted,
 }) {
-  showBuzzDialog<void>(
+  showCoreviaTalkDialog<void>(
     context: context,
     builder: (dialogContext) => AlertDialog(
       title: Text(tl('Delete message')),

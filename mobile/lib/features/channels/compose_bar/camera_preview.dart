@@ -207,7 +207,7 @@ class _CameraPlaceholder extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(Grid.sm),
           child: isInitializing
-              ? BuzzLoadingIndicator(
+              ? CoreviaTalkLoadingIndicator(
                   size: 44,
                   color: Colors.white,
                   semanticLabel: tl('Starting camera'),
@@ -216,7 +216,7 @@ class _CameraPlaceholder extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Icon(
-                      BuzzIcons.cameraOff,
+                      CoreviaTalkIcons.cameraOff,
                       color: Colors.white,
                       size: 28,
                     ),
@@ -310,7 +310,7 @@ class _CameraCloseButton extends StatelessWidget {
           foregroundColor: Colors.white,
         ),
         icon: BidiFlip(
-          child: Icon(BuzzIcons.arrowLeft, size: 24),
+          child: Icon(CoreviaTalkIcons.arrowLeft, size: 24),
         ),
       ),
     );
@@ -325,7 +325,7 @@ String _cameraErrorMessage(Object error) {
     return switch (error.code) {
       'CameraAccessDenied' ||
       'CameraAccessDeniedWithoutPrompt' ||
-      'CameraAccessRestricted' => tl('Camera access is turned off for Buzz.'),
+      'CameraAccessRestricted' => tl('Camera access is turned off for Corevia Talk.'),
       'no-cameras' => tl('Camera isn’t available on this device.'),
       _ => tl('Camera couldn’t start. Try again.'),
     };

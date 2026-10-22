@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:typed_data';
 
-import 'package:buzz/shared/huddle/huddle.dart';
-import 'package:buzz/features/age_gate/age_signal_provider.dart';
+import 'package:corevia_talk/shared/huddle/huddle.dart';
+import 'package:corevia_talk/features/age_gate/age_signal_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -374,7 +374,7 @@ HuddleRemoteAudioFrame _remoteFrame({
 );
 
 HuddleConnectionParameters _parameters() => HuddleConnectionParameters(
-  relayWebSocketUrl: 'wss://buzz.example',
+  relayWebSocketUrl: 'wss://corevia-talk.example',
   nsec: _privateKey,
   parentChannelId: _parentChannelId,
   ephemeralChannelId: _ephemeralChannelId,

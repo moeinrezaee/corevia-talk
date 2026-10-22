@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:buzz/features/activity/feed_item.dart';
+import 'package:corevia_talk/features/activity/feed_item.dart';
 
 import '../../helpers/thread_ids.dart';
 

@@ -2,7 +2,7 @@ import type {
   AcpRuntimeCatalogEntry,
   GlobalAgentConfig,
 } from "@/shared/api/types";
-import { BUZZ_AGENT_THINKING_EFFORT } from "./buzzAgentConfig";
+import { COREVIA_TALK_AGENT_THINKING_EFFORT } from "./coreviaTalkAgentConfig";
 import type { RuntimeFileConfigSubset } from "@/shared/api/tauri";
 import { tl } from "@/shared/i18n/tl";
 // Dialogs import getDefaultPersonaRuntime via this re-export; lib code imports
@@ -80,7 +80,7 @@ export type PersonaDropdownOption = {
  *   derived by `getProviderApiKeyLabel` — single source of truth for all UI
  *   surfaces so they never drift.
  *
- * Mirrors the Rust `readiness::buzz_agent_requirements` /
+ * Mirrors the Rust `readiness::corevia_talk_agent_requirements` /
  * `readiness::goose_requirements` logic — keep in sync.
  */
 export type ProviderCredentialConfig =
@@ -150,7 +150,7 @@ export const PERSONA_LLM_PROVIDER_OPTIONS: readonly PersonaModelOption[] = [
   { id: "openai", label: tl("OpenAI") },
   { id: "openai-compat", label: tl("OpenAI-compatible") },
   { id: "openrouter", label: tl("OpenRouter") },
-  { id: "relay-mesh", label: tl("Buzz shared compute") },
+  { id: "relay-mesh", label: tl("Corevia Talk shared compute") },
   { id: "databricks", label: tl("Databricks") },
   { id: "databricks_v2", label: tl("Databricks v2") },
 ];
@@ -160,7 +160,7 @@ const PERSONA_MODEL_OPTIONS_BY_RUNTIME: Record<
   readonly PersonaModelOption[]
 > = {
   goose: [DEFAULT_MODEL_OPTION],
-  "buzz-agent": [DEFAULT_MODEL_OPTION],
+  "corevia-talk-agent": [DEFAULT_MODEL_OPTION],
   claude: [DEFAULT_MODEL_OPTION],
   codex: [DEFAULT_MODEL_OPTION],
 };
@@ -181,7 +181,7 @@ function isKnownLlmProvider(
  * Required credential env keys for the given runtime + provider combination.
  * Derived from PROVIDER_CREDENTIAL_CONFIG — single source of truth.
  *
- * buzz-agent and goose use provider-specific credentials; claude and codex
+ * corevia-talk-agent and goose use provider-specific credentials; claude and codex
  * handle auth via CLI login (surfaced separately via the CliLogin surface).
  */
 export function requiredCredentialEnvKeys(
@@ -189,7 +189,7 @@ export function requiredCredentialEnvKeys(
   provider: string,
 ): readonly string[] {
   const normalizedRuntime = runtimeId.trim();
-  if (normalizedRuntime !== "buzz-agent" && normalizedRuntime !== "goose") {
+  if (normalizedRuntime !== "corevia-talk-agent" && normalizedRuntime !== "goose") {
     return [];
   }
   const config = PROVIDER_CREDENTIAL_CONFIG[provider.trim().toLowerCase()];
@@ -204,7 +204,7 @@ export function isMissingRequiredDropdownField(
 }
 
 export function runtimeSupportsLlmProviderSelection(runtimeId: string) {
-  return runtimeId === "buzz-agent" || runtimeId === "goose";
+  return runtimeId === "corevia-talk-agent" || runtimeId === "goose";
 }
 
 /** Clears values whose meaning or support changes with the selected harness. */
@@ -213,7 +213,7 @@ export function resetConfigForHarnessChange(
   runtimeId: string,
 ): GlobalAgentConfig {
   const nextEnvVars = { ...config.env_vars };
-  delete nextEnvVars[BUZZ_AGENT_THINKING_EFFORT];
+  delete nextEnvVars[COREVIA_TALK_AGENT_THINKING_EFFORT];
 
   return {
     ...config,
@@ -317,7 +317,7 @@ export function providerRequiresExplicitModel(
 export function providerDisplayLabel(providerId: string) {
   const trimmedProvider = providerId.trim();
   return trimmedProvider === "relay-mesh"
-    ? "Buzz shared compute"
+    ? "Corevia Talk shared compute"
     : trimmedProvider;
 }
 
@@ -559,7 +559,7 @@ function runtimeAvailabilitySortRank(
 
 function runtimePreferenceSortRank(runtimeId: string) {
   switch (runtimeId) {
-    case "buzz-agent":
+    case "corevia-talk-agent":
       return 0;
     case "goose":
       return 1;
@@ -649,7 +649,7 @@ export function getBakedSatisfiedEnvKeys(
  * the missing credential env keys so the caller can derive `canSubmit`,
  * field `isRequired`, and `EnvVarsEditor.requiredKeys` from the same source.
  *
- * Two classes of required field for provider-selection runtimes (buzz-agent,
+ * Two classes of required field for provider-selection runtimes (corevia-talk-agent,
  * goose) — both required unconditionally per readiness.rs:
  *   1. Normalized fields: provider + model (empty string = NotReady)
  *   2. Credential env keys: provider-specific (e.g. ANTHROPIC_API_KEY)
@@ -715,7 +715,7 @@ export function computeLocalModeGate({
    * row remains stable while the user types a value.
    */
   requiredEnvKeys: string[];
-  /** Env keys that are not set in Buzz but are satisfied in the runtime's
+  /** Env keys that are not set in Corevia Talk but are satisfied in the runtime's
    *  config file (e.g. "Set in goose config"). */
   fileSatisfiedEnvKeys: string[];
   /** True when the create button may be enabled (from this gate's perspective). */

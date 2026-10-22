@@ -15,7 +15,7 @@ export function UpdateChecker() {
       <SettingsSectionHeader
         title={tl("Software Updates")}
         description={tl(
-          "Keep Buzz up to date with the latest features and fixes.",
+          "Keep Corevia Talk up to date with the latest features and fixes.",
         )}
       />
 

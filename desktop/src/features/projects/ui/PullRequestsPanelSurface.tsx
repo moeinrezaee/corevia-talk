@@ -1,6 +1,6 @@
 import type * as React from "react";
 
-import { BuzzLoadingState } from "@/shared/ui/BuzzLoadingState";
+import { CoreviaTalkLoadingState } from "@/shared/ui/CoreviaTalkLoadingState";
 import { ProjectPanelState } from "./ProjectPanelState";
 import { tl } from "@/shared/i18n/tl";
 
@@ -43,7 +43,7 @@ export function PullRequestsPanelSurface({
     selectedPullRequest,
   });
   if (kind === "loading") {
-    return <BuzzLoadingState label={tl("Loading reviews")} />;
+    return <CoreviaTalkLoadingState label={tl("Loading reviews")} />;
   }
   if (kind === "detail") {
     return detail;

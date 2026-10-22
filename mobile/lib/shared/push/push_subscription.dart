@@ -1,16 +1,16 @@
 import 'dart:convert';
 
-/// User-visible Buzz message kinds. This mirrors
+/// User-visible Corevia Talk message kinds. This mirrors
 /// `EventKind.channelMessageEventKinds` without importing feature code into
 /// the shared push layer.
-const buzzPushEligibleKinds = [9, 40002, 45001, 45003];
-const buzzPushSelfDirectedKinds = buzzPushEligibleKinds;
-const buzzPushRenderableKinds = buzzPushEligibleKinds;
-const buzzPushChannelKinds = [9];
-const buzzPushChannelChunkSize = 50;
-const buzzPushMaxSubscriptions = 16;
-const buzzPushMaxIgnoreFilters = 8;
-const buzzPushHellthreadParticipantLimit = 20;
+const coreviaTalkPushEligibleKinds = [9, 40002, 45001, 45003];
+const coreviaTalkPushSelfDirectedKinds = coreviaTalkPushEligibleKinds;
+const coreviaTalkPushRenderableKinds = coreviaTalkPushEligibleKinds;
+const coreviaTalkPushChannelKinds = [9];
+const coreviaTalkPushChannelChunkSize = 50;
+const coreviaTalkPushMaxSubscriptions = 16;
+const coreviaTalkPushMaxIgnoreFilters = 8;
+const coreviaTalkPushHellthreadParticipantLimit = 20;
 
 const _supportedNotificationClasses = {'default'};
 const _filterKeys = {'kinds', 'authors', '#p', '#h', '#e'};
@@ -19,16 +19,16 @@ final _channelIdPattern = RegExp(
   r'^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$',
 );
 
-enum BuzzPushLeaseSubscriptionAuthority { desired, accepted }
+enum CoreviaTalkPushLeaseSubscriptionAuthority { desired, accepted }
 
-class BuzzPushFilter {
+class CoreviaTalkPushFilter {
   final List<int> kinds;
   final List<String>? authors;
   final List<String>? pTags;
   final List<String>? hTags;
   final List<String>? eTags;
 
-  BuzzPushFilter({
+  CoreviaTalkPushFilter({
     required Iterable<int> kinds,
     Iterable<String>? authors,
     Iterable<String>? pTags,
@@ -50,9 +50,9 @@ class BuzzPushFilter {
     if (eTags != null) '#e': eTags,
   };
 
-  factory BuzzPushFilter.fromJson(Map<String, dynamic> json) {
+  factory CoreviaTalkPushFilter.fromJson(Map<String, dynamic> json) {
     _rejectUnknownKeys(json, _filterKeys, 'push filter');
-    return BuzzPushFilter(
+    return CoreviaTalkPushFilter(
       kinds: _intList(json, 'kinds'),
       authors: _optionalStringList(json, 'authors'),
       pTags: _optionalStringList(json, '#p'),
@@ -63,7 +63,7 @@ class BuzzPushFilter {
 
   void _validate() {
     if (kinds.isEmpty ||
-        kinds.any((kind) => !buzzPushEligibleKinds.contains(kind))) {
+        kinds.any((kind) => !coreviaTalkPushEligibleKinds.contains(kind))) {
       throw const FormatException('Push filter contains invalid kinds.');
     }
     for (final value in [...?authors, ...?pTags, ...?eTags]) {
@@ -83,33 +83,33 @@ class BuzzPushFilter {
   }
 }
 
-class BuzzPushSuppression {
+class CoreviaTalkPushSuppression {
   final int pTagsMax;
 
-  const BuzzPushSuppression({required this.pTagsMax}) : assert(pTagsMax > 0);
+  const CoreviaTalkPushSuppression({required this.pTagsMax}) : assert(pTagsMax > 0);
 
   Map<String, dynamic> toJson() => {'p_tags_max': pTagsMax};
 
-  factory BuzzPushSuppression.fromJson(Map<String, dynamic> json) {
+  factory CoreviaTalkPushSuppression.fromJson(Map<String, dynamic> json) {
     _rejectUnknownKeys(json, const {'p_tags_max'}, 'push suppression');
     final value = json['p_tags_max'];
     if (value is! int || value <= 0) {
       throw const FormatException('p_tags_max must be a positive integer.');
     }
-    return BuzzPushSuppression(pTagsMax: value);
+    return CoreviaTalkPushSuppression(pTagsMax: value);
   }
 }
 
-class BuzzPushSubscription {
-  final BuzzPushFilter filter;
+class CoreviaTalkPushSubscription {
+  final CoreviaTalkPushFilter filter;
   final String notificationClass;
-  final List<BuzzPushFilter> ignore;
-  final BuzzPushSuppression? suppress;
+  final List<CoreviaTalkPushFilter> ignore;
+  final CoreviaTalkPushSuppression? suppress;
 
-  BuzzPushSubscription({
+  CoreviaTalkPushSubscription({
     required this.filter,
     required this.notificationClass,
-    Iterable<BuzzPushFilter> ignore = const [],
+    Iterable<CoreviaTalkPushFilter> ignore = const [],
     this.suppress,
   }) : ignore = List.unmodifiable(ignore) {
     if (!_supportedNotificationClasses.contains(notificationClass)) {
@@ -120,7 +120,7 @@ class BuzzPushSubscription {
         filter.hTags == null) {
       throw const FormatException('Push subscription filter is not narrowed.');
     }
-    if (this.ignore.length > buzzPushMaxIgnoreFilters) {
+    if (this.ignore.length > coreviaTalkPushMaxIgnoreFilters) {
       throw const FormatException(
         'Push subscription has too many ignore filters.',
       );
@@ -135,7 +135,7 @@ class BuzzPushSubscription {
     if (suppress != null) 'suppress': suppress!.toJson(),
   };
 
-  factory BuzzPushSubscription.fromJson(Map<String, dynamic> json) {
+  factory CoreviaTalkPushSubscription.fromJson(Map<String, dynamic> json) {
     _rejectUnknownKeys(json, const {
       'filter',
       'class',
@@ -157,19 +157,19 @@ class BuzzPushSubscription {
         'Push subscription suppress must be an object.',
       );
     }
-    return BuzzPushSubscription(
-      filter: BuzzPushFilter.fromJson(Map<String, dynamic>.from(filter)),
+    return CoreviaTalkPushSubscription(
+      filter: CoreviaTalkPushFilter.fromJson(Map<String, dynamic>.from(filter)),
       notificationClass: notificationClass,
       ignore: [
         for (final raw in ignore as List<dynamic>? ?? const [])
           if (raw is Map)
-            BuzzPushFilter.fromJson(Map<String, dynamic>.from(raw))
+            CoreviaTalkPushFilter.fromJson(Map<String, dynamic>.from(raw))
           else
             throw const FormatException('Malformed push ignore filter.'),
       ],
       suppress: suppress == null
           ? null
-          : BuzzPushSuppression.fromJson(Map<String, dynamic>.from(suppress)),
+          : CoreviaTalkPushSuppression.fromJson(Map<String, dynamic>.from(suppress)),
     );
   }
 }
@@ -177,10 +177,10 @@ class BuzzPushSubscription {
 /// Desired and relay-accepted lease subscriptions are intentionally separate.
 /// Keeping both sets makes relay rejection or expiry detectable instead of
 /// assuming the desired lease was accepted unchanged.
-class BuzzPushLeaseSubscriptionState {
-  final BuzzPushLeaseSubscriptionAuthority authority;
-  final List<BuzzPushSubscription> desired;
-  final List<BuzzPushSubscription>? accepted;
+class CoreviaTalkPushLeaseSubscriptionState {
+  final CoreviaTalkPushLeaseSubscriptionAuthority authority;
+  final List<CoreviaTalkPushSubscription> desired;
+  final List<CoreviaTalkPushSubscription>? accepted;
 
   /// Monotonic generation of the relay-facing kind-30350 lease.
   final int? acceptedGeneration;
@@ -197,7 +197,7 @@ class BuzzPushLeaseSubscriptionState {
   /// lost is safely superseded without weakening strict relay monotonicity.
   final int? pendingTombstoneGeneration;
 
-  const BuzzPushLeaseSubscriptionState.desired({
+  const CoreviaTalkPushLeaseSubscriptionState.desired({
     this.desired = const [],
     this.accepted,
     this.acceptedGeneration,
@@ -209,15 +209,15 @@ class BuzzPushLeaseSubscriptionState {
                  generationCursor != null &&
                  pendingTombstoneGeneration <= generationCursor),
        ),
-       authority = BuzzPushLeaseSubscriptionAuthority.desired;
+       authority = CoreviaTalkPushLeaseSubscriptionAuthority.desired;
 
-  BuzzPushLeaseSubscriptionState.accepted({
-    required Iterable<BuzzPushSubscription> desired,
-    required Iterable<BuzzPushSubscription> acceptedSubscriptions,
+  CoreviaTalkPushLeaseSubscriptionState.accepted({
+    required Iterable<CoreviaTalkPushSubscription> desired,
+    required Iterable<CoreviaTalkPushSubscription> acceptedSubscriptions,
     required this.acceptedGeneration,
     this.generationCursor,
     this.pendingTombstoneGeneration,
-  }) : authority = BuzzPushLeaseSubscriptionAuthority.accepted,
+  }) : authority = CoreviaTalkPushLeaseSubscriptionAuthority.accepted,
        desired = List.unmodifiable(desired),
        accepted = List.unmodifiable(acceptedSubscriptions) {
     if (acceptedGeneration == null || acceptedGeneration! <= 0) {
@@ -245,26 +245,26 @@ class BuzzPushLeaseSubscriptionState {
     }
   }
 
-  List<BuzzPushSubscription> get authoritative => switch (authority) {
-    BuzzPushLeaseSubscriptionAuthority.desired => desired,
-    BuzzPushLeaseSubscriptionAuthority.accepted => accepted!,
+  List<CoreviaTalkPushSubscription> get authoritative => switch (authority) {
+    CoreviaTalkPushLeaseSubscriptionAuthority.desired => desired,
+    CoreviaTalkPushLeaseSubscriptionAuthority.accepted => accepted!,
   };
 
-  BuzzPushLeaseSubscriptionState withDesired(
-    Iterable<BuzzPushSubscription> subscriptions,
+  CoreviaTalkPushLeaseSubscriptionState withDesired(
+    Iterable<CoreviaTalkPushSubscription> subscriptions,
   ) {
-    final updated = List<BuzzPushSubscription>.unmodifiable(subscriptions);
+    final updated = List<CoreviaTalkPushSubscription>.unmodifiable(subscriptions);
     return switch (authority) {
-      BuzzPushLeaseSubscriptionAuthority.desired =>
-        BuzzPushLeaseSubscriptionState.desired(
+      CoreviaTalkPushLeaseSubscriptionAuthority.desired =>
+        CoreviaTalkPushLeaseSubscriptionState.desired(
           desired: updated,
           accepted: accepted,
           acceptedGeneration: acceptedGeneration,
           generationCursor: generationCursor,
           pendingTombstoneGeneration: pendingTombstoneGeneration,
         ),
-      BuzzPushLeaseSubscriptionAuthority.accepted =>
-        BuzzPushLeaseSubscriptionState.accepted(
+      CoreviaTalkPushLeaseSubscriptionAuthority.accepted =>
+        CoreviaTalkPushLeaseSubscriptionState.accepted(
           desired: updated,
           acceptedSubscriptions: accepted!,
           acceptedGeneration: acceptedGeneration,
@@ -274,10 +274,10 @@ class BuzzPushLeaseSubscriptionState {
     };
   }
 
-  BuzzPushLeaseSubscriptionState withAccepted({
-    required Iterable<BuzzPushSubscription> subscriptions,
+  CoreviaTalkPushLeaseSubscriptionState withAccepted({
+    required Iterable<CoreviaTalkPushSubscription> subscriptions,
     required int generation,
-  }) => BuzzPushLeaseSubscriptionState.accepted(
+  }) => CoreviaTalkPushLeaseSubscriptionState.accepted(
     desired: desired,
     acceptedSubscriptions: subscriptions,
     acceptedGeneration: generation,
@@ -291,23 +291,23 @@ class BuzzPushLeaseSubscriptionState {
         : null,
   );
 
-  BuzzPushLeaseSubscriptionState withReservedGeneration(int generation) {
+  CoreviaTalkPushLeaseSubscriptionState withReservedGeneration(int generation) {
     if (generation <= (generationCursor ?? acceptedGeneration ?? 0)) {
       throw const FormatException(
         'Reserved push lease generation must advance monotonically.',
       );
     }
     return switch (authority) {
-      BuzzPushLeaseSubscriptionAuthority.desired =>
-        BuzzPushLeaseSubscriptionState.desired(
+      CoreviaTalkPushLeaseSubscriptionAuthority.desired =>
+        CoreviaTalkPushLeaseSubscriptionState.desired(
           desired: desired,
           accepted: accepted,
           acceptedGeneration: acceptedGeneration,
           generationCursor: generation,
           pendingTombstoneGeneration: pendingTombstoneGeneration,
         ),
-      BuzzPushLeaseSubscriptionAuthority.accepted =>
-        BuzzPushLeaseSubscriptionState.accepted(
+      CoreviaTalkPushLeaseSubscriptionAuthority.accepted =>
+        CoreviaTalkPushLeaseSubscriptionState.accepted(
           desired: desired,
           acceptedSubscriptions: accepted!,
           acceptedGeneration: acceptedGeneration,
@@ -317,13 +317,13 @@ class BuzzPushLeaseSubscriptionState {
     };
   }
 
-  BuzzPushLeaseSubscriptionState withPendingTombstone(int generation) {
+  CoreviaTalkPushLeaseSubscriptionState withPendingTombstone(int generation) {
     if (generation <= (generationCursor ?? acceptedGeneration ?? 0)) {
       throw const FormatException(
         'Pending push tombstone generation must advance monotonically.',
       );
     }
-    return BuzzPushLeaseSubscriptionState.desired(
+    return CoreviaTalkPushLeaseSubscriptionState.desired(
       desired: desired,
       accepted: accepted,
       acceptedGeneration: acceptedGeneration,
@@ -334,12 +334,12 @@ class BuzzPushLeaseSubscriptionState {
 
   /// Migrates a generation reserved by an older client before the explicit
   /// tombstone journal field existed.
-  BuzzPushLeaseSubscriptionState withPendingTombstoneAtCursor() {
+  CoreviaTalkPushLeaseSubscriptionState withPendingTombstoneAtCursor() {
     final generation = generationCursor;
     if (generation == null || generation <= (acceptedGeneration ?? 0)) {
       return this;
     }
-    return BuzzPushLeaseSubscriptionState.desired(
+    return CoreviaTalkPushLeaseSubscriptionState.desired(
       desired: desired,
       accepted: accepted,
       acceptedGeneration: acceptedGeneration,
@@ -348,12 +348,12 @@ class BuzzPushLeaseSubscriptionState {
     );
   }
 
-  BuzzPushLeaseSubscriptionState withAcceptedTombstone(int generation) {
+  CoreviaTalkPushLeaseSubscriptionState withAcceptedTombstone(int generation) {
     if (generation != pendingTombstoneGeneration ||
         generation < (acceptedGeneration ?? 0)) {
       return this;
     }
-    return BuzzPushLeaseSubscriptionState.desired(
+    return CoreviaTalkPushLeaseSubscriptionState.desired(
       desired: desired,
       acceptedGeneration: generation,
       generationCursor:
@@ -374,7 +374,7 @@ class BuzzPushLeaseSubscriptionState {
       'pendingTombstoneGeneration': pendingTombstoneGeneration,
   };
 
-  factory BuzzPushLeaseSubscriptionState.fromJson(Map<String, dynamic> json) {
+  factory CoreviaTalkPushLeaseSubscriptionState.fromJson(Map<String, dynamic> json) {
     _rejectUnknownKeys(json, const {
       'authority',
       'desired',
@@ -422,7 +422,7 @@ class BuzzPushLeaseSubscriptionState {
       );
     }
     return switch (authority) {
-      'desired' => BuzzPushLeaseSubscriptionState.desired(
+      'desired' => CoreviaTalkPushLeaseSubscriptionState.desired(
         desired: desired,
         accepted: accepted,
         acceptedGeneration: acceptedGeneration as int?,
@@ -430,7 +430,7 @@ class BuzzPushLeaseSubscriptionState {
         pendingTombstoneGeneration: pendingTombstoneGeneration as int?,
       ),
       'accepted' when accepted != null && acceptedGeneration is int =>
-        BuzzPushLeaseSubscriptionState.accepted(
+        CoreviaTalkPushLeaseSubscriptionState.accepted(
           desired: desired,
           acceptedSubscriptions: accepted,
           acceptedGeneration: acceptedGeneration,
@@ -445,7 +445,7 @@ class BuzzPushLeaseSubscriptionState {
   }
 }
 
-List<BuzzPushSubscription> buildDesiredBuzzPushSubscriptions({
+List<CoreviaTalkPushSubscription> buildDesiredCoreviaTalkPushSubscriptions({
   required String myPubkey,
   Iterable<String> channelIds = const [],
   Iterable<String> mutedChannelIds = const [],
@@ -459,28 +459,28 @@ List<BuzzPushSubscription> buildDesiredBuzzPushSubscriptions({
   final normalizedMuted = mutedChannelIds.map(_normalizeChannelID).toSet();
   final activeMuted =
       normalizedMuted.intersection(normalizedChannelIds).toList()..sort();
-  final mutedIgnoreFilters = <BuzzPushFilter>[];
-  for (final chunk in _chunks(activeMuted, buzzPushChannelChunkSize)) {
+  final mutedIgnoreFilters = <CoreviaTalkPushFilter>[];
+  for (final chunk in _chunks(activeMuted, coreviaTalkPushChannelChunkSize)) {
     mutedIgnoreFilters.add(
-      BuzzPushFilter(kinds: buzzPushChannelKinds, hTags: chunk),
+      CoreviaTalkPushFilter(kinds: coreviaTalkPushChannelKinds, hTags: chunk),
     );
   }
-  if (mutedIgnoreFilters.length + 1 > buzzPushMaxIgnoreFilters) {
+  if (mutedIgnoreFilters.length + 1 > coreviaTalkPushMaxIgnoreFilters) {
     throw const FormatException('Too many muted channels for a push lease.');
   }
 
-  final selfAuthored = BuzzPushFilter(
-    kinds: buzzPushRenderableKinds,
+  final selfAuthored = CoreviaTalkPushFilter(
+    kinds: coreviaTalkPushRenderableKinds,
     authors: [normalizedPubkey],
   );
   final ignores = [selfAuthored, ...mutedIgnoreFilters];
-  const suppression = BuzzPushSuppression(
-    pTagsMax: buzzPushHellthreadParticipantLimit,
+  const suppression = CoreviaTalkPushSuppression(
+    pTagsMax: coreviaTalkPushHellthreadParticipantLimit,
   );
-  final subscriptions = <BuzzPushSubscription>[
-    BuzzPushSubscription(
-      filter: BuzzPushFilter(
-        kinds: buzzPushSelfDirectedKinds,
+  final subscriptions = <CoreviaTalkPushSubscription>[
+    CoreviaTalkPushSubscription(
+      filter: CoreviaTalkPushFilter(
+        kinds: coreviaTalkPushSelfDirectedKinds,
         pTags: [normalizedPubkey],
       ),
       notificationClass: 'default',
@@ -491,30 +491,30 @@ List<BuzzPushSubscription> buildDesiredBuzzPushSubscriptions({
 
   final channels = normalizedChannelIds.difference(normalizedMuted).toList()
     ..sort();
-  for (final chunk in _chunks(channels, buzzPushChannelChunkSize)) {
+  for (final chunk in _chunks(channels, coreviaTalkPushChannelChunkSize)) {
     subscriptions.add(
-      BuzzPushSubscription(
-        filter: BuzzPushFilter(kinds: buzzPushChannelKinds, hTags: chunk),
+      CoreviaTalkPushSubscription(
+        filter: CoreviaTalkPushFilter(kinds: coreviaTalkPushChannelKinds, hTags: chunk),
         notificationClass: 'default',
         ignore: ignores,
         suppress: suppression,
       ),
     );
   }
-  if (subscriptions.length > buzzPushMaxSubscriptions) {
+  if (subscriptions.length > coreviaTalkPushMaxSubscriptions) {
     throw const FormatException('Too many channels for a push lease.');
   }
   return List.unmodifiable(subscriptions);
 }
 
-String buzzPushSubscriptionsFingerprint(
-  List<BuzzPushSubscription> subscriptions,
+String coreviaTalkPushSubscriptionsFingerprint(
+  List<CoreviaTalkPushSubscription> subscriptions,
 ) => jsonEncode([
   for (final subscription in subscriptions) subscription.toJson(),
 ]);
 
-String buzzPushSubscriptionStateFingerprint(
-  BuzzPushLeaseSubscriptionState state,
+String coreviaTalkPushSubscriptionStateFingerprint(
+  CoreviaTalkPushLeaseSubscriptionState state,
 ) => jsonEncode(state.toJson());
 
 List<List<String>> _chunks(List<String> values, int size) => [
@@ -550,7 +550,7 @@ List<String>? _optionalStringList(Map<String, dynamic> json, String key) {
   return raw.cast<String>();
 }
 
-List<BuzzPushSubscription> _subscriptionList(
+List<CoreviaTalkPushSubscription> _subscriptionList(
   Object? raw,
   String label, {
   bool allowEmpty = false,
@@ -561,7 +561,7 @@ List<BuzzPushSubscription> _subscriptionList(
   return [
     for (final item in raw)
       if (item is Map)
-        BuzzPushSubscription.fromJson(Map<String, dynamic>.from(item))
+        CoreviaTalkPushSubscription.fromJson(Map<String, dynamic>.from(item))
       else
         throw FormatException('Malformed $label subscription.'),
   ];

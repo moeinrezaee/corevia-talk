@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:buzz/shared/hosted/hpke_backup.dart';
+import 'package:corevia_talk/shared/hosted/hpke_backup.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -51,7 +51,7 @@ void main() {
     'seal binds derived identity and passes exact primitives to native',
     () async {
       var calls = 0;
-      const channel = MethodChannel('buzz/hosted_hpke');
+      const channel = MethodChannel('corevia-talk/hosted_hpke');
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
           .setMockMethodCallHandler(channel, (call) async {
             calls++;

@@ -1,5 +1,5 @@
-import 'package:buzz/shared/deeplink/community_link_input.dart';
-import 'package:buzz/shared/deeplink/deep_link.dart';
+import 'package:corevia_talk/shared/deeplink/community_link_input.dart';
+import 'package:corevia_talk/shared/deeplink/deep_link.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -10,7 +10,7 @@ void main() {
       'wss://team.communities.buzz.xyz',
     ]) {
       final uri = parseCommunityLinkInput(value)!;
-      final link = parseBuzzDeepLink(uri) as AddCommunityDeepLink;
+      final link = parseCoreviaTalkDeepLink(uri) as AddCommunityDeepLink;
       expect(link.relayUrl, 'wss://team.communities.buzz.xyz');
     }
   });
@@ -19,7 +19,7 @@ void main() {
     final uri = parseCommunityLinkInput(
       'https://community.example.com/invite/abc123',
     )!;
-    final link = parseBuzzDeepLink(uri) as InviteDeepLink;
+    final link = parseCoreviaTalkDeepLink(uri) as InviteDeepLink;
     expect(link.code, 'abc123');
     expect(link.relayUrl, 'wss://community.example.com');
   });
@@ -36,7 +36,7 @@ void main() {
       'https://community.example.com?token=secret',
       'https://127.0.0.1',
       'https://community.example.com.',
-      'buzz://channel/580ca78b-9dae-46f3-8854-bd671853ba32',
+      'corevia-talk://channel/580ca78b-9dae-46f3-8854-bd671853ba32',
       'nostrpair://example',
     ]) {
       expect(parseCommunityLinkInput(value), isNull, reason: value);

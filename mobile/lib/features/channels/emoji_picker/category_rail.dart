@@ -3,22 +3,22 @@ part of '../emoji_picker.dart';
 /// Rail icon for each emoji-mart category. Ids come from the dataset, so this
 /// map is keyed on emoji-mart's own category ids.
 IconData _categoryIcon(String categoryId) => switch (categoryId) {
-  'people' => BuzzIcons.smile,
-  'nature' => BuzzIcons.leaf,
-  'foods' => BuzzIcons.coffee,
-  'activity' => BuzzIcons.volleyball,
-  'places' => BuzzIcons.plane,
-  'objects' => BuzzIcons.lightbulb,
-  'symbols' => BuzzIcons.heart,
-  'flags' => BuzzIcons.flag,
-  _ => BuzzIcons.layoutGrid,
+  'people' => CoreviaTalkIcons.smile,
+  'nature' => CoreviaTalkIcons.leaf,
+  'foods' => CoreviaTalkIcons.coffee,
+  'activity' => CoreviaTalkIcons.volleyball,
+  'places' => CoreviaTalkIcons.plane,
+  'objects' => CoreviaTalkIcons.lightbulb,
+  'symbols' => CoreviaTalkIcons.heart,
+  'flags' => CoreviaTalkIcons.flag,
+  _ => CoreviaTalkIcons.layoutGrid,
 };
 
 /// Height of the rail. Sized to a comfortable tap target rather than to the
 /// 18px icon it holds.
 const _railHeight = 36.0;
 
-const _emojiSkinTonePrefsKey = 'buzz.emoji-picker.skin-tone.v1';
+const _emojiSkinTonePrefsKey = 'corevia-talk.emoji-picker.skin-tone.v1';
 
 List<({String label, Color color})> get _skinTones => [
   (label: tl('Default'), color: Color(0xFFFFC93A)),
@@ -113,7 +113,7 @@ class _SkinToneSelector extends StatelessWidget {
                 Expanded(child: Text(tone.label)),
                 if (index == value)
                   Icon(
-                    BuzzIcons.check,
+                    CoreviaTalkIcons.check,
                     size: 18,
                     color: context.colors.primary,
                   ),

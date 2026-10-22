@@ -18,7 +18,7 @@ fn bare_agent_record(
         auth_tag: None,
         relay_url: "ws://localhost:3000".to_string(),
         avatar_url: None,
-        acp_command: "buzz-acp".to_string(),
+        acp_command: "corevia-talk-acp".to_string(),
         agent_command: "goose".to_string(),
         agent_command_override: None,
         agent_args: vec![],
@@ -282,7 +282,7 @@ fn normalize_relay_mesh_rejects_empty_model_ref() {
 
     assert_eq!(
         normalize_relay_mesh(Some(&config), &BackendKind::Local).unwrap_err(),
-        "Buzz shared compute model is required"
+        "Corevia Talk shared compute model is required"
     );
 }
 
@@ -298,7 +298,7 @@ fn normalize_relay_mesh_rejects_non_local_backend() {
 
     assert_eq!(
         normalize_relay_mesh(Some(&config), &backend).unwrap_err(),
-        "Buzz shared compute agents must use the local backend"
+        "Corevia Talk shared compute agents must use the local backend"
     );
 }
 
@@ -569,7 +569,7 @@ fn deploy_payload_for_policy(
 #[test]
 fn deploy_payload_matches_the_shared_full_launch_fixture() {
     let fixture_path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(
-        "../../crates/buzz-backend-kubernetes/tests/fixtures/provider-wire/deploy-full-launch.request.json",
+        "../../crates/corevia-talk-backend-kubernetes/tests/fixtures/provider-wire/deploy-full-launch.request.json",
     );
     let fixture: serde_json::Value = serde_json::from_str(
         &std::fs::read_to_string(&fixture_path)
@@ -582,7 +582,7 @@ fn deploy_payload_matches_the_shared_full_launch_fixture() {
         "private_key_nsec": "nsec1vl029mgpspedva04g90vltkh6fvh240zqtv9k0t9af8935ke9laqsnlfe5",
         "relay_url": "wss://localhost:3000",
         "auth_tag": "tag-1",
-        "acp_command": "buzz-acp",
+        "acp_command": "corevia-talk-acp",
         "agent_command": "goose",
         "runtime": "goose",
         "model": "gpt-5",
@@ -655,7 +655,7 @@ fn tauri_platform_configs_bundle_kubernetes_only_on_supported_hosts() {
             .expect("bundle.externalBin array");
         let has_kubernetes = external_bins
             .iter()
-            .any(|value| value == "binaries/buzz-backend-kubernetes");
+            .any(|value| value == "binaries/corevia-talk-backend-kubernetes");
         assert_eq!(
             has_kubernetes, expected,
             "unexpected Kubernetes externalBin for {target}; merged {paths:?}"
@@ -667,10 +667,10 @@ fn tauri_platform_configs_bundle_kubernetes_only_on_supported_hosts() {
 fn current_build_deploy_payload_forwards_compiled_policy() {
     use crate::managed_agents::{BackendKind, RespondTo};
 
-    let expected_owner_only = match std::env::var("BUZZ_TEST_EXPECTED_AGENT_ACCESS_OWNER_ONLY") {
+    let expected_owner_only = match std::env::var("COREVIA_TALK_TEST_EXPECTED_AGENT_ACCESS_OWNER_ONLY") {
         Ok(value) => value
             .parse::<bool>()
-            .expect("BUZZ_TEST_EXPECTED_AGENT_ACCESS_OWNER_ONLY must be true or false"),
+            .expect("COREVIA_TALK_TEST_EXPECTED_AGENT_ACCESS_OWNER_ONLY must be true or false"),
         Err(std::env::VarError::NotPresent)
             if !crate::managed_agents::owner_only_access_build() =>
         {
@@ -678,11 +678,11 @@ fn current_build_deploy_payload_forwards_compiled_policy() {
         }
         Err(std::env::VarError::NotPresent) => {
             panic!(
-                "BUZZ_TEST_EXPECTED_AGENT_ACCESS_OWNER_ONLY must be set for owner-only-access-build tests"
+                "COREVIA_TALK_TEST_EXPECTED_AGENT_ACCESS_OWNER_ONLY must be set for owner-only-access-build tests"
             )
         }
         Err(std::env::VarError::NotUnicode(_)) => {
-            panic!("BUZZ_TEST_EXPECTED_AGENT_ACCESS_OWNER_ONLY must be valid UTF-8")
+            panic!("COREVIA_TALK_TEST_EXPECTED_AGENT_ACCESS_OWNER_ONLY must be valid UTF-8")
         }
     };
     let mut record = bare_agent_record(None, None, None);
@@ -799,7 +799,7 @@ fn owner_only_access_deploy_payload_clamps_stale_access() {
 /// and no background work outliving the test.
 #[test]
 fn create_managed_agent_persists_picked_effort_and_drops_env_aliases() {
-    const CHILD: &str = "BUZZ_CREATE_EFFORT_TEST_HOME";
+    const CHILD: &str = "COREVIA_TALK_CREATE_EFFORT_TEST_HOME";
     if let Some(home) = std::env::var_os(CHILD) {
         return create_with_effort_in_confined_child(std::path::Path::new(&home));
     }
@@ -809,8 +809,8 @@ fn create_managed_agent_persists_picked_effort_and_drops_env_aliases() {
         .env(CHILD, home.path()).env("HOME", home.path())
         .env("XDG_DATA_HOME", home.path()).env("APPDATA", home.path())
         .env("LOCALAPPDATA", home.path())
-        .env_remove("BUZZ_PRIVATE_KEY").env_remove("BUZZ_AUTH_TAG")
-        .env_remove("BUZZ_RELAY_URL").env_remove("BUZZ_NETWORK_TRACE")
+        .env_remove("COREVIA_TALK_PRIVATE_KEY").env_remove("COREVIA_TALK_AUTH_TAG")
+        .env_remove("COREVIA_TALK_RELAY_URL").env_remove("COREVIA_TALK_NETWORK_TRACE")
         .output().unwrap();
     let stdout = String::from_utf8_lossy(&output.stdout);
     assert!(

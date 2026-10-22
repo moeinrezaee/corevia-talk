@@ -76,7 +76,7 @@ function publicationToPersona(
     avatarUrl: publication.agent.avatarUrl,
     description: publication.agent.description ?? null,
     systemPrompt: publication.agent.systemPrompt,
-    acpCommand: publication.agent.acpCommand ?? "buzz-acp",
+    acpCommand: publication.agent.acpCommand ?? "corevia-talk-acp",
     runtime: publication.agent.runtime,
     model: publication.agent.model,
     provider: publication.agent.provider,

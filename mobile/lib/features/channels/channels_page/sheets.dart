@@ -423,7 +423,7 @@ class _CreateChannelSettingMenu<T> extends StatelessWidget {
               ),
               const SizedBox(width: Grid.half),
               Icon(
-                BuzzIcons.chevronDown,
+                CoreviaTalkIcons.chevronDown,
                 size: 16,
                 color: context.colors.onSurfaceVariant,
               ),
@@ -645,7 +645,7 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                                               ),
                                               child: SizedBox.square(
                                                 dimension: 16,
-                                                child: BuzzLoadingIndicator(
+                                                child: CoreviaTalkLoadingIndicator(
                                                   size: 16,
                                                   semanticLabel: tl(
                                                     'Creating conversation',
@@ -695,7 +695,7 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                     child: SizedBox(
                       height: 280,
                       child: Center(
-                        child: BuzzLoadingIndicator(
+                        child: CoreviaTalkLoadingIndicator(
                           size: 44,
                           semanticLabel: tl('Loading people'),
                         ),
@@ -781,7 +781,7 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         trailing: Icon(
-                          BuzzIcons.plus,
+                          CoreviaTalkIcons.plus,
                           size: 18,
                           color: context.colors.onSurfaceVariant,
                         ),

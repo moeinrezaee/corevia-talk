@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/relay/relay.dart';
 import '../../shared/theme/theme.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../shared/widgets/skeleton.dart';
 import 'voice_note_play_pause_icon.dart';
 import 'voice_note_recording.dart';
@@ -177,14 +177,14 @@ class VoiceNoteAttachment extends HookConsumerWidget {
                   ),
                   icon: state.isLoading
                       ? ExcludeSemantics(
-                          child: BuzzLoadingIndicator(
+                          child: CoreviaTalkLoadingIndicator(
                             size: 18,
                             color: context.colors.onSecondaryContainer,
                           ),
                         )
                       : state.hasError && isRemote
                       ? Icon(
-                          BuzzIcons.refreshCcw,
+                          CoreviaTalkIcons.refreshCcw,
                           key: const ValueKey('voice-note-retry-icon'),
                           size: 18,
                           color: context.colors.onSecondaryContainer,
@@ -275,7 +275,7 @@ class VoiceNoteAttachment extends HookConsumerWidget {
                   padding: EdgeInsets.zero,
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
-                icon: const Icon(BuzzIcons.x, size: 18),
+                icon: const Icon(CoreviaTalkIcons.x, size: 18),
               ),
             ),
           ],

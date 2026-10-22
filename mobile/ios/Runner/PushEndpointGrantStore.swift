@@ -1,13 +1,13 @@
-import BuzzPushKit
+import CoreviaTalkPushKit
 import Foundation
 import Security
 
 /// Keychain-backed endpoint grant storage. The opaque grant is never written to
 /// UserDefaults or logs. Dart can read the closed record through the push bridge.
-final class BuzzPushEndpointGrantKeychainStore: BuzzPushEndpointGrantStore {
-  private static let service = "buzz.push.endpoint-grants"
-  private static let recordsAccount = "records-buzz-push-v1"
-  private static let pendingAccount = "pending-buzz-push-v1"
+final class CoreviaTalkPushEndpointGrantKeychainStore: CoreviaTalkPushEndpointGrantStore {
+  private static let service = "corevia-talk.push.endpoint-grants"
+  private static let recordsAccount = "records-corevia-talk-push-v1"
+  private static let pendingAccount = "pending-corevia-talk-push-v1"
 
   private let accessGroup: String?
 
@@ -15,7 +15,7 @@ final class BuzzPushEndpointGrantKeychainStore: BuzzPushEndpointGrantStore {
     self.accessGroup = accessGroup
   }
 
-  func records() throws -> [BuzzPushEndpointGrantRecord] {
+  func records() throws -> [CoreviaTalkPushEndpointGrantRecord] {
     var query = baseQuery(account: Self.recordsAccount)
     query[kSecReturnData as String] = true
     query[kSecMatchLimit as String] = kSecMatchLimitOne
@@ -26,17 +26,17 @@ final class BuzzPushEndpointGrantKeychainStore: BuzzPushEndpointGrantStore {
       throw keychainError(status, operation: "read")
     }
     do {
-      return try JSONDecoder().decode([BuzzPushEndpointGrantRecord].self, from: data)
+      return try JSONDecoder().decode([CoreviaTalkPushEndpointGrantRecord].self, from: data)
     } catch {
       throw NSError(
-        domain: "BuzzPushEndpointGrantStore",
+        domain: "CoreviaTalkPushEndpointGrantStore",
         code: 1,
         userInfo: [NSLocalizedDescriptionKey: "Stored endpoint grants are invalid: \(error)"]
       )
     }
   }
 
-  func save(_ record: BuzzPushEndpointGrantRecord) throws {
+  func save(_ record: CoreviaTalkPushEndpointGrantRecord) throws {
     var all = try records()
     all.removeAll {
       $0.gatewayOrigin == record.gatewayOrigin && $0.relayOrigin == record.relayOrigin
@@ -48,13 +48,13 @@ final class BuzzPushEndpointGrantKeychainStore: BuzzPushEndpointGrantStore {
   func pendingEnrollment(
     gatewayOrigin: String,
     relayOrigin: String
-  ) throws -> BuzzPushPendingEnrollmentRecord? {
+  ) throws -> CoreviaTalkPushPendingEnrollmentRecord? {
     try pendingEnrollments().first {
       $0.gatewayOrigin == gatewayOrigin && $0.relayOrigin == relayOrigin
     }
   }
 
-  func savePendingEnrollment(_ record: BuzzPushPendingEnrollmentRecord) throws {
+  func savePendingEnrollment(_ record: CoreviaTalkPushPendingEnrollmentRecord) throws {
     var all = try pendingEnrollments()
     all.removeAll {
       $0.gatewayOrigin == record.gatewayOrigin && $0.relayOrigin == record.relayOrigin
@@ -74,7 +74,7 @@ final class BuzzPushEndpointGrantKeychainStore: BuzzPushEndpointGrantStore {
     try replaceValue(all, account: Self.pendingAccount)
   }
 
-  private func pendingEnrollments() throws -> [BuzzPushPendingEnrollmentRecord] {
+  private func pendingEnrollments() throws -> [CoreviaTalkPushPendingEnrollmentRecord] {
     var query = baseQuery(account: Self.pendingAccount)
     query[kSecReturnData as String] = true
     query[kSecMatchLimit as String] = kSecMatchLimitOne
@@ -85,10 +85,10 @@ final class BuzzPushEndpointGrantKeychainStore: BuzzPushEndpointGrantStore {
       throw keychainError(status, operation: "read pending enrollment")
     }
     do {
-      return try JSONDecoder().decode([BuzzPushPendingEnrollmentRecord].self, from: data)
+      return try JSONDecoder().decode([CoreviaTalkPushPendingEnrollmentRecord].self, from: data)
     } catch {
       throw NSError(
-        domain: "BuzzPushEndpointGrantStore",
+        domain: "CoreviaTalkPushEndpointGrantStore",
         code: 2,
         userInfo: [NSLocalizedDescriptionKey: "Stored pending enrollments are invalid: \(error)"]
       )
@@ -139,7 +139,7 @@ final class BuzzPushEndpointGrantKeychainStore: BuzzPushEndpointGrantStore {
   }
 }
 
-extension BuzzPushEndpointGrantRecord {
+extension CoreviaTalkPushEndpointGrantRecord {
   var flutterArguments: [String: Any] {
     let arguments: [String: Any] = [
       "relayOrigin": relayOrigin,

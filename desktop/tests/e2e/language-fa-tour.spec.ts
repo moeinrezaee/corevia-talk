@@ -8,7 +8,7 @@ const SHOTS = "test-results/language-fa-tour";
 test("Persian tour of the main surfaces", async ({ page }) => {
   test.setTimeout(120_000);
   await page.addInitScript(() =>
-    window.localStorage.setItem("buzz.appearance.language", "fa"),
+    window.localStorage.setItem("corevia-talk.appearance.language", "fa"),
   );
   await installMockBridge(page);
   await page.setViewportSize({ width: 1280, height: 720 });

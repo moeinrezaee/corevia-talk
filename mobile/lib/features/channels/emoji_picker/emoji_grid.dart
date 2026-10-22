@@ -221,7 +221,7 @@ class _EmojiSearchResults extends StatelessWidget {
   Widget build(BuildContext context) {
     if (entries.isEmpty && customEmoji.isEmpty) {
       return _EmojiEmptyState(
-        icon: BuzzIcons.searchX,
+        icon: CoreviaTalkIcons.searchX,
         message: tl('No emoji found.'),
       );
     }

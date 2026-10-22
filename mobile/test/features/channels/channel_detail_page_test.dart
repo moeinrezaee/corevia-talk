@@ -1,15 +1,15 @@
-import 'package:buzz/features/channels/compose_bar.dart';
-import 'package:buzz/features/channels/send_message_provider.dart';
-import 'package:buzz/features/channels/agent_reply_handoff.dart';
-import 'package:buzz/features/channels/me/me_messages_provider.dart';
-import 'package:buzz/shared/me/me_assistants.dart';
-import 'package:buzz/shared/me/me_sync.dart';
-import 'package:buzz/shared/me/me_groups.dart';
+import 'package:corevia_talk/features/channels/compose_bar.dart';
+import 'package:corevia_talk/features/channels/send_message_provider.dart';
+import 'package:corevia_talk/features/channels/agent_reply_handoff.dart';
+import 'package:corevia_talk/features/channels/me/me_messages_provider.dart';
+import 'package:corevia_talk/shared/me/me_assistants.dart';
+import 'package:corevia_talk/shared/me/me_sync.dart';
+import 'package:corevia_talk/shared/me/me_groups.dart';
 import 'package:flutter/semantics.dart';
-import 'package:buzz/features/channels/message_media_avatar.dart';
+import 'package:corevia_talk/features/channels/message_media_avatar.dart';
 import 'dart:async';
-import 'package:buzz/shared/push/push_bridge.dart';
-import 'package:buzz/features/channels/channel_actions_sheet.dart';
+import 'package:corevia_talk/shared/push/push_bridge.dart';
+import 'package:corevia_talk/features/channels/channel_actions_sheet.dart';
 
 import '../profile/presence_snapshot_test.dart'
     show PresenceTestRelay, presenceEvent;
@@ -34,59 +34,59 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart' as http_testing;
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'package:nostr/nostr.dart' as nostr;
 import 'package:pointycastle/digests/sha256.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channel_detail_page.dart';
-import 'package:buzz/features/channels/channel_management_provider.dart';
-import 'package:buzz/features/channels/channel_messages_provider.dart';
-import 'package:buzz/features/channels/channel_window.dart';
-import 'package:buzz/features/channels/channel_mutes/channel_mutes_provider.dart';
-import 'package:buzz/features/channels/channel_mutes/channel_mutes_storage.dart';
-import 'package:buzz/features/channels/channel_stars/channel_stars_provider.dart';
-import 'package:buzz/features/channels/channel_stars/channel_stars_storage.dart';
-import 'package:buzz/features/channels/channel_typing_provider.dart';
-import 'package:buzz/features/channels/composer_dock_size_reporter.dart';
-import 'package:buzz/features/channels/date_formatters.dart';
-import 'package:buzz/features/channels/day_divider.dart';
-import 'package:buzz/features/channels/emoji_picker.dart';
-import 'package:buzz/features/channels/ime_metrics_settle_observer.dart';
-import 'package:buzz/features/channels/local_message_send_animation_provider.dart';
-import 'package:buzz/features/channels/local_send_bubble_surface.dart';
-import 'package:buzz/features/channels/message_action_backdrop_state.dart';
-import 'package:buzz/features/channels/message_content.dart';
-import 'package:buzz/features/channels/mobile_huddle_controller.dart';
-import 'package:buzz/features/channels/reaction_row.dart';
-import 'package:buzz/features/channels/message_mention_pill.dart';
-import 'package:buzz/features/channels/thread_detail_page.dart';
-import 'package:buzz/features/channels/thread_replies_provider.dart';
-import 'package:buzz/features/channels/timeline_message.dart';
-import 'package:buzz/features/channels/channels_provider.dart';
-import 'package:buzz/shared/read_state/read_state_provider.dart';
-import 'package:buzz/features/channels/unread_badge/observed_unread_event.dart';
-import 'package:buzz/features/channels/small_avatar.dart';
-import 'package:buzz/features/profile/profile_provider.dart';
-import 'package:buzz/features/profile/presence_cache_provider.dart';
-import 'package:buzz/shared/profile/user_cache_provider.dart';
-import 'package:buzz/shared/profile/user_profile.dart';
-import 'package:buzz/features/profile/user_profile_sheet.dart';
-import 'package:buzz/shared/identity_names/identity_names.dart';
-import 'package:buzz/shared/community/community_provider.dart';
-import 'package:buzz/shared/emoji/emoji_burst.dart';
-import 'package:buzz/shared/mentions/agent_identity_provider.dart';
-import 'package:buzz/shared/huddle/huddle.dart';
-import 'package:buzz/shared/relay/relay.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/widgets/app_list_card.dart';
-import 'package:buzz/shared/widgets/avatar_image.dart';
-import 'package:buzz/shared/widgets/frosted_app_bar.dart';
-import 'package:buzz/shared/widgets/frosted_scaffold.dart';
-import 'package:buzz/shared/widgets/flapping_bee.dart';
-import 'package:buzz/shared/widgets/keyboard_dismiss_on_drag.dart';
-import 'package:buzz/shared/widgets/tabler_star_icon.dart';
-import 'package:buzz/shared/widgets/skeleton.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channel_detail_page.dart';
+import 'package:corevia_talk/features/channels/channel_management_provider.dart';
+import 'package:corevia_talk/features/channels/channel_messages_provider.dart';
+import 'package:corevia_talk/features/channels/channel_window.dart';
+import 'package:corevia_talk/features/channels/channel_mutes/channel_mutes_provider.dart';
+import 'package:corevia_talk/features/channels/channel_mutes/channel_mutes_storage.dart';
+import 'package:corevia_talk/features/channels/channel_stars/channel_stars_provider.dart';
+import 'package:corevia_talk/features/channels/channel_stars/channel_stars_storage.dart';
+import 'package:corevia_talk/features/channels/channel_typing_provider.dart';
+import 'package:corevia_talk/features/channels/composer_dock_size_reporter.dart';
+import 'package:corevia_talk/features/channels/date_formatters.dart';
+import 'package:corevia_talk/features/channels/day_divider.dart';
+import 'package:corevia_talk/features/channels/emoji_picker.dart';
+import 'package:corevia_talk/features/channels/ime_metrics_settle_observer.dart';
+import 'package:corevia_talk/features/channels/local_message_send_animation_provider.dart';
+import 'package:corevia_talk/features/channels/local_send_bubble_surface.dart';
+import 'package:corevia_talk/features/channels/message_action_backdrop_state.dart';
+import 'package:corevia_talk/features/channels/message_content.dart';
+import 'package:corevia_talk/features/channels/mobile_huddle_controller.dart';
+import 'package:corevia_talk/features/channels/reaction_row.dart';
+import 'package:corevia_talk/features/channels/message_mention_pill.dart';
+import 'package:corevia_talk/features/channels/thread_detail_page.dart';
+import 'package:corevia_talk/features/channels/thread_replies_provider.dart';
+import 'package:corevia_talk/features/channels/timeline_message.dart';
+import 'package:corevia_talk/features/channels/channels_provider.dart';
+import 'package:corevia_talk/shared/read_state/read_state_provider.dart';
+import 'package:corevia_talk/features/channels/unread_badge/observed_unread_event.dart';
+import 'package:corevia_talk/features/channels/small_avatar.dart';
+import 'package:corevia_talk/features/profile/profile_provider.dart';
+import 'package:corevia_talk/features/profile/presence_cache_provider.dart';
+import 'package:corevia_talk/shared/profile/user_cache_provider.dart';
+import 'package:corevia_talk/shared/profile/user_profile.dart';
+import 'package:corevia_talk/features/profile/user_profile_sheet.dart';
+import 'package:corevia_talk/shared/identity_names/identity_names.dart';
+import 'package:corevia_talk/shared/community/community_provider.dart';
+import 'package:corevia_talk/shared/emoji/emoji_burst.dart';
+import 'package:corevia_talk/shared/mentions/agent_identity_provider.dart';
+import 'package:corevia_talk/shared/huddle/huddle.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/widgets/app_list_card.dart';
+import 'package:corevia_talk/shared/widgets/avatar_image.dart';
+import 'package:corevia_talk/shared/widgets/frosted_app_bar.dart';
+import 'package:corevia_talk/shared/widgets/frosted_scaffold.dart';
+import 'package:corevia_talk/shared/widgets/flapping_bee.dart';
+import 'package:corevia_talk/shared/widgets/keyboard_dismiss_on_drag.dart';
+import 'package:corevia_talk/shared/widgets/tabler_star_icon.dart';
+import 'package:corevia_talk/shared/widgets/skeleton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../helpers/thread_ids.dart';
@@ -638,7 +638,7 @@ void main() {
         (await container.read(
           channelDetailsProvider(_channelId).future,
         )).labels,
-        ['buzz.solo'],
+        ['corevia-talk.solo'],
       );
       session.solo = false;
       final refresh = container.read(channelsProvider.notifier).refresh();
@@ -2660,7 +2660,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       // A catch-up mark reads the thread. Each visible reply keeps its own
-      // mark too, as in `buzz-app`: the thread mark reads a reply only while
+      // mark too, as in `corevia-talk-app`: the thread mark reads a reply only while
       // its root is loaded. The covered channel page does not read meanwhile.
       expect(readState.markedContexts, {
         'thread-activity:$threadIdRoot': 1102,
@@ -3119,7 +3119,7 @@ void main() {
         expect(
           find.descendant(
             of: aliceRow,
-            matching: find.byIcon(BuzzIcons.chevronRight),
+            matching: find.byIcon(CoreviaTalkIcons.chevronRight),
           ),
           findsOneWidget,
         );
@@ -3304,7 +3304,7 @@ void main() {
         var star = tester.widget<TablerStarIcon>(find.byType(TablerStarIcon));
         expect(star.filled, isFalse);
         expect(find.text('Mute'), findsOneWidget);
-        expect(find.byIcon(BuzzIcons.bellOff), findsOneWidget);
+        expect(find.byIcon(CoreviaTalkIcons.bellOff), findsOneWidget);
 
         await tester.tap(starAction);
         await tester.pump();
@@ -3318,7 +3318,7 @@ void main() {
         await tester.pump();
 
         expect(find.text('Unmute'), findsOneWidget);
-        final activeBell = tester.widget<Icon>(find.byIcon(BuzzIcons.bell));
+        final activeBell = tester.widget<Icon>(find.byIcon(CoreviaTalkIcons.bell));
         expect(activeBell.color, AppTheme.light().colorScheme.primary);
 
         await tester.tap(starAction);
@@ -3329,7 +3329,7 @@ void main() {
         expect(find.text('Mute'), findsOneWidget);
         star = tester.widget<TablerStarIcon>(find.byType(TablerStarIcon));
         expect(star.filled, isFalse);
-        expect(find.byIcon(BuzzIcons.bellOff), findsOneWidget);
+        expect(find.byIcon(CoreviaTalkIcons.bellOff), findsOneWidget);
       },
     );
 
@@ -3451,7 +3451,7 @@ void main() {
         findsNothing,
       );
       expect(
-        find.descendant(of: seeAllRow, matching: find.byIcon(BuzzIcons.users)),
+        find.descendant(of: seeAllRow, matching: find.byIcon(CoreviaTalkIcons.users)),
         findsNothing,
       );
       final firstMemberRow = previews.first;
@@ -4146,7 +4146,7 @@ void main() {
       const posterUrl = 'https://relay.example/media/alice-poster.png';
       const animationUrl = 'https://relay.example/media/alice-avatar.png';
       final profileUrl =
-          '$posterUrl#buzz-anim=${Uri.encodeComponent(animationUrl)}';
+          '$posterUrl#corevia-talk-anim=${Uri.encodeComponent(animationUrl)}';
       final mediaClient = http_testing.MockClient(
         (_) async => http.Response.bytes(_transparentPng, 200),
       );
@@ -4484,7 +4484,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('2 replies'), findsOneWidget);
-      expect(find.byIcon(BuzzIcons.messageSquareReply), findsNothing);
+      expect(find.byIcon(CoreviaTalkIcons.messageSquareReply), findsNothing);
       expect(find.byType(SmallAvatar), findsNWidgets(2));
       for (final avatar in find.byType(SmallAvatar).evaluate()) {
         expect(
@@ -4671,7 +4671,7 @@ void main() {
       expect(
         find.descendant(
           of: unreadButton,
-          matching: find.byIcon(BuzzIcons.chevronUp),
+          matching: find.byIcon(CoreviaTalkIcons.chevronUp),
         ),
         findsOneWidget,
       );
@@ -4699,7 +4699,7 @@ void main() {
         findsOneWidget,
       );
       expect(find.text('Latest'), findsNothing);
-      expect(find.byIcon(BuzzIcons.arrowDown), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.arrowDown), findsOneWidget);
       expect(find.byTooltip('Jump to latest message'), findsOneWidget);
     });
 
@@ -5749,7 +5749,7 @@ void main() {
         ),
       );
       expect(find.text('Latest'), findsNothing);
-      expect(find.byIcon(BuzzIcons.arrowDown), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.arrowDown), findsOneWidget);
       for (final container in tester.widgetList<Container>(
         find.descendant(
           of: find.byKey(const ValueKey('channel-jump-to-latest')),
@@ -6985,7 +6985,7 @@ void main() {
         expect(
           find.descendant(
             of: find.byKey(const ValueKey('huddle-retry')),
-            matching: find.byIcon(BuzzIcons.refreshCw),
+            matching: find.byIcon(CoreviaTalkIcons.refreshCw),
           ),
           findsNothing,
         );
@@ -7045,7 +7045,7 @@ void main() {
         expect(
           find.descendant(
             of: find.byKey(const ValueKey('huddle-retry')),
-            matching: find.byIcon(BuzzIcons.settings),
+            matching: find.byIcon(CoreviaTalkIcons.settings),
           ),
           findsOneWidget,
         );
@@ -7099,11 +7099,11 @@ void main() {
       expect(
         find.descendant(
           of: find.byKey(const ValueKey('channel-huddle-button')),
-          matching: find.byIcon(BuzzIcons.headphones),
+          matching: find.byIcon(CoreviaTalkIcons.headphones),
         ),
         findsOneWidget,
       );
-      expect(find.byIcon(BuzzIcons.headphoneOff), findsNothing);
+      expect(find.byIcon(CoreviaTalkIcons.headphoneOff), findsNothing);
     });
 
     testWidgets('failed admission cannot publish Huddle leave lifecycle', (
@@ -7792,7 +7792,7 @@ void main() {
           tester.getSize(find.byType(CircleAvatar).first),
           const Size.square(104),
         );
-        expect(find.byIcon(BuzzIcons.userRound), findsNWidgets(3));
+        expect(find.byIcon(CoreviaTalkIcons.userRound), findsNWidgets(3));
         await tester.tap(
           find.byKey(const ValueKey('huddle-participant-avatar-desktop')),
         );
@@ -7962,17 +7962,17 @@ void main() {
         expect(
           find.descendant(
             of: find.byKey(const ValueKey('huddle-speaker-toggle')),
-            matching: find.byIcon(BuzzIcons.volume2),
+            matching: find.byIcon(CoreviaTalkIcons.volume2),
           ),
           findsOneWidget,
         );
         final speakerIcon = find.descendant(
           of: find.byKey(const ValueKey('huddle-speaker-toggle')),
-          matching: find.byIcon(BuzzIcons.volume2),
+          matching: find.byIcon(CoreviaTalkIcons.volume2),
         );
         final leaveIcon = find.descendant(
           of: find.byKey(const ValueKey('huddle-leave')),
-          matching: find.byIcon(BuzzIcons.phoneOff),
+          matching: find.byIcon(CoreviaTalkIcons.phoneOff),
         );
         expect(tester.widget<Icon>(speakerIcon).size, 28);
         expect(tester.widget<Icon>(leaveIcon).size, 28);
@@ -8005,7 +8005,7 @@ void main() {
         expect(
           find.descendant(
             of: find.byKey(const ValueKey('huddle-speaker-toggle')),
-            matching: find.byIcon(BuzzIcons.volume2),
+            matching: find.byIcon(CoreviaTalkIcons.volume2),
           ),
           findsOneWidget,
         );
@@ -8039,7 +8039,7 @@ void main() {
         expect(
           find.descendant(
             of: find.byKey(const ValueKey('huddle-mute-toggle')),
-            matching: find.byIcon(BuzzIcons.mic),
+            matching: find.byIcon(CoreviaTalkIcons.mic),
           ),
           findsOneWidget,
         );
@@ -8048,7 +8048,7 @@ void main() {
               .widget<Icon>(
                 find.descendant(
                   of: find.byKey(const ValueKey('huddle-mute-toggle')),
-                  matching: find.byIcon(BuzzIcons.mic),
+                  matching: find.byIcon(CoreviaTalkIcons.mic),
                 ),
               )
               .size,
@@ -8061,7 +8061,7 @@ void main() {
         expect(
           find.descendant(
             of: find.byKey(const ValueKey('huddle-mute-toggle')),
-            matching: find.byIcon(BuzzIcons.micOff),
+            matching: find.byIcon(CoreviaTalkIcons.micOff),
           ),
           findsOneWidget,
         );
@@ -8082,7 +8082,7 @@ void main() {
 
         final emojiIcon = find.descendant(
           of: find.byKey(const ValueKey('huddle-emoji-reactions')),
-          matching: find.byIcon(BuzzIcons.smilePlus),
+          matching: find.byIcon(CoreviaTalkIcons.smilePlus),
         );
         expect(emojiIcon, findsOneWidget);
         expect(tester.widget<Icon>(emojiIcon).size, 28);
@@ -8154,14 +8154,14 @@ void main() {
         expect(
           find.descendant(
             of: find.byKey(const ValueKey('huddle-drawer-expand')),
-            matching: find.byIcon(BuzzIcons.chevronUp),
+            matching: find.byIcon(CoreviaTalkIcons.chevronUp),
           ),
           findsOneWidget,
         );
         expect(
           find.descendant(
             of: find.byKey(const ValueKey('huddle-drawer-mute-toggle')),
-            matching: find.byIcon(BuzzIcons.micOff),
+            matching: find.byIcon(CoreviaTalkIcons.micOff),
           ),
           findsOneWidget,
         );
@@ -10116,7 +10116,7 @@ void main() {
         const posterUrl = 'https://relay.example/media/alice-poster.png';
         const animationUrl = 'https://relay.example/media/alice-avatar.png';
         final profileUrl =
-            '$posterUrl#buzz-anim=${Uri.encodeComponent(animationUrl)}';
+            '$posterUrl#corevia-talk-anim=${Uri.encodeComponent(animationUrl)}';
         final animationResponse = Completer<http.Response>();
         final mediaClient = http_testing.MockClient(
           (request) => request.url.toString() == animationUrl
@@ -10650,7 +10650,7 @@ void main() {
       // Only the text message should render, unknown system event is skipped.
       expect(findRichText('Hello'), findsOneWidget);
       // No system message row rendered for unknown type.
-      expect(find.byIcon(BuzzIcons.arrowLeftRight), findsNothing);
+      expect(find.byIcon(CoreviaTalkIcons.arrowLeftRight), findsNothing);
     });
   });
 
@@ -10863,7 +10863,7 @@ void main() {
         name: 'Labeled Solo',
         channelType: 'stream',
         visibility: 'private',
-        labels: const ['buzz.solo'],
+        labels: const ['corevia-talk.solo'],
         description: '',
         createdBy: own ? 'self' : 'other',
         createdAt: DateTime(2026),
@@ -10908,7 +10908,7 @@ void main() {
         name: 'Shared Solo',
         channelType: 'stream',
         visibility: 'private',
-        labels: const ['buzz.solo'],
+        labels: const ['corevia-talk.solo'],
         description: '',
         createdBy: 'other',
         createdAt: DateTime(2026),
@@ -11291,13 +11291,13 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(TextField), findsNothing);
-      expect(find.byIcon(BuzzIcons.arrowUp).hitTestable(), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.arrowUp).hitTestable(), findsOneWidget);
 
       await tester.tap(find.text('Message #general'));
       await tester.pumpAndSettle();
 
       expect(find.byType(TextField), findsOneWidget);
-      expect(find.byIcon(BuzzIcons.arrowUp).hitTestable(), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.arrowUp).hitTestable(), findsOneWidget);
     });
 
     testWidgets('shows hint text', (tester) async {
@@ -11341,10 +11341,10 @@ void main() {
         find.byWidgetPredicate(
           (widget) =>
               widget is UiKitView &&
-              widget.viewType == 'buzz/ios_navigation_bar',
+              widget.viewType == 'corevia-talk/ios_navigation_bar',
         ),
       );
-      expect(channelView.viewType, 'buzz/ios_navigation_bar');
+      expect(channelView.viewType, 'corevia-talk/ios_navigation_bar');
       expect(channelView.creationParams, containsPair('back', true));
       unawaited(
         showChannelDetailsPage(
@@ -11359,10 +11359,10 @@ void main() {
         find.byWidgetPredicate(
           (widget) =>
               widget is UiKitView &&
-              widget.viewType == 'buzz/ios_navigation_bar',
+              widget.viewType == 'corevia-talk/ios_navigation_bar',
         ),
       );
-      expect(detailsView.viewType, 'buzz/ios_navigation_bar');
+      expect(detailsView.viewType, 'corevia-talk/ios_navigation_bar');
       expect(
         (detailsView.creationParams! as Map)['leading'],
         containsPair('symbol', 'chevron.backward'),
@@ -11374,7 +11374,7 @@ void main() {
     testWidgets('matches the channel header placement on iOS', (tester) async {
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
       addTearDown(() => debugDefaultTargetPlatformOverride = null);
-      const nativeChannel = MethodChannel('buzz/ios_navigation_bar/43');
+      const nativeChannel = MethodChannel('corevia-talk/ios_navigation_bar/43');
       tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
         nativeChannel,
         (_) async => null,
@@ -11427,10 +11427,10 @@ void main() {
         find.byWidgetPredicate(
           (widget) =>
               widget is UiKitView &&
-              widget.viewType == 'buzz/ios_navigation_bar',
+              widget.viewType == 'corevia-talk/ios_navigation_bar',
         ),
       );
-      expect(nativeView.viewType, 'buzz/ios_navigation_bar');
+      expect(nativeView.viewType, 'corevia-talk/ios_navigation_bar');
       expect(nativeView.creationParams, containsPair('title', 'Thread'));
       expect(
         (nativeView.creationParams! as Map)['leading'],
@@ -11482,7 +11482,7 @@ void main() {
         );
         await tester.pumpAndSettle();
         final finder = find.byWidgetPredicate(
-          (w) => w is UiKitView && w.viewType == 'buzz/ios_navigation_bar',
+          (w) => w is UiKitView && w.viewType == 'corevia-talk/ios_navigation_bar',
         );
         final view = tester.widget<UiKitView>(finder);
         Map<Object?, Object?> payload = view.creationParams! as Map;
@@ -11496,7 +11496,7 @@ void main() {
           isEmpty,
         );
         expect(payload['titleAvatar'], isNull);
-        const channel = MethodChannel('buzz/ios_navigation_bar/197');
+        const channel = MethodChannel('corevia-talk/ios_navigation_bar/197');
         tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
           channel,
           (call) async {
@@ -11593,7 +11593,7 @@ void main() {
                     find.byWidgetPredicate(
                       (w) =>
                           w is UiKitView &&
-                          w.viewType == 'buzz/ios_navigation_bar',
+                          w.viewType == 'corevia-talk/ios_navigation_bar',
                     ),
                   )
                   .creationParams!
@@ -11644,7 +11644,7 @@ void main() {
         await tester.pumpAndSettle();
         final view = tester.widget<UiKitView>(
           find.byWidgetPredicate(
-            (w) => w is UiKitView && w.viewType == 'buzz/ios_navigation_bar',
+            (w) => w is UiKitView && w.viewType == 'corevia-talk/ios_navigation_bar',
           ),
         );
         Map payload = view.creationParams! as Map;
@@ -11653,7 +11653,7 @@ void main() {
           contains('after 1 hour of inactivity'),
         );
         expect(payload['subtitle'], startsWith('Temporary · 1h TTL'));
-        const bridge = MethodChannel('buzz/ios_navigation_bar/297');
+        const bridge = MethodChannel('corevia-talk/ios_navigation_bar/297');
         tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(bridge, (
           call,
         ) async {
@@ -11732,7 +11732,7 @@ void main() {
             find.byWidgetPredicate(
               (widget) =>
                   widget is UiKitView &&
-                  widget.viewType == 'buzz/ios_navigation_bar',
+                  widget.viewType == 'corevia-talk/ios_navigation_bar',
             ),
           );
           expect(view.creationParams, containsPair('titleEnabled', true));
@@ -11753,7 +11753,7 @@ void main() {
                 ),
             isEmpty,
           );
-          const bridge = MethodChannel('buzz/ios_navigation_bar/497');
+          const bridge = MethodChannel('corevia-talk/ios_navigation_bar/497');
           tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
             bridge,
             (_) async => null,
@@ -11821,7 +11821,7 @@ void main() {
         find.byWidgetPredicate(
           (widget) =>
               widget is UiKitView &&
-              widget.viewType == 'buzz/ios_navigation_bar',
+              widget.viewType == 'corevia-talk/ios_navigation_bar',
         ),
       );
       final payload = view.creationParams! as Map<String, Object?>;
@@ -11832,7 +11832,7 @@ void main() {
       expect(actions, hasLength(1));
       expect(actions.single, containsPair('label', 'Start Huddle'));
       expect(actions.single, containsPair('enabled', true));
-      const channel = MethodChannel('buzz/ios_navigation_bar/97');
+      const channel = MethodChannel('corevia-talk/ios_navigation_bar/97');
       tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
         channel,
         (_) async => null,
@@ -11900,10 +11900,10 @@ void main() {
           find.byWidgetPredicate(
             (widget) =>
                 widget is UiKitView &&
-                widget.viewType == 'buzz/ios_navigation_bar',
+                widget.viewType == 'corevia-talk/ios_navigation_bar',
           ),
         );
-        expect(nativeView.viewType, 'buzz/ios_navigation_bar');
+        expect(nativeView.viewType, 'corevia-talk/ios_navigation_bar');
         expect(nativeView.creationParams, containsPair('back', true));
         expect(nativeView.creationParams, containsPair('title', 'general'));
         expect(tester.takeException(), isNull);
@@ -11955,10 +11955,10 @@ void main() {
               find.byWidgetPredicate(
                 (widget) =>
                     widget is UiKitView &&
-                    widget.viewType == 'buzz/ios_navigation_bar',
+                    widget.viewType == 'corevia-talk/ios_navigation_bar',
               ),
             );
-            expect(nativeView.viewType, 'buzz/ios_navigation_bar');
+            expect(nativeView.viewType, 'corevia-talk/ios_navigation_bar');
             expect(
               nativeView.creationParams,
               containsPair('title', channel.name),
@@ -11969,7 +11969,7 @@ void main() {
                     find.byWidgetPredicate(
                       (widget) =>
                           widget is UiKitView &&
-                          widget.viewType == 'buzz/ios_navigation_bar',
+                          widget.viewType == 'corevia-talk/ios_navigation_bar',
                     ),
                   )
                   .width,
@@ -12226,7 +12226,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('secret'), findsOneWidget);
-      expect(find.byIcon(BuzzIcons.lock), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.lock), findsOneWidget);
     });
   });
 
@@ -13220,11 +13220,11 @@ void main() {
         'push tap highlights its exact reply after newer arrivals: $variant',
         (tester) async {
           pendingPushNotificationLink.value = null;
-          installBuzzPushMethodHandler();
+          installCoreviaTalkPushMethodHandler();
           addTearDown(() {
             pendingPushNotificationLink.value = null;
           });
-          const channel = MethodChannel('buzz/push');
+          const channel = MethodChannel('corevia-talk/push');
           await TestDefaultBinaryMessengerBinding
               .instance
               .defaultBinaryMessenger
@@ -16025,7 +16025,7 @@ void main() {
       );
       nativeView.onPlatformViewCreated!(42);
       await tester.pump();
-      const nativeChannel = MethodChannel('buzz/jump_to_latest_glass/42');
+      const nativeChannel = MethodChannel('corevia-talk/jump_to_latest_glass/42');
       await tester.binding.defaultBinaryMessenger.handlePlatformMessage(
         nativeChannel.name,
         nativeChannel.codec.encodeMethodCall(const MethodCall('pressed')),
@@ -16618,7 +16618,7 @@ void main() {
         expect(
           find.descendant(
             of: find.byKey(const ValueKey('thread-jump-to-latest')),
-            matching: find.byIcon(BuzzIcons.arrowDown),
+            matching: find.byIcon(CoreviaTalkIcons.arrowDown),
           ),
           findsOneWidget,
         );

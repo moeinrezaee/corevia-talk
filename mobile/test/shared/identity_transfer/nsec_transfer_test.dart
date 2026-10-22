@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:buzz/shared/community/community.dart';
-import 'package:buzz/shared/hosted/account_identity_store.dart';
-import 'package:buzz/shared/identity_transfer/nsec_transfer.dart';
-import 'package:buzz/shared/security/sensitive_action_authorizer.dart';
+import 'package:corevia_talk/shared/community/community.dart';
+import 'package:corevia_talk/shared/hosted/account_identity_store.dart';
+import 'package:corevia_talk/shared/identity_transfer/nsec_transfer.dart';
+import 'package:corevia_talk/shared/security/sensitive_action_authorizer.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +19,7 @@ void main() {
       'native $platform import validates text and preserves cancellation/error',
       () async {
         debugDefaultTargetPlatformOverride = platform;
-        const channel = MethodChannel('buzz/identity_file');
+        const channel = MethodChannel('corevia-talk/identity_file');
         final messenger =
             TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
         addTearDown(() {
@@ -118,7 +118,7 @@ void main() {
       // Continue through the real share coordinator; only native boundaries
       // are synthetic here. Native tests assert the file's protection class.
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
-      const channel = MethodChannel('buzz/identity_file');
+      const channel = MethodChannel('corevia-talk/identity_file');
       const shareChannel = MethodChannel('dev.fluttercommunity.plus/share');
       final messenger =
           TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
@@ -136,8 +136,8 @@ void main() {
         expect(call.method, 'prepareExport');
         expect(call.arguments, {'text': '${keys.nsec}\n'});
         if (failPrepare) throw PlatformException(code: 'export_failed');
-        final directory = await root.createTemp('buzz-identity-');
-        prepared = File('${directory.path}/buzz-identity.nsec');
+        final directory = await root.createTemp('corevia-talk-identity-');
+        prepared = File('${directory.path}/corevia-talk-identity.nsec');
         await prepared!.writeAsString('${keys.nsec}\n');
         return prepared!.path;
       });

@@ -8,7 +8,7 @@ import '../../../shared/me/me_sync.dart';
 import '../../../shared/profile/user_cache_provider.dart';
 import '../../../shared/relay/relay.dart';
 import '../../../shared/theme/theme.dart';
-import '../../../shared/theme/buzz_icons.dart';
+import '../../../shared/theme/corevia_talk_icons.dart';
 import '../../../shared/widgets/avatar_image.dart';
 import '../../../shared/widgets/frosted_app_bar.dart';
 import '../../../shared/widgets/modal_presentation.dart';
@@ -160,7 +160,7 @@ useMeChatAssistant(
         }
         if (resume != 'resume') return;
       } else {
-        final picked = await showBuzzModalBottomSheet<String>(
+        final picked = await showCoreviaTalkModalBottomSheet<String>(
           context: context,
           title: 'Agent',
           isScrollControlled: true,
@@ -216,7 +216,7 @@ useMeChatAssistant(
             liveRegion: true,
             child: TextButton.icon(
               onPressed: busy.value ? null : choose,
-              icon: const Icon(BuzzIcons.clock),
+              icon: const Icon(CoreviaTalkIcons.clock),
               label: Text('Finish choosing $pendingName'),
             ),
           ),
@@ -240,7 +240,7 @@ useMeChatAssistant(
         isAgent: selected != null,
         backgroundColor: context.controlSurface,
         fallback: selected == null
-            ? const Icon(BuzzIcons.plus, size: 20)
+            ? const Icon(CoreviaTalkIcons.plus, size: 20)
             : Text(
                 profile?.initial ?? (name?.isNotEmpty == true ? name![0] : '?'),
               ),

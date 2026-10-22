@@ -260,7 +260,7 @@ private final class IosNavigationBarView: NSObject, FlutterPlatformView {
   init(frame: CGRect, id: Int64, args: Any?, messenger: FlutterBinaryMessenger, parent: UIViewController?) {
     container = NavigationClipView(frame: frame)
     navigation = UINavigationController(rootViewController: content)
-    channel = FlutterMethodChannel(name: "buzz/ios_navigation_bar/\(id)", binaryMessenger: messenger)
+    channel = FlutterMethodChannel(name: "corevia-talk/ios_navigation_bar/\(id)", binaryMessenger: messenger)
     super.init()
     container.clipsToBounds = true
     container.backgroundColor = .clear

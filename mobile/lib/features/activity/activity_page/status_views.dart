@@ -118,24 +118,24 @@ class _EmptyFilterState extends StatelessWidget {
   Widget build(BuildContext context) {
     if (unreadOnly) {
       return _EmptySurface(
-        icon: BuzzIcons.mailOpen,
+        icon: CoreviaTalkIcons.mailOpen,
         message: tl('No unread messages'),
         detail: tl('Turn off the unread filter to see read messages.'),
       );
     }
     final (icon, message) = switch (filter) {
-      InboxFilter.mention => (BuzzIcons.atSign, tl('No mentions yet')),
-      InboxFilter.thread => (BuzzIcons.messageSquare, tl('No thread replies yet')),
+      InboxFilter.mention => (CoreviaTalkIcons.atSign, tl('No mentions yet')),
+      InboxFilter.thread => (CoreviaTalkIcons.messageSquare, tl('No thread replies yet')),
       InboxFilter.needsAction => (
-        BuzzIcons.circleAlert,
+        CoreviaTalkIcons.circleAlert,
         tl('Nothing needs your action'),
       ),
       InboxFilter.activity => (
-        BuzzIcons.activity,
+        CoreviaTalkIcons.activity,
         tl('No recent channel activity'),
       ),
-      InboxFilter.agentActivity => (BuzzIcons.bot, tl('No agent updates')),
-      _ => (BuzzIcons.bell, tl('No activity yet')),
+      InboxFilter.agentActivity => (CoreviaTalkIcons.bot, tl('No agent updates')),
+      _ => (CoreviaTalkIcons.bell, tl('No activity yet')),
     };
     return _EmptySurface(icon: icon, message: message);
   }
@@ -153,7 +153,7 @@ class _ErrorView extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            BuzzIcons.triangleAlert,
+            CoreviaTalkIcons.triangleAlert,
             size: Grid.lg,
             color: context.colors.error,
           ),
@@ -167,7 +167,7 @@ class _ErrorView extends StatelessWidget {
           SizedBox(height: Grid.xs),
           FilledButton.icon(
             onPressed: () => unawaited(onRetry()),
-            icon: Icon(BuzzIcons.refreshCcw, size: 16),
+            icon: Icon(CoreviaTalkIcons.refreshCcw, size: 16),
             label: Text(tl('Retry')),
           ),
         ],

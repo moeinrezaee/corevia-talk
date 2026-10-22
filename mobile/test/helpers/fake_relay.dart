@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:buzz/shared/auth/auth_provider.dart';
-import 'package:buzz/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/auth/auth_provider.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/misc.dart';
 import 'package:http/http.dart' as http;

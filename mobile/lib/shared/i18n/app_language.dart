@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../theme/theme_provider.dart' show savedPrefsProvider;
 import 'fa_messages.dart';
 
-const _languageKey = 'buzz_language';
+const _languageKey = 'corevia_talk_language';
 
 /// First strong isolate / pop directional isolate: keeps an interpolated name
 /// or #channel inside a Persian sentence from reordering its neighbours.

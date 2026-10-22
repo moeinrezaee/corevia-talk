@@ -1,28 +1,28 @@
-import 'package:buzz/shared/hosted/hosted_environment.dart';
-import 'package:buzz/features/pairing/pairing_provider.dart';
+import 'package:corevia_talk/shared/hosted/hosted_environment.dart';
+import 'package:corevia_talk/features/pairing/pairing_provider.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channels_provider.dart';
-import 'package:buzz/features/invites/invite_join_provider.dart';
-import 'package:buzz/features/onboarding/self_hosted_entry_sheet.dart';
-import 'package:buzz/features/profile/profile_provider.dart';
-import 'package:buzz/hosted_app_gate.dart';
-import 'package:buzz/shared/hosted/hosted_flow_provider.dart';
-import 'package:buzz/onboarding_app_entry.dart';
-import 'package:buzz/shared/auth/auth.dart';
-import 'package:buzz/shared/deeplink/pending_deep_link_provider.dart';
-import 'package:buzz/shared/hosted/account_identity_store.dart';
-import 'package:buzz/shared/hosted/browser_auth.dart';
-import 'package:buzz/shared/hosted/builderlab_account.dart';
-import 'package:buzz/shared/hosted/hosted_flow.dart';
-import 'package:buzz/shared/hosted/hosted_relay_auth.dart';
-import 'package:buzz/shared/relay/relay_session.dart';
-import 'package:buzz/shared/relay/relay_socket.dart';
-import 'package:buzz/shared/hosted/self_hosted_entry.dart';
-import 'package:buzz/shared/profile/user_profile.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channels_provider.dart';
+import 'package:corevia_talk/features/invites/invite_join_provider.dart';
+import 'package:corevia_talk/features/onboarding/self_hosted_entry_sheet.dart';
+import 'package:corevia_talk/features/profile/profile_provider.dart';
+import 'package:corevia_talk/hosted_app_gate.dart';
+import 'package:corevia_talk/shared/hosted/hosted_flow_provider.dart';
+import 'package:corevia_talk/onboarding_app_entry.dart';
+import 'package:corevia_talk/shared/auth/auth.dart';
+import 'package:corevia_talk/shared/deeplink/pending_deep_link_provider.dart';
+import 'package:corevia_talk/shared/hosted/account_identity_store.dart';
+import 'package:corevia_talk/shared/hosted/browser_auth.dart';
+import 'package:corevia_talk/shared/hosted/builderlab_account.dart';
+import 'package:corevia_talk/shared/hosted/hosted_flow.dart';
+import 'package:corevia_talk/shared/hosted/hosted_relay_auth.dart';
+import 'package:corevia_talk/shared/relay/relay_session.dart';
+import 'package:corevia_talk/shared/relay/relay_socket.dart';
+import 'package:corevia_talk/shared/hosted/self_hosted_entry.dart';
+import 'package:corevia_talk/shared/profile/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -209,7 +209,7 @@ class HostedJourneyFixture {
         'version': 1,
         'suite': {'kem_id': 16, 'kdf_id': 1, 'aead_id': 2},
         'recipient_key_id': 'test-key',
-        'service_namespace': 'buzz',
+        'service_namespace': 'corevia-talk',
         'owner_id': 'journey-owner',
         'backup_id': '12345678-1234-1234-1234-123456789abc',
         'nostr_pubkey': bound,
@@ -223,7 +223,7 @@ class HostedJourneyFixture {
         'stored': true,
         'backup_id': jsonDecode(request.body)['backup_id'],
       };
-    } else if (path.endsWith('/v1/buzz/communities')) {
+    } else if (path.endsWith('/v1/corevia-talk/communities')) {
       final name = jsonDecode(request.body)['name'] as String;
       final created =
           owned
@@ -296,7 +296,7 @@ class HostedJourneyFixture {
   }) async {
     await tester.binding.setSurfaceSize(const Size(440, 1100));
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
-      const MethodChannel('buzz/hosted_hpke'),
+      const MethodChannel('corevia-talk/hosted_hpke'),
       (_) async => {
         'enc': Uint8List.fromList([4, ...List.filled(64, 2)]),
         'ciphertext': Uint8List(48),
@@ -425,7 +425,7 @@ class HostedJourneyFixture {
         .read(pendingDeepLinkProvider.notifier)
         .open(
           Uri(
-            scheme: 'buzz',
+            scheme: 'corevia-talk',
             host: invite ? 'join' : 'add',
             queryParameters: {
               'relay': 'wss://$name.communities.buzz.xyz',
@@ -447,7 +447,7 @@ class HostedJourneyFixture {
     await tester.pump();
     PendingDeepLinkNotifier.debugUriStreamOverride = null;
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
-      const MethodChannel('buzz/hosted_hpke'),
+      const MethodChannel('corevia-talk/hosted_hpke'),
       null,
     );
     await tester.binding.setSurfaceSize(null);

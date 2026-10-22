@@ -1,6 +1,6 @@
 part of '../pairing_page.dart';
 
-// Foregrounds for the fixed Buzz shell artwork, independent of accent choice.
+// Foregrounds for the fixed Corevia Talk shell artwork, independent of accent choice.
 extension _OnboardingColors on BuildContext {
   bool get _onboardingIsDark => Theme.of(this).brightness == Brightness.dark;
   Color get _onboardingInk =>

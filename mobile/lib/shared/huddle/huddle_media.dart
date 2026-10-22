@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'huddle_wire.dart';
 import '../i18n/app_language.dart';
 
-const huddleMediaMethodChannelName = 'buzz/huddle_media';
+const huddleMediaMethodChannelName = 'corevia-talk/huddle_media';
 
 enum HuddleMediaPhase {
   idle,

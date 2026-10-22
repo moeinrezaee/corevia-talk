@@ -16,7 +16,7 @@ import { tl } from "@/shared/i18n/tl";
 /**
  * An external `[text](href)` link with a custom right-click menu.
  *
- * Buzz renders inside a native webview whose default context menu has no
+ * Corevia Talk renders inside a native webview whose default context menu has no
  * useful link actions, so a plain right-click on a link is a no-op. This adds
  * an in-app menu with "Open link" (via the OS opener, matching the anchor's
  * left-click `target="_blank"` behavior) and "Copy link" (the real href, not

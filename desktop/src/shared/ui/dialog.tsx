@@ -105,7 +105,7 @@ const DialogContent = React.forwardRef<
             surface === "default" && "rounded-2xl bg-background p-6 shadow-2xl",
             surface === "none" && "bg-transparent p-0 shadow-none",
             surface === "textured" &&
-              "buzz-card-textured isolate box-border w-full rounded-none border-0 bg-transparent p-[var(--buzz-card-textured-safe-inset)] shadow-none",
+              "corevia-talk-card-textured isolate box-border w-full rounded-none border-0 bg-transparent p-[var(--corevia-talk-card-textured-safe-inset)] shadow-none",
             MODAL_CONTENT_MOTION_CLASS,
             className,
           )}
@@ -121,7 +121,7 @@ const DialogContent = React.forwardRef<
                 // fade; dock the close button at the safe-inset corner so it
                 // stays on the solid center of the texture.
                 surface === "textured"
-                  ? "end-[var(--buzz-card-textured-safe-inset)] top-[var(--buzz-card-textured-safe-inset)] -me-2 -mt-2"
+                  ? "end-[var(--corevia-talk-card-textured-safe-inset)] top-[var(--corevia-talk-card-textured-safe-inset)] -me-2 -mt-2"
                   : "end-4 top-4",
                 closeButtonClassName,
               )}

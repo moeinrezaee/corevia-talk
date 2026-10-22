@@ -28,8 +28,8 @@ export const FA_MESSAGES: Record<string, string> = {
   "Back to feedback": "بازگشت به بازخورد",
   "Back to reports": "بازگشت به گزارش‌ها",
   Bug: "باگ",
-  Buzz: "Buzz",
-  "Buzz admin": "مدیریت Buzz",
+  Corevia Talk: "Corevia Talk",
+  "Corevia Talk admin": "مدیریت Corevia Talk",
   Cancel: "لغو",
   Category: "دسته‌بندی",
   Channel: "کانال",
@@ -72,8 +72,8 @@ export const FA_MESSAGES: Record<string, string> = {
   Praise: "تحسین",
   Product: "محصول",
   Received: "دریافت شد",
-  "Recent product feedback from across Buzz.":
-    "بازخوردهای اخیر محصول از سراسر Buzz.",
+  "Recent product feedback from across Corevia Talk.":
+    "بازخوردهای اخیر محصول از سراسر Corevia Talk.",
   Reload: "بارگذاری مجدد",
   "Report detail": "جزئیات گزارش",
   Reporter: "گزارش‌دهنده",
@@ -81,8 +81,8 @@ export const FA_MESSAGES: Record<string, string> = {
   "Request failed": "درخواست ناموفق بود",
   "Request failed ({0})": "درخواست ناموفق بود ({0})",
   Retry: "تلاش دوباره",
-  "Review reports across every Buzz community.":
-    "گزارش‌های همهٔ انجمن‌های Buzz را بازبینی کنید.",
+  "Review reports across every Corevia Talk community.":
+    "گزارش‌های همهٔ انجمن‌های Corevia Talk را بازبینی کنید.",
   Reviewed: "بازبینی‌شده",
   Save: "ذخیره",
   "Search feedback": "جستجوی بازخورد",

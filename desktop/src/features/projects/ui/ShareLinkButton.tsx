@@ -7,7 +7,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 import { tl } from "@/shared/i18n/tl";
 
 /**
- * Copies a `buzz://` share link for the surrounding entity. Renders nothing
+ * Copies a `corevia-talk://` share link for the surrounding entity. Renders nothing
  * when `link` is null — see `lib/projectShareLinks` for when an entity has no
  * shareable coordinate.
  */

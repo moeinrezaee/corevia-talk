@@ -1,9 +1,9 @@
-import 'package:buzz/shared/hosted/hosted_environment.dart';
-import 'package:buzz/shared/auth/auth_provider.dart';
-import 'package:buzz/shared/community/community.dart';
-import 'package:buzz/shared/community/community_provider.dart';
-import 'package:buzz/shared/community/community_storage.dart';
-import 'package:buzz/shared/hosted/builderlab_account.dart';
+import 'package:corevia_talk/shared/hosted/hosted_environment.dart';
+import 'package:corevia_talk/shared/auth/auth_provider.dart';
+import 'package:corevia_talk/shared/community/community.dart';
+import 'package:corevia_talk/shared/community/community_provider.dart';
+import 'package:corevia_talk/shared/community/community_storage.dart';
+import 'package:corevia_talk/shared/hosted/builderlab_account.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

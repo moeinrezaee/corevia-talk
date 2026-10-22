@@ -43,7 +43,7 @@ class _ChannelLinkMd extends InlineMd {
     final channelName = raw.substring(1);
     final opensChannel = channelId != null && onChannelTap != null;
     final child = _TokenPill(
-      icon: BuzzIcons.hash,
+      icon: CoreviaTalkIcons.hash,
       interactive: opensChannel,
       semanticLabel: opensChannel
           ? tlt('Open channel {0}', [channelName])

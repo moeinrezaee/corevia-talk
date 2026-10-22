@@ -1,10 +1,10 @@
-import 'package:buzz/features/channels/channel_management_provider.dart';
-import 'package:buzz/features/channels/mentions/mention_candidates.dart';
-import 'package:buzz/features/channels/mentions/mention_candidates_provider.dart';
-import 'package:buzz/features/channels/mentions/mention_ranking.dart';
-import 'package:buzz/shared/identity_names/identity_names.dart';
-import 'package:buzz/shared/profile/user_profile.dart';
-import 'package:buzz/shared/utils/string_utils.dart';
+import 'package:corevia_talk/features/channels/channel_management_provider.dart';
+import 'package:corevia_talk/features/channels/mentions/mention_candidates.dart';
+import 'package:corevia_talk/features/channels/mentions/mention_candidates_provider.dart';
+import 'package:corevia_talk/features/channels/mentions/mention_ranking.dart';
+import 'package:corevia_talk/shared/identity_names/identity_names.dart';
+import 'package:corevia_talk/shared/profile/user_profile.dart';
+import 'package:corevia_talk/shared/utils/string_utils.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 String _key(String digit) => digit * 64;

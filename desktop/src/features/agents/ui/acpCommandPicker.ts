@@ -2,7 +2,7 @@ import type { AcpCommandCandidate } from "@/shared/api/acpCommands";
 import type { PersonaDropdownOption } from "./agentConfigOptions";
 import { tl } from "@/shared/i18n/tl";
 
-export const DEFAULT_ACP_COMMAND_VALUE = "buzz-acp";
+export const DEFAULT_ACP_COMMAND_VALUE = "corevia-talk-acp";
 
 export function acpCommandPickerState(
   command: string,
@@ -12,7 +12,7 @@ export function acpCommandPickerState(
   selectValue: string;
 } {
   const options: PersonaDropdownOption[] = [
-    { label: tl("Buzz ACP (default)"), value: DEFAULT_ACP_COMMAND_VALUE },
+    { label: tl("Corevia Talk ACP (default)"), value: DEFAULT_ACP_COMMAND_VALUE },
     ...candidates.map((candidate) => ({
       label: candidate.command,
       value: candidate.command,

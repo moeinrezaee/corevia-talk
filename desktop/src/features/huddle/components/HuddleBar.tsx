@@ -72,7 +72,7 @@ const HUDDLE_DRAWER_EXIT_MS = 260;
 const HUDDLE_STATE_FALLBACK_INTERVAL_MS = 30_000;
 const HUDDLE_MODEL_STATUS_INTERVAL_MS = 10_000;
 const HUDDLE_REACTION_NAME_MAX = 48;
-const HEADPHONES_HINT_SEEN_STORAGE_KEY = "buzz.huddle.headphones-hint-seen";
+const HEADPHONES_HINT_SEEN_STORAGE_KEY = "corevia-talk.huddle.headphones-hint-seen";
 
 function hasSeenHeadphonesHint() {
   return window.localStorage.getItem(HEADPHONES_HINT_SEEN_STORAGE_KEY) === "1";
@@ -578,7 +578,7 @@ export function HuddleBar({
       aria-hidden={isDrawerClosing}
       data-state={isDrawerClosing ? "closing" : "open"}
       className={cn(
-        "buzz-huddle-drawer grid min-w-0 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 px-5 py-3 text-foreground",
+        "corevia-talk-huddle-drawer grid min-w-0 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 px-5 py-3 text-foreground",
         isDrawerClosing && "pointer-events-none",
         className,
       )}
@@ -774,7 +774,7 @@ export function HuddleBar({
                     aria-label={tl("Emoji reactions")}
                     aria-pressed={isReactionPickerOpen}
                     className={cn(
-                      "buzz-huddle-control-button h-12 w-12 shrink-0 rounded-md",
+                      "corevia-talk-huddle-control-button h-12 w-12 shrink-0 rounded-md",
                       isReactionPickerOpen && "text-foreground",
                     )}
                     size="icon"
@@ -785,7 +785,7 @@ export function HuddleBar({
                   </Button>
                 </PopoverTrigger>
               </TooltipTrigger>
-              <TooltipContent className="buzz-huddle-tooltip" side="top">
+              <TooltipContent className="corevia-talk-huddle-tooltip" side="top">
                 {tl("Emoji reactions")}
               </TooltipContent>
             </Tooltip>
@@ -808,7 +808,7 @@ export function HuddleBar({
                     : tl("Start transcript")
                 }
                 aria-pressed={transcriptionEnabled}
-                className="buzz-huddle-control-button h-12 w-12 shrink-0 rounded-md"
+                className="corevia-talk-huddle-control-button h-12 w-12 shrink-0 rounded-md"
                 onClick={() => void handleToggleTranscript()}
                 size="icon"
                 type="button"
@@ -817,7 +817,7 @@ export function HuddleBar({
                 <Captions className="h-4 w-4" />
               </Button>
             </TooltipTrigger>
-            <TooltipContent className="buzz-huddle-tooltip" side="top">
+            <TooltipContent className="corevia-talk-huddle-tooltip" side="top">
               {transcriptionEnabled
                 ? tl("Stop transcript")
                 : tl("Start transcript")}
@@ -828,7 +828,7 @@ export function HuddleBar({
             <TooltipTrigger asChild>
               <Button
                 aria-label={tl("Add agent to huddle")}
-                className="buzz-huddle-control-button h-12 w-12 shrink-0 rounded-md"
+                className="corevia-talk-huddle-control-button h-12 w-12 shrink-0 rounded-md"
                 onClick={() => setShowAddAgent(true)}
                 size="icon"
                 type="button"
@@ -837,7 +837,7 @@ export function HuddleBar({
                 <Bot className="h-4 w-4" />
               </Button>
             </TooltipTrigger>
-            <TooltipContent className="buzz-huddle-tooltip" side="top">
+            <TooltipContent className="corevia-talk-huddle-tooltip" side="top">
               {tl("Add agent")}
             </TooltipContent>
           </Tooltip>
@@ -850,7 +850,7 @@ export function HuddleBar({
             <TooltipTrigger asChild>
               <Button
                 aria-label={tl("Open huddle in a new window")}
-                className="buzz-huddle-control-button h-12 w-12 shrink-0 rounded-md"
+                className="corevia-talk-huddle-control-button h-12 w-12 shrink-0 rounded-md"
                 onClick={() => void handleOpenHuddleWindow()}
                 size="icon"
                 type="button"
@@ -859,7 +859,7 @@ export function HuddleBar({
                 <PictureInPicture2 className="h-4 w-4" />
               </Button>
             </TooltipTrigger>
-            <TooltipContent className="buzz-huddle-tooltip" side="top">
+            <TooltipContent className="corevia-talk-huddle-tooltip" side="top">
               {tl("Open huddle window")}
             </TooltipContent>
           </Tooltip>
@@ -868,7 +868,7 @@ export function HuddleBar({
             <TooltipTrigger asChild>
               <Button
                 aria-label={tl("Return huddle to drawer")}
-                className="buzz-huddle-control-button h-12 w-12 shrink-0 rounded-md"
+                className="corevia-talk-huddle-control-button h-12 w-12 shrink-0 rounded-md"
                 onClick={() => void handleReturnToDrawer()}
                 size="icon"
                 type="button"
@@ -877,7 +877,7 @@ export function HuddleBar({
                 <PictureInPicture className="h-4 w-4" />
               </Button>
             </TooltipTrigger>
-            <TooltipContent className="buzz-huddle-tooltip" side="top">
+            <TooltipContent className="corevia-talk-huddle-tooltip" side="top">
               {tl("Return huddle to drawer")}
             </TooltipContent>
           </Tooltip>

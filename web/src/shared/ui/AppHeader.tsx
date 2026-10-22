@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
-import buzzAppIcon from "@/assets/app-icon@3x.png";
+import coreviaTalkAppIcon from "@/assets/app-icon@3x.png";
 import { LanguageSwitch } from "@/shared/i18n/LanguageSwitch";
 import { ThemeToggle } from "@/shared/theme/ThemeToggle";
 
@@ -13,9 +13,9 @@ export function AppHeader() {
           className="h-6 w-6 overflow-hidden bg-black"
           style={{ borderRadius: "22.37%" }}
         >
-          <img alt="" className="h-full w-full" src={buzzAppIcon} />
+          <img alt="" className="h-full w-full" src={coreviaTalkAppIcon} />
         </span>
-        Buzz
+        Corevia Talk
       </Link>
       <div className="flex items-center gap-2">
         <LanguageSwitch />

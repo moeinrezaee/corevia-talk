@@ -33,14 +33,14 @@ export class TwoRelayHarness {
 
   static async create(relays: readonly RelaySpec[]) {
     return new TwoRelayHarness(
-      await mkdtemp(join(tmpdir(), "buzz-ae-e2e-")),
+      await mkdtemp(join(tmpdir(), "corevia-talk-ae-e2e-")),
       relays,
     );
   }
 
-  async startRelays(binary = process.env.BUZZ_E2E_RELAY_BIN) {
+  async startRelays(binary = process.env.COREVIA_TALK_E2E_RELAY_BIN) {
     if (!binary)
-      throw new Error("BUZZ_E2E_RELAY_BIN is required for the live gate");
+      throw new Error("COREVIA_TALK_E2E_RELAY_BIN is required for the live gate");
     await Promise.all(
       this.relays.map((relay) => this.startRelay(binary, relay)),
     );
@@ -77,9 +77,9 @@ export class TwoRelayHarness {
   }
 
   /** Start a fresh process for a relay spec on its original ports. */
-  async restartRelay(name: string, binary = process.env.BUZZ_E2E_RELAY_BIN) {
+  async restartRelay(name: string, binary = process.env.COREVIA_TALK_E2E_RELAY_BIN) {
     if (!binary)
-      throw new Error("BUZZ_E2E_RELAY_BIN is required for the live gate");
+      throw new Error("COREVIA_TALK_E2E_RELAY_BIN is required for the live gate");
     const relay = this.relays.find((candidate) => candidate.name === name);
     if (!relay) throw new Error(`no relay spec named ${name}`);
     await this.startRelay(binary, relay);
@@ -91,17 +91,17 @@ export class TwoRelayHarness {
     privateKey: string,
     extraEnv: NodeJS.ProcessEnv = {},
   ) {
-    const binary = process.env.BUZZ_E2E_ACP_BIN;
+    const binary = process.env.COREVIA_TALK_E2E_ACP_BIN;
     if (!binary)
-      throw new Error("BUZZ_E2E_ACP_BIN is required for the live gate");
+      throw new Error("COREVIA_TALK_E2E_ACP_BIN is required for the live gate");
     return this.spawnOwned(name, binary, [], {
-      BUZZ_RELAY_URL: relayWsUrl,
-      BUZZ_PRIVATE_KEY: privateKey,
-      BUZZ_AUTH_TAG: "",
-      BUZZ_ACP_LAZY_POOL: "true",
-      BUZZ_ACP_AGENT_COMMAND: process.execPath,
-      BUZZ_ACP_AGENT_ARGS: resolve("tests/e2e/fixtures/fake-acp-agent.mjs"),
-      BUZZ_E2E_CLI_BIN: process.env.BUZZ_E2E_CLI_BIN,
+      COREVIA_TALK_RELAY_URL: relayWsUrl,
+      COREVIA_TALK_PRIVATE_KEY: privateKey,
+      COREVIA_TALK_AUTH_TAG: "",
+      COREVIA_TALK_ACP_LAZY_POOL: "true",
+      COREVIA_TALK_ACP_AGENT_COMMAND: process.execPath,
+      COREVIA_TALK_ACP_AGENT_ARGS: resolve("tests/e2e/fixtures/fake-acp-agent.mjs"),
+      COREVIA_TALK_E2E_CLI_BIN: process.env.COREVIA_TALK_E2E_CLI_BIN,
       ...extraEnv,
     });
   }
@@ -157,12 +157,12 @@ export class TwoRelayHarness {
       DATABASE_URL: relay.databaseUrl,
       REDIS_URL: relay.redisUrl,
       RELAY_URL: `ws://127.0.0.1:${relay.ports.main}`,
-      BUZZ_BIND_ADDR: `127.0.0.1:${relay.ports.main}`,
-      BUZZ_HEALTH_PORT: String(relay.ports.health),
-      BUZZ_METRICS_PORT: String(relay.ports.metrics),
-      BUZZ_REQUIRE_AUTH_TOKEN: "false",
-      BUZZ_RECONCILE_CHANNELS: "true",
-      BUZZ_AUTO_MIGRATE: "true",
+      COREVIA_TALK_BIND_ADDR: `127.0.0.1:${relay.ports.main}`,
+      COREVIA_TALK_HEALTH_PORT: String(relay.ports.health),
+      COREVIA_TALK_METRICS_PORT: String(relay.ports.metrics),
+      COREVIA_TALK_REQUIRE_AUTH_TOKEN: "false",
+      COREVIA_TALK_RECONCILE_CHANNELS: "true",
+      COREVIA_TALK_AUTO_MIGRATE: "true",
     });
     await this.waitForHealth(relay, child);
   }

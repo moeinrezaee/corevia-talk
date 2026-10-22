@@ -102,7 +102,7 @@ function RuntimeReadinessIndicator({
   return (
     <span
       aria-hidden="true"
-      className="pointer-events-none absolute end-8 top-8 flex h-8 w-8 items-center justify-center rounded-full border border-[var(--buzz-welcome-chartreuse)] bg-[var(--buzz-welcome-chartreuse)]"
+      className="pointer-events-none absolute end-8 top-8 flex h-8 w-8 items-center justify-center rounded-full border border-[var(--corevia-talk-welcome-chartreuse)] bg-[var(--corevia-talk-welcome-chartreuse)]"
       data-testid={`onboarding-runtime-check-${runtime.id}`}
     >
       <Check
@@ -258,7 +258,7 @@ function RuntimeStatus({
       return (
         <Button
           aria-label={tlt("Check {0} again", [runtime.label])}
-          className="buzz-onboarding-runtime-setup h-5 rounded-md bg-[var(--buzz-welcome-chartreuse)]/30 px-2.5 text-xs font-medium text-foreground hover:bg-[var(--buzz-welcome-chartreuse)]/40"
+          className="corevia-talk-onboarding-runtime-setup h-5 rounded-md bg-[var(--corevia-talk-welcome-chartreuse)]/30 px-2.5 text-xs font-medium text-foreground hover:bg-[var(--corevia-talk-welcome-chartreuse)]/40"
           data-testid={`onboarding-runtime-recheck-${runtime.id}`}
           onClick={() => void runtimesQuery.forceRefresh()}
           type="button"
@@ -278,7 +278,7 @@ function RuntimeStatus({
     return (
       <Button
         aria-label={tlt("Check {0} again", [runtime.label])}
-        className="buzz-onboarding-runtime-setup h-5 rounded-md bg-[var(--buzz-welcome-chartreuse)]/30 px-2.5 text-xs font-medium text-foreground hover:bg-[var(--buzz-welcome-chartreuse)]/40"
+        className="corevia-talk-onboarding-runtime-setup h-5 rounded-md bg-[var(--corevia-talk-welcome-chartreuse)]/30 px-2.5 text-xs font-medium text-foreground hover:bg-[var(--corevia-talk-welcome-chartreuse)]/40"
         disabled={runtimesQuery.isFetching}
         onClick={() => void runtimesQuery.forceRefresh()}
         type="button"
@@ -294,7 +294,7 @@ function RuntimeStatus({
     return (
       <Button
         aria-label={`${installError ? "Retry installing" : "Install"} ${runtime.label}`}
-        className="buzz-onboarding-runtime-setup h-5 rounded-md bg-[var(--buzz-welcome-chartreuse)]/30 px-2.5 text-xs font-medium text-foreground hover:bg-[var(--buzz-welcome-chartreuse)]/40"
+        className="corevia-talk-onboarding-runtime-setup h-5 rounded-md bg-[var(--corevia-talk-welcome-chartreuse)]/30 px-2.5 text-xs font-medium text-foreground hover:bg-[var(--corevia-talk-welcome-chartreuse)]/40"
         data-testid={`onboarding-runtime-install-${runtime.id}`}
         onClick={onInstall}
         type="button"
@@ -308,7 +308,7 @@ function RuntimeStatus({
   return (
     <Button
       aria-label={tlt("View {0} install instructions", [runtime.label])}
-      className="buzz-onboarding-runtime-setup h-5 rounded-md bg-[var(--buzz-welcome-chartreuse)]/30 px-2.5 text-xs font-medium text-foreground hover:bg-[var(--buzz-welcome-chartreuse)]/40"
+      className="corevia-talk-onboarding-runtime-setup h-5 rounded-md bg-[var(--corevia-talk-welcome-chartreuse)]/30 px-2.5 text-xs font-medium text-foreground hover:bg-[var(--corevia-talk-welcome-chartreuse)]/40"
       data-testid={`onboarding-runtime-instructions-${runtime.id}`}
       onClick={() => void openUrl(runtime.installInstructionsUrl)}
       type="button"
@@ -811,7 +811,7 @@ function RuntimeProvidersSection({
                     <RuntimeCard
                       installResults={installResults}
                       isRecommended={
-                        method === "api" && runtime.id === "buzz-agent"
+                        method === "api" && runtime.id === "corevia-talk-agent"
                       }
                       onInstallResultsChange={onInstallResultsChange}
                       onOpenDetails={() => onOpenDetails(runtime.id)}
@@ -868,7 +868,7 @@ function RuntimeSetupGuide({
   const subscriptionDetail =
     method === "subscription"
       ? {
-          description: `Buzz will open a sign-in window for ${label}.`,
+          description: `Corevia Talk will open a sign-in window for ${label}.`,
           title: SUBSCRIPTION_NAMES[runtime.id] ?? label,
         }
       : undefined;
@@ -1080,7 +1080,7 @@ function SetupStepContent({
     setLocalDirection("forward");
 
     if (nextMethod === "api") {
-      actions.next(["buzz-agent"], "method");
+      actions.next(["corevia-talk-agent"], "method");
       return;
     }
 
@@ -1089,7 +1089,7 @@ function SetupStepContent({
 
   function openRuntime(runtimeId: string) {
     setLocalDirection("forward");
-    if (runtimeId === "buzz-agent") {
+    if (runtimeId === "corevia-talk-agent") {
       actions.next([runtimeId]);
       return;
     }

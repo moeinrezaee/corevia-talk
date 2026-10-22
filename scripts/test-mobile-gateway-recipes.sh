@@ -41,15 +41,15 @@ export OPEN_LOG="$fixture/open-calls"
 export SELECTED_DEVELOPER_DIR="$fixture/Xcode 27.app/Contents/Developer"
 export OPEN_FAIL=0
 mkdir -p "$SELECTED_DEVELOPER_DIR" "$SELECTED_DEVELOPER_DIR/../Applications/DeviceHub.app"
-unset BUZZ_PUSH_GATEWAY_URL
+unset COREVIA_TALK_PUSH_GATEWAY_URL
 
 for recipe in mobile-dev mobile-build-android; do
   for mode in omitted supplied; do
-    unset BUZZ_PUSH_GATEWAY_URL
+    unset COREVIA_TALK_PUSH_GATEWAY_URL
     if [[ "$mode" == supplied ]]; then
       # A space catches accidental splitting. The build gate validates URLs;
       # this test checks exact argument forwarding.
-      export BUZZ_PUSH_GATEWAY_URL='https://push.example/value with space'
+      export COREVIA_TALK_PUSH_GATEWAY_URL='https://push.example/value with space'
     fi
     (cd "$fixture" && /bin/bash "$fixture/$recipe")
     if [[ "$recipe" == mobile-dev ]]; then
@@ -58,17 +58,17 @@ for recipe in mobile-dev mobile-build-android; do
       printf '%s\n' build apk --debug --no-pub > "$fixture/expected"
     fi
     if [[ "$mode" == supplied ]]; then
-      printf '%s\n' "--dart-define=BUZZ_PUSH_GATEWAY_URL=$BUZZ_PUSH_GATEWAY_URL" >> "$fixture/expected"
+      printf '%s\n' "--dart-define=COREVIA_TALK_PUSH_GATEWAY_URL=$COREVIA_TALK_PUSH_GATEWAY_URL" >> "$fixture/expected"
     fi
     diff -u "$fixture/expected" "$CALL_LOG"
     printf 'PASS %s %s\n' "$recipe" "$mode"
   done
 done
 
-unset BUZZ_PUSH_GATEWAY_URL
-printf '%s\n' 'BUZZ_PUSH_GATEWAY_URL = https:/$()/push.example' > "$fixture/mobile/ios/Flutter/AppOverrides.xcconfig"
+unset COREVIA_TALK_PUSH_GATEWAY_URL
+printf '%s\n' 'COREVIA_TALK_PUSH_GATEWAY_URL = https:/$()/push.example' > "$fixture/mobile/ios/Flutter/AppOverrides.xcconfig"
 (cd "$fixture" && /bin/bash "$fixture/mobile-dev")
-printf '%s\n' run '--dart-define=BUZZ_PUSH_GATEWAY_URL=https://push.example' > "$fixture/expected"
+printf '%s\n' run '--dart-define=COREVIA_TALK_PUSH_GATEWAY_URL=https://push.example' > "$fixture/expected"
 diff -u "$fixture/expected" "$CALL_LOG"
 printf 'PASS mobile-dev Xcode override\n'
 

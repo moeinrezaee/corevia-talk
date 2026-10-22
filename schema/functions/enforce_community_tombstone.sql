@@ -1,8 +1,8 @@
 CREATE FUNCTION enforce_community_tombstone() RETURNS TRIGGER
 LANGUAGE plpgsql AS $$
 DECLARE
-    executor_community TEXT := current_setting('buzz.deletion_executor_community', true);
-    executor_generation TEXT := current_setting('buzz.deletion_fence_generation', true);
+    executor_community TEXT := current_setting('corevia_talk.deletion_executor_community', true);
+    executor_generation TEXT := current_setting('corevia_talk.deletion_fence_generation', true);
     expected_generation BIGINT;
 BEGIN
     IF TG_OP = 'DELETE' THEN

@@ -9,11 +9,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image/image.dart' as image;
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/relay/relay.dart';
 import '../../shared/theme/theme.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../shared/widgets/ios_glass_navigation_button.dart';
 import 'camera_disposal_barrier.dart';
 import '../../shared/i18n/app_language.dart';
@@ -435,10 +435,10 @@ class ImageAvatarCapture extends HookConsumerWidget {
                             )
                           : Center(
                               child: isInitializing.value
-                                  ? BuzzLoadingIndicator(
+                                  ? CoreviaTalkLoadingIndicator(
                                       semanticLabel: tl('Starting camera'),
                                     )
-                                  : const Icon(BuzzIcons.cameraOff, size: 32),
+                                  : const Icon(CoreviaTalkIcons.cameraOff, size: 32),
                             ),
                     ),
                   ),
@@ -497,8 +497,8 @@ class ImageAvatarCapture extends HookConsumerWidget {
                               ),
                               width: sideWidth,
                               icon: isClosing.value
-                                  ? BuzzIcons.camera
-                                  : BuzzIcons.x,
+                                  ? CoreviaTalkIcons.camera
+                                  : CoreviaTalkIcons.x,
                               iosIcon: isClosing.value
                                   ? IosGlassNavigationIcon.camera
                                   : IosGlassNavigationIcon.close,
@@ -572,8 +572,8 @@ class ImageAvatarCapture extends HookConsumerWidget {
                               ),
                               width: sideWidth,
                               icon: isClosing.value
-                                  ? BuzzIcons.images
-                                  : BuzzIcons.switchCamera,
+                                  ? CoreviaTalkIcons.images
+                                  : CoreviaTalkIcons.switchCamera,
                               iosIcon: isClosing.value
                                   ? IosGlassNavigationIcon.photoLibrary
                                   : IosGlassNavigationIcon.rotateCamera,

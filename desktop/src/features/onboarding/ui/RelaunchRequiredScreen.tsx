@@ -5,8 +5,8 @@ export function RelaunchRequiredScreen() {
   return (
     <RecoveryScreen
       testId="relaunch-required"
-      title={tl("Restart Buzz to finish recovery")}
-      body="Your identity was updated. Buzz needs to restart so syncing and agents run under it."
+      title={tl("Restart Corevia Talk to finish recovery")}
+      body="Your identity was updated. Corevia Talk needs to restart so syncing and agents run under it."
     />
   );
 }

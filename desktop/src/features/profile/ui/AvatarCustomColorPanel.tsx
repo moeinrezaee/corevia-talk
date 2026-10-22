@@ -233,7 +233,7 @@ export function AvatarCustomColorPanel({
         aria-valuemin={0}
         aria-valuenow={hue}
         className={cn(
-          "buzz-avatar-hue-scrubber relative w-full cursor-pointer select-none rounded-full touch-none",
+          "corevia-talk-avatar-hue-scrubber relative w-full cursor-pointer select-none rounded-full touch-none",
           compact ? "mt-2 h-8" : "mt-3 h-10",
         )}
         data-testid={`${testIdPrefix}-custom-color-hue`}

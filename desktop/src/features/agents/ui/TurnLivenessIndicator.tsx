@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from "motion/react";
 
 import { cn } from "@/shared/lib/cn";
-import { FuzzyLogo } from "@/shared/ui/buzz-logo/FuzzyLogo";
+import { FuzzyLogo } from "@/shared/ui/corevia-talk-logo/FuzzyLogo";
 import { useTranscriptAnimationEnabled } from "./transcriptAnimationPreference";
 import { tl } from "@/shared/i18n/tl";
 

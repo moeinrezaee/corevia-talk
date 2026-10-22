@@ -7,11 +7,11 @@ import 'package:http/http.dart' as http;
 import 'package:http/testing.dart' as http_testing;
 import 'package:nostr/nostr.dart' as nostr;
 import 'package:pointycastle/digests/sha256.dart';
-import 'package:buzz/features/age_gate/age_signal_provider.dart';
-import 'package:buzz/features/channels/agent_activity/observer_subscription.dart';
-import 'package:buzz/features/channels/agent_activity/observer_models.dart';
-import 'package:buzz/shared/auth/auth_provider.dart';
-import 'package:buzz/shared/relay/relay.dart';
+import 'package:corevia_talk/features/age_gate/age_signal_provider.dart';
+import 'package:corevia_talk/features/channels/agent_activity/observer_subscription.dart';
+import 'package:corevia_talk/features/channels/agent_activity/observer_models.dart';
+import 'package:corevia_talk/shared/auth/auth_provider.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
 
 void main() {
   test(

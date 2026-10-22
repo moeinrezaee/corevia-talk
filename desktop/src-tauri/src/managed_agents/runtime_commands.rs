@@ -649,7 +649,7 @@ mod tests {
                 "pubkey": "{}",
                 "name": "pin-test",
                 "relay_url": "{relay_url}",
-                "acp_command": "buzz-acp",
+                "acp_command": "corevia-talk-acp",
                 "agent_command": "goose",
                 "agent_args": [],
                 "mcp_command": "",

@@ -46,7 +46,7 @@ export function fromRawPersona(persona: RawPersona): AgentPersona {
     avatarUrl: persona.avatar_url,
     description: persona.description ?? null,
     systemPrompt: persona.system_prompt,
-    acpCommand: persona.acp_command ?? "buzz-acp",
+    acpCommand: persona.acp_command ?? "corevia-talk-acp",
     runtime: persona.runtime ?? null,
     model: persona.model ?? null,
     provider: persona.provider ?? null,
@@ -457,7 +457,7 @@ export async function previewAgentSnapshotImport(
 }
 
 /**
- * Import a `buzz-agent-snapshot v1` file as a brand-new agent with fresh
+ * Import a `corevia-talk-agent-snapshot v1` file as a brand-new agent with fresh
  * keys. Returns a structured result describing what was created and whether
  * memory restoration was complete.
  */

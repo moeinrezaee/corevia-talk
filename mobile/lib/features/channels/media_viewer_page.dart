@@ -9,13 +9,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../shared/relay/relay.dart';
 import '../../shared/theme/theme.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../shared/widgets/concentric_sheet_surface.dart';
 import '../../shared/widgets/page_indicator.dart';
 import '../../shared/widgets/ios_glass_navigation_button.dart';
@@ -557,7 +557,7 @@ class MediaImageViewerPage extends HookConsumerWidget {
                                                 message: tl(
                                                   'Failed to load image',
                                                 ),
-                                                icon: BuzzIcons.imageOff,
+                                                icon: CoreviaTalkIcons.imageOff,
                                               ),
                                         ),
                                       ),

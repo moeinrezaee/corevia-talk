@@ -438,7 +438,7 @@ fn stage_provider(
     binary: &Path,
 ) -> Result<(tempfile::TempDir, PathBuf, String, std::fs::File), String> {
     let directory = tempfile::Builder::new()
-        .prefix("buzz-provider-")
+        .prefix("corevia-talk-provider-")
         .tempdir()
         .map_err(|error| format!("failed to create provider staging directory: {error}"))?;
     let suffix = if cfg!(windows) { ".exe" } else { "" };
@@ -571,7 +571,7 @@ pub fn validate_provider_config(config: &serde_json::Value) -> Result<(), String
 /// Windows leaves the executable/script extension, which is not part of the
 /// provider id.
 fn provider_id_from_filename(name: &str) -> Option<&str> {
-    let raw = name.strip_prefix("buzz-backend-")?;
+    let raw = name.strip_prefix("corevia-talk-backend-")?;
     let id = [".exe", ".bat", ".cmd"]
         .into_iter()
         .find_map(|extension| {
@@ -600,7 +600,7 @@ fn executable_search_dirs() -> Vec<PathBuf> {
     }
 
     // Also include ~/.local/bin — the conventional location for user-installed
-    // Buzz extension binaries (symlinks created by install scripts).
+    // Corevia Talk extension binaries (symlinks created by install scripts).
     if let Some(home) = dirs::home_dir() {
         let local_bin = home.join(".local").join("bin");
         if !dirs.contains(&local_bin) {
@@ -631,7 +631,7 @@ pub(crate) fn is_portable_acp_command(command: &str) -> bool {
     }
     command.len() <= 255
         && command
-            .strip_prefix("buzz-")
+            .strip_prefix("corevia-talk-")
             .and_then(|name| name.strip_suffix("-acp"))
             .is_some_and(|name| {
                 !name.is_empty()
@@ -644,7 +644,7 @@ pub(crate) fn is_portable_acp_command(command: &str) -> bool {
 /// Reject nonportable commands at foreign catalog and snapshot boundaries.
 pub(crate) fn validate_portable_acp_command(command: Option<&str>) -> Result<(), String> {
     if command.is_some_and(|command| !is_portable_acp_command(command)) {
-        return Err("ACP command must be buzz-acp or a portable buzz-*-acp alias".to_string());
+        return Err("ACP command must be corevia-talk-acp or a portable corevia-talk-*-acp alias".to_string());
     }
     Ok(())
 }
@@ -657,7 +657,7 @@ fn acp_command_from_filename(name: &str, require_windows_extension: bool) -> Opt
     (command != super::DEFAULT_ACP_COMMAND && is_portable_acp_command(command)).then_some(command)
 }
 
-/// Enumerate PATH for buzz-backend-* executables. Returns (id, path) pairs.
+/// Enumerate PATH for corevia-talk-backend-* executables. Returns (id, path) pairs.
 /// Only includes files that are executable. Does NOT execute any binaries.
 ///
 /// On macOS, GUI apps inherit a minimal PATH from launchd (`/usr/bin:/bin:/usr/sbin:/sbin`)
@@ -665,7 +665,7 @@ fn acp_command_from_filename(name: &str, require_windows_extension: bool) -> Opt
 /// We augment the search with those directories so bundled and user-installed providers
 /// are always discovered regardless of how the desktop was launched.
 pub fn discover_provider_candidates() -> Vec<(String, PathBuf)> {
-    let prefix = "buzz-backend-";
+    let prefix = "corevia-talk-backend-";
     let mut seen = std::collections::HashSet::new();
     let mut results = Vec::new();
 
@@ -688,8 +688,8 @@ pub fn discover_provider_candidates() -> Vec<(String, PathBuf)> {
     results
 }
 
-/// Enumerate executable `buzz-*-acp` drop-in wrappers without running them.
-/// The stock `buzz-acp` command is deliberately excluded because it has no
+/// Enumerate executable `corevia-talk-*-acp` drop-in wrappers without running them.
+/// The stock `corevia-talk-acp` command is deliberately excluded because it has no
 /// namespaced middle segment and is always the editor's built-in default.
 ///
 /// Candidate names come from the normal executable search directories, but
@@ -739,7 +739,7 @@ fn discover_acp_command_candidates_in(
 /// 3. Returns the canonical path of the discovered binary
 ///
 /// All deploy, start, and create paths MUST use this instead of raw
-/// `resolve_command(format!("buzz-backend-{id}"))` to prevent a compromised
+/// `resolve_command(format!("corevia-talk-backend-{id}"))` to prevent a compromised
 /// frontend/IPC caller from steering execution to an arbitrary binary.
 pub fn resolve_provider_binary(provider_id: &str) -> Result<PathBuf, String> {
     // Reject IDs that could be path components or shell metacharacters.
@@ -765,7 +765,7 @@ pub fn resolve_provider_binary(provider_id: &str) -> Result<PathBuf, String> {
             .canonicalize()
             .map_err(|e| format!("provider binary not accessible: {e}")),
         None => Err(format!(
-            "provider 'buzz-backend-{provider_id}' not found on PATH"
+            "provider 'corevia-talk-backend-{provider_id}' not found on PATH"
         )),
     }
 }
@@ -793,7 +793,7 @@ pub struct BackendProviderInfo {
     pub binary_path: String,
 }
 
-/// A PATH-discovered drop-in wrapper for the stock `buzz-acp` harness.
+/// A PATH-discovered drop-in wrapper for the stock `corevia-talk-acp` harness.
 #[derive(Debug, serde::Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AcpCommandCandidate {

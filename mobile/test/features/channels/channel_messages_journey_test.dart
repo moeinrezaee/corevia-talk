@@ -1,7 +1,7 @@
-import 'package:buzz/features/channels/channel_messages_provider.dart';
-import 'package:buzz/features/channels/pending_local_messages_provider.dart';
-import 'package:buzz/features/channels/send_message_provider.dart';
-import 'package:buzz/shared/relay/relay.dart';
+import 'package:corevia_talk/features/channels/channel_messages_provider.dart';
+import 'package:corevia_talk/features/channels/pending_local_messages_provider.dart';
+import 'package:corevia_talk/features/channels/send_message_provider.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
 import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

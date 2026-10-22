@@ -89,7 +89,7 @@ The `content` field is a **plaintext** (unencrypted) JSON object:
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `system_prompt` | string \| null | `null` | The system prompt injected into agent sessions. Optional since the unified agent model: a definition can be pure configuration (e.g. provider/model only). Readers MUST treat an absent or `null` prompt as "no prompt". |
-| `acp_command` | string \| null | `"buzz-acp"` | ACP transport command, distinct from the runtime/harness. See transport portability below. |
+| `acp_command` | string \| null | `"corevia-talk-acp"` | ACP transport command, distinct from the runtime/harness. See transport portability below. |
 | `avatar_url` | string \| null | `null` | URL to an avatar image. |
 | `runtime` | string \| null | `null` | ACP runtime identifier (e.g. `"goose"`, `"claude-code"`). |
 | `model` | string \| null | `null` | Model identifier (e.g. `"claude-opus-4"`). |
@@ -110,14 +110,14 @@ Unknown fields MUST be ignored by readers (forward compatibility).
 
 ### Transport portability
 
-`acp_command` is optional; legacy absence/null selects stock `buzz-acp` for
-new definitions. Portable commands are `buzz-acp` or a name of at most 255
-ASCII bytes matching `buzz-[A-Za-z0-9_-]+-acp`. Discovery resolves these aliases
+`acp_command` is optional; legacy absence/null selects stock `corevia-talk-acp` for
+new definitions. Portable commands are `corevia-talk-acp` or a name of at most 255
+ASCII bytes matching `corevia-talk-[A-Za-z0-9_-]+-acp`. Discovery resolves these aliases
 on the receiving device; publication does not guarantee local availability.
 
 Catalog publications carry `["shared", "true"]`. Their writers MUST omit
 nonportable commands (including machine-local paths), and MUST emit explicit
-`"buzz-acp"` when stock is selected. Foreign catalog readers MUST reject a
+`"corevia-talk-acp"` when stock is selected. Foreign catalog readers MUST reject a
 present nonportable value, and use stock when the field is omitted/null.
 
 Owner-to-self synchronization of non-catalog heads retains existing custom
@@ -125,7 +125,7 @@ command compatibility; it is not a foreign adoption path or a sandbox. On an
 owner's existing definition, absent/null transport on a shared head MUST
 preserve an existing nonportable local command, because that value may have
 been redacted. Otherwise absence selects stock. An explicit portable value,
-including `"buzz-acp"`, replaces the previous command. A shared custom command
+including `"corevia-talk-acp"`, replaces the previous command. A shared custom command
 therefore remains local rather than synchronizing its path to another device.
 The `shared` tag is catalog presentation, not confidentiality: all kind:30175
 content remains plaintext, including non-catalog heads.
@@ -225,7 +225,7 @@ to carry only instance-level state:
 - Readers SHOULD continue to accept legacy "fat" kind:30177 events
   during the transition. Where the linked 30175 head and a legacy 30177
   event both carry a field, the 30175 head is authoritative. For an
-  agent's instructions, its current `buzz.agent.instructions` artifact is
+  agent's instructions, its current `corevia-talk.agent.instructions` artifact is
   authoritative over both (see "Launch composition").
 - Deletion/retention rules for kind:30177 are unchanged so historical
   tombstones keep working.
@@ -303,7 +303,7 @@ Changing who is on a team is a change to the channel's membership, under the cha
 
 ### Team instructions
 
-A team's current instructions are the `instructions` field of its current `buzz.team` artifact (see "Config artifacts"). A team whose `buzz.team` artifact is absent has no name and empty instructions. A team whose `buzz.team` artifact is invalid, deleted, or unavailable has invalid instructions (see "Artifact state").
+A team's current instructions are the `instructions` field of its current `corevia-talk.team` artifact (see "Config artifacts"). A team whose `corevia-talk.team` artifact is absent has no name and empty instructions. A team whose `corevia-talk.team` artifact is invalid, deleted, or unavailable has invalid instructions (see "Artifact state").
 
 ### Launch with teams
 
@@ -341,7 +341,7 @@ How a relay advertises each one is defined by the specification of that feature.
 
 The owner creates a config channel with a kind:9007 that carries `["channel_type", "system"]`, both labels as `t` tags, and no `visibility` or `ttl` tag. A config channel MUST be private and MUST NOT have a TTL. The owner MUST NOT change a config channel's labels.
 
-Both subject labels are 64 characters. A team id can contain characters a label cannot, so the team label is derived from a hash; the team id itself is stored on the `buzz.team` artifact (see "Config artifacts").
+Both subject labels are 64 characters. A team id can contain characters a label cannot, so the team label is derived from a hash; the team id itself is stored on the `corevia-talk.team` artifact (see "Config artifacts").
 
 An agent config channel's members are the owner, the agent, and any others the owner adds. A team config channel holds the owner and the team's members, and can hold others who are not members (see "Membership").
 
@@ -368,13 +368,13 @@ In every case the client keeps only channels whose type is `system`, whose label
 
 | Type | Channel | `title` | Extra tags | Content |
 | --- | --- | --- | --- | --- |
-| `buzz.agent.settings` | agent config | `Agent settings` | | `{"version": 1, "settings": { ... }}` |
-| `buzz.agent.instructions` | agent config | `Agent instructions` | | `{"version": 1, "text": "<string>"}` |
-| `buzz.team` | team config | the team name | `["team", "<team-id>"]` | `{"version": 1, "name": "<string>", "instructions": "<string>"}` |
+| `corevia-talk.agent.settings` | agent config | `Agent settings` | | `{"version": 1, "settings": { ... }}` |
+| `corevia-talk.agent.instructions` | agent config | `Agent instructions` | | `{"version": 1, "text": "<string>"}` |
+| `corevia-talk.team` | team config | the team name | `["team", "<team-id>"]` | `{"version": 1, "name": "<string>", "instructions": "<string>"}` |
 
-A config channel holds at most one artifact of each of its types. Its `d` is the UUIDv5 of the type name in the namespace of the channel's UUID, so two clients creating the same artifact collide on `d` and one create fails. The client whose create fails fetches the current revision and edits it; it MUST NOT choose a different `d`. A client accepts a config artifact only when its `d`, `type`, and `h` match the config channel it was read from. A `buzz.team` artifact has no member list; members come from the channel (see "Membership").
+A config channel holds at most one artifact of each of its types. Its `d` is the UUIDv5 of the type name in the namespace of the channel's UUID, so two clients creating the same artifact collide on `d` and one create fails. The client whose create fails fetches the current revision and edits it; it MUST NOT choose a different `d`. A client accepts a config artifact only when its `d`, `type`, and `h` match the config channel it was read from. A `corevia-talk.team` artifact has no member list; members come from the channel (see "Membership").
 
-**Team id.** A `buzz.team` artifact carries exactly one `team` tag, whose value is the team id. A client MUST check that the team id's subject label equals the channel's subject label, and MUST treat the artifact as invalid otherwise.
+**Team id.** A `corevia-talk.team` artifact carries exactly one `team` tag, whose value is the team id. A client MUST check that the team id's subject label equals the channel's subject label, and MUST treat the artifact as invalid otherwise.
 
 **Team name.** `name` is also the artifact's `title`, so it MUST be nonblank and at most 512 UTF-8 bytes, and MUST equal the `title` tag.
 
@@ -382,7 +382,7 @@ A config channel holds at most one artifact of each of its types. Its `d` is the
 
 **Settings.** `settings` is a JSON object of the agent's launch configuration. Its fields are defined by the client and harness that launch the agent, not by this NIP. It MUST NOT contain credentials, secrets, machine-local paths, or device state. A client MUST NOT launch an agent with a setting it does not support silently replaced by a default; it shows the error instead.
 
-**Size.** A config artifact's `content` MUST NOT exceed 131,072 bytes after JSON encoding, and `buzz.agent.settings` content MUST NOT exceed 65,535 bytes. The signed event MUST also fit within the relay's advertised event-size limits. Writers check these limits on the encoded content and the signed event, reject an edit that exceeds them, and MUST NOT truncate.
+**Size.** A config artifact's `content` MUST NOT exceed 131,072 bytes after JSON encoding, and `corevia-talk.agent.settings` content MUST NOT exceed 65,535 bytes. The signed event MUST also fit within the relay's advertised event-size limits. Writers check these limits on the encoded content and the signed event, reject an edit that exceeds them, and MUST NOT truncate.
 
 An artifact whose content does not parse, has an unknown `version`, or breaks these rules is **invalid**.
 
@@ -416,12 +416,12 @@ Every revision of a config artifact has a stable ID, its event ID. A config arti
 
 An agent's own instructions layer is the first of these that exists:
 
-1. the `text` of its current `buzz.agent.instructions` artifact. Empty text yields no instructions and stops resolution. An invalid, deleted, or unavailable artifact blocks the start (see "Artifact state");
+1. the `text` of its current `corevia-talk.agent.instructions` artifact. Empty text yields no instructions and stops resolution. An invalid, deleted, or unavailable artifact blocks the start (see "Artifact state");
 2. while that artifact is absent, instructions held in local configuration;
 3. the `system_prompt` of its linked `kind:30175` definition;
 4. for a definition-less instance, the `system_prompt` in its legacy `kind:30177` event.
 
-A client moving local instructions to the relay MUST create the `buzz.agent.instructions` artifact and confirm that the relay accepted it before it stops using the local copy.
+A client moving local instructions to the relay MUST create the `corevia-talk.agent.instructions` artifact and confirm that the relay accepted it before it stops using the local copy.
 
 Team sections are resolved independently (see "Launch with teams"). The client delivers the agent's own layer and each team section to the agent's harness separately, the agent's own first.
 
@@ -457,7 +457,7 @@ Kind `30178` is stored globally and its content is unvalidated, exactly as for `
 
 Kind `30175` uses **shared-tag-gated read semantics** to protect system prompts and `respond_to_allowlist` from being visible to all community members as a side-effect of device sync.
 
-The gate is kind-generic: the relay applies it to every kind in `SHARED_GATED_KINDS` (`buzz-core/src/kind.rs`), currently `30175` and the `30178` team-catalog projection described below. The rules and enforcement surfaces are identical for each member kind.
+The gate is kind-generic: the relay applies it to every kind in `SHARED_GATED_KINDS` (`corevia-talk-core/src/kind.rs`), currently `30175` and the `30178` team-catalog projection described below. The rules and enforcement surfaces are identical for each member kind.
 
 **Rules:**
 

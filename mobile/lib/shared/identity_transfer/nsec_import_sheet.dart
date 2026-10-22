@@ -13,7 +13,7 @@ Future<bool> showNsecImportSheet(
   BuildContext context, {
   required Future<void> Function(String nsec) onImport,
 }) async =>
-    await showBuzzModalBottomSheet<bool>(
+    await showCoreviaTalkModalBottomSheet<bool>(
       context: context,
       title: 'Import identity',
       isScrollControlled: true,

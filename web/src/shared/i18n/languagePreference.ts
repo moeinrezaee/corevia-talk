@@ -3,7 +3,7 @@ import * as React from "react";
 /** Interface languages the web client ships translations for. */
 export type Language = "en" | "fa";
 
-export const LANGUAGE_STORAGE_KEY = "buzz.web.language";
+export const LANGUAGE_STORAGE_KEY = "corevia-talk.web.language";
 export const DEFAULT_LANGUAGE: Language = "en";
 
 /** Languages written right to left; the document direction follows these. */

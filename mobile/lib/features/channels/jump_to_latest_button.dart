@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/theme/theme.dart';
 import 'message_action_backdrop_state.dart';
@@ -27,7 +27,7 @@ class JumpToLatestButton extends HookWidget {
     super.key,
   });
 
-  static const _iosViewType = 'buzz/jump_to_latest_glass';
+  static const _iosViewType = 'corevia-talk/jump_to_latest_glass';
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +80,7 @@ class JumpToLatestButton extends HookWidget {
                     border: Border.all(color: borderColor),
                   ),
                   child: Icon(
-                    BuzzIcons.arrowDown,
+                    CoreviaTalkIcons.arrowDown,
                     size: Grid.gutter,
                     color: context.colors.onSurfaceVariant,
                   ),

@@ -20,13 +20,13 @@ const PROJECT_REPO_UNAVAILABLE_PRESENTATIONS: Record<
 > = {
   authentication: {
     description: tl(
-      "Buzz could not authenticate with this repository. Check your access and try again.",
+      "Corevia Talk could not authenticate with this repository. Check your access and try again.",
     ),
     title: tl("Repository access failed"),
   },
   missing: {
     description: tl(
-      "The project announcement exists, but its git repository was not found on the Buzz relay.",
+      "The project announcement exists, but its git repository was not found on the Corevia Talk relay.",
     ),
     title: tl("Repository not initialized"),
   },
@@ -44,7 +44,7 @@ const PROJECT_REPO_UNAVAILABLE_PRESENTATIONS: Record<
   },
   network: {
     description: tl(
-      "The Buzz git service could not be reached. Check your connection and try again.",
+      "The Corevia Talk git service could not be reached. Check your connection and try again.",
     ),
     title: tl("Couldn’t reach repository"),
   },
@@ -56,7 +56,7 @@ const PROJECT_REPO_UNAVAILABLE_PRESENTATIONS: Record<
   },
   unknown: {
     description: tl(
-      "Buzz could not load this repository. Try again or contact the project owner.",
+      "Corevia Talk could not load this repository. Try again or contact the project owner.",
     ),
     title: tl("Repository unavailable"),
   },
@@ -117,7 +117,7 @@ export function projectRepoUnavailableReason(
  * alone cannot distinguish "never initialized" from "you have no access".
  * The announcement events ARE visible to every relay member though, so the
  * client can re-classify a `missing` result using the repository's
- * `buzz-channel` binding and the viewer's own channel memberships:
+ * `corevia-talk-channel` binding and the viewer's own channel memberships:
  *
  * - no binding at all → `unbound` (the relay refuses access for everyone
  *   until the owner binds a channel)

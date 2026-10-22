@@ -37,7 +37,7 @@ class HostedBackupService {
   final FlutterSecureStorage _storage;
   static final _queue = SerialQueue();
   static String pendingKey(String subject, String pubkey) =>
-      'buzz_backup_pending_v2_${sha256.convert(utf8.encode(jsonEncode([HostedEnvironment.origin.origin, subject, pubkey])))}';
+      'corevia_talk_backup_pending_v2_${sha256.convert(utf8.encode(jsonEncode([HostedEnvironment.origin.origin, subject, pubkey])))}';
 
   Future<void> backup({bool Function()? isCurrent}) {
     final result = _queue.run(() => _backup(isCurrent: isCurrent));
@@ -93,7 +93,7 @@ class HostedBackupService {
     if (envelope == null) {
       final Map<String, dynamic> enrollment;
       try {
-        enrollment = await account.post('/v1/buzz/nsec-backups/enrollment', {});
+        enrollment = await account.post('/v1/corevia-talk/nsec-backups/enrollment', {});
       } on AccountFailure catch (failure) {
         if (failure == AccountFailure.rejected) {
           throw HostedBackupFailure.unavailable;
@@ -128,7 +128,7 @@ class HostedBackupService {
     final pending = envelope!;
     final Map<String, dynamic> result;
     try {
-      result = await account.post('/v1/buzz/nsec-backups', pending);
+      result = await account.post('/v1/corevia-talk/nsec-backups', pending);
     } on AccountFailure catch (failure) {
       if (failure != AccountFailure.rejected) rethrow;
       checkAccount();

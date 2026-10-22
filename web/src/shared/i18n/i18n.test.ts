@@ -30,10 +30,10 @@ describe("web language preference", () => {
     expect(isRtlLanguage("en")).toBe(false);
   });
 
-  it("persists the choice under buzz.web.language and flips lang/dir", () => {
+  it("persists the choice under corevia-talk.web.language and flips lang/dir", () => {
     setLanguage("fa");
     expect(getLanguage()).toBe("fa");
-    expect(LANGUAGE_STORAGE_KEY).toBe("buzz.web.language");
+    expect(LANGUAGE_STORAGE_KEY).toBe("corevia-talk.web.language");
     expect(localStorage.getItem(LANGUAGE_STORAGE_KEY)).toBe("fa");
     expect(document.documentElement.getAttribute("lang")).toBe("fa");
     expect(document.documentElement.getAttribute("dir")).toBe("rtl");

@@ -14,7 +14,7 @@ import {
 } from "@/shared/lib/mediaUrl";
 import { useRelayOrigin } from "@/shared/lib/useRelayOrigin";
 import {
-  isBuzzEntityPreview,
+  isCoreviaTalkEntityPreview,
   type ResolvedLinkPreview,
   useResolvedLinkPreviews,
   withEntityFallbacks,
@@ -85,11 +85,11 @@ function ComposerLinkPreviewCard({
   );
   const showImage = Boolean(imageSrc && failedImageSrc !== imageSrc);
   const hostname = previewHostname(preview.href);
-  // External cards are send-ready only once their snapshot tag exists. Buzz
+  // External cards are send-ready only once their snapshot tag exists. Corevia Talk
   // entities never snapshot; recipients resolve them from the relay, so they
   // are complete as soon as the recognized entity card exists.
   const snapshotTagReady = Boolean(preview.snapshotReady && tagReady);
-  const done = snapshotTagReady || isBuzzEntityPreview(preview);
+  const done = snapshotTagReady || isCoreviaTalkEntityPreview(preview);
 
   return (
     <div
@@ -208,7 +208,7 @@ export function updateComposerLinkPreviewInput(
   const nextHrefs = new Set(
     extractSupportedLinkPreviews(content, relayOrigin)
       .filter((preview) =>
-        preview.href.startsWith("buzz://")
+        preview.href.startsWith("corevia-talk://")
           ? true
           : isValidLinkPreviewSnapshotCanonicalUrl(preview.href),
       )
@@ -300,7 +300,7 @@ export function useComposerLinkPreviews(
     (source: string) =>
       enabled
         ? extractSupportedLinkPreviews(source, relayOrigin).filter((preview) =>
-            preview.href.startsWith("buzz://")
+            preview.href.startsWith("corevia-talk://")
               ? true
               : isValidLinkPreviewSnapshotCanonicalUrl(preview.href),
           )
@@ -491,7 +491,7 @@ export function useComposerLinkPreviews(
     !suppressed &&
     previews.some(
       (preview) =>
-        !preview.href.startsWith("buzz://") &&
+        !preview.href.startsWith("corevia-talk://") &&
         (preview.imageState === "pending" ||
           isHrefReentering(preview.href) ||
           (preview.snapshotReady && !readyTags[preview.href])),
@@ -502,7 +502,7 @@ export function useComposerLinkPreviews(
     !suppressed &&
     liveCandidates.some(
       (href) =>
-        !href.startsWith("buzz://") &&
+        !href.startsWith("corevia-talk://") &&
         !readyTags[href] &&
         !candidates.some((candidate) => candidate.href === href),
     );

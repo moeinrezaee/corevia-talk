@@ -2,10 +2,10 @@ use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::Arc;
 use std::time::Duration;
 
-use buzz_core_pkg::kind::KIND_PAIRING;
-use buzz_core_pkg::pairing::qr::encode_qr;
-use buzz_core_pkg::pairing::session::PairingSession;
-use buzz_core_pkg::pairing::types::{AbortReason, PayloadType};
+use corevia_talk_core_pkg::kind::KIND_PAIRING;
+use corevia_talk_core_pkg::pairing::qr::encode_qr;
+use corevia_talk_core_pkg::pairing::session::PairingSession;
+use corevia_talk_core_pkg::pairing::types::{AbortReason, PayloadType};
 use futures_util::{SinkExt, StreamExt};
 use nostr::ToBech32;
 use serde::Serialize;
@@ -463,7 +463,7 @@ async fn pairing_ws_task_inner(
                             Ok((response, false)) => {
                                 write.send(Message::Text(event_to_relay_json(&response).into())).await
                                     .map_err(|e| format!("publish rejection failed: {e}"))?;
-                                if s.state() == buzz_core_pkg::pairing::SessionState::Aborted {
+                                if s.state() == corevia_talk_core_pkg::pairing::SessionState::Aborted {
                                     return Err("Too many incorrect codes. Create a new QR code.".into());
                                 }
                                 continue;
@@ -486,7 +486,7 @@ async fn pairing_ws_task_inner(
                                 }
                                 continue;
                             }
-                            Err(buzz_core_pkg::pairing::PairingError::TranscriptMismatch) => {
+                            Err(corevia_talk_core_pkg::pairing::PairingError::TranscriptMismatch) => {
                                 return Err("Code verification failed. Try pairing again.".into());
                             }
                             Err(_) => {}
@@ -765,7 +765,7 @@ fn event_to_relay_json(event: &nostr::Event) -> String {
     format!("[\"EVENT\",{}]", nostr::JsonUtil::as_json(event))
 }
 
-/// Parse a relay EVENT message into a nostr 0.36 Event (buzz-core compatible).
+/// Parse a relay EVENT message into a nostr 0.36 Event (corevia-talk-core compatible).
 fn parse_relay_event(text: &str, sub_id: &str) -> Option<nostr::Event> {
     let arr: serde_json::Value = serde_json::from_str(text).ok()?;
     let arr = arr.as_array()?;

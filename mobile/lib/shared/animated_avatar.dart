@@ -7,8 +7,8 @@ const animatedAvatarArtworkScale = 0.85;
 // in the fragment so clients that do not understand the scheme render only
 // the poster:
 //
-//   posterUrl#buzz-anim=encodedAnimationUrl
-const _animatedAvatarSeparator = '#buzz-anim=';
+//   posterUrl#corevia-talk-anim=encodedAnimationUrl
+const _animatedAvatarSeparator = '#corevia-talk-anim=';
 
 /// The static poster and animated image URLs encoded in an avatar URL.
 class AnimatedAvatarDescriptor {
@@ -26,7 +26,7 @@ class AnimatedAvatarDescriptor {
 String buildAnimatedAvatarUrl(String posterUrl, String animationUrl) =>
     '$posterUrl$_animatedAvatarSeparator${Uri.encodeComponent(animationUrl)}';
 
-/// Parses the Buzz animated-avatar fragment scheme from [url].
+/// Parses the Corevia Talk animated-avatar fragment scheme from [url].
 ///
 /// Returns `null` when the poster or animation URL is missing, malformed, or
 /// does not use HTTP(S).
@@ -65,7 +65,7 @@ bool _isHttpUrl(String value) {
       uri.host.isNotEmpty;
 }
 
-/// Character presets can be saved as plain poster URLs without buzz-anim.
+/// Character presets can be saved as plain poster URLs without corevia-talk-anim.
 /// Keep photographs and ordinary emoji avatars at their existing size.
 bool usesInsetAgentArtwork(String? url) {
   if (parseAnimatedAvatarUrl(url) != null) return true;

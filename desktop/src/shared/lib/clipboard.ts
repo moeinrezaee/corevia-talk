@@ -7,7 +7,7 @@ import { tl } from "@/shared/i18n/tl";
  * Write text through the native clipboard integration.
  *
  * `html` is an optional richer flavor written in the same clipboard
- * transaction. External apps read `text`; Buzz reads `html` on paste to
+ * transaction. External apps read `text`; Corevia Talk reads `html` on paste to
  * recover metadata the plain flavor deliberately omits (mention pubkeys).
  */
 export async function writeTextToClipboard(

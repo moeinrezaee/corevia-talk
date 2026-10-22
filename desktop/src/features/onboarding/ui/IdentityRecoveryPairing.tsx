@@ -190,7 +190,7 @@ export function IdentityRecoveryPairing({
             </div>
             <p className="text-xs text-muted-foreground">
               {tl(
-                "This gives this desktop permanent access to your Buzz identity. Only continue if you trust it.",
+                "This gives this desktop permanent access to your Corevia Talk identity. Only continue if you trust it.",
               )}
             </p>
             <div className="flex w-full flex-col gap-2">

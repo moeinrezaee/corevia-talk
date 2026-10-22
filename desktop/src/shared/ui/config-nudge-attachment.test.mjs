@@ -63,16 +63,16 @@ test("shouldOpenDoctor_regularMixedRequirements_routesToEditAgent", () => {
 
 test("shouldOpenDoctor_missingBinary_routesToAgentRuntimes", () => {
   assert.equal(
-    shouldOpenDoctor([{ surface: "missing_binary", command: "buzz-pi-acp" }]),
+    shouldOpenDoctor([{ surface: "missing_binary", command: "corevia-talk-pi-acp" }]),
     true,
     "a missing runtime binary must route to Agent runtimes",
   );
 });
 
-test("missingBinaryRecoveryMessage_requiresBuzzRestart", () => {
+test("missingBinaryRecoveryMessage_requiresCoreviaTalkRestart", () => {
   assert.equal(
     missingBinaryRecoveryMessage(),
-    "not found in PATH — install it or update PATH, then restart Buzz",
+    "not found in PATH — install it or update PATH, then restart Corevia Talk",
   );
 });
 

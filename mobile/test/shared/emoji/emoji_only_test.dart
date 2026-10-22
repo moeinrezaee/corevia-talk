@@ -1,11 +1,11 @@
 import 'dart:collection';
 
-import 'package:buzz/shared/custom_emoji/custom_emoji.dart';
-import 'package:buzz/shared/emoji/emoji_only.dart';
+import 'package:corevia_talk/shared/custom_emoji/custom_emoji.dart';
+import 'package:corevia_talk/shared/emoji/emoji_only.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _customEmoji = [
-  CustomEmoji(shortcode: 'buzz', url: 'https://example.test/buzz.png'),
+  CustomEmoji(shortcode: 'corevia-talk', url: 'https://example.test/corevia-talk.png'),
 ];
 
 /// Keycaps carry no `Extended_Pictographic` code point of their own, so they
@@ -52,23 +52,23 @@ void main() {
     });
 
     test('counts a known custom shortcode as emoji', () {
-      expect(emojiOnly(':buzz:', customEmoji: _customEmoji), isTrue);
-      expect(emojiOnly(':buzz: \u{1F600}', customEmoji: _customEmoji), isTrue);
-      expect(emojiOnly('hi :buzz:', customEmoji: _customEmoji), isFalse);
+      expect(emojiOnly(':corevia-talk:', customEmoji: _customEmoji), isTrue);
+      expect(emojiOnly(':corevia-talk: \u{1F600}', customEmoji: _customEmoji), isTrue);
+      expect(emojiOnly('hi :corevia-talk:', customEmoji: _customEmoji), isFalse);
     });
 
     test('scans consecutive shortcodes without skipping following text', () {
-      expect(emojiOnly(':BUZZ::buzz:', customEmoji: _customEmoji), isTrue);
-      expect(emojiOnly('😀:buzz:😀', customEmoji: _customEmoji), isTrue);
+      expect(emojiOnly(':COREVIA_TALK::corevia-talk:', customEmoji: _customEmoji), isTrue);
+      expect(emojiOnly('😀:corevia-talk:😀', customEmoji: _customEmoji), isTrue);
       expect(
-        emojiOnly(':buzz:ordinary text', customEmoji: _customEmoji),
+        emojiOnly(':corevia-talk:ordinary text', customEmoji: _customEmoji),
         isFalse,
       );
       expect(
-        emojiOnly(':buzz::unfinished', customEmoji: _customEmoji),
+        emojiOnly(':corevia_talk::unfinished', customEmoji: _customEmoji),
         isFalse,
       );
-      expect(emojiOnly(':buzz:::', customEmoji: _customEmoji), isFalse);
+      expect(emojiOnly(':corevia_talk:::', customEmoji: _customEmoji), isFalse);
     });
 
     test('does not inspect the community palette without a shortcode', () {
@@ -78,17 +78,17 @@ void main() {
         isFalse,
       );
       expect(emojiOnly('😀 👋', customEmoji: palette), isTrue);
-      expect(emojiOnly('text :buzz:', customEmoji: palette), isFalse);
+      expect(emojiOnly('text :corevia-talk:', customEmoji: palette), isFalse);
       expect(emojiOnly(':unfinished', customEmoji: palette), isFalse);
       expect(palette.reads, 0);
-      expect(emojiOnly(':buzz::BUZZ:', customEmoji: palette), isTrue);
+      expect(emojiOnly(':corevia_talk::COREVIA_TALK:', customEmoji: palette), isTrue);
       expect(palette.reads, palette.length);
     });
 
     test('an unknown shortcode is just text', () {
       // Desktop behaves the same: without the palette it renders literally, so
       // it must not be scaled up as if it were a glyph.
-      expect(emojiOnly(':buzz:'), isFalse);
+      expect(emojiOnly(':corevia-talk:'), isFalse);
       expect(emojiOnly(':nope:', customEmoji: _customEmoji), isFalse);
       expect(emojiOnly(':', customEmoji: _customEmoji), isFalse);
       expect(emojiOnly('::', customEmoji: _customEmoji), isFalse);
@@ -123,7 +123,7 @@ class _CountingEmojiList extends ListBase<CustomEmoji> {
   CustomEmoji operator [](int index) {
     reads += 1;
     return CustomEmoji(
-      shortcode: index == 0 ? 'buzz' : 'unused_$index',
+      shortcode: index == 0 ? 'corevia-talk' : 'unused_$index',
       url: 'https://example.test/emoji.png',
     );
   }

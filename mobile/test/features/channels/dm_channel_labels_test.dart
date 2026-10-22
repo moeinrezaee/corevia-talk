@@ -1,7 +1,7 @@
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/dm_channel_labels.dart';
-import 'package:buzz/shared/identity_names/identity_names.dart';
-import 'package:buzz/shared/profile/user_profile.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/dm_channel_labels.dart';
+import 'package:corevia_talk/shared/identity_names/identity_names.dart';
+import 'package:corevia_talk/shared/profile/user_profile.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 String _key(int number) => number.toRadixString(16).padLeft(64, '0');

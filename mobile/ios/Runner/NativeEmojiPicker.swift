@@ -19,7 +19,7 @@ final class NativeEmojiPickerCoordinator: NSObject,
     parentViewController: UIViewController?
   ) {
     channel = FlutterMethodChannel(
-      name: "buzz/native_emoji_picker",
+      name: "corevia-talk/native_emoji_picker",
       binaryMessenger: messenger
     )
     self.parentViewController = parentViewController
@@ -101,10 +101,10 @@ final class NativeEmojiPickerCoordinator: NSObject,
 
     if let sheet = controller.sheetPresentationController {
       let compactID = UISheetPresentationController.Detent.Identifier(
-        "buzz.emoji.compact"
+        "corevia-talk.emoji.compact"
       )
       let mediumID = UISheetPresentationController.Detent.Identifier(
-        "buzz.emoji.medium"
+        "corevia-talk.emoji.medium"
       )
       sheet.detents = [
         .custom(identifier: compactID) { context in

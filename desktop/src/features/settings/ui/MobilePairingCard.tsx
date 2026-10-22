@@ -134,7 +134,7 @@ function PairingSteps({
             data-settings-subcopy
           >
             {tl(
-              "Open Buzz on your mobile device and scan the code shown here.",
+              "Open Corevia Talk on your mobile device and scan the code shown here.",
             )}
           </p>
         </div>
@@ -158,7 +158,7 @@ function PairingSteps({
           >
             {codeEntry
               ? tl(
-                  "Type the six-digit code shown here into the Buzz mobile app.",
+                  "Type the six-digit code shown here into the Corevia Talk mobile app.",
                 )
               : tl(
                   "Check that the six-digit code matches on both devices, then confirm it.",
@@ -434,7 +434,7 @@ export function MobilePairingCard({
       <SettingsSectionHeader
         title={tl("Mobile")}
         description={tl(
-          "Connect the Buzz mobile app to this relay by scanning a QR code. The connection is secured with end-to-end encryption and a verification code.",
+          "Connect the Corevia Talk mobile app to this relay by scanning a QR code. The connection is secured with end-to-end encryption and a verification code.",
         )}
       />
 
@@ -455,7 +455,7 @@ export function MobilePairingCard({
                 sasCode.slice(0, 3),
                 sasCode.slice(3, 6),
                 codeEntry
-                  ? "Enter this code in the Buzz app on your phone."
+                  ? "Enter this code in the Corevia Talk app on your phone."
                   : "Check that it matches on your mobile device, then confirm the codes match.",
               ])
             : step === "transferring"

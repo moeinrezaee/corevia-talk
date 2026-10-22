@@ -17,7 +17,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  BUZZ_TEST_POSTGRES_PASSWORD: buzz_dev
+  COREVIA_TALK_TEST_POSTGRES_PASSWORD: corevia_talk_dev
   PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/ms-playwright
 
 jobs:
@@ -62,7 +62,7 @@ jobs:
           key: pnpm-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
 
   # Tauri Rust lanes run in parallel. The compiled-flags lane only rebuilds
-  # buzz_lib under other BUZZ_BUILD_* values, so it restores the core lane's
+  # corevia_talk_lib under other COREVIA_TALK_BUILD_* values, so it restores the core lane's
   # cache read-only; the mesh-llm feature pulls its own dependency graph.
   desktop-tauri:
     name: Desktop Tauri (${{ matrix.lane }})
@@ -255,10 +255,10 @@ jobs:
       - name: Build both protected-feature selections
         shell: pwsh
         run: |
-          Remove-Item Env:VITE_BUZZ_BESTIE -ErrorAction SilentlyContinue
+          Remove-Item Env:VITE_COREVIA_TALK_BESTIE -ErrorAction SilentlyContinue
           pnpm -C desktop build
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          $env:VITE_BUZZ_BESTIE = "1"
+          $env:VITE_COREVIA_TALK_BESTIE = "1"
           pnpm -C desktop build
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 

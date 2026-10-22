@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:buzz/shared/me/me_groups.dart';
+import 'package:corevia_talk/shared/me/me_groups.dart';
 
 void main() {
-  const origin = 'https://buzz.block.builderlab.xyz';
+  const origin = 'https://corevia-talk.block.builderlab.xyz';
   const channel = '11111111-1111-4111-8111-111111111111';
   Map<String, dynamic> record() => {
     'version': 1,
@@ -30,7 +30,7 @@ void main() {
     expect(jsonDecode(groups.place(channel).encode(origin)), source);
     expect(
       MeGroups.coordinate(origin),
-      'buzz-me-kit-v1:https%3A%2F%2Fbuzz.block.builderlab.xyz:groups:me',
+      'corevia-talk-me-kit-v1:https%3A%2F%2Fcoreviatalk.block.builderlab.xyz:groups:me',
     );
   });
   test('rejects another community and independent Messages organization', () {

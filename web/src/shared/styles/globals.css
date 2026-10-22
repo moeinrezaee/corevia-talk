@@ -101,6 +101,6 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: var(--buzz-font-sans);
+    font-family: var(--corevia-talk-font-sans);
   }
 }

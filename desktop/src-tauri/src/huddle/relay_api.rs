@@ -10,7 +10,7 @@
 //!   → recv loop: WS binary frame → Opus decode (per-peer) → rodio playback
 //! ```
 
-use buzz_audio_client::encoder::{AudioEncoder, FRAME_SAMPLES};
+use corevia_talk_audio_client::encoder::{AudioEncoder, FRAME_SAMPLES};
 use futures_util::{SinkExt, StreamExt};
 use std::sync::{atomic::AtomicBool, Arc};
 use tokio_tungstenite::tungstenite::Message as WsMsg;
@@ -52,9 +52,9 @@ fn build_audio_auth_event(
     if let Some(auth_tag_json) = auth_tag_json {
         let compat_pubkey = nostr::PublicKey::from_hex(&keys.public_key().to_hex())
             .map_err(|e| format!("agent pubkey conversion failed: {e}"))?;
-        buzz_sdk_pkg::nip_oa::verify_auth_tag(auth_tag_json, &compat_pubkey)
+        corevia_talk_sdk_pkg::nip_oa::verify_auth_tag(auth_tag_json, &compat_pubkey)
             .map_err(|e| format!("agent auth tag verification failed: {e}"))?;
-        let compat_tag = buzz_sdk_pkg::nip_oa::parse_auth_tag(auth_tag_json)
+        let compat_tag = corevia_talk_sdk_pkg::nip_oa::parse_auth_tag(auth_tag_json)
             .map_err(|e| format!("agent auth tag parse failed: {e}"))?;
         tags.push(
             nostr::Tag::parse(compat_tag.as_slice())
@@ -77,7 +77,7 @@ async fn connect_authenticated_audio_socket(
     use nostr::JsonUtil;
 
     let ws_url = format!("{relay_url}/huddle/{channel_id}/audio");
-    let joined = buzz_audio_client::connection::connect(
+    let joined = corevia_talk_audio_client::connection::connect(
         &ws_url,
         parent_channel_id,
         None,
@@ -163,7 +163,7 @@ pub(crate) async fn connect_audio_relay(
         })
         .await
         {
-            eprintln!("buzz-desktop: audio relay pipeline exited: {e}");
+            eprintln!("corevia-talk-desktop: audio relay pipeline exited: {e}");
         }
 
         // Only emit the disconnect event for UNEXPECTED exits.
@@ -220,7 +220,7 @@ fn queue_tts_broadcast_packet(
     let samples_48k = upsample_tts_24k_to_48k(&packet.samples_24k);
     for chunk in samples_48k.chunks(960) {
         if queue.len() >= TTS_BROADCAST_MAX_FRAMES {
-            eprintln!("buzz-desktop: tts broadcast status=dropped reason=queue_duration_limit");
+            eprintln!("corevia-talk-desktop: tts broadcast status=dropped reason=queue_duration_limit");
             break;
         }
         let mut frame = chunk.to_vec();
@@ -272,7 +272,7 @@ pub(crate) async fn connect_tts_audio_publisher(
         )
         .await
         {
-            eprintln!("buzz-desktop: tts broadcast status=disconnected error={error}");
+            eprintln!("corevia-talk-desktop: tts broadcast status=disconnected error={error}");
         }
         publisher_cancel.cancel();
     });
@@ -409,7 +409,7 @@ async fn audio_relay_pipeline(args: AudioRelayPipelineArgs) -> Result<(), String
                 let frame = match encoder.encode(chunk) {
                     Ok(frame) => frame,
                     Err(error) => {
-                        eprintln!("buzz-desktop: opus encode error: {error}");
+                        eprintln!("corevia-talk-desktop: opus encode error: {error}");
                         continue;
                     }
                 };
@@ -463,7 +463,7 @@ pub(crate) async fn fetch_channel_members_with_roles(
     let events = query_relay(state, std::slice::from_ref(&filter))
         .await
         .map_err(|e| {
-            eprintln!("buzz-desktop: fetch channel members failed: {e}");
+            eprintln!("corevia-talk-desktop: fetch channel members failed: {e}");
             e
         })?;
 

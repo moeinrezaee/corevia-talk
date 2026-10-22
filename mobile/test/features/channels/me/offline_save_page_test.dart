@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channels_provider.dart';
-import 'package:buzz/features/channels/me/me_page.dart';
-import 'package:buzz/shared/crypto/nip44.dart';
-import 'package:buzz/shared/me/me_assistants.dart';
-import 'package:buzz/shared/me/me_groups.dart';
-import 'package:buzz/shared/me/me_sync.dart';
-import 'package:buzz/shared/relay/relay.dart';
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channels_provider.dart';
+import 'package:corevia_talk/features/channels/me/me_page.dart';
+import 'package:corevia_talk/shared/crypto/nip44.dart';
+import 'package:corevia_talk/shared/me/me_assistants.dart';
+import 'package:corevia_talk/shared/me/me_groups.dart';
+import 'package:corevia_talk/shared/me/me_sync.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

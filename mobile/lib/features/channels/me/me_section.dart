@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../../shared/theme/theme.dart';
-import '../../../shared/theme/buzz_icons.dart';
+import '../../../shared/theme/corevia_talk_icons.dart';
 import '../../../shared/widgets/collapsible_section_body.dart';
 
 /// A project or unassigned-chat section matching the Channels list headings.
@@ -86,7 +86,7 @@ class MeSection extends HookWidget {
                           : sectionExpandDuration,
                       curve: sectionExpandCurve,
                       child: Icon(
-                        BuzzIcons.chevronDown,
+                        CoreviaTalkIcons.chevronDown,
                         size: 18,
                         color: color,
                       ),

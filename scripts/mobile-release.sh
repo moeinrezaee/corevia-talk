@@ -169,7 +169,7 @@ case "$command" in
       fi
       fail "could not dispatch App-backed publication for $tag: $dispatch_output"
     fi
-    run_url="$(printf '%s\n' "$dispatch_output" | awk '/^https:\/\/github\.com\/block\/buzz\/actions\/runs\/[0-9]+$/ { if (found) exit 2; found = $0 } END { if (found) print found }')" || \
+    run_url="$(printf '%s\n' "$dispatch_output" | awk '/^https:\/\/github\.com\/block\/corevia-talk\/actions\/runs\/[0-9]+$/ { if (found) exit 2; found = $0 } END { if (found) print found }')" || \
       fail "GitHub returned multiple workflow run URLs for one candidate dispatch"
     [[ -n "$run_url" ]] || \
       fail "GitHub accepted the candidate dispatch but returned no workflow run URL"
@@ -184,7 +184,7 @@ case "$command" in
     if [[ "$local_head_sha" != "$source_sha" ]]; then
       echo "Note: local HEAD is $local_head_sha; candidate source is pinned from origin/$MOBILE_RELEASE_SOURCE_BRANCH $source_sha." >&2
     fi
-    printf 'Published %s at pinned origin/%s commit %s through buzz-release-bot. Use this exact tag in Release Mobile.\n' \
+    printf 'Published %s at pinned origin/%s commit %s through corevia-talk-release-bot. Use this exact tag in Release Mobile.\n' \
       "$tag" "$MOBILE_RELEASE_SOURCE_BRANCH" "$source_sha"
     ;;
 

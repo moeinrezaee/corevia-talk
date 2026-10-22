@@ -47,7 +47,7 @@ class _HuddleCallParticipants extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
-                BuzzIcons.triangleAlert,
+                CoreviaTalkIcons.triangleAlert,
                 size: 32,
                 color: context.colors.error,
               ),

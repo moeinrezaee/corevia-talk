@@ -329,7 +329,7 @@ export function MachineOnboardingFlow({
   if (page === "identity") {
     return (
       <div
-        className="buzz-onboarding-neutral-theme buzz-startup-shell buzz-onboarding-welcome flex max-h-dvh items-start justify-center overflow-x-hidden overflow-y-auto px-4 py-8 text-foreground"
+        className="corevia-talk-onboarding-neutral-theme corevia-talk-startup-shell corevia-talk-onboarding-welcome flex max-h-dvh items-start justify-center overflow-x-hidden overflow-y-auto px-4 py-8 text-foreground"
         data-testid="machine-onboarding-gate"
       >
         <StartupWindowDragRegion />
@@ -342,9 +342,9 @@ export function MachineOnboardingFlow({
               transitionKey={`machine-identity-${transitionDirection}`}
             >
               <img
-                alt={tl("Buzz")}
+                alt={tl("Corevia Talk")}
                 className="w-full max-w-[600px]"
-                src="/landing/buzz-wordmark.png"
+                src="/landing/corevia-talk-wordmark.png"
               />
               <p className="mt-2 max-w-[560px] text-center text-2xl font-normal leading-none text-foreground">
                 {tl("Your people, your agents, your projects —")}
@@ -445,7 +445,7 @@ export function MachineOnboardingFlow({
                 {tl("Restore from a backup file")}
               </h1>
               <p className="mt-2 w-full text-base leading-6 text-foreground/80">
-                {tl("Choose the encrypted backup file you saved from Buzz.")}
+                {tl("Choose the encrypted backup file you saved from Corevia Talk.")}
               </p>
               <NostrKeyImportForm
                 key={keyImportFormKey}
@@ -472,7 +472,7 @@ export function MachineOnboardingFlow({
               <p className="mt-2 w-full text-base leading-6 text-foreground/80">
                 {phoneRecoveryStep === "loading" || phoneRecoveryStep === "qr"
                   ? tl(
-                      "Scan this code with a device where you’re currently signed in to Buzz.",
+                      "Scan this code with a device where you’re currently signed in to Corevia Talk.",
                     )
                   : tl("Confirm the code before sharing your identity.")}
               </p>
@@ -509,7 +509,7 @@ export function MachineOnboardingFlow({
                   ) : (
                     <p>
                       {tl(
-                        "Paste your private key to sign in to Buzz. You can also use a",
+                        "Paste your private key to sign in to Corevia Talk. You can also use a",
                       )}{" "}
                       <button
                         className="rounded-sm font-medium underline decoration-foreground/40 underline-offset-4 transition-colors hover:decoration-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-60"

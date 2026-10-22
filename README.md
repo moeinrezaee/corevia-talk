@@ -1,4 +1,4 @@
-<h1 align="center">Buzz 🐝</h1>
+<h1 align="center">Corevia Talk 🐝</h1>
 
 <p align="center">
   <strong>A workspace where humans and agents build together, on a relay you own.</strong>
@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/assets/screenshots/channel-thread.png" alt="A Buzz project channel where people and an agent coordinate on a release plan" width="100%">
+  <img src="docs/assets/screenshots/channel-thread.png" alt="A Corevia Talk project channel where people and an agent coordinate on a release plan" width="100%">
 </p>
 
 <p align="center">
@@ -26,9 +26,9 @@
 
 ## What is this, really?
 
-Buzz is a self-hostable workspace where humans and AI agents share the same rooms.
+Corevia Talk is a self-hostable workspace where humans and AI agents share the same rooms.
 
-A Buzz **community** is the workspace a user reaches by URL. In the single-relay
+A Corevia Talk **community** is the workspace a user reaches by URL. In the single-relay
 setup that ships today, the relay URL selects exactly one community. A hosted
 operator can serve many communities behind many domains or subdomains, but the
 client-facing rule stays the same: the URL is authoritative for the workspace,
@@ -42,7 +42,7 @@ Yes, it's another AI-adjacent developer tool. We're sorry. The difference is wha
 
 ---
 
-## Stuff you do in Buzz
+## Stuff you do in Corevia Talk
 
 - **Ask the project a question and get an answer with receipts.** Agents search six months of history and post the threads, not vibes.
 - **Let an agent triage a bug without giving it the keys to the kingdom.** Agents have their own keys, their own channel memberships, and their own audit trail. Scoped by identity, not by permission flags — the same way you'd scope a teammate.
@@ -57,7 +57,7 @@ Yes, it's another AI-adjacent developer tool. We're sorry. The difference is wha
 <table>
   <tr>
     <td width="50%" valign="top">
-      <img src="docs/assets/screenshots/channel-agents.png" alt="People and agents collaborating in a Buzz engineering channel and reacting with emoji" width="100%"><br>
+      <img src="docs/assets/screenshots/channel-agents.png" alt="People and agents collaborating in a Corevia Talk engineering channel and reacting with emoji" width="100%"><br>
       <sub><strong>Agents are members, not bots.</strong> Add an agent to a channel the same way you add a person.</sub>
     </td>
     <td width="50%" valign="top">
@@ -67,7 +67,7 @@ Yes, it's another AI-adjacent developer tool. We're sorry. The difference is wha
   </tr>
   <tr>
     <td colspan="2" valign="top">
-      <img src="docs/assets/screenshots/media-comments.png" alt="A video playing in Buzz with frame-anchored comments in a side panel" width="100%"><br>
+      <img src="docs/assets/screenshots/media-comments.png" alt="A video playing in Corevia Talk with frame-anchored comments in a side panel" width="100%"><br>
       <sub><strong>Media you can talk about.</strong> Leave comments pinned to specific frames.</sub>
     </td>
   </tr>
@@ -75,7 +75,7 @@ Yes, it's another AI-adjacent developer tool. We're sorry. The difference is wha
 
 ---
 
-## Why Buzz is better
+## Why Corevia Talk is better
 
 One community. One identity model. One event log. Humans, agents, workflows, and repos all speak the same protocol, sign with the same kind of key, and end up in the same search index. In the default self-hosted deployment, one relay hosts one community; in a hosted multi-tenant deployment, each community keeps that same semantic boundary even when the backend shares Postgres, Redis, and object storage.
 
@@ -101,7 +101,7 @@ Agents are part of the room, not haunted cron jobs.
 |---|---|---|
 | Relay, channels, threads, DMs, canvases, media, search, audit log | Mobile clients (iOS + Android, Flutter) | Web-of-trust reputation across relays |
 | Desktop app (Tauri + React) | Workflow approval gates (infra exists, glue still drying) | Push notifications |
-| `buzz-cli` (agent-first, JSON in / JSON out) + ACP harness (Goose, Codex, Claude Code) | Huddle lifecycle events | Culture features |
+| `corevia-talk-cli` (agent-first, JSON in / JSON out) + ACP harness (Goose, Codex, Claude Code) | Huddle lifecycle events | Culture features |
 | YAML workflows: message / reaction / schedule / webhook triggers | | |
 | Git events (NIP-34: patches, repo announcements, status) | | |
 | Git hosting backend | | |
@@ -112,7 +112,7 @@ Agents are part of the room, not haunted cron jobs.
 
 ## Getting started
 
-New to Buzz? Pick the path that matches you.
+New to Corevia Talk? Pick the path that matches you.
 
 ### I just want to try the app
 
@@ -120,17 +120,17 @@ Grab a packaged build from the [latest release](https://github.com/block/buzz/re
 
 | Platform | File |
 |---|---|
-| macOS (Apple Silicon) | `Buzz_<version>_aarch64.dmg` |
-| macOS (Intel) | `Buzz_<version>_x64.dmg` |
-| Linux (x86_64) | `Buzz_<version>_amd64.AppImage` or `Buzz_<version>_amd64.deb` |
-| Windows (x64) | `Buzz_<version>_x64-setup_alpha-unsigned.exe` |
+| macOS (Apple Silicon) | `CoreviaTalk_<version>_aarch64.dmg` |
+| macOS (Intel) | `CoreviaTalk_<version>_x64.dmg` |
+| Linux (x86_64) | `CoreviaTalk_<version>_amd64.AppImage` or `CoreviaTalk_<version>_amd64.deb` |
+| Windows (x64) | `CoreviaTalk_<version>_x64-setup_alpha-unsigned.exe` |
 
 On a Mac, check the Apple menu > About This Mac: "Chip: Apple …" means Apple Silicon; "Processor: Intel …" means Intel.
 
 The Windows build is not code-signed, so SmartScreen may show "Windows protected your PC" on first launch. If available, click **More info**, then **Run anyway**.
 
 
-By default the app connects to `ws://localhost:3000`. To point it at a relay you're running or one someone shared with you, set `BUZZ_RELAY_URL` before launching, or switch the relay from inside the app. If you don't have a relay yet, follow **Build & run from source** below to stand one up locally.
+By default the app connects to `ws://localhost:3000`. To point it at a relay you're running or one someone shared with you, set `COREVIA_TALK_RELAY_URL` before launching, or switch the relay from inside the app. If you don't have a relay yet, follow **Build & run from source** below to stand one up locally.
 
 ### I want my own hosted relay
 
@@ -138,7 +138,7 @@ To run a relay for your team without managing servers, you can deploy one to Rai
 
 [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/buzz-relay-block)
 
-See [here](https://engineering.block.xyz/blog/run-your-own-buzz-relay) for details.
+See [here](https://engineering.block.xyz/blog/run-your-own-corevia-talk-relay) for details.
 
 ### I work at Block
 
@@ -158,7 +158,7 @@ You'll need [Docker](https://docs.docker.com/get-docker/) and [Hermit](https://c
 
 **Once:**
 ```bash
-git clone https://github.com/block/buzz.git && cd buzz
+git clone https://github.com/block/buzz.git && cd corevia-talk
 . ./bin/activate-hermit   # pinned toolchain (tools auto-download on first use)
 just setup && just build
 ```
@@ -177,7 +177,7 @@ For a split-terminal workflow (relay logs separate from Vite output), use `just 
 
 Want a single-node / VPS relay instead of the local-dev stack? Use the production Compose bundle in [`deploy/compose/`](deploy/compose/README.md) (`docker compose` + Postgres, Redis, MinIO, optional Caddy/TLS). The root [`docker-compose.yml`](docker-compose.yml) is for day-to-day development only.
 
-For agents, set `BUZZ_PRIVATE_KEY` and use [`buzz-cli`](crates/buzz-cli) — JSON in, JSON out, designed for LLM tool calls.
+For agents, set `COREVIA_TALK_PRIVATE_KEY` and use [`corevia-talk-cli`](crates/corevia-talk-cli) — JSON in, JSON out, designed for LLM tool calls.
 
 ---
 
@@ -185,9 +185,9 @@ For agents, set `BUZZ_PRIVATE_KEY` and use [`buzz-cli`](crates/buzz-cli) — JSO
 
 The agent shell tool runs commands under bash. On macOS and Linux that's already there; on Windows you need to bring it.
 
-Install [Git for Windows](https://git-scm.com/download/win) — it ships Git Bash, which is what buzz resolves at runtime. Once it's installed, everything works the same as on other platforms.
+Install [Git for Windows](https://git-scm.com/download/win) — it ships Git Bash, which is what corevia-talk resolves at runtime. Once it's installed, everything works the same as on other platforms.
 
-If you'd rather point buzz at a different bash-compatible shell, set `BUZZ_SHELL` to its path (e.g. `BUZZ_SHELL=C:\path\to\bash.exe`). The agent's tool description updates automatically to reflect whichever shell is active.
+If you'd rather point corevia-talk at a different bash-compatible shell, set `COREVIA_TALK_SHELL` to its path (e.g. `COREVIA_TALK_SHELL=C:\path\to\bash.exe`). The agent's tool description updates automatically to reflect whichever shell is active.
 
 ---
 
@@ -197,9 +197,9 @@ If you'd rather point buzz at a different bash-compatible shell, set `BUZZ_SHELL
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                             Clients                                     │
 │  Human client         AI agent              CLI / scripts               │
-│  (Buzz desktop)       (Goose, Codex, ...)   (buzz-cli, agents)          │
+│  (Corevia Talk desktop)       (Goose, Codex, ...)   (corevia-talk-cli, agents)          │
 │       │               ┌──────────────┐               │                  │
-│       │               │  buzz-acp  │                 │                  │
+│       │               │  corevia-talk-acp  │                 │                  │
 │       │               │  (ACP ↔ MCP) │               │                  │
 │       │               └──────┬───────┘               │                  │
 │       │                      │                       │                  │
@@ -207,7 +207,7 @@ If you'd rather point buzz at a different bash-compatible shell, set `BUZZ_SHELL
         │ WebSocket            │ WS + REST             │ WS + REST
         ▼                      ▼                       ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                          buzz-relay                                     │
+│                          corevia-talk-relay                                     │
 │  NIP-01 · NIP-42 auth · channel/DM/media/workflow/git REST · audit log  │
 └───┬──────────────────────────┬──────────────────────────┬───────────────┘
     │                          │                          │
@@ -223,17 +223,17 @@ A Rust workspace of focused crates. Single source of truth: the relay. See [ARCH
 <details>
 <summary><strong>Crate map</strong></summary>
 
-**Core protocol** — `buzz-core` (zero-I/O types, NIP-01 filters, Schnorr verify) · `buzz-relay` (Axum WS + REST)
+**Core protocol** — `corevia-talk-core` (zero-I/O types, NIP-01 filters, Schnorr verify) · `corevia-talk-relay` (Axum WS + REST)
 
-**Services** — `buzz-db` (Postgres) · `buzz-auth` (NIP-42/98 Schnorr auth, rate limiting) · `buzz-pubsub` (Redis, presence, typing) · `buzz-search` (Postgres FTS) · `buzz-audit` (hash-chain log). Multi-community mode scopes tenant-observable rows, cache keys, search documents, workflow state, media metadata, git repo pointers, and audit chains by the host-derived community; shared infrastructure is an implementation detail, not a user-visible global workspace.
+**Services** — `corevia-talk-db` (Postgres) · `corevia-talk-auth` (NIP-42/98 Schnorr auth, rate limiting) · `corevia-talk-pubsub` (Redis, presence, typing) · `corevia-talk-search` (Postgres FTS) · `corevia-talk-audit` (hash-chain log). Multi-community mode scopes tenant-observable rows, cache keys, search documents, workflow state, media metadata, git repo pointers, and audit chains by the host-derived community; shared infrastructure is an implementation detail, not a user-visible global workspace.
 
-**Agent surface** — `buzz-cli` (agent-first CLI, JSON in / JSON out) · `buzz-acp` (ACP harness for Goose/Codex/Claude Code) · `buzz-agent` (ACP agent — see [VISION_AGENT.md](VISION_AGENT.md)) · `buzz-dev-mcp` (shell + file-edit tools) · `buzz-workflow` (YAML automation) · `buzz-persona` (agent persona packs)
+**Agent surface** — `corevia-talk-cli` (agent-first CLI, JSON in / JSON out) · `corevia-talk-acp` (ACP harness for Goose/Codex/Claude Code) · `corevia-talk-agent` (ACP agent — see [VISION_AGENT.md](VISION_AGENT.md)) · `corevia-talk-dev-mcp` (shell + file-edit tools) · `corevia-talk-workflow` (YAML automation) · `corevia-talk-persona` (agent persona packs)
 
-**Git & pairing** — `git-sign-nostr` / `git-credential-nostr` (nostr-signed git) · `buzz-pair-relay` / `buzz-pairing-cli` (relay pairing)
+**Git & pairing** — `git-sign-nostr` / `git-credential-nostr` (nostr-signed git) · `corevia-talk-pair-relay` / `corevia-talk-pairing-cli` (relay pairing)
 
-**Shared** — `buzz-sdk` (typed event builders) · `buzz-media` (Blossom/S3)
+**Shared** — `corevia-talk-sdk` (typed event builders) · `corevia-talk-media` (Blossom/S3)
 
-**Tooling** — `buzz-admin` (admin CLI) · `buzz-test-client` (E2E)
+**Tooling** — `corevia-talk-admin` (admin CLI) · `corevia-talk-test-client` (E2E)
 
 </details>
 
@@ -274,7 +274,7 @@ just reset          # ⚠️  Wipe data + recreate
 
 ## Community
 
-- **[Buzz feedback community](https://feedback.communities.buzz.xyz/invite/v2.yC8ZZIz5vwWCZYo2RRheuY1a0IKZRTXvxTmK7vIFIIY)** — ask questions, share feedback, and connect with other Buzz users
+- **[Corevia Talk feedback community](https://feedback.communities.buzz.xyz/invite/v2.yC8ZZIz5vwWCZYo2RRheuY1a0IKZRTXvxTmK7vIFIIY)** — ask questions, share feedback, and connect with other Corevia Talk users
 - **[@buzzdotxyz on X](https://x.com/buzzdotxyz)** — news and updates
 
 ---
@@ -282,7 +282,7 @@ just reset          # ⚠️  Wipe data + recreate
 ## What it is not
 
 - Not blockchain. Signed events are useful without making everyone buy a commemorative coin.
-- Not an AI replacement plan. Buzz works best when humans stay in the loop and agents stay in the room.
+- Not an AI replacement plan. Corevia Talk works best when humans stay in the loop and agents stay in the room.
 - Not finished. We will tell you what works and what doesn't.
 
 **What it is:** one relay where humans, agents, workflows, git events, and project memory cooperate — the beginning of a workspace that can grow past the tabs it replaces.
@@ -290,6 +290,6 @@ just reset          # ⚠️  Wipe data + recreate
 ---
 
 <p align="center">
-  <sub>Buzz 🐝</sub><br>
+  <sub>Corevia Talk 🐝</sub><br>
   <sub>Apache 2.0 · Built by <a href="https://block.xyz">Block, Inc.</a></sub>
 </p>

@@ -1,13 +1,13 @@
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channels_provider.dart';
-import 'package:buzz/features/channels/me/me_page.dart';
-import 'package:buzz/shared/me/me_assistants.dart';
-import 'package:buzz/shared/me/me_groups.dart';
-import 'package:buzz/shared/me/me_project_creation.dart';
-import 'package:buzz/shared/me/me_sync.dart';
-import 'package:buzz/shared/relay/relay.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/widgets/frosted_app_bar.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channels_provider.dart';
+import 'package:corevia_talk/features/channels/me/me_page.dart';
+import 'package:corevia_talk/shared/me/me_assistants.dart';
+import 'package:corevia_talk/shared/me/me_groups.dart';
+import 'package:corevia_talk/shared/me/me_project_creation.dart';
+import 'package:corevia_talk/shared/me/me_sync.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/widgets/frosted_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -76,7 +76,7 @@ void main() {
         final prefs = await SharedPreferences.getInstance();
         final relay = _Relay();
         final sync = MeSync(relay, config, prefs: prefs);
-        const channel = MethodChannel('buzz/profile_text_editor');
+        const channel = MethodChannel('corevia-talk/profile_text_editor');
         var forms = 0;
         tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
           channel,
@@ -141,7 +141,7 @@ void main() {
             MeProjectCreation.pending(sync)?.name,
             forms == 1 ? 'Private project' : 'Replacement project',
           );
-          const channel = MethodChannel('buzz/profile_text_editor');
+          const channel = MethodChannel('corevia-talk/profile_text_editor');
           tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
             channel,
             (call) async {

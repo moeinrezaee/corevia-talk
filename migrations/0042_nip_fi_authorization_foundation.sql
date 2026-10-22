@@ -132,7 +132,7 @@ CREATE TABLE protected_object_authority (
 );
 
 -- Explicit immutable-capacity policy required by Enforce mode. Hard ceilings
--- match buzz-auth; installation limits must be sized explicitly below them.
+-- match corevia-talk-auth; installation limits must be sized explicitly below them.
 -- V1 has no online pruning/export/reset workflow.
 CREATE TABLE authorization_event_capacity (
     community_id UUID NOT NULL PRIMARY KEY REFERENCES communities(id),

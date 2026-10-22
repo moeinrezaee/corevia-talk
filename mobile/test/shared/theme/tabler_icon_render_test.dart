@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:buzz/shared/theme/buzz_icons.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/widgets/tabler_star_icon.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/widgets/tabler_star_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +19,7 @@ void main() {
           'Inter',
         )..addFont(rootBundle.load('assets/fonts/InterVariable.ttf'))).load();
         await (FontLoader(
-          'BuzzTabler',
+          'CoreviaTalkTabler',
         )..addFont(rootBundle.load('assets/fonts/TablerIcons.ttf'))).load();
       });
       final theme = dark ? AppTheme.dark() : AppTheme.light();
@@ -46,23 +46,23 @@ void main() {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const ListTile(
-                        leading: Icon(BuzzIcons.filter2),
+                        leading: Icon(CoreviaTalkIcons.filter2),
                         title: Text('Filter inbox'),
                       ),
                       const ListTile(
-                        leading: Icon(BuzzIcons.archive),
+                        leading: Icon(CoreviaTalkIcons.archive),
                         title: Text('Archive'),
                       ),
                       const ListTile(
-                        leading: Icon(BuzzIcons.archiveRestore),
+                        leading: Icon(CoreviaTalkIcons.archiveRestore),
                         title: Text('Unarchive'),
                       ),
                       const ListTile(
-                        leading: Icon(BuzzIcons.clock3),
+                        leading: Icon(CoreviaTalkIcons.clock3),
                         title: Text('Running'),
                       ),
                       const ListTile(
-                        leading: Icon(BuzzIcons.clockFading),
+                        leading: Icon(CoreviaTalkIcons.clockFading),
                         title: Text('Temporary channel'),
                       ),
                       ListTile(

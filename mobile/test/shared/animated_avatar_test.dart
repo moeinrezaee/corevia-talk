@@ -1,4 +1,4 @@
-import 'package:buzz/shared/animated_avatar.dart';
+import 'package:corevia_talk/shared/animated_avatar.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -17,24 +17,24 @@ void main() {
   test('builds the shared desktop and mobile fragment format', () {
     expect(
       buildAnimatedAvatarUrl(posterUrl, animationUrl),
-      '$posterUrl#buzz-anim=${Uri.encodeComponent(animationUrl)}',
+      '$posterUrl#corevia-talk-anim=${Uri.encodeComponent(animationUrl)}',
     );
   });
 
   test('rejects malformed and non-http animated avatar URLs', () {
     expect(parseAnimatedAvatarUrl(posterUrl), isNull);
-    expect(parseAnimatedAvatarUrl('$posterUrl#buzz-anim='), isNull);
-    expect(parseAnimatedAvatarUrl('$posterUrl#buzz-anim=%E0%A4%A'), isNull);
-    expect(parseAnimatedAvatarUrl('$posterUrl#buzz-anim=%'), isNull);
+    expect(parseAnimatedAvatarUrl('$posterUrl#corevia-talk-anim='), isNull);
+    expect(parseAnimatedAvatarUrl('$posterUrl#corevia-talk-anim=%E0%A4%A'), isNull);
+    expect(parseAnimatedAvatarUrl('$posterUrl#corevia-talk-anim=%'), isNull);
     expect(
       parseAnimatedAvatarUrl(
-        '$posterUrl#buzz-anim=${Uri.encodeComponent('javascript:alert(1)')}',
+        '$posterUrl#corevia-talk-anim=${Uri.encodeComponent('javascript:alert(1)')}',
       ),
       isNull,
     );
     expect(
       parseAnimatedAvatarUrl(
-        'data:image/png;base64,xx#buzz-anim='
+        'data:image/png;base64,xx#corevia-talk-anim='
         '${Uri.encodeComponent(animationUrl)}',
       ),
       isNull,

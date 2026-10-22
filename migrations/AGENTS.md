@@ -12,7 +12,7 @@ Before changing anything in this directory, read
 - Make each change in every schema location: `migrations/`,
   `schema/tables/public/`, the `schema/` manifest and sibling directories,
   `scripts/reconcile-schema-after-pgschema.sql` where it applies, and, for
-  existing `push_gateway_*` tables, `crates/buzz-push-gateway/migrations/`.
+  existing `push_gateway_*` tables, `crates/corevia-talk-push-gateway/migrations/`.
   Do not add new gateway tables here.
 - Never edit a merged migration. Fix forward.
 - Adding a `community_id` table has its own checklist in that document. A

@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:buzz/shared/community/paired_community_landing.dart';
+import 'package:corevia_talk/shared/community/paired_community_landing.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:buzz/app.dart';
-import 'package:buzz/features/age_gate/age_signal_provider.dart';
-import 'package:buzz/shared/auth/auth.dart';
-import 'package:buzz/shared/theme/theme_provider.dart';
+import 'package:corevia_talk/app.dart';
+import 'package:corevia_talk/features/age_gate/age_signal_provider.dart';
+import 'package:corevia_talk/shared/auth/auth.dart';
+import 'package:corevia_talk/shared/theme/theme_provider.dart';
 
 void main() {
   testWidgets('pairing loading cover blocks hidden input and semantics', (
@@ -99,7 +99,7 @@ void main() {
       ),
     );
     await tester.pump();
-    expect(find.bySemanticsLabel('Buzz'), findsOneWidget);
+    expect(find.bySemanticsLabel('Corevia Talk'), findsOneWidget);
     expect(find.text('Scan a QR code'), findsOneWidget);
   });
 }

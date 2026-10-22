@@ -532,7 +532,7 @@ export function LocalArchiveSettingsCard() {
       <SettingsSectionHeader
         title={tl("Local archive")}
         description={tl(
-          "Save copies of relay messages to a local SQLite database in your Buzz nest. Events are re-verified against the relay at archive time.",
+          "Save copies of relay messages to a local SQLite database in your Corevia Talk nest. Events are re-verified against the relay at archive time.",
         )}
       />
 

@@ -115,7 +115,7 @@ class AccountIdentityStore {
       : '${storageKey}_subject_${base64Url.encode(utf8.encode(_subject))}';
 
   static final storageKey =
-      'buzz_account_identity_${HostedEnvironment.origin.host.replaceAll('.', '_')}_v1';
+      'corevia_talk_account_identity_${HostedEnvironment.origin.host.replaceAll('.', '_')}_v1';
   static final _queue = SerialQueue();
   final FlutterSecureStorage _storage;
   // Public lookup hints from the choices shown by this store. Always reread

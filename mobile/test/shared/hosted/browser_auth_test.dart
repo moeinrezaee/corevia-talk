@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:buzz/shared/hosted/browser_auth.dart';
-import 'package:buzz/shared/hosted/hosted_environment.dart';
+import 'package:corevia_talk/shared/hosted/browser_auth.dart';
+import 'package:corevia_talk/shared/hosted/hosted_environment.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -75,7 +75,7 @@ void main() {
         '${BrowserAuth.callback}?code=x',
         '${BrowserAuth.callback}?state=wrong&code=x',
         '${BrowserAuth.callback}?state=$state&state=$state&code=x',
-        'xyz.block.buzz.mobile://auth/callback?state=$state&code=x',
+        'xyz.block.coreviatalk.mobile://auth/callback?state=$state&code=x',
         '${BrowserAuth.callback}/?state=$state&code=x',
         '${BrowserAuth.callback}?state=$state&code=x#fragment',
       ]) {

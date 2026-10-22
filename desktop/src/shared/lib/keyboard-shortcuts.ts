@@ -1,7 +1,7 @@
 import { isMacPlatform } from "@/shared/lib/platform";
 import { tl } from "@/shared/i18n/tl";
 
-export const HUDDLE_SHORTCUT_EVENT = "buzz:huddle-shortcut";
+export const HUDDLE_SHORTCUT_EVENT = "corevia-talk:huddle-shortcut";
 
 export type HuddleShortcutDetail = {
   channelId: string;

@@ -140,7 +140,7 @@ class _CustomSectionHeader extends StatelessWidget {
                 key: ValueKey('section-menu-${section.id}'),
                 tooltip: tlt('{0} options', [section.name]),
                 icon: Icon(
-                  BuzzIcons.ellipsisVertical,
+                  CoreviaTalkIcons.ellipsisVertical,
                   size: _kChannelIconSize,
                   color: navigationSecondaryForeground(context),
                 ),
@@ -155,7 +155,7 @@ class _CustomSectionHeader extends StatelessWidget {
                         value: 'rename',
                         padding: _sectionMenuItemPadding,
                         child: _SectionMenuItemContent(
-                          icon: BuzzIcons.pencil,
+                          icon: CoreviaTalkIcons.pencil,
                           label: tl('Rename section'),
                         ),
                       ),
@@ -164,7 +164,7 @@ class _CustomSectionHeader extends StatelessWidget {
                         enabled: !isFirst,
                         padding: _sectionMenuItemPadding,
                         child: _SectionMenuItemContent(
-                          icon: BuzzIcons.arrowUp,
+                          icon: CoreviaTalkIcons.arrowUp,
                           label: tl('Move up'),
                         ),
                       ),
@@ -173,7 +173,7 @@ class _CustomSectionHeader extends StatelessWidget {
                         enabled: !isLast,
                         padding: _sectionMenuItemPadding,
                         child: _SectionMenuItemContent(
-                          icon: BuzzIcons.arrowDown,
+                          icon: CoreviaTalkIcons.arrowDown,
                           label: tl('Move down'),
                         ),
                       ),
@@ -182,7 +182,7 @@ class _CustomSectionHeader extends StatelessWidget {
                         value: 'delete',
                         padding: _sectionMenuItemPadding,
                         child: _SectionMenuItemContent(
-                          icon: BuzzIcons.trash2,
+                          icon: CoreviaTalkIcons.trash2,
                           label: tl('Delete section'),
                           color: context.colors.error,
                         ),
@@ -296,7 +296,7 @@ PopupMenuItem<String> _sortMenuItem({
     children: [
       Expanded(child: Text(label)),
       if (selected)
-        const Icon(BuzzIcons.check, key: ValueKey('sort-selected-check'))
+        const Icon(CoreviaTalkIcons.check, key: ValueKey('sort-selected-check'))
       else
         const SizedBox(width: 24),
     ],
@@ -414,7 +414,7 @@ class _EmptyState extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              BuzzIcons.messagesSquare,
+              CoreviaTalkIcons.messagesSquare,
               size: Grid.xl,
               color: context.colors.onSurfaceVariant,
             ),
@@ -494,7 +494,7 @@ class _SectionHeader extends StatelessWidget {
                   key: ValueKey('sort-menu-$label'),
                   tooltip: tlt('{0} options', [label]),
                   icon: Icon(
-                    BuzzIcons.ellipsisVertical,
+                    CoreviaTalkIcons.ellipsisVertical,
                     size: _kChannelIconSize,
                     color: navigationSecondaryForeground(context),
                   ),
@@ -570,7 +570,7 @@ class _SectionChevron extends StatelessWidget {
       turns: expanded ? 0 : -0.25,
       duration: reducedMotion ? Duration.zero : sectionExpandDuration,
       curve: sectionExpandCurve,
-      child: Icon(BuzzIcons.chevronDown, size: _kChannelIconSize, color: color),
+      child: Icon(CoreviaTalkIcons.chevronDown, size: _kChannelIconSize, color: color),
     );
   }
 }

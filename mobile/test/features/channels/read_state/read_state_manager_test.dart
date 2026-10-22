@@ -5,11 +5,11 @@ import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nostr/nostr.dart' as nostr;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:buzz/shared/read_state/read_state_format.dart';
-import 'package:buzz/shared/read_state/read_state_manager.dart';
-import 'package:buzz/shared/read_state/read_state_storage.dart';
-import 'package:buzz/shared/read_state/read_state_time.dart';
-import 'package:buzz/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/read_state/read_state_format.dart';
+import 'package:corevia_talk/shared/read_state/read_state_manager.dart';
+import 'package:corevia_talk/shared/read_state/read_state_storage.dart';
+import 'package:corevia_talk/shared/read_state/read_state_time.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
 
 const _relayUrl = 'https://relay.example';
 
@@ -308,11 +308,11 @@ void main() {
   test('each community keeps its own slot, seeded from the shared one, '
       'and none takes the shared marks', () async {
     SharedPreferences.setMockInitialValues({
-      'buzz.nip-rs.slot-id:pk': 'a' * 32,
-      'buzz.channel-read-state.v2:pk':
+      'corevia-talk.nip-rs.slot-id:pk': 'a' * 32,
+      'corevia-talk.channel-read-state.v2:pk':
           '{"channel-1":"2026-01-01T00:00:00.000",'
           '"thread-activity:root-1":"2026-01-01T00:00:00.000"}',
-      'buzz.channel-read-state.publishable.v1:pk':
+      'corevia-talk.channel-read-state.publishable.v1:pk':
           '["channel-1","thread-activity:root-1"]',
     });
     final prefs = await SharedPreferences.getInstance();
@@ -328,9 +328,9 @@ void main() {
     // the published ones, so neither community takes them.
     expect(storage.read('pk', _relayUrl).contexts, isEmpty);
     expect(storage.read('pk', 'https://other.example').contexts, isEmpty);
-    expect(prefs.containsKey('buzz.channel-read-state.v2:pk'), isFalse);
+    expect(prefs.containsKey('corevia-talk.channel-read-state.v2:pk'), isFalse);
     expect(
-      prefs.containsKey('buzz.channel-read-state.publishable.v1:pk'),
+      prefs.containsKey('corevia-talk.channel-read-state.publishable.v1:pk'),
       isFalse,
     );
   });

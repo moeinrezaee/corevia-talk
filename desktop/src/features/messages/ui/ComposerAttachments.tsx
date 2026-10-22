@@ -289,7 +289,7 @@ const MediaAttachmentItem = React.forwardRef<
       ? rewriteRelayUrl(attachment.thumb)
       : undefined;
 
-  // Only Buzz-hosted uploads have a content hash. URL-only provider media
+  // Only CoreviaTalk-hosted uploads have a content hash. URL-only provider media
   // must remain externally hosted instead of being copied into storage by the
   // image editor's save path.
   const canEdit =

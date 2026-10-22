@@ -5,7 +5,7 @@ import { Button } from "@/shared/ui/button";
 import { tl } from "@/shared/i18n/tl";
 
 function providerLabel(providerId: string) {
-  const option = getPersonaProviderOptions("", "buzz-agent").find(
+  const option = getPersonaProviderOptions("", "corevia-talk-agent").find(
     (candidate) => candidate.id === providerId,
   );
   return option?.label ?? providerId;

@@ -1,17 +1,17 @@
 import 'dart:async';
 
-import 'package:buzz/shared/community/community.dart';
-import 'package:buzz/shared/deeplink/deep_link.dart';
-import 'package:buzz/shared/push/push_bridge.dart';
-import 'package:buzz/shared/relay/relay_provider.dart';
-import 'package:buzz/shared/relay/app_lifecycle_provider.dart';
+import 'package:corevia_talk/shared/community/community.dart';
+import 'package:corevia_talk/shared/deeplink/deep_link.dart';
+import 'package:corevia_talk/shared/push/push_bridge.dart';
+import 'package:corevia_talk/shared/relay/relay_provider.dart';
+import 'package:corevia_talk/shared/relay/app_lifecycle_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-const _channel = MethodChannel('buzz/push');
+const _channel = MethodChannel('corevia-talk/push');
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +23,7 @@ void main() {
     pushEndpointGrantError.value = null;
     pushCommunitySnapshotError.value = null;
     pendingPushNotificationLink.value = null;
-    installBuzzPushMethodHandler();
+    installCoreviaTalkPushMethodHandler();
   });
 
   tearDown(() {
@@ -56,7 +56,7 @@ void main() {
             return null;
           });
 
-      await startBuzzPushRegistration();
+      await startCoreviaTalkPushRegistration();
     },
   );
 
@@ -66,7 +66,7 @@ void main() {
         .setMockMethodCallHandler(_channel, null);
 
     await expectLater(
-      registerBuzzPushCommunitySnapshotStrict(const [], settleFence: false),
+      registerCoreviaTalkPushCommunitySnapshotStrict(const [], settleFence: false),
       throwsA(isA<MissingPluginException>()),
     );
   });
@@ -87,7 +87,7 @@ void main() {
             return null;
           });
 
-      await registerBuzzPushCommunitySnapshotStrict(
+      await registerCoreviaTalkPushCommunitySnapshotStrict(
         const [],
         settleFence: true,
       );
@@ -103,7 +103,7 @@ void main() {
           return null;
         });
 
-    await purgeAgeRestrictedBuzzNotifications();
+    await purgeAgeRestrictedCoreviaTalkNotifications();
   });
 
   test('reads native notification authorization status', () async {
@@ -115,8 +115,8 @@ void main() {
         });
 
     expect(
-      await readBuzzPushAuthorizationStatus(),
-      BuzzPushAuthorizationStatus.denied,
+      await readCoreviaTalkPushAuthorizationStatus(),
+      CoreviaTalkPushAuthorizationStatus.denied,
     );
   });
 
@@ -128,18 +128,18 @@ void main() {
           return true;
         });
 
-    expect(await openBuzzPushNotificationSettings(), isTrue);
+    expect(await openCoreviaTalkPushNotificationSettings(), isTrue);
   });
 
   test('refreshes not-determined permission to denied on resume', () async {
     final statuses = [
-      BuzzPushAuthorizationStatus.notDetermined,
-      BuzzPushAuthorizationStatus.denied,
+      CoreviaTalkPushAuthorizationStatus.notDetermined,
+      CoreviaTalkPushAuthorizationStatus.denied,
     ];
     final container = ProviderContainer(
       overrides: [
         appLifecycleProvider.overrideWith(_TestAppLifecycleNotifier.new),
-        buzzPushAuthorizationStatusReaderProvider.overrideWithValue(
+        coreviaTalkPushAuthorizationStatusReaderProvider.overrideWithValue(
           () async => statuses.removeAt(0),
         ),
       ],
@@ -147,26 +147,26 @@ void main() {
     addTearDown(container.dispose);
 
     expect(
-      await container.read(buzzPushAuthorizationStatusProvider.future),
-      BuzzPushAuthorizationStatus.notDetermined,
+      await container.read(coreviaTalkPushAuthorizationStatusProvider.future),
+      CoreviaTalkPushAuthorizationStatus.notDetermined,
     );
     final lifecycle =
         container.read(appLifecycleProvider.notifier)
             as _TestAppLifecycleNotifier;
     lifecycle.setState(AppLifecycleState.paused);
     lifecycle.setState(AppLifecycleState.resumed);
-    await _waitForAuthorization(container, BuzzPushAuthorizationStatus.denied);
+    await _waitForAuthorization(container, CoreviaTalkPushAuthorizationStatus.denied);
   });
 
   test('refreshes externally revoked permission on resume', () async {
     final statuses = [
-      BuzzPushAuthorizationStatus.authorized,
-      BuzzPushAuthorizationStatus.denied,
+      CoreviaTalkPushAuthorizationStatus.authorized,
+      CoreviaTalkPushAuthorizationStatus.denied,
     ];
     final container = ProviderContainer(
       overrides: [
         appLifecycleProvider.overrideWith(_TestAppLifecycleNotifier.new),
-        buzzPushAuthorizationStatusReaderProvider.overrideWithValue(
+        coreviaTalkPushAuthorizationStatusReaderProvider.overrideWithValue(
           () async => statuses.removeAt(0),
         ),
       ],
@@ -174,15 +174,15 @@ void main() {
     addTearDown(container.dispose);
 
     expect(
-      await container.read(buzzPushAuthorizationStatusProvider.future),
-      BuzzPushAuthorizationStatus.authorized,
+      await container.read(coreviaTalkPushAuthorizationStatusProvider.future),
+      CoreviaTalkPushAuthorizationStatus.authorized,
     );
     final lifecycle =
         container.read(appLifecycleProvider.notifier)
             as _TestAppLifecycleNotifier;
     lifecycle.setState(AppLifecycleState.paused);
     lifecycle.setState(AppLifecycleState.resumed);
-    await _waitForAuthorization(container, BuzzPushAuthorizationStatus.denied);
+    await _waitForAuthorization(container, CoreviaTalkPushAuthorizationStatus.denied);
   });
 
   test('reads and exposes persisted endpoint grants on iOS', () async {
@@ -195,7 +195,7 @@ void main() {
       return [_grantMap('opaque-grant')];
     });
 
-    final grants = await readBuzzPushEndpointGrants();
+    final grants = await readCoreviaTalkPushEndpointGrants();
 
     expect(grants, hasLength(1));
     expect(grants.single.relayOrigin, 'wss://relay.example');
@@ -235,11 +235,11 @@ void main() {
         fail('Unexpected method ${call.method}');
       });
 
-      final firstGrant = await enrollBuzzPush(
+      final firstGrant = await enrollCoreviaTalkPush(
         'wss://relay.example/',
         'https://gateway-one.example/',
       );
-      final secondGrant = await enrollBuzzPush(
+      final secondGrant = await enrollCoreviaTalkPush(
         'wss://relay.example/',
         'https://gateway-two.example/',
         communitiesForSnapshotRefresh: [
@@ -294,7 +294,7 @@ void main() {
 
   test('development push gateway matches the compiled configuration', () {
     const expectedGateway = String.fromEnvironment(
-      'BUZZ_PUSH_GATEWAY_URL',
+      'COREVIA_TALK_PUSH_GATEWAY_URL',
       defaultValue: 'https://push.buzz.xyz',
     );
     expect(Env.pushGatewayUrl, expectedGateway);
@@ -386,7 +386,7 @@ void main() {
               'threadRootId': invalidThread,
             },
           );
-      await syncPendingBuzzPushNotificationResponse();
+      await syncPendingCoreviaTalkPushNotificationResponse();
       expect(pendingPushNotificationLink.value, isNull);
     });
   }
@@ -469,7 +469,7 @@ void main() {
           };
         });
 
-    await syncPendingBuzzPushNotificationResponse();
+    await syncPendingCoreviaTalkPushNotificationResponse();
 
     expect(
       pendingPushNotificationLink.value,
@@ -492,10 +492,10 @@ class _TestAppLifecycleNotifier extends AppLifecycleNotifier {
 
 Future<void> _waitForAuthorization(
   ProviderContainer container,
-  BuzzPushAuthorizationStatus expected,
+  CoreviaTalkPushAuthorizationStatus expected,
 ) async {
   for (var attempt = 0; attempt < 20; attempt++) {
-    if (container.read(buzzPushAuthorizationStatusProvider).value == expected) {
+    if (container.read(coreviaTalkPushAuthorizationStatusProvider).value == expected) {
       return;
     }
     await Future<void>.delayed(Duration.zero);

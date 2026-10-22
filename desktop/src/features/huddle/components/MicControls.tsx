@@ -36,7 +36,7 @@ type MicControlsProps = {
 
 const splitIconButtonClass = "h-12 w-auto shrink-0 rounded-e-none px-4 py-4";
 const splitChevronButtonClass =
-  "buzz-huddle-split-chevron group h-12 w-auto shrink-0 rounded-s-none px-2 py-4";
+  "corevia-talk-huddle-split-chevron group h-12 w-auto shrink-0 rounded-s-none px-2 py-4";
 const mutedHuddleControlClass =
   "bg-destructive/35 text-destructive shadow-none hover:bg-destructive/45 hover:text-destructive";
 const compactMutedHuddleControlClass =
@@ -45,7 +45,7 @@ const MIC_PERMISSION_SETTINGS_URL =
   "x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone";
 
 type MicMeterBarStyle = CSSProperties & {
-  "--buzz-huddle-meter-height": string;
+  "--corevia-talk-huddle-meter-height": string;
 };
 
 const MIC_METER_IDLE_HEIGHT_REM = 0.25;
@@ -60,7 +60,7 @@ function clamp01(value: number): number {
 }
 
 function micMeterBarStyle(heightRem: number): MicMeterBarStyle {
-  return { "--buzz-huddle-meter-height": `${heightRem}rem` };
+  return { "--corevia-talk-huddle-meter-height": `${heightRem}rem` };
 }
 
 function micMeterHeights(level: number): [number, number, number] {
@@ -129,7 +129,7 @@ export function MicControls({
     ? "h-8 w-8 shrink-0 rounded-s-md rounded-e-none px-0 py-0 text-sidebar-foreground/70 !shadow-none hover:bg-sidebar-foreground/5 hover:text-sidebar-foreground/70"
     : splitIconButtonClass;
   const chevronButtonClass = compact
-    ? "buzz-huddle-split-chevron group h-8 w-5 shrink-0 rounded-s-none rounded-e-md border-s border-sidebar-border/80 px-0.5 py-0 text-sidebar-foreground/70 !shadow-none hover:bg-sidebar-foreground/5 hover:text-sidebar-foreground/70"
+    ? "corevia-talk-huddle-split-chevron group h-8 w-5 shrink-0 rounded-s-none rounded-e-md border-s border-sidebar-border/80 px-0.5 py-0 text-sidebar-foreground/70 !shadow-none hover:bg-sidebar-foreground/5 hover:text-sidebar-foreground/70"
     : splitChevronButtonClass;
   const mutedMicClass =
     isEffectivelyMuted || micUnavailable
@@ -158,7 +158,7 @@ export function MicControls({
                 mutedMicClass,
                 !isEffectivelyMuted &&
                   !micUnavailable &&
-                  "buzz-huddle-split-main",
+                  "corevia-talk-huddle-split-main",
               )}
               onClick={() => {
                 if (!micConnected) return;
@@ -178,7 +178,7 @@ export function MicControls({
               )}
             </Button>
           </TooltipTrigger>
-          <TooltipContent className="buzz-huddle-tooltip" side="top">
+          <TooltipContent className="corevia-talk-huddle-tooltip" side="top">
             {isPttMode && !micUnavailable && isEffectivelyMuted ? (
               <span className="flex items-center gap-1.5">
                 <span>{tl("Click to unmute or hold")}</span>
@@ -205,15 +205,15 @@ export function MicControls({
               >
                 <span className="flex h-5 w-5 items-center justify-between text-current group-data-[state=open]:hidden group-focus-visible:hidden group-hover:hidden">
                   <span
-                    className="buzz-huddle-mic-meter-bar bg-current"
+                    className="corevia-talk-huddle-mic-meter-bar bg-current"
                     style={micMeterBarStyle(leftBarHeight)}
                   />
                   <span
-                    className="buzz-huddle-mic-meter-bar bg-current"
+                    className="corevia-talk-huddle-mic-meter-bar bg-current"
                     style={micMeterBarStyle(centerBarHeight)}
                   />
                   <span
-                    className="buzz-huddle-mic-meter-bar bg-current"
+                    className="corevia-talk-huddle-mic-meter-bar bg-current"
                     style={micMeterBarStyle(rightBarHeight)}
                   />
                 </span>
@@ -227,7 +227,7 @@ export function MicControls({
       </div>
       <PopoverContent
         side="top"
-        className="buzz-huddle-drawer buzz-huddle-popover w-64 text-foreground"
+        className="corevia-talk-huddle-drawer corevia-talk-huddle-popover w-64 text-foreground"
       >
         <div className="flex flex-col gap-3">
           <div>
@@ -369,7 +369,7 @@ export function SpeakerControls({
           <PopoverContent
             align="center"
             aria-label={tl("Headphones recommended")}
-            className="buzz-huddle-drawer buzz-huddle-popover buzz-huddle-headphones-hint w-64 p-3 text-foreground"
+            className="corevia-talk-huddle-drawer corevia-talk-huddle-popover corevia-talk-huddle-headphones-hint w-64 p-3 text-foreground"
             onCloseAutoFocus={(event) => event.preventDefault()}
             onOpenAutoFocus={(event) => event.preventDefault()}
             side="top"
@@ -407,7 +407,7 @@ export function SpeakerControls({
           aria-pressed={!ttsEnabled}
           className={cn(
             splitIconButtonClass,
-            ttsEnabled ? "buzz-huddle-split-main" : mutedHuddleControlClass,
+            ttsEnabled ? "corevia-talk-huddle-split-main" : mutedHuddleControlClass,
           )}
           onClick={onToggleTts}
           size="icon"
@@ -432,7 +432,7 @@ export function SpeakerControls({
       </div>
       <PopoverContent
         side="top"
-        className="buzz-huddle-drawer buzz-huddle-popover w-64 text-foreground"
+        className="corevia-talk-huddle-drawer corevia-talk-huddle-popover w-64 text-foreground"
       >
         <DeviceList
           label={tl("Speaker")}

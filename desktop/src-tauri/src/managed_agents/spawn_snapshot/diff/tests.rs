@@ -8,13 +8,13 @@ const RELAY_WITH_TOKEN: &str = "wss://relay.example/ws?token=SENTINEL";
 /// coverage guard below sees the full serialized key set.
 fn base() -> SpawnConfigSnapshot {
     SpawnConfigSnapshot {
-        acp_command: "buzz-acp".into(),
+        acp_command: "corevia-talk-acp".into(),
         command: "goose".into(),
         args: vec!["--mode".into(), "acp".into()],
         mcp_command: "goose-mcp".into(),
         env: BTreeMap::from([
             ("OPENAI_API_KEY".to_string(), SECRET.to_string()),
-            ("BUZZ_LOG".to_string(), "info".to_string()),
+            ("COREVIA_TALK_LOG".to_string(), "info".to_string()),
         ]),
         relay_url: "wss://relay.example".into(),
         team_instructions: Some("Team says hello.".into()),
@@ -162,9 +162,9 @@ fn env_key_insertion_is_added_without_a_payload() {
 #[test]
 fn env_key_removal_is_removed_without_a_payload() {
     let mut after = base();
-    after.env.remove("BUZZ_LOG");
+    after.env.remove("COREVIA_TALK_LOG");
     assert_eq!(
-        change_at(&diff(&base(), &after), "env.BUZZ_LOG"),
+        change_at(&diff(&base(), &after), "env.COREVIA_TALK_LOG"),
         &RestartChange::Removed
     );
 }
@@ -196,18 +196,18 @@ fn array_field_changes_as_one_atomic_leaf() {
 
 #[test]
 fn allowlisted_env_key_shows_plain_value() {
-    // BUZZ_AGENT_THINKING_EFFORT is on the safe-to-reveal allowlist — the user
+    // COREVIA_TALK_AGENT_THINKING_EFFORT is on the safe-to-reveal allowlist — the user
     // must be able to see actual enum values like "medium → high".
     let mut before = base();
     before
         .env
-        .insert("BUZZ_AGENT_THINKING_EFFORT".into(), "medium".into());
+        .insert("COREVIA_TALK_AGENT_THINKING_EFFORT".into(), "medium".into());
     let mut after = before.clone();
     after
         .env
-        .insert("BUZZ_AGENT_THINKING_EFFORT".into(), "high".into());
+        .insert("COREVIA_TALK_AGENT_THINKING_EFFORT".into(), "high".into());
     assert_eq!(
-        change_at(&diff(&before, &after), "env.BUZZ_AGENT_THINKING_EFFORT"),
+        change_at(&diff(&before, &after), "env.COREVIA_TALK_AGENT_THINKING_EFFORT"),
         &RestartChange::Value {
             before: Value::String("medium".into()),
             after: Value::String("high".into()),
@@ -223,13 +223,13 @@ fn allowlisted_env_key_is_case_insensitive() {
     let mut before = base();
     before
         .env
-        .insert("buzz_agent_provider".into(), "anthropic".into());
+        .insert("corevia_talk_agent_provider".into(), "anthropic".into());
     let mut after = before.clone();
     after
         .env
-        .insert("buzz_agent_provider".into(), "openai".into());
+        .insert("corevia_talk_agent_provider".into(), "openai".into());
     assert_eq!(
-        change_at(&diff(&before, &after), "env.buzz_agent_provider"),
+        change_at(&diff(&before, &after), "env.corevia_talk_agent_provider"),
         &RestartChange::Value {
             before: Value::String("anthropic".into()),
             after: Value::String("openai".into()),

@@ -288,10 +288,10 @@ describe("SetupStep cached-ready revalidation", () => {
     queryClient.clear();
   });
 
-  it("hands Buzz directly to API config while forced discovery is pending", async () => {
+  it("hands Corevia Talk directly to API config while forced discovery is pending", async () => {
     const queryClient = makeQueryClient();
     queryClient.setQueryData(acpRuntimesQueryKey, [
-      catalogEntry("buzz-agent", "not_applicable"),
+      catalogEntry("corevia-talk-agent", "not_applicable"),
       catalogEntry("goose", "not_applicable"),
     ]);
 
@@ -324,25 +324,25 @@ describe("SetupStep cached-ready revalidation", () => {
     });
     assert.deepEqual(
       nextCalls,
-      [[["buzz-agent"], "method"]],
-      "Buzz API configuration does not wait for runtime discovery",
+      [[["corevia-talk-agent"], "method"]],
+      "Corevia Talk API configuration does not wait for runtime discovery",
     );
 
     await act(async () => {
-      pending.resolve([rawReadyEntry("buzz-agent"), rawReadyEntry("goose")]);
+      pending.resolve([rawReadyEntry("corevia-talk-agent"), rawReadyEntry("goose")]);
       await new Promise((r) => setTimeout(r, 50));
     });
 
     assert.deepEqual(
       nextCalls,
-      [[["buzz-agent"], "method"]],
+      [[["corevia-talk-agent"], "method"]],
       "discovery completion does not navigate a second time",
     );
     assert.ok(
       readyRuntimeIdSnapshots.some(
         (snapshot) =>
           snapshot.length === 2 &&
-          snapshot.includes("buzz-agent") &&
+          snapshot.includes("corevia-talk-agent") &&
           snapshot.includes("goose"),
       ),
       "catalog readiness may still be published independently of the selected handoff",

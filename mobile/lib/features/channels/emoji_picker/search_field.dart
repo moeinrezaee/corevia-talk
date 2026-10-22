@@ -42,7 +42,7 @@ class _EmojiSearchField extends StatelessWidget {
               color: colors.onSurfaceVariant,
             ),
             prefixIcon: Icon(
-              BuzzIcons.search,
+              CoreviaTalkIcons.search,
               size: 18,
               color: colors.onSurfaceVariant,
             ),
@@ -58,7 +58,7 @@ class _EmojiSearchField extends StatelessWidget {
                   key: const ValueKey('emoji-picker-search-clear'),
                   onPressed: controller.clear,
                   icon: Icon(
-                    BuzzIcons.x,
+                    CoreviaTalkIcons.x,
                     size: 16,
                     color: colors.onSurfaceVariant,
                   ),

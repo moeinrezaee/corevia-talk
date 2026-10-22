@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../shared/mentions/agent_identity_provider.dart';
 import '../../../shared/profile/user_cache_provider.dart';
 import '../../../shared/theme/theme.dart';
-import '../../../shared/theme/buzz_icons.dart';
+import '../../../shared/theme/corevia_talk_icons.dart';
 import '../../../shared/widgets/app_list.dart';
 import '../../../shared/widgets/avatar_image.dart';
 import '../../../shared/widgets/sheet_action_section.dart';
@@ -61,7 +61,7 @@ class MeAssistantList extends ConsumerWidget {
                           ),
                           title: Text(agent.displayName ?? 'Agent'),
                           trailing: agent.pubkey == selected
-                              ? const Icon(BuzzIcons.check)
+                              ? const Icon(CoreviaTalkIcons.check)
                               : null,
                           onTap: () => Navigator.pop(context, agent.pubkey),
                         ),

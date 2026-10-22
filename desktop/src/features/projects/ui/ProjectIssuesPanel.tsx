@@ -34,7 +34,7 @@ import {
 } from "@/features/projects/projectTaskCategories";
 import { useIdentityQuery } from "@/shared/api/hooks";
 import type { ChannelMember } from "@/shared/api/types";
-import { BuzzLoadingState } from "@/shared/ui/BuzzLoadingState";
+import { CoreviaTalkLoadingState } from "@/shared/ui/CoreviaTalkLoadingState";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import { IssueAssigneeFacepile, IssueAssigneesRow } from "./IssueAssigneesRow";
 import { DiscussedInChannels } from "./DiscussionChannels";
@@ -448,7 +448,7 @@ export function ProjectIssuesPanel({
   const loadError = error ?? issuesQuery.error;
 
   if (loading) {
-    return <BuzzLoadingState label={tl("Loading tasks")} />;
+    return <CoreviaTalkLoadingState label={tl("Loading tasks")} />;
   }
 
   if (resolvedItems.length === 0) {

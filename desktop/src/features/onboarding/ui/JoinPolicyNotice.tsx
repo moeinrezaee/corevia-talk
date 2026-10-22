@@ -72,7 +72,7 @@ export function JoinPolicyNotice({
             className="cursor-pointer text-xs leading-5 text-muted-foreground"
             htmlFor={agreementConfirmationId}
           >
-            {tl("I agree to the Buzz")}{" "}
+            {tl("I agree to the Corevia Talk")}{" "}
             {policy.termsMarkdown ? (
               <Button
                 className="h-auto p-0 align-baseline text-xs no-underline hover:underline focus-visible:no-underline"

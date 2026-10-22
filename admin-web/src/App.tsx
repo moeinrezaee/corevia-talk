@@ -133,7 +133,7 @@ function Reports({ authMode }: { authMode: AuthMode }) {
     <Page
       eyebrow="Moderation"
       title={tl("Open reports")}
-      description={tl("Review reports across every Buzz community.")}
+      description={tl("Review reports across every Corevia Talk community.")}
     >
       <StateView resource={resource}>
         {(reports) =>
@@ -276,7 +276,7 @@ function FeedbackList({ authMode }: { authMode: AuthMode }) {
     <Page
       eyebrow="Product"
       title={tl("Feedback")}
-      description={tl("Recent product feedback from across Buzz.")}
+      description={tl("Recent product feedback from across Corevia Talk.")}
     >
       <StateView resource={resource}>
         {(items) => {
@@ -865,7 +865,7 @@ function date(value: string) {
     : parsed.toLocaleString();
 }
 
-function BuzzMark() {
+function CoreviaTalkMark() {
   return (
     <svg viewBox="0 0 466 309" aria-hidden="true">
       <path d="M91.7 62.8a91.7 91.7 0 0 0 0 183.4H128V62.8H91.7Zm282.6 0H338v183.4h36.3a91.7 91.7 0 1 0 0-183.4Z" />
@@ -1044,10 +1044,10 @@ export function App() {
       <header className="app-header">
         <Link href="/reports" className="brand">
           <span className="brand-mark">
-            <BuzzMark />
+            <CoreviaTalkMark />
           </span>
           <span>
-            {tl("Buzz")} <b>{tl("Admin")}</b>
+            {tl("Corevia Talk")} <b>{tl("Admin")}</b>
           </span>
         </Link>
         <nav>

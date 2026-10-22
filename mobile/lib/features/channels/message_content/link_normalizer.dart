@@ -6,17 +6,17 @@ String normalizeMarkdownDestination(String url) =>
 const _markdownDelimiters = ['***', '___', '**', '__', '~~', '*', '_'];
 
 final _autolinkPattern = RegExp(
-  r'<((?:https?://|buzz://(?:message\?|join\?|channel/|(?:pr|issue|repo)\?))[^>]+)>',
+  r'<((?:https?://|corevia-talk://(?:message\?|join\?|channel/|(?:pr|issue|repo)\?))[^>]+)>',
 );
 final _bareLinkPattern = RegExp(
-  r'(?<![(\]=])(?:https?://|buzz://(?:message\?|join\?|channel/|(?:pr|issue|repo)\?))[^\s)>\]]+',
+  r'(?<![(\]=])(?:https?://|corevia-talk://(?:message\?|join\?|channel/|(?:pr|issue|repo)\?))[^\s)>\]]+',
 );
 final _trailingPunctuationPattern = RegExp(r'[.,!?:;]+$');
 final _backtickRunPattern = RegExp(r'`+');
 
-/// Converts supported Buzz and HTTP(S) autolinks and bare links into Markdown
+/// Converts supported Corevia Talk and HTTP(S) autolinks and bare links into Markdown
 /// links while leaving inline and fenced code untouched. Punctuation peeling
-/// is limited to Buzz URLs so existing HTTP(S) destinations stay unchanged.
+/// is limited to Corevia Talk URLs so existing HTTP(S) destinations stay unchanged.
 String normalizeBareLinks(String content) {
   final buffer = StringBuffer();
   var offset = 0;
@@ -273,10 +273,10 @@ String _normalizeBareLink(String segment, Match match) {
   final matched = match[0]!;
   var url = matched;
   var trailing = '';
-  final isBuzzUrl = matched.startsWith('buzz://');
+  final isCoreviaTalkUrl = matched.startsWith('corevia-talk://');
   final start = match.start;
 
-  if (isBuzzUrl) {
+  if (isCoreviaTalkUrl) {
     final outsidePunctuation = _trailingPunctuationPattern.firstMatch(url);
     if (outsidePunctuation != null) {
       url = url.substring(0, outsidePunctuation.start);
@@ -301,7 +301,7 @@ String _normalizeBareLink(String segment, Match match) {
     }
   }
 
-  if (isBuzzUrl) {
+  if (isCoreviaTalkUrl) {
     final punctuation = _trailingPunctuationPattern.firstMatch(url);
     if (punctuation != null) {
       url = url.substring(0, punctuation.start);

@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:buzz/features/pairing/pairing_provider.dart';
-import 'package:buzz/features/settings/settings_page.dart';
-import 'package:buzz/shared/auth/auth.dart';
-import 'package:buzz/shared/relay/relay.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/widgets/app_list_card.dart';
+import 'package:corevia_talk/features/pairing/pairing_provider.dart';
+import 'package:corevia_talk/features/settings/settings_page.dart';
+import 'package:corevia_talk/shared/auth/auth.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/widgets/app_list_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'package:nostr/nostr.dart' as nostr;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,7 +19,7 @@ void main() {
   testWidgets('shows a compact copyable identity row', (tester) async {
     var successFeedback = false;
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
-      const MethodChannel('buzz/haptics'),
+      const MethodChannel('corevia-talk/haptics'),
       (call) async {
         expect(call.method, 'success');
         successFeedback = true;
@@ -28,7 +28,7 @@ void main() {
     );
     addTearDown(() {
       tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
-        const MethodChannel('buzz/haptics'),
+        const MethodChannel('corevia-talk/haptics'),
         null,
       );
     });
@@ -117,8 +117,8 @@ void main() {
       ),
       findsOneWidget,
     );
-    final copy = tester.getRect(find.byIcon(BuzzIcons.copy));
-    final chevron = tester.getRect(find.byIcon(BuzzIcons.chevronRight).first);
+    final copy = tester.getRect(find.byIcon(CoreviaTalkIcons.copy));
+    final chevron = tester.getRect(find.byIcon(CoreviaTalkIcons.chevronRight).first);
     expect(copy.center.dx, closeTo(chevron.center.dx, 0.5));
 
     await tester.tap(find.text('Copy public key (npub)'));
@@ -200,7 +200,7 @@ void main() {
     expect(pairing.resetCalls, 1);
     expect(find.text('Identity recovery'), findsNothing);
     expect(
-      find.text('Buzz did not return to the foreground. Try again.'),
+      find.text('Corevia Talk did not return to the foreground. Try again.'),
       findsOneWidget,
     );
   });

@@ -4,7 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/theme/theme.dart';
 import '../../shared/widgets/app_list_card_item.dart';
@@ -410,7 +410,7 @@ class _AddReactionPill extends StatelessWidget {
           child: Center(
             widthFactor: 1,
             child: Icon(
-              BuzzIcons.smilePlus,
+              CoreviaTalkIcons.smilePlus,
               size: _pillGlyphSize,
               color: context.colors.onSurfaceVariant,
             ),
@@ -471,7 +471,7 @@ Future<void> showReactionDetailSheet({
     return;
   }
   if (!context.mounted) return;
-  await showBuzzModalBottomSheet<void>(
+  await showCoreviaTalkModalBottomSheet<void>(
     context: context,
     title: tl('Reactions'),
     isScrollControlled: true,
@@ -547,7 +547,7 @@ class _ReactionDetailSheet extends HookConsumerWidget {
                     IconButton(
                       key: const ValueKey('reaction-sheet-add'),
                       tooltip: tl('Add reaction'),
-                      icon: const Icon(BuzzIcons.smilePlus),
+                      icon: const Icon(CoreviaTalkIcons.smilePlus),
                       onPressed: () {
                         Navigator.of(context).pop();
                         onAddReaction!();
@@ -743,7 +743,7 @@ Future<bool> _showNativeReactionDetails(
         if (onlyChanges && sent[pubkey] == value) continue;
         sent[pubkey] = value;
         final url = value.avatarUrl;
-        // Buzz's emoji-avatar SVG is a small value object, not arbitrary native SVG.
+        // Corevia Talk's emoji-avatar SVG is a small value object, not arbitrary native SVG.
         final avatar = url != null && url.length <= 8192
             ? parseEmojiAvatarDataUrl(url)
             : null;
@@ -853,7 +853,7 @@ Future<bool> _showNativeReactionDetails(
         ).colorScheme.onSurface.withValues(alpha: 0.25).toARGB32(),
         'dark': Theme.of(context).brightness == Brightness.dark,
         'canAddReaction': onAddReaction != null,
-        'addReactionIconCodePoint': BuzzIcons.smilePlus.codePoint,
+        'addReactionIconCodePoint': CoreviaTalkIcons.smilePlus.codePoint,
         'profiles': profiles(),
         'reactions': reactionData(),
       }, onReaction: onToggle);

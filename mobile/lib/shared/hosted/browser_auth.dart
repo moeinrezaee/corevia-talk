@@ -37,12 +37,12 @@ class BrowserAuth {
        _openBrowser = openBrowser ?? _openPlatformBrowser,
        _now = now ?? DateTime.now;
 
-  static const callback = 'xyz.block.buzz.mobile:/auth/callback';
+  static const callback = 'xyz.block.coreviatalk.mobile:/auth/callback';
   static final _attemptKey =
-      'buzz_browser_auth_attempt_v1_${HostedEnvironment.origin.host}';
+      'corevia_talk_browser_auth_attempt_v1_${HostedEnvironment.origin.host}';
   static final _intentKey =
-      'buzz_browser_auth_intent_v1_${HostedEnvironment.origin.host}';
-  static const _channel = MethodChannel('buzz/browser_auth');
+      'corevia_talk_browser_auth_intent_v1_${HostedEnvironment.origin.host}';
+  static const _channel = MethodChannel('corevia-talk/browser_auth');
   final FlutterSecureStorage _storage;
   final Future<String?> Function(Uri) _openBrowser;
   final DateTime Function() _now;
@@ -71,13 +71,13 @@ class BrowserAuth {
     _initialized = true;
     final links = AppLinks();
     _links = links.uriLinkStream.listen((uri) {
-      if (uri.scheme == 'xyz.block.buzz.mobile') {
+      if (uri.scheme == 'xyz.block.coreviatalk.mobile') {
         unawaited(receive(uri).catchError((Object _) {}));
       }
     }, onError: (Object _) => _fail(BrowserAuthFailure.unavailable));
     try {
       final initial = await links.getInitialLink();
-      if (initial != null && initial.scheme == 'xyz.block.buzz.mobile') {
+      if (initial != null && initial.scheme == 'xyz.block.coreviatalk.mobile') {
         await receive(initial);
       }
     } catch (_) {
@@ -137,7 +137,7 @@ class BrowserAuth {
         path: '/api/goose/v1/auth/login',
         queryParameters: {
           'type': 'cli',
-          'product': 'buzz',
+          'product': 'corevia-talk',
           'returnTo': callback,
           'state': state,
           'code_challenge': base64UrlEncode(
@@ -274,7 +274,7 @@ class BrowserAuth {
       return _channel.invokeMethod<String>('start', {
         'url': uri.toString(),
         if (kDebugMode &&
-            const bool.fromEnvironment('BUZZ_DEBUG_PRIVATE_LOGIN'))
+            const bool.fromEnvironment('COREVIA_TALK_DEBUG_PRIVATE_LOGIN'))
           'ephemeral': 'true',
       });
     }

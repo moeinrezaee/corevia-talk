@@ -35,8 +35,8 @@ BEGIN
     END IF;
 
     -- Authorization is evaluated independently for every community checked.
-    executor_community := current_setting('buzz.deletion_executor_community', true);
-    executor_generation := current_setting('buzz.deletion_fence_generation', true);
+    executor_community := current_setting('corevia_talk.deletion_executor_community', true);
+    executor_generation := current_setting('corevia_talk.deletion_fence_generation', true);
     IF executor_community = target::TEXT
        AND executor_generation ~ '^[0-9]+$'
        AND executor_generation::BIGINT = generation THEN
@@ -45,11 +45,11 @@ BEGIN
 
     -- A serving mutation admitted before quiescing may finish only while its
     -- exact durable lease remains current and bound to this fence generation.
-    serving_community := current_setting('buzz.serving_write_community', true);
-    serving_lease_id := current_setting('buzz.serving_write_lease_id', true);
-    serving_owner := current_setting('buzz.serving_write_owner', true);
-    serving_generation := current_setting('buzz.serving_write_generation', true);
-    serving_fence_generation := current_setting('buzz.serving_write_fence_generation', true);
+    serving_community := current_setting('corevia_talk.serving_write_community', true);
+    serving_lease_id := current_setting('corevia_talk.serving_write_lease_id', true);
+    serving_owner := current_setting('corevia_talk.serving_write_owner', true);
+    serving_generation := current_setting('corevia_talk.serving_write_generation', true);
+    serving_fence_generation := current_setting('corevia_talk.serving_write_fence_generation', true);
     IF lifecycle IN ('active', 'quiescing')
        AND serving_community = target::TEXT
        AND serving_lease_id ~ '^[0-9a-fA-F-]{36}$'

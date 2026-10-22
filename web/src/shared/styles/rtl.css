@@ -9,7 +9,7 @@
   :root {
     /* Persian typed in the English UI is still drawn in Peyda (Arabic-script
        fallback, see fonts-fa.css); Latin text and ASCII digits stay in Inter. */
-    --buzz-font-sans:
+    --corevia-talk-font-sans:
       "Inter Variable", Inter, "Peyda Script", "Avenir Next", "Segoe UI",
       sans-serif;
   }
@@ -17,7 +17,7 @@
   /* Peyda FaNum goes first so digits come out as Persian numerals; Inter still
      covers Latin glyphs Peyda lacks. */
   :root[lang="fa"] {
-    --buzz-font-sans:
+    --corevia-talk-font-sans:
       "Peyda FaNum", "Inter Variable", Inter, "Avenir Next", "Segoe UI",
       sans-serif;
   }

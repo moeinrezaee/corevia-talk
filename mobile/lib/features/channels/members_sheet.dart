@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/theme/theme.dart';
 import '../../shared/widgets/sheet_action_section.dart';
 import '../../shared/widgets/avatar_image.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../shared/widgets/modal_presentation.dart';
 import '../../shared/widgets/confirmation_dialog.dart';
 import '../../shared/profile/user_cache_provider.dart';
@@ -60,7 +60,7 @@ class MembersSheet extends HookConsumerWidget {
       navigator.pop();
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!navigator.mounted) return;
-        showBuzzModalBottomSheet<void>(
+        showCoreviaTalkModalBottomSheet<void>(
           context: navigator.context,
           isScrollControlled: true,
           showDragHandle: true,
@@ -165,7 +165,7 @@ class MembersSheet extends HookConsumerWidget {
             ],
           ),
           loading: () => Center(
-            child: BuzzLoadingIndicator(
+            child: CoreviaTalkLoadingIndicator(
               size: 44,
               semanticLabel: tl('Loading members'),
             ),
@@ -251,7 +251,7 @@ class _MemberTile extends ConsumerWidget {
           ? Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                BuzzLoadingIndicator(
+                CoreviaTalkLoadingIndicator(
                   size: 14,
                   color: context.appColors.success,
                   semanticLabel: tl('Agent working'),
@@ -283,7 +283,7 @@ class _MemberTile extends ConsumerWidget {
             ),
       trailing: showMenu
           ? IconButton(
-              icon: const Icon(BuzzIcons.ellipsis, size: 18),
+              icon: const Icon(CoreviaTalkIcons.ellipsis, size: 18),
               onPressed: () => _showMemberActions(
                 context,
                 ref,
@@ -311,7 +311,7 @@ class _MemberTile extends ConsumerWidget {
               .read(channelIdentityNamesProvider(channelId))
               .labelFor(member.pubkey);
     final canChangeRole = showManagementActions && !member.isBot;
-    showBuzzModalBottomSheet<void>(
+    showCoreviaTalkModalBottomSheet<void>(
       context: context,
       title: label,
       showDragHandle: true,
@@ -326,7 +326,7 @@ class _MemberTile extends ConsumerWidget {
                 children: [
                   ListTile(
                     leading: Icon(
-                      BuzzIcons.activity,
+                      CoreviaTalkIcons.activity,
                       size: 18,
                       color: context.colors.primary,
                     ),
@@ -363,7 +363,7 @@ class _MemberTile extends ConsumerWidget {
                 children: [
                   ListTile(
                     leading: Icon(
-                      BuzzIcons.userMinus,
+                      CoreviaTalkIcons.userMinus,
                       size: 18,
                       color: context.colors.error,
                     ),

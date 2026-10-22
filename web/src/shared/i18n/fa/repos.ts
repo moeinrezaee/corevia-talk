@@ -5,8 +5,8 @@ export const FA_REPOS: Record<string, string> = {
   "No matching repositories": "مخزنی پیدا نشد",
   "Try adjusting your search term.": "عبارت جستجو را تغییر دهید.",
   "This community is empty": "این انجمن خالی است",
-  "Repositories pushed to this community will show up here. Open this community in the Buzz desktop app to start pushing code.":
-    "مخزن‌هایی که به این انجمن ارسال شوند اینجا نمایش داده می‌شوند. برای شروع ارسال کد، این انجمن را در برنامهٔ دسکتاپ Buzz باز کنید.",
+  "Repositories pushed to this community will show up here. Open this community in the Corevia Talk desktop app to start pushing code.":
+    "مخزن‌هایی که به این انجمن ارسال شوند اینجا نمایش داده می‌شوند. برای شروع ارسال کد، این انجمن را در برنامهٔ دسکتاپ Corevia Talk باز کنید.",
   "Find a repository...": "جستجوی مخزن…",
   "Sort repositories": "مرتب‌سازی مخزن‌ها",
   Newest: "جدیدترین",
@@ -16,7 +16,7 @@ export const FA_REPOS: Record<string, string> = {
   "{0} people": "{0} نفر",
   Public: "عمومی",
   "Updated {0}": "به‌روزرسانی {0}",
-  "Open in Buzz": "باز کردن در Buzz",
+  "Open in Corevia Talk": "باز کردن در Corevia Talk",
   README: "README",
   "1 branch": "۱ شاخه",
   "{0} branches": "{0} شاخه",

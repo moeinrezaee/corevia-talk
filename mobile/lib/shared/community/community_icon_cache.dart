@@ -7,7 +7,7 @@ import '../theme/theme_provider.dart';
 
 // v1 allowed unbounded rasters and v2 allowed arbitrary SVG resources.
 // Rebuild this derived cache through the validated artwork pipeline.
-const _storageKey = 'buzz.community-icons.v3';
+const _storageKey = 'corevia-talk.community-icons.v3';
 const _maximumEntries = 32;
 const _maximumStoredCharacters = 3 * 1024 * 1024;
 

@@ -1,0 +1,4 @@
+{{- include "corevia-talk.validate" . -}}
+{{- if .Values.operatorJobs.deletionDrain.enabled }}
+{{- include "corevia-talk.operatorCronJob" (dict "root" . "type" "deletionDrain") }}
+{{- end }}

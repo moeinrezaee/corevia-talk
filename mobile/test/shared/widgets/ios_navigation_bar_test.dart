@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'package:buzz/shared/relay/media_image.dart';
+import 'package:corevia_talk/shared/relay/media_image.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/widgets/frosted_app_bar.dart';
-import 'package:buzz/shared/widgets/frosted_scaffold.dart';
-import 'package:buzz/shared/widgets/ios_navigation_bar.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/widgets/frosted_app_bar.dart';
+import 'package:corevia_talk/shared/widgets/frosted_scaffold.dart';
+import 'package:corevia_talk/shared/widgets/ios_navigation_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,7 +46,7 @@ void main() {
     (tester) async {
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
       addTearDown(() => debugDefaultTargetPlatformOverride = null);
-      const channel = MethodChannel('buzz/ios_navigation_bar/844');
+      const channel = MethodChannel('corevia-talk/ios_navigation_bar/844');
       final applied = Completer<void>();
       final readiness = <bool>[];
       final calls = <String>[];
@@ -100,7 +100,7 @@ void main() {
       return pending.future;
     });
     addTearDown(client.close);
-    const channel = MethodChannel('buzz/ios_navigation_bar/846');
+    const channel = MethodChannel('corevia-talk/ios_navigation_bar/846');
     final readiness = <bool>[];
     final calls = <String>[];
     final createdChannels = <MethodChannel>[];
@@ -304,7 +304,7 @@ void main() {
   ) async {
     debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
     addTearDown(() => debugDefaultTargetPlatformOverride = null);
-    const channel = MethodChannel('buzz/ios_navigation_bar/845');
+    const channel = MethodChannel('corevia-talk/ios_navigation_bar/845');
     final configurations = <Map<Object?, Object?>>[];
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel, (
       call,
@@ -347,7 +347,7 @@ void main() {
   ) async {
     debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
     addTearDown(() => debugDefaultTargetPlatformOverride = null);
-    const channel = MethodChannel('buzz/ios_navigation_bar/843');
+    const channel = MethodChannel('corevia-talk/ios_navigation_bar/843');
     final calls = <MethodCall>[];
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel, (
       call,

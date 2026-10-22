@@ -191,7 +191,7 @@ export function CommunitySwitcher({
       if (result?.status === "already-absent") {
         toast(tl("Community removed"), {
           description: tl(
-            "You were no longer a member, so Buzz removed the community from this device.",
+            "You were no longer a member, so Corevia Talk removed the community from this device.",
           ),
         });
       }
@@ -521,7 +521,7 @@ export function CommunitySwitcher({
             <AlertDialogTitle>{tl("Remove from this device")}</AlertDialogTitle>
             <AlertDialogDescription>
               {tlt(
-                "Remove \"{0}\" from this device? Buzz won't contact the relay, so your membership isn't revoked. You can add the community again later.",
+                "Remove \"{0}\" from this device? Corevia Talk won't contact the relay, so your membership isn't revoked. You can add the community again later.",
                 [removingCommunity?.name ?? ""],
               )}
             </AlertDialogDescription>

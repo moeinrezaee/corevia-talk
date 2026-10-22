@@ -54,7 +54,7 @@ export function AgentContextPayloadPreview({
         >
           <p className="mb-2 text-xs text-muted-foreground">
             {tl(
-              "This exact text is appended to your message before it is signed and sent. Quoted values are untrusted workspace metadata — Buzz does not verify or rewrite them.",
+              "This exact text is appended to your message before it is signed and sent. Quoted values are untrusted workspace metadata — Corevia Talk does not verify or rewrite them.",
             )}
           </p>
           <pre

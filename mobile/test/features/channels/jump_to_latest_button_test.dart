@@ -1,12 +1,12 @@
-import 'package:buzz/features/channels/message_action_backdrop_state.dart';
-import 'package:buzz/features/channels/jump_to_latest_button.dart';
-import 'package:buzz/features/channels/jump_to_latest_switcher.dart';
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/features/channels/message_action_backdrop_state.dart';
+import 'package:corevia_talk/features/channels/jump_to_latest_button.dart';
+import 'package:corevia_talk/features/channels/jump_to_latest_switcher.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 void main() {
   test(
@@ -45,7 +45,7 @@ void main() {
     tester,
   ) async {
     debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
-    const channel = MethodChannel('buzz/jump_to_latest_glass/41');
+    const channel = MethodChannel('corevia-talk/jump_to_latest_glass/41');
     final methodCalls = <MethodCall>[];
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel, (
       call,
@@ -62,7 +62,7 @@ void main() {
       );
 
       final nativeView = tester.widget<UiKitView>(find.byType(UiKitView));
-      expect(nativeView.viewType, 'buzz/jump_to_latest_glass');
+      expect(nativeView.viewType, 'corevia-talk/jump_to_latest_glass');
       expect(nativeView.creationParams, <String, Object>{
         'brightness': 'light',
       });
@@ -90,7 +90,7 @@ void main() {
       await tester.pump();
       expect(find.byType(UiKitView), findsNothing);
       expect(find.byType(BackdropFilter), findsOneWidget);
-      expect(find.byIcon(BuzzIcons.arrowDown), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.arrowDown), findsOneWidget);
     } finally {
       messageActionBackdropActive.value = false;
       tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
@@ -120,7 +120,7 @@ void main() {
 
       expect(find.byType(UiKitView), findsNothing);
       expect(find.byType(BackdropFilter), findsOneWidget);
-      expect(find.byIcon(BuzzIcons.arrowDown), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.arrowDown), findsOneWidget);
       expect(
         tester.getSize(find.byType(JumpToLatestButton)),
         const Size.square(Grid.xl),

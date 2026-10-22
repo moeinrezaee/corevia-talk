@@ -1,10 +1,10 @@
-import 'package:buzz/shared/hosted/hosted_environment.dart';
+import 'package:corevia_talk/shared/hosted/hosted_environment.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'package:buzz/features/pairing/pairing_provider.dart';
-import 'package:buzz/shared/hosted/hosted_flow_provider.dart';
-import 'package:buzz/shared/community/community.dart';
-import 'package:buzz/shared/hosted/hosted_flow.dart';
+import 'package:corevia_talk/features/pairing/pairing_provider.dart';
+import 'package:corevia_talk/shared/hosted/hosted_flow_provider.dart';
+import 'package:corevia_talk/shared/community/community.dart';
+import 'package:corevia_talk/shared/hosted/hosted_flow.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

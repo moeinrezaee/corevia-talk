@@ -1,18 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:buzz/features/profile/profile_provider.dart';
-import 'package:buzz/features/profile/settings_profile_header.dart';
-import 'package:buzz/shared/profile/user_profile.dart';
-import 'package:buzz/features/profile/user_status.dart';
-import 'package:buzz/features/profile/user_status_provider.dart';
-import 'package:buzz/shared/custom_emoji/custom_emoji_provider.dart';
-import 'package:buzz/shared/custom_emoji/custom_emoji.dart';
-import 'package:buzz/shared/custom_emoji/custom_emoji_render.dart';
-import 'package:buzz/shared/relay/media_auth.dart';
-import 'package:buzz/shared/relay/media_image.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/widgets/masked_avatar_badge.dart';
+import 'package:corevia_talk/features/profile/profile_provider.dart';
+import 'package:corevia_talk/features/profile/settings_profile_header.dart';
+import 'package:corevia_talk/shared/profile/user_profile.dart';
+import 'package:corevia_talk/features/profile/user_status.dart';
+import 'package:corevia_talk/features/profile/user_status_provider.dart';
+import 'package:corevia_talk/shared/custom_emoji/custom_emoji_provider.dart';
+import 'package:corevia_talk/shared/custom_emoji/custom_emoji.dart';
+import 'package:corevia_talk/shared/custom_emoji/custom_emoji_render.dart';
+import 'package:corevia_talk/shared/relay/media_auth.dart';
+import 'package:corevia_talk/shared/relay/media_image.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/widgets/masked_avatar_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -74,7 +74,7 @@ void main() {
     const posterUrl = 'https://relay.example/media/poster.png';
     const animationUrl = 'https://relay.example/media/animation.png';
     final profileUrl =
-        '$posterUrl#buzz-anim=${Uri.encodeComponent(animationUrl)}';
+        '$posterUrl#corevia-talk-anim=${Uri.encodeComponent(animationUrl)}';
     final animationResponse = Completer<http.Response>();
     final client = http_testing.MockClient(
       (request) => request.url.toString() == animationUrl
@@ -176,7 +176,7 @@ void main() {
     const posterUrl = 'https://relay.example/media/poster.png';
     const animationUrl = 'https://relay.example/media/animation.png';
     final profileUrl =
-        '$posterUrl#buzz-anim=${Uri.encodeComponent(animationUrl)}';
+        '$posterUrl#corevia-talk-anim=${Uri.encodeComponent(animationUrl)}';
     final posterResponse = Completer<http.Response>();
     final animationResponse = Completer<http.Response>();
     final client = http_testing.MockClient(

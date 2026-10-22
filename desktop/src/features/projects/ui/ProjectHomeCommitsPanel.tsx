@@ -8,7 +8,7 @@ import type { ViewerGitIdentity } from "@/features/projects/lib/projectContribut
 import type { ProjectRepositorySnapshotResult } from "@/features/projects/useProjectRepositorySnapshots";
 import type { UserProfileLookup } from "@/features/profile/lib/identity";
 import type { ProjectRepoCommit } from "@/shared/api/types";
-import { BuzzLoadingState } from "@/shared/ui/BuzzLoadingState";
+import { CoreviaTalkLoadingState } from "@/shared/ui/CoreviaTalkLoadingState";
 import { ProjectPanelState } from "./ProjectPanelState";
 import { ActivityPanel } from "./ProjectDetailFeedPanels";
 import { tl } from "@/shared/i18n/tl";
@@ -51,7 +51,7 @@ export function ProjectHomeCommitsPanel({
       )
     : null;
   if (results.some((result) => result.isLoading) && loaded.length === 0) {
-    return <BuzzLoadingState label={tl("Loading commits")} />;
+    return <CoreviaTalkLoadingState label={tl("Loading commits")} />;
   }
   if (loaded.length === 0) {
     return (

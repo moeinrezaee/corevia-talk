@@ -42,7 +42,7 @@ class HostedConnectSheet extends HookConsumerWidget {
         'Review this community’s terms and privacy policy before joining.',
       HostedFlowStage.signIn => 'Complete sign-in in your browser.',
       HostedFlowStage.browserReturned =>
-        'Continue setup in your browser. Open your community in Buzz when it is ready.',
+        'Continue setup in your browser. Open your community in Corevia Talk when it is ready.',
       HostedFlowStage.complete => 'Your community is ready.',
       HostedFlowStage.blocked => hostedFlowProblemMessage(flow.problem),
     };

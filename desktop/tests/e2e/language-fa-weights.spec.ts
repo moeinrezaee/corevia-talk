@@ -6,7 +6,7 @@ test("Persian font resolves each weight to a shipped Peyda file", async ({
   page,
 }) => {
   await page.addInitScript(() =>
-    window.localStorage.setItem("buzz.appearance.language", "fa"),
+    window.localStorage.setItem("corevia-talk.appearance.language", "fa"),
   );
   await installMockBridge(page);
   await page.goto("/", { waitUntil: "domcontentloaded" });

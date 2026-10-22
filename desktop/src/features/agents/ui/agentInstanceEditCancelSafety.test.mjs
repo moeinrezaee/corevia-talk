@@ -284,7 +284,7 @@ function renderDialog(onOpenChange, agentOverrides = {}) {
   return render(
     createElement(
       ThemeProvider,
-      { defaultTheme: "buzz" },
+      { defaultTheme: "corevia-talk" },
       createElement(
         QueryClientProvider,
         { client },
@@ -694,7 +694,7 @@ test("pin→inherit toggle hides the picker, stored level included", async () =>
         ...effortConfigSurface().normalized,
         thinkingEffort: {
           value: "max",
-          origin: "buzzExplicit",
+          origin: "coreviaTalkExplicit",
           writeVia: {
             type: "respawnWithEnvVar",
             envKey: "GOOSE_THINKING_EFFORT",
@@ -918,7 +918,7 @@ test("runtime switch clears touched effort — no effortLevel dispatched after s
         ...effortConfigSurface().normalized,
         thinkingEffort: {
           value: "low",
-          origin: "buzzExplicit",
+          origin: "coreviaTalkExplicit",
           writeVia: {
             type: "respawnWithEnvVar",
             envKey: "GOOSE_THINKING_EFFORT",

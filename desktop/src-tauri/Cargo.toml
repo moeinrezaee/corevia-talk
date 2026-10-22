@@ -3,12 +3,12 @@
 # With a bare `[workspace]` and no `members`, `cargo test/check --workspace`
 # expands to a set that excludes this crate, and its gates pass green-and-empty
 # over a real defect. Verified: Sami Arm A/D, Dawn `.scratch/armA`.
-members = ["crates/buzz-terminal"]
+members = ["crates/corevia-talk-terminal"]
 
 [package]
-name = "buzz-desktop"
+name = "corevia-talk-desktop"
 version = "0.5.28"
-description = "Buzz desktop app"
+description = "Corevia Talk desktop app"
 authors = ["you"]
 edition = "2021"
 
@@ -18,7 +18,7 @@ edition = "2021"
 # The `_lib` suffix may seem redundant but it is necessary
 # to make the lib name unique and wouldn't conflict with the bin name.
 # This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
-name = "buzz_lib"
+name = "corevia_talk_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [features]
@@ -106,14 +106,14 @@ percent-encoding = "2"
 reqwest = { version = "0.13", features = ["json", "query", "stream", "blocking"] }
 rustls = { version = "0.23", default-features = false, features = ["aws_lc_rs", "std"] }
 url = "2"
-buzz_core_pkg = { package = "buzz-core", path = "../../crates/buzz-core" }
-buzz_persona_pkg = { package = "buzz-persona", path = "../../crates/buzz-persona" }
-buzz_sdk_pkg = { package = "buzz-sdk", path = "../../crates/buzz-sdk" }
-buzz_agent_pkg = { package = "buzz-agent", path = "../../crates/buzz-agent" }
-buzz_audio_client = { package = "buzz-audio-client", path = "../../crates/buzz-audio-client", default-features = false, features = ["webpki-roots"] }
-buzz_voice_pkg = { package = "buzz-voice", path = "../../crates/buzz-voice" }
-buzz_terminal = { package = "buzz-terminal", path = "crates/buzz-terminal" }
-buzz_ws_client_pkg = { package = "buzz-ws-client", path = "../../crates/buzz-ws-client" }
+corevia_talk_core_pkg = { package = "corevia-talk-core", path = "../../crates/corevia-talk-core" }
+corevia_talk_persona_pkg = { package = "corevia-talk-persona", path = "../../crates/corevia-talk-persona" }
+corevia_talk_sdk_pkg = { package = "corevia-talk-sdk", path = "../../crates/corevia-talk-sdk" }
+corevia_talk_agent_pkg = { package = "corevia-talk-agent", path = "../../crates/corevia-talk-agent" }
+corevia_talk_audio_client = { package = "corevia-talk-audio-client", path = "../../crates/corevia-talk-audio-client", default-features = false, features = ["webpki-roots"] }
+corevia_talk_voice_pkg = { package = "corevia-talk-voice", path = "../../crates/corevia-talk-voice" }
+corevia_talk_terminal = { package = "corevia-talk-terminal", path = "crates/corevia-talk-terminal" }
+corevia_talk_ws_client_pkg = { package = "corevia-talk-ws-client", path = "../../crates/corevia-talk-ws-client" }
 portable-pty = "0.9"
 iroh = { version = "1.0.3", optional = true }
 mesh-llm-sdk = { git = "https://github.com/Mesh-LLM/mesh-llm.git", tag = "v0.76.2", package = "mesh-llm-sdk", default-features = false, features = ["client", "serving"], optional = true }
@@ -162,4 +162,4 @@ tauri-utils = "2"
 tokio = { version = "1", features = ["test-util"] }
 # The relay's media validation, so desktop-produced snapshots and voice notes
 # can prove their full client-sanitize → relay-accept contract end to end.
-buzz_media_pkg = { package = "buzz-media", path = "../../crates/buzz-media" }
+corevia_talk_media_pkg = { package = "corevia-talk-media", path = "../../crates/corevia-talk-media" }

@@ -303,7 +303,7 @@ function snapshot(
 /** Seed the communities the provider will load from localStorage. */
 function seedCommunities(activeId) {
   storage.set(
-    "buzz-communities",
+    "corevia-talk-communities",
     JSON.stringify([
       {
         id: COMMUNITY_A,
@@ -319,7 +319,7 @@ function seedCommunities(activeId) {
       },
     ]),
   );
-  storage.set("buzz-active-community-id", activeId);
+  storage.set("corevia-talk-active-community-id", activeId);
 }
 
 /**
@@ -558,7 +558,7 @@ function deferProfileLookup() {
 
 function ledgerKeys() {
   return [...storage.keys()].filter((key) =>
-    key.startsWith("buzz-community-join-seen.v1"),
+    key.startsWith("corevia-talk-community-join-seen.v1"),
   );
 }
 
@@ -647,7 +647,7 @@ describe("useCommunityJoinAlerts — mounted subscription behaviour", () => {
     assert.deepEqual(
       ledgerKeys(),
       [],
-      "no buzz-community-join-seen.v1 key may be created for a plain member",
+      "no corevia-talk-community-join-seen.v1 key may be created for a plain member",
     );
 
     await unmount();

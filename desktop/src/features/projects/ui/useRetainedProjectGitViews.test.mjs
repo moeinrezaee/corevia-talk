@@ -16,12 +16,12 @@ import { buildProjectDetailCrumbs } from "./useProjectDetailCrumbs.ts";
 registerHooks({
   resolve(specifier, context, nextResolve) {
     if (specifier === "@/features/forum/ui/ForumComposer") {
-      return { shortCircuit: true, url: "buzz-pr-panel-stub:ForumComposer" };
+      return { shortCircuit: true, url: "corevia-talk-pr-panel-stub:ForumComposer" };
     }
     return nextResolve(specifier, context);
   },
   load(url, context, nextLoad) {
-    if (url === "buzz-pr-panel-stub:ForumComposer") {
+    if (url === "corevia-talk-pr-panel-stub:ForumComposer") {
       return {
         format: "module",
         shortCircuit: true,
@@ -37,18 +37,18 @@ const OWNER = "a".repeat(64);
 const REVIEW_A_ID = "b".repeat(64);
 
 const repository = {
-  id: `${OWNER}:buzz`,
-  dtag: "buzz",
-  name: "buzz",
+  id: `${OWNER}:corevia-talk`,
+  dtag: "corevia-talk",
+  name: "corevia-talk",
   description: "",
-  cloneUrls: ["https://example.com/buzz.git"],
+  cloneUrls: ["https://example.com/corevia-talk.git"],
   webUrl: null,
   owner: OWNER,
   contributors: [],
   createdAt: 0,
   status: "open",
   defaultBranch: "main",
-  repoAddress: `30617:${OWNER}:buzz`,
+  repoAddress: `30617:${OWNER}:corevia-talk`,
   channelId: "trusted-repository-channel",
 };
 
@@ -117,7 +117,7 @@ function productionConsumers({ activeRepoPullRequest, selectedPullRequest }) {
   const agent = buildProjectDetailAgentContext({
     activeTab: "prs",
     branch: "feature-a",
-    project: { name: "buzz" },
+    project: { name: "corevia-talk" },
     repository: {
       name: repository.name,
       repoAddress: repository.repoAddress,

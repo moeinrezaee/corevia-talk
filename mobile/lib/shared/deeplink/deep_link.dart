@@ -1,7 +1,7 @@
-/// Parsing for `buzz://` deep links.
+/// Parsing for `corevia-talk://` deep links.
 ///
 /// Mirrors the desktop handler in `desktop/src-tauri/src/deep_link.rs`:
-/// `buzz://message?channel=<uuid>&id=<hex>[&thread=<hex>]` references a
+/// `corevia-talk://message?channel=<uuid>&id=<hex>[&thread=<hex>]` references a
 /// message (optionally inside a thread) in a channel. Required params that
 /// are missing or empty make the link invalid — the caller never sees a
 /// half-formed target.
@@ -11,8 +11,8 @@ import '../relay/relay_validation.dart';
 import '../hosted/hosted_environment.dart';
 
 /// A parsed deep link supported by the app.
-sealed class BuzzDeepLink {
-  const BuzzDeepLink();
+sealed class CoreviaTalkDeepLink {
+  const CoreviaTalkDeepLink();
 
   /// Community addressed by entry links; other actions have no relay target.
   String? get relayUrl => null;
@@ -21,9 +21,9 @@ sealed class BuzzDeepLink {
 /// A parsed relay invite link.
 ///
 /// Canonical share links are `https://<relay>/invite/<code>`. The custom
-/// `buzz://join?relay=<ws(s)://relay>&code=<code>` form is only an installed-app
+/// `corevia-talk://join?relay=<ws(s)://relay>&code=<code>` form is only an installed-app
 /// handoff from the web landing page.
-class InviteDeepLink extends BuzzDeepLink {
+class InviteDeepLink extends CoreviaTalkDeepLink {
   /// Relay URL normalized to the websocket scheme used by the app.
   @override
   final String relayUrl;
@@ -57,8 +57,8 @@ class InviteDeepLink extends BuzzDeepLink {
 
 /// A parsed channel-only deep link.
 ///
-/// Canonical form: `buzz://channel/<channel-uuid>`.
-class ChannelDeepLink extends BuzzDeepLink {
+/// Canonical form: `corevia-talk://channel/<channel-uuid>`.
+class ChannelDeepLink extends CoreviaTalkDeepLink {
   /// Channel UUID from the sole path segment.
   final String channelId;
 
@@ -75,8 +75,8 @@ class ChannelDeepLink extends BuzzDeepLink {
   String toString() => 'ChannelDeepLink(channel: $channelId)';
 }
 
-/// A parsed `buzz://message` deep link.
-class MessageDeepLink extends BuzzDeepLink {
+/// A parsed `corevia-talk://message` deep link.
+class MessageDeepLink extends CoreviaTalkDeepLink {
   /// Local community identifier for notification-originated links.
   /// Canonical shared links omit this because community IDs are device-local.
   final String? communityId;
@@ -115,11 +115,11 @@ class MessageDeepLink extends BuzzDeepLink {
       'thread: $threadRootId)';
 }
 
-/// Build a canonical `buzz://message` link for a channel message.
+/// Build a canonical `corevia-talk://message` link for a channel message.
 ///
 /// Mirrors `desktop/src/features/messages/lib/messageLink.ts` so links copied
 /// or shared from mobile round-trip through every client's parser:
-/// `buzz://message?channel=<uuid>&id=<eventId>[&thread=<rootId>]`.
+/// `corevia-talk://message?channel=<uuid>&id=<eventId>[&thread=<rootId>]`.
 ///
 /// An empty [threadRootId] is treated as "no thread" so callers can pass
 /// through a nullable thread reference without extra checks.
@@ -141,19 +141,19 @@ String buildMessageLink({
     if (threadRootId != null && threadRootId.isNotEmpty) 'thread': threadRootId,
   };
   return Uri(
-    scheme: 'buzz',
+    scheme: 'corevia-talk',
     host: 'message',
     queryParameters: params,
   ).toString();
 }
 
-/// Parse a canonical `buzz://channel/<channel-uuid>` URI.
+/// Parse a canonical `corevia-talk://channel/<channel-uuid>` URI.
 ///
 /// The channel ID must be the URI's sole non-empty path segment. Query
 /// parameters and fragments are rejected so malformed or ambiguous links never
 /// become navigation targets.
 ChannelDeepLink? parseChannelDeepLink(Uri uri) {
-  if (uri.scheme != 'buzz' || uri.host != 'channel') return null;
+  if (uri.scheme != 'corevia-talk' || uri.host != 'channel') return null;
   if (uri.hasQuery ||
       uri.hasFragment ||
       uri.userInfo.isNotEmpty ||
@@ -173,13 +173,13 @@ ChannelDeepLink? parseChannelDeepLink(Uri uri) {
   return ChannelDeepLink(channelId: channelId.toLowerCase());
 }
 
-/// Parse a `buzz://message?…` URI into a [MessageDeepLink].
+/// Parse a `corevia-talk://message?…` URI into a [MessageDeepLink].
 ///
 /// Returns `null` unless the URI exactly matches the canonical message-link
 /// shape: no path, fragment, credentials, duplicate or unknown parameters; a
 /// UUID channel; and 64-character hexadecimal message/thread event IDs.
 MessageDeepLink? parseMessageDeepLink(Uri uri) {
-  if (uri.scheme != 'buzz' || uri.host != 'message') return null;
+  if (uri.scheme != 'corevia-talk' || uri.host != 'message') return null;
   if (uri.path.isNotEmpty ||
       uri.hasFragment ||
       uri.userInfo.isNotEmpty ||
@@ -216,13 +216,13 @@ MessageDeepLink? parseMessageDeepLink(Uri uri) {
   );
 }
 
-/// Parse canonical HTTPS invite links and `buzz://join` app handoffs.
+/// Parse canonical HTTPS invite links and `corevia-talk://join` app handoffs.
 ///
 /// Accepted forms:
 /// - `https://<relay>/invite/<code>` -> `wss://<relay>` + code
 /// - `http://localhost/invite/<code>` -> `ws://localhost` + code in debug builds
-/// - `buzz://join?relay=<wss://relay>&code=<code>` -> relay + code
-/// - `buzz://join?relay=<ws://localhost>&code=<code>` -> local relay in debug
+/// - `corevia-talk://join?relay=<wss://relay>&code=<code>` -> relay + code
+/// - `corevia-talk://join?relay=<ws://localhost>&code=<code>` -> local relay in debug
 ///
 /// Rejects credentials, fragments, missing params, nested relay credentials, and
 /// non-invite paths so scanners do not accidentally treat arbitrary URLs as
@@ -230,7 +230,7 @@ MessageDeepLink? parseMessageDeepLink(Uri uri) {
 InviteDeepLink? parseInviteDeepLink(Uri uri) {
   if (uri.hasFragment || uri.userInfo.isNotEmpty) return null;
 
-  if (uri.scheme == 'buzz') {
+  if (uri.scheme == 'corevia-talk') {
     if (uri.host != 'join') return null;
     final relay = uri.queryParameters['relay'];
     final code = uri.queryParameters['code'];
@@ -295,16 +295,16 @@ InviteDeepLink? parseInviteDeepLink(Uri uri) {
   return null;
 }
 
-/// Parse any supported Buzz deep link.
-BuzzDeepLink? parseBuzzDeepLink(Uri uri) =>
+/// Parse any supported Corevia Talk deep link.
+CoreviaTalkDeepLink? parseCoreviaTalkDeepLink(Uri uri) =>
     parseNostrBindDeepLink(uri) ??
     parseAddCommunityDeepLink(uri) ??
     parseInviteDeepLink(uri) ??
     parseChannelDeepLink(uri) ??
     parseMessageDeepLink(uri);
 
-/// A validated Buzz repository, pull request, or issue permalink.
-class EntityDeepLink extends BuzzDeepLink {
+/// A validated Corevia Talk repository, pull request, or issue permalink.
+class EntityDeepLink extends CoreviaTalkDeepLink {
   final String type;
   final String owner;
   final String repository;
@@ -318,9 +318,9 @@ class EntityDeepLink extends BuzzDeepLink {
   });
 }
 
-/// Parse canonical `buzz://repo|pr|issue` permalinks for inline presentation.
+/// Parse canonical `corevia-talk://repo|pr|issue` permalinks for inline presentation.
 EntityDeepLink? parseEntityDeepLink(Uri uri) {
-  if (uri.scheme != 'buzz' || !{'repo', 'pr', 'issue'}.contains(uri.host)) {
+  if (uri.scheme != 'corevia-talk' || !{'repo', 'pr', 'issue'}.contains(uri.host)) {
     return null;
   }
   if (uri.path.isNotEmpty ||
@@ -361,7 +361,7 @@ EntityDeepLink? parseEntityDeepLink(Uri uri) {
 }
 
 /// Web signup's challenge. Values are untrusted until authenticated verification.
-class NostrBindDeepLink extends BuzzDeepLink {
+class NostrBindDeepLink extends CoreviaTalkDeepLink {
   final Map<String, String> fields;
   NostrBindDeepLink._(Map<String, String> fields)
     : fields = Map.unmodifiable(fields);
@@ -372,7 +372,7 @@ class NostrBindDeepLink extends BuzzDeepLink {
   String toString() => 'NostrBindDeepLink(redacted)';
 }
 
-class AddCommunityDeepLink extends BuzzDeepLink {
+class AddCommunityDeepLink extends CoreviaTalkDeepLink {
   @override
   final String relayUrl;
   final String name;
@@ -380,7 +380,7 @@ class AddCommunityDeepLink extends BuzzDeepLink {
 }
 
 bool _webHandoffShape(Uri uri, String host, Set<String> allowed) =>
-    uri.scheme == 'buzz' &&
+    uri.scheme == 'corevia-talk' &&
     uri.host == host &&
     uri.path.isEmpty &&
     !uri.hasFragment &&
@@ -414,14 +414,14 @@ NostrBindDeepLink? parseNostrBindDeepLink(Uri uri) {
       ).hasMatch(p['challenge_id']!) ||
       !RegExp(r'^[A-Za-z0-9_-]{43}$').hasMatch(p['nonce']!) ||
       !RegExp(r'^[0-9]{6}$').hasMatch(p['verification_code']!) ||
-      p['audience'] != 'buzz:nostr-identity' ||
+      p['audience'] != 'corevia-talk:nostr-identity' ||
       p['action'] != 'bind_nostr_identity' ||
-      p['protocol'] != 'buzz-nostr-identity' ||
+      p['protocol'] != 'corevia-talk-nostr-identity' ||
       p['version'] != '1' ||
       p['origin'] != HostedEnvironment.origin.toString() ||
       p['return'] != 'browser_fragment_v1' ||
       p['callback_url'] !=
-          HostedEnvironment.origin.resolve('/buzz').toString() ||
+          HostedEnvironment.origin.resolve('/corevia-talk').toString() ||
       !RegExp(r'(Z|[+-][0-9]{2}:[0-9]{2})$').hasMatch(p['expires_at']!) ||
       DateTime.tryParse(p['expires_at']!) == null) {
     return null;

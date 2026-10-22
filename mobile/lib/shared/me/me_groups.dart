@@ -4,7 +4,7 @@ import 'package:characters/characters.dart';
 
 /// Desktop-compatible personal project and chat placement record.
 class MeGroups {
-  static const tag = 'buzz-me-kit-v1';
+  static const tag = 'corevia-talk-me-kit-v1';
   final List<Map<String, dynamic>> groups;
   final Map<String, String> assignments;
   final List<String> channels;

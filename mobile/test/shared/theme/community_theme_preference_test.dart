@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,7 +25,7 @@ void main() {
     for (final payload in [
       {
         'version': 2,
-        'theme': 'buzz',
+        'theme': 'corevia-talk',
         'accent': '#3b82f6',
         'followSystem': true,
       },
@@ -37,7 +37,7 @@ void main() {
       },
       {
         'version': 1,
-        'theme': 'buzz',
+        'theme': 'corevia-talk',
         'accent': '#000000',
         'followSystem': true,
       },
@@ -54,7 +54,7 @@ void main() {
     final prefs = await SharedPreferences.getInstance();
     final storage = CommunityThemeStorage(prefs);
     const a = CommunityThemePreference(
-      theme: 'buzz',
+      theme: 'corevia-talk',
       accent: '#3b82f6',
       followSystem: true,
     );
@@ -105,12 +105,12 @@ void main() {
         'local ${color.name} ${mode.name} survives a storage restart',
         () async {
           SharedPreferences.setMockInitialValues({
-            'buzz_accent_color': 0,
-            'buzz_theme_mode': 'light',
+            'corevia_talk_accent_color': 0,
+            'corevia_talk_theme_mode': 'light',
           });
           final prefs = await SharedPreferences.getInstance();
           final preference = CommunityThemePreference(
-            theme: mode == ThemeMode.dark ? buzzDarkThemeName : buzzThemeName,
+            theme: mode == ThemeMode.dark ? coreviaTalkDarkThemeName : coreviaTalkThemeName,
             accent: color.wireValue,
             followSystem: mode == ThemeMode.system,
           );
@@ -132,8 +132,8 @@ void main() {
 
   test('invalid local snapshot falls back to historical migration', () async {
     SharedPreferences.setMockInitialValues({
-      'buzz-local-theme.v1': '{"version":99}',
-      'buzz_accent_color': 8,
+      'corevia-talk-local-theme.v1': '{"version":99}',
+      'corevia_talk_accent_color': 8,
     });
     final prefs = await SharedPreferences.getInstance();
     expect(CommunityThemeStorage(prefs).legacyPreference().accent, 'neutral');
@@ -141,9 +141,9 @@ void main() {
 
   test('legacy accent indexes migrate without inventing wire values', () async {
     SharedPreferences.setMockInitialValues({
-      'buzz_theme_mode': 'dark',
-      'buzz_color_scheme': 'dracula',
-      'buzz_accent_color': 8,
+      'corevia_talk_theme_mode': 'dark',
+      'corevia_talk_color_scheme': 'dracula',
+      'corevia_talk_accent_color': 8,
     });
     final prefs = await SharedPreferences.getInstance();
     final preference = CommunityThemeStorage(prefs).legacyPreference();

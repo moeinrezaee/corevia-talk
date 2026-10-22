@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/emoji/emoji_avatar.dart';
 import '../../shared/emoji/emoji_data.dart';
@@ -16,7 +16,7 @@ import '../../shared/emoji/emoji_search.dart';
 import '../../shared/emoji/native_emoji_glyph.dart';
 import '../../shared/relay/relay.dart';
 import '../../shared/theme/theme.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../shared/widgets/frosted_app_bar.dart';
 import '../../shared/widgets/ios_native_segmented_control.dart';
 import '../../shared/widgets/ios_glass_navigation_button.dart';
@@ -294,7 +294,7 @@ class ProfileAvatarEditor extends HookConsumerWidget {
                     shape: BoxShape.circle,
                   ),
                   child: Center(
-                    child: BuzzLoadingIndicator(
+                    child: CoreviaTalkLoadingIndicator(
                       semanticLabel: tl('Preparing photo'),
                     ),
                   ),
@@ -707,7 +707,7 @@ class _ImageMode extends StatelessWidget {
             Expanded(
               child: _ImageSourceOption(
                 key: const ValueKey('image-source-camera'),
-                icon: BuzzIcons.camera,
+                icon: CoreviaTalkIcons.camera,
                 iosIcon: IosGlassNavigationIcon.camera,
                 label: tl('Camera'),
                 onTap: isPicking ? null : onCamera,
@@ -718,7 +718,7 @@ class _ImageMode extends StatelessWidget {
             Expanded(
               child: _ImageSourceOption(
                 key: const ValueKey('image-source-library'),
-                icon: BuzzIcons.images,
+                icon: CoreviaTalkIcons.images,
                 iosIcon: IosGlassNavigationIcon.photoLibrary,
                 label: tl('Photo Library'),
                 onTap: isPicking ? null : onLibrary,

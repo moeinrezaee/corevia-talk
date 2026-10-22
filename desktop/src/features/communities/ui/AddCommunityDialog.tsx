@@ -147,7 +147,7 @@ export function AddCommunityDialog({
                     {tl("Create a new community")}
                   </span>
                   <span className="mt-0.5 block text-xs leading-5 text-muted-foreground">
-                    {tl("Claim a Buzz address for your team.")}
+                    {tl("Claim a Corevia Talk address for your team.")}
                   </span>
                 </span>
                 <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground/60" />

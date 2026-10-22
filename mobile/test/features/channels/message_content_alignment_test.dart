@@ -1,6 +1,6 @@
-import 'package:buzz/features/channels/message_content.dart';
-import 'package:buzz/shared/i18n/app_language.dart';
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/features/channels/message_content.dart';
+import 'package:corevia_talk/shared/i18n/app_language.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';

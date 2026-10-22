@@ -1,9 +1,9 @@
 # Database: target architecture and schema-change rules
 
-This document states where the Buzz PostgreSQL database is going and the rules
+This document states where the Corevia Talk PostgreSQL database is going and the rules
 every schema or data change must follow on the way there. Read it before
 changing anything under `migrations/`, `schema/`,
-`scripts/reconcile-schema-after-pgschema.sql`, or a `buzz-db` query whose
+`scripts/reconcile-schema-after-pgschema.sql`, or a `corevia-talk-db` query whose
 behavior depends on schema shape.
 
 The key words **MUST**, **MUST NOT**, **SHOULD**, and **MAY** are to be
@@ -16,7 +16,7 @@ PostgreSQL stores data. The application owns behavior.
 | Concern | Today | Target |
 |---|---|---|
 | Schema source of truth | Two parallel sources: ordered sqlx migrations in `migrations/` and the desired-state manifest in `schema/` | The declarative desired state in `schema/tables/public/` is the source of truth. Deployments that apply schema out of band plan each change from it, with the tool of their choice. `migrations/` stays, because auto-migration stays supported (next row). Each app owns its own migrations and declarative schema: the relay's copies of the push gateway's tables are debt to remove (Rule 4). |
-| Who applies DDL | Startup migrations when `BUZZ_AUTO_MIGRATE` is on (binary default off, Helm chart default on), `buzz-admin migrate`, the push gateway's pre-upgrade Helm Job, and partition creation at relay startup and on a schedule | Both modes stay supported. Deployments at scale, including Block's hosted deployment, apply schema changes out of band through a reviewed workflow before deploying, and their serving relay runs no DDL. Smaller and self-hosted deployments MAY keep auto-migration on. Still open: how the two modes share one schema source, how auto-migration orders a release whose expand, backfill, and contract steps arrive in one upgrade, and how an operator recovers after a contract migration fails at boot (Rule 5). Monthly partition creation is planned to move out of the relay. Changes to partitioned tables (`events`, `delivery_log`) are outside the out-of-band envelope (Rule 6): attaching a partition to a live parent and building an index on a partitioned parent need their own reviewed procedure. |
+| Who applies DDL | Startup migrations when `COREVIA_TALK_AUTO_MIGRATE` is on (binary default off, Helm chart default on), `corevia-talk-admin migrate`, the push gateway's pre-upgrade Helm Job, and partition creation at relay startup and on a schedule | Both modes stay supported. Deployments at scale, including Block's hosted deployment, apply schema changes out of band through a reviewed workflow before deploying, and their serving relay runs no DDL. Smaller and self-hosted deployments MAY keep auto-migration on. Still open: how the two modes share one schema source, how auto-migration orders a release whose expand, backfill, and contract steps arrive in one upgrade, and how an operator recovers after a contract migration fails at boot (Rule 5). Monthly partition creation is planned to move out of the relay. Changes to partitioned tables (`events`, `delivery_log`) are outside the out-of-band envelope (Rule 6): attaching a partition to a live parent and building an index on a partitioned parent need their own reviewed procedure. |
 | Integrity between tables | Some foreign keys, including `ON DELETE CASCADE` and `ON DELETE SET NULL` | None in the database. The owning application transaction checks references and performs deletes explicitly. |
 | Guards and follow-up writes | Triggers and PL/pgSQL functions (`schema/functions/`, `schema/triggers/`) | None in the database. Guards run in the owning writer's transaction; follow-up work is recorded in the same transaction and processed as durable, retryable application work. |
 | Data repair | Some historical repair embedded in migrations | Backfill definitions in application code, run by the durable framework in [data-backfills.md](data-backfills.md). |
@@ -84,8 +84,8 @@ including fleet sweeps (one community at a time), is admitted by
 `DeletionStore::guard_transaction`, which takes the shared community deletion
 lock and refuses a community that is not `active`. Most writers open their
 transaction with `begin_community_write_transaction` or one of its variants
-(`crates/buzz-db/src/runtime/mod.rs`), which returns an `AdmittedTx`
-(`crates/buzz-db/src/runtime/admitted_tx.rs`). One exception is deliberate:
+(`crates/corevia-talk-db/src/runtime/mod.rs`), which returns an `AdmittedTx`
+(`crates/corevia-talk-db/src/runtime/admitted_tx.rs`). One exception is deliberate:
 a write that finishes under an already-admitted serving lease
 (`insert_event_with_serving_write_guard`, through
 `AdmittedTx::admit_with_serving_lease`) is checked by
@@ -103,7 +103,7 @@ update ARCHITECTURE.md § *Dual enforcement*.
 **Today this blocks new tenant-owned tables.** Startup and deletion validation
 no longer require a fence on any table; they pass with every universal fence
 object dropped (`migration_schema_fence_objects_are_optional_for_serving_and_deletion`
-in `crates/buzz-db/src/store/deletion.rs`). Two things still matter:
+in `crates/corevia-talk-db/src/store/deletion.rs`). Two things still matter:
 
 - Deletion's catalog check is an exact set. A `community_id` table missing from
   `EXPECTED_SCOPED_TABLES`, fenced or not, fails it
@@ -131,7 +131,7 @@ After the desired-state change above has landed, all in the same PR:
       `AdmittedTx`). Nothing writes the table outside it.
 - [ ] No fence trigger: no `attach_community_write_fence` call in the
       migration and no `schema/triggers/` file.
-- [ ] The table in `EXPECTED_SCOPED_TABLES` (`crates/buzz-db/src/store/deletion.rs`).
+- [ ] The table in `EXPECTED_SCOPED_TABLES` (`crates/corevia-talk-db/src/store/deletion.rs`).
 - [ ] The table in `PURGE_SCOPED_TABLES` in the same file, ordered child
       before parent. A table missing here keeps its rows after the purge, and
       deletion verification fails closed.
@@ -140,7 +140,7 @@ After the desired-state change above has landed, all in the same PR:
       deletion of its community has started, and that the purge removes its
       rows.
 - [ ] A run of the Postgres-gated migration-mode tests (see
-      [crates/buzz-db/TESTING.md](../crates/buzz-db/TESTING.md)). Most tests
+      [crates/corevia-talk-db/TESTING.md](../crates/corevia-talk-db/TESTING.md)). Most tests
       use desired state, which builds the catalog differently.
 
 #### Checklist: adding a provenance-only table
@@ -162,11 +162,11 @@ PR follows this checklist. All in the same PR:
 - [ ] Register it as operator-global in all three places: the
       `_operator_global_tables` seed row in the migration, `schema/seeds/`, and
       the hard-coded name list in `operator_global_tables()`
-      (`crates/buzz-db/src/runtime/migration.rs`). The lint ignores a registry
+      (`crates/corevia-talk-db/src/runtime/migration.rs`). The lint ignores a registry
       row whose name is not on that list, and without registration the
       `community_id NOT NULL` and key-leads-with-`community_id` lints fail.
 - [ ] Choose and implement its community-deletion disposition in
-      `crates/buzz-db/src/store/deletion.rs`:
+      `crates/corevia-talk-db/src/store/deletion.rs`:
   - **sever:** set the provenance column to `NULL` in the `purge_postgres`
     transaction, as `product_feedback` and `rate_limit_violations` are;
   - **delete and verify:** add it to `RELAY_ADMIN_TABLES` with a row source,
@@ -234,7 +234,7 @@ write-blocking lock. Scans that do not block writes, such as
 - A repair script that writes a channel-bearing `events` row older than the
   floor (inserting one, moving `created_at` backward, or setting `channel_id`
   on an old row) is outside the replica-floor proof: an
-  operator session does not set `buzz.created_at_floor`, so the commit-time
+  operator session does not set `corevia-talk.created_at_floor`, so the commit-time
   floor guard lets it through (`migrations/0021`). Its PR MUST document a
   reviewed procedure that keeps replica routing closed from before the first
   batch until its WAL has replayed on every replica.
@@ -262,11 +262,11 @@ apply:
 | `schema/schema.sql` | An `\i` line for each new file, after the tables it depends on. |
 | `schema/types/`, `schema/partitions/`, `schema/seeds/` | The matching non-table objects. The layout test permits nothing else here. Rule 1 forbids any addition to `functions/` and `triggers/`. |
 | `scripts/reconcile-schema-after-pgschema.sql` | Idempotent convergence, plus a live assertion, for anything `pgschema` does not preserve: seed rows, some storage parameters, partition attachment, and the shapes listed in AGENTS.md *Common Gotchas* #7. |
-| `crates/buzz-push-gateway/migrations/` **and** the relay copies | The six `push_gateway_*` tables have two homes. The gateway applies its own migration history to its own database, through a pre-install/pre-upgrade Helm Job ([push-gateway-deployment.md](push-gateway-deployment.md)). The relay schema also defines them: `migrations/` (`0015`, `0043`, `0045`, `0060`), `schema/tables/public/push_gateway_*.sql`, and `schema/seeds/push_gateway_*.sql`. Until the duplication is removed, a gateway schema change goes in both, as relay `0060` mirrors gateway `0006`. Every rule here applies to both. The target is for the gateway to own its tables alone, in its own migrations and declarative schema; do not add new gateway tables to the relay schema. |
+| `crates/corevia-talk-push-gateway/migrations/` **and** the relay copies | The six `push_gateway_*` tables have two homes. The gateway applies its own migration history to its own database, through a pre-install/pre-upgrade Helm Job ([push-gateway-deployment.md](push-gateway-deployment.md)). The relay schema also defines them: `migrations/` (`0015`, `0043`, `0045`, `0060`), `schema/tables/public/push_gateway_*.sql`, and `schema/seeds/push_gateway_*.sql`. Until the duplication is removed, a gateway schema change goes in both, as relay `0060` mirrors gateway `0006`. Every rule here applies to both. The target is for the gateway to own its tables alone, in its own migrations and declarative schema; do not add new gateway tables to the relay schema. |
 
 A fresh desired-state database and a migrated database MUST converge on the
 same live catalog. The desired-state layout test in
-`crates/buzz-db/src/runtime/migration.rs` checks file structure only. Parity
+`crates/corevia-talk-db/src/runtime/migration.rs` checks file structure only. Parity
 tests cover selected surfaces, and the full drift gate does not exist yet. For
 tables and indexes you touch, add or extend a parity assertion that compares
 the live catalog from both bootstrap paths, following
@@ -280,10 +280,10 @@ provenance-only checklist under Rule 1.
 
 ### 5. Every schema change is backward compatible with the running app
 
-Buzz supports two ways of applying migrations, and every change MUST be safe
+Corevia Talk supports two ways of applying migrations, and every change MUST be safe
 under both:
 
-- **Auto-migration.** The relay binary defaults `BUZZ_AUTO_MIGRATE` to off,
+- **Auto-migration.** The relay binary defaults `COREVIA_TALK_AUTO_MIGRATE` to off,
   but the Helm chart defaults `migrate.autoMigrate` to `true`. With it on, the
   first new pod migrates at boot while old pods are still serving.
 - **Out of band.** An operator applies the migrations while the current relay
@@ -298,7 +298,7 @@ write against.
 The relay has no general schema-version compatibility check. It verifies only
 specific catalog surfaces, such as the deletion serving fence and the replica
 floor guard, so the ordering below is the main protection. When
-`BUZZ_AUTO_MIGRATE` is on, an older binary refuses a database that has
+`COREVIA_TALK_AUTO_MIGRATE` is on, an older binary refuses a database that has
 migrations it does not know (sqlx `VersionMissing`), so `helm rollback` with
 auto-migration on fails at startup, and so does any old pod that restarts
 mid-rollout after a new pod has migrated. A rollback therefore depends on the
@@ -464,12 +464,12 @@ description:
 ## Related documents
 
 - [ARCHITECTURE.md](../ARCHITECTURE.md): *Supported Writer Contract* and the
-  `buzz-db` crate.
+  `corevia-talk-db` crate.
 - [data-backfills.md](data-backfills.md): the backfill specification.
 - [multi-tenant-conformance.md](multi-tenant-conformance.md): tenant-scoping
   obligations.
 - [thread-window-deployment.md](thread-window-deployment.md): the brownfield
   concurrent-index procedure.
-- [crates/buzz-db/TESTING.md](../crates/buzz-db/TESTING.md): desired-state
+- [crates/corevia-talk-db/TESTING.md](../crates/corevia-talk-db/TESTING.md): desired-state
   and migration-mode tests.
 - `schema/schema.sql` header: the desired-state layout.

@@ -169,7 +169,7 @@ export function SendFeedbackDialog({
             data-testid="feedback-privacy-disclosure"
           >
             {tl(
-              "Feedback is sent privately to this Buzz deployment and is not posted to a channel. Attachments are uploaded before you send.",
+              "Feedback is sent privately to this Corevia Talk deployment and is not posted to a channel. Attachments are uploaded before you send.",
             )}
           </p>
         </DialogHeader>

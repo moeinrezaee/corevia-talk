@@ -1,39 +1,39 @@
 [workspace]
 members = [
-    "crates/buzz-relay",
-    "crates/buzz-core",
+    "crates/corevia-talk-relay",
+    "crates/corevia-talk-core",
     "crates/ifc-core",
-    "crates/buzz-conformance",
-    "crates/buzz-push-gateway",
-    "crates/buzz-db",
-    "crates/buzz-pubsub",
-    "crates/buzz-auth",
-    "crates/buzz-search",
-    "crates/buzz-audit",
-    "crates/buzz-acp",
-    "crates/buzz-agent",
+    "crates/corevia-talk-conformance",
+    "crates/corevia-talk-push-gateway",
+    "crates/corevia-talk-db",
+    "crates/corevia-talk-pubsub",
+    "crates/corevia-talk-auth",
+    "crates/corevia-talk-search",
+    "crates/corevia-talk-audit",
+    "crates/corevia-talk-acp",
+    "crates/corevia-talk-agent",
     "crates/sprig",
-    "crates/buzz-test-client",
-    "crates/buzz-ws-client",
-    "crates/buzz-admin",
-    "crates/buzz-deletion",
-    "crates/buzz-feature-flags",
-    "crates/buzz-workflow",
-    "crates/buzz-media",
-    "crates/buzz-cli",
-    "crates/buzz-pairing-cli",
-    "crates/buzz-sdk",
-    "crates/buzz-persona",
+    "crates/corevia-talk-test-client",
+    "crates/corevia-talk-ws-client",
+    "crates/corevia-talk-admin",
+    "crates/corevia-talk-deletion",
+    "crates/corevia-talk-feature-flags",
+    "crates/corevia-talk-workflow",
+    "crates/corevia-talk-media",
+    "crates/corevia-talk-cli",
+    "crates/corevia-talk-pairing-cli",
+    "crates/corevia-talk-sdk",
+    "crates/corevia-talk-persona",
     "crates/git-credential-nostr",
     "crates/git-sign-nostr",
-    "crates/buzz-pair-relay",
-    "crates/buzz-relay-mesh",
-    "crates/buzz-mesh-smoke",
-    "crates/buzz-dev-mcp",
-    "crates/buzz-voice",
-    "crates/buzz-audio-client",
-    "crates/buzz-backend-kubernetes",
-    "crates/buzz-datastore-tracing",
+    "crates/corevia-talk-pair-relay",
+    "crates/corevia-talk-relay-mesh",
+    "crates/corevia-talk-mesh-smoke",
+    "crates/corevia-talk-dev-mcp",
+    "crates/corevia-talk-voice",
+    "crates/corevia-talk-audio-client",
+    "crates/corevia-talk-backend-kubernetes",
+    "crates/corevia-talk-datastore-tracing",
     "examples/countdown-bot",
 ]
 exclude = ["desktop/src-tauri"]
@@ -65,9 +65,9 @@ sqlx = { version = "0.9", features = [
 redis        = { version = "1.0", features = ["tokio-comp", "connection-manager", "tokio-rustls-comp"] }
 deadpool-redis = { version = "0.23", features = ["rt_tokio_1"] }
 
-# Kubernetes (buzz-backend-kubernetes provider). No `ring` feature here: the
+# Kubernetes (corevia-talk-backend-kubernetes provider). No `ring` feature here: the
 # process-level CryptoProvider is installed explicitly at startup, matching
-# buzz-cli/buzz-acp/buzz-admin/buzz-relay/buzz-dev-mcp — see the comment on the
+# corevia-talk-cli/corevia-talk-acp/corevia-talk-admin/corevia-talk-relay/corevia-talk-dev-mcp — see the comment on the
 # crate's own rustls dependency.
 kube = { version = "2.0", default-features = false, features = ["client", "rustls-tls"] }
 k8s-openapi = { version = "0.26", features = ["v1_31"] }
@@ -79,7 +79,7 @@ nostr = { version = "0.44", features = ["nip44", "nip98"] }
 serde       = { version = "1", features = ["derive"] }
 postcard    = { version = "1", default-features = false, features = ["use-std"] }
 
-# Inter-relay mesh transport (buzz-relay-mesh)
+# Inter-relay mesh transport (corevia-talk-relay-mesh)
 iroh = { version = "1.0.0-rc.0", default-features = false, features = ["tls-ring"] }
 serde_json  = { version = "1", features = ["raw_value"] }
 serde_yaml  = "0.9"
@@ -137,26 +137,26 @@ url = "2"
 # Property-based testing (dev-only)
 proptest = "1"
 
-# MCP SDK (used by buzz-dev-mcp and buzz-agent)
+# MCP SDK (used by corevia-talk-dev-mcp and corevia-talk-agent)
 rmcp = { version = "1.1.0", features = ["server", "transport-io", "macros"] }
 schemars = { version = "1", default-features = false }
 
 # Internal crates
-buzz-core = { path = "crates/buzz-core" }
-buzz-conformance = { path = "crates/buzz-conformance" }
-buzz-db = { path = "crates/buzz-db" }
-buzz-deletion = { path = "crates/buzz-deletion" }
-buzz-feature-flags = { path = "crates/buzz-feature-flags" }
-buzz-auth = { path = "crates/buzz-auth" }
-buzz-pubsub = { path = "crates/buzz-pubsub" }
-buzz-search = { path = "crates/buzz-search" }
-buzz-audit = { path = "crates/buzz-audit" }
-buzz-workflow = { path = "crates/buzz-workflow" }
-buzz-media = { path = "crates/buzz-media" }
-buzz-sdk = { path = "crates/buzz-sdk" }
-buzz-ws-client = { path = "crates/buzz-ws-client" }
-buzz-relay-mesh = { path = "crates/buzz-relay-mesh" }
-buzz-datastore-tracing = { path = "crates/buzz-datastore-tracing" }
+corevia-talk-core = { path = "crates/corevia-talk-core" }
+corevia-talk-conformance = { path = "crates/corevia-talk-conformance" }
+corevia-talk-db = { path = "crates/corevia-talk-db" }
+corevia-talk-deletion = { path = "crates/corevia-talk-deletion" }
+corevia-talk-feature-flags = { path = "crates/corevia-talk-feature-flags" }
+corevia-talk-auth = { path = "crates/corevia-talk-auth" }
+corevia-talk-pubsub = { path = "crates/corevia-talk-pubsub" }
+corevia-talk-search = { path = "crates/corevia-talk-search" }
+corevia-talk-audit = { path = "crates/corevia-talk-audit" }
+corevia-talk-workflow = { path = "crates/corevia-talk-workflow" }
+corevia-talk-media = { path = "crates/corevia-talk-media" }
+corevia-talk-sdk = { path = "crates/corevia-talk-sdk" }
+corevia-talk-ws-client = { path = "crates/corevia-talk-ws-client" }
+corevia-talk-relay-mesh = { path = "crates/corevia-talk-relay-mesh" }
+corevia-talk-datastore-tracing = { path = "crates/corevia-talk-datastore-tracing" }
 
 # CI profile — builds the relay for desktop e2e. Dependencies keep full
 # release optimization (warm from main's cache; they carry the runtime hot
@@ -195,6 +195,6 @@ strip = true
 aws-creds = { git = "https://github.com/tlongwell-block/rust-s3", rev = "c9fce3620dd434c1f810101d672cf384268dbb0f" }
 # MeshLLM 0.76 uses rusqlite 0.40 / libsqlite3-sys 0.38. SQLx 0.9.0's
 # optional SQLite driver still caps libsqlite3-sys below 0.38, which Cargo
-# resolves even though Buzz only enables PostgreSQL. Pin the merged upstream
+# resolves even though Corevia Talk only enables PostgreSQL. Pin the merged upstream
 # compatibility fix until it is released: https://github.com/transact-rs/sqlx/pull/4402
 sqlx-sqlite = { git = "https://github.com/launchbadge/sqlx", rev = "94aafe3a68884d923b0798a767c8d7f6cfda89d2" }

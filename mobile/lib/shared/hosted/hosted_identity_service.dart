@@ -73,7 +73,7 @@ class HostedIdentityService {
     }
     if (local != null && bound != null) return _result(local, bound, subject);
 
-    final status = await account.post('/v1/buzz/nsec-backups/status', {});
+    final status = await account.post('/v1/corevia-talk/nsec-backups/status', {});
     _sameAccount(subject);
     checkCurrent();
     final listed = status['backup_nostr_pubkeys'];
@@ -165,7 +165,7 @@ class HostedIdentityService {
           : _result(generated, bound, subject);
     }
 
-    final recovered = await account.post('/v1/buzz/nsec-backups/recovery', {});
+    final recovered = await account.post('/v1/corevia-talk/nsec-backups/recovery', {});
     _sameAccount(subject);
     final backups = recovered['backups'];
     final failed = recovered['failed_backup_ids'];

@@ -13,7 +13,7 @@ import type { IdentityStorage } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
 import { Button } from "@/shared/ui/button";
-import { FuzzyLogo } from "@/shared/ui/buzz-logo/FuzzyLogo";
+import { FuzzyLogo } from "@/shared/ui/corevia-talk-logo/FuzzyLogo";
 import { Spinner } from "@/shared/ui/spinner";
 import {
   ONBOARDING_PRIMARY_CTA_CLASS,
@@ -155,10 +155,10 @@ export function BackupStep({
 
   const storageDescription =
     identityStorage === "system-keyring"
-      ? "Buzz keeps your identity key in your system keychain. Your computer may ask for your password when Buzz needs to read the key."
+      ? "Corevia Talk keeps your identity key in your system keychain. Your computer may ask for your password when Corevia Talk needs to read the key."
       : identityStorage === "local-file"
-        ? "Your system keychain wasn’t available, so Buzz keeps your identity key in a private file on this device."
-        : "Buzz keeps your identity key protected on this device. Make a separate backup in case you lose access.";
+        ? "Your system keychain wasn’t available, so Corevia Talk keeps your identity key in a private file on this device."
+        : "Corevia Talk keeps your identity key protected on this device. Make a separate backup in case you lose access.";
   const storageTitle =
     identityStorage === "system-keyring"
       ? "Protected by your system keychain"
@@ -192,7 +192,7 @@ export function BackupStep({
             )}
           >
             {tl(
-              "Your identity key works like a password for your Buzz account. Keep a copy somewhere safe. You can create a backup file and lock it with a password you can remember.",
+              "Your identity key works like a password for your Corevia Talk account. Keep a copy somewhere safe. You can create a backup file and lock it with a password you can remember.",
             )}
           </p>
         </div>
@@ -386,7 +386,7 @@ export function BackupStep({
               <p
                 className={cn(
                   ONBOARDING_KEY_TEXT_CLASS,
-                  "buzz-onboarding-key-text-v3 select-text break-all transition-[filter] duration-150 ease-out group-hover/key:select-none group-hover/key:blur-[4px] group-focus-within/key:select-none group-focus-within/key:blur-[4px] motion-reduce:transition-none",
+                  "corevia-talk-onboarding-key-text-v3 select-text break-all transition-[filter] duration-150 ease-out group-hover/key:select-none group-hover/key:blur-[4px] group-focus-within/key:select-none group-focus-within/key:blur-[4px] motion-reduce:transition-none",
                 )}
                 data-testid="backup-key-value"
               >

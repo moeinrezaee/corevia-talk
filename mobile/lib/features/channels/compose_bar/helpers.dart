@@ -338,7 +338,7 @@ Future<_NonMemberMentionChoice?> _promptNonMemberMention(
 }) {
   final single = names.length == 1;
   final joinedNames = names.join(', ');
-  return showBuzzDialog<_NonMemberMentionChoice>(
+  return showCoreviaTalkDialog<_NonMemberMentionChoice>(
     context: context,
     builder: (dialogContext) => AlertDialog(
       title: Text(tl('Mention people outside this channel?')),

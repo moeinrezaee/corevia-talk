@@ -116,12 +116,12 @@ export function InviteJoinPolicyNotice({
       {policy.terms_markdown || policy.privacy_markdown ? (
         <PolicyCheckbox
           accessibleLabel={tl(
-            "I agree to the Buzz Terms of Service and Privacy Policy.",
+            "I agree to the Corevia Talk Terms of Service and Privacy Policy.",
           )}
           checked={agreementConfirmed}
           onCheckedChange={onAgreementConfirmedChange}
         >
-          {tlNodes("I agree to the Buzz {0} and {1}.", [
+          {tlNodes("I agree to the Corevia Talk {0} and {1}.", [
             policy.terms_markdown ? (
               <button
                 key="terms"

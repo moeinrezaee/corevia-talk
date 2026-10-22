@@ -1,10 +1,10 @@
-import 'package:buzz/shared/hosted/hosted_environment.dart';
+import 'package:corevia_talk/shared/hosted/hosted_environment.dart';
 import 'dart:convert';
 
-import 'package:buzz/shared/community/community.dart';
-import 'package:buzz/shared/hosted/account_identity_store.dart';
-import 'package:buzz/shared/hosted/device_identity_source.dart';
-import 'package:buzz/shared/hosted/self_hosted_entry.dart';
+import 'package:corevia_talk/shared/community/community.dart';
+import 'package:corevia_talk/shared/hosted/account_identity_store.dart';
+import 'package:corevia_talk/shared/hosted/device_identity_source.dart';
+import 'package:corevia_talk/shared/hosted/self_hosted_entry.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nostr/nostr.dart' as nostr;
@@ -134,12 +134,12 @@ void main() {
           if (source == 'account') {
             await AccountIdentityStore(storage: storage).create(key.nsec);
           } else if (source == 'legacy') {
-            storage.data['buzz_nsec'] = key.nsec;
+            storage.data['corevia_talk_nsec'] = key.nsec;
           } else {
-            storage.data['buzz_communities'] = jsonEncode([
+            storage.data['corevia_talk_communities'] = jsonEncode([
               {'name': 'Saved', 'nsec': key.nsec, 'pubkey': key.public},
             ]);
-            storage.data['buzz_nsec'] = other.nsec;
+            storage.data['corevia_talk_nsec'] = other.nsec;
           }
           storage.failEnumeration = brokenEnumeration;
           final before = Map<String, String>.of(storage.data);
@@ -180,7 +180,7 @@ void main() {
     'account and community choices deduplicate the same saved identity',
     () async {
       await AccountIdentityStore(storage: storage).create(key.nsec);
-      storage.data['buzz_nsec'] = key.nsec;
+      storage.data['corevia_talk_nsec'] = key.nsec;
       expect((await entry.choices()).choices.map((choice) => choice.pubkey), [
         key.public,
       ]);

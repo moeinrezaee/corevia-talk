@@ -134,7 +134,7 @@ class _EmojiMode extends HookConsumerWidget {
                                         borderSide: BorderSide.none,
                                       ),
                                       prefixIcon: const Icon(
-                                        BuzzIcons.search,
+                                        CoreviaTalkIcons.search,
                                         size: 20,
                                       ),
                                       suffixIcon: searchController.text.isEmpty
@@ -143,7 +143,7 @@ class _EmojiMode extends HookConsumerWidget {
                                               tooltip: tl('Clear search'),
                                               onPressed: searchController.clear,
                                               icon: const Icon(
-                                                BuzzIcons.x,
+                                                CoreviaTalkIcons.x,
                                                 size: 18,
                                               ),
                                             ),
@@ -228,7 +228,7 @@ class _EmojiMode extends HookConsumerWidget {
                     Expanded(
                       child: AvatarEditorOptionButton(
                         key: const ValueKey('emoji-editor-background'),
-                        icon: BuzzIcons.palette,
+                        icon: CoreviaTalkIcons.palette,
                         iosIcon: IosGlassNavigationIcon.palette,
                         label: tl('Background'),
                         selected:
@@ -242,7 +242,7 @@ class _EmojiMode extends HookConsumerWidget {
                     Expanded(
                       child: AvatarEditorOptionButton(
                         key: const ValueKey('emoji-editor-emoji'),
-                        icon: BuzzIcons.smile,
+                        icon: CoreviaTalkIcons.smile,
                         iosIcon: IosGlassNavigationIcon.emoji,
                         label: tl('Emoji'),
                         selected: activeSection == _EmojiEditorSection.emoji,
@@ -341,7 +341,7 @@ class _AvatarSkinToneSelector extends StatelessWidget {
                 Expanded(child: Text(tone.label)),
                 if (index == value)
                   Icon(
-                    BuzzIcons.check,
+                    CoreviaTalkIcons.check,
                     size: 18,
                     color: context.colors.primary,
                   ),

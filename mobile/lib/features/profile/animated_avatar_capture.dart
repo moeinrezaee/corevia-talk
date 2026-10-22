@@ -11,13 +11,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:google_mlkit_selfie_segmentation/google_mlkit_selfie_segmentation.dart';
 import 'package:image/image.dart' as image;
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../shared/emoji/emoji_avatar.dart';
 import '../../shared/relay/relay.dart';
 import '../../shared/theme/theme.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../shared/widgets/ios_glass_navigation_button.dart';
 import 'avatar_background_grid.dart';
 import 'camera_disposal_barrier.dart';
@@ -595,7 +595,7 @@ class AnimatedAvatarCapture extends HookConsumerWidget {
                     color: Colors.black,
                     child: isPreparingFrames.value
                         ? Center(
-                            child: BuzzLoadingIndicator(
+                            child: CoreviaTalkLoadingIndicator(
                               size: 44,
                               color: context.colors.onSurface,
                               semanticLabel: tl('Preparing animated avatar'),
@@ -605,12 +605,12 @@ class AnimatedAvatarCapture extends HookConsumerWidget {
                         ? _AspectCorrectCameraPreview(controller: active)
                         : Center(
                             child: isInitializing.value
-                                ? BuzzLoadingIndicator(
+                                ? CoreviaTalkLoadingIndicator(
                                     color: Colors.white,
                                     semanticLabel: tl('Starting camera'),
                                   )
                                 : const Icon(
-                                    BuzzIcons.cameraOff,
+                                    CoreviaTalkIcons.cameraOff,
                                     color: Colors.white,
                                     size: 32,
                                   ),

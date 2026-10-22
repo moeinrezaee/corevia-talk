@@ -102,7 +102,7 @@ class _MorphingQuickActionsButton extends HookWidget {
     }, [fadeController, open, reducedMotion, surfaceController]);
 
     return ComposeMorphIcon(
-      compose: icon == BuzzIcons.edit,
+      compose: icon == CoreviaTalkIcons.edit,
       color: defaultTargetPlatform == TargetPlatform.iOS
           ? context.colors.onSurface
           : Colors.white,
@@ -298,7 +298,7 @@ class _QuickActionsMenu extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _QuickActionItem(
-            icon: BuzzIcons.hash,
+            icon: CoreviaTalkIcons.hash,
             title: tl('Create channel'),
             borderRadius: const BorderRadius.vertical(
               top: Radius.circular(_kQuickActionCardRadius),
@@ -309,7 +309,7 @@ class _QuickActionsMenu extends StatelessWidget {
           ),
           const SizedBox(height: Grid.xxs - 2),
           _QuickActionItem(
-            icon: BuzzIcons.messagesSquare,
+            icon: CoreviaTalkIcons.messagesSquare,
             title: tl('New direct message'),
             borderRadius: const BorderRadius.vertical(
               top: Radius.circular(8),

@@ -221,7 +221,7 @@ class DeviceVoiceNoteRecorder implements VoiceNoteRecorder {
     final recordedPath = await _recorder.stop() ?? _path;
     _nativeEnded = true;
     if (recordedPath == null || recordedPath.isEmpty) {
-      throw StateError('Buzz could not finish the voice note.');
+      throw StateError('Corevia Talk could not finish the voice note.');
     }
     final startedAt = _startedAt;
     final duration = startedAt == null
@@ -639,7 +639,7 @@ class DeviceVoiceNotePlayerController extends VoiceNotePlayerController {
       }
       file = File(
         '${directory.path}${Platform.pathSeparator}'
-        'buzz-voice-note-${DateTime.now().microsecondsSinceEpoch}.mp4',
+        'corevia-talk-voice-note-${DateTime.now().microsecondsSinceEpoch}.mp4',
       );
       _downloadingRemoteFile = file;
       var downloadedBytes = 0;

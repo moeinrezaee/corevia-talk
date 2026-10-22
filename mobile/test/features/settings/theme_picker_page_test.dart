@@ -1,5 +1,5 @@
-import 'package:buzz/features/settings/theme_picker_page.dart';
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/features/settings/theme_picker_page.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,7 +39,7 @@ void main() {
   testWidgets('one Home and Chat pair replaces the theme carousel', (
     tester,
   ) async {
-    await _pumpPicker(tester, prefs: {'buzz_color_scheme': 'dracula'});
+    await _pumpPicker(tester, prefs: {'corevia_talk_color_scheme': 'dracula'});
     expect(find.byType(PageView), findsNothing);
     expect(find.bySemanticsLabel('Home preview'), findsOneWidget);
     expect(find.bySemanticsLabel('Chat preview'), findsOneWidget);
@@ -80,7 +80,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(notifier.preferenceWrites, 1);
     expect(notifier.lastPreference?.mode, ThemeMode.dark);
-    expect(notifier.lastPreference?.theme, buzzDarkThemeName);
+    expect(notifier.lastPreference?.theme, coreviaTalkDarkThemeName);
     expect(notifier.lastPreference?.accent, chatColorChoices[green].wireValue);
   });
 

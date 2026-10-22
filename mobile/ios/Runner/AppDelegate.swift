@@ -1,6 +1,6 @@
 import AuthenticationServices
 import AVFoundation
-import BuzzPushKit
+import CoreviaTalkPushKit
 import DeclaredAgeRange
 import Flutter
 import UIKit
@@ -13,19 +13,19 @@ import os.log
   private var mediaUploadChannel: FlutterMethodChannel?
   private var pushChannel: FlutterMethodChannel?
   private let apnsRegistrationBuffer = APNsRegistrationBuffer()
-  private let pushNavigationBuffer = BuzzPushNavigationBuffer()
+  private let pushNavigationBuffer = CoreviaTalkPushNavigationBuffer()
   private var apnsDeviceToken: Data?
-  private lazy var endpointGrantStore = BuzzPushEndpointGrantKeychainStore(
-    accessGroup: Bundle.main.object(forInfoDictionaryKey: "BuzzKeychainAccessGroup") as? String
+  private lazy var endpointGrantStore = CoreviaTalkPushEndpointGrantKeychainStore(
+    accessGroup: Bundle.main.object(forInfoDictionaryKey: "CoreviaTalkKeychainAccessGroup") as? String
   )
   private var enrollmentTask: Task<Void, Never>?
   var appGroupIdentifier: String? {
-    Bundle.main.object(forInfoDictionaryKey: "BuzzAppGroupIdentifier") as? String
+    Bundle.main.object(forInfoDictionaryKey: "CoreviaTalkAppGroupIdentifier") as? String
   }
   private var pushKeychainAccessGroup: String? {
-    Bundle.main.object(forInfoDictionaryKey: "BuzzKeychainAccessGroup") as? String
+    Bundle.main.object(forInfoDictionaryKey: "CoreviaTalkKeychainAccessGroup") as? String
   }
-  private lazy var pushSnapshotBridge = BuzzPushSnapshotBridge(
+  private lazy var pushSnapshotBridge = CoreviaTalkPushSnapshotBridge(
     appGroupIdentifier: appGroupIdentifier,
     endpointGrantStore: endpointGrantStore,
     keychainAccessGroup: pushKeychainAccessGroup
@@ -48,7 +48,7 @@ import os.log
   private var nativeMessageActionSurfaceSupportChannel: FlutterMethodChannel?
   private var identityFilePlugin: IdentityFilePlugin?
   private var hostedHpkeChannel: FlutterMethodChannel?
-  private var browserAuthBridge: BuzzBrowserAuthBridge?
+  private var browserAuthBridge: CoreviaTalkBrowserAuthBridge?
   private var huddleMediaPlugin: HuddleMediaPlugin?
 
   override func application(
@@ -63,14 +63,14 @@ import os.log
 
   func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
     GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
-    if let registrar = engineBridge.pluginRegistry.registrar(forPlugin: "BuzzIosMediaCarousel") {
-      registrar.register(IosMediaCarouselFactory(messenger: registrar.messenger()), withId: "buzz/ios_media_carousel")
+    if let registrar = engineBridge.pluginRegistry.registrar(forPlugin: "CoreviaTalkIosMediaCarousel") {
+      registrar.register(IosMediaCarouselFactory(messenger: registrar.messenger()), withId: "corevia-talk/ios_media_carousel")
     }
 
     let messenger = engineBridge.applicationRegistrar.messenger()
     identityFilePlugin = IdentityFilePlugin(messenger: messenger)
-    browserAuthBridge = BuzzBrowserAuthBridge(messenger: messenger)
-    hostedHpkeChannel = FlutterMethodChannel(name: "buzz/hosted_hpke", binaryMessenger: messenger)
+    browserAuthBridge = CoreviaTalkBrowserAuthBridge(messenger: messenger)
+    hostedHpkeChannel = FlutterMethodChannel(name: "corevia-talk/hosted_hpke", binaryMessenger: messenger)
     hostedHpkeChannel?.setMethodCallHandler { call, result in
       guard call.method == "seal" else { result(FlutterMethodNotImplemented); return }
       guard #available(iOS 17.0, *) else {
@@ -90,18 +90,18 @@ import os.log
       }
     }
     huddleMediaPlugin = HuddleMediaPlugin(messenger: messenger)
-    if let registrar = engineBridge.pluginRegistry.registrar(forPlugin: "BuzzIosNavigationBar") {
-      registrar.register(IosNavigationBarFactory(messenger: messenger, parent: registrar.viewController), withId: "buzz/ios_navigation_bar")
+    if let registrar = engineBridge.pluginRegistry.registrar(forPlugin: "CoreviaTalkIosNavigationBar") {
+      registrar.register(IosNavigationBarFactory(messenger: messenger, parent: registrar.viewController), withId: "corevia-talk/ios_navigation_bar")
     }
     mediaUploadChannel = FlutterMethodChannel(
-      name: "buzz/media_upload",
+      name: "corevia-talk/media_upload",
       binaryMessenger: messenger
     )
     mediaUploadChannel?.setMethodCallHandler { [weak self] call, result in
       self?.handleMediaUploadMethodCall(call, result: result)
     }
     pushChannel = FlutterMethodChannel(
-      name: "buzz/push",
+      name: "corevia-talk/push",
       binaryMessenger: messenger
     )
     pushChannel?.setMethodCallHandler { [weak self] call, result in
@@ -111,7 +111,7 @@ import os.log
       self?.pushChannel?.invokeMethod(update.method, arguments: update.arguments)
     }
     hapticsChannel = FlutterMethodChannel(
-      name: "buzz/haptics",
+      name: "corevia-talk/haptics",
       binaryMessenger: messenger
     )
     hapticsChannel?.setMethodCallHandler { call, result in
@@ -125,14 +125,14 @@ import os.log
       result(nil)
     }
     qrScannerChannel = FlutterMethodChannel(
-      name: "buzz/qr_scanner",
+      name: "corevia-talk/qr_scanner",
       binaryMessenger: messenger
     )
     qrScannerChannel?.setMethodCallHandler { call, result in
       Self.handleQrScannerMethodCall(call, result: result)
     }
     inlinePhotoPickerSupportChannel = FlutterMethodChannel(
-      name: "buzz/inline_photo_picker",
+      name: "corevia-talk/inline_photo_picker",
       binaryMessenger: messenger
     )
     inlinePhotoPickerSupportChannel?.setMethodCallHandler { call, result in
@@ -148,11 +148,11 @@ import os.log
     }
 
     ageSignalChannel = FlutterMethodChannel(
-      name: "buzz/age_signal",
+      name: "corevia-talk/age_signal",
       binaryMessenger: messenger
     )
     let ageSignalRegistrar = engineBridge.pluginRegistry.registrar(
-      forPlugin: "BuzzAgeSignal"
+      forPlugin: "CoreviaTalkAgeSignal"
     )
     ageSignalChannel?.setMethodCallHandler { [weak self] call, result in
       self?.handleAgeSignalMethodCall(
@@ -163,26 +163,26 @@ import os.log
     }
 
     if let inlinePhotoPickerRegistrar = engineBridge.pluginRegistry.registrar(
-      forPlugin: "BuzzInlinePhotoPicker"
+      forPlugin: "CoreviaTalkInlinePhotoPicker"
     ) {
       inlinePhotoPickerRegistrar.register(
         InlinePhotoPickerFactory(
           messenger: messenger,
           parentViewController: inlinePhotoPickerRegistrar.viewController
         ),
-        withId: "buzz/inline_photo_picker"
+        withId: "corevia-talk/inline_photo_picker"
       )
     }
 
     if let concentricSheetRegistrar = engineBridge.pluginRegistry.registrar(
-      forPlugin: "BuzzConcentricSheetSurface"
+      forPlugin: "CoreviaTalkConcentricSheetSurface"
     ) {
       concentricSheetRegistrar.register(
         ConcentricSheetSurfaceFactory(messenger: messenger),
-        withId: "buzz/concentric_sheet_surface"
+        withId: "corevia-talk/concentric_sheet_surface"
       )
       concentricSheetSurfaceChannel = FlutterMethodChannel(
-        name: "buzz/concentric_sheet_surface",
+        name: "corevia-talk/concentric_sheet_surface",
         binaryMessenger: messenger
       )
       concentricSheetSurfaceChannel?.setMethodCallHandler { call, result in
@@ -199,67 +199,67 @@ import os.log
     }
 
     if let jumpToLatestGlassRegistrar = engineBridge.pluginRegistry.registrar(
-      forPlugin: "BuzzJumpToLatestGlassButton"
+      forPlugin: "CoreviaTalkJumpToLatestGlassButton"
     ) {
       jumpToLatestGlassRegistrar.register(
         JumpToLatestGlassButtonFactory(messenger: messenger),
-        withId: "buzz/jump_to_latest_glass"
+        withId: "corevia-talk/jump_to_latest_glass"
       )
     }
 
     if let navigationGlassRegistrar = engineBridge.pluginRegistry.registrar(
-      forPlugin: "BuzzNavigationGlassButton"
+      forPlugin: "CoreviaTalkNavigationGlassButton"
     ) {
       navigationGlassRegistrar.register(
         NavigationGlassButtonFactory(messenger: messenger),
-        withId: "buzz/navigation_glass"
+        withId: "corevia-talk/navigation_glass"
       )
     }
 
     if let segmentedControlRegistrar = engineBridge.pluginRegistry.registrar(
-      forPlugin: "BuzzNativeSegmentedControl"
+      forPlugin: "CoreviaTalkNativeSegmentedControl"
     ) {
       segmentedControlRegistrar.register(
         NativeSegmentedControlFactory(messenger: messenger),
-        withId: "buzz/native_segmented_control"
+        withId: "corevia-talk/native_segmented_control"
       )
     }
 
     if let skinToneRegistrar = engineBridge.pluginRegistry.registrar(
-      forPlugin: "BuzzNativeSkinToneControl"
+      forPlugin: "CoreviaTalkNativeSkinToneControl"
     ) {
       skinToneRegistrar.register(
         NativeSkinToneControlFactory(messenger: messenger),
-        withId: "buzz/native_skin_tone_control"
+        withId: "corevia-talk/native_skin_tone_control"
       )
     }
 
     if let stickyDateGlassRegistrar = engineBridge.pluginRegistry.registrar(
-      forPlugin: "BuzzStickyDateGlassHeader"
+      forPlugin: "CoreviaTalkStickyDateGlassHeader"
     ) {
       stickyDateGlassRegistrar.register(
         StickyDateGlassHeaderFactory(messenger: messenger),
-        withId: "buzz/sticky_date_glass"
+        withId: "corevia-talk/sticky_date_glass"
       )
     }
 
     if let themePaginationGlassRegistrar = engineBridge.pluginRegistry.registrar(
-      forPlugin: "BuzzThemePaginationGlassControl"
+      forPlugin: "CoreviaTalkThemePaginationGlassControl"
     ) {
       themePaginationGlassRegistrar.register(
         ThemePaginationGlassControlFactory(messenger: messenger),
-        withId: "buzz/theme_pagination_glass"
+        withId: "corevia-talk/theme_pagination_glass"
       )
     }
     nativeMessagePresentationCoordinator = NativeMessagePresentationCoordinator(
       messenger: messenger,
       parentViewController: engineBridge.pluginRegistry.registrar(
-        forPlugin: "BuzzNativeMessagePresentation"
+        forPlugin: "CoreviaTalkNativeMessagePresentation"
       )?.viewController
     )
 
     let nativeAttachmentRegistrar = engineBridge.pluginRegistry.registrar(
-      forPlugin: "BuzzNativeAttachmentPopover"
+      forPlugin: "CoreviaTalkNativeAttachmentPopover"
     )
     nativeAttachmentPopoverCoordinator = NativeAttachmentPopoverCoordinator(
       messenger: messenger,
@@ -267,33 +267,33 @@ import os.log
     )
 
     let nativeEmojiPickerRegistrar = engineBridge.pluginRegistry.registrar(
-      forPlugin: "BuzzNativeEmojiPicker"
+      forPlugin: "CoreviaTalkNativeEmojiPicker"
     )
     nativeEmojiPickerCoordinator = NativeEmojiPickerCoordinator(
       messenger: messenger,
       parentViewController: nativeEmojiPickerRegistrar?.viewController
     )
 
-    engineBridge.pluginRegistry.registrar(forPlugin: "BuzzNativePresenceMenu")?.register(
-      NativePresenceMenuFactory(messenger: messenger), withId: "buzz/presence_menu"
+    engineBridge.pluginRegistry.registrar(forPlugin: "CoreviaTalkNativePresenceMenu")?.register(
+      NativePresenceMenuFactory(messenger: messenger), withId: "corevia-talk/presence_menu"
     )
 
     nativeAddMembersSheetCoordinator = NativeAddMembersSheetCoordinator(
       messenger: messenger,
       parentViewController: engineBridge.pluginRegistry.registrar(
-        forPlugin: "BuzzNativeAddMembersSheet"
+        forPlugin: "CoreviaTalkNativeAddMembersSheet"
       )?.viewController
     )
 
     nativeConfirmationDialogCoordinator = NativeConfirmationDialogCoordinator(
       messenger: messenger,
       parentViewController: engineBridge.pluginRegistry.registrar(
-        forPlugin: "BuzzNativeConfirmationDialog"
+        forPlugin: "CoreviaTalkNativeConfirmationDialog"
       )?.viewController
     )
 
     let nativeProfileTextEditorRegistrar = engineBridge.pluginRegistry.registrar(
-      forPlugin: "BuzzNativeProfileTextEditor"
+      forPlugin: "CoreviaTalkNativeProfileTextEditor"
     )
     nativeProfileTextEditorCoordinator = NativeProfileTextEditorCoordinator(
       messenger: messenger,
@@ -301,15 +301,15 @@ import os.log
     )
     if #available(iOS 16.0, *),
       let nativeMessageActionsRegistrar = engineBridge.pluginRegistry.registrar(
-        forPlugin: "BuzzNativeMessageActionSurface"
+        forPlugin: "CoreviaTalkNativeMessageActionSurface"
       )
     {
       nativeMessageActionsRegistrar.register(
         NativeMessageActionSurfaceFactory(messenger: messenger),
-        withId: "buzz/native_message_action_surface"
+        withId: "corevia-talk/native_message_action_surface"
       )
       nativeMessageActionSurfaceSupportChannel = FlutterMethodChannel(
-        name: "buzz/native_message_action_surface",
+        name: "corevia-talk/native_message_action_surface",
         binaryMessenger: messenger
       )
       nativeMessageActionSurfaceSupportChannel?.setMethodCallHandler { call, result in
@@ -383,10 +383,10 @@ import os.log
     case .declinedSharing:
       return noAgeSignalResponse
     case .sharing(let range):
-      return BuzzAgeSignalPayload.sharing(
+      return CoreviaTalkAgeSignalPayload.sharing(
         exclusiveUpperBound: range.upperBound, lowerBound: range.lowerBound)
     @unknown default:
-      throw NSError(domain: "BuzzAgeSignal", code: 1,
+      throw NSError(domain: "CoreviaTalkAgeSignal", code: 1,
         userInfo: [NSLocalizedDescriptionKey: "Unsupported age signal response"])
     }
   }
@@ -491,7 +491,7 @@ import os.log
     didReceive response: UNNotificationResponse,
     withCompletionHandler completionHandler: @escaping () -> Void
   ) {
-    BuzzPushNotificationResponseCoordinator.handle(
+    CoreviaTalkPushNotificationResponseCoordinator.handle(
       actionIdentifier: response.actionIdentifier,
       userInfo: response.notification.request.content.userInfo,
       onTarget: { target in
@@ -521,7 +521,7 @@ import os.log
     )
   }
 
-  private func deliverPushNavigationTarget(_ target: BuzzPushNavigationTarget) {
+  private func deliverPushNavigationTarget(_ target: CoreviaTalkPushNavigationTarget) {
     pushChannel?.invokeMethod(
       "notificationOpened",
       arguments: target.flutterArguments
@@ -556,8 +556,8 @@ import os.log
         guard let arguments = call.arguments as? [String: Any],
           let gatewayText = arguments["gatewayUrl"] as? String,
           let gatewayURL = URL(string: gatewayText)
-        else { throw BuzzDevPushEnrollmentError.invalidGatewayURL }
-        let driver = try BuzzDevPushEnrollmentDriver(
+        else { throw CoreviaTalkDevPushEnrollmentError.invalidGatewayURL }
+        let driver = try CoreviaTalkDevPushEnrollmentDriver(
           gatewayBaseURL: gatewayURL,
           store: endpointGrantStore,
           appAttestKeychainAccessGroup: pushKeychainAccessGroup
@@ -619,7 +619,7 @@ import os.log
       _, error in
       if let error {
         os_log(
-          "Buzz notification authorization request failed: %{public}@",
+          "Corevia Talk notification authorization request failed: %{public}@",
           type: .error,
           error.localizedDescription
         )
@@ -682,11 +682,11 @@ import os.log
     }
 
     do {
-      let driver = try BuzzDevPushEnrollmentDriver(
+      let driver = try CoreviaTalkDevPushEnrollmentDriver(
         gatewayBaseURL: gatewayURL,
         store: endpointGrantStore,
         appAttestKeychainAccessGroup: Bundle.main.object(
-          forInfoDictionaryKey: "BuzzKeychainAccessGroup"
+          forInfoDictionaryKey: "CoreviaTalkKeychainAccessGroup"
         ) as? String
       )
       enrollmentTask = Task { [weak self] in
@@ -953,7 +953,7 @@ import os.log
       let exportSession = AVAssetExportSession(
         asset: composition,
         // Passthrough preserves the source's HEVC codec and container
-        // metadata. Buzz accepts only canonical H.264/AAC MP4s with no
+        // metadata. Corevia Talk accepts only canonical H.264/AAC MP4s with no
         // metadata channels, so re-encode instead of copying the movie.
         presetName: AVAssetExportPresetMediumQuality
       )
@@ -986,7 +986,7 @@ import os.log
       case .completed:
         do {
           // AVFoundation writes a standard sample-dependency table (`sdtp`).
-          // Older Buzz relays mistook that playback-only box for metadata. Keep
+          // Older Corevia Talk relays mistook that playback-only box for metadata. Keep
           // its size and payload in a `free` box so chunk offsets stay valid and
           // uploads work before those relays receive the validator fix.
           try MP4Canonicalizer.neutralizeSampleDependencyBoxes(at: outputURL)
@@ -1071,14 +1071,14 @@ import os.log
         guard let posterImage else {
           throw lastError
             ?? NSError(
-              domain: "BuzzVideoPoster",
+              domain: "CoreviaTalkVideoPoster",
               code: 1,
               userInfo: [NSLocalizedDescriptionKey: "Unable to decode a video frame."]
             )
         }
         guard let jpegData = try MediaSanitizer.encodeJpeg(UIImage(cgImage: posterImage)) else {
           throw NSError(
-            domain: "BuzzVideoPoster",
+            domain: "CoreviaTalkVideoPoster",
             code: 2,
             userInfo: [NSLocalizedDescriptionKey: "Unable to encode video poster."]
           )
@@ -1101,7 +1101,7 @@ import os.log
   }
 }
 
-extension BuzzPushNavigationTarget {
+extension CoreviaTalkPushNavigationTarget {
   var flutterArguments: [String: String] {
     var arguments = [
       "eventId": eventID,
@@ -1115,14 +1115,14 @@ extension BuzzPushNavigationTarget {
 
 
 /// Keeps the authentication callback scoped to the system browser session.
-private final class BuzzBrowserAuthBridge: NSObject, ASWebAuthenticationPresentationContextProviding {
+private final class CoreviaTalkBrowserAuthBridge: NSObject, ASWebAuthenticationPresentationContextProviding {
   private let channel: FlutterMethodChannel
   private var session: ASWebAuthenticationSession?
   private var pending: FlutterResult?
   private var attemptID: UUID?
 
   init(messenger: FlutterBinaryMessenger) {
-    channel = FlutterMethodChannel(name: "buzz/browser_auth", binaryMessenger: messenger)
+    channel = FlutterMethodChannel(name: "corevia-talk/browser_auth", binaryMessenger: messenger)
     super.init()
     channel.setMethodCallHandler { [weak self] call, result in
       guard let self else { return }
@@ -1144,7 +1144,7 @@ private final class BuzzBrowserAuthBridge: NSObject, ASWebAuthenticationPresenta
       self.pending = result
       let attemptID = UUID()
       self.attemptID = attemptID
-      let session = ASWebAuthenticationSession(url: url, callbackURLScheme: "xyz.block.buzz.mobile") { [weak self] callback, error in
+      let session = ASWebAuthenticationSession(url: url, callbackURLScheme: "xyz.block.coreviatalk.mobile") { [weak self] callback, error in
         DispatchQueue.main.async {
           guard self?.attemptID == attemptID else { return }
           let cancelled = (error as? ASWebAuthenticationSessionError)?.code == .canceledLogin

@@ -24,7 +24,7 @@ class IosMediaCarousel extends HookWidget {
     required this.onPageChanged,
   });
 
-  static const viewType = 'buzz/ios_media_carousel';
+  static const viewType = 'corevia-talk/ios_media_carousel';
   final List<ImageProvider<Object>> providers;
   final List<String> labels;
   final double width;

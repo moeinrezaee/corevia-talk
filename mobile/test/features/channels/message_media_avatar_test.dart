@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:buzz/features/channels/message_media_avatar.dart';
+import 'package:corevia_talk/features/channels/message_media_avatar.dart';
 
 void main() {
   testWidgets('caption edits retain offset but replacing images resets it', (

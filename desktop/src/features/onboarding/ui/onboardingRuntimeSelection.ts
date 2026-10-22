@@ -4,7 +4,7 @@ export const ONBOARDING_RUNTIME_ORDER = [
   "claude",
   "codex",
   "goose",
-  "buzz-agent",
+  "corevia-talk-agent",
   "cursor",
   "devin",
   "omp",

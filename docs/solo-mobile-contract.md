@@ -7,13 +7,13 @@ The captured producer revision is
 [`64726576ed3b082daa5786e5e7ca6b5a018663a1`](https://github.com/block/buzz-app/commit/64726576ed3b082daa5786e5e7ca6b5a018663a1):
 
 - [`SoloDraft.tsx`](https://github.com/block/buzz-app/blob/64726576ed3b082daa5786e5e7ca6b5a018663a1/src/features/solo/SoloDraft.tsx) calls `session.channelWrites.create`.
-- [`channel-writes.ts`](https://github.com/block/buzz-app/blob/64726576ed3b082daa5786e5e7ca6b5a018663a1/src/features/relay/channel-writes.ts) emits kind 9007 with `channel_type=stream`, `visibility=private`, and `t=buzz.solo`. Its existing production-service test is “creates a Solo chat in its single durable outbox command” in `channel-writes.test.ts`.
+- [`channel-writes.ts`](https://github.com/block/buzz-app/blob/64726576ed3b082daa5786e5e7ca6b5a018663a1/src/features/relay/channel-writes.ts) emits kind 9007 with `channel_type=stream`, `visibility=private`, and `t=corevia-talk.solo`. Its existing production-service test is “creates a Solo chat in its single durable outbox command” in `channel-writes.test.ts`.
 - [`model.ts`](https://github.com/block/buzz-app/blob/64726576ed3b082daa5786e5e7ca6b5a018663a1/src/features/channel-templates/model.ts) retains project assignments but drops the legacy `groups.channels` discovery list.
 
 The desktop does **not** author `P`. The relay derives the creator from the
 signed creation event. In this repository, `channel_labels_from_tags` in
-`crates/buzz-relay/src/handlers/side_effects.rs` parses creation labels;
-`group_state_identity_tags` in `crates/buzz-core/src/channel.rs` emits the
+`crates/corevia-talk-relay/src/handlers/side_effects.rs` parses creation labels;
+`group_state_identity_tags` in `crates/corevia-talk-core/src/channel.rs` emits the
 leading type `t`, subsequent label `t` tags, and uppercase creator `P`.
 `emit_group_discovery_events` uses that builder for relay metadata. Mobile reads those
 facts through `ChannelData.fromEvent` and its channel providers.
@@ -25,7 +25,7 @@ create command**, plus expected relay identity tags using a synthetic creator.
 To recapture it from a checkout of the pinned desktop revision:
 
 ```sh
-node --experimental-transform-types scripts/contracts/capture-solo-creation.mjs /path/to/buzz-app > test-fixtures/solo-creation.json
+node --experimental-transform-types scripts/contracts/capture-solo-creation.mjs /path/to/corevia-talk-app > test-fixtures/solo-creation.json
 ```
 
 The script invokes `createChannelWrites(...).create(...)` and captures its

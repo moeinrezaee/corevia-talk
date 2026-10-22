@@ -8,7 +8,7 @@ class _PairingWelcomeView extends StatelessWidget {
   final VoidCallback onScan;
   final VoidCallback onTogglePairingCode;
   final VoidCallback onConnect;
-  final VoidCallback? onAlreadyUseBuzz;
+  final VoidCallback? onAlreadyUseCoreviaTalk;
   final VoidCallback? onWelcomeBack;
   final bool connectionLanding;
   final bool existingUser;
@@ -32,7 +32,7 @@ class _PairingWelcomeView extends StatelessWidget {
     required this.onTogglePairingCode,
     required this.onConnect,
     required this.onOpenCommunity,
-    this.onAlreadyUseBuzz,
+    this.onAlreadyUseCoreviaTalk,
     this.onWelcomeBack,
     this.connectionLanding = false,
     this.existingUser = false,
@@ -122,7 +122,7 @@ class _PairingWelcomeView extends StatelessWidget {
                 const SizedBox(height: Grid.xxs),
                 TextButton(
                   style: context._onboardingGhostButtonStyle,
-                  onPressed: isBusy ? null : onAlreadyUseBuzz,
+                  onPressed: isBusy ? null : onAlreadyUseCoreviaTalk,
                   child: Text(tl('Use pairing code')),
                 ),
               ] else ...[
@@ -134,7 +134,7 @@ class _PairingWelcomeView extends StatelessWidget {
                         ? SizedBox(
                             width: 20,
                             height: 20,
-                            child: BuzzLoadingIndicator(
+                            child: CoreviaTalkLoadingIndicator(
                               size: 20,
                               color: context._onboardingInk,
                               semanticLabel: tl('Opening scanner'),
@@ -179,13 +179,13 @@ class _PairingWelcomeView extends StatelessWidget {
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: context._onboardingInputSurface,
-                                hintText: 'nostrpair://... or buzz://...',
+                                hintText: 'nostrpair://... or corevia-talk://...',
                                 hintStyle: context.textTheme.bodyMedium
                                     ?.copyWith(
                                       color: context._onboardingMutedInk,
                                     ),
                                 prefixIcon: Icon(
-                                  BuzzIcons.link,
+                                  CoreviaTalkIcons.link,
                                   color: context._onboardingInk,
                                 ),
                                 enabledBorder: context._inputBorder,
@@ -216,7 +216,7 @@ class _PairingWelcomeView extends StatelessWidget {
                                     ? SizedBox(
                                         width: 20,
                                         height: 20,
-                                        child: BuzzLoadingIndicator(
+                                        child: CoreviaTalkLoadingIndicator(
                                           size: 20,
                                           color: context._onboardingInk,
                                           semanticLabel: tl('Connecting'),
@@ -250,7 +250,7 @@ class _PairingWelcomeView extends StatelessWidget {
                   child: Row(
                     children: [
                       Icon(
-                        BuzzIcons.triangleAlert,
+                        CoreviaTalkIcons.triangleAlert,
                         size: 16,
                         color: context.colors.onErrorContainer,
                       ),
@@ -294,7 +294,7 @@ class _PairingWelcomeView extends StatelessWidget {
                           child: AspectRatio(
                             aspectRatio: 777 / 326,
                             child: OnboardingWordmark(
-                              key: const Key('pairing-buzz-wordmark'),
+                              key: const Key('pairing-corevia-talk-wordmark'),
                               color: context._onboardingIsDark
                                   ? context._onboardingInk
                                   : null,

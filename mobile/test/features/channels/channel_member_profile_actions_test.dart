@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:ui' show SemanticsAction;
 
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channel_management_provider.dart';
-import 'package:buzz/features/channels/channel_member_profile_actions.dart';
-import 'package:buzz/features/channels/channels_provider.dart';
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channel_management_provider.dart';
+import 'package:corevia_talk/features/channels/channel_member_profile_actions.dart';
+import 'package:corevia_talk/features/channels/channels_provider.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -120,7 +120,7 @@ void main() {
       'same-name agents have distinct ${platform.name} removal confirmations',
       (tester) async {
         debugDefaultTargetPlatformOverride = platform;
-        const bridge = MethodChannel('buzz/confirmation_dialog');
+        const bridge = MethodChannel('corevia-talk/confirmation_dialog');
         final messages = <String>[];
         TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
             .setMockMethodCallHandler(bridge, (call) async {
@@ -179,7 +179,7 @@ void main() {
       tester,
     ) async {
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
-      const bridge = MethodChannel('buzz/confirmation_dialog');
+      const bridge = MethodChannel('corevia-talk/confirmation_dialog');
       final response = Completer<bool>();
       final calls = <MethodCall>[];
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger

@@ -3,7 +3,7 @@ import { tl } from "./tl";
 
 /**
  * Translate a sentence that embeds React nodes (links, bold text) at numbered
- * placeholders, e.g. `tlNodes("I agree to the Buzz {0} and {1}.", [a, b])`.
+ * placeholders, e.g. `tlNodes("I agree to the Corevia Talk {0} and {1}.", [a, b])`.
  * The translated template decides where each node lands, so Persian word
  * order can differ from English.
  */

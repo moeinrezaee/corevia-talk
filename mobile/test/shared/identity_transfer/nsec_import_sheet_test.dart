@@ -1,6 +1,6 @@
-import 'package:buzz/shared/hosted/account_identity_store.dart';
-import 'package:buzz/shared/identity_transfer/nsec_import_sheet.dart';
-import 'package:buzz/shared/utils/string_utils.dart';
+import 'package:corevia_talk/shared/hosted/account_identity_store.dart';
+import 'package:corevia_talk/shared/identity_transfer/nsec_import_sheet.dart';
+import 'package:corevia_talk/shared/utils/string_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nostr/nostr.dart' as nostr;

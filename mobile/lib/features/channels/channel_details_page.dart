@@ -200,7 +200,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
       return () => scrollController.removeListener(updateCollapsedTitle);
     }, [scrollController, displayName]);
 
-    Future<void> openMembers() => showBuzzModalBottomSheet<void>(
+    Future<void> openMembers() => showCoreviaTalkModalBottomSheet<void>(
       context: context,
       title: tl('Members'),
       isScrollControlled: true,
@@ -362,7 +362,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
-                    child: BuzzActionTile(
+                    child: CoreviaTalkActionTile(
                       key: const ValueKey('channel-details-star-action'),
                       icon: null,
                       iconWidget: TablerStarIcon(
@@ -377,9 +377,9 @@ class ChannelDetailsPage extends HookConsumerWidget {
                   ),
                   const SizedBox(width: Grid.xxs),
                   Expanded(
-                    child: BuzzActionTile(
+                    child: CoreviaTalkActionTile(
                       key: const ValueKey('channel-details-mute-action'),
-                      icon: isMuted ? BuzzIcons.bell : BuzzIcons.bellOff,
+                      icon: isMuted ? CoreviaTalkIcons.bell : CoreviaTalkIcons.bellOff,
                       iconColor: isMuted ? context.colors.primary : null,
                       label: isMuted ? tl('Unmute') : tl('Mute'),
                       onTap: toggleMute,
@@ -388,9 +388,9 @@ class ChannelDetailsPage extends HookConsumerWidget {
                   if (!resolvedChannel.isDm) ...[
                     const SizedBox(width: Grid.xxs),
                     Expanded(
-                      child: BuzzActionTile(
+                      child: CoreviaTalkActionTile(
                         key: const ValueKey('channel-details-edit-action'),
-                        icon: BuzzIcons.pencil,
+                        icon: CoreviaTalkIcons.pencil,
                         label: tl('Edit'),
                         isEnabled: canEdit,
                         onTap: openManageChannel,
@@ -419,7 +419,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
-                        BuzzIcons.plus,
+                        CoreviaTalkIcons.plus,
                         color: context.colors.onSurfaceVariant,
                       ),
                     ),
@@ -433,16 +433,16 @@ class ChannelDetailsPage extends HookConsumerWidget {
                   ),
                 if (membersAsync.isLoading && members.isEmpty)
                   AppListRow(
-                    icon: BuzzIcons.loaderCircle,
+                    icon: CoreviaTalkIcons.loaderCircle,
                     title: tl('Loading members…'),
-                    trailing: BuzzLoadingIndicator(
+                    trailing: CoreviaTalkLoadingIndicator(
                       size: 20,
                       semanticLabel: tl('Loading members'),
                     ),
                   )
                 else if (membersAsync.hasError && members.isEmpty)
                   AppListRow(
-                    icon: BuzzIcons.triangleAlert,
+                    icon: CoreviaTalkIcons.triangleAlert,
                     title: tl('Members unavailable'),
                   )
                 else ...[
@@ -479,7 +479,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
             verticalPadding: _channelDetailsSectionPadding,
             children: [
               AppListRow(
-                icon: BuzzIcons.folderInput,
+                icon: CoreviaTalkIcons.folderInput,
                 title: tl('Move to section…'),
                 trailing: const _ChannelDetailsChevron(),
                 onTap: () async {
@@ -492,7 +492,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
                 },
               ),
               AppListRow(
-                icon: BuzzIcons.copy,
+                icon: CoreviaTalkIcons.copy,
                 title: tl('Copy channel name'),
                 onTap: () {
                   copyToClipboard(
@@ -503,7 +503,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
                 },
               ),
               AppListRow(
-                icon: BuzzIcons.hash,
+                icon: CoreviaTalkIcons.hash,
                 title: tl('Copy channel ID'),
                 onTap: () {
                   copyToClipboard(
@@ -528,7 +528,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
               children: [
                 if (canJoin)
                   AppListRow(
-                    icon: BuzzIcons.logIn,
+                    icon: CoreviaTalkIcons.logIn,
                     title: isJoining.value
                         ? tl('Joining channel…')
                         : tl('Join channel'),
@@ -536,7 +536,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
                   ),
                 if (resolvedChannel.isMember && !resolvedChannel.isArchived)
                   AppListRow(
-                    icon: BuzzIcons.logOut,
+                    icon: CoreviaTalkIcons.logOut,
                     title: tl('Leave channel'),
                     titleColor: context.colors.error,
                     onTap: () => _confirmAndRun(
@@ -554,22 +554,22 @@ class ChannelDetailsPage extends HookConsumerWidget {
                   ),
                 if (lifecycleCapabilitiesLoading)
                   AppListRow(
-                    icon: BuzzIcons.loaderCircle,
+                    icon: CoreviaTalkIcons.loaderCircle,
                     title: tl('Loading channel actions…'),
-                    trailing: BuzzLoadingIndicator(
+                    trailing: CoreviaTalkLoadingIndicator(
                       size: 20,
                       semanticLabel: tl('Loading channel actions'),
                     ),
                   )
                 else if (lifecycleCapabilitiesUnavailable)
                   AppListRow(
-                    icon: BuzzIcons.triangleAlert,
+                    icon: CoreviaTalkIcons.triangleAlert,
                     title: tl('Channel actions unavailable'),
                   )
                 else ...[
                   if (canArchive)
                     AppListRow(
-                      icon: BuzzIcons.archive,
+                      icon: CoreviaTalkIcons.archive,
                       title: tl('Archive channel'),
                       onTap: () => _confirmAndRun(
                         context,
@@ -584,7 +584,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
                     ),
                   if (canUnarchive)
                     AppListRow(
-                      icon: BuzzIcons.archiveRestore,
+                      icon: CoreviaTalkIcons.archiveRestore,
                       title: tl('Unarchive channel'),
                       onTap: () => _confirmAndRun(
                         context,
@@ -599,7 +599,7 @@ class ChannelDetailsPage extends HookConsumerWidget {
                     ),
                   if (canDelete)
                     AppListRow(
-                      icon: BuzzIcons.trash2,
+                      icon: CoreviaTalkIcons.trash2,
                       title: tl('Delete channel'),
                       titleColor: context.colors.error,
                       onTap: () => _confirmAndRun(
@@ -778,9 +778,9 @@ String _channelMemberRoleLabel(String role) {
 }
 
 IconData _channelDetailsIcon(Channel channel) {
-  if (channel.isPrivate) return BuzzIcons.lock;
-  if (channel.isForum) return BuzzIcons.messageSquareText;
-  return BuzzIcons.hash;
+  if (channel.isPrivate) return CoreviaTalkIcons.lock;
+  if (channel.isForum) return CoreviaTalkIcons.messageSquareText;
+  return CoreviaTalkIcons.hash;
 }
 
 class _ChannelDetailsChevron extends StatelessWidget {
@@ -789,7 +789,7 @@ class _ChannelDetailsChevron extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BidiFlip(
     child: Icon(
-      BuzzIcons.chevronRight,
+      CoreviaTalkIcons.chevronRight,
       size: 18,
       color: context.colors.onSurfaceVariant,
     ),

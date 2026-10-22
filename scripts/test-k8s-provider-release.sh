@@ -8,16 +8,16 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 TARGET_DIR="${CARGO_TARGET_DIR:-$ROOT/target}"
-PROVIDER_BINARY="$TARGET_DIR/release/buzz-backend-kubernetes"
+PROVIDER_BINARY="$TARGET_DIR/release/corevia-talk-backend-kubernetes"
 
 CARGO="${CARGO:-cargo}"
 "$CARGO" build --release \
-  -p buzz-acp \
-  -p buzz-agent \
-  -p buzz-dev-mcp \
+  -p corevia-talk-acp \
+  -p corevia-talk-agent \
+  -p corevia-talk-dev-mcp \
   -p git-credential-nostr \
-  -p buzz-cli \
-  -p buzz-backend-kubernetes
+  -p corevia-talk-cli \
+  -p corevia-talk-backend-kubernetes
 
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT

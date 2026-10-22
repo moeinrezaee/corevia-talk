@@ -16,7 +16,7 @@ class _EphemeralBadge extends StatelessWidget {
         width: _kChannelIconSize,
         child: Center(
           child: Icon(
-            BuzzIcons.clockFading,
+            CoreviaTalkIcons.clockFading,
             key: Key('channel-ephemeral-${channel.id}'),
             size: 16,
             color: context.colors.onSurfaceVariant,
@@ -57,7 +57,7 @@ class _ErrorView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(BuzzIcons.wifiOff, size: Grid.xl, color: context.colors.error),
+            Icon(CoreviaTalkIcons.wifiOff, size: Grid.xl, color: context.colors.error),
             const SizedBox(height: Grid.xs),
             Text(
               tl('Could not load channels'),
@@ -76,7 +76,7 @@ class _ErrorView extends StatelessWidget {
             const SizedBox(height: Grid.xs),
             FilledButton.icon(
               onPressed: onRetry,
-              icon: const Icon(BuzzIcons.refreshCw),
+              icon: const Icon(CoreviaTalkIcons.refreshCw),
               label: Text(tl('Retry')),
             ),
           ],

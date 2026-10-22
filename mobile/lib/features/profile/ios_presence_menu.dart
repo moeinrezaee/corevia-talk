@@ -152,12 +152,12 @@ class _IosPresenceMenuState extends State<IosPresenceMenu> {
 
   Widget _nativeMenu(BuildContext context) => UiKitView(
     key: const ValueKey('settings-presence-menu'),
-    viewType: 'buzz/presence_menu',
+    viewType: 'corevia-talk/presence_menu',
     creationParams: _configuration(context),
     creationParamsCodec: const StandardMessageCodec(),
     onPlatformViewCreated: (id) {
       if (!mounted || !_routeSettled) return;
-      final channel = MethodChannel('buzz/presence_menu/$id');
+      final channel = MethodChannel('corevia-talk/presence_menu/$id');
       _channel = channel;
       setState(() => _nativeVisible = true);
       channel.setMethodCallHandler((call) async {

@@ -215,7 +215,7 @@ class _MobileHuddleDrawer extends ConsumerWidget {
                           key: const ValueKey('huddle-drawer-expand'),
                           tooltip: tl('Open Huddle'),
                           showTooltip: false,
-                          icon: BuzzIcons.chevronUp,
+                          icon: CoreviaTalkIcons.chevronUp,
                           foregroundColor: foreground,
                           backgroundColor: controlSurface,
                           useHapticFeedback: true,
@@ -228,7 +228,7 @@ class _MobileHuddleDrawer extends ConsumerWidget {
                               ? 'Use earpiece'
                               : tl('Use speaker'),
                           showTooltip: false,
-                          icon: BuzzIcons.volume2,
+                          icon: CoreviaTalkIcons.volume2,
                           foregroundColor: session.isSpeakerEnabled
                               ? drawerSurface
                               : foreground,
@@ -249,8 +249,8 @@ class _MobileHuddleDrawer extends ConsumerWidget {
                           tooltip: session.isMuted ? tl('Unmute') : tl('Mute'),
                           showTooltip: false,
                           icon: session.isMuted
-                              ? BuzzIcons.micOff
-                              : BuzzIcons.mic,
+                              ? CoreviaTalkIcons.micOff
+                              : CoreviaTalkIcons.mic,
                           foregroundColor: session.isMuted
                               ? foreground
                               : drawerSurface,
@@ -269,7 +269,7 @@ class _MobileHuddleDrawer extends ConsumerWidget {
                       key: const ValueKey('huddle-drawer-leave'),
                       tooltip: tl('Leave Huddle'),
                       showTooltip: false,
-                      icon: BuzzIcons.phoneOff,
+                      icon: CoreviaTalkIcons.phoneOff,
                       foregroundColor: context.colors.error,
                       backgroundColor: controlSurface,
                       useHapticFeedback: true,

@@ -9,31 +9,31 @@ import {
 const expected = (name, slug) => ({
   name,
   slug,
-  productName: `Buzz ${name}`,
-  dmgVolumeName: `Buzz ${name}`,
-  dmgFileStem: `Buzz_${name.replace(/ /g, "_")}`,
-  identifier: `xyz.block.buzz.app.demo.${slug}`,
-  appDataIdentity: `xyz.block.buzz.app.demo.${slug}`,
-  deepLinkScheme: `buzz-demo-${slug}`,
-  keyringService: `buzz-desktop-demo.${slug}`,
-  nestName: `.buzz-demo-${slug}`,
-  cliName: `buzz-demo-${slug}`,
+  productName: `Corevia Talk ${name}`,
+  dmgVolumeName: `Corevia Talk ${name}`,
+  dmgFileStem: `CoreviaTalk_${name.replace(/ /g, "_")}`,
+  identifier: `xyz.block.coreviatalk.app.demo.${slug}`,
+  appDataIdentity: `xyz.block.coreviatalk.app.demo.${slug}`,
+  deepLinkScheme: `corevia-talk-demo-${slug}`,
+  keyringService: `corevia-talk-desktop-demo.${slug}`,
+  nestName: `.corevia-talk-demo-${slug}`,
+  cliName: `corevia-talk-demo-${slug}`,
   tauriConfig: {
-    productName: `Buzz ${name}`,
-    identifier: `xyz.block.buzz.app.demo.${slug}`,
-    plugins: { "deep-link": { desktop: { schemes: [`buzz-demo-${slug}`] } } },
+    productName: `Corevia Talk ${name}`,
+    identifier: `xyz.block.coreviatalk.app.demo.${slug}`,
+    plugins: { "deep-link": { desktop: { schemes: [`corevia-talk-demo-${slug}`] } } },
     bundle: { targets: ["app"] },
   },
 });
 
 test("production identity remains unchanged", () => {
   assert.deepEqual(productionBuildIdentity, {
-    productName: "Buzz",
-    identifier: "xyz.block.buzz.app",
-    deepLinkScheme: "buzz",
-    keyringService: "buzz-desktop",
-    nestName: ".buzz",
-    cliName: "buzz",
+    productName: "Corevia Talk",
+    identifier: "xyz.block.coreviatalk.app",
+    deepLinkScheme: "corevia-talk",
+    keyringService: "corevia-talk-desktop",
+    nestName: ".corevia-talk",
+    cliName: "corevia-talk",
   });
 });
 

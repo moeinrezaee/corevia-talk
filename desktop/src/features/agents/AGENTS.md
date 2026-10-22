@@ -4,7 +4,7 @@ Scope: `desktop/src/features/agents/` (config surfaces, shared config renderer,
 and the agent config core). Read this before changing how harness / provider /
 model / effort configuration is modeled, rendered, persisted, or applied.
 
-Plan of record: `Buzz/Harness-Provider-Model.md` in Morgan's Obsidian vault
+Plan of record: `Corevia Talk/Harness-Provider-Model.md` in Morgan's Obsidian vault
 (PR sequence, decisions log). PRs: #2140 (rename), #2148 (flag reduction),
 #2156 (honest model states), #2158 (Agent Config Core).
 
@@ -44,7 +44,7 @@ with a TypeScript lookup table or an id comparison in a component.
    (`hasRenderableAgentConfigField`, `getRenderableEffortField`).
 2. **Effort reads/writes go through the descriptor.** Use the effort
    descriptor's `currentPersistence` key — never a raw
-   `BUZZ_AGENT_THINKING_EFFORT` literal in UI code. `currentPersistence` is
+   `COREVIA_TALK_AGENT_THINKING_EFFORT` literal in UI code. `currentPersistence` is
    where the value lives *today*; `targetApplication` is how the harness
    *should* receive it. They intentionally differ until PR 2.7 migrates
    Goose/Claude — do not "fix" one to match the other without doing the
@@ -93,7 +93,7 @@ with a TypeScript lookup table or an id comparison in a component.
    disables editing while awaiting `set_global_agent_config`, advances only on
    success, and leaves the draft in place with a retryable inline error on
    failure. A harness selection alone does not enable Next when the harness
-   requires provider/model/credential config (e.g. buzz-agent with no
+   requires provider/model/credential config (e.g. corevia-talk-agent with no
    provider). Baked build env and runtime-file config satisfy the gate. Drafts
    intentionally do not survive an app restart.
    `onboarding-agent-defaults.spec.ts` is the acceptance gate for anything
@@ -110,9 +110,9 @@ with a TypeScript lookup table or an id comparison in a component.
    harness has empty discovery` (and the failed-discovery counterpart) in
    `onboarding-agent-defaults.spec.ts`.
 9. **The defaults modal is progressively disclosed.** An unset global config
-   starts on the Buzz Agent-first deployment fallback and carries that visible
+   starts on the Corevia Talk Agent-first deployment fallback and carries that visible
    harness into the next saved edit. The `progressive-defaults` disclosure
-   preset therefore begins at Provider for Buzz Agent, then reveals Model,
+   preset therefore begins at Provider for Corevia Talk Agent, then reveals Model,
    Effort, and Advanced only after a provider is configured. Harnesses whose
    runtime metadata has no provider field skip that gate. Reveals animate their
    height through Motion and become immediate when reduced motion is requested.
@@ -172,7 +172,7 @@ with a TypeScript lookup table or an id comparison in a component.
    must never bypass the instance command's stop, persist, publish, and restart
    boundary.** An unknown location falls back to the local wording — never hedge
    with "computer or server". A remote host requires an
-   installed `buzz-backend-*` provider, and without one `WhereToRunSection`
+   installed `corevia-talk-backend-*` provider, and without one `WhereToRunSection`
    never renders, so "server" would name a concept the owner has never been
    shown; when it *is* remote they picked that host from the selector
    themselves. Never synthesize a run location a surface doesn't have. Don't
@@ -244,13 +244,13 @@ with a TypeScript lookup table or an id comparison in a component.
    is stored. Claude's levels come from the model data for the model Claude
    will launch: the explicit or linked-definition model, then the structured
    global model, then the adapter default from model discovery — never baked
-   `BUZZ_AGENT_MODEL` or provider fallbacks, which Claude never launches with,
+   `COREVIA_TALK_AGENT_MODEL` or provider fallbacks, which Claude never launches with,
    and never the stored session, which does not record which model produced
    it. While that model is unknown (`EFFORT_LEVELS_UNKNOWN`) the picker hides
    but a pending pick is kept. Other runtimes use the running session's
    `thought_level` list while the runtime is unchanged (absent
    pre-first-session). A stored level is only the agent's own saved value
-   (`ownEffortLevel`, origin `buzzExplicit`) — never a session, inherited, or
+   (`ownEffortLevel`, origin `coreviaTalkExplicit`) — never a session, inherited, or
    config-file value the dialog cannot clear. It stays shown and clearable
    across model and runtime switches, even when the model doesn't list it,
    and is hidden only on the pin→inherit transition, which clears it. Local-only
@@ -268,8 +268,8 @@ with a TypeScript lookup table or an id comparison in a component.
 
    **Cut invariant — live mid-conversation effort machinery was deliberately
    removed.** Effort is spawn-scoped only: the worker holds one `startup_effort`
-   read from `BUZZ_ACP_EFFORT_LEVEL` and applies it once at session creation
-   (`apply_startup_effort` in `buzz-acp/src/pool.rs`); there is no pool-level
+   read from `COREVIA_TALK_ACP_EFFORT_LEVEL` and applies it once at session creation
+   (`apply_startup_effort` in `corevia-talk-acp/src/pool.rs`); there is no pool-level
    effort authority, no live effort switching, and no effort-ack frame. Do not
    reintroduce a live effort-switch RPC, a pool effort field, or a
    mid-conversation effort control without a plan ruling. The archived live-effort
@@ -324,12 +324,12 @@ with a TypeScript lookup table or an id comparison in a component.
     refresh only local persona/team/managed-agent caches; they must never
     invalidate the remote relay directory.
 
-17. **Databricks model discovery has one shared catalog authority.** Desktop and ACP call the shared `buzz-agent` discovery library; Desktop passes the effective merged `DATABRICKS_MODEL_FILTER` explicitly, and the library applies it to raw workspace endpoint IDs and Unity Catalog model-service FQNs after the additive union. A successful filtered-empty catalog is authoritative: it stays empty, disables switching, and never falls through to configured or known-model fallback. Verified provider-qualified exact records in `scripts/model-capabilities.json` take precedence for UC FQNs: `data_workflow_tools.goose.goose-claude-opus-5-5` uses Anthropic Messages, adaptive thinking, and `output_config.effort` (default medium). This does not confer capabilities on other namespaces or similarly named services. Uncurated UC FQNs do not inherit family effort capabilities: Claude service components select Anthropic Messages and expose no effort choices, while GPT-5-or-newer service components select OpenAI Responses with neutral fallback effort capabilities; other uncurated FQNs use MLflow Chat Completions. Catalog/schema components never infer routing. Keep exact-record precedence and fallback rules identical in the Rust and TypeScript capability interpreters and shared corpus. Effort inheritance, persistence, and clearing semantics are unchanged. Global Defaults preserves the discovered model ID as the selected value while its closed trigger renders the provider-scoped display label; do not force the raw persisted ID over that label.
+17. **Databricks model discovery has one shared catalog authority.** Desktop and ACP call the shared `corevia-talk-agent` discovery library; Desktop passes the effective merged `DATABRICKS_MODEL_FILTER` explicitly, and the library applies it to raw workspace endpoint IDs and Unity Catalog model-service FQNs after the additive union. A successful filtered-empty catalog is authoritative: it stays empty, disables switching, and never falls through to configured or known-model fallback. Verified provider-qualified exact records in `scripts/model-capabilities.json` take precedence for UC FQNs: `data_workflow_tools.goose.goose-claude-opus-5-5` uses Anthropic Messages, adaptive thinking, and `output_config.effort` (default medium). This does not confer capabilities on other namespaces or similarly named services. Uncurated UC FQNs do not inherit family effort capabilities: Claude service components select Anthropic Messages and expose no effort choices, while GPT-5-or-newer service components select OpenAI Responses with neutral fallback effort capabilities; other uncurated FQNs use MLflow Chat Completions. Catalog/schema components never infer routing. Keep exact-record precedence and fallback rules identical in the Rust and TypeScript capability interpreters and shared corpus. Effort inheritance, persistence, and clearing semantics are unchanged. Global Defaults preserves the discovered model ID as the selected value while its closed trigger renders the provider-scoped display label; do not force the raw persisted ID over that label.
 
-18. **ACP transport is persona-owned before deployment.** Select `acp_command` in the persona create/edit form beside the harness. Deployment inherits that value; linked instances do not expose a competing post-deploy override. Legacy definitions without the field use `buzz-acp`; definition-less agents retain their stored command. Switching a linked definition back to stock resets the instance transport on the next spawn. Shared persona events and restart snapshots carry the field so edits apply on the next spawn.
+18. **ACP transport is persona-owned before deployment.** Select `acp_command` in the persona create/edit form beside the harness. Deployment inherits that value; linked instances do not expose a competing post-deploy override. Legacy definitions without the field use `corevia-talk-acp`; definition-less agents retain their stored command. Switching a linked definition back to stock resets the instance transport on the next spawn. Shared persona events and restart snapshots carry the field so edits apply on the next spawn.
 
 19. **ACP command selection is convention-based.** The editor always offers
-    stock `buzz-acp` and installed executable `buzz-*-acp` aliases discovered
+    stock `corevia-talk-acp` and installed executable `corevia-talk-*-acp` aliases discovered
     from normal executable search directories. It does not offer arbitrary
     command entry. A persisted value outside that set remains visible as an
     unavailable compatibility option but is not editable; selecting a conventional
@@ -369,7 +369,7 @@ rather than offer an ineffective command. An authorized owner can instead use
 the CLI with the channel and target thread root:
 
 ```sh
-buzz messages send --channel <channel-id> --reply-to <thread-root-id> \
+corevia-talk messages send --channel <channel-id> --reply-to <thread-root-id> \
   --mention <agent-pubkey> --content '!cancel'
 ```
 

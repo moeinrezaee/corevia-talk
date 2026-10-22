@@ -424,7 +424,7 @@ export function ChannelActivityPopover({
             {tl("Channel activity")}
           </h3>
           <div
-            className="buzz-channel-activity-scrollbar min-h-0 overflow-y-auto overscroll-contain"
+            className="corevia-talk-channel-activity-scrollbar min-h-0 overflow-y-auto overscroll-contain"
             data-testid="channel-activity-scroll"
           >
             {activeWorking?.agentPubkeys.length ? (

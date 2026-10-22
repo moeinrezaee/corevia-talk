@@ -45,15 +45,15 @@ type DesktopNotificationPayload = {
   title: string;
 };
 
-const DESKTOP_NOTIFICATION_ACTION_EVENT = "buzz:desktop-notification-action";
+const DESKTOP_NOTIFICATION_ACTION_EVENT = "corevia-talk:desktop-notification-action";
 
 type DesktopNotificationOptions = NotificationOptions & {
   extra?: Record<string, unknown>;
 };
 
 type TestWindow = Window & {
-  __BUZZ_E2E_APP_BADGE_COUNT__?: number;
-  __BUZZ_E2E_APP_BADGE_STATE__?: AppBadgeState["kind"];
+  __COREVIA_TALK_E2E_APP_BADGE_COUNT__?: number;
+  __COREVIA_TALK_E2E_APP_BADGE_STATE__?: AppBadgeState["kind"];
 };
 
 function hasNotificationApi() {
@@ -68,7 +68,7 @@ function notificationExtra(
   }
 
   return {
-    buzzNotificationTarget: target,
+    coreviaTalkNotificationTarget: target,
   };
 }
 
@@ -242,7 +242,7 @@ export async function listenForDesktopNotificationActions(
       try {
         pluginListener = await onAction((notification) => {
           const target = parseNotificationTarget(
-            notification.extra?.buzzNotificationTarget,
+            notification.extra?.coreviaTalkNotificationTarget,
           );
           if (!target) {
             return;
@@ -342,9 +342,9 @@ export async function listenForDesktopNotificationActions(
 export async function setDesktopAppBadge(state: AppBadgeState): Promise<void> {
   if (typeof window !== "undefined") {
     const testWindow = window as TestWindow;
-    testWindow.__BUZZ_E2E_APP_BADGE_COUNT__ =
+    testWindow.__COREVIA_TALK_E2E_APP_BADGE_COUNT__ =
       state.kind === "count" ? state.count : 0;
-    testWindow.__BUZZ_E2E_APP_BADGE_STATE__ = state.kind;
+    testWindow.__COREVIA_TALK_E2E_APP_BADGE_STATE__ = state.kind;
   }
 
   if (!isTauri()) {

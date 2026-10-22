@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:buzz/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nostr/nostr.dart' as nostr;
-import 'package:buzz/features/channels/channel_management_provider.dart';
-import 'package:buzz/features/channels/mobile_huddle_controller.dart';
-import 'package:buzz/shared/relay/relay.dart';
+import 'package:corevia_talk/features/channels/channel_management_provider.dart';
+import 'package:corevia_talk/features/channels/mobile_huddle_controller.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
 
 /// Tests for [channelDetailsFromEvent].
 ///
@@ -28,7 +28,7 @@ void main() {
               tags: [
                 ['d', 'chat'],
                 ['t', type],
-                ['t', 'buzz.solo'],
+                ['t', 'corevia-talk.solo'],
                 ['P', 'owner'],
                 [private ? 'private' : 'public'],
               ],
@@ -46,7 +46,7 @@ void main() {
             createdAt: DateTime(2026),
             memberCount: 1,
           ).mergeDetails(details).copyWith(isMember: true);
-          expect(channel.labels, ['buzz.solo']);
+          expect(channel.labels, ['corevia-talk.solo']);
           expect(channel.createdBy, 'owner');
           expect(channel.isSolo, type == 'stream' && private);
           expect(
@@ -54,7 +54,7 @@ void main() {
             type == 'stream' && private,
           );
           expect(channel.isPersonalChat('other', const []), isFalse);
-          expect(ChannelDetails.fromChannel(channel).labels, ['buzz.solo']);
+          expect(ChannelDetails.fromChannel(channel).labels, ['corevia-talk.solo']);
         }
       }
     },
@@ -275,9 +275,9 @@ void main() {
           name: 'Solo',
           channelType: 'stream',
           visibility: 'private',
-          labels: const ['buzz.solo'],
+          labels: const ['corevia-talk.solo'],
         );
-        expect(tags, contains(equals(['t', 'buzz.solo'])));
+        expect(tags, contains(equals(['t', 'corevia-talk.solo'])));
         expect(tags.where((tag) => tag.first == 'P'), isEmpty);
         final ordinary = buildCreateChannelTags(
           channelId: _channelId,

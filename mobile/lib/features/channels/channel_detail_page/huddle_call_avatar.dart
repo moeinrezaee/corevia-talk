@@ -247,7 +247,7 @@ class _HuddleCallAvatar extends HookConsumerWidget {
                                 radius: avatarRadius,
                                 backgroundColor: context.controlSurface,
                                 fallback: Icon(
-                                  BuzzIcons.userRound,
+                                  CoreviaTalkIcons.userRound,
                                   size: fallbackIconSize,
                                   color: context.colors.onPrimaryContainer,
                                 ),

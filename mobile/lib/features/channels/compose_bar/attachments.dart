@@ -503,10 +503,10 @@ class _AttachmentTrigger extends StatelessWidget {
               ),
               child: Icon(
                 switch (surface) {
-                  _AttachmentSurface.camera => BuzzIcons.camera,
-                  _AttachmentSurface.photos => BuzzIcons.images,
+                  _AttachmentSurface.camera => CoreviaTalkIcons.camera,
+                  _AttachmentSurface.photos => CoreviaTalkIcons.images,
                   _AttachmentSurface.closed ||
-                  _AttachmentSurface.menu => BuzzIcons.plus,
+                  _AttachmentSurface.menu => CoreviaTalkIcons.plus,
                 },
                 key: ValueKey('attachment-trigger-${surface.name}'),
                 size: 20,
@@ -540,11 +540,11 @@ class _AttachmentMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final items = <(IconData, String, VoidCallback)>[
-      (BuzzIcons.camera, tl('Camera'), onCamera),
-      (BuzzIcons.images, tl('Photos'), onPhotos),
-      (BuzzIcons.video, tl('Video'), onVideo),
-      (BuzzIcons.mic, tl('Voice note'), onVoiceNote),
-      (BuzzIcons.file, tl('Files'), onFiles),
+      (CoreviaTalkIcons.camera, tl('Camera'), onCamera),
+      (CoreviaTalkIcons.images, tl('Photos'), onPhotos),
+      (CoreviaTalkIcons.video, tl('Video'), onVideo),
+      (CoreviaTalkIcons.mic, tl('Voice note'), onVoiceNote),
+      (CoreviaTalkIcons.file, tl('Files'), onFiles),
     ];
     return SizedBox(
       key: const ValueKey('attachment-menu'),
@@ -693,7 +693,7 @@ class _AttachmentStrip extends StatelessWidget {
                             color: Colors.black,
                             child: Center(
                               child: Icon(
-                                BuzzIcons.video,
+                                CoreviaTalkIcons.video,
                                 color: Colors.white,
                                 size: 24,
                               ),
@@ -707,7 +707,7 @@ class _AttachmentStrip extends StatelessWidget {
                             errorBuilder: (_, _, _) => ColoredBox(
                               color: context.colors.surface,
                               child: Icon(
-                                BuzzIcons.image,
+                                CoreviaTalkIcons.image,
                                 color: context.colors.onSurfaceVariant,
                               ),
                             ),
@@ -722,7 +722,7 @@ class _AttachmentStrip extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(
-                                    BuzzIcons.file,
+                                    CoreviaTalkIcons.file,
                                     color: context.colors.onSurfaceVariant,
                                   ),
                                   const SizedBox(height: Grid.quarter),
@@ -765,7 +765,7 @@ class _AttachmentStrip extends StatelessWidget {
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                         icon: Icon(
-                          BuzzIcons.x,
+                          CoreviaTalkIcons.x,
                           size: 14,
                           color: context.colors.onSurface,
                         ),
@@ -795,7 +795,7 @@ class _MemoryAttachmentImage extends HookConsumerWidget {
     if (data == null || data.isEmpty) {
       return ColoredBox(
         color: context.colors.surface,
-        child: Icon(BuzzIcons.image, color: context.colors.onSurfaceVariant),
+        child: Icon(CoreviaTalkIcons.image, color: context.colors.onSurfaceVariant),
       );
     }
 
@@ -804,7 +804,7 @@ class _MemoryAttachmentImage extends HookConsumerWidget {
       fit: BoxFit.cover,
       errorBuilder: (_, _, _) => ColoredBox(
         color: context.colors.surface,
-        child: Icon(BuzzIcons.image, color: context.colors.onSurfaceVariant),
+        child: Icon(CoreviaTalkIcons.image, color: context.colors.onSurfaceVariant),
       ),
     );
   }

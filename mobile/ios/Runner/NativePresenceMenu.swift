@@ -17,7 +17,7 @@ private final class NativePresenceMenu: NSObject, FlutterPlatformView {
 
   init(frame: CGRect, id: Int64, args: Any?, messenger: FlutterBinaryMessenger) {
     container = UIView(frame: frame)
-    channel = FlutterMethodChannel(name: "buzz/presence_menu/\(id)", binaryMessenger: messenger)
+    channel = FlutterMethodChannel(name: "corevia-talk/presence_menu/\(id)", binaryMessenger: messenger)
     super.init()
     container.backgroundColor = .clear
     container.isOpaque = false

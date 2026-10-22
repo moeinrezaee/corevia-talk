@@ -1,6 +1,6 @@
-# Releasing Buzz
+# Releasing Corevia Talk
 
-Buzz has three independent release lanes. Desktop and relay use release PRs.
+Corevia Talk has three independent release lanes. Desktop and relay use release PRs.
 Mobile uses immutable release-candidate tags cut from remote `main` by default,
 with an optional stable source branch:
 
@@ -12,7 +12,7 @@ with an optional stable source branch:
 
 The lanes version independently. Desktop reads its manifests, relay reads its
 crate manifest, and mobile derives both source and marketing version from the
-exact candidate tag. The mobile handoff to the private `buzz-releases` pipeline
+exact candidate tag. The mobile handoff to the private `corevia-talk-releases` pipeline
 remains manual because OSS CI cannot trigger private CI.
 
 ## Quick Start
@@ -78,7 +78,7 @@ prior release's recorded squash commit; tag ancestry is deliberately irrelevant.
 ### Relay
 
 1. **`just release-relay`** runs locally on `main`, creates or updates a
-   `relay-release/<version>` PR, bumps `crates/buzz-relay/Cargo.toml`,
+   `relay-release/<version>` PR, bumps `crates/corevia-talk-relay/Cargo.toml`,
    regenerates `Cargo.lock`, and updates the relay changelog.
 2. **Merge the PR.** `auto-tag-on-release-pr-merge` pushes
    `relay-v<version>`.
@@ -137,13 +137,13 @@ release notes and require operators to upgrade before distributing these clients
    `scripts/mobile-release.sh candidate X.Y.Z`. The script resolves and fetches
    a snapshot of `origin/main`, derives the next number from exact
    remote tags for that marketing version, and publishes an annotated
-   `mobile-vX.Y.Z-rc.N` tag there through the dedicated `buzz-release-bot`
+   `mobile-vX.Y.Z-rc.N` tag there through the dedicated `corevia-talk-release-bot`
    GitHub App. It never uses the operator's checked-out commit and never moves
    an existing candidate. To select a historical commit, add `--commit FULL_SHA`.
    Both operator and publisher require that commit to be in the selected source
    branch's history. Later branch advances do not change or invalidate the tag.
 2. **Build the exact tag.** Enter the candidate tag as `mobile_ref` in the
-   private Buzz mobile Buildkite pipeline. OSS CI deliberately cannot trigger
+   private Corevia Talk mobile Buildkite pipeline. OSS CI deliberately cannot trigger
    that private pipeline. The tag supplies both source commit and release
    version. Flutter receives clean marketing version `X.Y.Z`; Buildkite's
    monotonically increasing build number supplies the platform build number.
@@ -214,7 +214,7 @@ release data. It is not a release ledger for this flow.
 | Lane | Release version authority |
 |------|---------------------------|
 | Desktop | `desktop/package.json` and synchronized desktop manifests |
-| Relay | `crates/buzz-relay/Cargo.toml` |
+| Relay | `crates/corevia-talk-relay/Cargo.toml` |
 | Mobile | Exact `mobile-vX.Y.Z-rc.N` remote tag |
 
 `just bump-desktop-version <version>` updates the desktop manifests and
@@ -238,7 +238,7 @@ DMG, verifies it with Gatekeeper, and uploads it as a short-lived Actions
 artifact with seven-day retention. Because this is a public repository, any
 signed-in GitHub user can download that artifact while it exists; it is
 unpublished, not private. The workflow has no release permissions, does not
-create or move tags, and cannot update `buzz-desktop-latest` or `latest.json`.
+create or move tags, and cannot update `corevia-talk-desktop-latest` or `latest.json`.
 
 Download the artifact from the completed run:
 
@@ -269,12 +269,12 @@ Buildkite pipeline accepts only an exact candidate tag.
 ## Internal Releases
 
 For mobile, trigger the private
-[Release Mobile pipeline](https://buildkite.com/runway/buzz-mobile-releases) with
+[Release Mobile pipeline](https://buildkite.com/runway/corevia-talk-mobile-releases) with
 an exact RC tag for the platform build being cut. For desktop, start
 [Release Desktop](https://buildkite.com/runway/sprout-releases) and enter the
 exact public source tag as `desktop_ref=desktop-v<version>`; a generic
 `v<version>` tag is intentionally rejected. See the
-[buzz-releases README](https://github.com/squareup/buzz-releases#cutting-a-release)
+[corevia-talk-releases README](https://github.com/squareup/buzz-releases#cutting-a-release)
 for the rest of the private pipeline contract.
 
 ---
@@ -286,7 +286,7 @@ Desktop publishes two GitHub releases:
 1. **`desktop-v<version>`**: the user-facing release with installers and the
    exact `updater-manifest.json` promotion candidate. Publishing this release
    does not expose it through in-app auto-update.
-2. **`buzz-desktop-latest`**: the rolling auto-updater release. Its
+2. **`corevia-talk-desktop-latest`**: the rolling auto-updater release. Its
    `latest.json` changes only through the manual promotion workflow.
 
 ### Promote an OSS desktop release to auto-update
@@ -296,7 +296,7 @@ After installing and testing the published `desktop-v<version>` artifacts, run
 stable `X.Y.Z` version. The workflow validates the immutable tag and release,
 the retained manifest and every referenced updater asset, and requires the
 version to be newer than the currently promoted version before replacing
-`buzz-desktop-latest/latest.json`. Same-version retries succeed only when the
+`corevia-talk-desktop-latest/latest.json`. Same-version retries succeed only when the
 manifest is identical; downgrades are rejected.
 
 Withholding promotion leaves existing clients on the previous version. If a
@@ -341,19 +341,19 @@ host's Wayland/GStreamer/graphics stack and requires GLib >= 2.72
   checks, stale-review dismissal, and the **Desktop Release Candidate** check
 - Release tag ruleset [`14378754`](https://github.com/block/buzz/rules/14378754)
   active for `desktop-v*` and `mobile-v*`, with creation, update, deletion, and
-  non-fast-forward protections and `buzz-release-bot` as its sole always-bypass
+  non-fast-forward protections and `corevia-talk-release-bot` as its sole always-bypass
   actor
-- The `buzz-release-bot` App credentials configured for GitHub Actions
+- The `corevia-talk-release-bot` App credentials configured for GitHub Actions
 - The following **GitHub Actions variables and secrets** configured for the
   desktop release lane:
 
   | Name | Kind | Purpose |
   |------|------|---------|
-  | `BUZZ_RELEASE_TAGGER_CLIENT_ID` | Variable | GitHub App client ID used to create protected release tags |
-  | `BUZZ_RELEASE_TAGGER_PRIVATE_KEY` | Secret | GitHub App private key |
+  | `COREVIA_TALK_RELEASE_TAGGER_CLIENT_ID` | Variable | GitHub App client ID used to create protected release tags |
+  | `COREVIA_TALK_RELEASE_TAGGER_PRIVATE_KEY` | Secret | GitHub App private key |
   | `OSX_CODESIGN_ROLE` | Secret | macOS signing role used by `block/apple-codesign-action` |
   | `CODESIGN_S3_BUCKET` | Secret | macOS signing exchange bucket |
-  | `BUZZ_UPDATER_PUBLIC_KEY` or `SPROUT_UPDATER_PUBLIC_KEY` | Secret | Tauri updater public key |
+  | `COREVIA_TALK_UPDATER_PUBLIC_KEY` or `SPROUT_UPDATER_PUBLIC_KEY` | Secret | Tauri updater public key |
   | `TAURI_SIGNING_PRIVATE_KEY` | Secret | Tauri updater private key |
   | `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` | Secret | Password for the private key |
 
@@ -415,13 +415,13 @@ increasing remote identities.
 
 ### A mobile candidate publication is rejected by repository rules
 
-Confirm `buzz-release-bot` remains the sole always-bypass actor for the active
+Confirm `corevia-talk-release-bot` remains the sole always-bypass actor for the active
 `mobile-v*` ruleset and that its Actions credentials are available. Do not grant
 direct human creation or weaken update or deletion protection. Existing
 candidate tags must remain immutable.
 
 ### Auto-updater reports "no update available"
-Verify that the `buzz-desktop-latest` release exists and contains a
+Verify that the `corevia-talk-desktop-latest` release exists and contains a
 valid `latest.json`. The manifest covers all four platform keys
 (`darwin-aarch64`, `darwin-x86_64`, `linux-x86_64`,
 `windows-x86_64`); a missing entry usually means that platform's

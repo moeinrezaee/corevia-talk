@@ -76,7 +76,7 @@ export function shouldOpenDoctor(
 }
 
 export function missingBinaryRecoveryMessage(): string {
-  return "not found in PATH — install it or update PATH, then restart Buzz";
+  return "not found in PATH — install it or update PATH, then restart Corevia Talk";
 }
 
 /**
@@ -171,7 +171,7 @@ export function focusTargetForRequirement(
 }
 
 /**
- * Inline card rendered when the desktop detects a `buzz:config-nudge`
+ * Inline card rendered when the desktop detects a `corevia-talk:config-nudge`
  * sentinel in a kind:9 message body.
  *
  * Uses the `Attachment` primitive's built-in `state="error"` destructive-tint
@@ -394,7 +394,7 @@ function RequirementRow({
       return (
         <div className="flex items-center gap-2 text-xs leading-4 text-muted-foreground">
           <span className="flex-1 [overflow-wrap:anywhere]">
-            {tl("Git for Windows is required for buzz-agent shell tools")}
+            {tl("Git for Windows is required for corevia-talk-agent shell tools")}
           </span>
         </div>
       );
@@ -415,8 +415,8 @@ function RequirementRow({
     }
     case "cli_config_invalid": {
       // Config-invalid rows are purely informational — the user must edit an
-      // external file. No Agent runtimes CTA (Buzz can't repair ~/.codex/config.toml)
-      // and no Edit Agent CTA (the field isn't managed by Buzz).
+      // external file. No Agent runtimes CTA (Corevia Talk can't repair ~/.codex/config.toml)
+      // and no Edit Agent CTA (the field isn't managed by Corevia Talk).
       const cli = requirement.probe_args[0] ?? "the CLI";
       const configFile = `~/.${cli}/config.toml`;
       return (

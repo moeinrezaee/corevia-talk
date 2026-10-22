@@ -10,14 +10,14 @@ import '../relay/signed_event_relay.dart';
 import 'push_bridge.dart';
 import 'push_subscription.dart';
 
-const buzzPushLeaseKind = 30350;
-const buzzPushTransport = 'apns';
+const coreviaTalkPushLeaseKind = 30350;
+const coreviaTalkPushTransport = 'apns';
 const _maxSafeJsonInteger = 9007199254740991;
 const _maxLeaseLifetimeSeconds = 2592000;
 const _lowercaseHex64Pattern = r'^[0-9a-f]{64}$';
 const _installationIdPattern = r'^[0-9a-f]{32}$';
 
-class BuzzPushLeaseDescriptor {
+class CoreviaTalkPushLeaseDescriptor {
   final String origin;
   final String executorKeyId;
   final String executorPubkey;
@@ -28,7 +28,7 @@ class BuzzPushLeaseDescriptor {
   final int maxEndpointLength;
   final int maxStringLength;
 
-  const BuzzPushLeaseDescriptor({
+  const CoreviaTalkPushLeaseDescriptor({
     required this.origin,
     required this.executorKeyId,
     required this.executorPubkey,
@@ -40,15 +40,15 @@ class BuzzPushLeaseDescriptor {
     required this.maxStringLength,
   });
 
-  factory BuzzPushLeaseDescriptor.fromRelayInformation(
+  factory CoreviaTalkPushLeaseDescriptor.fromRelayInformation(
     Map<String, dynamic> information,
   ) {
     final extensions = _stringList(
       information['supported_extensions'],
       name: 'supported_extensions',
     );
-    if (!extensions.contains('buzz-push-v1')) {
-      throw const FormatException('NIP-11 does not advertise buzz-push-v1');
+    if (!extensions.contains('corevia-talk-push-v1')) {
+      throw const FormatException('NIP-11 does not advertise corevia-talk-push-v1');
     }
 
     final push = _stringMap(information['push'], name: 'push');
@@ -106,12 +106,12 @@ class BuzzPushLeaseDescriptor {
     }
     final currentKey = currentKeys.single;
 
-    const transport = buzzPushTransport;
+    const transport = coreviaTalkPushTransport;
 
     final pushKinds = _intList(push['push_kinds'], name: 'push_kinds');
-    if (!buzzPushEligibleKinds.every(pushKinds.contains)) {
+    if (!coreviaTalkPushEligibleKinds.every(pushKinds.contains)) {
       throw const FormatException(
-        'NIP-11 does not advertise every Buzz message kind for push',
+        'NIP-11 does not advertise every Corevia Talk message kind for push',
       );
     }
     final hGrammar = _nonEmptyString(push['h_grammar'], name: 'h_grammar');
@@ -124,7 +124,7 @@ class BuzzPushLeaseDescriptor {
       name: 'class_support',
     );
     final supportedClasses = _stringList(
-      classSupport[buzzPushTransport],
+      classSupport[coreviaTalkPushTransport],
       name: 'class_support.apns',
     );
     const knownClasses = {'default'};
@@ -183,7 +183,7 @@ class BuzzPushLeaseDescriptor {
       throw const FormatException('max_lease_ttl exceeds the NIP-PL v1 limit');
     }
 
-    return BuzzPushLeaseDescriptor(
+    return CoreviaTalkPushLeaseDescriptor(
       origin: origin,
       executorKeyId: currentKey['id'] as String,
       executorPubkey: currentKey['pubkey'] as String,
@@ -197,7 +197,7 @@ class BuzzPushLeaseDescriptor {
   }
 }
 
-Future<BuzzPushLeaseDescriptor> fetchBuzzPushLeaseDescriptor(
+Future<CoreviaTalkPushLeaseDescriptor> fetchCoreviaTalkPushLeaseDescriptor(
   String relayBaseUrl, {
   http.Client? client,
   Duration timeout = const Duration(seconds: 8),
@@ -223,25 +223,25 @@ Future<BuzzPushLeaseDescriptor> fetchBuzzPushLeaseDescriptor(
     if (decoded is! Map<String, dynamic>) {
       throw const FormatException('NIP-11 response must be a JSON object');
     }
-    return BuzzPushLeaseDescriptor.fromRelayInformation(decoded);
+    return CoreviaTalkPushLeaseDescriptor.fromRelayInformation(decoded);
   } finally {
     if (client == null) ownedClient.close();
   }
 }
 
-class BuzzPushLeasePublication {
+class CoreviaTalkPushLeasePublication {
   final String eventId;
   final int expiration;
   final String plaintext;
 
-  const BuzzPushLeasePublication({
+  const CoreviaTalkPushLeasePublication({
     required this.eventId,
     required this.expiration,
     required this.plaintext,
   });
 }
 
-typedef BuzzPushLeaseSubmit =
+typedef CoreviaTalkPushLeaseSubmit =
     Future<NostrEvent> Function({
       required int kind,
       required String content,
@@ -249,15 +249,15 @@ typedef BuzzPushLeaseSubmit =
       int? createdAt,
     });
 
-Future<BuzzPushLeasePublication> publishBuzzDevPushLease({
-  required BuzzPushEndpointGrant grant,
+Future<CoreviaTalkPushLeasePublication> publishCoreviaTalkDevPushLease({
+  required CoreviaTalkPushEndpointGrant grant,
   String? leaseInstallationId,
   int? leaseGeneration,
-  required BuzzPushLeaseDescriptor descriptor,
+  required CoreviaTalkPushLeaseDescriptor descriptor,
   required String nsec,
   required String memberPubkey,
-  required List<BuzzPushSubscription> subscriptions,
-  required BuzzPushLeaseSubmit submit,
+  required List<CoreviaTalkPushSubscription> subscriptions,
+  required CoreviaTalkPushLeaseSubmit submit,
   DateTime Function() now = DateTime.now,
 }) async {
   _validateGrant(grant, descriptor);
@@ -323,7 +323,7 @@ Future<BuzzPushLeasePublication> publishBuzzDevPushLease({
     );
   }
   final acknowledged = await submit(
-    kind: buzzPushLeaseKind,
+    kind: coreviaTalkPushLeaseKind,
     content: content,
     tags: [
       ['d', effectiveLeaseInstallationId],
@@ -335,24 +335,24 @@ Future<BuzzPushLeasePublication> publishBuzzDevPushLease({
   if (acknowledged.id.isEmpty) {
     throw StateError('Relay returned an empty event id for the push lease');
   }
-  return BuzzPushLeasePublication(
+  return CoreviaTalkPushLeasePublication(
     eventId: acknowledged.id,
     expiration: expiration,
     plaintext: plaintext,
   );
 }
 
-Future<BuzzPushLeasePublication> publishBuzzDevPushLeaseThroughRelay({
-  required BuzzPushEndpointGrant grant,
+Future<CoreviaTalkPushLeasePublication> publishCoreviaTalkDevPushLeaseThroughRelay({
+  required CoreviaTalkPushEndpointGrant grant,
   String? leaseInstallationId,
   int? leaseGeneration,
-  required BuzzPushLeaseDescriptor descriptor,
+  required CoreviaTalkPushLeaseDescriptor descriptor,
   required String nsec,
   required String memberPubkey,
-  required List<BuzzPushSubscription> subscriptions,
+  required List<CoreviaTalkPushSubscription> subscriptions,
   required SignedEventRelay relay,
   DateTime Function() now = DateTime.now,
-}) => publishBuzzDevPushLease(
+}) => publishCoreviaTalkDevPushLease(
   grant: grant,
   leaseInstallationId: leaseInstallationId,
   leaseGeneration: leaseGeneration,
@@ -368,13 +368,13 @@ Future<BuzzPushLeasePublication> publishBuzzDevPushLeaseThroughRelay({
 /// community is removed from this device. Gateway delegation is intentionally
 /// untouched because it is scoped to the installation and relay key, not the
 /// community.
-Future<BuzzPushLeasePublication> publishBuzzPushLeaseTombstone({
-  required BuzzPushLeaseDescriptor descriptor,
+Future<CoreviaTalkPushLeasePublication> publishCoreviaTalkPushLeaseTombstone({
+  required CoreviaTalkPushLeaseDescriptor descriptor,
   required String installationId,
   required int generation,
   required String nsec,
   required String memberPubkey,
-  required BuzzPushLeaseSubmit submit,
+  required CoreviaTalkPushLeaseSubmit submit,
   DateTime Function() now = DateTime.now,
 }) async {
   if (!RegExp(_installationIdPattern).hasMatch(installationId)) {
@@ -421,7 +421,7 @@ Future<BuzzPushLeasePublication> publishBuzzPushLeaseTombstone({
     );
   }
   final acknowledged = await submit(
-    kind: buzzPushLeaseKind,
+    kind: coreviaTalkPushLeaseKind,
     content: content,
     tags: [
       ['d', installationId],
@@ -433,22 +433,22 @@ Future<BuzzPushLeasePublication> publishBuzzPushLeaseTombstone({
   if (acknowledged.id.isEmpty) {
     throw StateError('Relay returned an empty event id for the push tombstone');
   }
-  return BuzzPushLeasePublication(
+  return CoreviaTalkPushLeasePublication(
     eventId: acknowledged.id,
     expiration: expiration,
     plaintext: plaintext,
   );
 }
 
-Future<BuzzPushLeasePublication> publishBuzzPushLeaseTombstoneThroughRelay({
-  required BuzzPushLeaseDescriptor descriptor,
+Future<CoreviaTalkPushLeasePublication> publishCoreviaTalkPushLeaseTombstoneThroughRelay({
+  required CoreviaTalkPushLeaseDescriptor descriptor,
   required String installationId,
   required int generation,
   required String nsec,
   required String memberPubkey,
   required SignedEventRelay relay,
   DateTime Function() now = DateTime.now,
-}) => publishBuzzPushLeaseTombstone(
+}) => publishCoreviaTalkPushLeaseTombstone(
   descriptor: descriptor,
   installationId: installationId,
   generation: generation,
@@ -459,8 +459,8 @@ Future<BuzzPushLeasePublication> publishBuzzPushLeaseTombstoneThroughRelay({
 );
 
 void _validateGrant(
-  BuzzPushEndpointGrant grant,
-  BuzzPushLeaseDescriptor descriptor,
+  CoreviaTalkPushEndpointGrant grant,
+  CoreviaTalkPushLeaseDescriptor descriptor,
 ) {
   if (utf8.encode(grant.installationId).length > 64 ||
       !RegExp(_installationIdPattern).hasMatch(grant.installationId)) {

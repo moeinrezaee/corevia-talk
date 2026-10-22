@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/mentions/agent_identity_provider.dart';
 import '../../shared/relay/relay_closed_policy.dart';
 import '../../shared/theme/theme.dart';
 import '../../shared/widgets/sheet_action_section.dart';
 import '../../shared/widgets/avatar_image.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../shared/widgets/frosted_app_bar.dart';
 import '../../shared/widgets/frosted_scaffold.dart';
 import '../../shared/widgets/load_error_view.dart';
@@ -91,7 +91,7 @@ class ForumThreadPage extends HookConsumerWidget {
               onPressed: () =>
                   _showPostActions(context, ref, threadAsync.value!),
               tooltip: tl('Post actions'),
-              icon: const Icon(BuzzIcons.ellipsis),
+              icon: const Icon(CoreviaTalkIcons.ellipsis),
             ),
         ],
       ),
@@ -101,7 +101,7 @@ class ForumThreadPage extends HookConsumerWidget {
         loading: () => Padding(
           padding: EdgeInsets.only(top: frostedAppBarHeight(context)),
           child: Center(
-            child: BuzzLoadingIndicator(
+            child: CoreviaTalkLoadingIndicator(
               size: 44,
               semanticLabel: tl('Loading thread'),
             ),
@@ -132,7 +132,7 @@ class ForumThreadPage extends HookConsumerWidget {
     WidgetRef ref,
     ForumThreadResponse thread,
   ) {
-    showBuzzModalBottomSheet<void>(
+    showCoreviaTalkModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
       builder: (sheetContext) => SafeArea(
@@ -148,7 +148,7 @@ class ForumThreadPage extends HookConsumerWidget {
             child: SheetActionSection(
               children: [
                 ListTile(
-                  leading: const Icon(BuzzIcons.copy),
+                  leading: const Icon(CoreviaTalkIcons.copy),
                   title: Text(tl('Copy text')),
                   onTap: () {
                     Navigator.of(sheetContext).pop();
@@ -157,7 +157,7 @@ class ForumThreadPage extends HookConsumerWidget {
                 ),
                 ListTile(
                   leading: Icon(
-                    BuzzIcons.trash2,
+                    CoreviaTalkIcons.trash2,
                     color: sheetContext.colors.error,
                   ),
                   title: Text(
@@ -178,7 +178,7 @@ class ForumThreadPage extends HookConsumerWidget {
   }
 
   void _confirmDeletePost(BuildContext context, WidgetRef ref, String eventId) {
-    showBuzzDialog<void>(
+    showCoreviaTalkDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: Text(tl('Delete post')),
@@ -275,7 +275,7 @@ class _ThreadContent extends HookConsumerWidget {
                 child: Row(
                   children: [
                     Icon(
-                      BuzzIcons.messageSquare,
+                      CoreviaTalkIcons.messageSquare,
                       size: 16,
                       color: context.colors.onSurfaceVariant,
                     ),
@@ -557,7 +557,7 @@ class _ReplyRow extends ConsumerWidget {
                 child: IconButton(
                   onPressed: () => _showActions(context, ref),
                   icon: Icon(
-                    BuzzIcons.ellipsis,
+                    CoreviaTalkIcons.ellipsis,
                     size: 16,
                     color: context.colors.onSurfaceVariant,
                   ),
@@ -598,7 +598,7 @@ class _ReplyRow extends ConsumerWidget {
         currentPubkey != null &&
         reply.pubkey.toLowerCase() == currentPubkey!.toLowerCase();
 
-    showBuzzModalBottomSheet<void>(
+    showCoreviaTalkModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
       builder: (sheetContext) => SafeArea(
@@ -614,7 +614,7 @@ class _ReplyRow extends ConsumerWidget {
             child: SheetActionSection(
               children: [
                 ListTile(
-                  leading: const Icon(BuzzIcons.copy),
+                  leading: const Icon(CoreviaTalkIcons.copy),
                   title: Text(tl('Copy text')),
                   onTap: () {
                     Navigator.of(sheetContext).pop();
@@ -624,7 +624,7 @@ class _ReplyRow extends ConsumerWidget {
                 if (isOwn)
                   ListTile(
                     leading: Icon(
-                      BuzzIcons.trash2,
+                      CoreviaTalkIcons.trash2,
                       color: sheetContext.colors.error,
                     ),
                     title: Text(
@@ -645,7 +645,7 @@ class _ReplyRow extends ConsumerWidget {
   }
 
   void _confirmDelete(BuildContext context, WidgetRef ref) {
-    showBuzzDialog<void>(
+    showCoreviaTalkDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: Text(tl('Delete reply')),

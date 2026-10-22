@@ -7,14 +7,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
-import 'package:buzz/features/pairing/pairing_page.dart';
-import 'package:buzz/features/pairing/pairing_page/onboarding_wordmark.dart';
-import 'package:buzz/features/pairing/pairing_provider.dart';
-import 'package:buzz/shared/community/community.dart';
-import 'package:buzz/shared/security/sensitive_action_authorizer.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/widgets/buzz_loading_indicator.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
+import 'package:corevia_talk/features/pairing/pairing_page.dart';
+import 'package:corevia_talk/features/pairing/pairing_page/onboarding_wordmark.dart';
+import 'package:corevia_talk/features/pairing/pairing_provider.dart';
+import 'package:corevia_talk/shared/community/community.dart';
+import 'package:corevia_talk/shared/security/sensitive_action_authorizer.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/widgets/corevia_talk_loading_indicator.dart';
 
 import '../../helpers/widget_helpers.dart';
 
@@ -44,7 +44,7 @@ void main() {
           );
           expect(find.text('Scan a QR code'), findsNothing);
           expect(find.text('Use pairing code'), findsNothing);
-          expect(find.byType(BuzzLoadingIndicator), findsOneWidget);
+          expect(find.byType(CoreviaTalkLoadingIndicator), findsOneWidget);
         }
       },
     );
@@ -56,8 +56,8 @@ void main() {
         WidgetHelpers.testable(child: const PairingPage()),
       );
 
-      expect(find.bySemanticsLabel('Buzz'), findsOneWidget);
-      expect(find.text('Welcome to Buzz'), findsNothing);
+      expect(find.bySemanticsLabel('Corevia Talk'), findsOneWidget);
+      expect(find.text('Welcome to Corevia Talk'), findsNothing);
       expect(
         find.text(
           'Your people, your agents, your projects —\nall in one place.',
@@ -123,12 +123,12 @@ void main() {
         expect(tester.getBottomLeft(toggle).dy, 844 - 34 - Grid.sm);
         expect(
           tester
-              .getBottomLeft(find.byKey(const Key('pairing-buzz-wordmark')))
+              .getBottomLeft(find.byKey(const Key('pairing-corevia-talk-wordmark')))
               .dy,
           lessThan(tester.getTopLeft(toggle).dy - 150),
         );
 
-        final wordmark = find.byKey(const Key('pairing-buzz-wordmark'));
+        final wordmark = find.byKey(const Key('pairing-corevia-talk-wordmark'));
         final originalFrame = tester.getRect(wordmark);
         for (final distance in [-150.0, 150.0]) {
           await tester.drag(find.byType(CustomScrollView), Offset(0, distance));
@@ -214,7 +214,7 @@ void main() {
         expect(
           tester
               .widget<OnboardingWordmark>(
-                find.byKey(const Key('pairing-buzz-wordmark')),
+                find.byKey(const Key('pairing-corevia-talk-wordmark')),
               )
               .color,
           const Color(0xFFE6EDF0),
@@ -245,7 +245,7 @@ void main() {
         expect(
           tester
               .widget<OnboardingWordmark>(
-                find.byKey(const Key('pairing-buzz-wordmark')),
+                find.byKey(const Key('pairing-corevia-talk-wordmark')),
               )
               .color,
           isNull,
@@ -286,7 +286,7 @@ void main() {
       expect(find.text('Enter pairing code'), findsOneWidget);
       expect(
         find.text(
-          'Make sure the six-digit code matches on both devices. Your Buzz identity will transfer to this device. Only continue if you started this pairing from your desktop.',
+          'Make sure the six-digit code matches on both devices. Your Corevia Talk identity will transfer to this device. Only continue if you started this pairing from your desktop.',
         ),
         findsNothing,
       );
@@ -307,7 +307,7 @@ void main() {
 
       expect(find.byType(AppBar), findsNothing);
       expect(find.text('Add Community'), findsNothing);
-      expect(find.byIcon(BuzzIcons.arrowLeft), findsNothing);
+      expect(find.byIcon(CoreviaTalkIcons.arrowLeft), findsNothing);
       expect(find.byKey(const Key('pairing-pop-scope')), findsOneWidget);
 
       await tester.tap(find.widgetWithText(TextButton, 'Cancel'));
@@ -328,7 +328,7 @@ void main() {
       expect(appBar.surfaceTintColor, Colors.transparent);
       expect(appBar.elevation, 0);
       expect(appBar.scrolledUnderElevation, 0);
-      expect(find.byIcon(BuzzIcons.arrowLeft), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.arrowLeft), findsOneWidget);
     });
 
     testWidgets('uses the native navigation bar on iOS', (tester) async {
@@ -340,7 +340,7 @@ void main() {
       );
 
       final nativeBar = tester.widget<UiKitView>(find.byType(UiKitView));
-      expect(nativeBar.viewType, 'buzz/ios_navigation_bar');
+      expect(nativeBar.viewType, 'corevia-talk/ios_navigation_bar');
       expect(nativeBar.creationParams, containsPair('title', ''));
       debugDefaultTargetPlatformOverride = null;
     });
@@ -418,7 +418,7 @@ void main() {
       );
       await tester.pump();
 
-      expect(find.byType(BuzzLoadingIndicator), findsOneWidget);
+      expect(find.byType(CoreviaTalkLoadingIndicator), findsOneWidget);
       // Connect text should be replaced by spinner.
       expect(find.text('Connect'), findsNothing);
     });
@@ -617,7 +617,7 @@ void main() {
         ),
       );
 
-      expect(find.textContaining('full Buzz identity'), findsNothing);
+      expect(find.textContaining('full Corevia Talk identity'), findsNothing);
       expect(find.textContaining('permanent access'), findsNothing);
       expect(find.textContaining('started this recovery'), findsNothing);
       expect(find.text('Continue'), findsNothing);
@@ -635,11 +635,11 @@ void main() {
         ),
       );
 
-      expect(find.byIcon(BuzzIcons.shieldCheck), findsNothing);
+      expect(find.byIcon(CoreviaTalkIcons.shieldCheck), findsNothing);
       expect(find.text('Enter pairing code'), findsOneWidget);
       expect(
         find.text(
-          'Make sure the six-digit code matches on both devices. Your Buzz identity will transfer to this device. Only continue if you started this pairing from your desktop.',
+          'Make sure the six-digit code matches on both devices. Your Corevia Talk identity will transfer to this device. Only continue if you started this pairing from your desktop.',
         ),
         findsNothing,
       );
@@ -847,7 +847,7 @@ void main() {
       expect(tester.takeException(), isNull);
       expect(find.text('Enter pairing code'), findsOneWidget);
       expect(find.textContaining('matches on both devices'), findsNothing);
-      expect(find.textContaining('Buzz identity will transfer'), findsNothing);
+      expect(find.textContaining('Corevia Talk identity will transfer'), findsNothing);
       expect(find.text('Continue'), findsNothing);
     });
   });

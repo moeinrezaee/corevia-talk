@@ -29,13 +29,13 @@ class _SendButton extends StatelessWidget {
         ),
         padding: EdgeInsets.zero,
         icon: isSending
-            ? BuzzLoadingIndicator(
+            ? CoreviaTalkLoadingIndicator(
                 size: 18,
                 color: context.colors.onPrimary,
                 semanticLabel: tl('Sending message'),
               )
             : Icon(
-                BuzzIcons.arrowUp,
+                CoreviaTalkIcons.arrowUp,
                 size: 18,
                 color: context.colors.onPrimary,
               ),

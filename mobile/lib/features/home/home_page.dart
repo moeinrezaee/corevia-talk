@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/theme/theme.dart';
 import '../../shared/widgets/bottom_up_page_route.dart';
@@ -66,13 +66,13 @@ class HomePage extends HookConsumerWidget {
 
   static final _destinations = [
     _HomeDestination(
-      icon: BuzzIcons.house300,
-      selectedIcon: BuzzIcons.house500,
+      icon: CoreviaTalkIcons.house300,
+      selectedIcon: CoreviaTalkIcons.house500,
       label: tl('Home'),
     ),
     _HomeDestination(
-      icon: BuzzIcons.messageSquare,
-      selectedIcon: BuzzIcons.messageSquare,
+      icon: CoreviaTalkIcons.messageSquare,
+      selectedIcon: CoreviaTalkIcons.messageSquare,
       label: 'Solo',
     ),
   ];

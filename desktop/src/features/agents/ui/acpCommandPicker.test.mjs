@@ -7,21 +7,21 @@ import {
 } from "./acpCommandPicker.ts";
 
 const candidate = {
-  command: "buzz-janet-acp",
-  binaryPath: "/bin/buzz-janet-acp",
+  command: "corevia-talk-janet-acp",
+  binaryPath: "/bin/corevia-talk-janet-acp",
 };
 
 test("stock and discovered commands select discovered options", () => {
-  const defaultState = acpCommandPickerState("buzz-acp", [candidate]);
-  assert.equal(defaultState.selectValue, "buzz-acp");
+  const defaultState = acpCommandPickerState("corevia-talk-acp", [candidate]);
+  assert.equal(defaultState.selectValue, "corevia-talk-acp");
   assert.deepEqual(defaultState.options, [
-    { label: "Buzz ACP (default)", value: "buzz-acp" },
-    { label: "buzz-janet-acp", value: "buzz-janet-acp" },
+    { label: "Corevia Talk ACP (default)", value: "corevia-talk-acp" },
+    { label: "corevia-talk-janet-acp", value: "corevia-talk-janet-acp" },
   ]);
 
   assert.equal(
-    acpCommandPickerState("buzz-janet-acp", [candidate]).selectValue,
-    "buzz-janet-acp",
+    acpCommandPickerState("corevia-talk-janet-acp", [candidate]).selectValue,
+    "corevia-talk-janet-acp",
   );
 });
 
@@ -43,17 +43,17 @@ test("a persisted unknown command is preserved as a read-only current option", (
 });
 
 test("late discovery replaces the current marker without changing the command", () => {
-  const before = acpCommandPickerState("buzz-janet-acp", []);
+  const before = acpCommandPickerState("corevia-talk-janet-acp", []);
   assert.deepEqual(before.options.at(-1), {
     disabled: true,
-    label: "buzz-janet-acp (unavailable)",
-    value: "buzz-janet-acp",
+    label: "corevia-talk-janet-acp (unavailable)",
+    value: "corevia-talk-janet-acp",
   });
 
-  const after = acpCommandPickerState("buzz-janet-acp", [candidate]);
-  assert.equal(after.selectValue, "buzz-janet-acp");
+  const after = acpCommandPickerState("corevia-talk-janet-acp", [candidate]);
+  assert.equal(after.selectValue, "corevia-talk-janet-acp");
   assert.deepEqual(after.options.at(-1), {
-    label: "buzz-janet-acp",
-    value: "buzz-janet-acp",
+    label: "corevia-talk-janet-acp",
+    value: "corevia-talk-janet-acp",
   });
 });

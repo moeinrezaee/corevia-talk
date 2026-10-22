@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-const ageSignalChannel = MethodChannel('buzz/age_signal');
+const ageSignalChannel = MethodChannel('corevia-talk/age_signal');
 
 /// Maximum lifetime of a launch age check. Access never waits for this timer.
 const ageSignalRequestTimeout = Duration(seconds: 30);
@@ -81,7 +81,7 @@ class AgeSignalNotifier extends Notifier<AgeSignalState> {
 }
 
 /// Explicit pre-release testing opt-in. Production builds keep enforcement disabled.
-const ageGatingEnabled = bool.fromEnvironment('BUZZ_AGE_GATING_ENABLED');
+const ageGatingEnabled = bool.fromEnvironment('COREVIA_TALK_AGE_GATING_ENABLED');
 
 final ageSignalProvider = NotifierProvider<AgeSignalNotifier, AgeSignalState>(
   ageGatingEnabled ? AgeSignalNotifier.new : _DisabledAgeSignalNotifier.new,

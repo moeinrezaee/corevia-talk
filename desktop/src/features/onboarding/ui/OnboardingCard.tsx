@@ -48,7 +48,7 @@ export function OnboardingCard({
 
   return (
     <div
-      className="buzz-onboarding-neutral-theme buzz-startup-shell flex max-h-dvh items-center justify-center overflow-x-hidden overflow-y-auto px-4 py-6 text-foreground"
+      className="corevia-talk-onboarding-neutral-theme corevia-talk-startup-shell flex max-h-dvh items-center justify-center overflow-x-hidden overflow-y-auto px-4 py-6 text-foreground"
       data-system-color-scheme={systemColorScheme}
       data-testid={testId}
     >
@@ -62,13 +62,13 @@ export function OnboardingCard({
           stableWideWidth
             ? "w-[min(calc(100vw-2rem),50rem)]"
             : "w-[min(calc(100vw-2rem),calc(38rem+2px))]",
-          "[--buzz-onboarding-cta-label:#fff] [&_.buzz-onboarding-slide]:min-h-0",
-          "[&_.buzz-onboarding-transition-content]:w-full [&_.buzz-onboarding-transition-content]:min-w-0 [&_.buzz-onboarding-transition-content]:!text-start",
-          "[&_.buzz-onboarding-transition-line]:justify-start [&_h1+p]:!mx-0 [&_h1+p]:!mt-2 [&_h1+p]:!text-start [&_h1+p]:!text-base [&_h1+p]:!leading-6",
+          "[--corevia-talk-onboarding-cta-label:#fff] [&_.corevia-talk-onboarding-slide]:min-h-0",
+          "[&_.corevia-talk-onboarding-transition-content]:w-full [&_.corevia-talk-onboarding-transition-content]:min-w-0 [&_.corevia-talk-onboarding-transition-content]:!text-start",
+          "[&_.corevia-talk-onboarding-transition-line]:justify-start [&_h1+p]:!mx-0 [&_h1+p]:!mt-2 [&_h1+p]:!text-start [&_h1+p]:!text-base [&_h1+p]:!leading-6",
           "[&_h1]:!text-start [&_h1]:!text-2xl [&_h1]:!leading-8 [&_h1]:!text-foreground",
           allowWideContent
-            ? "[&_.buzz-onboarding-transition-content]:max-w-full"
-            : "[&_.buzz-onboarding-transition-content]:max-w-[32rem]",
+            ? "[&_.corevia-talk-onboarding-transition-content]:max-w-full"
+            : "[&_.corevia-talk-onboarding-transition-content]:max-w-[32rem]",
         )}
         data-testid="onboarding-content-card"
         ref={cardRef}
@@ -79,7 +79,7 @@ export function OnboardingCard({
             contentClassName={allowWideContent ? "max-w-full" : "max-w-[32rem]"}
             placement="card"
           >
-            <div className="buzz-onboarding-step-frame relative -mx-6 flex min-h-0! w-[calc(100%+3rem)] flex-1 flex-col items-stretch overflow-x-hidden overflow-y-auto overscroll-contain px-6 text-start min-[44rem]:-mx-12 min-[44rem]:w-[calc(100%+6rem)] min-[44rem]:px-12">
+            <div className="corevia-talk-onboarding-step-frame relative -mx-6 flex min-h-0! w-[calc(100%+3rem)] flex-1 flex-col items-stretch overflow-x-hidden overflow-y-auto overscroll-contain px-6 text-start min-[44rem]:-mx-12 min-[44rem]:w-[calc(100%+6rem)] min-[44rem]:px-12">
               {children}
             </div>
           </OnboardingFooterProvider>

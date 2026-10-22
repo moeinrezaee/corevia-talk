@@ -133,7 +133,7 @@ export function HostedCommunityCreateFlow({
           hostedCommunityErrorMessage(
             response.error,
             response.correlation_id,
-            "Could not connect the Buzz identity.",
+            "Could not connect the Corevia Talk identity.",
           ),
         );
       }
@@ -183,7 +183,7 @@ export function HostedCommunityCreateFlow({
           hostedCommunityErrorMessage(
             released.error,
             released.correlation_id,
-            "Could not disconnect the account's previous Buzz identity.",
+            "Could not disconnect the account's previous Corevia Talk identity.",
           ),
         );
       }
@@ -192,11 +192,11 @@ export function HostedCommunityCreateFlow({
         await loadAccount();
         throw new Error(
           bound.error.code === "pubkey_already_bound"
-            ? "This device's Buzz identity belongs to a different Builderlab account. Sign in with the account that already owns this identity."
+            ? "This device's Corevia Talk identity belongs to a different Builderlab account. Sign in with the account that already owns this identity."
             : hostedCommunityErrorMessage(
                 bound.error,
                 bound.correlation_id,
-                "Could not connect this device's Buzz identity.",
+                "Could not connect this device's Corevia Talk identity.",
               ),
         );
       }
@@ -256,7 +256,7 @@ export function HostedCommunityCreateFlow({
           hostedCommunityErrorMessage(
             available.error,
             available.correlation_id,
-            "That Buzz address is already taken.",
+            "That Corevia Talk address is already taken.",
           ),
         );
       }
@@ -314,7 +314,7 @@ export function HostedCommunityCreateFlow({
       <div className="space-y-5">
         <p className="text-sm leading-6 text-muted-foreground">
           {tl(
-            "Sign in with Builderlab to create and host a community. Buzz will open your browser, then bring you back here.",
+            "Sign in with Builderlab to create and host a community. Corevia Talk will open your browser, then bring you back here.",
           )}
         </p>
         {errorBox}
@@ -336,7 +336,7 @@ export function HostedCommunityCreateFlow({
       <div className="space-y-5">
         <p className="text-sm leading-6 text-muted-foreground">
           {tl(
-            "Connect this device’s Buzz identity to your Builderlab account. Your private key stays on this device.",
+            "Connect this device’s Corevia Talk identity to your Builderlab account. Your private key stays on this device.",
           )}
         </p>
         {errorBox}
@@ -367,7 +367,7 @@ export function HostedCommunityCreateFlow({
       <div className="space-y-5">
         <p className="text-sm leading-6 text-muted-foreground">
           {tl(
-            "This Builderlab account uses a different Buzz identity. Switch it to this device, or sign in with another account.",
+            "This Builderlab account uses a different Corevia Talk identity. Switch it to this device, or sign in with another account.",
           )}
         </p>
         <div className="rounded-xl bg-muted/40 px-4 py-3 font-mono text-xs text-muted-foreground">

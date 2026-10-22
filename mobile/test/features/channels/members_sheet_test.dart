@@ -1,15 +1,15 @@
-import 'package:buzz/features/channels/agent_activity/working_bots_provider.dart';
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channel_identity_names_provider.dart';
-import 'package:buzz/features/channels/channel_management_provider.dart';
-import 'package:buzz/features/channels/members_sheet.dart';
-import 'package:buzz/features/profile/user_status.dart';
-import 'package:buzz/features/profile/user_status_cache_provider.dart';
-import 'package:buzz/shared/identity_names/identity_names.dart';
-import 'package:buzz/shared/profile/user_cache_provider.dart';
-import 'package:buzz/shared/profile/user_profile.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/features/channels/agent_activity/working_bots_provider.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channel_identity_names_provider.dart';
+import 'package:corevia_talk/features/channels/channel_management_provider.dart';
+import 'package:corevia_talk/features/channels/members_sheet.dart';
+import 'package:corevia_talk/features/profile/user_status.dart';
+import 'package:corevia_talk/features/profile/user_status_cache_provider.dart';
+import 'package:corevia_talk/shared/identity_names/identity_names.dart';
+import 'package:corevia_talk/shared/profile/user_cache_provider.dart';
+import 'package:corevia_talk/shared/profile/user_profile.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -179,7 +179,7 @@ void main() {
       matching: find.byType(ListTile),
     );
     await tester.tap(
-      find.descendant(of: row, matching: find.byIcon(BuzzIcons.ellipsis)),
+      find.descendant(of: row, matching: find.byIcon(CoreviaTalkIcons.ellipsis)),
     );
     await tester.pumpAndSettle();
     expect(find.text('Role'), findsOneWidget);
@@ -197,7 +197,7 @@ void main() {
       matching: find.byType(ListTile),
     );
     await tester.tap(
-      find.descendant(of: agent, matching: find.byIcon(BuzzIcons.ellipsis)),
+      find.descendant(of: agent, matching: find.byIcon(CoreviaTalkIcons.ellipsis)),
     );
     await tester.pumpAndSettle();
     expect(find.text('View activity'), findsOneWidget);

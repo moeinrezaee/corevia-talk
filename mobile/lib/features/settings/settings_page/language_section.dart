@@ -9,10 +9,10 @@ class _LanguageSection extends ConsumerWidget {
     final selected = ref.watch(languageProvider);
     Widget row(AppLanguage language, String title) => AppListRow(
       key: ValueKey('language-${language.name}'),
-      icon: BuzzIcons.languages,
+      icon: CoreviaTalkIcons.languages,
       title: title,
       trailing: selected == language
-          ? Icon(BuzzIcons.check, size: 18, color: context.colors.primary)
+          ? Icon(CoreviaTalkIcons.check, size: 18, color: context.colors.primary)
           : null,
       onTap: () => ref.read(languageProvider.notifier).setLanguage(language),
     );

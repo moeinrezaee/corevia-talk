@@ -4,11 +4,11 @@ import { test } from "node:test";
 import { buildCreateProjectAgents } from "./useCreateProjectFormSettings.ts";
 
 const runtime = {
-  id: "buzz-agent",
-  label: "Buzz Agent",
+  id: "corevia-talk-agent",
+  label: "Corevia Talk Agent",
   availability: "available",
-  command: "buzz-agent",
-  binaryPath: "/bin/buzz-agent",
+  command: "corevia-talk-agent",
+  binaryPath: "/bin/corevia-talk-agent",
 };
 
 function persona(id, displayName) {

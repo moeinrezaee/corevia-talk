@@ -138,7 +138,7 @@ class IosNavigationBar extends HookConsumerWidget {
     this.onReadyChanged,
   });
 
-  static const viewType = 'buzz/ios_navigation_bar';
+  static const viewType = 'corevia-talk/ios_navigation_bar';
 
   final String title;
   final String? subtitle;

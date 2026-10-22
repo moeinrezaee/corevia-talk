@@ -15,8 +15,8 @@ export const FA_PART_3: Record<string, string> = {
   Issue: "مشکل",
   "It restores a different identity than the one signed in here.":
     "هویتی متفاوت از هویتی که اینجا وارد شده بازیابی می‌کند.",
-  "It restores your current Buzz identity.":
-    "هویت فعلی Buzz شما را بازیابی می‌کند.",
+  "It restores your current Corevia Talk identity.":
+    "هویت فعلی Corevia Talk شما را بازیابی می‌کند.",
   "It will run for every new message in this channel. Review the trigger before turning it on.":
     "برای هر پیام جدید در این کانال اجرا می‌شود. پیش از روشن کردن، محرک را بررسی کنید.",
   Italic: "کج",
@@ -48,16 +48,16 @@ export const FA_PART_3: Record<string, string> = {
   "Jump to {0}": "پرش به {0}",
   KEY: "KEY",
   Keep: "نگه داشتن",
-  "Keep Buzz up to date with the latest features and fixes.":
-    "Buzz را با آخرین قابلیت‌ها و رفع اشکال‌ها به‌روز نگه دارید.",
+  "Keep Corevia Talk up to date with the latest features and fixes.":
+    "Corevia Talk را با آخرین قابلیت‌ها و رفع اشکال‌ها به‌روز نگه دارید.",
   "Keep advanced expression": "نگه داشتن عبارت پیشرفته",
   "Keep awake while agents are active":
     "تا زمانی که ایجنت‌ها فعال‌اند بیدار بمان",
   "Keep current backup": "نگه داشتن پشتیبان فعلی",
   "Keep editing": "ادامهٔ ویرایش",
   "Keep off": "خاموش بماند",
-  "Keep the file private and save its password somewhere safe — Buzz cannot reset it. Once ready, the backup remains available to download for 5 minutes.":
-    "فایل را خصوصی نگه دارید و گذرواژه‌اش را جای امنی ذخیره کنید — Buzz نمی‌تواند آن را بازنشانی کند. پس از آماده شدن، پشتیبان تا ۵ دقیقه برای دانلود در دسترس می‌ماند.",
+  "Keep the file private and save its password somewhere safe — Corevia Talk cannot reset it. Once ready, the backup remains available to download for 5 minutes.":
+    "فایل را خصوصی نگه دارید و گذرواژه‌اش را جای امنی ذخیره کنید — Corevia Talk نمی‌تواند آن را بازنشانی کند. پس از آماده شدن، پشتیبان تا ۵ دقیقه برای دانلود در دسترس می‌ماند.",
   "Keep this legacy interval or choose a repeat option above. All schedules use UTC.":
     "این بازهٔ قدیمی را نگه دارید یا یک گزینهٔ تکرار از بالا انتخاب کنید. همهٔ زمان‌بندی‌ها از UTC استفاده می‌کنند.",
   "Keeps a separate conversation for each channel thread. Direct messages remain shared.":
@@ -107,8 +107,8 @@ export const FA_PART_3: Record<string, string> = {
   "Link previews": "پیش‌نمایش پیوندها",
   "Link the selected composer text, or edit the link under the caret":
     "متن انتخاب‌شده در ویرایشگر را پیوند بده، یا پیوند زیر نشانگر را ویرایش کن",
-  "Link this account to your Buzz identity":
-    "این حساب را به هویت Buzz خود وصل کنید",
+  "Link this account to your Corevia Talk identity":
+    "این حساب را به هویت Corevia Talk خود وصل کنید",
   "Linked from": "پیوندشده از",
   "List layout": "چیدمان فهرستی",
   Listed: "فهرست‌شده",
@@ -222,7 +222,7 @@ export const FA_PART_3: Record<string, string> = {
   Mary: "Mary",
   Match: "تطبیق",
   "Max VRAM (GB)": "حداکثر VRAM (گیگابایت)",
-  "Maximize Buzz Term": "بزرگ کردن ترمینال Buzz",
+  "Maximize Corevia Talk Term": "بزرگ کردن ترمینال Corevia Talk",
   "Meet your starter team": "با تیم شروع خود آشنا شوید",
   Member: "عضو",
   "Member removed": "عضو حذف شد",
@@ -277,8 +277,8 @@ export const FA_PART_3: Record<string, string> = {
   "Minted cards": "کارت‌های ساخته‌شده",
   "Minting a card costs money — it generates the art and card text through the OpenAI API with your key (typically well under a dollar per mint, billed by OpenAI). The key is saved as":
     "ساخت کارت هزینه دارد — طرح و متن کارت از طریق API شرکت OpenAI با کلید شما تولید می‌شود (معمولاً کمتر از یک دلار برای هر ساخت، با صورتحساب OpenAI). کلید ذخیره می‌شود به‌صورت",
-  "Minting calls the OpenAI API with your key and costs money — typically well under a dollar per mint, billed by OpenAI. It runs in the background (takes a few minutes); you can keep using Buzz while it works.":
-    "ساخت کارت API شرکت OpenAI را با کلید شما فراخوانی می‌کند و هزینه دارد — معمولاً کمتر از یک دلار برای هر ساخت، با صورتحساب OpenAI. در پس‌زمینه اجرا می‌شود (چند دقیقه طول می‌کشد)؛ در این مدت می‌توانید از Buzz استفاده کنید.",
+  "Minting calls the OpenAI API with your key and costs money — typically well under a dollar per mint, billed by OpenAI. It runs in the background (takes a few minutes); you can keep using Corevia Talk while it works.":
+    "ساخت کارت API شرکت OpenAI را با کلید شما فراخوانی می‌کند و هزینه دارد — معمولاً کمتر از یک دلار برای هر ساخت، با صورتحساب OpenAI. در پس‌زمینه اجرا می‌شود (چند دقیقه طول می‌کشد)؛ در این مدت می‌توانید از Corevia Talk استفاده کنید.",
   "Minting {0}’s card failed": "ساخت کارت {0} ناموفق بود",
   "Minting {0}’s card… (takes a few minutes)":
     "در حال ساخت کارت {0}… (چند دقیقه طول می‌کشد)",
@@ -330,7 +330,7 @@ export const FA_PART_3: Record<string, string> = {
   "Never share it—anyone with this key can sign in as you":
     "هرگز آن را به اشتراک نگذارید — هر کسی با این کلید می‌تواند به‌جای شما وارد شود",
   New: "جدید",
-  "New Buzz Term tab": "زبانهٔ جدید ترمینال Buzz",
+  "New Corevia Talk Term tab": "زبانهٔ جدید ترمینال Corevia Talk",
   "New activity will appear here.": "فعالیت جدید اینجا نمایش داده می‌شود.",
   "New agent": "ایجنت جدید",
   "New and existing connections stop and the address stays reserved. Archiving can't be undone from here without unarchiving, and the community keeps counting toward your quota — it isn't deleted.":
@@ -406,8 +406,8 @@ export const FA_PART_3: Record<string, string> = {
   "No files have been pushed yet": "هنوز فایلی ارسال نشده است",
   "No files match this filter.": "هیچ فایلی با این فیلتر مطابقت ندارد.",
   "No git commits": "بدون کامیت git",
-  "No git repository was found on the Buzz relay.":
-    "هیچ مخزن git ای روی رلهٔ Buzz پیدا نشد.",
+  "No git repository was found on the Corevia Talk relay.":
+    "هیچ مخزن git ای روی رلهٔ Corevia Talk پیدا نشد.",
   "No hosted communities yet.": "هنوز انجمن میزبانی‌شده‌ای نیست.",
   "No instruction set.": "دستورالعملی تنظیم نشده است.",
   "No instructions": "بدون دستورالعمل",
@@ -524,9 +524,9 @@ export const FA_PART_3: Record<string, string> = {
   "Open #{0}": "باز کردن #{0}",
   "Open Agent runtimes for {0}": "باز کردن زمان‌اجراهای ایجنت برای {0}",
   "Open Agent runtimes →": "باز کردن زمان‌اجراهای ایجنت ←",
-  "Open Buzz Term": "باز کردن ترمینال Buzz",
-  "Open Buzz on your mobile device and scan the code shown here.":
-    "Buzz را روی دستگاه موبایل خود باز کنید و کد نمایش‌داده‌شده اینجا را اسکن کنید.",
+  "Open Corevia Talk Term": "باز کردن ترمینال Corevia Talk",
+  "Open Corevia Talk on your mobile device and scan the code shown here.":
+    "Corevia Talk را روی دستگاه موبایل خود باز کنید و کد نمایش‌داده‌شده اینجا را اسکن کنید.",
   "Open Edit Agent for {0}": "باز کردن ویرایش ایجنت برای {0}",
   "Open Settings": "باز کردن تنظیمات",
   "Open a review": "باز کردن یک بازبینی",
@@ -648,8 +648,8 @@ export const FA_PART_3: Record<string, string> = {
   "Paste pubkeys": "کلیدهای عمومی را بچسبانید",
   "Paste this repository, review, or task link in a channel and it will appear here.":
     "پیوند این مخزن، بازبینی یا وظیفه را در یک کانال بچسبانید تا اینجا نمایش داده شود.",
-  "Paste your private key to sign in to Buzz. You can also use a":
-    "کلید خصوصی خود را برای ورود به Buzz بچسبانید. همچنین می‌توانید از یک",
+  "Paste your private key to sign in to Corevia Talk. You can also use a":
+    "کلید خصوصی خود را برای ورود به Corevia Talk بچسبانید. همچنین می‌توانید از یک",
   Path: "مسیر",
   "Pause review video": "توقف ویدیوی بازبینی",
   "Pause video": "توقف ویدیو",
@@ -668,8 +668,8 @@ export const FA_PART_3: Record<string, string> = {
     "یک ایجنت مدیریت‌شده را برای دیدن آخرین خروجی گزارش ACP انتخاب کنید.",
   "Pick an inbox item to see the full message and react to it.":
     "یک مورد صندوق ورودی را برای دیدن پیام کامل و واکنش به آن انتخاب کنید.",
-  "Pick the name people and agents will see in Buzz. You can change it anytime.":
-    "نامی را که افراد و ایجنت‌ها در Buzz می‌بینند انتخاب کنید. هر زمان می‌توانید تغییرش دهید.",
+  "Pick the name people and agents will see in Corevia Talk. You can change it anytime.":
+    "نامی را که افراد و ایجنت‌ها در Corevia Talk می‌بینند انتخاب کنید. هر زمان می‌توانید تغییرش دهید.",
   Pinned: "سنجاق‌شده",
   "Pins this agent to a specific runtime command, overriding the template's runtime.":
     "این ایجنت را به یک دستور زمان‌اجرای مشخص می‌چسباند و زمان‌اجرای قالب را بازنویسی می‌کند.",

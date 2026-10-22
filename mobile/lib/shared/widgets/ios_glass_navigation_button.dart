@@ -1,4 +1,4 @@
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -63,7 +63,7 @@ class IosGlassNavigationButton extends HookWidget {
     this.nativeViewSuppressed,
   });
 
-  static const viewType = 'buzz/navigation_glass';
+  static const viewType = 'corevia-talk/navigation_glass';
 
   /// The SF Symbol-style glyph rendered by the native control.
   final IosGlassNavigationIcon icon;
@@ -232,32 +232,32 @@ class IosGlassNavigationButton extends HookWidget {
                             icon,
                             Icon(
                             switch (icon) {
-                              IosGlassNavigationIcon.more => BuzzIcons.ellipsis,
+                              IosGlassNavigationIcon.more => CoreviaTalkIcons.ellipsis,
                               IosGlassNavigationIcon.reply =>
-                                BuzzIcons.cornerUpLeft,
+                                CoreviaTalkIcons.cornerUpLeft,
                               IosGlassNavigationIcon.back =>
-                                BuzzIcons.chevronLeft,
-                              IosGlassNavigationIcon.close => BuzzIcons.x,
-                              IosGlassNavigationIcon.camera => BuzzIcons.camera,
+                                CoreviaTalkIcons.chevronLeft,
+                              IosGlassNavigationIcon.close => CoreviaTalkIcons.x,
+                              IosGlassNavigationIcon.camera => CoreviaTalkIcons.camera,
                               IosGlassNavigationIcon.photoLibrary =>
-                                BuzzIcons.images,
+                                CoreviaTalkIcons.images,
                               IosGlassNavigationIcon.palette =>
-                                BuzzIcons.palette,
+                                CoreviaTalkIcons.palette,
                               IosGlassNavigationIcon.droplet =>
-                                BuzzIcons.droplet,
-                              IosGlassNavigationIcon.emoji => BuzzIcons.smile,
-                              IosGlassNavigationIcon.person => BuzzIcons.user,
-                              IosGlassNavigationIcon.frame => BuzzIcons.square,
+                                CoreviaTalkIcons.droplet,
+                              IosGlassNavigationIcon.emoji => CoreviaTalkIcons.smile,
+                              IosGlassNavigationIcon.person => CoreviaTalkIcons.user,
+                              IosGlassNavigationIcon.frame => CoreviaTalkIcons.square,
                               IosGlassNavigationIcon.rotateCamera =>
-                                BuzzIcons.switchCamera,
+                                CoreviaTalkIcons.switchCamera,
                               IosGlassNavigationIcon.shutter =>
-                                BuzzIcons.circle,
+                                CoreviaTalkIcons.circle,
                               IosGlassNavigationIcon.colorSwatch =>
-                                BuzzIcons.circle,
-                              IosGlassNavigationIcon.sun => BuzzIcons.sun,
-                              IosGlassNavigationIcon.moon => BuzzIcons.moon,
+                                CoreviaTalkIcons.circle,
+                              IosGlassNavigationIcon.sun => CoreviaTalkIcons.sun,
+                              IosGlassNavigationIcon.moon => CoreviaTalkIcons.moon,
                               IosGlassNavigationIcon.systemAppearance =>
-                                BuzzIcons.sunMoon,
+                                CoreviaTalkIcons.sunMoon,
                             },
                             size: icon == IosGlassNavigationIcon.shutter
                                 ? controlSize * 0.72

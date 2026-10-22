@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:buzz/features/channels/channel_mutes/channel_mutes_storage.dart'
+import 'package:corevia_talk/features/channels/channel_mutes/channel_mutes_storage.dart'
     show ChannelMutesStorage, legacyChannelMutesKey;
-import 'package:buzz/features/channels/channel_stars/channel_stars_storage.dart';
+import 'package:corevia_talk/features/channels/channel_stars/channel_stars_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Tests for [ChannelStarStore] parsing and [mergeStores] last-writer-wins.

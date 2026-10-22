@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:buzz/shared/relay/relay_provider.dart';
-import 'package:buzz/shared/relay/relay_socket.dart';
+import 'package:corevia_talk/shared/relay/relay_provider.dart';
+import 'package:corevia_talk/shared/relay/relay_socket.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nostr/nostr.dart' as nostr;
 

@@ -4,11 +4,11 @@ import { installMockBridge } from "../helpers/bridge";
 import { FEATURE_OVERRIDES_STORAGE_KEY } from "../helpers/features";
 
 const RELAY_URL = "ws://localhost:3000";
-const THEME_STORAGE_KEY = "buzz-theme";
+const THEME_STORAGE_KEY = "corevia-talk-theme";
 const OWNER_PUBKEY = "deadbeef".repeat(8);
 
 function snapshotKey(relayUrl: string) {
-  return `buzz-channels.v1:${relayUrl}:${OWNER_PUBKEY.toLowerCase()}`;
+  return `corevia-talk-channels.v1:${relayUrl}:${OWNER_PUBKEY.toLowerCase()}`;
 }
 
 const AGENT_PUBKEY = "c".repeat(64);
@@ -30,8 +30,8 @@ async function expectContentSurfaceHorizontalGutters(
   expectedLeftGutter = 1,
 ) {
   const [mainInsetBox, contentBox] = await Promise.all([
-    page.locator("[data-buzz-glass-inset]").boundingBox(),
-    page.locator("[data-buzz-content-surface]").first().boundingBox(),
+    page.locator("[data-corevia-talk-glass-inset]").boundingBox(),
+    page.locator("[data-corevia-talk-content-surface]").first().boundingBox(),
   ]);
   expect(mainInsetBox).not.toBeNull();
   expect(contentBox).not.toBeNull();
@@ -51,8 +51,8 @@ async function seedCommunities(
 ) {
   await page.addInitScript(
     ({ list, active }) => {
-      window.localStorage.setItem("buzz-communities", JSON.stringify(list));
-      window.localStorage.setItem("buzz-active-community-id", active);
+      window.localStorage.setItem("corevia-talk-communities", JSON.stringify(list));
+      window.localStorage.setItem("corevia-talk-active-community-id", active);
     },
     { list: communities, active: activeId },
   );
@@ -188,7 +188,7 @@ test.describe("community rail", () => {
     await expect
       .poll(() =>
         page.evaluate(() =>
-          window.localStorage.getItem("buzz-active-community-id"),
+          window.localStorage.getItem("corevia-talk-active-community-id"),
         ),
       )
       .toBe(COMMUNITY_B.id);
@@ -441,7 +441,7 @@ test.describe("community rail", () => {
     await expect
       .poll(() =>
         page.evaluate(() => {
-          return (window.__BUZZ_E2E_COMMAND_LOG__ ?? []).findLast(
+          return (window.__COREVIA_TALK_E2E_COMMAND_LOG__ ?? []).findLast(
             (entry) => entry.command === "copy_text_to_clipboard",
           )?.payload;
         }),
@@ -471,7 +471,7 @@ test.describe("community rail", () => {
     await expect
       .poll(() =>
         page.evaluate(() =>
-          window.localStorage.getItem("buzz-active-community-id"),
+          window.localStorage.getItem("corevia-talk-active-community-id"),
         ),
       )
       .toBe(COMMUNITY_B.id);
@@ -519,7 +519,7 @@ test.describe("community rail", () => {
       .poll(() =>
         page.evaluate(
           () =>
-            (window.__BUZZ_E2E_COMMANDS__ ?? []).filter(
+            (window.__COREVIA_TALK_E2E_COMMANDS__ ?? []).filter(
               (command) => command === "add_channel_members",
             ).length,
         ),
@@ -530,14 +530,14 @@ test.describe("community rail", () => {
     await expect
       .poll(() =>
         page.evaluate(() =>
-          window.localStorage.getItem("buzz-active-community-id"),
+          window.localStorage.getItem("corevia-talk-active-community-id"),
         ),
       )
       .toBe(COMMUNITY_B.id);
     await page.waitForTimeout(250);
 
     const publications = await page.evaluate(() =>
-      (window.__BUZZ_E2E_COMMAND_PAYLOADS__ ?? []).filter(
+      (window.__COREVIA_TALK_E2E_COMMAND_PAYLOADS__ ?? []).filter(
         (entry) => entry.command === "send_channel_message",
       ),
     );
@@ -574,7 +574,7 @@ test.describe("community rail", () => {
       .poll(() =>
         page.evaluate(
           () =>
-            (window.__BUZZ_E2E_COMMANDS__ ?? []).filter(
+            (window.__COREVIA_TALK_E2E_COMMANDS__ ?? []).filter(
               (command) => command === "fetch_link_preview_metadata",
             ).length,
         ),
@@ -585,19 +585,19 @@ test.describe("community rail", () => {
     await expect
       .poll(() =>
         page.evaluate(() =>
-          window.localStorage.getItem("buzz-active-community-id"),
+          window.localStorage.getItem("corevia-talk-active-community-id"),
         ),
       )
       .toBe(COMMUNITY_B.id);
     expect(
       await page.evaluate(
-        () => window.__BUZZ_E2E_RELEASE_LINK_PREVIEW_METADATA__?.() ?? 0,
+        () => window.__COREVIA_TALK_E2E_RELEASE_LINK_PREVIEW_METADATA__?.() ?? 0,
       ),
     ).toBeGreaterThan(0);
     await page.waitForTimeout(250);
 
     const uploadCalls = await page.evaluate(() =>
-      (window.__BUZZ_E2E_COMMAND_PAYLOADS__ ?? []).filter(
+      (window.__COREVIA_TALK_E2E_COMMAND_PAYLOADS__ ?? []).filter(
         (entry) => entry.command === "upload_media_bytes",
       ),
     );
@@ -633,7 +633,7 @@ test.describe("community rail", () => {
       .poll(() =>
         page.evaluate(
           () =>
-            (window.__BUZZ_E2E_COMMANDS__ ?? []).filter(
+            (window.__COREVIA_TALK_E2E_COMMANDS__ ?? []).filter(
               (command) => command === "upload_media_bytes",
             ).length,
         ),
@@ -645,7 +645,7 @@ test.describe("community rail", () => {
       .poll(() =>
         page.evaluate(
           () =>
-            (window.__BUZZ_E2E_COMMANDS__ ?? []).filter(
+            (window.__COREVIA_TALK_E2E_COMMANDS__ ?? []).filter(
               (command) => command === "cancel_media_upload",
             ).length,
         ),
@@ -653,14 +653,14 @@ test.describe("community rail", () => {
       .toBe(2);
     expect(
       await page.evaluate(
-        () => window.__BUZZ_E2E_RELEASE_LINK_PREVIEW_UPLOADS__?.() ?? 0,
+        () => window.__COREVIA_TALK_E2E_RELEASE_LINK_PREVIEW_UPLOADS__?.() ?? 0,
       ),
     ).toBe(2);
     await page.waitForTimeout(250);
 
     expect(
       await page.evaluate(
-        () => window.__BUZZ_E2E_LINK_PREVIEW_UPLOAD_STARTS__ ?? 0,
+        () => window.__COREVIA_TALK_E2E_LINK_PREVIEW_UPLOAD_STARTS__ ?? 0,
       ),
     ).toBe(0);
   });
@@ -718,7 +718,7 @@ test.describe("community rail", () => {
           throw new Error("missing general channel snapshot");
         window.localStorage.setItem(targetSnapshotKey, source);
         window.localStorage.setItem(
-          "buzz-community-destinations",
+          "corevia-talk-community-destinations",
           JSON.stringify({
             [communityId]: {
               kind: "channel",
@@ -737,13 +737,13 @@ test.describe("community rail", () => {
 
     await page.evaluate(() => {
       const testWindow = window as typeof window & {
-        __BUZZ_E2E__?: { mock?: { channelsReadDelayMs?: number } };
+        __COREVIA_TALK_E2E__?: { mock?: { channelsReadDelayMs?: number } };
       };
-      if (!testWindow.__BUZZ_E2E__) {
+      if (!testWindow.__COREVIA_TALK_E2E__) {
         throw new Error("missing E2E config");
       }
-      testWindow.__BUZZ_E2E__.mock = {
-        ...testWindow.__BUZZ_E2E__.mock,
+      testWindow.__COREVIA_TALK_E2E__.mock = {
+        ...testWindow.__COREVIA_TALK_E2E__.mock,
         channelsReadDelayMs: 800,
       };
     });
@@ -765,7 +765,7 @@ test.describe("community rail", () => {
     await seedCommunities(page, [COMMUNITY_A, COMMUNITY_B], COMMUNITY_A.id);
     await page.addInitScript((communityId) => {
       window.localStorage.setItem(
-        "buzz-community-destinations",
+        "corevia-talk-community-destinations",
         JSON.stringify({
           [communityId]: { kind: "channel", channelId: "missing-channel" },
         }),
@@ -803,7 +803,7 @@ test.describe("community rail", () => {
       .poll(() =>
         page.evaluate((communityId) => {
           const raw = window.localStorage.getItem(
-            "buzz-community-destinations",
+            "corevia-talk-community-destinations",
           );
           if (!raw) return null;
           return JSON.parse(raw)[communityId];
@@ -819,7 +819,7 @@ test.describe("community rail", () => {
     await seedCommunities(page, [COMMUNITY_A, COMMUNITY_B], COMMUNITY_A.id);
     await page.addInitScript((communityId) => {
       window.localStorage.setItem(
-        "buzz-community-destinations",
+        "corevia-talk-community-destinations",
         JSON.stringify({
           [communityId]: { kind: "channel", channelId: "general" },
         }),
@@ -839,16 +839,16 @@ test.describe("community rail", () => {
     expect(
       await page.evaluate(async () => {
         const testWindow = window as Window & {
-          __BUZZ_E2E_DEFER_NEXT_CHANNELS_READ__?: () => void;
-          __BUZZ_E2E_RELEASE_CHANNELS_READ__?: () => number;
-          __BUZZ_E2E_CHANNELS_READ_PENDING__?: number;
-          __BUZZ_E2E_INVOKE_MOCK_COMMAND__?: (
+          __COREVIA_TALK_E2E_DEFER_NEXT_CHANNELS_READ__?: () => void;
+          __COREVIA_TALK_E2E_RELEASE_CHANNELS_READ__?: () => number;
+          __COREVIA_TALK_E2E_CHANNELS_READ_PENDING__?: number;
+          __COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__?: (
             command: string,
           ) => Promise<unknown>;
         };
-        const deferNext = testWindow.__BUZZ_E2E_DEFER_NEXT_CHANNELS_READ__;
-        const release = testWindow.__BUZZ_E2E_RELEASE_CHANNELS_READ__;
-        const invoke = testWindow.__BUZZ_E2E_INVOKE_MOCK_COMMAND__;
+        const deferNext = testWindow.__COREVIA_TALK_E2E_DEFER_NEXT_CHANNELS_READ__;
+        const release = testWindow.__COREVIA_TALK_E2E_RELEASE_CHANNELS_READ__;
+        const invoke = testWindow.__COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__;
         if (!deferNext || !release || !invoke) {
           throw new Error("missing channel-read latch seam");
         }
@@ -857,7 +857,7 @@ test.describe("community rail", () => {
         await invoke("get_channels");
         return {
           released,
-          pending: testWindow.__BUZZ_E2E_CHANNELS_READ_PENDING__,
+          pending: testWindow.__COREVIA_TALK_E2E_CHANNELS_READ_PENDING__,
         };
       }),
     ).toEqual({ released: 0, pending: 0 });
@@ -879,14 +879,14 @@ test.describe("community rail", () => {
     await page.evaluate(() => {
       const config = (
         window as Window & {
-          __BUZZ_E2E__?: {
+          __COREVIA_TALK_E2E__?: {
             mock?: {
               channelsReadError?: string;
               channelsReadErrors?: (string | null)[];
             };
           };
         }
-      ).__BUZZ_E2E__;
+      ).__COREVIA_TALK_E2E__;
       if (!config) throw new Error("missing E2E config");
       config.mock = {
         ...config.mock,
@@ -897,18 +897,18 @@ test.describe("community rail", () => {
     await expect
       .poll(() =>
         page.evaluate(
-          () => window.__BUZZ_E2E__?.mock?.channelsReadErrors?.length ?? 0,
+          () => window.__COREVIA_TALK_E2E__?.mock?.channelsReadErrors?.length ?? 0,
         ),
       )
       .toBe(1);
     await page.evaluate(() => {
       const testWindow = window as Window & {
-        __BUZZ_E2E_DEFER_NEXT_CHANNELS_READ__?: () => void;
-        __BUZZ_E2E_INVALIDATE_CHANNELS__?: () => Promise<void>;
+        __COREVIA_TALK_E2E_DEFER_NEXT_CHANNELS_READ__?: () => void;
+        __COREVIA_TALK_E2E_INVALIDATE_CHANNELS__?: () => Promise<void>;
       };
       const deferNextChannelsRead =
-        testWindow.__BUZZ_E2E_DEFER_NEXT_CHANNELS_READ__;
-      const invalidateChannels = testWindow.__BUZZ_E2E_INVALIDATE_CHANNELS__;
+        testWindow.__COREVIA_TALK_E2E_DEFER_NEXT_CHANNELS_READ__;
+      const invalidateChannels = testWindow.__COREVIA_TALK_E2E_INVALIDATE_CHANNELS__;
       if (!deferNextChannelsRead) {
         throw new Error("missing channel-read defer seam");
       }
@@ -924,19 +924,19 @@ test.describe("community rail", () => {
       () =>
         (
           window as Window & {
-            __BUZZ_E2E_CHANNELS_READ_PENDING__?: number;
+            __COREVIA_TALK_E2E_CHANNELS_READ_PENDING__?: number;
           }
-        ).__BUZZ_E2E_CHANNELS_READ_PENDING__ === 1,
+        ).__COREVIA_TALK_E2E_CHANNELS_READ_PENDING__ === 1,
     );
     expect(
       await page.evaluate(async () => {
         const invoke = (
           window as Window & {
-            __BUZZ_E2E_INVOKE_MOCK_COMMAND__?: (
+            __COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__?: (
               command: string,
             ) => Promise<unknown>;
           }
-        ).__BUZZ_E2E_INVOKE_MOCK_COMMAND__;
+        ).__COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__;
         if (!invoke) throw new Error("missing mock command seam");
         try {
           await invoke("get_channels");
@@ -951,9 +951,9 @@ test.describe("community rail", () => {
         () =>
           (
             window as Window & {
-              __BUZZ_E2E_CHANNELS_READ_PENDING__?: number;
+              __COREVIA_TALK_E2E_CHANNELS_READ_PENDING__?: number;
             }
-          ).__BUZZ_E2E_CHANNELS_READ_PENDING__,
+          ).__COREVIA_TALK_E2E_CHANNELS_READ_PENDING__,
       ),
     ).toBe(1);
     await page.getByTestId(`community-rail-button-${COMMUNITY_B.id}`).click();
@@ -962,7 +962,7 @@ test.describe("community rail", () => {
       .poll(() =>
         page.evaluate((communityId) => {
           const raw = window.localStorage.getItem(
-            "buzz-community-destinations",
+            "corevia-talk-community-destinations",
           );
           return raw ? JSON.parse(raw)[communityId] : null;
         }, COMMUNITY_B.id),
@@ -973,20 +973,20 @@ test.describe("community rail", () => {
       () =>
         (
           window as Window & {
-            __BUZZ_E2E_RELEASE_CHANNELS_READ__?: () => number;
+            __COREVIA_TALK_E2E_RELEASE_CHANNELS_READ__?: () => number;
           }
-        ).__BUZZ_E2E_RELEASE_CHANNELS_READ__?.() ?? 0,
+        ).__COREVIA_TALK_E2E_RELEASE_CHANNELS_READ__?.() ?? 0,
     );
     expect(released).toBe(1);
     expect(
       await page.evaluate(async () => {
         const testWindow = window as Window & {
-          __BUZZ_E2E_INVOKE_MOCK_COMMAND__?: (
+          __COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__?: (
             command: string,
           ) => Promise<unknown>;
-          __BUZZ_E2E_CHANNELS_READ_PENDING__?: number;
+          __COREVIA_TALK_E2E_CHANNELS_READ_PENDING__?: number;
         };
-        const invoke = testWindow.__BUZZ_E2E_INVOKE_MOCK_COMMAND__;
+        const invoke = testWindow.__COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__;
         if (!invoke) throw new Error("missing mock command seam");
         let message: string | null = null;
         try {
@@ -996,14 +996,14 @@ test.describe("community rail", () => {
         }
         return {
           message,
-          pending: testWindow.__BUZZ_E2E_CHANNELS_READ_PENDING__,
+          pending: testWindow.__COREVIA_TALK_E2E_CHANNELS_READ_PENDING__,
         };
       }),
     ).toEqual({ message: "temporary channel read failure", pending: 0 });
     await expect
       .poll(() =>
         page.evaluate(
-          () => window.__BUZZ_E2E__?.mock?.channelsReadErrors?.length ?? 0,
+          () => window.__COREVIA_TALK_E2E__?.mock?.channelsReadErrors?.length ?? 0,
         ),
       )
       .toBe(0);
@@ -1012,7 +1012,7 @@ test.describe("community rail", () => {
       .poll(() =>
         page.evaluate((communityId) => {
           const raw = window.localStorage.getItem(
-            "buzz-community-destinations",
+            "corevia-talk-community-destinations",
           );
           return raw ? JSON.parse(raw)[communityId] : null;
         }, COMMUNITY_B.id),
@@ -1020,13 +1020,13 @@ test.describe("community rail", () => {
       .toEqual({ kind: "channel", channelId: "general" });
     await page.evaluate(async () => {
       const testWindow = window as Window & {
-        __BUZZ_E2E__?: {
+        __COREVIA_TALK_E2E__?: {
           mock?: { channelsReadError?: string };
         };
-        __BUZZ_E2E_INVALIDATE_CHANNELS__?: () => Promise<void>;
+        __COREVIA_TALK_E2E_INVALIDATE_CHANNELS__?: () => Promise<void>;
       };
-      const config = testWindow.__BUZZ_E2E__;
-      const invalidateChannels = testWindow.__BUZZ_E2E_INVALIDATE_CHANNELS__;
+      const config = testWindow.__COREVIA_TALK_E2E__;
+      const invalidateChannels = testWindow.__COREVIA_TALK_E2E_INVALIDATE_CHANNELS__;
       if (!config?.mock) throw new Error("missing E2E mock config");
       if (!invalidateChannels) {
         throw new Error("missing channel invalidation seam");
@@ -1038,7 +1038,7 @@ test.describe("community rail", () => {
       .poll(() =>
         page.evaluate((communityId) => {
           const raw = window.localStorage.getItem(
-            "buzz-community-destinations",
+            "corevia-talk-community-destinations",
           );
           return raw ? JSON.parse(raw)[communityId] : null;
         }, COMMUNITY_B.id),
@@ -1053,7 +1053,7 @@ test.describe("community rail", () => {
     await seedCommunities(page, [COMMUNITY_A, COMMUNITY_B], COMMUNITY_A.id);
     await page.addInitScript((communityId) => {
       window.localStorage.setItem(
-        "buzz-community-destinations",
+        "corevia-talk-community-destinations",
         JSON.stringify({
           [communityId]: { kind: "channel", channelId: "general" },
         }),
@@ -1089,7 +1089,7 @@ test.describe("community rail", () => {
     await expect
       .poll(() =>
         page.evaluate(() =>
-          window.localStorage.getItem("buzz-active-community-id"),
+          window.localStorage.getItem("corevia-talk-active-community-id"),
         ),
       )
       .toBe(COMMUNITY_B.id);
@@ -1139,9 +1139,9 @@ test.describe("community rail", () => {
     await expect
       .poll(() =>
         page.evaluate(() => ({
-          active: window.localStorage.getItem("buzz-active-community-id"),
+          active: window.localStorage.getItem("corevia-talk-active-community-id"),
           ids: JSON.parse(
-            window.localStorage.getItem("buzz-communities") ?? "[]",
+            window.localStorage.getItem("corevia-talk-communities") ?? "[]",
           ).map((community) => community.id),
         })),
       )
@@ -1151,7 +1151,7 @@ test.describe("community rail", () => {
       .poll(() =>
         page.evaluate(async () =>
           (
-            await window.__BUZZ_E2E_INVOKE_MOCK_COMMAND__(
+            await window.__COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__(
               "list_managed_agent_runtimes",
             )
           ).map(({ relayUrl, lifecycle }) => [relayUrl, lifecycle]),
@@ -1166,8 +1166,8 @@ test.describe("community rail", () => {
     // the stop sweep runs.
     const order = await page.evaluate(() => ({
       savedAtRelayRemoval:
-        window.__BUZZ_E2E_SAVED_COMMUNITIES_AT_RELAY_REMOVAL__,
-      commands: (window.__BUZZ_E2E_COMMANDS__ ?? []).filter((command) =>
+        window.__COREVIA_TALK_E2E_SAVED_COMMUNITIES_AT_RELAY_REMOVAL__,
+      commands: (window.__COREVIA_TALK_E2E_COMMANDS__ ?? []).filter((command) =>
         ["remove_community_relay", "stop_managed_agent_runtime"].includes(
           command,
         ),
@@ -1217,18 +1217,18 @@ test.describe("community rail", () => {
     await expect
       .poll(() =>
         page.evaluate(() =>
-          window.localStorage.getItem("buzz-active-community-id"),
+          window.localStorage.getItem("corevia-talk-active-community-id"),
         ),
       )
       .toBe(alias.id);
     const after = await page.evaluate(async () => ({
-      commands: (window.__BUZZ_E2E_COMMANDS__ ?? []).filter((command) =>
+      commands: (window.__COREVIA_TALK_E2E_COMMANDS__ ?? []).filter((command) =>
         ["remove_community_relay", "stop_managed_agent_runtime"].includes(
           command,
         ),
       ),
       runtimes: (
-        await window.__BUZZ_E2E_INVOKE_MOCK_COMMAND__(
+        await window.__COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__(
           "list_managed_agent_runtimes",
         )
       ).map(({ lifecycle }) => lifecycle),
@@ -1266,7 +1266,7 @@ test.describe("community rail", () => {
       .poll(() =>
         page.evaluate(
           () =>
-            window.__BUZZ_E2E_COMMANDS__?.filter(
+            window.__COREVIA_TALK_E2E_COMMANDS__?.filter(
               (command) => command === "clear_pending_navigation_deep_links",
             ).length ?? 0,
         ),
@@ -1293,11 +1293,11 @@ test.describe("community rail", () => {
 
     await expect
       .poll(() =>
-        page.evaluate(() => typeof window.__BUZZ_E2E_INVOKE_MOCK_COMMAND__),
+        page.evaluate(() => typeof window.__COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__),
       )
       .toBe("function");
     const identityBefore = await page.evaluate(async () =>
-      window.__BUZZ_E2E_INVOKE_MOCK_COMMAND__("get_identity"),
+      window.__COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__("get_identity"),
     );
     await page.getByTestId("sidebar-profile-avatar-button").click();
     await page.getByTestId("community-switcher").click();
@@ -1311,13 +1311,13 @@ test.describe("community rail", () => {
     await expect(page.getByTestId("community-choice-join")).toBeVisible();
     await expect
       .poll(() =>
-        page.evaluate(() => window.localStorage.getItem("buzz-communities")),
+        page.evaluate(() => window.localStorage.getItem("corevia-talk-communities")),
       )
       .toBeNull();
     await expect
       .poll(() =>
         page.evaluate(() =>
-          window.localStorage.getItem("buzz-community-discovery-after-leave"),
+          window.localStorage.getItem("corevia-talk-community-discovery-after-leave"),
         ),
       )
       .toBe("1");
@@ -1326,17 +1326,17 @@ test.describe("community rail", () => {
     await expect
       .poll(() =>
         page.evaluate(() =>
-          (window.__BUZZ_E2E_COMMANDS__ ?? []).includes(
+          (window.__COREVIA_TALK_E2E_COMMANDS__ ?? []).includes(
             "stop_managed_agent_runtime",
           ),
         ),
       )
       .toBe(true);
     const order = await page.evaluate(() => {
-      const commands = window.__BUZZ_E2E_COMMANDS__ ?? [];
+      const commands = window.__COREVIA_TALK_E2E_COMMANDS__ ?? [];
       return {
         savedAtRelayRemoval:
-          window.__BUZZ_E2E_SAVED_COMMUNITIES_AT_RELAY_REMOVAL__,
+          window.__COREVIA_TALK_E2E_SAVED_COMMUNITIES_AT_RELAY_REMOVAL__,
         refusedBeforeStop:
           commands.includes("remove_community_relay") &&
           commands.indexOf("remove_community_relay") <
@@ -1361,14 +1361,14 @@ test.describe("community rail", () => {
     await expect
       .poll(() =>
         relaunchPage.evaluate(() =>
-          window.localStorage.getItem("buzz-communities"),
+          window.localStorage.getItem("corevia-talk-communities"),
         ),
       )
       .toBeNull();
     await expect
       .poll(() =>
         relaunchPage.evaluate(async () =>
-          window.__BUZZ_E2E_INVOKE_MOCK_COMMAND__("get_identity"),
+          window.__COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__("get_identity"),
         ),
       )
       .toEqual(identityBefore);
@@ -1433,7 +1433,7 @@ test.describe("community rail", () => {
 
   test("hides the rail with a single community", async ({ page }) => {
     await page.addInitScript((themeStorageKey) => {
-      window.localStorage.setItem(themeStorageKey, "buzz-dark");
+      window.localStorage.setItem(themeStorageKey, "corevia-talk-dark");
     }, THEME_STORAGE_KEY);
     await installMockBridge(page, undefined, { skipCommunitySeed: true });
     await seedCommunities(page, [COMMUNITY_A], COMMUNITY_A.id);
@@ -1455,7 +1455,7 @@ test.describe("community rail", () => {
       "8px",
     );
     const sidebarBackground = await page
-      .locator("[data-buzz-glass-inset]")
+      .locator("[data-corevia-talk-glass-inset]")
       .evaluate((element) => getComputedStyle(element).backgroundColor);
     await expect(page.locator("[data-collapsed-content-gutter]")).toHaveCSS(
       "background-color",
@@ -1519,10 +1519,10 @@ test.describe("community rail", () => {
     const railBox = await page.getByTestId("community-rail").boundingBox();
     const searchBox = await page.getByTestId("open-search").boundingBox();
     const appSurfaceBox = await page
-      .locator(".buzz-huddle-app-surface")
+      .locator(".corevia-talk-huddle-app-surface")
       .boundingBox();
     const contentBox = await page
-      .locator("[data-buzz-content-surface]")
+      .locator("[data-corevia-talk-content-surface]")
       .first()
       .boundingBox();
     expect(buttonBox).not.toBeNull();
@@ -1574,11 +1574,11 @@ test.describe("community rail", () => {
     // Seed only if not already set so the persisted order survives page.reload().
     await page.addInitScript(
       ({ list, active }) => {
-        if (!window.localStorage.getItem("buzz-communities")) {
-          window.localStorage.setItem("buzz-communities", JSON.stringify(list));
+        if (!window.localStorage.getItem("corevia-talk-communities")) {
+          window.localStorage.setItem("corevia-talk-communities", JSON.stringify(list));
         }
-        if (!window.localStorage.getItem("buzz-active-community-id")) {
-          window.localStorage.setItem("buzz-active-community-id", active);
+        if (!window.localStorage.getItem("corevia-talk-active-community-id")) {
+          window.localStorage.setItem("corevia-talk-active-community-id", active);
         }
       },
       { list: [COMMUNITY_A, COMMUNITY_B], active: COMMUNITY_A.id },
@@ -1611,7 +1611,7 @@ test.describe("community rail", () => {
     await expect
       .poll(() =>
         page.evaluate(() => {
-          const raw = window.localStorage.getItem("buzz-communities");
+          const raw = window.localStorage.getItem("corevia-talk-communities");
           if (!raw) return null;
           const list = JSON.parse(raw) as Array<{ id: string }>;
           return list.map((c) => c.id);
@@ -1635,7 +1635,7 @@ test.describe("community rail", () => {
 
     // Storage must still be [B, A] after reload.
     const storedOrder = await page.evaluate(() => {
-      const raw = window.localStorage.getItem("buzz-communities");
+      const raw = window.localStorage.getItem("corevia-talk-communities");
       if (!raw) return null;
       const list = JSON.parse(raw) as Array<{ id: string }>;
       return list.map((c) => c.id);
@@ -1707,7 +1707,7 @@ test.describe("community rail", () => {
     await expect
       .poll(() =>
         page.evaluate(() => {
-          const raw = window.localStorage.getItem("buzz-communities");
+          const raw = window.localStorage.getItem("corevia-talk-communities");
           if (!raw) return null;
           const list = JSON.parse(raw) as Array<{ id: string }>;
           return list.map((c) => c.id);

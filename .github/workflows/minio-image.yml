@@ -76,5 +76,5 @@ jobs:
           docker push "$IMAGE_NAME:latest"
           {
             echo "Published $MINIO_CI_IMAGE and $IMAGE_NAME:latest"
-            echo 'First publication: make the buzz-minio package public before enabling CI consumers.'
+            echo 'First publication: make the corevia-talk-minio package public before enabling CI consumers.'
           } >> "$GITHUB_STEP_SUMMARY"

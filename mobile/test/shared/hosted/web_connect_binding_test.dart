@@ -1,85 +1,85 @@
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:buzz/shared/hosted/account_identity_store.dart';
+import 'package:corevia_talk/shared/hosted/account_identity_store.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nostr/nostr.dart' as nostr;
-import 'package:buzz/shared/deeplink/deep_link.dart';
-import 'package:buzz/shared/hosted/web_connect_binding.dart';
-import 'package:buzz/shared/hosted/hosted_environment.dart';
+import 'package:corevia_talk/shared/deeplink/deep_link.dart';
+import 'package:corevia_talk/shared/hosted/web_connect_binding.dart';
+import 'package:corevia_talk/shared/hosted/hosted_environment.dart';
 
 void main() {
   final fields = {
     'challenge_id': '12345678-1234-1234-1234-123456789012',
     'nonce': 'a' * 43,
     'verification_code': '123456',
-    'audience': 'buzz:nostr-identity',
+    'audience': 'corevia-talk:nostr-identity',
     'action': 'bind_nostr_identity',
-    'protocol': 'buzz-nostr-identity',
+    'protocol': 'corevia-talk-nostr-identity',
     'version': '1',
     'origin': HostedEnvironment.origin.toString(),
     'expires_at': '2099-01-01T00:00:00Z',
     'return': 'browser_fragment_v1',
-    'callback_url': HostedEnvironment.origin.resolve('/buzz').toString(),
+    'callback_url': HostedEnvironment.origin.resolve('/corevia-talk').toString(),
   };
   Uri link(Map<String, String> values) =>
-      Uri(scheme: 'buzz', host: 'nostr-bind', queryParameters: values);
+      Uri(scheme: 'corevia-talk', host: 'nostr-bind', queryParameters: values);
   final keys = nostr.Keys('1'.padLeft(64, '0'));
   Future<T> withKeys<T>(Future<T> Function(nostr.Keys) operation) =>
       operation(keys);
 
   test('production parser recognizes web links and rejects ambiguous trust', () {
-    expect(parseBuzzDeepLink(link(fields)), isA<NostrBindDeepLink>());
+    expect(parseCoreviaTalkDeepLink(link(fields)), isA<NostrBindDeepLink>());
     final otherOrigin = HostedEnvironment.origin.host == 'app.builderlab.xyz'
         ? 'https://app.builderlabstaging.xyz'
         : 'https://app.builderlab.xyz';
     expect(
-      parseBuzzDeepLink(
+      parseCoreviaTalkDeepLink(
         link({
           ...fields,
           'origin': otherOrigin,
-          'callback_url': '$otherOrigin/buzz',
+          'callback_url': '$otherOrigin/corevia-talk',
         }),
       ),
       isNull,
     );
     for (final entry in {
       'origin': 'https://attacker.example',
-      'callback_url': 'https://app.builderlab.xyz/buzz?redirect=evil',
+      'callback_url': 'https://app.builderlab.xyz/corevia-talk?redirect=evil',
       'nonce': 'short',
       'verification_code': '12345',
       'version': '2',
       'expires_at': '2099-01-01T00:00:00',
     }.entries) {
       expect(
-        parseBuzzDeepLink(link({...fields, entry.key: entry.value})),
+        parseCoreviaTalkDeepLink(link({...fields, entry.key: entry.value})),
         isNull,
       );
     }
     expect(
-      parseBuzzDeepLink(Uri.parse('${link(fields)}&nonce=duplicate')),
+      parseCoreviaTalkDeepLink(Uri.parse('${link(fields)}&nonce=duplicate')),
       isNull,
     );
-    expect(parseBuzzDeepLink(link({...fields, 'extra': 'value'})), isNull);
+    expect(parseCoreviaTalkDeepLink(link({...fields, 'extra': 'value'})), isNull);
     expect(
-      parseBuzzDeepLink(
+      parseCoreviaTalkDeepLink(
         Uri.parse(
-          'buzz://add-community?relay=wss%3A%2F%2Fexample.communities.buzz.xyz&name=Example',
+          'corevia-talk://add-community?relay=wss%3A%2F%2Fexample.communities.buzz.xyz&name=Example',
         ),
       ),
       isA<AddCommunityDeepLink>(),
     );
     expect(
-      parseBuzzDeepLink(
+      parseCoreviaTalkDeepLink(
         Uri.parse(
-          'buzz://add-community?relay=wss%3A%2F%2Fexample.com%2Fpath&name=Example',
+          'corevia-talk://add-community?relay=wss%3A%2F%2Fexample.com%2Fpath&name=Example',
         ),
       ),
       isNull,
     );
     expect(
-      parseBuzzDeepLink(
+      parseCoreviaTalkDeepLink(
         Uri.parse(
-          'buzz://add-community?relay=wss%3A%2F%2Fexample.com&name=Example&name=Other',
+          'corevia-talk://add-community?relay=wss%3A%2F%2Fexample.com&name=Example&name=Other',
         ),
       ),
       isNull,
@@ -117,7 +117,7 @@ void main() {
             },
       );
       expect(verified, isTrue);
-      expect(result, HostedEnvironment.origin.resolve('/buzz'));
+      expect(result, HostedEnvironment.origin.resolve('/corevia-talk'));
       expect(result.hasFragment, isFalse);
     },
   );

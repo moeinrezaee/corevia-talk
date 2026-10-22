@@ -396,27 +396,27 @@ fn split_config_key_handles_all_styles() {
 #[test]
 fn provider_filename_strips_the_windows_extension() {
     assert_eq!(
-        provider_id_from_filename("buzz-backend-kubernetes"),
+        provider_id_from_filename("corevia-talk-backend-kubernetes"),
         Some("kubernetes")
     );
     assert_eq!(
-        provider_id_from_filename("buzz-backend-kubernetes.exe"),
+        provider_id_from_filename("corevia-talk-backend-kubernetes.exe"),
         Some("kubernetes")
     );
     assert_eq!(
-        provider_id_from_filename("buzz-backend-kubernetes.EXE"),
+        provider_id_from_filename("corevia-talk-backend-kubernetes.EXE"),
         Some("kubernetes")
     );
     assert_eq!(
-        provider_id_from_filename("buzz-backend-kubernetes.bat"),
+        provider_id_from_filename("corevia-talk-backend-kubernetes.bat"),
         Some("kubernetes")
     );
     assert_eq!(
-        provider_id_from_filename("buzz-backend-kubernetes.CMD"),
+        provider_id_from_filename("corevia-talk-backend-kubernetes.CMD"),
         Some("kubernetes")
     );
     assert_eq!(
-        provider_id_from_filename("buzz-backend-my-provider"),
+        provider_id_from_filename("corevia-talk-backend-my-provider"),
         Some("my-provider")
     );
     assert_eq!(provider_id_from_filename("other"), None);
@@ -450,34 +450,34 @@ fn command_discovery_dirs_include_all_spawn_search_sources_without_duplicates() 
 #[test]
 fn acp_command_filename_supports_windows_shims_and_rejects_extensionless_windows_files() {
     assert_eq!(
-        acp_command_from_filename("buzz-janet-acp.EXE", true),
-        Some("buzz-janet-acp")
+        acp_command_from_filename("corevia-talk-janet-acp.EXE", true),
+        Some("corevia-talk-janet-acp")
     );
     assert_eq!(
-        acp_command_from_filename("buzz-janet-acp.cmd", true),
-        Some("buzz-janet-acp")
+        acp_command_from_filename("corevia-talk-janet-acp.cmd", true),
+        Some("corevia-talk-janet-acp")
     );
     assert_eq!(
-        acp_command_from_filename("buzz-janet-acp.BAT", true),
-        Some("buzz-janet-acp")
+        acp_command_from_filename("corevia-talk-janet-acp.BAT", true),
+        Some("corevia-talk-janet-acp")
     );
-    assert_eq!(acp_command_from_filename("buzz-janet-acp", true), None);
+    assert_eq!(acp_command_from_filename("corevia-talk-janet-acp", true), None);
     assert_eq!(
-        acp_command_from_filename("buzz-janet-acp", false),
-        Some("buzz-janet-acp")
+        acp_command_from_filename("corevia-talk-janet-acp", false),
+        Some("corevia-talk-janet-acp")
     );
-    assert_eq!(acp_command_from_filename("buzz-acp.exe", true), None);
+    assert_eq!(acp_command_from_filename("corevia-talk-acp.exe", true), None);
 }
 
 #[test]
 fn discovers_only_namespaced_acp_commands() {
     let dir = tempfile::tempdir().expect("temp dir");
     for command in [
-        "buzz-janet-acp",
-        "buzz-acp",
-        "buzz--acp",
+        "corevia-talk-janet-acp",
+        "corevia-talk-acp",
+        "corevia-talk--acp",
         "janet-acp",
-        "buzz-janet-helper",
+        "corevia-talk-janet-helper",
     ] {
         let filename = if cfg!(windows) {
             format!("{command}.cmd")
@@ -503,7 +503,7 @@ fn discovers_only_namespaced_acp_commands() {
             .into_iter()
             .map(|(command, _)| command)
             .collect::<Vec<_>>(),
-        vec!["buzz-janet-acp"]
+        vec!["corevia-talk-janet-acp"]
     );
 }
 
@@ -511,7 +511,7 @@ fn discovers_only_namespaced_acp_commands() {
 fn acp_command_discovery_deduplicates_path_entries() {
     let first = tempfile::tempdir().expect("first temp dir");
     let second = tempfile::tempdir().expect("second temp dir");
-    let command = "buzz-janet-acp";
+    let command = "corevia-talk-janet-acp";
     let filename = if cfg!(windows) {
         format!("{command}.cmd")
     } else {
@@ -535,7 +535,7 @@ fn acp_command_discovery_deduplicates_path_entries() {
         |_| Some(resolved.clone()),
     );
     assert_eq!(candidates.len(), 1);
-    assert_eq!(candidates[0].0, "buzz-janet-acp");
+    assert_eq!(candidates[0].0, "corevia-talk-janet-acp");
     assert_eq!(candidates[0].1, resolved);
 }
 
@@ -571,22 +571,22 @@ fn resolve_provider_binary_accepts_valid_id_format() {
 
 #[test]
 fn portable_acp_aliases_exclude_paths_arguments_and_platform_metacharacters() {
-    for command in ["buzz-acp", "buzz-janet-acp", "buzz-Team_2-acp"] {
+    for command in ["corevia-talk-acp", "corevia-talk-janet-acp", "corevia-talk-Team_2-acp"] {
         assert!(is_portable_acp_command(command), "{command}");
     }
     for command in [
         "",
-        "buzz--acp",
-        "/tmp/buzz-janet-acp",
-        r"C:\buzz-janet-acp.cmd",
-        "buzz-../evil-acp",
-        "buzz-a b-acp",
-        "buzz-a&b-acp",
-        "buzz-a%PATH%-acp",
-        "buzz-a\nb-acp",
-        "buzz-a\u{202e}b-acp",
+        "corevia-talk--acp",
+        "/tmp/corevia-talk-janet-acp",
+        r"C:\corevia-talk-janet-acp.cmd",
+        "corevia-talk-../evil-acp",
+        "corevia-talk-a b-acp",
+        "corevia-talk-a&b-acp",
+        "corevia-talk-a%PATH%-acp",
+        "corevia-talk-a\nb-acp",
+        "corevia-talk-a\u{202e}b-acp",
         "other-command",
-        "buzz-janet-acp.exe",
+        "corevia-talk-janet-acp.exe",
     ] {
         assert!(!is_portable_acp_command(command), "{command:?}");
     }

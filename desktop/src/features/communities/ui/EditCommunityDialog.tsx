@@ -191,7 +191,7 @@ export function EditCommunityDialog({
             <Input
               id="edit-ws-token"
               onChange={(e) => setToken(e.target.value)}
-              placeholder={tl("buzz_...")}
+              placeholder={tl("corevia_talk_...")}
               type="password"
               value={token}
             />

@@ -10,7 +10,7 @@ class _EmptyMessages extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            BuzzIcons.messageSquare,
+            CoreviaTalkIcons.messageSquare,
             size: Grid.xl,
             color: context.colors.onSurfaceVariant,
           ),

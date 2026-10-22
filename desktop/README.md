@@ -1,4 +1,4 @@
-# Buzz
+# Corevia Talk
 
 Desktop chat shell with:
 

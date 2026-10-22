@@ -2,14 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import '../../shared/identity_names/identity_names_provider.dart';
 import '../../shared/mentions/agent_identity_provider.dart';
 import '../../shared/mentions/mention_tags.dart';
 import '../../shared/theme/theme.dart';
 import '../../shared/widgets/avatar_image.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
-import '../../shared/widgets/buzz_search_field.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_search_field.dart';
 import '../../shared/widgets/filter_chip_bar.dart';
 import '../../shared/widgets/concentric_sheet_surface.dart';
 import '../../shared/widgets/ios_glass_navigation_button.dart';
@@ -164,7 +164,7 @@ class SearchPage extends HookConsumerWidget {
                           backgroundColor: searchSurfaceColor,
                           foregroundColor: searchPrimaryColor,
                         ),
-                        icon: const Icon(BuzzIcons.x),
+                        icon: const Icon(CoreviaTalkIcons.x),
                       ),
                     ),
                   const SizedBox(width: Grid.xxs),
@@ -180,7 +180,7 @@ class SearchPage extends HookConsumerWidget {
                         color: searchSurfaceColor,
                         minimumRadius: fieldHeight / 2,
                         contentClipRadius: fieldHeight / 2,
-                        child: BuzzSearchField(
+                        child: CoreviaTalkSearchField(
                           controller: textController,
                           focusNode: focusNode,
                           hintText: tl('Search'),
@@ -283,7 +283,7 @@ class _SearchBody extends ConsumerWidget {
                   color: context.controlSurface,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(BuzzIcons.search, size: 40),
+                child: const Icon(CoreviaTalkIcons.search, size: 40),
               ),
               const SizedBox(height: Grid.gutter),
               Text(
@@ -363,7 +363,7 @@ class _SearchBody extends ConsumerWidget {
                   child: Padding(
                     padding: EdgeInsets.all(Grid.sm),
                     child: Center(
-                      child: BuzzLoadingIndicator(
+                      child: CoreviaTalkLoadingIndicator(
                         size: 36,
                         semanticLabel: tl('Loading more search results'),
                       ),
@@ -445,7 +445,7 @@ class _RecentSearches extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(
-                      BuzzIcons.clock,
+                      CoreviaTalkIcons.clock,
                       size: 18,
                       color: context.colors.onSurfaceVariant,
                     ),
@@ -460,7 +460,7 @@ class _RecentSearches extends StatelessWidget {
                     ),
                     BidiFlip(
                       child: Icon(
-                        BuzzIcons.chevronRight,
+                        CoreviaTalkIcons.chevronRight,
                         size: 16,
                         color: context.colors.onSurfaceVariant,
                       ),

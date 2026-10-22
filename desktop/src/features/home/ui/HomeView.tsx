@@ -83,7 +83,7 @@ const INBOX_SEARCH_KEYS = [
   "profileView",
 ] as const;
 
-const INBOX_UNREAD_ONLY_STORAGE_KEY = "buzz.desktop.inbox-unread-only";
+const INBOX_UNREAD_ONLY_STORAGE_KEY = "corevia-talk.desktop.inbox-unread-only";
 
 type HomeViewProps = {
   feed?: HomeFeedResponse;

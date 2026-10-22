@@ -3,7 +3,7 @@ import UIKit
 import UniformTypeIdentifiers
 
 /// Reads the user-selected document in place; never imports a plaintext copy
-/// into Buzz's sandbox. The security-scoped grant lasts only for the read.
+/// into Corevia Talk's sandbox. The security-scoped grant lasts only for the read.
 final class IdentityFilePlugin: NSObject, UIDocumentPickerDelegate,
   UIAdaptivePresentationControllerDelegate
 {
@@ -13,7 +13,7 @@ final class IdentityFilePlugin: NSObject, UIDocumentPickerDelegate,
   private weak var activePicker: UIDocumentPickerViewController?
 
   init(messenger: FlutterBinaryMessenger) {
-    channel = FlutterMethodChannel(name: "buzz/identity_file", binaryMessenger: messenger)
+    channel = FlutterMethodChannel(name: "corevia-talk/identity_file", binaryMessenger: messenger)
     super.init()
     Self.removeInterruptedExports()
     channel.setMethodCallHandler { [weak self] call, result in
@@ -44,10 +44,10 @@ final class IdentityFilePlugin: NSObject, UIDocumentPickerDelegate,
       result(FlutterError(code: "export_failed", message: nil, details: nil))
       return
     }
-    let directory = root.appendingPathComponent("buzz-identity-\(UUID().uuidString)")
+    let directory = root.appendingPathComponent("corevia-talk-identity-\(UUID().uuidString)")
     do {
       try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: false)
-      let file = directory.appendingPathComponent("buzz-identity.nsec")
+      let file = directory.appendingPathComponent("corevia-talk-identity.nsec")
       try Data(text.utf8).write(to: file, options: [.atomic, .completeFileProtection])
       result(file.path)
     } catch {
@@ -70,12 +70,12 @@ final class IdentityFilePlugin: NSObject, UIDocumentPickerDelegate,
           includingPropertiesForKeys: nil,
           options: [.skipsHiddenFiles]
         )
-        for entry in entries where entry.lastPathComponent.hasPrefix("buzz-identity-") {
+        for entry in entries where entry.lastPathComponent.hasPrefix("corevia-talk-identity-") {
           try manager.removeItem(at: entry)
         }
       } catch {
         // No path or key material in diagnostics. Retry on the next launch.
-        NSLog("Buzz could not clean up an interrupted identity export")
+        NSLog("Corevia Talk could not clean up an interrupted identity export")
       }
     }
   }

@@ -481,7 +481,7 @@ class _MembershipSystemMessageContent extends StatelessWidget {
           child: Semantics(
             button: true,
             child: GestureDetector(
-              onTap: () => showBuzzModalBottomSheet<void>(
+              onTap: () => showCoreviaTalkModalBottomSheet<void>(
                 context: context,
                 title: event.isRemoval ? 'Removed members' : 'Added members',
                 isScrollControlled: true,

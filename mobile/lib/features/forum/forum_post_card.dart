@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/mentions/agent_identity_provider.dart';
 import '../../shared/theme/theme.dart';
@@ -169,7 +169,7 @@ class ForumPostCard extends HookConsumerWidget {
                   child: IconButton(
                     onPressed: () => _showActions(context),
                     icon: Icon(
-                      BuzzIcons.ellipsis,
+                      CoreviaTalkIcons.ellipsis,
                       size: 16,
                       color: context.colors.onSurfaceVariant,
                     ),
@@ -212,7 +212,7 @@ class ForumPostCard extends HookConsumerWidget {
               Row(
                 children: [
                   Icon(
-                    BuzzIcons.messageSquare,
+                    CoreviaTalkIcons.messageSquare,
                     size: 14,
                     color: context.colors.onSurfaceVariant,
                   ),
@@ -259,7 +259,7 @@ class ForumPostCard extends HookConsumerWidget {
         currentPubkey != null &&
         post.pubkey.toLowerCase() == currentPubkey!.toLowerCase();
 
-    showBuzzModalBottomSheet<void>(
+    showCoreviaTalkModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
       builder: (sheetContext) => SafeArea(
@@ -275,7 +275,7 @@ class ForumPostCard extends HookConsumerWidget {
             child: SheetActionSection(
               children: [
                 ListTile(
-                  leading: const Icon(BuzzIcons.copy),
+                  leading: const Icon(CoreviaTalkIcons.copy),
                   title: Text(tl('Copy text')),
                   onTap: () {
                     Navigator.of(sheetContext).pop();
@@ -285,7 +285,7 @@ class ForumPostCard extends HookConsumerWidget {
                 if (isOwn && onDelete != null)
                   ListTile(
                     leading: Icon(
-                      BuzzIcons.trash2,
+                      CoreviaTalkIcons.trash2,
                       color: sheetContext.colors.error,
                     ),
                     title: Text(
@@ -306,7 +306,7 @@ class ForumPostCard extends HookConsumerWidget {
   }
 
   void _confirmDelete(BuildContext context) {
-    showBuzzDialog<void>(
+    showCoreviaTalkDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: Text(tl('Delete post')),

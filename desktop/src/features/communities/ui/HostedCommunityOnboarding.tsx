@@ -34,7 +34,7 @@ import {
   ONBOARDING_INK_ICON_CLASS,
   ONBOARDING_PRIMARY_CTA_CLASS,
 } from "@/features/onboarding/ui/OnboardingChrome";
-import { BuzzMark } from "@/shared/ui/buzz-logo/BuzzMark";
+import { CoreviaTalkMark } from "@/shared/ui/corevia-talk-logo/CoreviaTalkMark";
 import {
   Dialog,
   DialogContent,
@@ -44,18 +44,18 @@ import {
 import { tl } from "@/shared/i18n/tl";
 
 const FUZZY_SURFACE_CLASS =
-  "relative left-1/2 w-[min(calc(100%+12rem),calc(100vw-2rem))] max-w-[1040px] -translate-x-1/2 px-20 pb-14 pt-20 !text-[rgb(var(--buzz-hosted-community-surface-fg))] [--buzz-card-textured-min-height:224px]";
+  "relative left-1/2 w-[min(calc(100%+12rem),calc(100vw-2rem))] max-w-[1040px] -translate-x-1/2 px-20 pb-14 pt-20 !text-[rgb(var(--corevia-talk-hosted-community-surface-fg))] [--corevia-talk-card-textured-min-height:224px]";
 const COMMUNITY_LIST_CLASS = "mx-auto w-full max-w-[520px] text-start";
 const COMMUNITY_ROW_CLASS =
   "flex min-h-[5.75rem] items-center justify-between gap-8 py-4 text-sm";
 const COMMUNITY_DIVIDER_CLASS =
-  "border-b-[0.5px] border-[rgb(var(--buzz-hosted-community-divider-border)/0.5)]";
+  "border-b-[0.5px] border-[rgb(var(--corevia-talk-hosted-community-divider-border)/0.5)]";
 const COMMUNITY_ACTION_CLASS =
-  "h-[2.375rem] min-w-32 shrink-0 rounded-full bg-[rgb(var(--buzz-hosted-community-action-bg))] px-6 text-sm text-foreground shadow-none hover:bg-[rgb(var(--buzz-hosted-community-action-bg-hover))]";
+  "h-[2.375rem] min-w-32 shrink-0 rounded-full bg-[rgb(var(--corevia-talk-hosted-community-action-bg))] px-6 text-sm text-foreground shadow-none hover:bg-[rgb(var(--corevia-talk-hosted-community-action-bg-hover))]";
 const PAGE_CTA_CLASS = `${ONBOARDING_PRIMARY_CTA_CLASS} w-36 shadow-none`;
 const PAGE_BACK_CLASS =
   "h-[2.375rem] w-36 rounded-full bg-foreground/10 px-6 shadow-none hover:bg-foreground/15";
-const MODAL_PRIMARY_ACTION_CLASS = `${ONBOARDING_PRIMARY_CTA_CLASS} !text-[rgb(var(--buzz-hosted-community-modal-action-fg))]`;
+const MODAL_PRIMARY_ACTION_CLASS = `${ONBOARDING_PRIMARY_CTA_CLASS} !text-[rgb(var(--corevia-talk-hosted-community-modal-action-fg))]`;
 const MODAL_BACK_ACTION_CLASS =
   "h-9 rounded-full bg-foreground/10 px-6 hover:bg-foreground/15";
 
@@ -193,7 +193,7 @@ export function HostedCommunityOnboarding({
           hostedCommunityErrorMessage(
             response.error,
             response.correlation_id,
-            "Could not connect the Buzz identity.",
+            "Could not connect the Corevia Talk identity.",
           ),
         );
       }
@@ -234,7 +234,7 @@ export function HostedCommunityOnboarding({
           hostedCommunityErrorMessage(
             released.error,
             released.correlation_id,
-            "Could not disconnect the account's previous Buzz identity.",
+            "Could not disconnect the account's previous Corevia Talk identity.",
           ),
         );
       }
@@ -243,11 +243,11 @@ export function HostedCommunityOnboarding({
         await loadAccount();
         throw new Error(
           bound.error.code === "pubkey_already_bound"
-            ? "This device's Buzz identity belongs to a different Builderlab account and can't be moved from here. Sign out, then sign in with the account that already owns this identity."
+            ? "This device's Corevia Talk identity belongs to a different Builderlab account and can't be moved from here. Sign out, then sign in with the account that already owns this identity."
             : hostedCommunityErrorMessage(
                 bound.error,
                 bound.correlation_id,
-                "Could not connect this device's Buzz identity.",
+                "Could not connect this device's Corevia Talk identity.",
               ),
         );
       }
@@ -337,7 +337,7 @@ export function HostedCommunityOnboarding({
           hostedCommunityErrorMessage(
             available.error,
             available.correlation_id,
-            "That Buzz address is already taken.",
+            "That Corevia Talk address is already taken.",
           ),
         );
       }
@@ -424,8 +424,8 @@ export function HostedCommunityOnboarding({
       autoComplete="off"
       className={
         inline
-          ? "h-[2.375rem] w-[16.5rem] rounded-full border border-[color:var(--buzz-onboarding-backup-ink)]/25 bg-[rgb(var(--buzz-hosted-community-input-bg)/0.6)] px-6 text-center text-sm shadow-none placeholder:text-foreground/30 focus-visible:ring-1 focus-visible:ring-[color:var(--buzz-onboarding-backup-ink)]/40"
-          : "h-auto min-w-0 flex-none rounded-none border-0 bg-transparent p-0 text-end font-mono !text-[rgb(var(--buzz-hosted-community-surface-fg))] shadow-none placeholder:!text-[rgb(var(--buzz-hosted-community-surface-fg))] placeholder:opacity-20 focus-visible:ring-0"
+          ? "h-[2.375rem] w-[16.5rem] rounded-full border border-[color:var(--corevia-talk-onboarding-backup-ink)]/25 bg-[rgb(var(--corevia-talk-hosted-community-input-bg)/0.6)] px-6 text-center text-sm shadow-none placeholder:text-foreground/30 focus-visible:ring-1 focus-visible:ring-[color:var(--corevia-talk-onboarding-backup-ink)]/40"
+          : "h-auto min-w-0 flex-none rounded-none border-0 bg-transparent p-0 text-end font-mono !text-[rgb(var(--corevia-talk-hosted-community-surface-fg))] shadow-none placeholder:!text-[rgb(var(--corevia-talk-hosted-community-surface-fg))] placeholder:opacity-20 focus-visible:ring-0"
       }
       disabled={busy || atCommunityLimit}
       id="hosted-community-address"
@@ -466,7 +466,7 @@ export function HostedCommunityOnboarding({
     ) : (
       <Card
         asChild
-        className={`${FUZZY_SURFACE_CLASS} !py-10 [--buzz-card-textured-min-height:176px]`}
+        className={`${FUZZY_SURFACE_CLASS} !py-10 [--corevia-talk-card-textured-min-height:176px]`}
         data-testid="hosted-community-create-surface"
         variant="textured"
       >
@@ -478,7 +478,7 @@ export function HostedCommunityOnboarding({
           >
             {creationInput(false)}
             <span
-              className="shrink-0 font-mono !text-[rgb(var(--buzz-hosted-community-surface-fg))]"
+              className="shrink-0 font-mono !text-[rgb(var(--corevia-talk-hosted-community-surface-fg))]"
               id="hosted-community-suffix"
               style={{ fontSize: addressFontSize }}
             >
@@ -502,14 +502,14 @@ export function HostedCommunityOnboarding({
       }}
     >
       <DialogContent
-        className="buzz-onboarding-neutral-theme max-w-[560px] text-foreground [&_button]:shadow-none"
+        className="corevia-talk-onboarding-neutral-theme max-w-[560px] text-foreground [&_button]:shadow-none"
         closeButtonClassName={ONBOARDING_INK_ICON_CLASS}
         data-system-color-scheme="light"
-        overlayClassName="bg-[rgb(var(--buzz-hosted-community-modal-overlay-bg)/0.25)]"
+        overlayClassName="bg-[rgb(var(--corevia-talk-hosted-community-modal-overlay-bg)/0.25)]"
         surface="textured"
       >
         <div className="mx-auto flex w-full max-w-sm flex-col items-center py-2 text-center">
-          <BuzzMark className="mb-5 h-auto w-9 text-foreground" />
+          <CoreviaTalkMark className="mb-5 h-auto w-9 text-foreground" />
 
           {!auth ? (
             <>
@@ -518,7 +518,7 @@ export function HostedCommunityOnboarding({
               </DialogTitle>
               <DialogDescription className="mt-2 text-sm leading-6 text-foreground">
                 {tl(
-                  "Sign in to connect a community you already own or create a new one. We’ll open Builderlab in your browser, then bring you back to Buzz.",
+                  "Sign in to connect a community you already own or create a new one. We’ll open Builderlab in your browser, then bring you back to Corevia Talk.",
                 )}
               </DialogDescription>
               {errorBox ? <div className="mt-5 w-full">{errorBox}</div> : null}
@@ -538,24 +538,24 @@ export function HostedCommunityOnboarding({
                   {tl("Sign in to continue")}
                 </Button>
               )}
-              {/* Quiet breadcrumb: Buzz itself is open source; this hosted
+              {/* Quiet breadcrumb: Corevia Talk itself is open source; this hosted
                     relay is the one account-backed piece of the flow. */}
               <p className="mt-6 w-full border-t border-foreground/10 pt-4 text-xs leading-5 text-foreground/45">
                 {tl(
-                  "Buzz is open source. Builderlab hosts the relay for this account.",
+                  "Corevia Talk is open source. Builderlab hosts the relay for this account.",
                 )}
               </p>
             </>
           ) : !identity ? (
             <>
               <DialogTitle className="text-xl font-medium text-foreground">
-                {tl("Finish connecting Buzz")}
+                {tl("Finish connecting Corevia Talk")}
               </DialogTitle>
               <DialogDescription className="mt-2 text-sm leading-6 text-foreground">
                 {tl("Your Builderlab account")}
                 {auth.email ? ` (${auth.email})` : ""}{" "}
                 {tl(
-                  "is ready. Connect this device’s Buzz identity to finish setup. Your private key stays on this device.",
+                  "is ready. Connect this device’s Corevia Talk identity to finish setup. Your private key stays on this device.",
                 )}
               </DialogDescription>
               {errorBox ? <div className="mt-5 w-full">{errorBox}</div> : null}
@@ -573,14 +573,14 @@ export function HostedCommunityOnboarding({
           ) : (
             <>
               <DialogTitle className="text-xl font-medium text-foreground">
-                {tl("This account uses a different Buzz identity")}
+                {tl("This account uses a different Corevia Talk identity")}
               </DialogTitle>
               <DialogDescription className="mt-2 text-sm leading-6 text-foreground">
                 {tl(
-                  "This account is connected to another Buzz identity. Reconnect this device, or sign out to use a different email.",
+                  "This account is connected to another Corevia Talk identity. Reconnect this device, or sign out to use a different email.",
                 )}
               </DialogDescription>
-              <p className="mt-4 w-full break-all rounded-xl bg-[rgb(var(--buzz-hosted-community-identity-bg)/0.5)] px-4 py-3 text-start font-mono text-xs text-foreground">
+              <p className="mt-4 w-full break-all rounded-xl bg-[rgb(var(--corevia-talk-hosted-community-identity-bg)/0.5)] px-4 py-3 text-start font-mono text-xs text-foreground">
                 {tl("Account:")} {boundNpub ?? UNAVAILABLE_KEY_LABEL}
                 <br />
                 {tl("This device:")} {localNpub ?? UNAVAILABLE_KEY_LABEL}
@@ -624,7 +624,7 @@ export function HostedCommunityOnboarding({
       <p className="mx-auto mt-2 max-w-[560px] text-sm leading-6 text-foreground">
         {hasCommunities
           ? tl("Connect one you own, or start something new.")
-          : tl("Claim a Buzz address to get started.")}
+          : tl("Claim a Corevia Talk address to get started.")}
       </p>
 
       <div className="flex w-full flex-1 flex-col justify-center text-start">
@@ -745,7 +745,7 @@ export function HostedCommunityOnboarding({
                   } ${
                     availability === false || (name && !validName)
                       ? "text-destructive"
-                      : "text-[color:var(--buzz-onboarding-backup-ink)]"
+                      : "text-[color:var(--corevia-talk-onboarding-backup-ink)]"
                   }`}
                   id="hosted-community-feedback"
                 >
@@ -762,7 +762,7 @@ export function HostedCommunityOnboarding({
                   } ${
                     availability === false || (name && !validName)
                       ? "text-destructive"
-                      : "text-[color:var(--buzz-onboarding-backup-ink)]"
+                      : "text-[color:var(--corevia-talk-onboarding-backup-ink)]"
                   }`}
                   id="hosted-community-feedback"
                 >

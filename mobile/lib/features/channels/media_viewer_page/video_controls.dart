@@ -41,7 +41,7 @@ class _VideoViewerBottomControls extends StatelessWidget {
               alignment: AlignmentDirectional.centerStart,
               child: _MediaViewerCircleButton(
                 key: const ValueKey('message-media-video-viewer-reply-thread'),
-                icon: BuzzIcons.messageSquareReply,
+                icon: CoreviaTalkIcons.messageSquareReply,
                 tooltip: tl('Reply in thread'),
                 onPressed: onReply,
               ),
@@ -196,7 +196,7 @@ class _VideoTransportBar extends HookConsumerWidget {
       },
       tooltip: value.isPlaying ? tl('Pause video') : tl('Play video'),
       icon: Icon(
-        value.isPlaying ? BuzzIcons.pause : BuzzIcons.play,
+        value.isPlaying ? CoreviaTalkIcons.pause : CoreviaTalkIcons.play,
         color: Colors.white,
         size: 20,
       ),
@@ -235,7 +235,7 @@ class _VideoTransportBar extends HookConsumerWidget {
         );
       },
       icon: Icon(
-        value.volume == 0 ? BuzzIcons.volumeX : BuzzIcons.volume2,
+        value.volume == 0 ? CoreviaTalkIcons.volumeX : CoreviaTalkIcons.volume2,
         color: Colors.white,
         size: 20,
       ),
@@ -317,7 +317,7 @@ class _VideoTransportBar extends HookConsumerWidget {
                     key: const ValueKey(
                       'message-media-video-viewer-reply-thread',
                     ),
-                    icon: BuzzIcons.messageSquareReply,
+                    icon: CoreviaTalkIcons.messageSquareReply,
                     tooltip: tl('Reply in thread'),
                     onPressed: onReply,
                   ),

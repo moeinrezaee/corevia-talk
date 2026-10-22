@@ -112,7 +112,7 @@ void bubbleContentTests() {
         expect(tester.widget<Text>(find.text(label)).style?.color, linkColor);
       }
       expect(
-        tester.widget<BuzzAgentIcon>(find.byType(BuzzAgentIcon)).color,
+        tester.widget<CoreviaTalkAgentIcon>(find.byType(CoreviaTalkAgentIcon)).color,
         linkColor,
       );
       final link = tester.widget<Text>(

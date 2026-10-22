@@ -146,7 +146,7 @@ abstract final class _MentionSuggestionInfo {
     return Row(
       children: [
         if (candidate.isAgent) ...[
-          Icon(BuzzIcons.bot, size: 12, color: context.colors.onSurfaceVariant),
+          Icon(CoreviaTalkIcons.bot, size: 12, color: context.colors.onSurfaceVariant),
           const SizedBox(width: Grid.half),
           Text(tl('agent'), style: style),
         ] else if (isAdmin)
@@ -227,7 +227,7 @@ class _ChannelSuggestions extends StatelessWidget {
               leading: SizedBox.square(
                 dimension: 36,
                 child: Icon(
-                  BuzzIcons.hash,
+                  CoreviaTalkIcons.hash,
                   size: 20,
                   color: context.colors.onSurfaceVariant,
                 ),

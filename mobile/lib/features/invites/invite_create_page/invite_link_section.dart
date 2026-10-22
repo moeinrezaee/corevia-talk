@@ -72,9 +72,9 @@ class _InviteLinkSection extends HookConsumerWidget {
             children: [
               Expanded(
                 child: Builder(
-                  builder: (buttonContext) => BuzzActionTile(
+                  builder: (buttonContext) => CoreviaTalkActionTile(
                     key: const Key('community-invite-share-link'),
-                    icon: BuzzIcons.share2,
+                    icon: CoreviaTalkIcons.share2,
                     label: tl('Share'),
                     isEnabled: invite.value != null,
                     onTap: () => share(buttonContext),
@@ -83,9 +83,9 @@ class _InviteLinkSection extends HookConsumerWidget {
               ),
               const SizedBox(width: Grid.twelve),
               Expanded(
-                child: BuzzActionTile(
+                child: CoreviaTalkActionTile(
                   key: const Key('community-invite-copy-link'),
-                  icon: BuzzIcons.copy,
+                  icon: CoreviaTalkIcons.copy,
                   label: tl('Copy'),
                   isEnabled: invite.value != null,
                   onTap: () => copyToClipboard(
@@ -166,7 +166,7 @@ void _showInviteOptionSheet<T>({
   required List<CommunityInviteOption<T>> options,
   required ValueChanged<T> onSelected,
 }) {
-  showBuzzModalBottomSheet<void>(
+  showCoreviaTalkModalBottomSheet<void>(
     context: context,
     showDragHandle: true,
     builder: (_) => _InviteOptionSheet<T>(
@@ -218,7 +218,7 @@ class _InviteOptionSheet<T> extends StatelessWidget {
                   title: option.label,
                   trailing: option.value == value
                       ? Icon(
-                          BuzzIcons.check,
+                          CoreviaTalkIcons.check,
                           size: 18,
                           color: context.colors.primary,
                         )
@@ -244,7 +244,7 @@ class _InviteRowChevron extends StatelessWidget {
   Widget build(BuildContext context) {
     return BidiFlip(
       child: Icon(
-        BuzzIcons.chevronRight,
+        CoreviaTalkIcons.chevronRight,
         size: 18,
         color: context.colors.onSurfaceVariant,
       ),

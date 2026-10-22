@@ -1,9 +1,9 @@
-import 'package:buzz/shared/hosted/hosted_relay_auth.dart';
-import 'package:buzz/shared/community/community.dart';
-import 'package:buzz/shared/community/community_storage.dart';
-import 'package:buzz/shared/deeplink/deep_link.dart';
-import 'package:buzz/shared/hosted/hosted_admission.dart';
-import 'package:buzz/shared/hosted/hosted_community_connection.dart';
+import 'package:corevia_talk/shared/hosted/hosted_relay_auth.dart';
+import 'package:corevia_talk/shared/community/community.dart';
+import 'package:corevia_talk/shared/community/community_storage.dart';
+import 'package:corevia_talk/shared/deeplink/deep_link.dart';
+import 'package:corevia_talk/shared/hosted/hosted_admission.dart';
+import 'package:corevia_talk/shared/hosted/hosted_community_connection.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nostr/nostr.dart' as nostr;

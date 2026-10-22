@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/relay/app_lifecycle_provider.dart';
 import '../../shared/theme/theme.dart';
@@ -84,7 +84,7 @@ class VoiceNoteComposerRecorder extends HookConsumerWidget {
         }
       } catch (_) {
         if (context.mounted) {
-          error.value = tl('Buzz could not finish the voice note.');
+          error.value = tl('Corevia Talk could not finish the voice note.');
           isStopping.value = false;
         }
       }
@@ -118,7 +118,7 @@ class VoiceNoteComposerRecorder extends HookConsumerWidget {
         } catch (_) {
           if (active) {
             error.value = tl(
-              'Buzz could not start recording. Check microphone access.',
+              'Corevia Talk could not start recording. Check microphone access.',
             );
           }
         }
@@ -141,7 +141,7 @@ class VoiceNoteComposerRecorder extends HookConsumerWidget {
         _RecorderButton(
           key: const ValueKey('voice-note-recorder-close'),
           tooltip: tl('Discard voice note'),
-          icon: BuzzIcons.x,
+          icon: CoreviaTalkIcons.x,
           foreground: context.colors.onSurfaceVariant,
           background: context.colors.surface,
           onPressed: isStopping.value ? null : onCancel,
@@ -215,7 +215,7 @@ class VoiceNoteComposerRecorder extends HookConsumerWidget {
         _RecorderButton(
           key: const ValueKey('voice-note-recorder-stop'),
           tooltip: tl('Stop recording'),
-          icon: BuzzIcons.square,
+          icon: CoreviaTalkIcons.square,
           foreground: Colors.white,
           background: context.colors.error,
           onPressed: error.value == null && isStarted.value && !isStopping.value

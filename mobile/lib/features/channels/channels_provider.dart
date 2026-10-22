@@ -30,8 +30,8 @@ const _unreadCatchUpLimit = 1000;
 
 /// Relay requests one channel-history batch keeps in flight at most.
 const _historyRequestConcurrency = 4;
-const _participatedRootIdsPrefix = 'buzz-thread-participation.v1';
-const _authoredRootIdsPrefix = 'buzz-thread-authored.v1';
+const _participatedRootIdsPrefix = 'corevia-talk-thread-participation.v1';
+const _authoredRootIdsPrefix = 'corevia-talk-thread-authored.v1';
 
 /// Loads the user's channel list from the relay over WebSocket.
 ///

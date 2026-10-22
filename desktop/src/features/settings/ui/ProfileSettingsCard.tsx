@@ -492,7 +492,7 @@ export function ProfileSettingsCard({
         <SettingsSectionHeader
           title={tl("Profile")}
           description={tl(
-            "Update how your name, avatar, and bio appear across Buzz.",
+            "Update how your name, avatar, and bio appear across Corevia Talk.",
           )}
         />
 
@@ -623,8 +623,8 @@ export function ProfileSettingsCard({
                             >
                               <span
                                 className={cn(
-                                  "buzz-avatar-emoji-glyph flex h-full w-full items-center justify-center text-[6rem] leading-[6.25rem]",
-                                  avatarSquishKey > 0 && "buzz-avatar-squish",
+                                  "corevia-talk-avatar-emoji-glyph flex h-full w-full items-center justify-center text-[6rem] leading-[6.25rem]",
+                                  avatarSquishKey > 0 && "corevia-talk-avatar-squish",
                                 )}
                                 data-testid="profile-avatar-preview-emoji"
                                 key={avatarSquishKey}

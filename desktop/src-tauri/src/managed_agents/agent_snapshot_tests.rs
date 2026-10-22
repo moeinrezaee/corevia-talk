@@ -654,7 +654,7 @@ fn avatar_url_fallback_when_over_size_limit() {
 #[test]
 fn invalid_format_discriminator_is_rejected() {
     let mut snapshot = build_snapshot(&minimal_record(), MemoryLevel::None, vec![], None);
-    snapshot.format = "not-a-buzz-snapshot".to_string();
+    snapshot.format = "not-a-corevia-talk-snapshot".to_string();
     let bytes = serde_json::to_vec(&snapshot).unwrap();
     let result = decode_snapshot_json(&bytes);
     assert!(result.is_err());
@@ -674,13 +674,13 @@ fn unsupported_version_is_rejected() {
 #[test]
 fn portable_acp_command_survives_json_and_png_and_legacy_absence() {
     let mut record = minimal_record();
-    record.acp_command = "buzz-janet-acp".to_string();
+    record.acp_command = "corevia-talk-janet-acp".to_string();
     let snapshot = build_snapshot(&record, MemoryLevel::None, vec![], None);
     let json = encode_snapshot_json(&snapshot).unwrap();
     let decoded = decode_snapshot_json(&json).unwrap();
     assert_eq!(
         decoded.definition.acp_command.as_deref(),
-        Some("buzz-janet-acp")
+        Some("corevia-talk-janet-acp")
     );
     let png = encode_snapshot_png(&snapshot, None).unwrap();
     assert_eq!(
@@ -705,10 +705,10 @@ fn portable_acp_command_survives_json_and_png_and_legacy_absence() {
 fn foreign_snapshot_rejects_nonportable_acp_commands() {
     let mut snapshot = build_snapshot(&minimal_record(), MemoryLevel::None, vec![], None);
     for command in [
-        "/tmp/buzz-janet-acp",
-        r"C:\buzz-janet-acp.cmd",
+        "/tmp/corevia-talk-janet-acp",
+        r"C:\corevia-talk-janet-acp.cmd",
         "sh",
-        "buzz-a b-acp",
+        "corevia-talk-a b-acp",
     ] {
         snapshot.definition.acp_command = Some(command.to_string());
         let json = serde_json::to_vec(&snapshot).unwrap();

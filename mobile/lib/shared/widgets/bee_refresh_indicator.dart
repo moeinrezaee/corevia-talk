@@ -10,7 +10,7 @@ import '../theme/theme.dart';
 import 'flapping_bee.dart';
 import '../i18n/app_language.dart';
 
-/// Replaces the standard pull-to-refresh spinner with Buzz's loading bee.
+/// Replaces the standard pull-to-refresh spinner with Corevia Talk's loading bee.
 ///
 /// Flutter continues to own the gesture, refresh lifecycle, and accessibility
 /// semantics. This widget maps those states into the elastic pull, retained

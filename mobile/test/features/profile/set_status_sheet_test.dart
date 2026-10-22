@@ -1,12 +1,12 @@
-import 'package:buzz/features/profile/set_status_sheet.dart';
-import 'package:buzz/features/profile/user_status.dart';
-import 'package:buzz/features/profile/user_status_provider.dart';
-import 'package:buzz/shared/custom_emoji/custom_emoji_provider.dart';
+import 'package:corevia_talk/features/profile/set_status_sheet.dart';
+import 'package:corevia_talk/features/profile/user_status.dart';
+import 'package:corevia_talk/features/profile/user_status_provider.dart';
+import 'package:corevia_talk/shared/custom_emoji/custom_emoji_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../helpers/widget_helpers.dart';
 
@@ -43,7 +43,7 @@ void main() {
     );
   });
 
-  testWidgets('uses Buzz rows, desktop presets, and a real duration', (
+  testWidgets('uses Corevia Talk rows, desktop presets, and a real duration', (
     tester,
   ) async {
     final statusNotifier = _RecordingUserStatusNotifier();
@@ -98,7 +98,7 @@ void main() {
     await tester.pump();
 
     expect(find.text('\u{1F3AF}'), findsNothing);
-    expect(find.byIcon(BuzzIcons.smilePlus), findsOneWidget);
+    expect(find.byIcon(CoreviaTalkIcons.smilePlus), findsOneWidget);
     expect(
       tester.widget<TextField>(find.byType(TextField)).controller?.text,
       'Focusing',

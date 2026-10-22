@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:buzz/shared/read_state/read_state_format.dart';
-import 'package:buzz/shared/read_state/read_state_provider.dart';
-import 'package:buzz/shared/read_state/read_state_time.dart';
-import 'package:buzz/shared/community/community_provider.dart';
-import 'package:buzz/shared/relay/relay.dart';
-import 'package:buzz/shared/theme/theme_provider.dart';
+import 'package:corevia_talk/shared/read_state/read_state_format.dart';
+import 'package:corevia_talk/shared/read_state/read_state_provider.dart';
+import 'package:corevia_talk/shared/read_state/read_state_time.dart';
+import 'package:corevia_talk/shared/community/community_provider.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/theme/theme_provider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -73,7 +73,7 @@ void main() {
     // community's, and the relay keeps the published ones, so none is taken.
     final notifier = await pumpNotifier(
       stored: (pubkey) => {
-        'buzz.channel-read-state.v2:$pubkey': jsonEncode({
+        'corevia-talk.channel-read-state.v2:$pubkey': jsonEncode({
           channelId: at,
           otherMsgKey: at,
         }),

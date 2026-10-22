@@ -23,7 +23,7 @@ pub(crate) struct EffortNormalization {
 /// Source: `crates/goose-provider-types/src/thinking.rs` at Goose `2db0e31fe`.
 /// Canonical Display values: `off`, `low`, `medium`, `high`, `max`.
 /// Aliases (case-insensitive): `none|disabled→off`, `med→medium`, `xhigh→max`.
-/// `minimal` (Buzz-only) is invalid — skipped as absent at every tier.
+/// `minimal` (CoreviaTalk-only) is invalid — skipped as absent at every tier.
 pub(crate) static GOOSE_EFFORT_NORMALIZATION: EffortNormalization = EffortNormalization {
     canonical: &["off", "low", "medium", "high", "max"],
     aliases: &[
@@ -34,17 +34,17 @@ pub(crate) static GOOSE_EFFORT_NORMALIZATION: EffortNormalization = EffortNormal
     ],
 };
 
-/// buzz-agent's accepted persisted thinking-effort values — a validation-only
-/// contract, NOT a canonicalization one. Unlike Goose, buzz-agent keeps `xhigh`
+/// corevia-talk-agent's accepted persisted thinking-effort values — a validation-only
+/// contract, NOT a canonicalization one. Unlike Goose, corevia-talk-agent keeps `xhigh`
 /// and `max` as *distinct* efforts, so these values are validated (invalid →
 /// skip as absent) but never aliased or collapsed.
 ///
-/// Source of truth: `parse_thinking_effort`, `crates/buzz-agent/src/config.rs`
+/// Source of truth: `parse_thinking_effort`, `crates/corevia-talk-agent/src/config.rs`
 /// (`none|minimal|low|medium|high|xhigh|max`). A destination-vocabulary check
 /// at projection time keeps a foreign canonical (e.g. Goose `off`) from being
-/// emitted as `BUZZ_AGENT_THINKING_EFFORT=off`, which the parser rejects at
+/// emitted as `COREVIA_TALK_AGENT_THINKING_EFFORT=off`, which the parser rejects at
 /// config init (child exits 2).
-pub(crate) static BUZZ_AGENT_EFFORT_VALUES: &[&str] =
+pub(crate) static COREVIA_TALK_AGENT_EFFORT_VALUES: &[&str] =
     &["none", "minimal", "low", "medium", "high", "xhigh", "max"];
 
 impl EffortNormalization {
@@ -95,8 +95,8 @@ pub(crate) struct KnownAcpRuntime {
     /// Human-readable hint about installing the ACP adapter.
     pub adapter_install_hint: &'static str,
     /// Harness-specific skill discovery directory (e.g. `.goose/skills`).
-    /// `Some(dir)` → Buzz creates a symlink at `<nest>/<dir>/buzz-cli`
-    /// pointing to the canonical `.agents/skills/buzz-cli`. `None` → this
+    /// `Some(dir)` → Corevia Talk creates a symlink at `<nest>/<dir>/corevia-talk-cli`
+    /// pointing to the canonical `.agents/skills/corevia-talk-cli`. `None` → this
     /// runtime reads the canonical path directly or has no skill support.
     pub skill_dir: Option<&'static str>,
     /// Whether this runtime handles model switching via ACP protocol natively.
@@ -121,10 +121,10 @@ pub(crate) struct KnownAcpRuntime {
     /// resolution, override tracking, and B-equality comparison.
     ///
     /// `None` — harness accepts any provider/model-specific value via its own
-    /// catalog (buzz-agent); see `getProviderEffortConfig()` in TS for that
-    /// path. Contract-less does NOT mean keyless: buzz-agent still has a native
+    /// catalog (corevia-talk-agent); see `getProviderEffortConfig()` in TS for that
+    /// path. Contract-less does NOT mean keyless: corevia-talk-agent still has a native
     /// `thinking_env_var`, and Claude/Codex route the canonical through
-    /// `BUZZ_ACP_EFFORT_LEVEL` for ACP startup even with `thinking_env_var: None`.
+    /// `COREVIA_TALK_ACP_EFFORT_LEVEL` for ACP startup even with `thinking_env_var: None`.
     ///
     /// The single canonical authority shared by UI choices, the launch
     /// projection, and the reader. No value-authority logic may live outside
@@ -132,7 +132,7 @@ pub(crate) struct KnownAcpRuntime {
     pub effort_normalization: Option<&'static EffortNormalization>,
     /// Accepted persisted effort values for a runtime that has NO
     /// canonicalization contract but still constrains its vocabulary
-    /// (buzz-agent: `parse_thinking_effort`'s accepted set). Used only for
+    /// (corevia-talk-agent: `parse_thinking_effort`'s accepted set). Used only for
     /// destination-vocabulary validation at projection/read time — a candidate
     /// outside this set is skipped as absent, so a foreign canonical (e.g.
     /// Goose `off`) is never emitted under `thinking_env_var` where the
@@ -140,7 +140,7 @@ pub(crate) struct KnownAcpRuntime {
     ///
     /// `None` means "no validation": Goose validates through
     /// `effort_normalization`; Claude/Codex and unknown/custom runtimes accept
-    /// any string over the `BUZZ_ACP_EFFORT_LEVEL` transport.
+    /// any string over the `COREVIA_TALK_ACP_EFFORT_LEVEL` transport.
     pub effort_accepted_values: Option<&'static [&'static str]>,
     /// Env var for normalizing `max_output_tokens`. `None` when the harness
     /// does not have a first-class env var for this field (config-file only).
@@ -154,7 +154,7 @@ pub(crate) struct KnownAcpRuntime {
     /// Keys match the camelCase names used in `NormalizedConfig` (e.g. "model", "provider").
     pub required_normalized_fields: &'static [&'static str],
     /// Human-readable hint shown in Doctor when the runtime is available but not
-    /// authenticated. `None` for runtimes that have no login step (goose, buzz-agent).
+    /// authenticated. `None` for runtimes that have no login step (goose, corevia-talk-agent).
     pub login_hint: Option<&'static str>,
     /// CLI args for probing authentication status. `args[0]` is the binary name;
     /// the remainder are the subcommand. `None` for runtimes with no login step.

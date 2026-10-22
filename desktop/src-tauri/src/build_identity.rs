@@ -1,31 +1,31 @@
 //! Compile-time identity for reusable named demo builds.
 //!
-//! Production builds leave `BUZZ_DESKTOP_BUILD_DEMO_SLUG` unset and retain all
+//! Production builds leave `COREVIA_TALK_DESKTOP_BUILD_DEMO_SLUG` unset and retain all
 //! existing names. The demo recipe validates one slug and `build.rs` bakes it
 //! into the binary; every runtime identity is then derived from that one value.
 
 use std::borrow::Cow;
 
 pub(crate) fn demo_slug() -> Option<&'static str> {
-    option_env!("BUZZ_DESKTOP_BUILD_DEMO_SLUG")
+    option_env!("COREVIA_TALK_DESKTOP_BUILD_DEMO_SLUG")
 }
 
 pub(crate) fn is_demo_build() -> bool {
     demo_slug().is_some()
 }
 
-pub(crate) const DEMO_AGENT_CONFIG_ENV: &str = "BUZZ_AGENT_CONFIG_DIR";
+pub(crate) const DEMO_AGENT_CONFIG_ENV: &str = "COREVIA_TALK_AGENT_CONFIG_DIR";
 
 pub(crate) fn demo_config_home() -> Result<Option<std::path::PathBuf>, String> {
     demo_config_home_for(demo_slug(), dirs::config_dir())
 }
 
 pub(crate) fn demo_agent_oauth_cache_dir() -> Result<Option<std::path::PathBuf>, String> {
-    Ok(demo_config_home()?.map(|dir| dir.join("buzz-agent").join("oauth")))
+    Ok(demo_config_home()?.map(|dir| dir.join("corevia-talk-agent").join("oauth")))
 }
 
 /// Keep child config caches inside this demo build's identity. In particular,
-/// bundled buzz-agent OAuth tokens must not read or write production's root.
+/// bundled corevia-talk-agent OAuth tokens must not read or write production's root.
 /// Refuse launch if a demo cannot resolve its root; None means production only.
 pub(crate) fn apply_demo_config_home(command: &mut std::process::Command) -> Result<(), String> {
     if let Some(config_home) = demo_config_home()? {
@@ -41,15 +41,15 @@ fn demo_config_home_for(
     match demo_slug {
         None => Ok(None),
         Some(slug) => config_dir
-            .map(|dir| Some(dir.join(format!("buzz-demo-{slug}"))))
+            .map(|dir| Some(dir.join(format!("corevia-talk-demo-{slug}"))))
             .ok_or_else(|| "cannot resolve demo credential directory".to_string()),
     }
 }
 
 pub(crate) fn deep_link_scheme() -> Cow<'static, str> {
     demo_slug()
-        .map(|slug| Cow::Owned(format!("buzz-demo-{slug}")))
-        .unwrap_or(Cow::Borrowed("buzz"))
+        .map(|slug| Cow::Owned(format!("corevia-talk-demo-{slug}")))
+        .unwrap_or(Cow::Borrowed("corevia-talk"))
 }
 
 pub(crate) fn is_deep_link_for_build(value: &str) -> bool {
@@ -64,8 +64,8 @@ fn is_deep_link_for_scheme(value: &str, scheme: &str) -> bool {
 
 pub(crate) fn keyring_service() -> Cow<'static, str> {
     demo_slug()
-        .map(|slug| Cow::Owned(format!("buzz-desktop-demo.{slug}")))
-        .unwrap_or(Cow::Borrowed("buzz-desktop"))
+        .map(|slug| Cow::Owned(format!("corevia-talk-desktop-demo.{slug}")))
+        .unwrap_or(Cow::Borrowed("corevia-talk-desktop"))
 }
 
 pub(crate) fn nest_name(is_dev: bool) -> Cow<'static, str> {
@@ -74,21 +74,21 @@ pub(crate) fn nest_name(is_dev: bool) -> Cow<'static, str> {
 
 fn nest_name_for(demo_slug: Option<&str>, is_dev: bool) -> Cow<'_, str> {
     if let Some(slug) = demo_slug {
-        Cow::Owned(format!(".buzz-demo-{slug}"))
+        Cow::Owned(format!(".corevia-talk-demo-{slug}"))
     } else if is_dev {
-        Cow::Borrowed(".buzz-dev")
+        Cow::Borrowed(".corevia-talk-dev")
     } else {
-        Cow::Borrowed(".buzz")
+        Cow::Borrowed(".corevia-talk")
     }
 }
 
 pub(crate) fn cli_name(is_dev: bool) -> String {
     if let Some(slug) = demo_slug() {
-        format!("buzz-demo-{slug}")
+        format!("corevia-talk-demo-{slug}")
     } else if is_dev {
-        "buzz-dev".to_string()
+        "corevia-talk-dev".to_string()
     } else {
-        "buzz".to_string()
+        "corevia-talk".to_string()
     }
 }
 
@@ -97,20 +97,20 @@ mod tests {
     use super::*;
 
     #[test]
-    #[ignore = "compiled with BUZZ_BUILD_DEMO_SLUG by the compiled-flags recipe"]
+    #[ignore = "compiled with COREVIA_TALK_BUILD_DEMO_SLUG by the compiled-flags recipe"]
     fn compiled_demo_slug_matches_expected() {
-        let expected = std::env::var("BUZZ_TEST_EXPECTED_DEMO_SLUG")
-            .expect("BUZZ_TEST_EXPECTED_DEMO_SLUG must be set");
+        let expected = std::env::var("COREVIA_TALK_TEST_EXPECTED_DEMO_SLUG")
+            .expect("COREVIA_TALK_TEST_EXPECTED_DEMO_SLUG must be set");
         assert_eq!(demo_slug(), Some(expected.as_str()));
     }
 
     #[test]
     fn ordinary_release_defaults_remain_production_identity() {
         if demo_slug().is_none() {
-            assert_eq!(deep_link_scheme(), "buzz");
-            assert_eq!(keyring_service(), "buzz-desktop");
-            assert_eq!(nest_name(false), ".buzz");
-            assert_eq!(cli_name(false), "buzz");
+            assert_eq!(deep_link_scheme(), "corevia-talk");
+            assert_eq!(keyring_service(), "corevia-talk-desktop");
+            assert_eq!(nest_name(false), ".corevia-talk");
+            assert_eq!(cli_name(false), "corevia-talk");
         }
     }
 
@@ -130,13 +130,13 @@ mod tests {
         assert_eq!(
             first,
             std::path::PathBuf::from(
-                "/Users/demo/Library/Application Support/buzz-demo-board-1234567812345678"
+                "/Users/demo/Library/Application Support/corevia-talk-demo-board-1234567812345678"
             )
         );
         assert_eq!(
-            first.join("buzz-agent/oauth"),
+            first.join("corevia-talk-agent/oauth"),
             std::path::PathBuf::from(
-                "/Users/demo/Library/Application Support/buzz-demo-board-1234567812345678/buzz-agent/oauth"
+                "/Users/demo/Library/Application Support/corevia-talk-demo-board-1234567812345678/corevia-talk-agent/oauth"
             )
         );
         assert_ne!(first, second);
@@ -153,31 +153,31 @@ mod tests {
 
     #[test]
     fn duplicate_instance_links_follow_the_build_scheme() {
-        assert!(is_deep_link_for_scheme("buzz://message?id=1", "buzz"));
+        assert!(is_deep_link_for_scheme("corevia-talk://message?id=1", "corevia-talk"));
         assert!(!is_deep_link_for_scheme(
-            "buzz-demo-board-1234567812345678://message?id=1",
-            "buzz"
+            "corevia-talk-demo-board-1234567812345678://message?id=1",
+            "corevia-talk"
         ));
         assert!(is_deep_link_for_scheme(
-            "buzz-demo-board-1234567812345678://message?id=1",
-            "buzz-demo-board-1234567812345678"
+            "corevia-talk-demo-board-1234567812345678://message?id=1",
+            "corevia-talk-demo-board-1234567812345678"
         ));
         assert!(!is_deep_link_for_scheme(
-            "buzz://message?id=1",
-            "buzz-demo-board-1234567812345678"
+            "corevia-talk://message?id=1",
+            "corevia-talk-demo-board-1234567812345678"
         ));
     }
 
     #[test]
     fn production_and_named_demo_nests_are_distinct() {
-        assert_eq!(nest_name_for(None, false), ".buzz");
+        assert_eq!(nest_name_for(None, false), ".corevia-talk");
         assert_eq!(
             nest_name_for(Some("workstream-board"), false),
-            ".buzz-demo-workstream-board"
+            ".corevia-talk-demo-workstream-board"
         );
         assert_eq!(
             nest_name_for(Some("second-demo"), false),
-            ".buzz-demo-second-demo"
+            ".corevia-talk-demo-second-demo"
         );
     }
 }

@@ -11,7 +11,7 @@ final class NativeMessagePresentationCoordinator: NSObject, UIAdaptivePresentati
   private var terminalValue: [String: String]?
 
   init(messenger: FlutterBinaryMessenger, parentViewController: UIViewController?) {
-    channel = FlutterMethodChannel(name: "buzz/native_message_presentation", binaryMessenger: messenger)
+    channel = FlutterMethodChannel(name: "corevia-talk/native_message_presentation", binaryMessenger: messenger)
     parent = parentViewController
     super.init()
     channel.setMethodCallHandler { [weak self] call, result in

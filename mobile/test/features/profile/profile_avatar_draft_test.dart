@@ -1,6 +1,6 @@
-import 'package:buzz/features/profile/profile_avatar_draft.dart';
-import 'package:buzz/shared/animated_avatar.dart';
-import 'package:buzz/shared/relay/relay.dart';
+import 'package:corevia_talk/features/profile/profile_avatar_draft.dart';
+import 'package:corevia_talk/shared/animated_avatar.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 

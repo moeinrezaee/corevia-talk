@@ -1,4 +1,4 @@
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -170,7 +170,7 @@ class MessageSkeletonBody extends StatelessWidget {
               ),
             ),
             if (kind == MessageMediaKind.video)
-              const Icon(BuzzIcons.play, size: 48, color: Colors.white),
+              const Icon(CoreviaTalkIcons.play, size: 48, color: Colors.white),
           ],
         ),
       );

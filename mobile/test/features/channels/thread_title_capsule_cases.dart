@@ -52,7 +52,7 @@ void threadTitleCapsuleTests() {
                     find.byWidgetPredicate(
                       (widget) =>
                           widget is UiKitView &&
-                          widget.viewType == 'buzz/ios_navigation_bar',
+                          widget.viewType == 'corevia-talk/ios_navigation_bar',
                     ),
                   )
                   .creationParams!

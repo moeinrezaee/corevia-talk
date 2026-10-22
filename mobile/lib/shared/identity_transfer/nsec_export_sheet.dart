@@ -16,7 +16,7 @@ Future<void> showNsecExportSheet(
   BuildContext context, {
   required Community community,
   required bool Function() isCurrent,
-}) => showBuzzModalBottomSheet<void>(
+}) => showCoreviaTalkModalBottomSheet<void>(
   context: context,
   title: 'Export private key',
   isScrollControlled: true,

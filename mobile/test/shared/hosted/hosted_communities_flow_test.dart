@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:buzz/shared/hosted/builderlab_account.dart';
-import 'package:buzz/shared/hosted/browser_auth.dart';
-import 'package:buzz/shared/hosted/account_identity_store.dart';
-import 'package:buzz/shared/hosted/hosted_flow.dart';
+import 'package:corevia_talk/shared/hosted/builderlab_account.dart';
+import 'package:corevia_talk/shared/hosted/browser_auth.dart';
+import 'package:corevia_talk/shared/hosted/account_identity_store.dart';
+import 'package:corevia_talk/shared/hosted/hosted_flow.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 

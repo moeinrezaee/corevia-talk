@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channel_actions_sheet.dart';
-import 'package:buzz/features/channels/channel_management_provider.dart';
-import 'package:buzz/features/channels/channel_sections/channel_sections_provider.dart';
-import 'package:buzz/features/channels/channel_sections/channel_sections_storage.dart';
-import 'package:buzz/features/channels/manage_channel_sheet.dart';
-import 'package:buzz/shared/mentions/agent_identity_provider.dart';
-import 'package:buzz/shared/relay/relay.dart';
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channel_actions_sheet.dart';
+import 'package:corevia_talk/features/channels/channel_management_provider.dart';
+import 'package:corevia_talk/features/channels/channel_sections/channel_sections_provider.dart';
+import 'package:corevia_talk/features/channels/channel_sections/channel_sections_storage.dart';
+import 'package:corevia_talk/features/channels/manage_channel_sheet.dart';
+import 'package:corevia_talk/shared/mentions/agent_identity_provider.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -426,7 +426,7 @@ void main() {
     (tester) async {
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
       addTearDown(() => debugDefaultTargetPlatformOverride = null);
-      const bridge = MethodChannel('buzz/profile_text_editor');
+      const bridge = MethodChannel('corevia-talk/profile_text_editor');
       final presentations = <Map<Object?, Object?>>[];
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
           .setMockMethodCallHandler(bridge, (call) async {
@@ -494,7 +494,7 @@ void main() {
     debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
     addTearDown(() => debugDefaultTargetPlatformOverride = null);
     final canvas = Completer<ChannelCanvas>();
-    const bridge = MethodChannel('buzz/profile_text_editor');
+    const bridge = MethodChannel('corevia-talk/profile_text_editor');
     final opened = <(bool, Object?)>[];
     var saved = false;
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
@@ -553,7 +553,7 @@ void main() {
   ) async {
     debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
     addTearDown(() => debugDefaultTargetPlatformOverride = null);
-    const bridge = MethodChannel('buzz/profile_text_editor');
+    const bridge = MethodChannel('corevia-talk/profile_text_editor');
     final canvasPresentations = <Map<Object?, Object?>>[];
     final channelPresentations = <Map<Object?, Object?>>[];
     final updates = <(String?, String?)>[];
@@ -703,7 +703,7 @@ void main() {
     (tester) async {
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
       addTearDown(() => debugDefaultTargetPlatformOverride = null);
-      const bridge = MethodChannel('buzz/profile_text_editor');
+      const bridge = MethodChannel('corevia-talk/profile_text_editor');
       final presentations = <(String, Map<Object?, Object?>)>[];
       final attempts = <String>[];
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger

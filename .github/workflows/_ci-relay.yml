@@ -28,7 +28,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  BUZZ_TEST_POSTGRES_PASSWORD: buzz_dev
+  COREVIA_TALK_TEST_POSTGRES_PASSWORD: corevia_talk_dev
   PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/ms-playwright
 
 jobs:
@@ -46,7 +46,7 @@ jobs:
         include:
           - artifact: relay-binaries
             paths: |
-              target/ci/buzz-relay
+              target/ci/corevia-talk-relay
               target/ci/git-credential-nostr
           - artifact: backend-integration-tests
             paths: target/ci/backend-integration-tests.tar.zst
@@ -97,7 +97,7 @@ jobs:
         if: steps.relay-artifacts-cache.outputs.cache-hit != 'true' && matrix.artifact == 'relay-binaries'
         env:
           RUSTC_WRAPPER: sccache
-        run: cargo build --profile ci -p buzz-relay -p git-credential-nostr
+        run: cargo build --profile ci -p corevia-talk-relay -p git-credential-nostr
       - name: Build backend integration test archive
         if: steps.relay-artifacts-cache.outputs.cache-hit != 'true' && matrix.artifact == 'backend-integration-tests'
         env:
@@ -105,9 +105,9 @@ jobs:
         run: |
           cargo nextest archive \
             --cargo-profile ci \
-            -p buzz-db \
-            -p buzz-relay \
-            -p buzz-test-client \
+            -p corevia-talk-db \
+            -p corevia-talk-relay \
+            -p corevia-talk-test-client \
             --lib \
             --test e2e_event_reminder \
             --test e2e_author_only_deletion \
@@ -159,13 +159,13 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_USER: buzz
-          POSTGRES_PASSWORD: ${{ env.BUZZ_TEST_POSTGRES_PASSWORD }}
+          POSTGRES_USER: corevia_talk
+          POSTGRES_PASSWORD: ${{ env.COREVIA_TALK_TEST_POSTGRES_PASSWORD }}
           POSTGRES_DB: postgres
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U buzz -d postgres"
+          --health-cmd "pg_isready -U corevia_talk -d postgres"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 12
@@ -181,19 +181,19 @@ jobs:
     env:
       PGHOST: localhost
       PGPORT: "5432"
-      PGUSER: buzz
+      PGUSER: corevia_talk
       PG_BIN_DIR: /usr/bin
       REDIS_URL: redis://localhost:6379
       PGSCHEMA_PLAN_HOST: localhost
       PGSCHEMA_PLAN_PORT: "5432"
-      PGSCHEMA_PLAN_USER: buzz
-      PGSCHEMA_PLAN_PASSWORD: buzz_dev
+      PGSCHEMA_PLAN_USER: corevia-talk
+      PGSCHEMA_PLAN_PASSWORD: corevia_talk_dev
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
       - uses: cashapp/activate-hermit@cea9af7913204a965fd488637a8d1811bba2e616 # v1
       - name: Tune disposable PostgreSQL
         env:
-          PGPASSWORD: ${{ env.BUZZ_TEST_POSTGRES_PASSWORD }}
+          PGPASSWORD: ${{ env.COREVIA_TALK_TEST_POSTGRES_PASSWORD }}
         run: |
           # Database-per-test cloning forces checkpoints. Durability is redundant
           # for this disposable service and makes runtime depend on runner disk I/O.
@@ -217,11 +217,11 @@ jobs:
           merge-multiple: true
           path: target/ci
       - name: Restore relay executable permission
-        run: chmod +x ./target/ci/buzz-relay
+        run: chmod +x ./target/ci/corevia-talk-relay
       - name: PostgreSQL-backed tests
         env:
-          BUZZ_POSTGRES_ADMIN_URL: postgres://buzz:${{ env.BUZZ_TEST_POSTGRES_PASSWORD }}@localhost:5432/postgres
-          PGPASSWORD: ${{ env.BUZZ_TEST_POSTGRES_PASSWORD }}
+          COREVIA_TALK_POSTGRES_ADMIN_URL: postgres://corevia_talk:${{ env.COREVIA_TALK_TEST_POSTGRES_PASSWORD }}@localhost:5432/postgres
+          PGPASSWORD: ${{ env.COREVIA_TALK_TEST_POSTGRES_PASSWORD }}
         run: |
           scripts/postgres-test-run.sh \
             --archive-file target/ci/postgres-tests.tar.zst
@@ -305,9 +305,9 @@ jobs:
             docker logs "${container}" || true
             return 1
           }
-          wait_healthy "Postgres" "buzz-postgres"
-          wait_healthy "Redis" "buzz-redis"
-          wait_healthy "MinIO" "buzz-minio"
+          wait_healthy "Postgres" "corevia-talk-postgres"
+          wait_healthy "Redis" "corevia-talk-redis"
+          wait_healthy "MinIO" "corevia-talk-minio"
       - name: Download relay binary
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
@@ -321,54 +321,54 @@ jobs:
         # exits permanently on an unmapped host, so the 'localhost:3000'
         # community MUST exist before the relay starts — the retry loop only
         # handles late-seeded channels, not a late-seeded community. The relay
-        # migrates at boot via BUZZ_AUTO_MIGRATE, but that's too late for the
+        # migrates at boot via COREVIA_TALK_AUTO_MIGRATE, but that's too late for the
         # pre-boot seed, so apply the schema here first (then drop AUTO_MIGRATE
         # below). lower(host) is the unique index → ON CONFLICT target. psql
-        # isn't on PATH in hermit → exec into the buzz-postgres container.
+        # isn't on PATH in hermit → exec into the corevia-talk-postgres container.
         env:
           PGHOST: localhost
           PGPORT: "5432"
-          PGUSER: buzz
-          PGPASSWORD: buzz_dev
-          PGDATABASE: buzz
+          PGUSER: corevia_talk
+          PGPASSWORD: corevia_talk_dev
+          PGDATABASE: corevia_talk
           # Use the already-running docker postgres for desired-state planning instead of
           # downloading an embedded Postgres from Maven Central (transient-fetch flake source).
           PGSCHEMA_PLAN_HOST: localhost
           PGSCHEMA_PLAN_PORT: "5432"
-          PGSCHEMA_PLAN_DB: buzz
-          PGSCHEMA_PLAN_USER: buzz
-          PGSCHEMA_PLAN_PASSWORD: buzz_dev
+          PGSCHEMA_PLAN_DB: corevia-talk
+          PGSCHEMA_PLAN_USER: corevia-talk
+          PGSCHEMA_PLAN_PASSWORD: corevia_talk_dev
         run: |
           ./bin/pgschema apply --file schema/schema.sql --auto-approve
-          docker exec -i -e PGPASSWORD=buzz_dev buzz-postgres \
-            psql -U buzz -d buzz -v ON_ERROR_STOP=1 < scripts/reconcile-schema-after-pgschema.sql
-          docker exec -e PGPASSWORD=buzz_dev buzz-postgres \
-            psql -U buzz -d buzz -qtA -c "
+          docker exec -i -e PGPASSWORD=corevia_talk_dev corevia-talk-postgres \
+            psql -U corevia_talk -d corevia_talk -v ON_ERROR_STOP=1 < scripts/reconcile-schema-after-pgschema.sql
+          docker exec -e PGPASSWORD=corevia_talk_dev corevia-talk-postgres \
+            psql -U corevia_talk -d corevia_talk -qtA -c "
           INSERT INTO communities (id, host)
           VALUES ('00000000-0000-4000-8000-00000000c0de', 'localhost:3000')
           ON CONFLICT (lower(host)) DO NOTHING
           ;"
       - name: Start relay
         run: |
-          chmod +x ./target/ci/buzz-relay
+          chmod +x ./target/ci/corevia-talk-relay
           nohup env \
-            DATABASE_URL="postgres://buzz:${BUZZ_TEST_POSTGRES_PASSWORD}@localhost:5432/buzz" \
+            DATABASE_URL="postgres://corevia_talk:${COREVIA_TALK_TEST_POSTGRES_PASSWORD}@localhost:5432/corevia_talk" \
             REDIS_URL=redis://localhost:6379 \
             RELAY_URL=ws://localhost:3000 \
-            BUZZ_BIND_ADDR=0.0.0.0:3000 \
-            BUZZ_RELAY_PRIVATE_KEY="$(openssl rand -hex 32)" \
-            BUZZ_REQUIRE_AUTH_TOKEN=false \
-            BUZZ_RECONCILE_CHANNELS=true \
-            BUZZ_RATE_LIMIT_HUMAN_MESSAGES_PER_MIN=100000 \
-            BUZZ_RATE_LIMIT_HUMAN_API_CALLS_PER_MIN=100000 \
-            BUZZ_RATE_LIMIT_HUMAN_WS_EVENTS_PER_SEC=10000 \
-            BUZZ_GIT_PROBE_WRITERS=8 \
+            COREVIA_TALK_BIND_ADDR=0.0.0.0:3000 \
+            COREVIA_TALK_RELAY_PRIVATE_KEY="$(openssl rand -hex 32)" \
+            COREVIA_TALK_REQUIRE_AUTH_TOKEN=false \
+            COREVIA_TALK_RECONCILE_CHANNELS=true \
+            COREVIA_TALK_RATE_LIMIT_HUMAN_MESSAGES_PER_MIN=100000 \
+            COREVIA_TALK_RATE_LIMIT_HUMAN_API_CALLS_PER_MIN=100000 \
+            COREVIA_TALK_RATE_LIMIT_HUMAN_WS_EVENTS_PER_SEC=10000 \
+            COREVIA_TALK_GIT_PROBE_WRITERS=8 \
             SPROUT_REMINDER_SCHEDULER_INTERVAL_SECS=1 \
-            ./target/ci/buzz-relay > /tmp/buzz-relay.log 2>&1 &
-          echo $! > /tmp/buzz-relay.pid
+            ./target/ci/corevia-talk-relay > /tmp/corevia-talk-relay.log 2>&1 &
+          echo $! > /tmp/corevia-talk-relay.pid
           for attempt in $(seq 1 60); do
-            if ! kill -0 "$(cat /tmp/buzz-relay.pid)" 2>/dev/null; then
-              cat /tmp/buzz-relay.log
+            if ! kill -0 "$(cat /tmp/corevia-talk-relay.pid)" 2>/dev/null; then
+              cat /tmp/corevia-talk-relay.log
               exit 1
             fi
             status_code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3000/_readiness || true)
@@ -377,7 +377,7 @@ jobs:
             fi
             sleep 1
           done
-          cat /tmp/buzz-relay.log
+          cat /tmp/corevia-talk-relay.log
           exit 1
       - name: Seed desktop e2e data
         run: bash scripts/setup-desktop-test-data.sh
@@ -396,7 +396,7 @@ jobs:
             desktop/playwright-report
             desktop/playwright-report.json
             desktop/test-results
-            /tmp/buzz-relay.log
+            /tmp/corevia-talk-relay.log
           if-no-files-found: ignore
           retention-days: 7
       - name: Save pnpm store cache
@@ -466,9 +466,9 @@ jobs:
             docker logs "${container}" || true
             return 1
           }
-          wait_healthy "Postgres" "buzz-postgres"
-          wait_healthy "Redis" "buzz-redis"
-          wait_healthy "MinIO" "buzz-minio"
+          wait_healthy "Postgres" "corevia-talk-postgres"
+          wait_healthy "Redis" "corevia-talk-redis"
+          wait_healthy "MinIO" "corevia-talk-minio"
       - name: Download relay artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
@@ -482,29 +482,29 @@ jobs:
         # unmapped host (no retry, unlike the channel reconciler), so the
         # 'localhost:3000' community MUST exist before the relay starts — seeding
         # after boot leaves the scheduler dead. The relay migrates at boot via
-        # BUZZ_AUTO_MIGRATE, but that's too late for the pre-boot seed, so apply
+        # COREVIA_TALK_AUTO_MIGRATE, but that's too late for the pre-boot seed, so apply
         # the schema here first (then drop AUTO_MIGRATE below). lower(host) is the
         # unique index → ON CONFLICT target. psql isn't on PATH in hermit → exec
-        # into the buzz-postgres container.
+        # into the corevia-talk-postgres container.
         env:
           PGHOST: localhost
           PGPORT: "5432"
-          PGUSER: buzz
-          PGPASSWORD: buzz_dev
-          PGDATABASE: buzz
+          PGUSER: corevia_talk
+          PGPASSWORD: corevia_talk_dev
+          PGDATABASE: corevia_talk
           # Use the already-running docker postgres for desired-state planning instead of
           # downloading an embedded Postgres from Maven Central (transient-fetch flake source).
           PGSCHEMA_PLAN_HOST: localhost
           PGSCHEMA_PLAN_PORT: "5432"
-          PGSCHEMA_PLAN_DB: buzz
-          PGSCHEMA_PLAN_USER: buzz
-          PGSCHEMA_PLAN_PASSWORD: buzz_dev
+          PGSCHEMA_PLAN_DB: corevia-talk
+          PGSCHEMA_PLAN_USER: corevia-talk
+          PGSCHEMA_PLAN_PASSWORD: corevia_talk_dev
         run: |
           ./bin/pgschema apply --file schema/schema.sql --auto-approve
-          docker exec -i -e PGPASSWORD=buzz_dev buzz-postgres \
-            psql -U buzz -d buzz -v ON_ERROR_STOP=1 < scripts/reconcile-schema-after-pgschema.sql
-          docker exec -e PGPASSWORD=buzz_dev buzz-postgres \
-            psql -U buzz -d buzz -qtA -c "
+          docker exec -i -e PGPASSWORD=corevia_talk_dev corevia-talk-postgres \
+            psql -U corevia_talk -d corevia_talk -v ON_ERROR_STOP=1 < scripts/reconcile-schema-after-pgschema.sql
+          docker exec -e PGPASSWORD=corevia_talk_dev corevia-talk-postgres \
+            psql -U corevia_talk -d corevia_talk -qtA -c "
           INSERT INTO communities (id, host)
           VALUES ('00000000-0000-4000-8000-00000000c0de', 'localhost:3000')
           ON CONFLICT (lower(host)) DO NOTHING
@@ -512,31 +512,31 @@ jobs:
       - name: Git default-branch route and clone regressions
         env:
           # The preceding step already applied and reconciled schema/schema.sql.
-          BUZZ_TEST_SCHEMA_MODE: desired
-          BUZZ_TEST_DATABASE_URL: postgres://buzz:${{ env.BUZZ_TEST_POSTGRES_PASSWORD }}@localhost:5432/buzz
-          BUZZ_TEST_REDIS_URL: redis://localhost:6379
-          BUZZ_TEST_S3_ENDPOINT: http://localhost:9000
-          BUZZ_TEST_S3_BUCKET: buzz-media
+          COREVIA_TALK_TEST_SCHEMA_MODE: desired
+          COREVIA_TALK_TEST_DATABASE_URL: postgres://corevia_talk:${{ env.COREVIA_TALK_TEST_POSTGRES_PASSWORD }}@localhost:5432/corevia_talk
+          COREVIA_TALK_TEST_REDIS_URL: redis://localhost:6379
+          COREVIA_TALK_TEST_S3_ENDPOINT: http://localhost:9000
+          COREVIA_TALK_TEST_S3_BUCKET: corevia-talk-media
         run: |
           cargo nextest run \
             --archive-file target/ci/backend-integration-tests.tar.zst \
-            -E 'package(buzz-relay) and test(/api::git::settings::tests::external_infra::/)' \
+            -E 'package(corevia-talk-relay) and test(/api::git::settings::tests::external_infra::/)' \
             --run-ignored ignored-only
       - name: Relay quota accounting and rejection regressions
         env:
-          BUZZ_TEST_REDIS_URL: redis://localhost:6379
+          COREVIA_TALK_TEST_REDIS_URL: redis://localhost:6379
         run: |
           cargo nextest run \
             --archive-file target/ci/backend-integration-tests.tar.zst \
-            -E 'package(buzz-relay) and (test(/^rejection::/) or test(/^admission::/))' \
+            -E 'package(corevia-talk-relay) and (test(/^rejection::/) or test(/^admission::/))' \
             --run-ignored all
       - name: NIP-FI cross-pod command replay regressions
         env:
-          BUZZ_TEST_REDIS_URL: redis://localhost:6379
+          COREVIA_TALK_TEST_REDIS_URL: redis://localhost:6379
         run: |
           cargo nextest run \
             --archive-file target/ci/backend-integration-tests.tar.zst \
-            -E 'package(buzz-relay) and test(/^api::nip_fi::route_integration_tests::external_infra_redis::/)' \
+            -E 'package(corevia-talk-relay) and test(/^api::nip_fi::route_integration_tests::external_infra_redis::/)' \
             --run-ignored ignored-only
       - name: Workflow message provenance unit tests
         # The relay's workflow_sink suite is not selected by the infra-free
@@ -545,25 +545,25 @@ jobs:
         run: |
           cargo nextest run \
             --archive-file target/ci/backend-integration-tests.tar.zst \
-            -E 'package(buzz-relay) and test(/workflow_sink/)'
+            -E 'package(corevia-talk-relay) and test(/workflow_sink/)'
       - name: Start relay
         run: |
-          chmod +x ./target/ci/buzz-relay
+          chmod +x ./target/ci/corevia-talk-relay
           nohup env \
-            DATABASE_URL="postgres://buzz:${BUZZ_TEST_POSTGRES_PASSWORD}@localhost:5432/buzz" \
+            DATABASE_URL="postgres://corevia_talk:${COREVIA_TALK_TEST_POSTGRES_PASSWORD}@localhost:5432/corevia_talk" \
             REDIS_URL=redis://localhost:6379 \
             RELAY_URL=ws://localhost:3000 \
-            BUZZ_BIND_ADDR=0.0.0.0:3000 \
-            BUZZ_RELAY_PRIVATE_KEY="$(openssl rand -hex 32)" \
-            BUZZ_REQUIRE_AUTH_TOKEN=false \
-            BUZZ_RECONCILE_CHANNELS=true \
-            BUZZ_GIT_PROBE_WRITERS=8 \
+            COREVIA_TALK_BIND_ADDR=0.0.0.0:3000 \
+            COREVIA_TALK_RELAY_PRIVATE_KEY="$(openssl rand -hex 32)" \
+            COREVIA_TALK_REQUIRE_AUTH_TOKEN=false \
+            COREVIA_TALK_RECONCILE_CHANNELS=true \
+            COREVIA_TALK_GIT_PROBE_WRITERS=8 \
             SPROUT_REMINDER_SCHEDULER_INTERVAL_SECS=1 \
-            ./target/ci/buzz-relay > /tmp/buzz-relay.log 2>&1 &
-          echo $! > /tmp/buzz-relay.pid
+            ./target/ci/corevia-talk-relay > /tmp/corevia-talk-relay.log 2>&1 &
+          echo $! > /tmp/corevia-talk-relay.pid
           for attempt in $(seq 1 60); do
-            if ! kill -0 "$(cat /tmp/buzz-relay.pid)" 2>/dev/null; then
-              cat /tmp/buzz-relay.log
+            if ! kill -0 "$(cat /tmp/corevia-talk-relay.pid)" 2>/dev/null; then
+              cat /tmp/corevia-talk-relay.log
               exit 1
             fi
             status_code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3000/_readiness || true)
@@ -572,13 +572,13 @@ jobs:
             fi
             sleep 1
           done
-          cat /tmp/buzz-relay.log
+          cat /tmp/corevia-talk-relay.log
           exit 1
       - name: NIP-ER reminder e2e
         # Feature e2e for NIP-ER (Event Reminders, kind:30300): write-path
         # validation, author-only read filtering, and scheduler delivery against
         # a live relay. The schema-drift / migration-version guarantee is owned
-        # by the buzz-db migration.rs unit tests, not this suite.
+        # by the corevia-talk-db migration.rs unit tests, not this suite.
         run: |
           cargo nextest run \
             --archive-file target/ci/backend-integration-tests.tar.zst \
@@ -587,13 +587,13 @@ jobs:
         env:
           RELAY_URL: ws://localhost:3000
           # schema/schema.sql (applied above) indexes kind:5 content.
-          BUZZ_TEST_SEARCH_INDEXES_DELETIONS: "1"
+          COREVIA_TALK_TEST_SEARCH_INDEXES_DELETIONS: "1"
       - name: Upload relay log
         if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: backend-integration-relay-log
-          path: /tmp/buzz-relay.log
+          path: /tmp/corevia-talk-relay.log
           if-no-files-found: ignore
 
   relay-e2e:
@@ -619,18 +619,18 @@ jobs:
           path: target/ci
       - name: Start relay
         run: |
-          chmod +x ./target/ci/buzz-relay ./target/ci/git-credential-nostr
+          chmod +x ./target/ci/corevia-talk-relay ./target/ci/git-credential-nostr
           ./scripts/start-relay-for-tests.sh --no-build
       - name: Relay E2E tests
         run: |
-          cargo test -p buzz-test-client --test e2e_persona --test e2e_team_catalog --test e2e_nostr_interop --test e2e_thread_roots --test e2e_project -- --ignored --nocapture
-          cargo test -p buzz-test-client --test e2e_relay invite -- --ignored --nocapture
-          cargo test -p buzz-test-client --test e2e_relay nip43_membership_snapshots_are_rejected -- --ignored --nocapture
-          cargo test -p buzz-test-client --test e2e_relay nip29_departure_wire -- --ignored --nocapture
-          cargo test -p buzz-test-client --test e2e_relay nip29_announce_channel_wire -- --ignored --nocapture
-          cargo test -p buzz-test-client --test e2e_relay nip29_member_raises_guest_agent -- --ignored --nocapture
-          cargo test -p buzz-test-client --test e2e_relay nip29_guest_is_read_only_in_normal_channel -- --ignored --nocapture
-          cargo test -p buzz-test-client --test e2e_relay nip29_relay_rejects_role_change_by_unprivileged_actor -- --ignored --nocapture
+          cargo test -p corevia-talk-test-client --test e2e_persona --test e2e_team_catalog --test e2e_nostr_interop --test e2e_thread_roots --test e2e_project -- --ignored --nocapture
+          cargo test -p corevia-talk-test-client --test e2e_relay invite -- --ignored --nocapture
+          cargo test -p corevia-talk-test-client --test e2e_relay nip43_membership_snapshots_are_rejected -- --ignored --nocapture
+          cargo test -p corevia-talk-test-client --test e2e_relay nip29_departure_wire -- --ignored --nocapture
+          cargo test -p corevia-talk-test-client --test e2e_relay nip29_announce_channel_wire -- --ignored --nocapture
+          cargo test -p corevia-talk-test-client --test e2e_relay nip29_member_raises_guest_agent -- --ignored --nocapture
+          cargo test -p corevia-talk-test-client --test e2e_relay nip29_guest_is_read_only_in_normal_channel -- --ignored --nocapture
+          cargo test -p corevia-talk-test-client --test e2e_relay nip29_relay_rejects_role_change_by_unprivileged_actor -- --ignored --nocapture
         env:
           RELAY_URL: ws://localhost:3000
           GIT_CREDENTIAL_NOSTR_BIN: ${{ github.workspace }}/target/ci/git-credential-nostr
@@ -643,7 +643,7 @@ jobs:
         # --no-fail-fast: without it cargo stops after the first failing binary,
         # so one broken case hides every later binary's result.
         run: |
-          cargo test -p buzz-test-client --no-fail-fast --test e2e_media --test e2e_media_extended --test e2e_media_video -- --ignored --nocapture
+          cargo test -p corevia-talk-test-client --no-fail-fast --test e2e_media --test e2e_media_extended --test e2e_media_video -- --ignored --nocapture
         env:
           RELAY_URL: ws://localhost:3000
           RELAY_HTTP_URL: http://localhost:3000
@@ -652,7 +652,7 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: relay-e2e-artifacts
-          path: /tmp/buzz-relay.log
+          path: /tmp/corevia-talk-relay.log
           if-no-files-found: ignore
 
 

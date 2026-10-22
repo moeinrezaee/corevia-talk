@@ -23,7 +23,7 @@ class _RemindersList extends ConsumerWidget {
 
     if (remindersAsync.isLoading && reminders.isEmpty) {
       return Center(
-        child: BuzzLoadingIndicator(
+        child: CoreviaTalkLoadingIndicator(
           size: 44,
           semanticLabel: tl('Loading reminders'),
         ),
@@ -31,7 +31,7 @@ class _RemindersList extends ConsumerWidget {
     }
     if (reminders.isEmpty) {
       return _EmptySurface(
-        icon: BuzzIcons.clock,
+        icon: CoreviaTalkIcons.clock,
         message: tl('No reminders'),
         detail: tl('Reminders you set will show up here.'),
       );
@@ -53,7 +53,7 @@ class _RemindersList extends ConsumerWidget {
           return ListTile(
             key: ValueKey('reminder-row-${reminder.id}'),
             leading: Icon(
-              due ? BuzzIcons.bellRing : BuzzIcons.clock,
+              due ? CoreviaTalkIcons.bellRing : CoreviaTalkIcons.clock,
               size: 20,
               color: due
                   ? context.colors.primary
@@ -101,7 +101,7 @@ class _DraftsList extends ConsumerWidget {
     final names = ref.watch(identityNameSourcesProvider);
     if (drafts.isEmpty) {
       return _EmptySurface(
-        icon: BuzzIcons.edit,
+        icon: CoreviaTalkIcons.edit,
         message: tl('No drafts'),
         detail: tl('Unsent messages you start composing will show up here.'),
       );
@@ -126,7 +126,7 @@ class _DraftsList extends ConsumerWidget {
         return ListTile(
           key: ValueKey('draft-row-${draft.key}'),
           leading: Icon(
-            BuzzIcons.edit,
+            CoreviaTalkIcons.edit,
             size: 20,
             color: context.colors.onSurfaceVariant,
           ),
@@ -137,7 +137,7 @@ class _DraftsList extends ConsumerWidget {
                 : destination,
           ),
           trailing: IconButton(
-            icon: Icon(BuzzIcons.trash2, size: 18),
+            icon: Icon(CoreviaTalkIcons.trash2, size: 18),
             tooltip: tl('Delete draft'),
             onPressed: () => onDelete(draft),
           ),

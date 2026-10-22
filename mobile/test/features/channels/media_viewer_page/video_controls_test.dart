@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:buzz/features/channels/media_viewer_page.dart';
-import 'package:buzz/shared/relay/relay.dart';
+import 'package:corevia_talk/features/channels/media_viewer_page.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -535,7 +535,7 @@ void main() {
           );
         }
       });
-      const channel = MethodChannel('buzz/concentric_sheet_surface');
+      const channel = MethodChannel('corevia-talk/concentric_sheet_surface');
       tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
         channel,
         (call) async => true,
@@ -553,7 +553,7 @@ void main() {
         find.byWidgetPredicate(
           (widget) =>
               widget is UiKitView &&
-              widget.viewType == 'buzz/concentric_sheet_surface',
+              widget.viewType == 'corevia-talk/concentric_sheet_surface',
         ),
       );
       expect(native, hasLength(3));

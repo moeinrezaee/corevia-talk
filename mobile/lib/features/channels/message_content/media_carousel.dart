@@ -280,7 +280,7 @@ class _MessageImageCarousel extends HookConsumerWidget {
                                             ),
                                       errorBuilder: (_, _, _) =>
                                           _MediaPreviewFallback(
-                                            icon: BuzzIcons.imageOff,
+                                            icon: CoreviaTalkIcons.imageOff,
                                             label: tl('Image unavailable'),
                                           ),
                                     ),

@@ -10,15 +10,15 @@ type ShimmerProps = {
 export function Shimmer({ children, className }: ShimmerProps) {
   return (
     <span
-      className={cn("buzz-shimmer", className)}
+      className={cn("corevia-talk-shimmer", className)}
       style={
-        { "--buzz-shimmer-spread": `${children.length * 2}px` } as CSSProperties
+        { "--corevia-talk-shimmer-spread": `${children.length * 2}px` } as CSSProperties
       }
     >
       {children}
       {/* Visual-only highlight copy; the sibling text node above is the sole
           accessible content. */}
-      <span aria-hidden="true" className="buzz-shimmer-overlay">
+      <span aria-hidden="true" className="corevia-talk-shimmer-overlay">
         {children}
       </span>
     </span>

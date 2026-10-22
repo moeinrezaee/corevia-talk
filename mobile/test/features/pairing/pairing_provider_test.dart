@@ -1,7 +1,7 @@
-import 'package:buzz/features/pairing/pairing_page.dart';
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/features/pairing/pairing_page.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:buzz/shared/community/paired_community_landing.dart';
+import 'package:corevia_talk/shared/community/paired_community_landing.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -9,14 +9,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:nostr/nostr.dart' as nostr;
-import 'package:buzz/features/pairing/pairing_crypto.dart';
-import 'package:buzz/features/pairing/pairing_provider.dart';
-import 'package:buzz/features/pairing/pairing_socket.dart';
-import 'package:buzz/shared/auth/auth.dart';
-import 'package:buzz/shared/crypto/ecdh.dart';
-import 'package:buzz/shared/crypto/nip44.dart';
-import 'package:buzz/shared/relay/relay.dart';
-import 'package:buzz/shared/security/sensitive_action_authorizer.dart';
+import 'package:corevia_talk/features/pairing/pairing_crypto.dart';
+import 'package:corevia_talk/features/pairing/pairing_provider.dart';
+import 'package:corevia_talk/features/pairing/pairing_socket.dart';
+import 'package:corevia_talk/shared/auth/auth.dart';
+import 'package:corevia_talk/shared/crypto/ecdh.dart';
+import 'package:corevia_talk/shared/crypto/nip44.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/security/sensitive_action_authorizer.dart';
 
 /// Exercises payload validation, credential import, and cancellation across
 /// pairing and credential-validation socket lifetimes.
@@ -124,10 +124,10 @@ void main() {
       expect(fakeAuth.lastCommunity, isNull);
     });
 
-    test('accepts buzz scheme prefix', () async {
+    test('accepts corevia-talk scheme prefix', () async {
       container = createContainer();
 
-      final code = 'buzz://${_encodePairingCode()}';
+      final code = 'corevia-talk://${_encodePairingCode()}';
       await container.read(pairingProvider.notifier).pair(code);
 
       final state = container.read(pairingProvider);

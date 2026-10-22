@@ -1,6 +1,6 @@
 import type { ObserverEvent, PromptSection } from "./agentSessionTypes";
 import {
-  findBuzzToolName,
+  findCoreviaTalkToolName,
   isGenericToolTitle,
   normalizeToolName,
 } from "./agentSessionToolCatalog";
@@ -21,7 +21,7 @@ export function extractPromptText(payload: Record<string, unknown>): string {
 }
 
 const SEMANTIC_PROMPT_SECTION_START =
-  /^\s*<(?:workspace|base|agent-instructions|system|team-instructions|core-memory|huddle-instructions|channel-canvas|context|thread-context|conversation-context|buzz-event|buzz-events|what-you-were-working-on|new-message-arrived-while-you-were-working|previous-request-interrupted-before-completion|new-request-supersedes-previous)(?:\s[^>]*)?>/;
+  /^\s*<(?:workspace|base|agent-instructions|system|team-instructions|core-memory|huddle-instructions|channel-canvas|context|thread-context|conversation-context|corevia-talk-event|corevia-talk-events|what-you-were-working-on|new-message-arrived-while-you-were-working|previous-request-interrupted-before-completion|new-request-supersedes-previous)(?:\s[^>]*)?>/;
 
 /**
  * Parse ACP prompt blocks without losing the connector-facing slash-command
@@ -75,7 +75,7 @@ export function parsePromptText(text: string): {
 
   const eventSection = sections.find((section) => {
     const title = section.title.toLowerCase();
-    return title.startsWith("buzz event");
+    return title.startsWith("corevia-talk event");
   });
   const eventContent = eventSection
     ? extractEventContent(eventSection.body)
@@ -89,7 +89,7 @@ export function parsePromptText(text: string): {
   return {
     sections,
     userText: eventContent,
-    userTitle: eventKind ? titleCase(eventKind) : "Buzz event",
+    userTitle: eventKind ? titleCase(eventKind) : "Corevia Talk event",
     userPubkey: eventAuthorPubkey,
     userEventId: eventId,
   };
@@ -118,7 +118,7 @@ export function parsePromptText(text: string): {
  *    Same two cases, same last-occurrence guard.
  *
  * 3. **Team Instructions** (`[Team Instructions]`): appended before core by
- *    `with_team()` in `buzz-acp/src/pool.rs`. Same two cases (start-of-string
+ *    `with_team()` in `corevia-talk-acp/src/pool.rs`. Same two cases (start-of-string
  *    or `\n\n[Team Instructions]\n` inline), same last-occurrence guard. Output
  *    position: after Agent Instructions, before Core Memory.
  *
@@ -129,7 +129,7 @@ export function parsePromptText(text: string): {
  *
  * 5. **Legacy Team Instructions** (backward compat): if the agent-instructions body
  *    contains the exact canonical delimiter `\n\n---\n# Team Instructions\n`
- *    (produced by the now-removed `compose_prompt()` in buzz-persona), the body
+ *    (produced by the now-removed `compose_prompt()` in corevia-talk-persona), the body
  *    is split at the **last** occurrence of that boundary. The text before
  *    becomes the agent-instructions body; the text after becomes a `Team Instructions`
  *    section inserted immediately after it. Non-canonical lookalikes
@@ -180,7 +180,7 @@ export function parseSystemPromptSections(
   }
 
   // ── 3. Extract [Team Instructions] (modern runtime framing) ─────────────
-  // with_team() in buzz-acp/src/pool.rs appends "\n\n[Team Instructions]\n{instructions}"
+  // with_team() in corevia-talk-acp/src/pool.rs appends "\n\n[Team Instructions]\n{instructions}"
   // after [Agent Instructions] and before core/canvas. Same two cases as canvas/core:
   // start-of-string (team-only input) or the inline double-newline marker
   // (last occurrence guards against embedded lookalikes preceded by a single \n).
@@ -203,7 +203,7 @@ export function parseSystemPromptSections(
 
   // ── 4. Parse Base/Workspace/Agent Instructions from the remaining prefix ─
   // The canonical team-instructions delimiter produced by compose_prompt() in
-  // buzz-persona/src/resolve.rs:
+  // corevia-talk-persona/src/resolve.rs:
   //   format!("{persona_prompt}\n\n---\n# Team Instructions\n{instructions}")
   const TEAM_DELIMITER = "\n\n---\n# Team Instructions\n";
 
@@ -418,8 +418,8 @@ function splitSemanticTurnSections(text: string): {
     "context",
     "thread-context",
     "conversation-context",
-    "buzz-event",
-    "buzz-events",
+    "corevia-talk-event",
+    "corevia-talk-events",
     "what-you-were-working-on",
     "new-message-arrived-while-you-were-working",
     "previous-request-interrupted-before-completion",
@@ -475,10 +475,10 @@ function semanticTurnTitle(
       const truncated = attributes.truncated === "true" ? ", truncated" : "";
       return `${label} (${attributes.included} of ${attributes.total} messages${truncated})`;
     }
-    case "buzz-event":
-      return attributes.type ? `Buzz event: ${attributes.type}` : "Buzz event";
-    case "buzz-events":
-      return `Buzz events — ${attributes.count} events`;
+    case "corevia-talk-event":
+      return attributes.type ? `Corevia Talk event: ${attributes.type}` : "Corevia Talk event";
+    case "corevia-talk-events":
+      return `Corevia Talk events — ${attributes.count} events`;
     case "what-you-were-working-on":
       return "What you were working on";
     case "new-message-arrived-while-you-were-working":
@@ -667,11 +667,11 @@ export function extractToolArgs(
 export function extractToolIdentity(update: Record<string, unknown>): {
   title: string;
   toolName: string;
-  buzzToolName: string | null;
+  coreviaTalkToolName: string | null;
 } {
   const candidates = collectToolNameCandidates(update);
   const knownName = candidates
-    .map((candidate) => findBuzzToolName(candidate, true))
+    .map((candidate) => findCoreviaTalkToolName(candidate, true))
     .find((candidate): candidate is string => Boolean(candidate));
   const firstSpecific = candidates.find(
     (candidate) => !isGenericToolTitle(candidate),
@@ -681,7 +681,7 @@ export function extractToolIdentity(update: Record<string, unknown>): {
   return {
     title,
     toolName: knownName ?? normalizeToolName(firstSpecific ?? title),
-    buzzToolName: knownName ?? null,
+    coreviaTalkToolName: knownName ?? null,
   };
 }
 

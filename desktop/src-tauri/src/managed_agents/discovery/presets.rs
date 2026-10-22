@@ -107,10 +107,10 @@ pub(super) const PRESET_HARNESSES: &[PresetHarness] = &[
     PresetHarness {
         id: "pi",
         label: "Pi",
-        command: "buzz-pi-acp",
+        command: "corevia-talk-pi-acp",
         args: &[],
-        install_instructions_url: "https://github.com/salman1993/buzz-pi-acp",
-        install_hint: "Requires Node.js 22 or newer. Install the Pi ACP adapter with `npm install -g --install-links=true 'git+https://github.com/salman1993/buzz-pi-acp.git#86b201e'`. Make sure `buzz-pi-acp` is on PATH, then restart Buzz.",
+        install_instructions_url: "https://github.com/salman1993/corevia-talk-pi-acp",
+        install_hint: "Requires Node.js 22 or newer. Install the Pi ACP adapter with `npm install -g --install-links=true 'git+https://github.com/salman1993/corevia-talk-pi-acp.git#86b201e'`. Make sure `corevia-talk-pi-acp` is on PATH, then restart Corevia Talk.",
         underlying_cli: Some("pi"),
         underlying_cli_install_hint: Some(
             "Install Pi with `npm install -g @earendil-works/pi-coding-agent`, then run `pi` to configure its model provider.",
@@ -125,7 +125,7 @@ pub(super) const PRESET_HARNESSES: &[PresetHarness] = &[
         command: "devin",
         args: &["acp"],
         install_instructions_url: "https://docs.devin.ai/cli",
-        install_hint: "Buzz talks to Devin through the official Devin CLI's ACP mode (devin acp).",
+        install_hint: "Corevia Talk talks to Devin through the official Devin CLI's ACP mode (devin acp).",
         underlying_cli: None,
         underlying_cli_install_hint: None,
         underlying_cli_install_instructions_url: None,
@@ -136,7 +136,7 @@ pub(super) const PRESET_HARNESSES: &[PresetHarness] = &[
         command: "cursor-agent",
         args: &["acp"],
         install_instructions_url: "https://cursor.com/downloads",
-        install_hint: "Buzz talks to Cursor through the cursor-agent CLI's ACP mode.",
+        install_hint: "Corevia Talk talks to Cursor through the cursor-agent CLI's ACP mode.",
         underlying_cli: None,
         underlying_cli_install_hint: None,
         underlying_cli_install_instructions_url: None,
@@ -147,7 +147,7 @@ pub(super) const PRESET_HARNESSES: &[PresetHarness] = &[
         command: "omp",
         args: &["acp"],
         install_instructions_url: "https://omp.sh/",
-        install_hint: "Buzz talks to Oh My Pi through its CLI's ACP mode (omp acp).",
+        install_hint: "Corevia Talk talks to Oh My Pi through its CLI's ACP mode (omp acp).",
         underlying_cli: None,
         underlying_cli_install_hint: None,
         underlying_cli_install_instructions_url: None,
@@ -158,7 +158,7 @@ pub(super) const PRESET_HARNESSES: &[PresetHarness] = &[
         command: "grok",
         args: &["agent", "--always-approve", "stdio"],
         install_instructions_url: "https://docs.x.ai/build/overview",
-        install_hint: "Buzz talks to Grok Build through its CLI's agent stdio mode.",
+        install_hint: "Corevia Talk talks to Grok Build through its CLI's agent stdio mode.",
         underlying_cli: None,
         underlying_cli_install_hint: None,
         underlying_cli_install_instructions_url: None,
@@ -169,7 +169,7 @@ pub(super) const PRESET_HARNESSES: &[PresetHarness] = &[
         command: "opencode",
         args: &["acp"],
         install_instructions_url: "https://opencode.ai/docs",
-        install_hint: "Buzz talks to OpenCode through its CLI's ACP mode (opencode acp).",
+        install_hint: "Corevia Talk talks to OpenCode through its CLI's ACP mode (opencode acp).",
         underlying_cli: None,
         underlying_cli_install_hint: None,
         underlying_cli_install_instructions_url: None,
@@ -180,7 +180,7 @@ pub(super) const PRESET_HARNESSES: &[PresetHarness] = &[
         command: "kimi",
         args: &["acp"],
         install_instructions_url: "https://kimi.ai/download",
-        install_hint: "Buzz talks to Kimi Code through its CLI's ACP mode (kimi acp).",
+        install_hint: "Corevia Talk talks to Kimi Code through its CLI's ACP mode (kimi acp).",
         underlying_cli: None,
         underlying_cli_install_hint: None,
         underlying_cli_install_instructions_url: None,
@@ -191,7 +191,7 @@ pub(super) const PRESET_HARNESSES: &[PresetHarness] = &[
         command: "amp-acp",
         args: &[],
         install_instructions_url: "https://github.com/tao12345666333/amp-acp",
-        install_hint: "Buzz talks to the Amp CLI through the amp-acp adapter. Follow the setup guide to install the adapter so the amp-acp command is on your PATH.",
+        install_hint: "Corevia Talk talks to the Amp CLI through the amp-acp adapter. Follow the setup guide to install the adapter so the amp-acp command is on your PATH.",
         underlying_cli: Some("amp"),
         underlying_cli_install_hint: None,
         underlying_cli_install_instructions_url: None,
@@ -202,7 +202,7 @@ pub(super) const PRESET_HARNESSES: &[PresetHarness] = &[
         command: "hermes-acp",
         args: &[],
         install_instructions_url: "https://hermes-agent.nousresearch.com",
-        install_hint: "Buzz talks to Hermes Agent through its hermes-acp command.",
+        install_hint: "Corevia Talk talks to Hermes Agent through its hermes-acp command.",
         underlying_cli: None,
         underlying_cli_install_hint: None,
         underlying_cli_install_instructions_url: None,
@@ -213,13 +213,13 @@ pub(super) const PRESET_HARNESSES: &[PresetHarness] = &[
         command: "openclaw",
         args: &["acp"],
         install_instructions_url: "https://docs.openclaw.ai/start/getting-started",
-        install_hint: "Buzz talks to OpenClaw through its ACP mode (openclaw acp), which relies on the OpenClaw Gateway daemon. Follow the setup guide to install both.\n\n\
+        install_hint: "Corevia Talk talks to OpenClaw through its ACP mode (openclaw acp), which relies on the OpenClaw Gateway daemon. Follow the setup guide to install both.\n\n\
             ⚠️  Execution-locus note: `openclaw acp` runs tools inside the \
             OpenClaw Gateway daemon, not in the Desktop process. \
-            Desktop-injected BUZZ_* env vars are visible to the `openclaw` \
+            Desktop-injected COREVIA_TALK_* env vars are visible to the `openclaw` \
             harness process itself, but do NOT automatically reach the \
             Gateway's execution environment. If your tools or agent logic \
-            needs BUZZ_* credentials at execution time, set them on the \
+            needs COREVIA_TALK_* credentials at execution time, set them on the \
             Gateway's own environment separately.",
         underlying_cli: None,
         underlying_cli_install_hint: None,
@@ -404,17 +404,17 @@ mod tests {
             .expect("Pi preset should be present");
 
         assert_eq!(preset.label, "Pi");
-        assert_eq!(preset.command, "buzz-pi-acp");
+        assert_eq!(preset.command, "corevia-talk-pi-acp");
         assert!(preset.args.is_empty());
         assert_eq!(preset.underlying_cli, Some("pi"));
 
         let available = preset_catalog_entry(preset, |command| match command {
-            "buzz-pi-acp" => Some(PathBuf::from("/usr/local/bin/buzz-pi-acp")),
+            "corevia-talk-pi-acp" => Some(PathBuf::from("/usr/local/bin/corevia-talk-pi-acp")),
             "pi" => Some(PathBuf::from("/usr/local/bin/pi")),
             _ => None,
         });
         assert_eq!(available.availability, AcpAvailabilityStatus::Available);
-        assert_eq!(available.command.as_deref(), Some("buzz-pi-acp"));
+        assert_eq!(available.command.as_deref(), Some("corevia-talk-pi-acp"));
         assert!(available.default_args.is_empty());
         assert!(available.install_hint.is_empty());
         assert!(available.requires_external_cli);
@@ -434,18 +434,18 @@ mod tests {
         assert!(adapter_missing.default_args.is_empty());
         assert_eq!(
             adapter_missing.install_hint,
-            "Requires Node.js 22 or newer. Install the Pi ACP adapter with `npm install -g --install-links=true 'git+https://github.com/salman1993/buzz-pi-acp.git#86b201e'`. Make sure `buzz-pi-acp` is on PATH, then restart Buzz."
+            "Requires Node.js 22 or newer. Install the Pi ACP adapter with `npm install -g --install-links=true 'git+https://github.com/salman1993/corevia-talk-pi-acp.git#86b201e'`. Make sure `corevia-talk-pi-acp` is on PATH, then restart Corevia Talk."
         );
         assert_eq!(
             adapter_missing.install_instructions_url,
-            "https://github.com/salman1993/buzz-pi-acp"
+            "https://github.com/salman1993/corevia-talk-pi-acp"
         );
 
         let cli_missing = preset_catalog_entry(preset, |command| {
-            (command == "buzz-pi-acp").then(|| PathBuf::from("/usr/local/bin/buzz-pi-acp"))
+            (command == "corevia-talk-pi-acp").then(|| PathBuf::from("/usr/local/bin/corevia-talk-pi-acp"))
         });
         assert_eq!(cli_missing.availability, AcpAvailabilityStatus::CliMissing);
-        assert_eq!(cli_missing.command.as_deref(), Some("buzz-pi-acp"));
+        assert_eq!(cli_missing.command.as_deref(), Some("corevia-talk-pi-acp"));
         assert_eq!(
             cli_missing.install_hint,
             "Install Pi with `npm install -g @earendil-works/pi-coding-agent`, then run `pi` to configure its model provider."
@@ -462,7 +462,7 @@ mod tests {
         );
         assert_eq!(
             not_installed.install_hint,
-            "Install Pi with `npm install -g @earendil-works/pi-coding-agent`, then run `pi` to configure its model provider. Requires Node.js 22 or newer. Install the Pi ACP adapter with `npm install -g --install-links=true 'git+https://github.com/salman1993/buzz-pi-acp.git#86b201e'`. Make sure `buzz-pi-acp` is on PATH, then restart Buzz."
+            "Install Pi with `npm install -g @earendil-works/pi-coding-agent`, then run `pi` to configure its model provider. Requires Node.js 22 or newer. Install the Pi ACP adapter with `npm install -g --install-links=true 'git+https://github.com/salman1993/corevia-talk-pi-acp.git#86b201e'`. Make sure `corevia-talk-pi-acp` is on PATH, then restart Corevia Talk."
         );
     }
 

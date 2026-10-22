@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/identity_names/identity_names_provider.dart';
 import '../../shared/mentions/agent_identity_provider.dart';
@@ -17,7 +17,7 @@ import '../../shared/widgets/sheet_action_section.dart';
 import '../../shared/widgets/avatar_image.dart';
 import '../../shared/widgets/anchored_popover_menu.dart';
 import '../../shared/widgets/bee_refresh_indicator.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../shared/widgets/frosted_app_bar.dart';
 import '../../shared/widgets/frosted_scaffold.dart';
 import '../../shared/widgets/message_author_meta.dart';
@@ -436,14 +436,14 @@ class ActivityPage extends HookConsumerWidget {
         ),
         leading: IconButton(
           tooltip: 'Close inbox',
-          icon: const Icon(BuzzIcons.x),
+          icon: const Icon(CoreviaTalkIcons.x),
           onPressed: () => Navigator.of(context).pop(),
         ),
         nativeLargeTitle: true,
         nativeActions: [
           IosNavigationAction(
             label: 'Filter inbox',
-            icon: BuzzIcons.filter2,
+            icon: CoreviaTalkIcons.filter2,
             children: [
               for (final entry in _filterLabels.entries)
                 IosNavigationAction(

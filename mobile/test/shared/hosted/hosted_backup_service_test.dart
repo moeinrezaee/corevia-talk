@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:buzz/shared/hosted/account_identity_store.dart';
-import 'package:buzz/shared/hosted/builderlab_account.dart';
-import 'package:buzz/shared/hosted/hosted_backup_service.dart';
-import 'package:buzz/shared/hosted/hpke_backup.dart';
+import 'package:corevia_talk/shared/hosted/account_identity_store.dart';
+import 'package:corevia_talk/shared/hosted/builderlab_account.dart';
+import 'package:corevia_talk/shared/hosted/hosted_backup_service.dart';
+import 'package:corevia_talk/shared/hosted/hpke_backup.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nostr/nostr.dart' as nostr;

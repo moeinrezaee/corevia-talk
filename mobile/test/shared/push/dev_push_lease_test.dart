@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-import 'package:buzz/shared/auth/auth_provider.dart';
-import 'package:buzz/shared/crypto/nip44.dart';
-import 'package:buzz/shared/push/dev_push_lease.dart';
-import 'package:buzz/shared/push/push_bridge.dart';
-import 'package:buzz/shared/push/push_subscription.dart';
-import 'package:buzz/shared/relay/nostr_models.dart';
-import 'package:buzz/shared/relay/relay_session.dart';
-import 'package:buzz/shared/relay/relay_socket.dart';
-import 'package:buzz/shared/relay/signed_event_relay.dart';
+import 'package:corevia_talk/shared/auth/auth_provider.dart';
+import 'package:corevia_talk/shared/crypto/nip44.dart';
+import 'package:corevia_talk/shared/push/dev_push_lease.dart';
+import 'package:corevia_talk/shared/push/push_bridge.dart';
+import 'package:corevia_talk/shared/push/push_subscription.dart';
+import 'package:corevia_talk/shared/relay/nostr_models.dart';
+import 'package:corevia_talk/shared/relay/relay_session.dart';
+import 'package:corevia_talk/shared/relay/relay_socket.dart';
+import 'package:corevia_talk/shared/relay/signed_event_relay.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -22,26 +22,26 @@ void main() {
   final grant = _grant(relay.public);
   final now = DateTime.fromMillisecondsSinceEpoch(1752620000 * 1000);
 
-  test('legacy capability does not enable Buzz push', () {
+  test('legacy capability does not enable Corevia Talk push', () {
     final information = _descriptorJson(relay.public);
     information['supported_extensions'] = ['nip-pl'];
     expect(
-      () => BuzzPushLeaseDescriptor.fromRelayInformation(information),
+      () => CoreviaTalkPushLeaseDescriptor.fromRelayInformation(information),
       throwsFormatException,
     );
   });
 
   test('publishes strict kind-30350 lease and waits for accepted OK', () async {
     Map<String, dynamic>? submitted;
-    final publication = await publishBuzzDevPushLease(
+    final publication = await publishCoreviaTalkDevPushLease(
       grant: grant,
       leaseGeneration: 7,
       descriptor: descriptor,
       nsec: signer.nsec,
       memberPubkey: signer.public,
       subscriptions: [
-        BuzzPushSubscription(
-          filter: BuzzPushFilter(kinds: const [9], pTags: [signer.public]),
+        CoreviaTalkPushSubscription(
+          filter: CoreviaTalkPushFilter(kinds: const [9], pTags: [signer.public]),
           notificationClass: 'default',
         ),
       ],
@@ -69,7 +69,7 @@ void main() {
     expect(publication.eventId, 'accepted-id');
     expect(grant.relayOrigin, descriptor.origin);
     expect(jsonDecode(publication.plaintext)['origin'], descriptor.origin);
-    expect(submitted!['kind'], buzzPushLeaseKind);
+    expect(submitted!['kind'], coreviaTalkPushLeaseKind);
     expect(submitted!['createdAt'], 1752620000);
     expect(submitted!['tags'], [
       ['d', 'c' * 32],
@@ -102,7 +102,7 @@ void main() {
   test('uses the community lease address instead of the endpoint id', () async {
     List<List<String>>? submittedTags;
 
-    await publishBuzzDevPushLease(
+    await publishCoreviaTalkDevPushLease(
       grant: grant,
       leaseInstallationId: 'e' * 32,
       descriptor: descriptor,
@@ -130,7 +130,7 @@ void main() {
 
   test('rejects a malformed community lease address', () async {
     await expectLater(
-      publishBuzzDevPushLease(
+      publishCoreviaTalkDevPushLease(
         grant: grant,
         leaseInstallationId: 'malformed',
         descriptor: descriptor,
@@ -195,7 +195,7 @@ void main() {
       await _deliverAcknowledgement(acknowledgements, session);
       await rejection;
       final acceptedFuture = relayClient.submit(
-        kind: buzzPushLeaseKind,
+        kind: coreviaTalkPushLeaseKind,
         content: 'restored',
         tags: [
           ['d', 'c' * 32],
@@ -208,7 +208,7 @@ void main() {
       final accepted = await acceptedFuture;
 
       expect(accepted.content, 'saved');
-      expect(events.map((event) => event.kind), [40002, buzzPushLeaseKind]);
+      expect(events.map((event) => event.kind), [40002, coreviaTalkPushLeaseKind]);
       expect(events.every((event) => event.pubkey == signer.public), isTrue);
       for (final event in events) {
         expect(
@@ -229,14 +229,14 @@ void main() {
 
   test('propagates relay rejection instead of accepting locally', () async {
     await expectLater(
-      publishBuzzDevPushLease(
+      publishCoreviaTalkDevPushLease(
         grant: grant,
         descriptor: descriptor,
         nsec: signer.nsec,
         memberPubkey: signer.public,
         subscriptions: [
-          BuzzPushSubscription(
-            filter: BuzzPushFilter(kinds: const [9], pTags: [signer.public]),
+          CoreviaTalkPushSubscription(
+            filter: CoreviaTalkPushFilter(kinds: const [9], pTags: [signer.public]),
             notificationClass: 'default',
           ),
         ],
@@ -261,7 +261,7 @@ void main() {
 
   test('publishes a minimal higher-generation inactive tombstone', () async {
     Map<String, dynamic>? submitted;
-    final publication = await publishBuzzPushLeaseTombstone(
+    final publication = await publishCoreviaTalkPushLeaseTombstone(
       descriptor: descriptor,
       installationId: grant.installationId,
       generation: 3,
@@ -295,7 +295,7 @@ void main() {
       'generation': 3,
       'active': false,
     });
-    expect(submitted!['kind'], buzzPushLeaseKind);
+    expect(submitted!['kind'], coreviaTalkPushLeaseKind);
     expect(submitted!['tags'], [
       ['d', grant.installationId],
       ['expiration', '1755212000'],
@@ -328,7 +328,7 @@ void main() {
       test('ignores unrelated top-level ${entry.key}', () {
         final information = _descriptorJson(relay.public)
           ..[entry.key] = entry.value;
-        final parsed = BuzzPushLeaseDescriptor.fromRelayInformation(
+        final parsed = CoreviaTalkPushLeaseDescriptor.fromRelayInformation(
           information,
         );
         expect(parsed.origin, descriptor.origin);
@@ -352,7 +352,7 @@ void main() {
       });
       addTearDown(client.close);
 
-      final parsed = await fetchBuzzPushLeaseDescriptor(
+      final parsed = await fetchCoreviaTalkPushLeaseDescriptor(
         'https://tenant.example:8443',
         client: client,
       );
@@ -380,7 +380,7 @@ void main() {
               push[field] = false;
             }
             expect(
-              () => BuzzPushLeaseDescriptor.fromRelayInformation(information),
+              () => CoreviaTalkPushLeaseDescriptor.fromRelayInformation(information),
               throwsA(
                 isA<FormatException>().having(
                   (error) => error.message,
@@ -405,7 +405,7 @@ void main() {
           ..addAll(metadata)
           ..['supported_extensions'] = extensions;
         expect(
-          () => BuzzPushLeaseDescriptor.fromRelayInformation(information),
+          () => CoreviaTalkPushLeaseDescriptor.fromRelayInformation(information),
           throwsA(isA<FormatException>()),
         );
       });
@@ -418,7 +418,7 @@ void main() {
         'wss://tenant.example:8443/';
 
     expect(
-      () => BuzzPushLeaseDescriptor.fromRelayInformation(information),
+      () => CoreviaTalkPushLeaseDescriptor.fromRelayInformation(information),
       throwsA(isA<FormatException>()),
     );
   });
@@ -428,7 +428,7 @@ void main() {
     (information['push'] as Map<String, dynamic>)['h_grammar'] = 'opaque';
 
     expect(
-      () => BuzzPushLeaseDescriptor.fromRelayInformation(information),
+      () => CoreviaTalkPushLeaseDescriptor.fromRelayInformation(information),
       throwsA(isA<FormatException>()),
     );
   });
@@ -438,7 +438,7 @@ void main() {
     (information['push'] as Map<String, dynamic>)['future'] = true;
 
     expect(
-      () => BuzzPushLeaseDescriptor.fromRelayInformation(information),
+      () => CoreviaTalkPushLeaseDescriptor.fromRelayInformation(information),
       throwsA(isA<FormatException>()),
     );
   });
@@ -502,11 +502,11 @@ Future<void> _deliverAcknowledgement(
   session.debugHandleMessage(acknowledgements.removeAt(0));
 }
 
-BuzzPushLeaseDescriptor _descriptor(String relayPubkey) =>
-    BuzzPushLeaseDescriptor.fromRelayInformation(_descriptorJson(relayPubkey));
+CoreviaTalkPushLeaseDescriptor _descriptor(String relayPubkey) =>
+    CoreviaTalkPushLeaseDescriptor.fromRelayInformation(_descriptorJson(relayPubkey));
 
 Map<String, dynamic> _descriptorJson(String relayPubkey) => {
-  'supported_extensions': ['nip-er', 'buzz-push-v1'],
+  'supported_extensions': ['nip-er', 'corevia-talk-push-v1'],
   'push': {
     'origin': 'wss://tenant.example:8443',
     'keys': [
@@ -534,7 +534,7 @@ Map<String, dynamic> _descriptorJson(String relayPubkey) => {
   },
 };
 
-BuzzPushEndpointGrant _grant(String relayPubkey) => BuzzPushEndpointGrant(
+CoreviaTalkPushEndpointGrant _grant(String relayPubkey) => CoreviaTalkPushEndpointGrant(
   relayOrigin: 'wss://tenant.example:8443',
   relayPubkey: relayPubkey,
   installationId: 'c' * 32,

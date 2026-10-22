@@ -123,14 +123,14 @@ async function waitForInvokeBridge(page: import("@playwright/test").Page) {
   await page.waitForFunction(
     () => {
       const tauriWindow = window as Window & {
-        __BUZZ_E2E_INVOKE_MOCK_COMMAND__?: unknown;
+        __COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__?: unknown;
         __TAURI_INTERNALS__?: {
           invoke?: unknown;
         };
       };
 
       return (
-        typeof tauriWindow.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ === "function" ||
+        typeof tauriWindow.__COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__ === "function" ||
         typeof tauriWindow.__TAURI_INTERNALS__?.invoke === "function"
       );
     },
@@ -149,7 +149,7 @@ async function invokeTauri<T>(
   return page.evaluate(
     async ({ command: targetCommand, payload: targetPayload }) => {
       const tauriWindow = window as Window & {
-        __BUZZ_E2E_INVOKE_MOCK_COMMAND__?: (
+        __COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__?: (
           command: string,
           payload?: Record<string, unknown>,
         ) => Promise<unknown>;
@@ -162,7 +162,7 @@ async function invokeTauri<T>(
       };
 
       const invoke =
-        tauriWindow.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ??
+        tauriWindow.__COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__ ??
         tauriWindow.__TAURI_INTERNALS__?.invoke;
       if (!invoke) {
         throw new Error("Mock invoke bridge is unavailable.");
@@ -184,7 +184,7 @@ async function invokeTauriExpectError(
   return page.evaluate(
     async ({ command: targetCommand, payload: targetPayload }) => {
       const tauriWindow = window as Window & {
-        __BUZZ_E2E_INVOKE_MOCK_COMMAND__?: (
+        __COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__?: (
           command: string,
           payload?: Record<string, unknown>,
         ) => Promise<unknown>;
@@ -197,7 +197,7 @@ async function invokeTauriExpectError(
       };
 
       const invoke =
-        tauriWindow.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ??
+        tauriWindow.__COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__ ??
         tauriWindow.__TAURI_INTERNALS__?.invoke;
       if (!invoke) {
         throw new Error("Mock invoke bridge is unavailable.");
@@ -222,9 +222,9 @@ async function countCommandInvocations(
     (targetCommand) =>
       (
         window as Window & {
-          __BUZZ_E2E_COMMANDS__?: string[];
+          __COREVIA_TALK_E2E_COMMANDS__?: string[];
         }
-      ).__BUZZ_E2E_COMMANDS__?.filter((invoked) => invoked === targetCommand)
+      ).__COREVIA_TALK_E2E_COMMANDS__?.filter((invoked) => invoked === targetCommand)
         .length ?? 0,
     command,
   );
@@ -343,8 +343,8 @@ test("built-in persona edits persist", async ({ page }) => {
 
 test("searches agent avatar emoji with focus on open", async ({ page }) => {
   await page.addInitScript(() => {
-    window.localStorage.setItem("buzz-theme", "buzz-dark");
-    window.localStorage.setItem("buzz-accent-color", "#c0a2f1");
+    window.localStorage.setItem("corevia-talk-theme", "corevia-talk-dark");
+    window.localStorage.setItem("corevia-talk-accent-color", "#c0a2f1");
   });
   await gotoApp(page);
   await page.getByTestId("open-agents-view").click();
@@ -576,7 +576,7 @@ test("an ACP-only edit publishes the selected transport", async ({ page }) => {
       env_vars: { ANTHROPIC_API_KEY: "sk-ant-test" },
     },
     acpCommands: [
-      { command: "buzz-janet-acp", binaryPath: "/opt/buzz-janet-acp" },
+      { command: "corevia-talk-janet-acp", binaryPath: "/opt/corevia-talk-janet-acp" },
     ],
     personas: [
       {
@@ -602,7 +602,7 @@ test("an ACP-only edit publishes the selected transport", async ({ page }) => {
   // form and mask this regression. Change ONLY the Radix ACP selection.
   await dialog.locator("#persona-acp-command").click();
   await page
-    .getByRole("menuitemradio", { name: "buzz-janet-acp", exact: true })
+    .getByRole("menuitemradio", { name: "corevia-talk-janet-acp", exact: true })
     .click();
   await expect(
     dialog.getByTestId("persona-dialog-catalog-publish-notice"),
@@ -617,14 +617,14 @@ test("an ACP-only edit publishes the selected transport", async ({ page }) => {
   >(page, "list_personas");
   expect(
     personas.find((persona) => persona.id === personaId)?.acp_command,
-  ).toBe("buzz-janet-acp");
+  ).toBe("corevia-talk-janet-acp");
   const publications = await invokeTauri<
     Array<{ sourcePersonaId: string; agent: { acpCommand?: string } }>
   >(page, "fetch_persona_catalog");
   expect(
     publications.find((entry) => entry.sourcePersonaId === personaId)?.agent
       .acpCommand,
-  ).toBe("buzz-janet-acp");
+  ).toBe("corevia-talk-janet-acp");
 });
 
 test("the new team card offers create and import", async ({ page }) => {
@@ -1125,9 +1125,9 @@ async function readAgentShareCommands(
     () =>
       (
         window as Window & {
-          __BUZZ_E2E_COMMAND_LOG__?: AgentShareCommand[];
+          __COREVIA_TALK_E2E_COMMAND_LOG__?: AgentShareCommand[];
         }
-      ).__BUZZ_E2E_COMMAND_LOG__ ?? [],
+      ).__COREVIA_TALK_E2E_COMMAND_LOG__ ?? [],
   );
 }
 
@@ -1379,7 +1379,7 @@ test("custom personas share with people and keep export separate", async ({
   ).toBeVisible();
   await expect(exportDialog.getByText("portable snapshot")).toHaveCount(0);
   await expect(
-    exportDialog.getByRole("button", { name: "Send in Buzz" }),
+    exportDialog.getByRole("button", { name: "Send in Corevia Talk" }),
   ).toHaveCount(0);
   await expect(exportDialog.getByLabel("Memories")).toHaveCount(0);
   await expect(
@@ -1424,18 +1424,18 @@ test("custom personas share with people and keep export separate", async ({
     const commands =
       (
         window as Window & {
-          __BUZZ_E2E_COMMAND_LOG__?: Array<{
+          __COREVIA_TALK_E2E_COMMAND_LOG__?: Array<{
             command: string;
             payload: { html?: string; text?: string };
           }>;
         }
-      ).__BUZZ_E2E_COMMAND_LOG__ ?? [];
+      ).__COREVIA_TALK_E2E_COMMAND_LOG__ ?? [];
     return commands.findLast(
       (entry) => entry.command === "copy_text_to_clipboard",
     )?.payload;
   });
   expect(copiedAgent?.text).toBe(sharedAgentUrl);
-  expect(copiedAgent?.html).toContain("data-buzz-agent-snapshot");
+  expect(copiedAgent?.html).toContain("data-corevia-talk-agent-snapshot");
 
   await page.keyboard.press("Escape");
   await expect(shareDialog).toHaveCount(0);
@@ -1509,25 +1509,25 @@ test("custom personas share with people and keep export separate", async ({
     });
     (
       window as Window & {
-        __BUZZ_RECIPIENT_POPOVER_OBSERVER__?: MutationObserver;
-        __BUZZ_RECIPIENT_POPOVER_STATE_CHANGES__?: string[];
+        __COREVIA_TALK_RECIPIENT_POPOVER_OBSERVER__?: MutationObserver;
+        __COREVIA_TALK_RECIPIENT_POPOVER_STATE_CHANGES__?: string[];
       }
-    ).__BUZZ_RECIPIENT_POPOVER_OBSERVER__ = observer;
+    ).__COREVIA_TALK_RECIPIENT_POPOVER_OBSERVER__ = observer;
     (
       window as Window & {
-        __BUZZ_RECIPIENT_POPOVER_STATE_CHANGES__?: string[];
+        __COREVIA_TALK_RECIPIENT_POPOVER_STATE_CHANGES__?: string[];
       }
-    ).__BUZZ_RECIPIENT_POPOVER_STATE_CHANGES__ = stateChanges;
+    ).__COREVIA_TALK_RECIPIENT_POPOVER_STATE_CHANGES__ = stateChanges;
   });
   await recipientSearch.click();
   await waitForAnimations(page);
   const recipientPopoverStateChanges = await page.evaluate(() => {
     const trackedWindow = window as Window & {
-      __BUZZ_RECIPIENT_POPOVER_OBSERVER__?: MutationObserver;
-      __BUZZ_RECIPIENT_POPOVER_STATE_CHANGES__?: string[];
+      __COREVIA_TALK_RECIPIENT_POPOVER_OBSERVER__?: MutationObserver;
+      __COREVIA_TALK_RECIPIENT_POPOVER_STATE_CHANGES__?: string[];
     };
-    trackedWindow.__BUZZ_RECIPIENT_POPOVER_OBSERVER__?.disconnect();
-    return trackedWindow.__BUZZ_RECIPIENT_POPOVER_STATE_CHANGES__ ?? [];
+    trackedWindow.__COREVIA_TALK_RECIPIENT_POPOVER_OBSERVER__?.disconnect();
+    return trackedWindow.__COREVIA_TALK_RECIPIENT_POPOVER_STATE_CHANGES__ ?? [];
   });
   expect(recipientPopoverStateChanges).not.toContain("closed");
   const recipientList = page.getByTestId("persona-share-recipient-results");
@@ -1585,7 +1585,7 @@ test("custom personas share with people and keep export separate", async ({
     `persona-share-recipient-chip-${TEST_IDENTITIES.bob.pubkey}`,
   );
   await expect(bobChip).toBeVisible();
-  await expect(bobChip).not.toHaveClass(/buzz-poof-trigger/);
+  await expect(bobChip).not.toHaveClass(/corevia-talk-poof-trigger/);
   await waitForAnimations(page);
   const bobChipBox = await bobChip.boundingBox();
   expect(bobChipBox).not.toBeNull();
@@ -1596,7 +1596,7 @@ test("custom personas share with people and keep export separate", async ({
   };
   await page.mouse.move(removePointer.x, removePointer.y);
   await page.mouse.down();
-  await expect(page.locator(".buzz-poof-burst")).toHaveCount(0);
+  await expect(page.locator(".corevia-talk-poof-burst")).toHaveCount(0);
   await page.mouse.up();
   await expect(bobChip).toHaveCount(0);
 
@@ -1661,12 +1661,12 @@ test("custom personas share with people and keep export separate", async ({
     (
       (
         window as Window & {
-          __BUZZ_E2E_COMMAND_LOG__?: Array<{
+          __COREVIA_TALK_E2E_COMMAND_LOG__?: Array<{
             command: string;
             payload: { content?: string };
           }>;
         }
-      ).__BUZZ_E2E_COMMAND_LOG__ ?? []
+      ).__COREVIA_TALK_E2E_COMMAND_LOG__ ?? []
     ).filter((entry) => entry.command === "send_channel_message"),
   );
   expect(sentAgentMessages.at(-1)?.payload.content).toBe(
@@ -2365,12 +2365,12 @@ test("one share level selector drives both the link and send paths", async ({
     (
       (
         window as Window & {
-          __BUZZ_E2E_COMMAND_LOG__?: Array<{
+          __COREVIA_TALK_E2E_COMMAND_LOG__?: Array<{
             command: string;
             payload: { memoryLevel?: string };
           }>;
         }
-      ).__BUZZ_E2E_COMMAND_LOG__ ?? []
+      ).__COREVIA_TALK_E2E_COMMAND_LOG__ ?? []
     )
       .filter((entry) => entry.command === "encode_agent_snapshot_for_send")
       .map((entry) => entry.payload.memoryLevel),
@@ -2444,12 +2444,12 @@ test("one share level selector drives both the link and send paths", async ({
     (
       (
         window as Window & {
-          __BUZZ_E2E_COMMAND_LOG__?: Array<{
+          __COREVIA_TALK_E2E_COMMAND_LOG__?: Array<{
             command: string;
             payload: { memoryLevel?: string };
           }>;
         }
-      ).__BUZZ_E2E_COMMAND_LOG__ ?? []
+      ).__COREVIA_TALK_E2E_COMMAND_LOG__ ?? []
     )
       .filter((entry) => entry.command === "encode_agent_snapshot_for_send")
       .map((entry) => entry.payload.memoryLevel),
@@ -2466,12 +2466,12 @@ test("one share level selector drives both the link and send paths", async ({
     (
       (
         window as Window & {
-          __BUZZ_E2E_COMMAND_LOG__?: Array<{
+          __COREVIA_TALK_E2E_COMMAND_LOG__?: Array<{
             command: string;
             payload: unknown;
           }>;
         }
-      ).__BUZZ_E2E_COMMAND_LOG__ ?? []
+      ).__COREVIA_TALK_E2E_COMMAND_LOG__ ?? []
     )
       .filter((entry) => entry.command === "encode_agent_snapshot_for_send")
       .map((entry) => entry.payload),
@@ -2535,9 +2535,9 @@ test("people sharing blocks a timeout before encoding or upload", async ({
   await page.evaluate(() => {
     (
       window as Window & {
-        __BUZZ_E2E_ACTIVATE_TIMEOUT__?: (expiresAtMs: number) => void;
+        __COREVIA_TALK_E2E_ACTIVATE_TIMEOUT__?: (expiresAtMs: number) => void;
       }
-    ).__BUZZ_E2E_ACTIVATE_TIMEOUT__?.(Date.now() + 60_000);
+    ).__COREVIA_TALK_E2E_ACTIVATE_TIMEOUT__?.(Date.now() + 60_000);
   });
 
   await page.getByTestId("persona-share-send").click();
@@ -2575,17 +2575,17 @@ test("people sharing rechecks destination eligibility after encoding", async ({
 
   await page.evaluate(() => {
     const testWindow = window as Window & {
-      __BUZZ_E2E_MUTATE_CHANNEL__?: (options: {
+      __COREVIA_TALK_E2E_MUTATE_CHANNEL__?: (options: {
         channelId: string;
         channelType: "forum";
       }) => void;
-      __BUZZ_E2E_INVALIDATE_CHANNELS__?: () => Promise<void>;
+      __COREVIA_TALK_E2E_INVALIDATE_CHANNELS__?: () => Promise<void>;
     };
-    testWindow.__BUZZ_E2E_MUTATE_CHANNEL__?.({
+    testWindow.__COREVIA_TALK_E2E_MUTATE_CHANNEL__?.({
       channelId: "d1ec7000-d000-4000-8000-000000000001",
       channelType: "forum",
     });
-    return testWindow.__BUZZ_E2E_INVALIDATE_CHANNELS__?.();
+    return testWindow.__COREVIA_TALK_E2E_INVALIDATE_CHANNELS__?.();
   });
 
   await expect(
@@ -2911,7 +2911,7 @@ test("start pill morphs into the running dot without remounting the avatar", asy
   await expect
     .poll(() =>
       page.evaluate(() =>
-        window.__BUZZ_E2E_HAS_MOCK_LIVE_SUBSCRIPTION__?.({
+        window.__COREVIA_TALK_E2E_HAS_MOCK_LIVE_SUBSCRIPTION__?.({
           channelName: "agents",
           kind: 20001,
         }),
@@ -2919,7 +2919,7 @@ test("start pill morphs into the running dot without remounting the avatar", asy
     )
     .toBe(true);
   await page.evaluate((pubkey) => {
-    const emit = window.__BUZZ_E2E_EMIT_MOCK_PRESENCE__;
+    const emit = window.__COREVIA_TALK_E2E_EMIT_MOCK_PRESENCE__;
     if (!emit) throw new Error("Mock presence emitter is unavailable.");
     emit({ pubkey, status: "online" });
   }, pubkey);

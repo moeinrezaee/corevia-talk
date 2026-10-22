@@ -89,12 +89,12 @@ export function ChannelScreenHeader({
     <Button
       aria-label={
         terminalPanel.mode === "closed"
-          ? tl("Open Buzz Term")
-          : tl("Hide Buzz Term")
+          ? tl("Open Corevia Talk Term")
+          : tl("Hide Corevia Talk Term")
       }
       onClick={toggleTerminalPanel}
       size="icon"
-      title={tl("Buzz Term (⌘J)")}
+      title={tl("Corevia Talk Term (⌘J)")}
       type="button"
       variant={terminalPanel.mode === "closed" ? "outline" : "secondary"}
     >

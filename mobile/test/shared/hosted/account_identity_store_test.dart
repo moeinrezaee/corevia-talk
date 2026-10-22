@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nostr/nostr.dart' as nostr;
-import 'package:buzz/shared/hosted/account_identity_store.dart';
+import 'package:corevia_talk/shared/hosted/account_identity_store.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -93,7 +93,7 @@ void main() {
     () async {
       FlutterSecureStorage.setMockInitialValues({
         AccountIdentityStore.storageKey: 'broken',
-        'buzz_communities': 'legacy',
+        'corevia_talk_communities': 'legacy',
       });
       final store = AccountIdentityStore();
       await expectLater(
@@ -105,7 +105,7 @@ void main() {
         throwsA(AccountIdentityFailure.unreadable),
       );
       expect(
-        await const FlutterSecureStorage().read(key: 'buzz_communities'),
+        await const FlutterSecureStorage().read(key: 'corevia_talk_communities'),
         'legacy',
       );
     },

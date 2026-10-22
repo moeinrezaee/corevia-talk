@@ -16,7 +16,7 @@ enum HostedHpkeBackup {
     var sender = try HPKE.Sender(
       recipientKey: publicKey,
       ciphersuite: .P256_SHA256_AES_GCM_256,
-      info: Data("buzz/nsec-backup/v1".utf8)
+      info: Data("corevia-talk/nsec-backup/v1".utf8)
     )
     let ciphertext = try sender.seal(plaintext, authenticating: aad)
     guard sender.encapsulatedKey.count == 65, ciphertext.count == 48

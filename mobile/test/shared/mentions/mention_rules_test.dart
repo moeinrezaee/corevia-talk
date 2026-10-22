@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:buzz/shared/mentions/mention_rules.dart';
-import 'package:buzz/shared/mentions/mention_tags.dart';
+import 'package:corevia_talk/shared/mentions/mention_rules.dart';
+import 'package:corevia_talk/shared/mentions/mention_tags.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-// Portable fixtures, copied unchanged from buzz-app
+// Portable fixtures, copied unchanged from corevia-talk-app
 // src/bundled/mentions/mention-rules.fixtures.json (mention rules v1).
 final Map<String, dynamic> _fixtures =
     jsonDecode(

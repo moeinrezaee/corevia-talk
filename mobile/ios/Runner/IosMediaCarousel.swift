@@ -71,7 +71,7 @@ final class IosMediaCarousel: NSObject, FlutterPlatformView, UICollectionViewDat
   init(frame: CGRect, id: Int64, arguments: Any?, messenger: FlutterBinaryMessenger) {
     layout.scrollDirection = .horizontal
     collection = UICollectionView(frame: frame, collectionViewLayout: layout)
-    channel = FlutterMethodChannel(name: "buzz/ios_media_carousel/\(id)", binaryMessenger: messenger)
+    channel = FlutterMethodChannel(name: "corevia-talk/ios_media_carousel/\(id)", binaryMessenger: messenger)
     super.init()
     collection.backgroundColor = .clear
     collection.showsHorizontalScrollIndicator = false

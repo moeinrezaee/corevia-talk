@@ -2,7 +2,7 @@ import 'dart:async';
 import 'hosted_http_fixture.dart';
 import 'dart:convert';
 
-import 'package:buzz/shared/hosted/builderlab_account.dart';
+import 'package:corevia_talk/shared/hosted/builderlab_account.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -139,7 +139,7 @@ void main() {
       expect(await client.restore(), isNull);
     }
   });
-  const storageKey = 'buzz_hosted_session_app_builderlab_xyz_v1';
+  const storageKey = 'corevia_talk_hosted_session_app_builderlab_xyz_v1';
   String record(String subject, String credential) => jsonEncode({
     'origin': 'https://app.builderlab.xyz',
     'credential': credential,
@@ -285,22 +285,22 @@ void main() {
     expect(await stored(), isNull);
   });
 
-  test('authenticated post accepts only Buzz account routes', () async {
+  test('authenticated post accepts only Corevia Talk account routes', () async {
     final client = BuilderlabAccountClient(
       httpClient: MockClient((_) async => fail('no request expected')),
     );
     for (final path in [
       '/v1/auth/me',
-      '/v1/buzz',
-      '/v1/buzz/../auth/me',
-      '/v1/buzz/nsec-backups?x=1',
-      'https://evil.example/v1/buzz/nsec-backups',
-      '//evil.example/v1/buzz/nsec-backups',
+      '/v1/corevia-talk',
+      '/v1/corevia-talk/../auth/me',
+      '/v1/corevia-talk/nsec-backups?x=1',
+      'https://evil.example/v1/corevia-talk/nsec-backups',
+      '//evil.example/v1/corevia-talk/nsec-backups',
     ]) {
       expect(() => client.post(path, {}), throwsArgumentError, reason: path);
     }
     await expectLater(
-      client.post('/v1/buzz/nsec-backups/enrollment', {}),
+      client.post('/v1/corevia-talk/nsec-backups/enrollment', {}),
       throwsA(AccountFailure.signedOut),
     );
   });

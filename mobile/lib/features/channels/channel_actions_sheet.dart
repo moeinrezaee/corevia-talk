@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/clipboard_utils.dart';
 import '../../shared/identity_names/identity_names_provider.dart';
@@ -15,8 +15,8 @@ import '../../shared/widgets/sheet_action_section.dart';
 import '../../shared/widgets/app_list.dart';
 import '../../shared/widgets/app_list_card.dart';
 import '../../shared/widgets/avatar_image.dart';
-import '../../shared/widgets/buzz_action_tile.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_action_tile.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../shared/widgets/frosted_app_bar.dart';
 import '../../shared/widgets/frosted_scaffold.dart';
 import '../../shared/widgets/ios_glass_navigation_button.dart';
@@ -48,7 +48,7 @@ Future<bool?> showChannelActionsSheet({
   required bool isUnread,
   VoidCallback? onMarkRead,
   String? sectionId,
-}) => showBuzzModalBottomSheet<bool>(
+}) => showCoreviaTalkModalBottomSheet<bool>(
   context: context,
   isScrollControlled: true,
   showDragHandle: true,
@@ -186,7 +186,7 @@ class ChannelActionsSheet extends HookConsumerWidget {
                 children: [
                   if (!channel.isDm)
                     ListTile(
-                      leading: Icon(BuzzIcons.folderInput),
+                      leading: Icon(CoreviaTalkIcons.folderInput),
                       title: Text(tl('Move to section…')),
                       onTap: () async {
                         final pageContext = Navigator.of(
@@ -203,7 +203,7 @@ class ChannelActionsSheet extends HookConsumerWidget {
                       },
                     ),
                   ListTile(
-                    leading: Icon(isMuted ? BuzzIcons.bell : BuzzIcons.bellOff),
+                    leading: Icon(isMuted ? CoreviaTalkIcons.bell : CoreviaTalkIcons.bellOff),
                     title: Text(
                       isMuted ? tl('Unmute channel') : tl('Mute channel'),
                     ),
@@ -217,7 +217,7 @@ class ChannelActionsSheet extends HookConsumerWidget {
                   ),
                   if (!channel.isDm)
                     ListTile(
-                      leading: Icon(BuzzIcons.settings),
+                      leading: Icon(CoreviaTalkIcons.settings),
                       title: Text(tl('Manage channel')),
                       onTap: () async {
                         final shouldClose = await showManageChannelSheet(
@@ -238,7 +238,7 @@ class ChannelActionsSheet extends HookConsumerWidget {
               SheetActionSection(
                 children: [
                   ListTile(
-                    leading: Icon(BuzzIcons.copy),
+                    leading: Icon(CoreviaTalkIcons.copy),
                     title: Text(tl('Copy channel name')),
                     onTap: () {
                       close();
@@ -250,7 +250,7 @@ class ChannelActionsSheet extends HookConsumerWidget {
                     },
                   ),
                   ListTile(
-                    leading: Icon(BuzzIcons.hash),
+                    leading: Icon(CoreviaTalkIcons.hash),
                     title: Text(tl('Copy channel ID')),
                     onTap: () {
                       close();
@@ -268,7 +268,7 @@ class ChannelActionsSheet extends HookConsumerWidget {
                   children: [
                     if (channel.isMember && !channel.isArchived)
                       _ActionTile(
-                        icon: BuzzIcons.logOut,
+                        icon: CoreviaTalkIcons.logOut,
                         label: tl('Leave channel'),
                         destructive: true,
                         onTap: () => _confirmAndRun(
@@ -287,7 +287,7 @@ class ChannelActionsSheet extends HookConsumerWidget {
                     if (lifecycleCapabilitiesLoading)
                       ListTile(
                         enabled: false,
-                        leading: BuzzLoadingIndicator(
+                        leading: CoreviaTalkLoadingIndicator(
                           size: 20,
                           semanticLabel: tl('Loading channel actions'),
                         ),
@@ -296,13 +296,13 @@ class ChannelActionsSheet extends HookConsumerWidget {
                     else if (lifecycleCapabilitiesUnavailable)
                       ListTile(
                         enabled: false,
-                        leading: Icon(BuzzIcons.triangleAlert),
+                        leading: Icon(CoreviaTalkIcons.triangleAlert),
                         title: Text(tl('Channel actions unavailable')),
                       )
                     else ...[
                       if (canArchive)
                         _ActionTile(
-                          icon: BuzzIcons.archive,
+                          icon: CoreviaTalkIcons.archive,
                           label: tl('Archive channel'),
                           onTap: () => _confirmAndRun(
                             context,
@@ -317,7 +317,7 @@ class ChannelActionsSheet extends HookConsumerWidget {
                         ),
                       if (canUnarchive)
                         _ActionTile(
-                          icon: BuzzIcons.archiveRestore,
+                          icon: CoreviaTalkIcons.archiveRestore,
                           label: tl('Unarchive channel'),
                           onTap: () => _confirmAndRun(
                             context,
@@ -334,7 +334,7 @@ class ChannelActionsSheet extends HookConsumerWidget {
                         ),
                       if (canDelete)
                         _ActionTile(
-                          icon: BuzzIcons.trash2,
+                          icon: CoreviaTalkIcons.trash2,
                           label: tl('Delete channel'),
                           destructive: true,
                           onTap: () => _confirmAndRun(
@@ -379,7 +379,7 @@ class _ChannelQuickActionsRow extends StatelessWidget {
     children: [
       Expanded(
         child: _ChannelQuickAction(
-          icon: BuzzIcons.star,
+          icon: CoreviaTalkIcons.star,
           iconWidget: TablerStarIcon(
             color: context.colors.onSurface,
             filled: isStarred,
@@ -391,7 +391,7 @@ class _ChannelQuickActionsRow extends StatelessWidget {
       SizedBox(width: Grid.twelve),
       Expanded(
         child: _ChannelQuickAction(
-          icon: isUnread ? BuzzIcons.checkCheck : BuzzIcons.circleDot,
+          icon: isUnread ? CoreviaTalkIcons.checkCheck : CoreviaTalkIcons.circleDot,
           label: isUnread ? tl('Mark Read') : tl('Mark Unread'),
           onTap: onToggleRead,
         ),
@@ -488,7 +488,7 @@ Future<void> _confirmAndRun(
   required Future<void> Function() action,
 }) async {
   final pageContext = Navigator.of(sheetContext, rootNavigator: true).context;
-  final confirmed = await showBuzzDialog<bool>(
+  final confirmed = await showCoreviaTalkDialog<bool>(
     context: pageContext,
     builder: (dialogContext) => AlertDialog(
       title: Text(title),
@@ -529,7 +529,7 @@ Future<void> _showMoveSectionSheet(
 }) async {
   final sections = [...ref.read(channelSectionsProvider).store.sections]
     ..sort((a, b) => a.order.compareTo(b.order));
-  await showBuzzModalBottomSheet<void>(
+  await showCoreviaTalkModalBottomSheet<void>(
     context: context,
     showDragHandle: true,
     builder: (sheetContext) => SafeArea(
@@ -546,11 +546,11 @@ Future<void> _showMoveSectionSheet(
             children: [
               for (final section in sections)
                 ListTile(
-                  leading: const Icon(BuzzIcons.folder),
+                  leading: const Icon(CoreviaTalkIcons.folder),
                   title: Text(section.name),
                   trailing: sectionId == section.id
                       ? Icon(
-                          BuzzIcons.check,
+                          CoreviaTalkIcons.check,
                           color: sheetContext.colors.primary,
                         )
                       : null,
@@ -562,7 +562,7 @@ Future<void> _showMoveSectionSheet(
                   },
                 ),
               ListTile(
-                leading: Icon(BuzzIcons.folderPlus),
+                leading: Icon(CoreviaTalkIcons.folderPlus),
                 title: Text(tl('New section…')),
                 onTap: () async {
                   Navigator.of(sheetContext).pop();
@@ -583,7 +583,7 @@ Future<void> _showMoveSectionSheet(
               ),
               if (sectionId != null)
                 ListTile(
-                  leading: Icon(BuzzIcons.folderMinus),
+                  leading: Icon(CoreviaTalkIcons.folderMinus),
                   title: Text(tl('Remove from section')),
                   onTap: () {
                     Navigator.of(sheetContext).pop();
@@ -602,7 +602,7 @@ Future<void> _showMoveSectionSheet(
 
 Future<String?> _showSectionNameDialog(BuildContext context) async {
   final controller = TextEditingController();
-  final result = await showBuzzDialog<String>(
+  final result = await showCoreviaTalkDialog<String>(
     context: context,
     builder: (dialogContext) => AlertDialog(
       title: Text(tl('New Section')),

@@ -29,7 +29,7 @@ fn restrictions_url(
     {
         return Err(RELAY_SCOPE_CHANGED.to_string());
     }
-    let host = buzz_core_pkg::tenant::validate_community_host(community_host.trim())
+    let host = corevia_talk_core_pkg::tenant::validate_community_host(community_host.trim())
         .map_err(|e| format!("invalid community host: {e}"))?;
     let q = routes::AdminQuery {
         community_host: Some(host),

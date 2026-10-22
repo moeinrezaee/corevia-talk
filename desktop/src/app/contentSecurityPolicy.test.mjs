@@ -130,19 +130,19 @@ test("pinned script source check rejects broad sources", () => {
   }
 });
 
-test("media directives allow the buzz-media scheme", () => {
-  // `rewriteRelayUrl` emits `buzz-media://localhost/...` until the loopback
+test("media directives allow the corevia-talk-media scheme", () => {
+  // `rewriteRelayUrl` emits `corevia-talk-media://localhost/...` until the loopback
   // proxy port resolves, so cold-start media renders through the custom
-  // scheme (mapped to `http://buzz-media.localhost` on Windows).
+  // scheme (mapped to `http://corevia-talk-media.localhost` on Windows).
   for (const directive of ["img-src", "media-src", "connect-src"]) {
     const allowed = sources(directive);
     assert.ok(
-      allowed.includes("buzz-media:"),
-      `${directive} must allow buzz-media:`,
+      allowed.includes("corevia-talk-media:"),
+      `${directive} must allow corevia-talk-media:`,
     );
     assert.ok(
-      allowed.includes("http://buzz-media.localhost"),
-      `${directive} must allow http://buzz-media.localhost`,
+      allowed.includes("http://corevia-talk-media.localhost"),
+      `${directive} must allow http://corevia-talk-media.localhost`,
     );
   }
 });

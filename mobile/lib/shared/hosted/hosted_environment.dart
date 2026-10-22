@@ -18,7 +18,7 @@ abstract final class HostedEnvironment {
   /// Comma-separated DNS domains requiring Builderlab authentication.
   /// Empty builds keep Nostr-only entry available, including hosted QR pairing.
   static final List<String> authDomains = List.unmodifiable(
-    const String.fromEnvironment('BUZZ_AUTH_DOMAINS')
+    const String.fromEnvironment('COREVIA_TALK_AUTH_DOMAINS')
         .split(',')
         .map(
           (domain) =>
@@ -30,7 +30,7 @@ abstract final class HostedEnvironment {
             r'^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)*$',
           ).hasMatch(domain)) {
             throw StateError(
-              'BUZZ_AUTH_DOMAINS must contain DNS names, not URLs or wildcards',
+              'COREVIA_TALK_AUTH_DOMAINS must contain DNS names, not URLs or wildcards',
             );
           }
           return domain;
@@ -68,7 +68,7 @@ abstract final class HostedEnvironment {
 
   static Uri _origin() {
     const configured = String.fromEnvironment(
-      'BUZZ_BUILDERLAB_URL',
+      'COREVIA_TALK_BUILDERLAB_URL',
       defaultValue: 'https://app.builderlab.xyz',
     );
     final uri = Uri.parse(configured);

@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:buzz/features/channels/composer_send_origin.dart';
-import 'package:buzz/features/channels/local_message_send_animation_provider.dart';
-import 'package:buzz/features/channels/local_message_send_transition.dart';
+import 'package:corevia_talk/features/channels/composer_send_origin.dart';
+import 'package:corevia_talk/features/channels/local_message_send_animation_provider.dart';
+import 'package:corevia_talk/features/channels/local_message_send_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

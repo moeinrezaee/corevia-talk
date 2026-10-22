@@ -157,7 +157,7 @@ test("creates a narrowly triggered workflow without an activation warning", asyn
     page.getByTestId("workflow-activation-confirmation"),
   ).toHaveCount(0);
   const yaml = await page.evaluate(() => {
-    const call = [...(window.__BUZZ_E2E_COMMAND_PAYLOADS__ ?? [])]
+    const call = [...(window.__COREVIA_TALK_E2E_COMMAND_PAYLOADS__ ?? [])]
       .reverse()
       .find((candidate) => candidate.command === "create_workflow");
     return (call?.payload as { yamlDefinition?: string } | undefined)
@@ -416,9 +416,9 @@ test("rejects a stale card toggle without overwriting a newer edit", async ({
     .first();
 
   await page.evaluate(async (name) => {
-    const invoke = window.__BUZZ_E2E_INVOKE_MOCK_COMMAND__;
+    const invoke = window.__COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__;
     if (!invoke) throw new Error("mock command bridge unavailable");
-    const createCall = [...(window.__BUZZ_E2E_COMMAND_PAYLOADS__ ?? [])]
+    const createCall = [...(window.__COREVIA_TALK_E2E_COMMAND_PAYLOADS__ ?? [])]
       .reverse()
       .find((call) => call.command === "create_workflow");
     const channelId = (
@@ -451,9 +451,9 @@ test("rejects a stale card toggle without overwriting a newer edit", async ({
       .filter({ hasText: "workflow changed since it was loaded" }),
   ).toBeVisible();
   const authoritativeName = await page.evaluate(async () => {
-    const invoke = window.__BUZZ_E2E_INVOKE_MOCK_COMMAND__;
+    const invoke = window.__COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__;
     if (!invoke) throw new Error("mock command bridge unavailable");
-    const createCall = [...(window.__BUZZ_E2E_COMMAND_PAYLOADS__ ?? [])]
+    const createCall = [...(window.__COREVIA_TALK_E2E_COMMAND_PAYLOADS__ ?? [])]
       .reverse()
       .find((call) => call.command === "create_workflow");
     const channelId = (
@@ -474,9 +474,9 @@ test("reports a rejected workflow status change", async ({ page }) => {
   await navigateToWorkflows(page);
   await createWorkflow(page, workflowName);
   await page.evaluate(() => {
-    window.__BUZZ_E2E__ ??= {};
-    window.__BUZZ_E2E__.mock ??= {};
-    window.__BUZZ_E2E__.mock.workflowUpdateError = "relay refused the update";
+    window.__COREVIA_TALK_E2E__ ??= {};
+    window.__COREVIA_TALK_E2E__.mock ??= {};
+    window.__COREVIA_TALK_E2E__.mock.workflowUpdateError = "relay refused the update";
   });
 
   const workflowCard = page
@@ -586,7 +586,7 @@ test("duplicates a workflow", async ({ page }) => {
     .poll(() =>
       page.evaluate(
         () =>
-          (window.__BUZZ_E2E_COMMAND_PAYLOADS__ ?? []).filter(
+          (window.__COREVIA_TALK_E2E_COMMAND_PAYLOADS__ ?? []).filter(
             (call) => call.command === "create_workflow",
           ).length,
       ),
@@ -599,7 +599,7 @@ test("duplicates a workflow", async ({ page }) => {
   await expect(page.getByRole("dialog")).not.toBeVisible();
 
   const copiedYaml = await page.evaluate(() => {
-    const calls = (window.__BUZZ_E2E_COMMAND_PAYLOADS__ ?? []).filter(
+    const calls = (window.__COREVIA_TALK_E2E_COMMAND_PAYLOADS__ ?? []).filter(
       (call) => call.command === "create_workflow",
     );
     return (calls.at(-1)?.payload as { yamlDefinition?: string } | undefined)
@@ -680,9 +680,9 @@ test("rejected deletion keeps the confirmation, editor, and draft", async ({
     ),
   );
   await page.evaluate(() => {
-    window.__BUZZ_E2E__ ??= {};
-    window.__BUZZ_E2E__.mock ??= {};
-    window.__BUZZ_E2E__.mock.workflowDeleteError = "relay refused deletion";
+    window.__COREVIA_TALK_E2E__ ??= {};
+    window.__COREVIA_TALK_E2E__.mock ??= {};
+    window.__COREVIA_TALK_E2E__.mock.workflowDeleteError = "relay refused deletion";
   });
 
   await editor.getByRole("button", { name: "Workflow actions" }).click();
@@ -933,7 +933,7 @@ test("stale editor save preserves the local draft and reports the conflict", asy
   await dialog.getByRole("button", { name: "Save workflow name" }).click();
 
   await page.evaluate(async () => {
-    const invoke = window.__BUZZ_E2E_INVOKE_MOCK_COMMAND__;
+    const invoke = window.__COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__;
     if (!invoke) throw new Error("mock command bridge unavailable");
     const workflowId = new URL(window.location.href).hash.match(
       /workflows\/([^?]+)/,
@@ -962,7 +962,7 @@ test("unsupported workflow opens canonical YAML without a fabricated sequence", 
   const workflowName = `unsupported_detail_${Date.now()}`;
   await navigateToWorkflows(page);
   const workflowId = await page.evaluate(async (name) => {
-    const invoke = window.__BUZZ_E2E_INVOKE_MOCK_COMMAND__;
+    const invoke = window.__COREVIA_TALK_E2E_INVOKE_MOCK_COMMAND__;
     if (!invoke) throw new Error("mock command bridge unavailable");
     const workflow = (await invoke("create_workflow", {
       channelId: "94a444a4-c0a3-5966-ab05-530c6ddc2301",
@@ -1052,7 +1052,7 @@ test("card click opens the animated trigger inspector, triggers a run, and hides
   ).toHaveAttribute("aria-pressed", "true");
   const triggerCallsBefore = await page.evaluate(
     () =>
-      window.__BUZZ_E2E_COMMAND_PAYLOADS__?.filter(
+      window.__COREVIA_TALK_E2E_COMMAND_PAYLOADS__?.filter(
         (call) => call.command === "trigger_workflow",
       ).length ?? 0,
   );
@@ -1062,7 +1062,7 @@ test("card click opens the animated trigger inspector, triggers a run, and hides
     .poll(async () =>
       page.evaluate(
         () =>
-          window.__BUZZ_E2E_COMMAND_PAYLOADS__?.filter(
+          window.__COREVIA_TALK_E2E_COMMAND_PAYLOADS__?.filter(
             (call) => call.command === "trigger_workflow",
           ).length ?? 0,
       ),

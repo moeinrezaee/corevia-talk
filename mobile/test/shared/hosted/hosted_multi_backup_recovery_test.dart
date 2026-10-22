@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:buzz/shared/hosted/account_identity_store.dart';
-import 'package:buzz/shared/hosted/builderlab_account.dart';
-import 'package:buzz/shared/hosted/device_identity_source.dart';
-import 'package:buzz/shared/hosted/hosted_identity_service.dart';
+import 'package:corevia_talk/shared/hosted/account_identity_store.dart';
+import 'package:corevia_talk/shared/hosted/builderlab_account.dart';
+import 'package:corevia_talk/shared/hosted/device_identity_source.dart';
+import 'package:corevia_talk/shared/hosted/hosted_identity_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -44,7 +44,7 @@ void main() {
       {'name': 'Existing', 'nsec': keys[2].nsec, 'pubkey': keys[2].public},
     ]);
     FlutterSecureStorage.setMockInitialValues({
-      'buzz_communities': communityJson,
+      'corevia_talk_communities': communityJson,
     });
     store = AccountIdentityStore(subject: 'a');
     recoveryCalls = 0;
@@ -112,7 +112,7 @@ void main() {
 
   Future<void> expectCommunityPreserved() async {
     expect(
-      await const FlutterSecureStorage().read(key: 'buzz_communities'),
+      await const FlutterSecureStorage().read(key: 'corevia_talk_communities'),
       communityJson,
     );
   }

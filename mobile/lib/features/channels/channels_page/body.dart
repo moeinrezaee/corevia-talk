@@ -260,9 +260,9 @@ class _SliverChannelsList extends HookConsumerWidget {
               alignment: AlignmentDirectional.centerStart,
               child: TextButton.icon(
                 key: const Key('browse-channels-button'),
-                icon: const Icon(BuzzIcons.compass),
+                icon: const Icon(CoreviaTalkIcons.compass),
                 label: Text(tl('Browse channels')),
-                onPressed: () => showBuzzModalBottomSheet<void>(
+                onPressed: () => showCoreviaTalkModalBottomSheet<void>(
                   context: context,
                   title: 'Browse channels',
                   constraints: _quickActionSheetConstraints(context),
@@ -317,7 +317,7 @@ class _SliverChannelsList extends HookConsumerWidget {
                     userSections.first.id != section.id,
                 onToggle: () => toggleSection(section.id),
                 onRename: () async {
-                  final name = await showBuzzDialog<String>(
+                  final name = await showCoreviaTalkDialog<String>(
                     context: context,
                     builder: (_) => _SectionNameDialog(
                       title: tl('Rename Section'),
@@ -332,7 +332,7 @@ class _SliverChannelsList extends HookConsumerWidget {
                   }
                 },
                 onDelete: () async {
-                  final confirmed = await showBuzzDialog<bool>(
+                  final confirmed = await showCoreviaTalkDialog<bool>(
                     context: context,
                     builder: (_) => AlertDialog(
                       title: Text(tlt('Delete "{0}"?', [section.name])),

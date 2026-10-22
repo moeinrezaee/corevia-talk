@@ -24,7 +24,7 @@ Future<String?> _name(
     final theme = utilitySurfaceThemeData(Theme.of(context));
     try {
       return await const MethodChannel(
-        'buzz/profile_text_editor',
+        'corevia-talk/profile_text_editor',
       ).invokeMethod<String>('presentProject', {
         'title': title,
         'initialValue': initialValue,
@@ -41,7 +41,7 @@ Future<String?> _name(
     }
   }
   if (!context.mounted) return null;
-  return showBuzzModalBottomSheet<String>(
+  return showCoreviaTalkModalBottomSheet<String>(
     context: context,
     title: title,
     isScrollControlled: true,
@@ -120,7 +120,7 @@ class _MeChatRow extends StatelessWidget {
                 width: 22,
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Icon(BuzzIcons.messageCircle, size: 18, color: color),
+                  child: Icon(CoreviaTalkIcons.messageCircle, size: 18, color: color),
                 ),
               ),
               const SizedBox(width: Grid.xxs),

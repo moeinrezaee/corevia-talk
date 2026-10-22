@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../shared/widgets/buzz_agent_icon.dart';
+import '../../shared/widgets/corevia_talk_agent_icon.dart';
 
 import '../../shared/theme/theme.dart';
 
@@ -46,7 +46,7 @@ class MessageMentionPill extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         if (isAgent)
-          BuzzAgentIcon(size: fontSize, color: context.colors.primary)
+          CoreviaTalkAgentIcon(size: fontSize, color: context.colors.primary)
         else
           Transform.translate(
             offset: const Offset(0, -Grid.quarter),

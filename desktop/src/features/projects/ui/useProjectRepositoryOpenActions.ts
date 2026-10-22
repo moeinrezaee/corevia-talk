@@ -43,7 +43,7 @@ export function useProjectRepositoryOpenActions({
     if (!localRepositoryPath || !repository || !cloneUrl) {
       toast.error(tl("Couldn’t open repository folder"), {
         description: tl(
-          "Buzz could not find this repository’s local checkout.",
+          "Corevia Talk could not find this repository’s local checkout.",
         ),
       });
       return;
@@ -57,7 +57,7 @@ export function useProjectRepositoryOpenActions({
     } catch {
       toast.error(tl("Couldn’t open repository folder"), {
         description: tl(
-          "Buzz could not open this checkout in your file browser.",
+          "Corevia Talk could not open this checkout in your file browser.",
         ),
       });
     }

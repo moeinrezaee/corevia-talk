@@ -51,13 +51,13 @@ const CLAUDE_MODELS = {
 };
 
 /**
- * `origin` is the tier the reported effort resolved from; only `buzzExplicit`
+ * `origin` is the tier the reported effort resolved from; only `coreviaTalkExplicit`
  * is the agent's own saved level.
  */
 function surface(
   effort?: { configId: string; options: string[] },
   storedEffort?: string,
-  origin = "buzzExplicit",
+  origin = "coreviaTalkExplicit",
 ) {
   return {
     runtimeId: "claude",
@@ -73,7 +73,7 @@ function surface(
             origin,
             writeVia: {
               type: "respawnWithEnvVar",
-              envKey: "BUZZ_ACP_EFFORT_LEVEL",
+              envKey: "COREVIA_TALK_ACP_EFFORT_LEVEL",
             },
             overriddenValue: null,
             overriddenOrigin: null,
@@ -128,7 +128,7 @@ async function install(page: Page, mock: MockBridgeOptions = {}) {
 async function payloadsFor(page: Page, command: string) {
   return page.evaluate(
     (name) =>
-      (window.__BUZZ_E2E_COMMAND_PAYLOADS__ ?? [])
+      (window.__COREVIA_TALK_E2E_COMMAND_PAYLOADS__ ?? [])
         .filter((entry) => entry.command === name)
         .map((entry) => entry.payload as { input: Record<string, unknown> }),
     command,
@@ -163,13 +163,13 @@ const ADAPTER_LEVELS = ["Adapter default", "low", "medium", "high"];
 
 /** A build-baked model, which never launches with Claude. */
 function bakedModel(value: string) {
-  return { bakedBuildEnv: [{ key: "BUZZ_AGENT_MODEL", value, masked: false }] };
+  return { bakedBuildEnv: [{ key: "COREVIA_TALK_AGENT_MODEL", value, masked: false }] };
 }
 
 /** Make the next discovery hang (`pending`) or reject (`failed`). */
 async function stallDiscovery(page: Page, mode: "pending" | "failed") {
   await page.evaluate((nextMode) => {
-    const mock = window.__BUZZ_E2E__?.mock;
+    const mock = window.__COREVIA_TALK_E2E__?.mock;
     if (!mock) throw new Error("mock bridge missing");
     if (nextMode === "pending") mock.discoverAgentModelsDelayMs = 60_000;
     else mock.discoverAgentModelsError = "discovery failed";
@@ -611,7 +611,7 @@ test.describe("create dialog", () => {
   }) => {
     await install(page, {
       backendProviders: [
-        { id: "kubernetes", binaryPath: "/mock/buzz-backend-kubernetes" },
+        { id: "kubernetes", binaryPath: "/mock/corevia-talk-backend-kubernetes" },
       ],
       backendProviderProbeResult: {
         ok: true,
@@ -666,7 +666,7 @@ test.describe("create dialog", () => {
     await dialog.getByRole("button", { name: "Save changes" }).click();
     await expect(dialog).toHaveCount(0);
     const saves = await page.evaluate(() =>
-      (window.__BUZZ_E2E_COMMAND_PAYLOADS__ ?? []).filter((entry) =>
+      (window.__COREVIA_TALK_E2E_COMMAND_PAYLOADS__ ?? []).filter((entry) =>
         /persona|managed_agent/.test(entry.command),
       ),
     );

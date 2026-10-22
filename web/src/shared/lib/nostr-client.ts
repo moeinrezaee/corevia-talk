@@ -78,7 +78,7 @@ export function queryEvents(
 
     ws.addEventListener("open", () => {
       // Wait briefly for an AUTH challenge before sending REQ.
-      // Buzz relays always send AUTH, but other relays may not.
+      // Corevia Talk relays always send AUTH, but other relays may not.
       unauthenticatedReqTimer = setTimeout(() => sendReq(), 100);
     });
 

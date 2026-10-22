@@ -13,7 +13,7 @@ import '../../shared/widgets/frosted_app_bar.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/security/sensitive_action_authorizer.dart';
 import '../../shared/error_haptic.dart';
@@ -23,7 +23,7 @@ import '../../shared/deeplink/pending_deep_link_provider.dart';
 import '../../shared/community/community.dart';
 import '../../shared/community/community_loading_surface.dart';
 import '../../shared/theme/theme.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../shared/widgets/ios_glass_navigation_button.dart';
 import 'pairing_page/onboarding_wordmark.dart';
 import 'pairing_provider.dart';
@@ -45,7 +45,7 @@ class PairingPage extends HookConsumerWidget {
   /// (user is already authenticated with at least one community).
   final bool addingCommunity;
   final bool identityRecoveryOnly;
-  final VoidCallback? onAlreadyUseBuzz;
+  final VoidCallback? onAlreadyUseCoreviaTalk;
   final VoidCallback? onWelcomeBack;
   final bool connectionLanding;
   final bool existingUser;
@@ -63,7 +63,7 @@ class PairingPage extends HookConsumerWidget {
     super.key,
     this.addingCommunity = false,
     this.identityRecoveryOnly = false,
-    this.onAlreadyUseBuzz,
+    this.onAlreadyUseCoreviaTalk,
     this.onWelcomeBack,
     this.connectionLanding = false,
     this.existingUser = false,
@@ -110,7 +110,7 @@ class PairingPage extends HookConsumerWidget {
       if (code != null && context.mounted) {
         if (connectionLanding && !existingUser) {
           final uri = Uri.tryParse(code.trim());
-          final link = uri == null ? null : parseBuzzDeepLink(uri);
+          final link = uri == null ? null : parseCoreviaTalkDeepLink(uri);
           if (link is InviteDeepLink || link is AddCommunityDeepLink) {
             ref.read(pendingDeepLinkProvider.notifier).open(uri!);
             return;
@@ -196,7 +196,7 @@ class PairingPage extends HookConsumerWidget {
                         )
                       : IconButton(
                           icon: const BidiFlip(
-                            child: Icon(BuzzIcons.arrowLeft),
+                            child: Icon(CoreviaTalkIcons.arrowLeft),
                           ),
                           tooltip: tl('Back'),
                           onPressed: () => Navigator.of(context).pop(),
@@ -271,7 +271,7 @@ class PairingPage extends HookConsumerWidget {
                 appBar: pairingAppBar,
                 body: SafeArea(
                   child: _PairingWelcomeView(
-                    onAlreadyUseBuzz: onAlreadyUseBuzz,
+                    onAlreadyUseCoreviaTalk: onAlreadyUseCoreviaTalk,
                     onWelcomeBack: onWelcomeBack,
                     connectionLanding: connectionLanding,
                     existingUser: existingUser,

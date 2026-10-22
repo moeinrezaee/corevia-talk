@@ -62,8 +62,8 @@ class _ChannelTile extends ConsumerWidget {
                   alignment: AlignmentDirectional.centerStart,
                   child: Icon(
                     channel.visibility == 'private'
-                        ? BuzzIcons.lock
-                        : BuzzIcons.hash,
+                        ? CoreviaTalkIcons.lock
+                        : CoreviaTalkIcons.hash,
                     key: ValueKey('channel-icon-${channel.id}'),
                     size: _kChannelIconSize,
                     color: contentColor,
@@ -111,7 +111,7 @@ class _ChannelTile extends ConsumerWidget {
                 width: _kChannelIconSize,
                 child: Center(
                   child: Icon(
-                    BuzzIcons.bellOff,
+                    CoreviaTalkIcons.bellOff,
                     size: 12,
                     color: navigationMetadataForeground(context),
                   ),

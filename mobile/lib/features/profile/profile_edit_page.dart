@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/profile/user_profile.dart';
 import '../../shared/relay/relay.dart';
@@ -13,7 +13,7 @@ import '../../shared/emoji/emoji_data_provider.dart';
 import '../../shared/theme/theme.dart';
 import '../../shared/widgets/app_list.dart';
 import '../../shared/widgets/app_list_card.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../shared/widgets/frosted_app_bar.dart';
 import '../../shared/widgets/frosted_scaffold.dart';
 import '../../shared/widgets/ios_glass_navigation_action.dart';
@@ -92,7 +92,7 @@ class ProfileEditPage extends HookConsumerWidget {
       required String hintText,
       required Future<void> Function(String value) onSave,
       bool multiline = false,
-    }) => showBuzzModalBottomSheet<void>(
+    }) => showCoreviaTalkModalBottomSheet<void>(
       context: context,
       title: title,
       isScrollControlled: true,
@@ -315,7 +315,7 @@ class ProfileEditPage extends HookConsumerWidget {
                             ? null
                             : () => unawaited(closeAvatarEditor()),
                         icon: const BidiFlip(
-                          child: Icon(BuzzIcons.arrowLeft),
+                          child: Icon(CoreviaTalkIcons.arrowLeft),
                         ),
                       )
               : null,
@@ -609,7 +609,7 @@ class _ProfileActionPill extends StatelessWidget {
             vertical: Grid.xxs,
           ),
           child: isBusy
-              ? BuzzLoadingIndicator(
+              ? CoreviaTalkLoadingIndicator(
                   size: 18,
                   semanticLabel: tl('Saving profile photo'),
                 )
@@ -634,7 +634,7 @@ class _EditChevron extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BidiFlip(
     child: Icon(
-      BuzzIcons.chevronRight,
+      CoreviaTalkIcons.chevronRight,
       size: 18,
       color: context.colors.onSurfaceVariant,
     ),

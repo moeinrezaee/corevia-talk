@@ -1,8 +1,8 @@
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/widgets/frosted_app_bar.dart';
-import 'package:buzz/shared/widgets/frosted_scroll_under_scope.dart';
-import 'package:buzz/shared/widgets/ios_glass_navigation_button.dart';
-import 'package:buzz/shared/widgets/ios_navigation_bar.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/widgets/frosted_app_bar.dart';
+import 'package:corevia_talk/shared/widgets/frosted_scroll_under_scope.dart';
+import 'package:corevia_talk/shared/widgets/ios_glass_navigation_button.dart';
+import 'package:corevia_talk/shared/widgets/ios_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';

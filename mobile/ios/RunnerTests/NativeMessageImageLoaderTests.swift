@@ -1,6 +1,6 @@
 import UIKit
 import XCTest
-@testable import Buzz
+@testable import Corevia Talk
 
 final class NativeMessageImageLoaderTests: XCTestCase {
   private func loader(limit: Int = 1) -> NativeMessageImageLoader {

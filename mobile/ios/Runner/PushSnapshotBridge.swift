@@ -1,31 +1,31 @@
-import BuzzPushKit
+import CoreviaTalkPushKit
 import Flutter
 import Foundation
 import Intents
 import UserNotifications
 
-final class BuzzPushSnapshotBridge {
+final class CoreviaTalkPushSnapshotBridge {
   private let containerURL: () -> URL?
-  private let endpointGrantStore: BuzzPushEndpointGrantKeychainStore
-  private let interactionDeletionDeadline: BuzzInteractionDeletionDeadline
+  private let endpointGrantStore: CoreviaTalkPushEndpointGrantKeychainStore
+  private let interactionDeletionDeadline: CoreviaTalkInteractionDeletionDeadline
   private let keychainAccessGroup: String?
   private let queue = DispatchQueue(
-    label: "xyz.block.buzz.push-snapshot",
+    label: "xyz.block.coreviatalk.push-snapshot",
     qos: .utility
   )
-  private lazy var store: BuzzPushPresentationCacheStore? = {
+  private lazy var store: CoreviaTalkPushPresentationCacheStore? = {
     guard let container = containerURL() else { return nil }
-    return BuzzPushPresentationCacheStore(containerURL: container)
+    return CoreviaTalkPushPresentationCacheStore(containerURL: container)
   }()
-  private let ageRestrictionSession = BuzzAgeRestrictionSession()
+  private let ageRestrictionSession = CoreviaTalkAgeRestrictionSession()
 
   init(
     appGroupIdentifier: String?,
-    endpointGrantStore: BuzzPushEndpointGrantKeychainStore,
+    endpointGrantStore: CoreviaTalkPushEndpointGrantKeychainStore,
     keychainAccessGroup: String?,
     containerURL: (() -> URL?)? = nil,
-    interactionDeletionDeadline: BuzzInteractionDeletionDeadline =
-      BuzzInteractionDeletionDeadline(
+    interactionDeletionDeadline: CoreviaTalkInteractionDeletionDeadline =
+      CoreviaTalkInteractionDeletionDeadline(
         timeout: 5,
         deleteAllInteractions: { completion in
           INInteraction.deleteAll(completion: completion)
@@ -53,7 +53,7 @@ final class BuzzPushSnapshotBridge {
     if call.method == "restoreAgeRestrictedNotifications" {
       queue.async { [self] in
         ageRestrictionSession.release()
-        BuzzInteractionCleanupRetry(
+        CoreviaTalkInteractionCleanupRetry(
           containerURL: containerURL(), deletion: interactionDeletionDeadline
         ).retryPending { error in
           Self.complete(result, value: error.map {
@@ -93,7 +93,7 @@ final class BuzzPushSnapshotBridge {
       do {
         guard let self, let container = containerURL() else {
           throw NSError(
-            domain: "BuzzPushSnapshotBridge",
+            domain: "CoreviaTalkPushSnapshotBridge",
             code: 1,
             userInfo: [
               NSLocalizedDescriptionKey: "The age-restriction session container is unavailable."
@@ -106,7 +106,7 @@ final class BuzzPushSnapshotBridge {
         let center = UNUserNotificationCenter.current()
         center.removeAllDeliveredNotifications()
         center.removeAllPendingNotificationRequests()
-        BuzzInteractionCleanupRetry(
+        CoreviaTalkInteractionCleanupRetry(
           containerURL: container, deletion: interactionDeletionDeadline
         ).request { error in
           Self.complete(
@@ -140,7 +140,7 @@ final class BuzzPushSnapshotBridge {
   ) {
     guard let communities = arguments["communities"] as? [[String: Any]],
       let signingKeys = arguments["signingKeys"] as? [String: String],
-      communities.count <= BuzzPushPresentationCacheStore.maximumCommunities,
+      communities.count <= CoreviaTalkPushPresentationCacheStore.maximumCommunities,
       !requiresStore || arguments["settleFence"] is Bool
     else {
       result(
@@ -198,7 +198,7 @@ final class BuzzPushSnapshotBridge {
         let decoded = try JSONDecoder().decode([PushLeaseCommunity].self, from: data)
         // Ordinary snapshot maintenance never changes age access.
         try store.replaceCommunities(decoded)
-        try BuzzPushKeychain.replace(
+        try CoreviaTalkPushKeychain.replace(
           signingKeys: signingKeys,
           accessGroup: self.keychainAccessGroup
         )
@@ -218,13 +218,13 @@ final class BuzzPushSnapshotBridge {
 
   static func relayMetadataPubkey(
     relayURL: String,
-    grants: [BuzzPushEndpointGrantRecord]
+    grants: [CoreviaTalkPushEndpointGrantRecord]
   ) -> String? {
-    guard let origin = BuzzPushPresentationCacheStore.canonicalRelayOrigin(relayURL) else {
+    guard let origin = CoreviaTalkPushPresentationCacheStore.canonicalRelayOrigin(relayURL) else {
       return nil
     }
     return grants.filter {
-      BuzzPushPresentationCacheStore.canonicalRelayOrigin($0.relayOrigin) == origin
+      CoreviaTalkPushPresentationCacheStore.canonicalRelayOrigin($0.relayOrigin) == origin
     }.max {
       $0.generation < $1.generation
     }?.relayMetadataPubkey

@@ -1,4 +1,4 @@
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -36,7 +36,7 @@ Future<bool?> showManageChannelSheet({
 
   if (defaultTargetPlatform == TargetPlatform.iOS) {
     final theme = utilitySurfaceThemeData(Theme.of(context));
-    const bridge = MethodChannel('buzz/profile_text_editor');
+    const bridge = MethodChannel('corevia-talk/profile_text_editor');
     // Start the provider without delaying metadata editing on relay I/O.
     // A cold or failed canvas can be loaded/retried from its row.
     final cachedCanvas = container
@@ -124,7 +124,7 @@ Future<bool?> showManageChannelSheet({
     }
   }
   if (!context.mounted || !canPresent()) return false;
-  return showBuzzModalBottomSheet<bool>(
+  return showCoreviaTalkModalBottomSheet<bool>(
     context: context,
     title: 'Edit channel',
     isScrollControlled: true,
@@ -368,7 +368,7 @@ class ManageChannelSheet extends HookConsumerWidget {
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                 ),
-                trailing: Icon(BuzzIcons.chevronRight),
+                trailing: Icon(CoreviaTalkIcons.chevronRight),
                 enabled: canEditCanvas && !busy,
                 onTap: canEditCanvas && !busy ? editCanvas : null,
               ),

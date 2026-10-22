@@ -6,10 +6,10 @@ import {
   deriveNumericDescriptors,
   structuredEnvKeys,
 } from "./agentConfigCore.ts";
-import { NUMERIC_KIND_MIN } from "../ui/buzzAgentModelTuningFields.tsx";
+import { NUMERIC_KIND_MIN } from "../ui/coreviaTalkAgentModelTuningFields.tsx";
 
 const config = {
-  env_vars: { BUZZ_AGENT_THINKING_EFFORT: "high" },
+  env_vars: { COREVIA_TALK_AGENT_THINKING_EFFORT: "high" },
   model: "test-model",
   preferred_runtime: null,
   provider: "anthropic",
@@ -46,13 +46,13 @@ function field(model, kind) {
   return model.fields.find((candidate) => candidate.kind === kind);
 }
 
-test("Buzz Agent exposes provider, model, and Buzz-owned effort", () => {
+test("Corevia Talk Agent exposes provider, model, and CoreviaTalk-owned effort", () => {
   const model = deriveAgentConfigFieldModel({
     config,
-    runtime: runtime("buzz-agent", {
-      modelEnvVar: "BUZZ_AGENT_MODEL",
-      providerEnvVar: "BUZZ_AGENT_PROVIDER",
-      thinkingEnvVar: "BUZZ_AGENT_THINKING_EFFORT",
+    runtime: runtime("corevia-talk-agent", {
+      modelEnvVar: "COREVIA_TALK_AGENT_MODEL",
+      providerEnvVar: "COREVIA_TALK_AGENT_PROVIDER",
+      thinkingEnvVar: "COREVIA_TALK_AGENT_THINKING_EFFORT",
     }),
     scope: "global",
   });
@@ -61,10 +61,10 @@ test("Buzz Agent exposes provider, model, and Buzz-owned effort", () => {
     model.fields.map((item) => item.kind),
     ["provider", "model", "effort"],
   );
-  assert.equal(field(model, "effort").optionSource, "buzzAgentCatalog");
+  assert.equal(field(model, "effort").optionSource, "coreviaTalkAgentCatalog");
   assert.deepEqual(field(model, "effort").targetApplication, {
     kind: "envVar",
-    key: "BUZZ_AGENT_THINKING_EFFORT",
+    key: "COREVIA_TALK_AGENT_THINKING_EFFORT",
   });
 });
 
@@ -89,7 +89,7 @@ test("Goose exposes provider, model, and its real effort application key", () =>
     key: "GOOSE_THINKING_EFFORT",
   });
   // Goose reads/writes its native key at global scope — the launch projection's
-  // global tier is native-only, so the legacy BUZZ_AGENT_THINKING_EFFORT in the
+  // global tier is native-only, so the legacy COREVIA_TALK_AGENT_THINKING_EFFORT in the
   // config is not surfaced as the effort value (it would be silently ignored).
   assert.equal(field(model, "effort").value, null);
 });
@@ -120,24 +120,24 @@ for (const scope of ["global", "onboarding"]) {
       "GOOSE_THINKING_EFFORT",
     ]);
 
-    const buzz = deriveAgentConfigFieldModel({
+    const corevia-talk = deriveAgentConfigFieldModel({
       config,
-      runtime: runtime("buzz-agent", {
-        thinkingEnvVar: "BUZZ_AGENT_THINKING_EFFORT",
+      runtime: runtime("corevia-talk-agent", {
+        thinkingEnvVar: "COREVIA_TALK_AGENT_THINKING_EFFORT",
       }),
       scope,
     });
-    const buzzEffort = field(buzz, "effort");
-    assert.deepEqual(buzzEffort.currentPersistence, {
+    const coreviaTalkEffort = field(corevia-talk, "effort");
+    assert.deepEqual(coreviaTalkEffort.currentPersistence, {
       kind: "envVar",
-      key: "BUZZ_AGENT_THINKING_EFFORT",
+      key: "COREVIA_TALK_AGENT_THINKING_EFFORT",
     });
-    assert.equal(buzzEffort.value, "high");
+    assert.equal(coreviaTalkEffort.value, "high");
   });
 }
 
 // Per-agent scopes (definition/instance) intentionally keep effort on the
-// generic legacy BUZZ_AGENT_THINKING_EFFORT row until PR 2.7 migrates Goose —
+// generic legacy COREVIA_TALK_AGENT_THINKING_EFFORT row until PR 2.7 migrates Goose —
 // currentPersistence/value stay legacy while targetApplication is native
 // (agents/AGENTS.md rule 2). The scope gate must not broaden to these scopes.
 for (const scope of ["definition", "instance"]) {
@@ -146,7 +146,7 @@ for (const scope of ["definition", "instance"]) {
       config: {
         ...config,
         env_vars: {
-          BUZZ_AGENT_THINKING_EFFORT: "high",
+          COREVIA_TALK_AGENT_THINKING_EFFORT: "high",
           GOOSE_THINKING_EFFORT: "low",
         },
       },
@@ -156,7 +156,7 @@ for (const scope of ["definition", "instance"]) {
     const effort = field(model, "effort");
     assert.deepEqual(effort.currentPersistence, {
       kind: "envVar",
-      key: "BUZZ_AGENT_THINKING_EFFORT",
+      key: "COREVIA_TALK_AGENT_THINKING_EFFORT",
     });
     assert.deepEqual(effort.targetApplication, {
       kind: "envVar",
@@ -208,10 +208,10 @@ test("Codex omits separate effort because model IDs own it", () => {
 });
 
 test("catalog mismatch cleanup is named and restricted to onboarding", () => {
-  const selectedRuntime = runtime("buzz-agent", {
-    modelEnvVar: "BUZZ_AGENT_MODEL",
-    providerEnvVar: "BUZZ_AGENT_PROVIDER",
-    thinkingEnvVar: "BUZZ_AGENT_THINKING_EFFORT",
+  const selectedRuntime = runtime("corevia-talk-agent", {
+    modelEnvVar: "COREVIA_TALK_AGENT_MODEL",
+    providerEnvVar: "COREVIA_TALK_AGENT_PROVIDER",
+    thinkingEnvVar: "COREVIA_TALK_AGENT_THINKING_EFFORT",
   });
   const onboarding = deriveAgentConfigFieldModel({
     config,
@@ -241,16 +241,16 @@ test("catalog mismatch cleanup is named and restricted to onboarding", () => {
 // model. Capability facts flow catalog → descriptor → UI; no runtime-ID
 // comparison decides numeric-field visibility.
 
-test("buzz-agent derives three numeric descriptors from catalog fields", () => {
+test("corevia-talk-agent derives three numeric descriptors from catalog fields", () => {
   const model = deriveAgentConfigFieldModel({
     config,
-    runtime: runtime("buzz-agent", {
-      modelEnvVar: "BUZZ_AGENT_MODEL",
-      providerEnvVar: "BUZZ_AGENT_PROVIDER",
-      thinkingEnvVar: "BUZZ_AGENT_THINKING_EFFORT",
-      maxTokensEnvVar: "BUZZ_AGENT_MAX_OUTPUT_TOKENS",
-      contextLimitEnvVar: "BUZZ_AGENT_MAX_CONTEXT_TOKENS",
-      maxRoundsEnvVar: "BUZZ_AGENT_MAX_ROUNDS",
+    runtime: runtime("corevia-talk-agent", {
+      modelEnvVar: "COREVIA_TALK_AGENT_MODEL",
+      providerEnvVar: "COREVIA_TALK_AGENT_PROVIDER",
+      thinkingEnvVar: "COREVIA_TALK_AGENT_THINKING_EFFORT",
+      maxTokensEnvVar: "COREVIA_TALK_AGENT_MAX_OUTPUT_TOKENS",
+      contextLimitEnvVar: "COREVIA_TALK_AGENT_MAX_CONTEXT_TOKENS",
+      maxRoundsEnvVar: "COREVIA_TALK_AGENT_MAX_ROUNDS",
     }),
     scope: "global",
   });
@@ -270,23 +270,23 @@ test("buzz-agent derives three numeric descriptors from catalog fields", () => {
   assert.equal(maxOutput.render, "control");
   assert.deepEqual(maxOutput.currentPersistence, {
     kind: "envVar",
-    key: "BUZZ_AGENT_MAX_OUTPUT_TOKENS",
+    key: "COREVIA_TALK_AGENT_MAX_OUTPUT_TOKENS",
   });
   assert.deepEqual(maxOutput.targetApplication, {
     kind: "envVar",
-    key: "BUZZ_AGENT_MAX_OUTPUT_TOKENS",
+    key: "COREVIA_TALK_AGENT_MAX_OUTPUT_TOKENS",
   });
 
   const ctx = field(model, "contextLimit");
   assert.deepEqual(ctx.currentPersistence, {
     kind: "envVar",
-    key: "BUZZ_AGENT_MAX_CONTEXT_TOKENS",
+    key: "COREVIA_TALK_AGENT_MAX_CONTEXT_TOKENS",
   });
 
   const rounds = field(model, "maxRounds");
   assert.deepEqual(rounds.currentPersistence, {
     kind: "envVar",
-    key: "BUZZ_AGENT_MAX_ROUNDS",
+    key: "COREVIA_TALK_AGENT_MAX_ROUNDS",
   });
 });
 
@@ -355,9 +355,9 @@ test("Codex derives no numeric descriptors", () => {
 test("numeric descriptor value is read from env_vars when set", () => {
   const cfgWithTuning = {
     env_vars: {
-      BUZZ_AGENT_MAX_OUTPUT_TOKENS: "8192",
-      BUZZ_AGENT_MAX_CONTEXT_TOKENS: "100000",
-      BUZZ_AGENT_MAX_ROUNDS: "25",
+      COREVIA_TALK_AGENT_MAX_OUTPUT_TOKENS: "8192",
+      COREVIA_TALK_AGENT_MAX_CONTEXT_TOKENS: "100000",
+      COREVIA_TALK_AGENT_MAX_ROUNDS: "25",
     },
     model: "test-model",
     preferred_runtime: null,
@@ -365,10 +365,10 @@ test("numeric descriptor value is read from env_vars when set", () => {
   };
   const model = deriveAgentConfigFieldModel({
     config: cfgWithTuning,
-    runtime: runtime("buzz-agent", {
-      maxTokensEnvVar: "BUZZ_AGENT_MAX_OUTPUT_TOKENS",
-      contextLimitEnvVar: "BUZZ_AGENT_MAX_CONTEXT_TOKENS",
-      maxRoundsEnvVar: "BUZZ_AGENT_MAX_ROUNDS",
+    runtime: runtime("corevia-talk-agent", {
+      maxTokensEnvVar: "COREVIA_TALK_AGENT_MAX_OUTPUT_TOKENS",
+      contextLimitEnvVar: "COREVIA_TALK_AGENT_MAX_CONTEXT_TOKENS",
+      maxRoundsEnvVar: "COREVIA_TALK_AGENT_MAX_ROUNDS",
     }),
     scope: "global",
   });
@@ -387,10 +387,10 @@ test("numeric descriptor value is null when env var is absent", () => {
   };
   const model = deriveAgentConfigFieldModel({
     config: cfgEmpty,
-    runtime: runtime("buzz-agent", {
-      maxTokensEnvVar: "BUZZ_AGENT_MAX_OUTPUT_TOKENS",
-      contextLimitEnvVar: "BUZZ_AGENT_MAX_CONTEXT_TOKENS",
-      maxRoundsEnvVar: "BUZZ_AGENT_MAX_ROUNDS",
+    runtime: runtime("corevia-talk-agent", {
+      maxTokensEnvVar: "COREVIA_TALK_AGENT_MAX_OUTPUT_TOKENS",
+      contextLimitEnvVar: "COREVIA_TALK_AGENT_MAX_CONTEXT_TOKENS",
+      maxRoundsEnvVar: "COREVIA_TALK_AGENT_MAX_ROUNDS",
     }),
     scope: "global",
   });
@@ -409,80 +409,80 @@ test("numeric descriptor value is null when env var is absent", () => {
 //
 // Critical invariant: per-agent Goose passes only its two numeric descriptors
 // (no effort descriptor, because no effort control renders there). The effort
-// key (BUZZ_AGENT_THINKING_EFFORT) must NOT appear in the output — it must
+// key (COREVIA_TALK_AGENT_THINKING_EFFORT) must NOT appear in the output — it must
 // stay a visible generic env row where any saved value can be edited.
 
 test("structuredEnvKeys_global_includes_effort_key_and_numeric_keys", () => {
   // Global surface renders effort + all numeric descriptors.
-  const buzzAgentModel = deriveAgentConfigFieldModel({
+  const coreviaTalkAgentModel = deriveAgentConfigFieldModel({
     config,
-    runtime: runtime("buzz-agent", {
-      modelEnvVar: "BUZZ_AGENT_MODEL",
-      providerEnvVar: "BUZZ_AGENT_PROVIDER",
-      thinkingEnvVar: "BUZZ_AGENT_THINKING_EFFORT",
-      maxTokensEnvVar: "BUZZ_AGENT_MAX_OUTPUT_TOKENS",
-      contextLimitEnvVar: "BUZZ_AGENT_MAX_CONTEXT_TOKENS",
-      maxRoundsEnvVar: "BUZZ_AGENT_MAX_ROUNDS",
+    runtime: runtime("corevia-talk-agent", {
+      modelEnvVar: "COREVIA_TALK_AGENT_MODEL",
+      providerEnvVar: "COREVIA_TALK_AGENT_PROVIDER",
+      thinkingEnvVar: "COREVIA_TALK_AGENT_THINKING_EFFORT",
+      maxTokensEnvVar: "COREVIA_TALK_AGENT_MAX_OUTPUT_TOKENS",
+      contextLimitEnvVar: "COREVIA_TALK_AGENT_MAX_CONTEXT_TOKENS",
+      maxRoundsEnvVar: "COREVIA_TALK_AGENT_MAX_ROUNDS",
     }),
     scope: "global",
   });
 
   // Global renders all renderable descriptors.
-  const renderedDescriptors = buzzAgentModel.fields.filter(
+  const renderedDescriptors = coreviaTalkAgentModel.fields.filter(
     (f) => f.render === "control",
   );
   const keys = structuredEnvKeys(renderedDescriptors);
 
   assert.ok(
-    keys.includes("BUZZ_AGENT_THINKING_EFFORT"),
+    keys.includes("COREVIA_TALK_AGENT_THINKING_EFFORT"),
     "effort key must be hidden on global (effort control renders)",
   );
   assert.ok(
-    keys.includes("BUZZ_AGENT_MAX_OUTPUT_TOKENS"),
+    keys.includes("COREVIA_TALK_AGENT_MAX_OUTPUT_TOKENS"),
     "maxOutputTokens key must be hidden on global",
   );
   assert.ok(
-    keys.includes("BUZZ_AGENT_MAX_CONTEXT_TOKENS"),
+    keys.includes("COREVIA_TALK_AGENT_MAX_CONTEXT_TOKENS"),
     "contextLimit key must be hidden on global",
   );
   assert.ok(
-    keys.includes("BUZZ_AGENT_MAX_ROUNDS"),
+    keys.includes("COREVIA_TALK_AGENT_MAX_ROUNDS"),
     "maxRounds key must be hidden on global",
   );
 });
 
-test("structuredEnvKeys_per_agent_buzz_agent_includes_effort_and_numeric_keys", () => {
-  // Per-agent buzz-agent renders effort + all 3 numeric descriptors.
-  const buzzAgentModel = deriveAgentConfigFieldModel({
+test("structuredEnvKeys_per_agent_corevia_talk_agent_includes_effort_and_numeric_keys", () => {
+  // Per-agent corevia-talk-agent renders effort + all 3 numeric descriptors.
+  const coreviaTalkAgentModel = deriveAgentConfigFieldModel({
     config,
-    runtime: runtime("buzz-agent", {
-      thinkingEnvVar: "BUZZ_AGENT_THINKING_EFFORT",
-      maxTokensEnvVar: "BUZZ_AGENT_MAX_OUTPUT_TOKENS",
-      contextLimitEnvVar: "BUZZ_AGENT_MAX_CONTEXT_TOKENS",
-      maxRoundsEnvVar: "BUZZ_AGENT_MAX_ROUNDS",
+    runtime: runtime("corevia-talk-agent", {
+      thinkingEnvVar: "COREVIA_TALK_AGENT_THINKING_EFFORT",
+      maxTokensEnvVar: "COREVIA_TALK_AGENT_MAX_OUTPUT_TOKENS",
+      contextLimitEnvVar: "COREVIA_TALK_AGENT_MAX_CONTEXT_TOKENS",
+      maxRoundsEnvVar: "COREVIA_TALK_AGENT_MAX_ROUNDS",
     }),
     scope: "definition",
   });
 
-  const renderedDescriptors = buzzAgentModel.fields.filter(
+  const renderedDescriptors = coreviaTalkAgentModel.fields.filter(
     (f) => f.render === "control",
   );
   const keys = structuredEnvKeys(renderedDescriptors);
 
-  assert.ok(keys.includes("BUZZ_AGENT_THINKING_EFFORT"), "effort key present");
-  assert.ok(keys.includes("BUZZ_AGENT_MAX_OUTPUT_TOKENS"), "maxTokens present");
+  assert.ok(keys.includes("COREVIA_TALK_AGENT_THINKING_EFFORT"), "effort key present");
+  assert.ok(keys.includes("COREVIA_TALK_AGENT_MAX_OUTPUT_TOKENS"), "maxTokens present");
   assert.ok(
-    keys.includes("BUZZ_AGENT_MAX_CONTEXT_TOKENS"),
+    keys.includes("COREVIA_TALK_AGENT_MAX_CONTEXT_TOKENS"),
     "contextLimit present",
   );
-  assert.ok(keys.includes("BUZZ_AGENT_MAX_ROUNDS"), "maxRounds present");
+  assert.ok(keys.includes("COREVIA_TALK_AGENT_MAX_ROUNDS"), "maxRounds present");
 });
 
 test("structuredEnvKeys_per_agent_goose_excludes_effort_key_discriminating_invariant", () => {
   // Per-agent Goose: effort migration is out of scope, so no effort control
   // renders on the per-agent surface for Goose. Only the 2 numeric descriptors
   // are passed as the rendered set. The effort persistence key
-  // (BUZZ_AGENT_THINKING_EFFORT) must NOT appear in the output — any saved
+  // (COREVIA_TALK_AGENT_THINKING_EFFORT) must NOT appear in the output — any saved
   // value must remain visible and editable as a generic env row.
   const gooseModel = deriveAgentConfigFieldModel({
     config,
@@ -503,7 +503,7 @@ test("structuredEnvKeys_per_agent_goose_excludes_effort_key_discriminating_invar
   const keys = structuredEnvKeys(numericDescriptorsOnly);
 
   assert.equal(
-    keys.includes("BUZZ_AGENT_THINKING_EFFORT"),
+    keys.includes("COREVIA_TALK_AGENT_THINKING_EFFORT"),
     false,
     "effort persistence key must NOT be hidden for Goose per-agent — no editor would replace it",
   );
@@ -551,10 +551,10 @@ test("deriveNumericDescriptors_undefined_runtime_returns_empty", () => {
 
 test("deriveNumericDescriptors_runtime_with_all_three_fields", () => {
   const ds = deriveNumericDescriptors(
-    runtime("buzz-agent", {
-      maxTokensEnvVar: "BUZZ_AGENT_MAX_OUTPUT_TOKENS",
-      contextLimitEnvVar: "BUZZ_AGENT_MAX_CONTEXT_TOKENS",
-      maxRoundsEnvVar: "BUZZ_AGENT_MAX_ROUNDS",
+    runtime("corevia-talk-agent", {
+      maxTokensEnvVar: "COREVIA_TALK_AGENT_MAX_OUTPUT_TOKENS",
+      contextLimitEnvVar: "COREVIA_TALK_AGENT_MAX_CONTEXT_TOKENS",
+      maxRoundsEnvVar: "COREVIA_TALK_AGENT_MAX_ROUNDS",
     }),
   );
   assert.deepEqual(
@@ -587,10 +587,10 @@ test("deriveNumericDescriptors_matches_deriveAgentConfigFieldModel_numeric_subse
   // The standalone helper must produce the same descriptor set (without values)
   // that deriveAgentConfigFieldModel embeds, so surfaces that call the helper
   // directly get a consistent policy with the full field model.
-  const runtimeEntry = runtime("buzz-agent", {
-    maxTokensEnvVar: "BUZZ_AGENT_MAX_OUTPUT_TOKENS",
-    contextLimitEnvVar: "BUZZ_AGENT_MAX_CONTEXT_TOKENS",
-    maxRoundsEnvVar: "BUZZ_AGENT_MAX_ROUNDS",
+  const runtimeEntry = runtime("corevia-talk-agent", {
+    maxTokensEnvVar: "COREVIA_TALK_AGENT_MAX_OUTPUT_TOKENS",
+    contextLimitEnvVar: "COREVIA_TALK_AGENT_MAX_CONTEXT_TOKENS",
+    maxRoundsEnvVar: "COREVIA_TALK_AGENT_MAX_ROUNDS",
   });
 
   const standalone = deriveNumericDescriptors(runtimeEntry);
@@ -620,7 +620,7 @@ test("deriveNumericDescriptors_matches_deriveAgentConfigFieldModel_numeric_subse
 
 // ── NUMERIC_KIND_MIN: kind-specific input minima ──────────────────────────
 //
-// max output tokens and context limit must have min=1 (buzz-agent rejects 0).
+// max output tokens and context limit must have min=1 (corevia-talk-agent rejects 0).
 // max rounds allows 0 (meaning unlimited).
 
 test("NUMERIC_KIND_MIN_maxOutputTokens_is_1", () => {
@@ -640,7 +640,7 @@ test("NUMERIC_KIND_MIN_maxRounds_is_0", () => {
 // Source-level reproduction of the P2 blocker: save global Goose defaults with
 // GOOSE_THINKING_EFFORT=off, then open AI defaults. Previously, optionSource
 // was "legacyProviderModelCatalog" → AgentConfigFields passed the persisted key
-// to useEffortAutoClear with buzz-agent provider/model vocab → "off" not in
+// to useEffortAutoClear with corevia-talk-agent provider/model vocab → "off" not in
 // that list → hook deleted the valid native value on mount. Fix: emit
 // "harnessNative" so AgentConfigFields can detect isHarnessNativeEffort and
 // make the hook a no-op.
@@ -648,7 +648,7 @@ test("NUMERIC_KIND_MIN_maxRounds_is_0", () => {
 test("Goose_optionSource_is_harnessNative_not_legacyProviderModelCatalog", () => {
   // The sole optionSource change (P2 fix): Goose must NOT be
   // "legacyProviderModelCatalog" because that routes effort into the
-  // buzz-agent provider/model catalog, deleting valid Goose values on mount.
+  // corevia-talk-agent provider/model catalog, deleting valid Goose values on mount.
   const model = deriveAgentConfigFieldModel({
     config,
     runtime: runtime("goose", { thinkingEnvVar: "GOOSE_THINKING_EFFORT" }),
@@ -658,7 +658,7 @@ test("Goose_optionSource_is_harnessNative_not_legacyProviderModelCatalog", () =>
   assert.equal(
     effortField.optionSource,
     "harnessNative",
-    'Goose global optionSource must be "harnessNative" — "legacyProviderModelCatalog" routes to buzz-agent vocab and deletes valid `off` on mount',
+    'Goose global optionSource must be "harnessNative" — "legacyProviderModelCatalog" routes to corevia-talk-agent vocab and deletes valid `off` on mount',
   );
 });
 
@@ -666,7 +666,7 @@ test("Goose_global_off_value_is_preserved_by_harnessNative_optionSource", () => 
   // A saved GOOSE_THINKING_EFFORT=off must round-trip through the field model
   // without deletion. The field value reflects the config value, and
   // optionSource="harnessNative" signals to AgentConfigFields that the
-  // auto-clear hook should be a no-op (no buzz-agent vocab gate).
+  // auto-clear hook should be a no-op (no corevia-talk-agent vocab gate).
   const savedConfig = {
     ...config,
     env_vars: { GOOSE_THINKING_EFFORT: "off" },
@@ -685,13 +685,13 @@ test("Goose_global_off_value_is_preserved_by_harnessNative_optionSource", () => 
   assert.equal(
     effortField.value,
     "off",
-    "saved GOOSE_THINKING_EFFORT=off must survive round-trip through field model (not deleted by buzz-agent vocab check)",
+    "saved GOOSE_THINKING_EFFORT=off must survive round-trip through field model (not deleted by corevia-talk-agent vocab check)",
   );
 });
 
 test("Goose_onboarding_optionSource_is_harnessNative", () => {
   // Same contract at onboarding scope — the persistence key is the native key
-  // at both global and onboarding, so both must guard against buzz-agent vocab.
+  // at both global and onboarding, so both must guard against corevia-talk-agent vocab.
   const model = deriveAgentConfigFieldModel({
     config,
     runtime: runtime("goose", { thinkingEnvVar: "GOOSE_THINKING_EFFORT" }),
@@ -704,20 +704,20 @@ test("Goose_onboarding_optionSource_is_harnessNative", () => {
   );
 });
 
-test("buzz_agent_optionSource_unchanged_still_buzzAgentCatalog", () => {
-  // Ensure the fix did not accidentally change buzz-agent's optionSource.
-  // buzz-agent's effort MUST go through the provider/model catalog for the
+test("corevia_talk_agent_optionSource_unchanged_still_coreviaTalkAgentCatalog", () => {
+  // Ensure the fix did not accidentally change corevia-talk-agent's optionSource.
+  // corevia-talk-agent's effort MUST go through the provider/model catalog for the
   // per-provider effort validation to work (e.g. "none" vs "off").
   const model = deriveAgentConfigFieldModel({
     config,
-    runtime: runtime("buzz-agent", {
-      thinkingEnvVar: "BUZZ_AGENT_THINKING_EFFORT",
+    runtime: runtime("corevia-talk-agent", {
+      thinkingEnvVar: "COREVIA_TALK_AGENT_THINKING_EFFORT",
     }),
     scope: "global",
   });
   assert.equal(
     field(model, "effort").optionSource,
-    "buzzAgentCatalog",
-    "buzz-agent optionSource must remain buzzAgentCatalog",
+    "coreviaTalkAgentCatalog",
+    "corevia-talk-agent optionSource must remain coreviaTalkAgentCatalog",
   );
 });

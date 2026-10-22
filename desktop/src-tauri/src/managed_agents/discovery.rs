@@ -4,7 +4,7 @@ use std::sync::OnceLock;
 use std::time::Duration;
 
 use crate::managed_agents::{
-    buzz_managed_command_path, buzz_managed_node_bin_dir, buzz_managed_npm_bin_dir,
+    corevia_talk_managed_command_path, corevia_talk_managed_node_bin_dir, corevia_talk_managed_npm_bin_dir,
     AcpAvailabilityStatus, AcpRuntimeCatalogEntry, AuthStatus, CommandAvailabilityInfo,
     HarnessSource,
 };
@@ -37,7 +37,7 @@ pub(crate) use runtime_metadata::GOOSE_EFFORT_NORMALIZATION;
 const GOOSE_AVATAR_URL: &str = "https://goose-docs.ai/img/logo_dark.png";
 const CLAUDE_CODE_AVATAR_URL: &str = "https://anthropic.gallerycdn.vsassets.io/extensions/anthropic/claude-code/2.1.77/1773707456892/Microsoft.VisualStudio.Services.Icons.Default";
 const CODEX_AVATAR_URL: &str = "https://openai.gallerycdn.vsassets.io/extensions/openai/chatgpt/26.5313.41514/1773706730621/Microsoft.VisualStudio.Services.Icons.Default";
-const BUZZ_AGENT_AVATAR_URL: &str =
+const COREVIA_TALK_AGENT_AVATAR_URL: &str =
     "https://raw.githubusercontent.com/block/buzz/refs/heads/main/crates/buzz-agent/buzz-agent.png";
 fn common_binary_paths() -> &'static [PathBuf] {
     static PATHS: OnceLock<Vec<PathBuf>> = OnceLock::new();
@@ -48,10 +48,10 @@ fn common_binary_paths() -> &'static [PathBuf] {
             PathBuf::from("/usr/bin"),
             PathBuf::from("/home/linuxbrew/.linuxbrew/bin"),
         ];
-        if let Some(managed_node_bin) = buzz_managed_node_bin_dir() {
+        if let Some(managed_node_bin) = corevia_talk_managed_node_bin_dir() {
             paths.insert(0, managed_node_bin);
         }
-        if let Some(managed_bin) = buzz_managed_npm_bin_dir() {
+        if let Some(managed_bin) = corevia_talk_managed_npm_bin_dir() {
             paths.insert(0, managed_bin);
         }
         if let Some(home) = dirs::home_dir() {
@@ -161,14 +161,14 @@ pub(crate) fn known_acp_runtime_exact(id: &str) -> Option<&'static KnownAcpRunti
 }
 
 /// The agent command a freshly-created agent defaults to when the create
-/// request supplies none. Resolves the bundled `buzz-agent` from the catalog so
+/// request supplies none. Resolves the bundled `corevia-talk-agent` from the catalog so
 /// the default cannot drift from the provider definition. Falls back to the id
 /// if the catalog entry is missing. (Previous default was bare `goose`, which
-/// is not on PATH on a stock Windows install; buzz-agent ships with the app.)
+/// is not on PATH on a stock Windows install; corevia-talk-agent ships with the app.)
 pub fn default_agent_command() -> String {
-    known_acp_runtime_exact("buzz-agent")
+    known_acp_runtime_exact("corevia-talk-agent")
         .and_then(|p| p.commands.first().copied())
-        .unwrap_or("buzz-agent")
+        .unwrap_or("corevia-talk-agent")
         .to_string()
 }
 
@@ -326,7 +326,7 @@ fn default_agent_args(command: &str) -> Option<Vec<String>> {
     match normalize_command_identity(command).as_str() {
         "goose" => Some(vec!["acp".to_string()]),
         "codex" | "codex-acp" | "claude-agent-acp" | "claude-code-acp" | "claude-code"
-        | "claudecode" | "buzz-agent" => Some(Vec::new()),
+        | "claudecode" | "corevia-talk-agent" => Some(Vec::new()),
         _ => None,
     }
 }
@@ -426,7 +426,7 @@ fn resolve_cache() -> &'static std::sync::Mutex<std::collections::HashMap<String
 /// Resolve a command to an absolute path, caching results for the app lifetime.
 /// The cache eliminates redundant login-shell spawns when multiple agents share binaries.
 pub fn resolve_command(command: &str) -> Option<PathBuf> {
-    if let Some(managed) = resolve_buzz_managed_command(command) {
+    if let Some(managed) = resolve_corevia_talk_managed_command(command) {
         return Some(managed);
     }
 
@@ -456,21 +456,21 @@ pub fn resolve_command(command: &str) -> Option<PathBuf> {
 
 /// Cache-only command resolution for the cheap discovery path.
 ///
-/// Consults the Buzz-managed shim dir (a filesystem stat, never a spawn) and
+/// Consults the CoreviaTalk-managed shim dir (a filesystem stat, never a spawn) and
 /// the resolve cache; on a miss it reports the command absent rather than
 /// resolving live via `resolve_command_uncached` → `find_via_login_shell`,
 /// which spawns a login shell on the channel-switch / composer hot path — the
 /// freeze the cheap path exists to avoid. `resolve_command` (the forced path)
 /// is the sole prober and cache populator.
 pub fn resolve_command_cached(command: &str) -> Option<PathBuf> {
-    if let Some(managed) = resolve_buzz_managed_command(command) {
+    if let Some(managed) = resolve_corevia_talk_managed_command(command) {
         return Some(managed);
     }
-    // Bundled sidecars (e.g. `buzz-agent`) ship next to the app executable, so
+    // Bundled sidecars (e.g. `corevia-talk-agent`) ship next to the app executable, so
     // `resolve_workspace_command` finds them with a filesystem stat and no
     // login-shell spawn — the same class of work the managed-shim check above
     // already performs. Without this the cheap path could never see the sidecar
-    // until a forced discovery warmed the resolve cache, so `buzz-agent` (which
+    // until a forced discovery warmed the resolve cache, so `corevia-talk-agent` (which
     // cannot legitimately be missing) reported "not installed" at every cold
     // launch across the create/edit and agent-defaults surfaces.
     if let Some(workspace) = resolve_workspace_command(command) {
@@ -579,11 +579,11 @@ fn command_basenames(command: &str) -> Vec<String> {
     candidates
 }
 
-fn resolve_buzz_managed_command(command: &str) -> Option<PathBuf> {
+fn resolve_corevia_talk_managed_command(command: &str) -> Option<PathBuf> {
     let basenames = command_basenames(command);
     basenames
         .iter()
-        .find_map(|basename| buzz_managed_command_path(command, basename))
+        .find_map(|basename| corevia_talk_managed_command_path(command, basename))
 }
 
 fn resolve_command_uncached(command: &str) -> Option<PathBuf> {
@@ -598,7 +598,7 @@ fn resolve_command_uncached(command: &str) -> Option<PathBuf> {
         return path.exists().then_some(path);
     }
 
-    if let Some(managed) = resolve_buzz_managed_command(command) {
+    if let Some(managed) = resolve_corevia_talk_managed_command(command) {
         return Some(managed);
     }
 
@@ -693,7 +693,7 @@ fn runtime_needs_npm(runtime: &KnownAcpRuntime) -> bool {
 
 /// Returns `true` when `cmd` is an npm global install/uninstall invocation.
 ///
-/// Buzz rewrites these catalog commands to an app-private npm prefix before
+/// Corevia Talk rewrites these catalog commands to an app-private npm prefix before
 /// execution; the global shape remains in the catalog so existing install plans
 /// and Doctor's Node.js-required detection stay simple.
 pub(crate) fn is_npm_global_install(cmd: &str) -> bool {
@@ -752,7 +752,7 @@ pub fn missing_command_message(command: &str, role: &str) -> String {
     }
 
     format!(
-        "{role} `{command}` was not found. Make sure it is installed and on your PATH. Antivirus software can quarantine bundled binaries — if that happened, restore the file or reinstall Buzz. (Source builds: see TESTING.md.)"
+        "{role} `{command}` was not found. Make sure it is installed and on your PATH. Antivirus software can quarantine bundled binaries — if that happened, restore the file or reinstall Corevia Talk. (Source builds: see TESTING.md.)"
     )
 }
 
@@ -782,7 +782,7 @@ pub(crate) fn classify_runtime(
     }
 }
 
-/// The oldest `codex-acp` version supported by Buzz managed agents.
+/// The oldest `codex-acp` version supported by Corevia Talk managed agents.
 ///
 /// Older 1.x adapters are detected successfully, but can still bundle a Codex runtime
 /// that cannot use newer models. Adapter 1.6.2 bundles Codex 0.148.x, which rejects
@@ -1018,14 +1018,14 @@ fn discover_acp_runtime_phase1(runtime: &'static KnownAcpRuntime, force: bool) -
         | AcpAvailabilityStatus::NotInstalled => runtime.cli_install_instructions_url,
     };
 
-    // node_required now means Buzz cannot provide npm for this platform.
-    // On supported desktop platforms, Buzz downloads a private Node/npm
+    // node_required now means Corevia Talk cannot provide npm for this platform.
+    // On supported desktop platforms, Corevia Talk downloads a private Node/npm
     // runtime into app data before running npm-backed adapter installs.
     let node_required = matches!(
         availability,
         AcpAvailabilityStatus::AdapterMissing | AcpAvailabilityStatus::NotInstalled
     ) && runtime_needs_npm(runtime)
-        && buzz_managed_node_bin_dir().is_none()
+        && corevia_talk_managed_node_bin_dir().is_none()
         && resolve("npm").is_none()
         && resolve("node").is_none();
 

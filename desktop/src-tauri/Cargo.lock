@@ -1058,7 +1058,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "72f5acc6cb2ba439de613abc23857ec3d78374d8ed5ac84e9d11336e87da8649"
 
 [[package]]
-name = "buzz-agent"
+name = "corevia-talk-agent"
 version = "0.1.0"
 dependencies = [
  "arc-swap",
@@ -1085,7 +1085,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-audio-client"
+name = "corevia-talk-audio-client"
 version = "0.1.0"
 dependencies = [
  "futures-util",
@@ -1097,7 +1097,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-core"
+name = "corevia-talk-core"
 version = "0.1.0"
 dependencies = [
  "base64 0.22.1",
@@ -1118,7 +1118,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-desktop"
+name = "corevia-talk-desktop"
 version = "0.5.28"
 dependencies = [
  "anyhow",
@@ -1128,15 +1128,15 @@ dependencies = [
  "axum",
  "base64 0.22.1",
  "block2",
- "buzz-agent",
- "buzz-audio-client",
- "buzz-core",
- "buzz-media",
- "buzz-persona",
- "buzz-sdk",
- "buzz-terminal",
- "buzz-voice",
- "buzz-ws-client",
+ "corevia-talk-agent",
+ "corevia-talk-audio-client",
+ "corevia-talk-core",
+ "corevia-talk-media",
+ "corevia-talk-persona",
+ "corevia-talk-sdk",
+ "corevia-talk-terminal",
+ "corevia-talk-voice",
+ "corevia-talk-ws-client",
  "bytes",
  "bzip2 0.6.1",
  "chrono",
@@ -1212,12 +1212,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-media"
+name = "corevia-talk-media"
 version = "0.1.0"
 dependencies = [
  "axum",
  "blurhash",
- "buzz-core",
+ "corevia-talk-core",
  "bytes",
  "chrono",
  "futures-core",
@@ -1243,7 +1243,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-persona"
+name = "corevia-talk-persona"
 version = "0.1.0"
 dependencies = [
  "serde",
@@ -1253,10 +1253,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-sdk"
+name = "corevia-talk-sdk"
 version = "0.1.0"
 dependencies = [
- "buzz-core",
+ "corevia-talk-core",
  "nostr 0.44.7",
  "serde",
  "serde_json",
@@ -1265,7 +1265,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-terminal"
+name = "corevia-talk-terminal"
 version = "0.1.0"
 dependencies = [
  "alacritty_terminal",
@@ -1275,7 +1275,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-voice"
+name = "corevia-talk-voice"
 version = "0.1.0"
 dependencies = [
  "atomic-write-file",
@@ -1293,7 +1293,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-ws-client"
+name = "corevia-talk-ws-client"
 version = "0.1.0"
 dependencies = [
  "futures-util",

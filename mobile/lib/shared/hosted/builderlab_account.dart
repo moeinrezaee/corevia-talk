@@ -67,7 +67,7 @@ class BuilderlabAccountClient {
 
   /// Sessions are scoped per origin so staging never reads production state.
   static final _storageKey =
-      'buzz_hosted_session_${origin.host.replaceAll('.', '_')}_v1';
+      'corevia_talk_hosted_session_${origin.host.replaceAll('.', '_')}_v1';
   final http.Client _http;
   final FlutterSecureStorage _storage;
   String? _credential;
@@ -212,9 +212,9 @@ class BuilderlabAccountClient {
   /// Public identity metadata only. Private-key recovery belongs to the identity
   /// storage owner, which must derive and verify the key before any persistence.
   Future<Map<String, dynamic>> currentIdentity() =>
-      post('/v1/buzz/nostr-identities/current', {});
+      post('/v1/corevia-talk/nostr-identities/current', {});
 
-  /// Authenticated JSON POST to a Buzz account route on the fixed origin. The
+  /// Authenticated JSON POST to a Corevia Talk account route on the fixed origin. The
   /// credential never leaves this client. A 401 clears the stored session only
   /// when the session check also rejects it; otherwise it is [AccountFailure.denied].
   Future<Map<String, dynamic>> post(String path, Map<String, dynamic> body) =>
@@ -226,8 +226,8 @@ class BuilderlabAccountClient {
     String? signingKey,
     String? expectedSubject,
   }) {
-    if (!RegExp(r'^/v1/buzz(/[a-z0-9_-]+)+$').hasMatch(path)) {
-      throw ArgumentError.value(path, 'path', 'not a /v1/buzz/ route');
+    if (!RegExp(r'^/v1/corevia-talk(/[a-z0-9_-]+)+$').hasMatch(path)) {
+      throw ArgumentError.value(path, 'path', 'not a /v1/corevia-talk/ route');
     }
     return _serial(() async {
       final credential = _credential;
@@ -268,7 +268,7 @@ class BuilderlabAccountClient {
     String nsec, {
     required String expectedSubject,
   }) => _post(
-    '/v1/buzz/identity/assertions',
+    '/v1/corevia-talk/identity/assertions',
     {
       'relay_url': relay,
       'nostr_pubkey': AccountIdentityStore.publicKeyForNsec(nsec),

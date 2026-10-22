@@ -96,7 +96,7 @@ class PairingNotifier extends Notifier<PairingState> {
     if (trimmed.startsWith('nostrpair://')) {
       return _pairNipAb(trimmed);
     }
-    // Legacy buzz:// flow.
+    // Legacy corevia-talk:// flow.
     return _pairLegacy(trimmed);
   }
 
@@ -877,7 +877,7 @@ class PairingNotifier extends Notifier<PairingState> {
     );
   }
 
-  // ── Legacy buzz:// flow ───────────────────────────────────────────────
+  // ── Legacy corevia-talk:// flow ───────────────────────────────────────────────
 
   Future<void> _pairLegacy(String rawInput) async {
     final generation = _pairingGeneration;
@@ -968,8 +968,8 @@ class PairingNotifier extends Notifier<PairingState> {
   Community _parseLegacyInput(String raw) {
     var payload = raw.trim();
 
-    if (payload.startsWith('buzz://')) {
-      payload = payload.substring('buzz://'.length);
+    if (payload.startsWith('corevia-talk://')) {
+      payload = payload.substring('corevia-talk://'.length);
     }
 
     final normalized = base64Url.normalize(payload);

@@ -283,7 +283,7 @@ class CommunitySwitcherPage extends HookConsumerWidget {
                 IconButton(
                   tooltip: tl('Close community switcher'),
                   onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(BuzzIcons.x),
+                  icon: const Icon(CoreviaTalkIcons.x),
                 ),
                 const Spacer(),
                 TextButton(
@@ -328,7 +328,7 @@ class CommunitySwitcherPage extends HookConsumerWidget {
                 ),
               communitiesAsync.when(
                 loading: () => Center(
-                  child: BuzzLoadingIndicator(
+                  child: CoreviaTalkLoadingIndicator(
                     size: 40,
                     semanticLabel: tl('Loading communities'),
                   ),
@@ -441,7 +441,7 @@ class CommunitySwitcherPage extends HookConsumerWidget {
                     end: 0,
                     child: Center(
                       child: RepaintBoundary(
-                        child: BuzzLoadingIndicator(
+                        child: CoreviaTalkLoadingIndicator(
                           key: const Key('community-switch-loading'),
                           size: 18,
                           color: context.colors.onSecondaryContainer,
@@ -688,7 +688,7 @@ class _CommunityGridAdd extends StatelessWidget {
               height: _communityGridAvatarSize,
               color: context.controlSurface.withValues(alpha: 0.5),
               child: Icon(
-                BuzzIcons.plus,
+                CoreviaTalkIcons.plus,
                 size: 32,
                 color: context.colors.onSurfaceVariant,
               ),

@@ -55,13 +55,13 @@ test.beforeEach(async ({ page }) => {
         () =>
           (
             window as Window & {
-              __BUZZ_E2E_HAS_MOCK_LIVE_SUBSCRIPTION__?: (input: {
+              __COREVIA_TALK_E2E_HAS_MOCK_LIVE_SUBSCRIPTION__?: (input: {
                 channelName: string;
                 kind: number;
                 exactChannel: boolean;
               }) => boolean;
             }
-          ).__BUZZ_E2E_HAS_MOCK_LIVE_SUBSCRIPTION__?.({
+          ).__COREVIA_TALK_E2E_HAS_MOCK_LIVE_SUBSCRIPTION__?.({
             channelName: "general",
             kind: 9,
             exactChannel: true,
@@ -73,12 +73,12 @@ test.beforeEach(async ({ page }) => {
     (content) =>
       (
         window as Window & {
-          __BUZZ_E2E_EMIT_MOCK_MESSAGE__?: (input: {
+          __COREVIA_TALK_E2E_EMIT_MOCK_MESSAGE__?: (input: {
             channelName: string;
             content: string;
           }) => { id: string } | undefined;
         }
-      ).__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({ channelName: "general", content }),
+      ).__COREVIA_TALK_E2E_EMIT_MOCK_MESSAGE__?.({ channelName: "general", content }),
     ORIGINAL_CONTENT,
   );
   if (!emitted?.id) throw new Error("mock message emit did not return an id");

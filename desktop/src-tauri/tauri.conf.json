@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Buzz",
+  "productName": "CoreviaTalk",
   "version": "0.5.28",
-  "identifier": "xyz.block.buzz.app",
+  "identifier": "xyz.block.coreviatalk.app",
   "build": {
     "beforeDevCommand": {
       "script": "exec ./node_modules/.bin/vite",
@@ -16,7 +16,7 @@
   "app": {
     "windows": [
       {
-        "title": "Buzz",
+        "title": "Corevia Talk",
         "width": 900,
         "height": 650,
         "maximized": true,
@@ -36,7 +36,7 @@
     ],
     "macOSPrivateApi": true,
     "security": {
-      "csp": "default-src 'self'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; object-src 'none'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net/npm/@mediapipe/; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self' ipc: http://ipc.localhost buzz-media: http://buzz-media.localhost https: http: wss: ws:; img-src 'self' buzz-media: http://buzz-media.localhost data: blob: https: http:; media-src 'self' buzz-media: http://buzz-media.localhost data: blob: https: http:; worker-src 'self' blob:"
+      "csp": "default-src 'self'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; object-src 'none'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net/npm/@mediapipe/; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self' ipc: http://ipc.localhost corevia-talk-media: http://corevia-talk-media.localhost https: http: wss: ws:; img-src 'self' corevia-talk-media: http://corevia-talk-media.localhost data: blob: https: http:; media-src 'self' corevia-talk-media: http://corevia-talk-media.localhost data: blob: https: http:; worker-src 'self' blob:"
     }
   },
   "plugins": {
@@ -45,7 +45,7 @@
     },
     "deep-link": {
       "desktop": {
-        "schemes": ["buzz"]
+        "schemes": ["corevia-talk"]
       }
     }
   },
@@ -53,12 +53,12 @@
     "active": true,
     "targets": "all",
     "externalBin": [
-      "binaries/buzz-acp",
-      "binaries/buzz-agent",
-      "binaries/buzz-backend-kubernetes",
-      "binaries/buzz-dev-mcp",
+      "binaries/corevia-talk-acp",
+      "binaries/corevia-talk-agent",
+      "binaries/corevia-talk-backend-kubernetes",
+      "binaries/corevia-talk-dev-mcp",
       "binaries/git-credential-nostr",
-      "binaries/buzz"
+      "binaries/corevia-talk"
     ],
     "icon": [
       "icons/32x32.png",

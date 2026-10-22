@@ -168,7 +168,7 @@ export function SignOutSection() {
             </AlertDialogTitle>
             <AlertDialogDescription>
               {tl(
-                "This will delete your identity key, all agent settings, and cached data from this device, then relaunch Buzz into first-run setup. This cannot be undone.",
+                "This will delete your identity key, all agent settings, and cached data from this device, then relaunch Corevia Talk into first-run setup. This cannot be undone.",
               )}
             </AlertDialogDescription>
           </AlertDialogHeader>

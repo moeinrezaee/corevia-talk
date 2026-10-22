@@ -190,7 +190,7 @@ export function VoiceSettingsCard() {
       <SettingsSectionHeader
         title={tl("Voice")}
         description={tl(
-          "Choose whether Buzz reads new agent responses aloud during an active huddle.",
+          "Choose whether Corevia Talk reads new agent responses aloud during an active huddle.",
         )}
       />
 

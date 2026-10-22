@@ -10,7 +10,7 @@ final class NativeAddMembersSheetCoordinator: NSObject, UIAdaptivePresentationCo
   private var session: String?
 
   init(messenger: FlutterBinaryMessenger, parentViewController: UIViewController?) {
-    channel = FlutterMethodChannel(name: "buzz/add_members_sheet", binaryMessenger: messenger)
+    channel = FlutterMethodChannel(name: "corevia-talk/add_members_sheet", binaryMessenger: messenger)
     parent = parentViewController
     super.init()
     channel.setMethodCallHandler { [weak self] call, result in

@@ -12,27 +12,27 @@ class _FormattingToolbar extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         _FormatButton(
-          icon: BuzzIcons.bold,
+          icon: CoreviaTalkIcons.bold,
           tooltip: tl('Bold'),
           onTap: () => onFormat('**'),
         ),
         _FormatButton(
-          icon: BuzzIcons.italic,
+          icon: CoreviaTalkIcons.italic,
           tooltip: tl('Italic'),
           onTap: () => onFormat('_'),
         ),
         _FormatButton(
-          icon: BuzzIcons.strikethrough,
+          icon: CoreviaTalkIcons.strikethrough,
           tooltip: tl('Strikethrough'),
           onTap: () => onFormat('~~'),
         ),
         _FormatButton(
-          icon: BuzzIcons.code,
+          icon: CoreviaTalkIcons.code,
           tooltip: tl('Code'),
           onTap: () => onFormat('`'),
         ),
         _FormatButton(
-          icon: BuzzIcons.squareCode,
+          icon: CoreviaTalkIcons.squareCode,
           tooltip: tl('Code block'),
           onTap: () => onFormat('```\n', '\n```'),
         ),

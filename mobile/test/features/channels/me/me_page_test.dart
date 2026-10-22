@@ -1,22 +1,22 @@
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:buzz/shared/me/me_chat_creation.dart';
+import 'package:corevia_talk/shared/me/me_chat_creation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:nostr/nostr.dart' as nostr;
-import 'package:buzz/shared/relay/relay.dart';
-import 'package:buzz/shared/me/me_assistants.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
-import 'package:buzz/shared/widgets/frosted_app_bar.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/me/me_assistants.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
+import 'package:corevia_talk/shared/widgets/frosted_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channels_provider.dart';
-import 'package:buzz/features/channels/me/me_page.dart';
-import 'package:buzz/shared/me/me_groups.dart';
-import 'package:buzz/shared/me/me_sync.dart';
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channels_provider.dart';
+import 'package:corevia_talk/features/channels/me/me_page.dart';
+import 'package:corevia_talk/shared/me/me_groups.dart';
+import 'package:corevia_talk/shared/me/me_sync.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 
 class FakeChannels extends ChannelsNotifier {
   @override
@@ -54,7 +54,7 @@ class LabeledChannels extends ChannelsNotifier {
         name: name,
         channelType: 'stream',
         visibility: 'private',
-        labels: const ['buzz.solo'],
+        labels: const ['corevia-talk.solo'],
         description: '',
         createdBy: owner,
         createdAt: DateTime(2026),
@@ -156,13 +156,13 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Search chats'), findsNothing);
       expect(find.byType(TextField), findsNothing);
-      expect(find.byIcon(BuzzIcons.edit), findsOneWidget);
-      expect(find.byIcon(BuzzIcons.folderPlus), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.edit), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.folderPlus), findsOneWidget);
       final header = tester.widget<FrostedAppBar>(find.byType(FrostedAppBar));
       expect(header.nativeLargeTitle, isTrue);
       expect(header.nativeActions!.map((action) => action.icon), [
-        BuzzIcons.folderPlus,
-        BuzzIcons.edit,
+        CoreviaTalkIcons.folderPlus,
+        CoreviaTalkIcons.edit,
       ]);
       expect(find.text('App work'), findsOneWidget);
       expect(find.text('Design agent'), findsOneWidget);
@@ -262,7 +262,7 @@ void main() {
   ) async {
     debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
     addTearDown(() => debugDefaultTargetPlatformOverride = null);
-    const channel = MethodChannel('buzz/profile_text_editor');
+    const channel = MethodChannel('corevia-talk/profile_text_editor');
     final calls = <MethodCall>[];
     var directoryLoads = 0;
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel, (
@@ -330,7 +330,7 @@ void main() {
     ) async {
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
       addTearDown(() => debugDefaultTargetPlatformOverride = null);
-      const channel = MethodChannel('buzz/profile_text_editor');
+      const channel = MethodChannel('corevia-talk/profile_text_editor');
       final calls = <MethodCall>[];
       var directoryLoads = 0;
       tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel, (

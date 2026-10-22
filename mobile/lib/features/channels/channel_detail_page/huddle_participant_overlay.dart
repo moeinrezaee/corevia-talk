@@ -214,7 +214,7 @@ class _HuddleParticipantSpotlight extends ConsumerWidget {
                   radius: _huddleParticipantSpotlightRadius,
                   backgroundColor: context.controlSurface,
                   fallback: Icon(
-                    BuzzIcons.userRound,
+                    CoreviaTalkIcons.userRound,
                     size: 56,
                     color: context.colors.onPrimaryContainer,
                   ),
@@ -364,7 +364,7 @@ class _HuddleParticipantRoster extends ConsumerWidget {
                                     radius: 22,
                                     backgroundColor: context.controlSurface,
                                     fallback: Icon(
-                                      BuzzIcons.userRound,
+                                      CoreviaTalkIcons.userRound,
                                       size: 22,
                                       color: context.colors.onPrimaryContainer,
                                     ),

@@ -20,14 +20,14 @@ export const FA_PART_2: Record<string, string> = {
   "Confirm: {0}": "تأیید: {0}",
   "Confirmation code": "کد تأیید",
   Connect: "اتصال",
-  "Connect Buzz identity": "اتصال هویت Buzz",
+  "Connect Corevia Talk identity": "اتصال هویت Corevia Talk",
   "Connect and continue": "اتصال و ادامه",
   "Connect one you own, or start something new.":
     "یکی را که مالکش هستید وصل کنید، یا چیز جدیدی شروع کنید.",
-  "Connect the Buzz mobile app to this relay by scanning a QR code. The connection is secured with end-to-end encryption and a verification code.":
-    "برنامهٔ موبایل Buzz را با اسکن یک کد QR به این رله وصل کنید. اتصال با رمزگذاری سرتاسری و یک کد تأیید امن می‌شود.",
-  "Connect this device’s Buzz identity to your Builderlab account. Your private key stays on this device.":
-    "هویت Buzz این دستگاه را به حساب Builderlab خود وصل کنید. کلید خصوصی شما روی همین دستگاه می‌ماند.",
+  "Connect the Corevia Talk mobile app to this relay by scanning a QR code. The connection is secured with end-to-end encryption and a verification code.":
+    "برنامهٔ موبایل Corevia Talk را با اسکن یک کد QR به این رله وصل کنید. اتصال با رمزگذاری سرتاسری و یک کد تأیید امن می‌شود.",
+  "Connect this device’s Corevia Talk identity to your Builderlab account. Your private key stays on this device.":
+    "هویت Corevia Talk این دستگاه را به حساب Builderlab خود وصل کنید. کلید خصوصی شما روی همین دستگاه می‌ماند.",
   "Connect with an API key": "اتصال با کلید API",
   "Connect your AI provider": "ارائه‌دهندهٔ هوش مصنوعی خود را وصل کنید",
   Connected: "متصل",
@@ -84,8 +84,8 @@ export const FA_PART_2: Record<string, string> = {
   "Copy response": "کپی پاسخ",
   "Copy review link": "کپی پیوند بازبینی",
   "Copy task link": "کپی پیوند وظیفه",
-  "Copy the response below, then paste it into the Buzz website to finish verification.":
-    "پاسخ زیر را کپی کنید، سپس در وب‌سایت Buzz بچسبانید تا تأیید کامل شود.",
+  "Copy the response below, then paste it into the Corevia Talk website to finish verification.":
+    "پاسخ زیر را کپی کنید، سپس در وب‌سایت Corevia Talk بچسبانید تا تأیید کامل شود.",
   "Copy this response and paste it into the pairing page.":
     "این پاسخ را کپی کنید و در صفحهٔ جفت‌سازی بچسبانید.",
   "Copy this workflow and adjust its details.":
@@ -510,8 +510,8 @@ export const FA_PART_2: Record<string, string> = {
   Features: "قابلیت‌ها",
   Feedback: "بازخورد",
   "Feedback attachment": "پیوست بازخورد",
-  "Feedback is sent privately to this Buzz deployment and is not posted to a channel. Attachments are uploaded before you send.":
-    "بازخورد به‌صورت خصوصی به این استقرار Buzz ارسال می‌شود و در کانالی منتشر نمی‌شود. پیوست‌ها پیش از ارسال بارگذاری می‌شوند.",
+  "Feedback is sent privately to this Corevia Talk deployment and is not posted to a channel. Attachments are uploaded before you send.":
+    "بازخورد به‌صورت خصوصی به این استقرار Corevia Talk ارسال می‌شود و در کانالی منتشر نمی‌شود. پیوست‌ها پیش از ارسال بارگذاری می‌شوند.",
   Fetch: "دریافت",
   "File and password verified. Keep them both somewhere safe — that's all you need to restore your identity.":
     "فایل و گذرواژه تأیید شدند. هر دو را در جای امنی نگه دارید — برای بازیابی هویت فقط همین‌ها لازم است.",
@@ -525,8 +525,8 @@ export const FA_PART_2: Record<string, string> = {
   "Filter files…": "فیلتر فایل‌ها…",
   "Filter inbox: {0}{1}": "فیلتر صندوق ورودی: {0}{1}",
   "Find in channel": "جستجو در کانال",
-  "Finish connecting Buzz": "اتصال Buzz را کامل کنید",
-  "Finish on the Buzz website": "در وب‌سایت Buzz تمام کنید",
+  "Finish connecting Corevia Talk": "اتصال Corevia Talk را کامل کنید",
+  "Finish on the Corevia Talk website": "در وب‌سایت Corevia Talk تمام کنید",
   "Finish or cancel your edit before leaving the thread.":
     "پیش از ترک رشته، ویرایش خود را تمام یا لغو کنید.",
   "Finish or cancel your edit first.": "ابتدا ویرایش خود را تمام یا لغو کنید.",
@@ -580,8 +580,8 @@ export const FA_PART_2: Record<string, string> = {
   "Generic agent": "ایجنت عمومی",
   "Get a key at platform.openai.com": "یک کلید از platform.openai.com بگیرید",
   "Git Bash": "Git Bash",
-  "Git for Windows is required for buzz-agent shell tools":
-    "Git برای ویندوز برای ابزارهای شل buzz-agent لازم است",
+  "Git for Windows is required for corevia-talk-agent shell tools":
+    "Git برای ویندوز برای ابزارهای شل corevia-talk-agent لازم است",
   "Git repository browser and collaboration": "مرورگر مخزن Git و همکاری",
   "Give it a name": "یک نام برایش بگذارید",
   "Give it a name, purpose, and instructions.":
@@ -614,7 +614,7 @@ export const FA_PART_2: Record<string, string> = {
   "Headphones recommended": "استفاده از هدفون توصیه می‌شود",
   Hide: "پنهان کردن",
   "Hide API key": "پنهان کردن کلید API",
-  "Hide Buzz Term": "پنهان کردن ترمینال Buzz",
+  "Hide Corevia Talk Term": "پنهان کردن ترمینال Corevia Talk",
   "Hide channels in {0}": "پنهان کردن کانال‌ها در {0}",
   "Hide comments": "پنهان کردن نظرات",
   "Hide history": "پنهان کردن تاریخچه",
@@ -650,7 +650,7 @@ export const FA_PART_2: Record<string, string> = {
   Hyphens: "خط‌تیره‌ها",
   "I added a longer message so you can compare line height and text spacing.":
     "یک پیام بلندتر اضافه کردم تا بتوانید ارتفاع خط و فاصلهٔ متن را مقایسه کنید.",
-  "I agree to the Buzz": "من با این موارد Buzz موافقم:",
+  "I agree to the Corevia Talk": "من با این موارد Corevia Talk موافقم:",
   "I already have a community": "از قبل یک انجمن دارم",
   "I already have a key": "از قبل یک کلید دارم",
   "I am 18 years of age or older.": "من ۱۸ سال یا بیشتر سن دارم.",
@@ -678,8 +678,8 @@ export const FA_PART_2: Record<string, string> = {
   "Import an agent": "وارد کردن یک ایجنت",
   "Import key": "وارد کردن کلید",
   "Import team snapshot": "وارد کردن اسنپ‌شات تیم",
-  "Import your Nostr private key to use that identity with Buzz. If this key already has a profile on the relay, your name and avatar are restored automatically.":
-    "کلید خصوصی Nostr خود را وارد کنید تا از آن هویت در Buzz استفاده کنید. اگر این کلید از قبل روی رله نمایه‌ای دارد، نام و آواتار شما خودکار بازیابی می‌شود.",
+  "Import your Nostr private key to use that identity with Corevia Talk. If this key already has a profile on the relay, your name and avatar are restored automatically.":
+    "کلید خصوصی Nostr خود را وارد کنید تا از آن هویت در Corevia Talk استفاده کنید. اگر این کلید از قبل روی رله نمایه‌ای دارد، نام و آواتار شما خودکار بازیابی می‌شود.",
   "Importing key": "در حال وارد کردن کلید",
   Improvement: "بهبود",
   "In 1 hour": "۱ ساعت دیگر",

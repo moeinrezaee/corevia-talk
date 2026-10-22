@@ -7,11 +7,11 @@ import '../../../shared/theme/community_theme_preference.dart';
 /// Groups belong to one community, so the cache is keyed by relay as well as
 /// identity. One identity can be paired with several communities.
 String channelSectionsKey(String pubkey, String relayUrl) =>
-    'buzz.channel-sections.v1:$pubkey:${Uri.encodeComponent(normalizeCommunityRelayUrl(relayUrl))}';
+    'corevia-talk.channel-sections.v1:$pubkey:${Uri.encodeComponent(normalizeCommunityRelayUrl(relayUrl))}';
 
 /// The earlier key, shared by every community of the identity.
 String legacyChannelSectionsKey(String pubkey) =>
-    'buzz.channel-sections.v1:$pubkey';
+    'corevia-talk.channel-sections.v1:$pubkey';
 
 class ChannelSection {
   final String id;

@@ -10,12 +10,12 @@ import 'shared/push/push_bridge.dart';
 import 'shared/relay/relay_closed_policy.dart';
 import 'shared/theme/theme_provider.dart';
 
-void main() => runBuzzApp(const App());
+void main() => runCoreviaTalkApp(const App());
 
-Future<void> runBuzzApp(Widget app) async {
+Future<void> runCoreviaTalkApp(Widget app) async {
   WidgetsFlutterBinding.ensureInitialized();
-  installBuzzPushMethodHandler();
-  await syncPendingBuzzPushNotificationResponse();
+  installCoreviaTalkPushMethodHandler();
+  await syncPendingCoreviaTalkPushNotificationResponse();
 
   // Pre-load preferences so the first frame uses the saved theme/accent.
   final prefs = await SharedPreferences.getInstance();

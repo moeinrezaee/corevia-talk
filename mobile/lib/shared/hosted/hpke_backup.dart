@@ -12,7 +12,7 @@ enum HpkeBackupFailure { invalidEnrollment, identityMismatch, unavailable }
 /// Persist the returned envelope BEFORE upload; retry its exact backup_id and
 /// ciphertext instead of enrolling/sealing again after uncertain responses.
 class HpkeBackup {
-  static const _channel = MethodChannel('buzz/hosted_hpke');
+  static const _channel = MethodChannel('corevia-talk/hosted_hpke');
 
   Future<Map<String, dynamic>> seal({
     required Map<String, dynamic> enrollment,
@@ -84,7 +84,7 @@ class HpkeBackup {
         throw HpkeBackupFailure.invalidEnrollment;
       }
       final bytes = BytesBuilder(copy: false)
-        ..add(utf8.encode('buzz/nsec-backup/aad/v1'))
+        ..add(utf8.encode('corevia-talk/nsec-backup/aad/v1'))
         ..add([1, 0, 16, 0, 1, 0, 2]);
       for (final field in [
         'recipient_key_id',

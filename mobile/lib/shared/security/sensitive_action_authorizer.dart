@@ -26,7 +26,7 @@ class LocalSensitiveActionAuthorizer implements SensitiveActionAuthorizer {
   Future<DeviceAuthResult> authorizeIdentityAction({
     required bool biometricOnly,
   }) => _authorize(
-    localizedReason: 'Confirm exporting your Buzz identity',
+    localizedReason: 'Confirm exporting your Corevia Talk identity',
     biometricOnly: biometricOnly,
   );
 

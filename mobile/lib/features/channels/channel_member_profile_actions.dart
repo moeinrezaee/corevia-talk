@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/theme/theme.dart';
 import '../../shared/widgets/app_list.dart';
@@ -134,13 +134,13 @@ class ChannelMemberProfileActions extends HookConsumerWidget {
             if (!member.isBot) ...[
               if (member.role != 'admin')
                 AppListRow(
-                  icon: BuzzIcons.shieldCheck,
+                  icon: CoreviaTalkIcons.shieldCheck,
                   title: tl('Make channel admin'),
                   onTap: busy.value ? null : () => perform(role: 'admin'),
                 ),
               if (member.role == 'admin' || member.role == 'guest')
                 AppListRow(
-                  icon: BuzzIcons.user,
+                  icon: CoreviaTalkIcons.user,
                   title: member.role == 'guest'
                       ? tl('Make member')
                       : tl('Change to member'),
@@ -148,7 +148,7 @@ class ChannelMemberProfileActions extends HookConsumerWidget {
                 ),
             ],
             AppListRow(
-              icon: BuzzIcons.userMinus,
+              icon: CoreviaTalkIcons.userMinus,
               title: tl('Remove from channel'),
               titleColor: context.colors.error,
               onTap: busy.value ? null : () => perform(),

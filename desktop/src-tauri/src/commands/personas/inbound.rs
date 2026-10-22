@@ -165,7 +165,7 @@ fn reconcile_inbound_persona_event_blocking<R: tauri::Runtime>(
         save_managed_agents, save_teams,
         team_events::team_content_from_event,
     };
-    use buzz_core_pkg::kind::{
+    use corevia_talk_core_pkg::kind::{
         KIND_DELETION, KIND_MANAGED_AGENT, KIND_PERSONA, KIND_TEAM, KIND_TEAM_CATALOG,
     };
     use nostr::JsonUtil;
@@ -444,7 +444,7 @@ pub(crate) fn retain_inbound_catalog_witness(
     conn: &rusqlite::Connection,
     inbound: &crate::managed_agents::retention::RetainedEvent,
 ) -> Result<bool, String> {
-    use buzz_core_pkg::kind::KIND_TEAM_CATALOG;
+    use corevia_talk_core_pkg::kind::KIND_TEAM_CATALOG;
     if inbound.kind != KIND_TEAM_CATALOG {
         return Ok(false);
     }
@@ -535,7 +535,7 @@ fn reconcile_inbound_tombstone<R: tauri::Runtime>(
         },
         save_managed_agents, save_teams,
     };
-    use buzz_core_pkg::kind::{
+    use corevia_talk_core_pkg::kind::{
         KIND_DELETION, KIND_MANAGED_AGENT, KIND_PERSONA, KIND_TEAM, KIND_TEAM_CATALOG,
     };
     use nostr::JsonUtil;
@@ -698,7 +698,7 @@ fn apply_inbound_persona(personas: &mut Vec<AgentDefinition>, inbound: AgentDefi
             local.system_prompt = inbound.system_prompt;
             // Shared absence can be a redacted machine-local transport. Keep
             // only that local override; portable/legacy absence still resets.
-            // Shared writers emit explicit buzz-acp for an intentional reset.
+            // Shared writers emit explicit corevia-talk-acp for an intentional reset.
             let redacted_local_command = inbound.shared
                 && inbound.acp_command.is_none()
                 && local.acp_command.as_deref().is_some_and(|command| {

@@ -5,14 +5,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nostr/nostr.dart' as nostr;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_platform_interface.dart';
-import 'package:buzz/shared/crypto/nip44.dart';
-import 'package:buzz/shared/me/me_groups.dart';
-import 'package:buzz/shared/me/me_chat_creation.dart';
-import 'package:buzz/shared/me/me_assistants.dart';
-import 'package:buzz/shared/me/me_sync.dart';
-import 'package:buzz/shared/me/me_recovery.dart';
-import 'package:buzz/shared/relay/relay.dart';
-import 'package:buzz/shared/theme/theme_provider.dart';
+import 'package:corevia_talk/shared/crypto/nip44.dart';
+import 'package:corevia_talk/shared/me/me_groups.dart';
+import 'package:corevia_talk/shared/me/me_chat_creation.dart';
+import 'package:corevia_talk/shared/me/me_assistants.dart';
+import 'package:corevia_talk/shared/me/me_sync.dart';
+import 'package:corevia_talk/shared/me/me_recovery.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/theme/theme_provider.dart';
 
 class _Config extends RelayConfigNotifier {
   final RelayConfig config;

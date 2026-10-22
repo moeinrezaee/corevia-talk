@@ -1,5 +1,5 @@
-import 'package:buzz/shared/widgets/compose_morph_icon.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/widgets/compose_morph_icon.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -25,10 +25,10 @@ void main() {
       ),
     );
     await tester.pumpWidget(app(false));
-    expect(find.byIcon(BuzzIcons.plus), findsOneWidget);
+    expect(find.byIcon(CoreviaTalkIcons.plus), findsOneWidget);
     await tester.pumpWidget(app(true));
     await tester.pump(const Duration(milliseconds: 100));
-    expect(find.byIcon(BuzzIcons.edit), findsNothing);
+    expect(find.byIcon(CoreviaTalkIcons.edit), findsNothing);
     Transform rotation() => tester.widget<Transform>(
       find.byKey(const ValueKey('compose-icon-rotation')),
     );
@@ -46,10 +46,10 @@ void main() {
     );
     await tester.pumpWidget(app(false));
     await tester.pumpAndSettle();
-    expect(find.byIcon(BuzzIcons.plus), findsOneWidget);
+    expect(find.byIcon(CoreviaTalkIcons.plus), findsOneWidget);
     await tester.pumpWidget(app(true));
     await tester.pumpAndSettle();
-    expect(find.byIcon(BuzzIcons.edit), findsOneWidget);
+    expect(find.byIcon(CoreviaTalkIcons.edit), findsOneWidget);
     expect(rotation().transform.entry(1, 0), closeTo(1, 0.001));
     await tester.pump(const Duration(milliseconds: 500));
     expect(rotation().transform.entry(1, 0), closeTo(1, 0.001));
@@ -58,7 +58,7 @@ void main() {
     expect(rotation().transform.entry(1, 0), inExclusiveRange(0, 1));
     await tester.pumpWidget(app(false, reduced: true));
     await tester.pump();
-    expect(find.byIcon(BuzzIcons.plus), findsOneWidget);
+    expect(find.byIcon(CoreviaTalkIcons.plus), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }

@@ -39,7 +39,7 @@ import type { UserProfileLookup } from "@/features/profile/lib/identity";
 import { useIdentityQuery } from "@/shared/api/hooks";
 import { cn } from "@/shared/lib/cn";
 import type { ProjectRepoDiff, ProjectRepoDiffFile } from "@/shared/api/types";
-import { BuzzLoadingState } from "@/shared/ui/BuzzLoadingState";
+import { CoreviaTalkLoadingState } from "@/shared/ui/CoreviaTalkLoadingState";
 import { PROJECT_DETAIL_PANEL_CLASS } from "./projectPanelStyles";
 import { ProjectPullRequestInlineCommentThread } from "./ProjectPullRequestInlineComments";
 import { tl, tlt } from "@/shared/i18n/tl";
@@ -826,7 +826,7 @@ export function ProjectDiffFilesPanel({
   }, [filteredFiles, selectedPath]);
 
   if (isLoading && !diff) {
-    return <BuzzLoadingState label={tl("Loading changed files")} />;
+    return <CoreviaTalkLoadingState label={tl("Loading changed files")} />;
   }
 
   if (error && !diff) {

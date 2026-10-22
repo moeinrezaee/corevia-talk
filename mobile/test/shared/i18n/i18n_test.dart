@@ -1,8 +1,8 @@
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:buzz/shared/i18n/app_language.dart';
-import 'package:buzz/shared/i18n/persian_date.dart';
-import 'package:buzz/shared/i18n/text_direction.dart';
+import 'package:corevia_talk/shared/i18n/app_language.dart';
+import 'package:corevia_talk/shared/i18n/persian_date.dart';
+import 'package:corevia_talk/shared/i18n/text_direction.dart';
 
 void main() {
   tearDown(() => setActiveLanguage(AppLanguage.en));

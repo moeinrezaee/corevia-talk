@@ -11,7 +11,7 @@ import {
 
 const OWNER = "a".repeat(64);
 const REVIEWER = "b".repeat(64);
-const REPO_ADDRESS = `30617:${OWNER}:buzz`;
+const REPO_ADDRESS = `30617:${OWNER}:corevia-talk`;
 const PR_ID = "c".repeat(64);
 const ISSUE_ID = "d".repeat(64);
 
@@ -35,16 +35,16 @@ function feedItem(overrides = {}) {
 }
 
 const repository = {
-  id: "buzz",
-  dtag: "buzz",
-  name: "Buzz",
+  id: "corevia-talk",
+  dtag: "corevia-talk",
+  name: "Corevia Talk",
   owner: OWNER,
   repoAddress: REPO_ADDRESS,
 };
 
 const project = {
-  id: "buzz-project",
-  name: "Buzz",
+  id: "corevia-talk-project",
+  name: "Corevia Talk",
   owner: OWNER,
   repositories: [repository],
 };

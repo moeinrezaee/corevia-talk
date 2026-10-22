@@ -40,11 +40,11 @@ export class RootErrorBoundary extends Component<
       return (
         <div className="flex h-screen w-screen flex-col items-center justify-center gap-3 bg-background px-6 text-foreground">
           <p className="text-base font-semibold">
-            {tl("Buzz failed to start")}
+            {tl("Corevia Talk failed to start")}
           </p>
           <p className="max-w-md text-center text-sm text-muted-foreground">
             {tl(
-              "Reload Buzz to try again. If this keeps happening, check that Buzz can access website data, then contact support.",
+              "Reload Corevia Talk to try again. If this keeps happening, check that Corevia Talk can access website data, then contact support.",
             )}
           </p>
           <button

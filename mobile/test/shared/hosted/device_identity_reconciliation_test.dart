@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:buzz/shared/hosted/account_identity_store.dart';
-import 'package:buzz/shared/hosted/builderlab_account.dart';
-import 'package:buzz/shared/hosted/device_identity_source.dart';
-import 'package:buzz/shared/hosted/hosted_identity_service.dart';
+import 'package:corevia_talk/shared/hosted/account_identity_store.dart';
+import 'package:corevia_talk/shared/hosted/builderlab_account.dart';
+import 'package:corevia_talk/shared/hosted/device_identity_source.dart';
+import 'package:corevia_talk/shared/hosted/hosted_identity_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nostr/nostr.dart' as nostr;
@@ -83,7 +83,7 @@ void main() {
   ]) {
     test('device key reconciliation: ${scenario.name}', () async {
       final raw = jsonEncode([record(first, 'Old community')]);
-      await secure.write(key: 'buzz_workspaces', value: raw);
+      await secure.write(key: 'corevia_talk_workspaces', value: raw);
       account.bound = scenario.bound ? first.public : null;
       account.backups = scenario.backups;
       if (!scenario.bound) {
@@ -97,8 +97,8 @@ void main() {
       expect(result.state, scenario.state);
       expect(result.pubkey, first.public);
       expect((await store.read())?.pubkey, first.public);
-      expect(await secure.read(key: 'buzz_workspaces'), raw);
-      expect(await secure.read(key: 'buzz_communities'), isNull);
+      expect(await secure.read(key: 'corevia_talk_workspaces'), raw);
+      expect(await secure.read(key: 'corevia_talk_communities'), isNull);
       expect(account.calls.every((path) => path.endsWith('/status')), isTrue);
     });
   }
@@ -107,10 +107,10 @@ void main() {
     'multiple current and hidden legacy keys require choice; no writes before choice',
     () async {
       await secure.write(
-        key: 'buzz_communities',
+        key: 'corevia_talk_communities',
         value: jsonEncode([record(first, 'Current')]),
       );
-      await secure.write(key: 'buzz_nsec', value: second.nsec);
+      await secure.write(key: 'corevia_talk_nsec', value: second.nsec);
       final before = await secure.readAll();
       final pending = await service.resolve();
       expect(pending.state, HostedIdentityState.needsSelection);
@@ -134,8 +134,8 @@ void main() {
 
   test('duplicate device identities offer one explicit reuse choice', () async {
     FlutterSecureStorage.setMockInitialValues({
-      'buzz_nsec': first.nsec,
-      'buzz_communities': jsonEncode([record(first, 'Same identity')]),
+      'corevia_talk_nsec': first.nsec,
+      'corevia_talk_communities': jsonEncode([record(first, 'Same identity')]),
     });
     expect((await service.resolve()).choices.map((item) => item.pubkey), [
       first.public,
@@ -150,10 +150,10 @@ void main() {
     'corrupt, incomplete and mismatched legacy records never authorize generation',
     () async {
       for (final data in [
-        {'buzz_workspaces': '{broken'},
-        {'buzz_nsec': ''},
+        {'corevia_talk_workspaces': '{broken'},
+        {'corevia_talk_nsec': ''},
         {
-          'buzz_communities': jsonEncode([
+          'corevia_talk_communities': jsonEncode([
             {'nsec': first.nsec, 'pubkey': second.public},
           ]),
         },
@@ -204,8 +204,8 @@ void main() {
       final raw = jsonEncode([
         {'pubkey': first.public, 'name': 'Token-only community'},
       ]);
-      await secure.write(key: 'buzz_communities', value: raw);
-      await secure.write(key: 'buzz_pubkey', value: first.public);
+      await secure.write(key: 'corevia_talk_communities', value: raw);
+      await secure.write(key: 'corevia_talk_pubkey', value: first.public);
       account.bound = first.public;
       account.backups = [first.public];
       account.recovery = {
@@ -225,11 +225,11 @@ void main() {
       expect(result.state, HostedIdentityState.ready);
       expect(result.pubkey, first.public);
       expect(account.calls, [
-        '/v1/buzz/nsec-backups/status',
-        '/v1/buzz/nsec-backups/recovery',
+        '/v1/corevia-talk/nsec-backups/status',
+        '/v1/corevia-talk/nsec-backups/recovery',
       ]);
-      expect(await secure.read(key: 'buzz_communities'), raw);
-      expect(await secure.read(key: 'buzz_pubkey'), first.public);
+      expect(await secure.read(key: 'corevia_talk_communities'), raw);
+      expect(await secure.read(key: 'corevia_talk_pubkey'), first.public);
     },
   );
 
@@ -237,8 +237,8 @@ void main() {
     'inventory labels are deduplicated and empty names get a fallback',
     () async {
       final raw = jsonEncode([record(first, 'Team'), record(second, '  ')]);
-      await secure.write(key: 'buzz_communities', value: raw);
-      await secure.write(key: 'buzz_workspaces', value: raw);
+      await secure.write(key: 'corevia_talk_communities', value: raw);
+      await secure.write(key: 'corevia_talk_workspaces', value: raw);
       final choices = await DeviceIdentitySource().choices();
       expect(choices.map((choice) => choice.label), [
         'Team',
@@ -248,7 +248,7 @@ void main() {
   );
 
   test('cancelled resolution cannot adopt or generate', () async {
-    await secure.write(key: 'buzz_nsec', value: first.nsec);
+    await secure.write(key: 'corevia_talk_nsec', value: first.nsec);
     await expectLater(
       service.resolve(isCurrent: () => false),
       throwsA(AccountFailure.unavailable),

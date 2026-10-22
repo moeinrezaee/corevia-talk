@@ -28,7 +28,7 @@ class HostedConnectPage extends HookConsumerWidget {
             flow.stage != HostedFlowStage.complete &&
             flow.stage != HostedFlowStage.idle) {
           if (!context.mounted) return;
-          await showBuzzModalBottomSheet<void>(
+          await showCoreviaTalkModalBottomSheet<void>(
             context: context,
             title: 'Connect to Builderlab',
             useRootNavigator: true,

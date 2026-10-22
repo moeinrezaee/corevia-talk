@@ -49,7 +49,7 @@ import 'shared/push/push_relay_capability_provider.dart';
 import 'shared/relay/relay.dart';
 import 'shared/read_state/read_state_provider.dart';
 import 'shared/theme/theme.dart';
-import 'shared/widgets/buzz_loading_indicator.dart';
+import 'shared/widgets/corevia_talk_loading_indicator.dart';
 
 const _starterChannelNamespace = '3ce33bea-8f09-5f1b-9c85-8a7d2659e6b0';
 
@@ -354,7 +354,7 @@ class App extends HookConsumerWidget {
       );
     }
 
-    // Start listening for buzz:// links immediately (even pre-auth) so a
+    // Start listening for corevia-talk:// links immediately (even pre-auth) so a
     // cold-start link survives until the authenticated UI can dispatch it.
     ref.watch(pendingDeepLinkProvider);
 
@@ -395,7 +395,7 @@ class App extends HookConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       navigatorObservers: [appRouteObserver],
-      title: tl('Buzz'),
+      title: tl('Corevia Talk'),
       theme: mobileAppearanceTheme(Brightness.light, communityTheme.accent),
       darkTheme: mobileAppearanceTheme(Brightness.dark, communityTheme.accent),
       themeMode: themeMode,
@@ -487,9 +487,9 @@ class _SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: BuzzLoadingIndicator(
+        child: CoreviaTalkLoadingIndicator(
           size: 56,
-          semanticLabel: tl('Starting Buzz'),
+          semanticLabel: tl('Starting Corevia Talk'),
         ),
       ),
     );

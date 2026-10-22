@@ -1,7 +1,7 @@
-import 'package:buzz/shared/push/dev_push_lease.dart';
-import 'package:buzz/shared/community/community.dart';
-import 'package:buzz/shared/push/push_bootstrap.dart';
-import 'package:buzz/shared/push/push_subscription.dart';
+import 'package:corevia_talk/shared/push/dev_push_lease.dart';
+import 'package:corevia_talk/shared/community/community.dart';
+import 'package:corevia_talk/shared/push/push_bootstrap.dart';
+import 'package:corevia_talk/shared/push/push_subscription.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/widgets.dart';
 
@@ -10,7 +10,7 @@ void main() {
     tester,
   ) async {
     var registrations = 0;
-    Widget bootstrap(bool enabled) => BuzzPushRegistrationBootstrap(
+    Widget bootstrap(bool enabled) => CoreviaTalkPushRegistrationBootstrap(
       shouldRegister: enabled,
       attemptKey: 'same-community|same-relay',
       startRegistration: () async {
@@ -34,9 +34,9 @@ void main() {
       relayUrl: 'wss://relay.example',
     );
     var registrations = 0;
-    Widget bootstrap(BuzzPushLeaseDescriptor? descriptor) =>
-        BuzzPushRegistrationBootstrap(
-          shouldRegister: buzzPushLifecycleEnabled(
+    Widget bootstrap(CoreviaTalkPushLeaseDescriptor? descriptor) =>
+        CoreviaTalkPushRegistrationBootstrap(
+          shouldRegister: coreviaTalkPushLifecycleEnabled(
             community: community,
             descriptor: descriptor,
           ),
@@ -57,7 +57,7 @@ void main() {
     'superseded lease acceptance is a retryable publication failure',
     () async {
       await expectLater(
-        publishBuzzPushLeaseRecoverably(
+        publishCoreviaTalkPushLeaseRecoverably(
           reserveGeneration: () async => 1,
           publish: (_) async {},
           markAccepted: (_) async => false,
@@ -68,7 +68,7 @@ void main() {
   );
 
   test('failed bootstrap attempt becomes retryable after the delay', () async {
-    final gate = BuzzPushAttemptGate(retryDelay: Duration.zero);
+    final gate = CoreviaTalkPushAttemptGate(retryDelay: Duration.zero);
     addTearDown(gate.dispose);
     var retries = 0;
 
@@ -83,7 +83,7 @@ void main() {
   testWidgets('a failed attempt stays blocked until the retry delay', (
     tester,
   ) async {
-    final gate = BuzzPushAttemptGate();
+    final gate = CoreviaTalkPushAttemptGate();
     addTearDown(gate.dispose);
     var retries = 0;
     expect(gate.tryBegin('attempt'), isTrue);
@@ -98,7 +98,7 @@ void main() {
   });
 
   test('a new attempt cancels an obsolete scheduled retry', () async {
-    final gate = BuzzPushAttemptGate(retryDelay: Duration.zero);
+    final gate = CoreviaTalkPushAttemptGate(retryDelay: Duration.zero);
     addTearDown(gate.dispose);
     var retries = 0;
 
@@ -112,7 +112,7 @@ void main() {
   });
 
   test('successful bootstrap becomes retryable at renewal time', () async {
-    final gate = BuzzPushAttemptGate(retryDelay: Duration.zero);
+    final gate = CoreviaTalkPushAttemptGate(retryDelay: Duration.zero);
     addTearDown(gate.dispose);
     var retries = 0;
 
@@ -125,7 +125,7 @@ void main() {
   });
 
   test('completed bootstrap attempt can run again for later work', () {
-    final gate = BuzzPushAttemptGate();
+    final gate = CoreviaTalkPushAttemptGate();
     addTearDown(gate.dispose);
 
     expect(gate.tryBegin('attempt'), isTrue);
@@ -134,11 +134,11 @@ void main() {
   });
 
   test('publication attempt changes when the relay executor rotates', () {
-    final subscription = BuzzPushSubscription(
-      filter: BuzzPushFilter(kinds: const [9], pTags: [_hex('a')]),
+    final subscription = CoreviaTalkPushSubscription(
+      filter: CoreviaTalkPushFilter(kinds: const [9], pTags: [_hex('a')]),
       notificationClass: 'default',
     );
-    final original = buzzPushPublicationAttemptKey(
+    final original = coreviaTalkPushPublicationAttemptKey(
       communityId: 'community',
       relayBaseUrl: 'https://relay.example',
       token: 'token',
@@ -147,7 +147,7 @@ void main() {
     );
 
     expect(
-      buzzPushPublicationAttemptKey(
+      coreviaTalkPushPublicationAttemptKey(
         communityId: 'community',
         relayBaseUrl: 'https://relay.example',
         token: 'token',
@@ -157,7 +157,7 @@ void main() {
       isNot(original),
     );
     expect(
-      buzzPushPublicationAttemptKey(
+      coreviaTalkPushPublicationAttemptKey(
         communityId: 'community',
         relayBaseUrl: 'https://relay.example',
         token: 'token',
@@ -176,28 +176,28 @@ void main() {
     final disabled = enabled.copyWith(pushNotificationsEnabled: false);
 
     expect(
-      buzzPushLifecycleEnabled(
+      coreviaTalkPushLifecycleEnabled(
         community: disabled,
         descriptor: _descriptor(keyId: 'relay-v1', pubkey: _hex('b')),
       ),
       isFalse,
     );
     expect(
-      buzzPushLifecycleEnabled(
+      coreviaTalkPushLifecycleEnabled(
         community: enabled,
         descriptor: _descriptor(keyId: 'relay-v1', pubkey: _hex('b')),
       ),
       isTrue,
     );
     expect(
-      buzzPushLifecycleEnabled(community: enabled, descriptor: null),
+      coreviaTalkPushLifecycleEnabled(community: enabled, descriptor: null),
       isFalse,
     );
   });
 
   test('pending opt-out tombstone keeps active push lifecycle disabled', () {
-    final subscription = BuzzPushSubscription(
-      filter: BuzzPushFilter(kinds: const [9], pTags: [_hex('a')]),
+    final subscription = CoreviaTalkPushSubscription(
+      filter: CoreviaTalkPushFilter(kinds: const [9], pTags: [_hex('a')]),
       notificationClass: 'default',
     );
     final community =
@@ -207,13 +207,13 @@ void main() {
         ).copyWith(
           pushNotificationsEnabled: false,
           pushSubscriptionState:
-              BuzzPushLeaseSubscriptionState.desired(desired: [subscription])
+              CoreviaTalkPushLeaseSubscriptionState.desired(desired: [subscription])
                   .withAccepted(subscriptions: [subscription], generation: 3)
                   .withPendingTombstone(4),
         );
 
     expect(
-      buzzPushLifecycleEnabled(
+      coreviaTalkPushLifecycleEnabled(
         community: community,
         descriptor: _descriptor(keyId: 'relay-v1', pubkey: _hex('b')),
       ),
@@ -245,7 +245,7 @@ void main() {
       }
 
       await expectLater(
-        publishBuzzPushLeaseRecoverably(
+        publishCoreviaTalkPushLeaseRecoverably(
           reserveGeneration: reserve,
           publish: publish,
           markAccepted: markAccepted,
@@ -255,7 +255,7 @@ void main() {
       expect(relayGeneration, 1);
       expect(acceptedGeneration, 0);
 
-      await publishBuzzPushLeaseRecoverably(
+      await publishCoreviaTalkPushLeaseRecoverably(
         reserveGeneration: reserve,
         publish: publish,
         markAccepted: markAccepted,
@@ -266,10 +266,10 @@ void main() {
   );
 }
 
-BuzzPushLeaseDescriptor _descriptor({
+CoreviaTalkPushLeaseDescriptor _descriptor({
   required String keyId,
   required String pubkey,
-}) => BuzzPushLeaseDescriptor(
+}) => CoreviaTalkPushLeaseDescriptor(
   origin: 'wss://relay.example',
   executorKeyId: keyId,
   executorPubkey: pubkey,

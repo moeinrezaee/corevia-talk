@@ -178,7 +178,7 @@ class _InboxRow extends HookConsumerWidget {
                       key: ValueKey('inbox-swipe-read-${item.id}'),
                       color: actionColor,
                       foregroundColor: contrastForeground(actionColor),
-                      icon: isDone ? BuzzIcons.mail : BuzzIcons.mailOpen,
+                      icon: isDone ? CoreviaTalkIcons.mail : CoreviaTalkIcons.mailOpen,
                       label: isDone ? tl('Mark unread') : tl('Mark as read'),
                       onTap: toggleReadState,
                     ),
@@ -371,7 +371,7 @@ class _InboxRow extends HookConsumerWidget {
   }
 
   void _showRowActions(BuildContext context) {
-    showBuzzModalBottomSheet<void>(
+    showCoreviaTalkModalBottomSheet<void>(
       context: context,
       builder: (sheetContext) => SafeArea(
         child: Padding(
@@ -386,7 +386,7 @@ class _InboxRow extends HookConsumerWidget {
             child: SheetActionSection(
               children: [
                 ListTile(
-                  leading: Icon(isDone ? BuzzIcons.mail : BuzzIcons.mailOpen),
+                  leading: Icon(isDone ? CoreviaTalkIcons.mail : CoreviaTalkIcons.mailOpen),
                   title: Text(isDone ? 'Mark unread' : 'Mark as read'),
                   onTap: () {
                     Navigator.of(sheetContext).pop();
@@ -394,7 +394,7 @@ class _InboxRow extends HookConsumerWidget {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(BuzzIcons.externalLink),
+                  leading: const Icon(CoreviaTalkIcons.externalLink),
                   title: Text(tl('Open conversation')),
                   onTap: () {
                     Navigator.of(sheetContext).pop();

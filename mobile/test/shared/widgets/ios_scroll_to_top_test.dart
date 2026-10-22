@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/widgets/frosted_app_bar.dart';
-import 'package:buzz/shared/widgets/frosted_scaffold.dart';
+import 'package:corevia_talk/shared/widgets/frosted_app_bar.dart';
+import 'package:corevia_talk/shared/widgets/frosted_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';

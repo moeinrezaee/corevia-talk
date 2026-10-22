@@ -5,7 +5,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use super::{AgentDefinition, ManagedAgentRecord};
 use crate::app_state::AppState;
 
-pub(crate) const ACP_SESSION_POLICY_ENV_VAR: &str = "BUZZ_ACP_SESSION_POLICY";
+pub(crate) const ACP_SESSION_POLICY_ENV_VAR: &str = "COREVIA_TALK_ACP_SESSION_POLICY";
 
 /// Desktop experiment state that influences managed-agent lifecycle behavior.
 pub struct ManagedAgentExperimentState {

@@ -15,8 +15,8 @@ export const FA_PART_1: Record<string, string> = {
   "(edited)": "(ویرایش‌شده)",
   "(empty)": "(خالی)",
   "(optional)": "(اختیاری)",
-  "(override at spawn time; Buzz-managed vars always win)":
-    "(در زمان اجرا بازنویسی می‌شود؛ متغیرهای مدیریت‌شده توسط Buzz همیشه اولویت دارند)",
+  "(override at spawn time; CoreviaTalk-managed vars always win)":
+    "(در زمان اجرا بازنویسی می‌شود؛ متغیرهای مدیریت‌شده توسط Corevia Talk همیشه اولویت دارند)",
   "(per community)": "(برای هر انجمن)",
   "(you)": "(شما)",
   ") can always use this agent. You don't need to add yourself.":
@@ -355,8 +355,8 @@ export const FA_PART_1: Record<string, string> = {
   "Audio unavailable. Retry playback.": "صدا در دسترس نیست. دوباره پخش کنید.",
   "Auth is disabled on this relay. The admin console is accessible without a credential.":
     "احراز هویت در این رله غیرفعال است. کنسول مدیریت بدون اعتبارنامه در دسترس است.",
-  "Authentication opens in your browser and returns securely to Buzz. You can use every other part of the app without signing in.":
-    "احراز هویت در مرورگر شما باز می‌شود و به‌صورت امن به Buzz برمی‌گردد. می‌توانید بدون ورود از بقیهٔ بخش‌های برنامه استفاده کنید.",
+  "Authentication opens in your browser and returns securely to Corevia Talk. You can use every other part of the app without signing in.":
+    "احراز هویت در مرورگر شما باز می‌شود و به‌صورت امن به Corevia Talk برمی‌گردد. می‌توانید بدون ورود از بقیهٔ بخش‌های برنامه استفاده کنید.",
   Author: "نویسنده",
   "Author pubkey": "کلید عمومی نویسنده",
   Authors: "نویسندگان",
@@ -449,44 +449,44 @@ export const FA_PART_1: Record<string, string> = {
   "Builderlab account": "حساب Builderlab",
   "Built-in": "داخلی",
   "Bullet list": "فهرست نقطه‌ای",
-  Buzz: "Buzz",
-  "Buzz ACP (default)": "Buzz ACP (پیش‌فرض)",
-  "Buzz Term": "ترمینال Buzz",
-  "Buzz Term (⌘J)": "ترمینال Buzz (⌘J)",
-  "Buzz Term mode": "حالت ترمینال Buzz",
-  "Buzz could not authenticate with this repository.":
-    "Buzz نتوانست با این مخزن احراز هویت کند.",
-  "Buzz could not authenticate with this repository. Check your access and try again.":
-    "Buzz نتوانست با این مخزن احراز هویت کند. دسترسی خود را بررسی کنید و دوباره تلاش کنید.",
-  "Buzz could not find this repository’s local checkout.":
-    "Buzz چک‌اوت محلی این مخزن را پیدا نکرد.",
-  "Buzz could not load this repository.":
-    "Buzz نتوانست این مخزن را بارگذاری کند.",
-  "Buzz could not load this repository. Try again or contact the project owner.":
-    "Buzz نتوانست این مخزن را بارگذاری کند. دوباره تلاش کنید یا با مالک پروژه تماس بگیرید.",
-  "Buzz could not open this checkout in your configured terminal.":
-    "Buzz نتوانست این چک‌اوت را در ترمینال پیکربندی‌شدهٔ شما باز کند.",
-  "Buzz could not open this checkout in your file browser.":
-    "Buzz نتوانست این چک‌اوت را در مرورگر فایل شما باز کند.",
-  "Buzz could not save some local data — read positions may not persist across restarts.":
-    "Buzz نتوانست بخشی از داده‌های محلی را ذخیره کند — موقعیت‌های خوانده‌شده ممکن است پس از راه‌اندازی مجدد حفظ نشوند.",
-  "Buzz downloads remote models when sharing starts.":
-    "Buzz هنگام شروع اشتراک‌گذاری مدل‌های راه‌دور را دانلود می‌کند.",
-  "Buzz failed to start": "Buzz راه‌اندازی نشد",
-  "Buzz identity connected": "هویت Buzz متصل شد",
-  "Buzz is open source. Builderlab hosts the relay for this account.":
-    "Buzz متن‌باز است. Builderlab میزبان رلهٔ این حساب است.",
-  "Buzz lets you bring multiple agents into the same workspace. Your team will help you get started using Buzz.":
-    "Buzz به شما امکان می‌دهد چند ایجنت را به یک فضای کار بیاورید. تیم شما کمک می‌کند تا استفاده از Buzz را شروع کنید.",
-  "Buzz link": "پیوند Buzz",
-  "Buzz mode": "حالت Buzz",
-  "Buzz opened your browser to finish verification.":
-    "Buzz مرورگر شما را برای تکمیل تأیید باز کرد.",
-  "Buzz shared compute": "توان محاسباتی اشتراکی Buzz",
-  "Buzz will create a Nostr identity with two parts: a private key that signs you in and a public key you can safely share. You can find your public identity anytime in Buzz settings.":
-    "Buzz یک هویت Nostr با دو بخش می‌سازد: یک کلید خصوصی که شما را وارد می‌کند و یک کلید عمومی که می‌توانید با خیال راحت به اشتراک بگذارید. هویت عمومی‌تان را هر زمان در تنظیمات Buzz می‌توانید پیدا کنید.",
-  "Buzz works with any relay. This page is only for relay hosting provided by Block — sign in with a Builderlab account to create and manage Block-hosted communities. Builderlab sign-in is used on this page alone.":
-    "Buzz با هر رله‌ای کار می‌کند. این صفحه فقط برای رله‌های میزبانی‌شده توسط Block است — با حساب Builderlab وارد شوید تا انجمن‌های میزبانی‌شده توسط Block را بسازید و مدیریت کنید. ورود با Builderlab فقط در همین صفحه استفاده می‌شود.",
+  Corevia Talk: "Corevia Talk",
+  "Corevia Talk ACP (default)": "Corevia Talk ACP (پیش‌فرض)",
+  "Corevia Talk Term": "ترمینال Corevia Talk",
+  "Corevia Talk Term (⌘J)": "ترمینال Corevia Talk (⌘J)",
+  "Corevia Talk Term mode": "حالت ترمینال Corevia Talk",
+  "Corevia Talk could not authenticate with this repository.":
+    "Corevia Talk نتوانست با این مخزن احراز هویت کند.",
+  "Corevia Talk could not authenticate with this repository. Check your access and try again.":
+    "Corevia Talk نتوانست با این مخزن احراز هویت کند. دسترسی خود را بررسی کنید و دوباره تلاش کنید.",
+  "Corevia Talk could not find this repository’s local checkout.":
+    "Corevia Talk چک‌اوت محلی این مخزن را پیدا نکرد.",
+  "Corevia Talk could not load this repository.":
+    "Corevia Talk نتوانست این مخزن را بارگذاری کند.",
+  "Corevia Talk could not load this repository. Try again or contact the project owner.":
+    "Corevia Talk نتوانست این مخزن را بارگذاری کند. دوباره تلاش کنید یا با مالک پروژه تماس بگیرید.",
+  "Corevia Talk could not open this checkout in your configured terminal.":
+    "Corevia Talk نتوانست این چک‌اوت را در ترمینال پیکربندی‌شدهٔ شما باز کند.",
+  "Corevia Talk could not open this checkout in your file browser.":
+    "Corevia Talk نتوانست این چک‌اوت را در مرورگر فایل شما باز کند.",
+  "Corevia Talk could not save some local data — read positions may not persist across restarts.":
+    "Corevia Talk نتوانست بخشی از داده‌های محلی را ذخیره کند — موقعیت‌های خوانده‌شده ممکن است پس از راه‌اندازی مجدد حفظ نشوند.",
+  "Corevia Talk downloads remote models when sharing starts.":
+    "Corevia Talk هنگام شروع اشتراک‌گذاری مدل‌های راه‌دور را دانلود می‌کند.",
+  "Corevia Talk failed to start": "Corevia Talk راه‌اندازی نشد",
+  "Corevia Talk identity connected": "هویت Corevia Talk متصل شد",
+  "Corevia Talk is open source. Builderlab hosts the relay for this account.":
+    "Corevia Talk متن‌باز است. Builderlab میزبان رلهٔ این حساب است.",
+  "Corevia Talk lets you bring multiple agents into the same workspace. Your team will help you get started using Corevia Talk.":
+    "Corevia Talk به شما امکان می‌دهد چند ایجنت را به یک فضای کار بیاورید. تیم شما کمک می‌کند تا استفاده از Corevia Talk را شروع کنید.",
+  "Corevia Talk link": "پیوند Corevia Talk",
+  "Corevia Talk mode": "حالت Corevia Talk",
+  "Corevia Talk opened your browser to finish verification.":
+    "Corevia Talk مرورگر شما را برای تکمیل تأیید باز کرد.",
+  "Corevia Talk shared compute": "توان محاسباتی اشتراکی Corevia Talk",
+  "Corevia Talk will create a Nostr identity with two parts: a private key that signs you in and a public key you can safely share. You can find your public identity anytime in Corevia Talk settings.":
+    "Corevia Talk یک هویت Nostr با دو بخش می‌سازد: یک کلید خصوصی که شما را وارد می‌کند و یک کلید عمومی که می‌توانید با خیال راحت به اشتراک بگذارید. هویت عمومی‌تان را هر زمان در تنظیمات Corevia Talk می‌توانید پیدا کنید.",
+  "Corevia Talk works with any relay. This page is only for relay hosting provided by Block — sign in with a Builderlab account to create and manage Block-hosted communities. Builderlab sign-in is used on this page alone.":
+    "Corevia Talk با هر رله‌ای کار می‌کند. این صفحه فقط برای رله‌های میزبانی‌شده توسط Block است — با حساب Builderlab وارد شوید تا انجمن‌های میزبانی‌شده توسط Block را بسازید و مدیریت کنید. ورود با Builderlab فقط در همین صفحه استفاده می‌شود.",
   "Can't reach the relay": "به رله دسترسی ندارم",
   "Can't reach this relay": "به این رله دسترسی ندارم",
   Cancel: "لغو",
@@ -611,8 +611,8 @@ export const FA_PART_1: Record<string, string> = {
     "یک مخزن موجود را برای افزودن به {0} انتخاب کنید.",
   "Choose an image file for custom emoji.":
     "یک فایل تصویر برای ایموجی سفارشی انتخاب کنید.",
-  "Choose an image first; Buzz will suggest a name from the filename.":
-    "ابتدا یک تصویر انتخاب کنید؛ Buzz از روی نام فایل یک نام پیشنهاد می‌دهد.",
+  "Choose an image first; Corevia Talk will suggest a name from the filename.":
+    "ابتدا یک تصویر انتخاب کنید؛ Corevia Talk از روی نام فایل یک نام پیشنهاد می‌دهد.",
   "Choose an image or emoji as your avatar":
     "یک تصویر یا ایموجی را به‌عنوان آواتار انتخاب کنید",
   "Choose custom avatar color": "رنگ آواتار سفارشی را انتخاب کنید",
@@ -639,30 +639,30 @@ export const FA_PART_1: Record<string, string> = {
   "Choose still frame": "فریم ثابت را انتخاب کنید",
   "Choose the address your team will use to connect.":
     "نشانی‌ای را که تیم شما برای اتصال استفاده می‌کند انتخاب کنید.",
-  "Choose the encrypted backup file you saved from Buzz.":
-    "فایل پشتیبان رمزگذاری‌شده‌ای را که از Buzz ذخیره کرده‌اید انتخاب کنید.",
-  "Choose the highlight color used throughout Buzz.":
-    "رنگ تأکیدی مورد استفاده در سراسر Buzz را انتخاب کنید.",
+  "Choose the encrypted backup file you saved from Corevia Talk.":
+    "فایل پشتیبان رمزگذاری‌شده‌ای را که از Corevia Talk ذخیره کرده‌اید انتخاب کنید.",
+  "Choose the highlight color used throughout Corevia Talk.":
+    "رنگ تأکیدی مورد استفاده در سراسر Corevia Talk را انتخاب کنید.",
   "Choose when you want to be reminded about this message.":
     "انتخاب کنید چه زمانی دربارهٔ این پیام یادآوری شوید.",
   "Choose where to run": "انتخاب کنید کجا اجرا شود",
-  "Choose whether Buzz reads new agent responses aloud during an active huddle.":
-    "انتخاب کنید Buzz پاسخ‌های جدید ایجنت را در گفتگوی صوتیِ فعال با صدای بلند بخواند یا نه.",
-  "Choose which agent tools Buzz can use on this device.":
-    "انتخاب کنید Buzz کدام ابزارهای ایجنت را روی این دستگاه می‌تواند استفاده کند.",
+  "Choose whether Corevia Talk reads new agent responses aloud during an active huddle.":
+    "انتخاب کنید Corevia Talk پاسخ‌های جدید ایجنت را در گفتگوی صوتیِ فعال با صدای بلند بخواند یا نه.",
+  "Choose which agent tools Corevia Talk can use on this device.":
+    "انتخاب کنید Corevia Talk کدام ابزارهای ایجنت را روی این دستگاه می‌تواند استفاده کند.",
   "Choose which runtime to use for each agent.":
     "انتخاب کنید برای هر ایجنت از کدام زمان‌اجرا استفاده شود.",
   "Choose who can send instructions to":
     "انتخاب کنید چه کسی می‌تواند به این ایجنت دستور بدهد:",
   "Choose your model settings": "تنظیمات مدل خود را انتخاب کنید",
-  "Choose your provider and enter an API key to connect to the Buzz harness.":
-    "ارائه‌دهندهٔ خود را انتخاب کنید و یک کلید API وارد کنید تا به هارنس Buzz وصل شوید.",
+  "Choose your provider and enter an API key to connect to the Corevia Talk harness.":
+    "ارائه‌دهندهٔ خود را انتخاب کنید و یک کلید API وارد کنید تا به هارنس Corevia Talk وصل شوید.",
   "Choose {0}": "انتخاب {0}",
   "Choosing a basic filter will replace the entire advanced expression. This cannot be undone.":
     "انتخاب فیلتر ساده کل عبارت پیشرفته را جایگزین می‌کند. این کار قابل بازگشت نیست.",
   Circle: "دایره",
-  "Claim a Buzz address for your team.": "یک نشانی Buzz برای تیم خود بگیرید.",
-  "Claim a Buzz address to get started.": "برای شروع یک نشانی Buzz بگیرید.",
+  "Claim a Corevia Talk address for your team.": "یک نشانی Corevia Talk برای تیم خود بگیرید.",
+  "Claim a Corevia Talk address to get started.": "برای شروع یک نشانی Corevia Talk بگیرید.",
   Clear: "پاک کردن",
   "Clear conversation": "پاک کردن گفتگو",
   "Clear filter": "پاک کردن فیلتر",
@@ -680,8 +680,8 @@ export const FA_PART_1: Record<string, string> = {
   Clone: "کلون",
   "Clone URL": "نشانی کلون",
   "Clone locally": "کلون محلی",
-  "Clone this repository locally to explore its files, commits, and contributors in Buzz.":
-    "این مخزن را به‌صورت محلی کلون کنید تا فایل‌ها، کامیت‌ها و مشارکت‌کنندگانش را در Buzz مرور کنید.",
+  "Clone this repository locally to explore its files, commits, and contributors in Corevia Talk.":
+    "این مخزن را به‌صورت محلی کلون کنید تا فایل‌ها، کامیت‌ها و مشارکت‌کنندگانش را در Corevia Talk مرور کنید.",
   "Cloning…": "در حال کلون…",
   Close: "بستن",
   "Close Bestie": "بستن Bestie",

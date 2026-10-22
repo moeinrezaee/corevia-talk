@@ -13,7 +13,7 @@ import {
 } from "./whereToRunIntent";
 import { tl } from "@/shared/i18n/tl";
 
-/** Optional remote-backend selector. Buzz shared compute is an LLM provider, not a run destination. */
+/** Optional remote-backend selector. Corevia Talk shared compute is an LLM provider, not a run destination. */
 export function WhereToRunSection({
   draft,
   isPending,

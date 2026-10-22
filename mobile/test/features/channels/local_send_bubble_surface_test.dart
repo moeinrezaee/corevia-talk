@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
-import 'package:buzz/features/channels/local_message_send_transition.dart';
-import 'package:buzz/features/channels/local_send_bubble_surface.dart';
-import 'package:buzz/features/channels/local_send_row.dart';
+import 'package:corevia_talk/features/channels/local_message_send_transition.dart';
+import 'package:corevia_talk/features/channels/local_send_bubble_surface.dart';
+import 'package:corevia_talk/features/channels/local_send_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';

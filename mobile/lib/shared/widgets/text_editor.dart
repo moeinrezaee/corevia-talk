@@ -53,7 +53,7 @@ Future<void> showTextEditor({
   }
 
   if (!context.mounted) return;
-  await showBuzzModalBottomSheet<void>(
+  await showCoreviaTalkModalBottomSheet<void>(
     context: context,
     title: title,
     isScrollControlled: true,

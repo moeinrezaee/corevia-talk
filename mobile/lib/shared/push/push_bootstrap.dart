@@ -18,8 +18,8 @@ import 'push_subscription.dart';
 const _pushBootstrapRetryDelay = Duration(seconds: 5);
 
 @visibleForTesting
-class BuzzPushAttemptGate {
-  BuzzPushAttemptGate({this.retryDelay = _pushBootstrapRetryDelay});
+class CoreviaTalkPushAttemptGate {
+  CoreviaTalkPushAttemptGate({this.retryDelay = _pushBootstrapRetryDelay});
 
   final Duration retryDelay;
   String? _attempt;
@@ -70,25 +70,25 @@ class BuzzPushAttemptGate {
 }
 
 @visibleForTesting
-String buzzPushPublicationAttemptKey({
+String coreviaTalkPushPublicationAttemptKey({
   required String communityId,
   required String relayBaseUrl,
   required String token,
-  required BuzzPushLeaseDescriptor descriptor,
-  required List<BuzzPushSubscription> subscriptions,
+  required CoreviaTalkPushLeaseDescriptor descriptor,
+  required List<CoreviaTalkPushSubscription> subscriptions,
 }) => [
   communityId,
   relayBaseUrl,
   token,
   descriptor.executorKeyId,
   descriptor.executorPubkey,
-  buzzPushSubscriptionsFingerprint(subscriptions),
+  coreviaTalkPushSubscriptionsFingerprint(subscriptions),
 ].join('|');
 
 @visibleForTesting
-bool buzzPushLifecycleEnabled({
+bool coreviaTalkPushLifecycleEnabled({
   required Community? community,
-  required BuzzPushLeaseDescriptor? descriptor,
+  required CoreviaTalkPushLeaseDescriptor? descriptor,
 }) =>
     Env.pushGatewayConfigured &&
     community?.pushNotificationsEnabled == true &&
@@ -96,12 +96,12 @@ bool buzzPushLifecycleEnabled({
 
 /// Starts APNs registration when the active community opts in.
 @visibleForTesting
-class BuzzPushRegistrationBootstrap extends HookWidget {
-  const BuzzPushRegistrationBootstrap({
+class CoreviaTalkPushRegistrationBootstrap extends HookWidget {
+  const CoreviaTalkPushRegistrationBootstrap({
     required this.shouldRegister,
     required this.attemptKey,
     required this.child,
-    this.startRegistration = startBuzzPushRegistration,
+    this.startRegistration = startCoreviaTalkPushRegistration,
     super.key,
   });
 
@@ -112,7 +112,7 @@ class BuzzPushRegistrationBootstrap extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attemptGate = useMemoized(BuzzPushAttemptGate.new);
+    final attemptGate = useMemoized(CoreviaTalkPushAttemptGate.new);
     final retry = useState(0);
     useEffect(() => attemptGate.dispose, const []);
     useEffect(() {
@@ -138,7 +138,7 @@ class BuzzPushRegistrationBootstrap extends HookWidget {
 }
 
 @visibleForTesting
-Future<int> publishBuzzPushLeaseRecoverably({
+Future<int> publishCoreviaTalkPushLeaseRecoverably({
   required Future<int> Function() reserveGeneration,
   required Future<void> Function(int generation) publish,
   required Future<bool> Function(int generation) markAccepted,
@@ -153,19 +153,19 @@ Future<int> publishBuzzPushLeaseRecoverably({
 
 /// Starts the push lifecycle only after authenticated relay connectivity and a
 /// push-capable NIP-11 descriptor are both present.
-class BuzzPushBootstrap extends HookConsumerWidget {
-  const BuzzPushBootstrap({required this.child, super.key});
+class CoreviaTalkPushBootstrap extends HookConsumerWidget {
+  const CoreviaTalkPushBootstrap({required this.child, super.key});
 
   final Widget child;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     useListenable(apnsDeviceToken);
-    final publicationAttempt = useMemoized(BuzzPushAttemptGate.new);
-    final tombstoneAttempt = useMemoized(BuzzPushAttemptGate.new);
+    final publicationAttempt = useMemoized(CoreviaTalkPushAttemptGate.new);
+    final tombstoneAttempt = useMemoized(CoreviaTalkPushAttemptGate.new);
     final publicationRetry = useState(0);
     final tombstoneRetry = useState(0);
-    final revocationOutbox = ref.watch(buzzPushLeaseRevocationOutboxProvider);
+    final revocationOutbox = ref.watch(coreviaTalkPushLeaseRevocationOutboxProvider);
     final session = ref.watch(relaySessionProvider);
     final communities = ref.watch(communityListProvider).value ?? const [];
     final config = ref.watch(relayConfigProvider);
@@ -269,7 +269,7 @@ class BuzzPushBootstrap extends HookConsumerWidget {
     useEffect(
       () {
         if (!_ready(session, config, community, memberPubkey) ||
-            !buzzPushLifecycleEnabled(
+            !coreviaTalkPushLifecycleEnabled(
               community: community,
               descriptor: descriptor,
             ) ||
@@ -280,7 +280,7 @@ class BuzzPushBootstrap extends HookConsumerWidget {
         final activeDescriptor = descriptor!;
         final state = activeCommunity.pushSubscriptionState;
         if (state.desired.isEmpty) return null;
-        final publicationKey = buzzPushPublicationAttemptKey(
+        final publicationKey = coreviaTalkPushPublicationAttemptKey(
           communityId: activeCommunity.id,
           relayBaseUrl: config.baseUrl,
           token: token,
@@ -343,10 +343,10 @@ class BuzzPushBootstrap extends HookConsumerWidget {
       ],
     );
 
-    return BuzzPushRegistrationBootstrap(
+    return CoreviaTalkPushRegistrationBootstrap(
       shouldRegister:
           _ready(session, config, community, memberPubkey) &&
-          buzzPushLifecycleEnabled(
+          coreviaTalkPushLifecycleEnabled(
             community: community,
             descriptor: descriptor,
           ),
@@ -368,7 +368,7 @@ class BuzzPushBootstrap extends HookConsumerWidget {
       memberPubkey != null &&
       memberPubkey.isNotEmpty;
 
-  static Future<BuzzPushEndpointGrant> _publish(
+  static Future<CoreviaTalkPushEndpointGrant> _publish(
     WidgetRef ref,
     RelayConfig config,
     Community community,
@@ -377,10 +377,10 @@ class BuzzPushBootstrap extends HookConsumerWidget {
   ) async {
     final state = community.pushSubscriptionState;
     final desired = state.desired;
-    final descriptor = await ref.read(buzzPushDescriptorFetcherProvider)(
+    final descriptor = await ref.read(coreviaTalkPushDescriptorFetcherProvider)(
       config.baseUrl,
     );
-    final grant = await enrollBuzzPush(
+    final grant = await enrollCoreviaTalkPush(
       config.wsUrl,
       Env.pushGatewayUrl,
       communitiesForSnapshotRefresh:
@@ -390,10 +390,10 @@ class BuzzPushBootstrap extends HookConsumerWidget {
     // machines. Subscription changes advance only the kind-30350 generation;
     // the opaque grant remains reusable until its own authority changes.
     final notifier = ref.read(communityListProvider.notifier);
-    await publishBuzzPushLeaseRecoverably(
+    await publishCoreviaTalkPushLeaseRecoverably(
       reserveGeneration: () =>
           notifier.reservePushLeaseGeneration(community.id),
-      publish: (leaseGeneration) => publishBuzzDevPushLeaseThroughRelay(
+      publish: (leaseGeneration) => publishCoreviaTalkDevPushLeaseThroughRelay(
         grant: grant,
         leaseInstallationId: community.pushLeaseInstallationId,
         leaseGeneration: leaseGeneration,

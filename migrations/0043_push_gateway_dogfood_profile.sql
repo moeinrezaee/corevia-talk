@@ -6,14 +6,14 @@ DELETE FROM push_gateway_delegations
 WHERE installation_id IN (
     SELECT id
     FROM push_gateway_installations
-    WHERE app_profile <> 'buzz-ios-dogfood'
+    WHERE app_profile <> 'corevia-talk-ios-dogfood'
 );
 
 DELETE FROM push_gateway_installations
-WHERE app_profile <> 'buzz-ios-dogfood';
+WHERE app_profile <> 'corevia-talk-ios-dogfood';
 
 ALTER TABLE push_gateway_installations
     DROP CONSTRAINT push_gateway_installations_app_profile_check;
 ALTER TABLE push_gateway_installations
     ADD CONSTRAINT push_gateway_installations_app_profile_check
-    CHECK (app_profile = 'buzz-ios-dogfood');
+    CHECK (app_profile = 'corevia-talk-ios-dogfood');

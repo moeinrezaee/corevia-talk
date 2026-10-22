@@ -23,7 +23,7 @@ import {
 } from "@/shared/ui/dialog";
 import { Toggle } from "@/shared/ui/toggle";
 import { AnimatedCount } from "@/shared/ui/AnimatedCount";
-import { FuzzyLogo } from "@/shared/ui/buzz-logo/FuzzyLogo";
+import { FuzzyLogo } from "@/shared/ui/corevia-talk-logo/FuzzyLogo";
 import type { PromptSection, TranscriptItem } from "./agentSessionTypes";
 import { TurnLivenessIndicator } from "./TurnLivenessIndicator";
 import { PromptSectionList as PromptContextSections } from "./PromptSectionAccordion";
@@ -62,7 +62,7 @@ import { hasFileEditLineDiff } from "./FileEditDiffView";
 import { UserMessageBubble } from "./activityRenderClasses/UserMessageBubble";
 import { tl, tlt } from "@/shared/i18n/tl";
 
-const TRANSCRIPT_ACP_SOURCE_STORAGE_KEY = "buzz:show-transcript-acp-source";
+const TRANSCRIPT_ACP_SOURCE_STORAGE_KEY = "corevia-talk:show-transcript-acp-source";
 
 const ROW_ENTER_SPRING = {
   damping: 38,

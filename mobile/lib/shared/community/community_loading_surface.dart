@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/theme.dart';
-import '../widgets/buzz_loading_indicator.dart';
+import '../widgets/corevia_talk_loading_indicator.dart';
 import 'community_avatar.dart';
 import '../i18n/app_language.dart';
 
@@ -26,7 +26,7 @@ class CommunityLoadingSurface extends StatelessWidget {
           start: 0,
           end: 0,
           child: Center(
-            child: BuzzLoadingIndicator(
+            child: CoreviaTalkLoadingIndicator(
               size: 18,
               color: context.colors.onSecondaryContainer,
               semanticLabel: name == null

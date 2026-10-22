@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nostr/nostr.dart' as nostr;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:buzz/shared/me/me_chat_creation.dart';
-import 'package:buzz/shared/me/me_sync.dart';
-import 'package:buzz/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/me/me_chat_creation.dart';
+import 'package:corevia_talk/shared/me/me_sync.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
 
 void main() {
   test('missing durable storage blocks every relay side effect', () async {

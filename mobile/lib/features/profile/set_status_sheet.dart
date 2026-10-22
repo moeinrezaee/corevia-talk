@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/custom_emoji/custom_emoji.dart';
 import '../../shared/custom_emoji/custom_emoji_provider.dart';
@@ -12,7 +12,7 @@ import '../../shared/custom_emoji/custom_emoji_render.dart';
 import '../../shared/theme/theme.dart';
 import '../../shared/widgets/app_list.dart';
 import '../../shared/widgets/app_list_card.dart';
-import '../../shared/widgets/buzz_titled_sheet_layout.dart';
+import '../../shared/widgets/corevia_talk_titled_sheet_layout.dart';
 import '../../shared/widgets/modal_presentation.dart';
 import '../channels/emoji_picker.dart';
 import 'user_status.dart';
@@ -52,7 +52,7 @@ enum _StatusDuration {
 }
 
 void showSetStatusSheet(BuildContext context, {UserStatus? currentStatus}) {
-  showBuzzModalBottomSheet<void>(
+  showCoreviaTalkModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     showCloseButton: false,
@@ -163,13 +163,13 @@ class _SetStatusSheet extends HookConsumerWidget {
             borderRadius: BorderRadius.circular(Radii.dialog),
           ),
         ),
-        icon: const Icon(BuzzIcons.check, size: 22),
+        icon: const Icon(CoreviaTalkIcons.check, size: 22),
       ),
     );
 
     return SafeArea(
       top: false,
-      child: BuzzTitledSheetLayout(
+      child: CoreviaTalkTitledSheetLayout(
         title: tl('Set a status'),
         showDragHandle: true,
         leading: headerAction,
@@ -206,15 +206,15 @@ class _SetStatusSheet extends HookConsumerWidget {
                 label: tl('Duration'),
                 children: [
                   AppListRow(
-                    icon: BuzzIcons.clock3,
+                    icon: CoreviaTalkIcons.clock3,
                     title: tl('Duration'),
                     value: duration.value.label,
-                    trailing: const Icon(BuzzIcons.chevronDown, size: 18),
+                    trailing: const Icon(CoreviaTalkIcons.chevronDown, size: 18),
                     onTap: chooseDuration,
                   ),
                   if (duration.value == _StatusDuration.custom)
                     AppListRow(
-                      icon: BuzzIcons.calendarClock,
+                      icon: CoreviaTalkIcons.calendarClock,
                       title: tl('Until'),
                       value: _formatUntil(customUntil.value),
                       onTap: pickCustomUntil,
@@ -250,7 +250,7 @@ class _SetStatusSheet extends HookConsumerWidget {
                 AppListCard(
                   children: [
                     AppListRow(
-                      icon: BuzzIcons.trash2,
+                      icon: CoreviaTalkIcons.trash2,
                       title: tl('Clear status'),
                       titleColor: context.colors.error,
                       onTap: isSaving.value ? null : handleClear,
@@ -326,7 +326,7 @@ class _StatusInput extends ConsumerWidget {
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                         icon: Icon(
-                          BuzzIcons.x,
+                          CoreviaTalkIcons.x,
                           size: 14,
                           color: context.colors.onSurface,
                         ),
@@ -376,7 +376,7 @@ class _StatusEmojiPreview extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     if (emoji.isEmpty) {
       return Icon(
-        BuzzIcons.smilePlus,
+        CoreviaTalkIcons.smilePlus,
         size: _emojiGlyphSize,
         color: context.colors.onSurfaceVariant,
       );
@@ -402,7 +402,7 @@ Future<_StatusDuration?> _showStatusDurationSheet(
   BuildContext context, {
   required _StatusDuration selected,
 }) {
-  return showBuzzModalBottomSheet<_StatusDuration>(
+  return showCoreviaTalkModalBottomSheet<_StatusDuration>(
     context: context,
     title: tl('Duration'),
     isScrollControlled: true,
@@ -416,7 +416,7 @@ Future<_StatusDuration?> _showStatusDurationSheet(
               AppListRow(
                 title: option.label,
                 trailing: option == selected
-                    ? const Icon(BuzzIcons.check, size: 18)
+                    ? const Icon(CoreviaTalkIcons.check, size: 18)
                     : null,
                 onTap: () => Navigator.of(sheetContext).pop(option),
               ),

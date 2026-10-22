@@ -11,7 +11,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:gpt_markdown/custom_widgets/unordered_ordered_list.dart';
 import 'package:gpt_markdown/gpt_markdown.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -244,7 +244,7 @@ class MessageContent extends HookConsumerWidget {
         } else {
           ref
               .read(pendingDeepLinkProvider.notifier)
-              .open(Uri(scheme: 'buzz', host: 'channel', path: channelId));
+              .open(Uri(scheme: 'corevia-talk', host: 'channel', path: channelId));
         }
       },
       const [],
@@ -508,17 +508,17 @@ class MessageContent extends HookConsumerWidget {
       return _buildMedia(context, url, imeta);
     }
     final uri = Uri.tryParse(url);
-    final buzzLink = uri?.scheme == 'buzz'
-        ? parseBuzzDeepLink(uri!) ?? parseEntityDeepLink(uri)
+    final coreviaTalkLink = uri?.scheme == 'corevia-talk'
+        ? parseCoreviaTalkDeepLink(uri!) ?? parseEntityDeepLink(uri)
         : null;
-    final isBuzzLink =
-        buzzLink is ChannelDeepLink ||
-        buzzLink is MessageDeepLink ||
-        buzzLink is EntityDeepLink;
-    final isCanonicalBuzzLabel = isBuzzLink && text == url;
-    final buzzPresentation = switch (buzzLink) {
+    final isCoreviaTalkLink =
+        coreviaTalkLink is ChannelDeepLink ||
+        coreviaTalkLink is MessageDeepLink ||
+        coreviaTalkLink is EntityDeepLink;
+    final isCanonicalCoreviaTalkLabel = isCoreviaTalkLink && text == url;
+    final coreviaTalkPresentation = switch (coreviaTalkLink) {
       ChannelDeepLink(:final channelId) => (
-        icon: BuzzIcons.hash,
+        icon: CoreviaTalkIcons.hash,
         label:
             _channelNameForId(resolvedChannelNames, channelId) ??
             channelId.substring(0, math.min(8, channelId.length)),
@@ -529,7 +529,7 @@ class MessageContent extends HookConsumerWidget {
         interactive: true,
       ),
       MessageDeepLink(:final channelId, :final messageId) => (
-        icon: BuzzIcons.messageSquare,
+        icon: CoreviaTalkIcons.messageSquare,
         label:
             '${_channelNameForId(resolvedChannelNames, channelId) ?? channelId.substring(0, math.min(8, channelId.length))} · ${messageId.substring(0, math.min(8, messageId.length))}',
         semanticLabel: tlt('Open message {0} in channel {1}', [
@@ -541,9 +541,9 @@ class MessageContent extends HookConsumerWidget {
       ),
       EntityDeepLink(:final type, :final repository, :final eventId) => (
         icon: switch (type) {
-          'repo' => BuzzIcons.folderGit2,
-          'pr' => BuzzIcons.gitPullRequest,
-          _ => BuzzIcons.circleDot,
+          'repo' => CoreviaTalkIcons.folderGit2,
+          'pr' => CoreviaTalkIcons.gitPullRequest,
+          _ => CoreviaTalkIcons.circleDot,
         },
         label: type == 'repo'
             ? repository
@@ -569,7 +569,7 @@ class MessageContent extends HookConsumerWidget {
       decoration: TextDecoration.underline,
       decorationColor: context.colors.primary,
     );
-    final linkTextWidget = isCanonicalBuzzLabel
+    final linkTextWidget = isCanonicalCoreviaTalkLabel
         ? Text(
             text,
             style: baseStyle.copyWith(
@@ -579,20 +579,20 @@ class MessageContent extends HookConsumerWidget {
           )
         : Text.rich(TextSpan(style: authoredLinkStyle, children: [linkText]));
 
-    final renderedLink = isCanonicalBuzzLabel && buzzPresentation != null
+    final renderedLink = isCanonicalCoreviaTalkLabel && coreviaTalkPresentation != null
         ? _TokenPill(
-            key: ValueKey('buzz-link-chip:$url'),
-            icon: buzzPresentation.icon,
-            interactive: buzzPresentation.interactive,
-            semanticLabel: buzzPresentation.semanticLabel,
-            text: buzzPresentation.label,
+            key: ValueKey('corevia-talk-link-chip:$url'),
+            icon: coreviaTalkPresentation.icon,
+            interactive: coreviaTalkPresentation.interactive,
+            semanticLabel: coreviaTalkPresentation.semanticLabel,
+            text: coreviaTalkPresentation.label,
             textStyle: baseStyle.copyWith(fontWeight: FontWeight.w600),
           )
         : linkTextWidget;
 
     // Mobile has no repo/PR/issue destination yet. Keep these presentation-only
     // instead of exposing a control whose tap cannot do anything.
-    if (buzzLink is EntityDeepLink) {
+    if (coreviaTalkLink is EntityDeepLink) {
       return IgnorePointer(child: renderedLink);
     }
 
@@ -605,8 +605,8 @@ class MessageContent extends HookConsumerWidget {
         // references so detail-page callers can suppress self-navigation.
         // Message and join links still need the top-level authenticated
         // dispatcher.
-        if (uri.scheme == 'buzz') {
-          final deepLink = parseBuzzDeepLink(uri);
+        if (uri.scheme == 'corevia-talk') {
+          final deepLink = parseCoreviaTalkDeepLink(uri);
           if (deepLink case ChannelDeepLink(:final channelId)) {
             resolvedChannelTap(channelId);
           } else if (deepLink is MessageDeepLink ||
@@ -710,7 +710,7 @@ class _MessageImagePreview extends HookConsumerWidget {
                     ? child
                     : MediaLoadingPlaceholder(label: tl('Loading image')),
                 errorBuilder: (_, _, _) => _MediaPreviewFallback(
-                  icon: BuzzIcons.imageOff,
+                  icon: CoreviaTalkIcons.imageOff,
                   label: tl('Image unavailable'),
                 ),
               ),
@@ -925,7 +925,7 @@ class _MessageCodeBlock extends HookWidget {
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
                     icon: Icon(
-                      isCopied.value ? BuzzIcons.check : BuzzIcons.copy,
+                      isCopied.value ? CoreviaTalkIcons.check : CoreviaTalkIcons.copy,
                       size: 14,
                       color: isCopied.value
                           ? context.colors.primary
@@ -1066,7 +1066,7 @@ class _MentionPill extends StatelessWidget {
           children: [
             if (isAgent) ...[
               Icon(
-                BuzzIcons.bot,
+                CoreviaTalkIcons.bot,
                 size: fontSize * 0.95,
                 color: context.colors.primary,
               ),

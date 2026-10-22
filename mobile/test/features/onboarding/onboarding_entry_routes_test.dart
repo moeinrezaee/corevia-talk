@@ -1,22 +1,22 @@
-import 'package:buzz/shared/hosted/hosted_environment.dart';
+import 'package:corevia_talk/shared/hosted/hosted_environment.dart';
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channels_provider.dart';
-import 'package:buzz/features/onboarding/hosted_connect_page.dart';
-import 'package:buzz/features/onboarding/self_hosted_entry_sheet.dart';
-import 'package:buzz/hosted_app_gate.dart';
-import 'package:buzz/shared/hosted/hosted_flow_provider.dart';
-import 'package:buzz/onboarding_app_entry.dart';
-import 'package:buzz/shared/auth/auth.dart';
-import 'package:buzz/shared/deeplink/pending_deep_link_provider.dart';
-import 'package:buzz/shared/hosted/builderlab_account.dart';
-import 'package:buzz/shared/hosted/hosted_flow.dart';
-import 'package:buzz/shared/hosted/hosted_community_connection.dart';
-import 'package:buzz/shared/hosted/self_hosted_entry.dart';
-import 'package:buzz/shared/hosted/account_identity_store.dart';
-import 'package:buzz/shared/widgets/buzz_sheet_header.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channels_provider.dart';
+import 'package:corevia_talk/features/onboarding/hosted_connect_page.dart';
+import 'package:corevia_talk/features/onboarding/self_hosted_entry_sheet.dart';
+import 'package:corevia_talk/hosted_app_gate.dart';
+import 'package:corevia_talk/shared/hosted/hosted_flow_provider.dart';
+import 'package:corevia_talk/onboarding_app_entry.dart';
+import 'package:corevia_talk/shared/auth/auth.dart';
+import 'package:corevia_talk/shared/deeplink/pending_deep_link_provider.dart';
+import 'package:corevia_talk/shared/hosted/builderlab_account.dart';
+import 'package:corevia_talk/shared/hosted/hosted_flow.dart';
+import 'package:corevia_talk/shared/hosted/hosted_community_connection.dart';
+import 'package:corevia_talk/shared/hosted/self_hosted_entry.dart';
+import 'package:corevia_talk/shared/hosted/account_identity_store.dart';
+import 'package:corevia_talk/shared/widgets/corevia_talk_sheet_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -153,7 +153,7 @@ void main() {
         find.byType(CircularProgressIndicator).hitTestable(),
         findsOneWidget,
       );
-      expect(find.byType(BuzzSheetHeader), findsNothing);
+      expect(find.byType(CoreviaTalkSheetHeader), findsNothing);
       expect(find.byType(HostedConnectPage), findsNothing);
       admission.completeError(AccountFailure.unavailable);
       await tester.pumpAndSettle();
@@ -166,7 +166,7 @@ void main() {
       );
       expect(find.text('Try again').hitTestable(), findsOneWidget);
       expect(find.text('Leave setup').hitTestable(), findsOneWidget);
-      expect(find.byType(BuzzSheetHeader), findsNothing);
+      expect(find.byType(CoreviaTalkSheetHeader), findsNothing);
       f.beforeAdmission = null;
       await tester.tap(find.text('Try again').hitTestable());
       await tester.pumpAndSettle();
@@ -219,7 +219,7 @@ void main() {
     Navigator.of(tester.element(find.byType(SelfHostedEntrySheet))).pop();
     await tester.pumpAndSettle();
     await const FlutterSecureStorage().write(
-      key: 'buzz_nsec',
+      key: 'corevia_talk_nsec',
       value: f.keys.nsec,
     );
     await tester.tap(find.text('Continue').hitTestable());
@@ -274,7 +274,7 @@ void main() {
           .read(pendingDeepLinkProvider.notifier)
           .open(
             Uri(
-              scheme: 'buzz',
+              scheme: 'corevia-talk',
               host: 'join',
               queryParameters: {
                 'relay': 'wss://invited.communities.buzz.xyz',
@@ -335,7 +335,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(restarted.stage, HostedFlowStage.signIn);
     expect(find.text('Cancel sign-in').hitTestable(), findsOneWidget);
-    expect(find.byType(BuzzSheetHeader), findsNothing);
+    expect(find.byType(CoreviaTalkSheetHeader), findsNothing);
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump();
     expect(tester.takeException(), isNull);

@@ -77,7 +77,7 @@ export function ProjectRightPanelControls({
   return (
     <div className="flex items-center gap-0.5">
       <Button
-        aria-label={terminalOpen ? tl("Hide Buzz Term") : tl("Open Buzz Term")}
+        aria-label={terminalOpen ? tl("Hide Corevia Talk Term") : tl("Open Corevia Talk Term")}
         aria-pressed={terminalOpen}
         className={cn(
           "h-7 w-7 text-sidebar-foreground/65 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
@@ -87,7 +87,7 @@ export function ProjectRightPanelControls({
         disabled={!terminalAvailable}
         onClick={toggleTerminalPanel}
         size="icon"
-        title={tl("Buzz Term (⌘J)")}
+        title={tl("Corevia Talk Term (⌘J)")}
         type="button"
         variant="ghost"
       >

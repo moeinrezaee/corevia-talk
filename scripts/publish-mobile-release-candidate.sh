@@ -52,7 +52,7 @@ done <<< "$refs"
   fail "candidate sequence changed; expected rc.$candidate_number but next is rc.$next"
 
 tag="mobile-v${version}-rc.${candidate_number}"
-message="Buzz Mobile $version release candidate $candidate_number"
+message="Corevia Talk Mobile $version release candidate $candidate_number"
 tag_object_sha="$(
   gh api --method POST "repos/$repo/git/tags" \
     -f tag="$tag" \
@@ -82,4 +82,4 @@ direct_sha="$(gh api "repos/$repo/git/tags/$tag_object_sha" --jq .object.sha)" |
 [[ "$direct_type" == "commit" && "$direct_sha" == "$target_sha" ]] || \
   fail "$tag does not point directly to requested commit $target_sha"
 
-printf 'Published %s at %s through buzz-release-bot.\n' "$tag" "$target_sha"
+printf 'Published %s at %s through corevia-talk-release-bot.\n' "$tag" "$target_sha"

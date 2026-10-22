@@ -48,7 +48,7 @@ export function useOpenProjectTerminal(reposDir?: string | null) {
           ? {
               title: tl("Couldn’t open terminal"),
               description: tl(
-                "Buzz could not open this checkout in your configured terminal.",
+                "Corevia Talk could not open this checkout in your configured terminal.",
               ),
             }
           : projectCloneErrorPresentation(error, project.cloneUrls[0]);

@@ -1,2 +1,2 @@
 //! Shared Huddle jitter implementation.
-pub use buzz_audio_client::jitter::*;
+pub use corevia_talk_audio_client::jitter::*;

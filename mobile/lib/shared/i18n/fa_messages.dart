@@ -97,18 +97,18 @@ const Map<String, String> faMessages = {
   'Blue': 'آبی',
   'Bold': 'پررنگ',
   'Browse channels': 'مرور کانال‌ها',
-  'Buzz': 'Buzz',
-  'Buzz bee': 'زنبور Buzz',
-  'Buzz could not finish the voice note.':
-      'Buzz نتوانست پیام صوتی را تمام کند.',
-  'Buzz could not start recording. Check microphone access.':
-      'Buzz نتوانست ضبط را شروع کند. دسترسی میکروفون را بررسی کنید.',
-  'Buzz did not return to the foreground. Try again.':
-      'Buzz به پیش‌زمینه برنگشت. دوباره تلاش کنید.',
-  'Buzz event': 'رویداد Buzz',
-  'Buzz is for people 18 and older': 'Buzz برای افراد ۱۸ سال به بالا است',
+  'Corevia Talk': 'Corevia Talk',
+  'Corevia Talk bee': 'زنبور Corevia Talk',
+  'Corevia Talk could not finish the voice note.':
+      'Corevia Talk نتوانست پیام صوتی را تمام کند.',
+  'Corevia Talk could not start recording. Check microphone access.':
+      'Corevia Talk نتوانست ضبط را شروع کند. دسترسی میکروفون را بررسی کنید.',
+  'Corevia Talk did not return to the foreground. Try again.':
+      'Corevia Talk به پیش‌زمینه برنگشت. دوباره تلاش کنید.',
+  'Corevia Talk event': 'رویداد Corevia Talk',
+  'Corevia Talk is for people 18 and older': 'Corevia Talk برای افراد ۱۸ سال به بالا است',
   'Camera': 'دوربین',
-  'Camera access is turned off for Buzz.': 'دسترسی دوربین برای Buzz خاموش است.',
+  'Camera access is turned off for Corevia Talk.': 'دسترسی دوربین برای Corevia Talk خاموش است.',
   'Camera couldn’t start. Try again.': 'دوربین روشن نشد. دوباره تلاش کنید.',
   'Camera isn’t available here.': 'دوربین اینجا در دسترس نیست.',
   'Camera isn’t available on this device.':
@@ -187,8 +187,8 @@ const Map<String, String> faMessages = {
   'Community': 'انجمن',
   'Community settings': 'تنظیمات انجمن',
   'Commuting': 'در رفت‌وآمد',
-  'Confirm sending your Buzz identity to desktop':
-      'تأیید ارسال هویت Buzz شما به دسکتاپ',
+  'Confirm sending your Corevia Talk identity to desktop':
+      'تأیید ارسال هویت Corevia Talk شما به دسکتاپ',
   'Confirmed — waiting for desktop': 'تأیید شد — در انتظار دسکتاپ',
   'Connect': 'اتصال',
   'Connecting': 'در حال اتصال',
@@ -318,10 +318,10 @@ const Map<String, String> faMessages = {
   'Emoji reactions': 'واکنش‌های ایموجی',
   'Enable biometrics for secure actions':
       'فعال‌سازی زیست‌سنجی برای اقدام‌های امن',
-  'Enabled in Buzz, but disabled in iOS Settings':
-      'در Buzz فعال است اما در تنظیمات iOS غیرفعال است',
-  'Enabled in Buzz; iOS permission status unavailable':
-      'در Buzz فعال است؛ وضعیت مجوز iOS در دسترس نیست',
+  'Enabled in Corevia Talk, but disabled in iOS Settings':
+      'در Corevia Talk فعال است اما در تنظیمات iOS غیرفعال است',
+  'Enabled in Corevia Talk; iOS permission status unavailable':
+      'در Corevia Talk فعال است؛ وضعیت مجوز iOS در دسترس نیست',
   'Ended': 'پایان یافت',
   'Enter pairing code': 'کد جفت‌سازی را وارد کنید',
   'Ephemeral channel. Cleans up after {0} of inactivity.':
@@ -444,7 +444,7 @@ const Map<String, String> faMessages = {
   'Join an open channel to add it to your conversations.':
       'به یک کانال باز بپیوندید تا به گفتگوهایتان اضافه شود.',
   'Join channel': 'پیوستن به کانال',
-  'Join this Buzz community?': 'به این انجمن Buzz بپیوندید؟',
+  'Join this Corevia Talk community?': 'به این انجمن Corevia Talk بپیوندید؟',
   'Join this channel from Manage to participate.':
       'برای مشارکت، از بخش مدیریت به این کانال بپیوندید.',
   'Join this forum from Manage to participate.':
@@ -671,7 +671,7 @@ const Map<String, String> faMessages = {
   'People · {0}': 'افراد · {0}',
   'Photo': 'عکس',
   'Photo Library': 'کتابخانهٔ عکس',
-  'Photo access is turned off for Buzz.': 'دسترسی عکس برای Buzz خاموش است.',
+  'Photo access is turned off for Corevia Talk.': 'دسترسی عکس برای Corevia Talk خاموش است.',
   'Photo crop': 'برش عکس',
   'Photo library permission was not granted.':
       'اجازهٔ دسترسی به کتابخانهٔ عکس داده نشد.',
@@ -790,8 +790,8 @@ const Map<String, String> faMessages = {
       'سلام کنید، سؤالی بپرسید یا بگویید چه شد که اینجا آمدید.',
   'Scan a QR code': 'یک کد QR اسکن کنید',
   'Scan a desktop recovery code.': 'یک کد بازیابی دسکتاپ را اسکن کنید.',
-  'Scan a recovery code shown by Buzz Desktop':
-      'کد بازیابی نمایش‌داده‌شده توسط Buzz Desktop را اسکن کنید',
+  'Scan a recovery code shown by Corevia Talk Desktop':
+      'کد بازیابی نمایش‌داده‌شده توسط Corevia Talk Desktop را اسکن کنید',
   'Scan the QR code from your desktop app\nor paste a pairing code to connect.':
       'کد QR را از برنامهٔ دسکتاپ اسکن کنید\nیا برای اتصال یک کد جفت‌سازی بچسبانید.',
   'Search': 'جستجو',
@@ -849,7 +849,7 @@ const Map<String, String> faMessages = {
       'کانال‌های اولیه راه‌اندازی نشدند. برای تلاش دوباره، راه‌اندازی را دوباره امتحان کنید.',
   'Starter channels could not reach the relay. Check your connection and retry setup.':
       'کانال‌های اولیه به رله نرسیدند. اتصال خود را بررسی کنید و راه‌اندازی را دوباره امتحان کنید.',
-  'Starting Buzz': 'در حال شروع Buzz',
+  'Starting Corevia Talk': 'در حال شروع Corevia Talk',
   'Starting camera': 'در حال روشن کردن دوربین',
   'Stop recording': 'توقف ضبط',
   'Strikethrough': 'خط‌خورده',
@@ -1025,8 +1025,8 @@ const Map<String, String> faMessages = {
   'You': 'شما',
   'You cannot invite yourself.': 'نمی‌توانید خودتان را دعوت کنید.',
   'You joined {0}': 'شما به {0} پیوستید',
-  'You must be 18 or older to use Buzz under Buzz\'s Terms.':
-      'برای استفاده از Buzz طبق شرایط Buzz باید ۱۸ سال یا بیشتر داشته باشید.',
+  'You must be 18 or older to use Corevia Talk under Corevia Talk\'s Terms.':
+      'برای استفاده از Corevia Talk طبق شرایط Corevia Talk باید ۱۸ سال یا بیشتر داشته باشید.',
   'Your membership is ready, but starter channels still need to be set up. You can safely retry without claiming the invite again.':
       'عضویت شما آماده است اما هنوز باید کانال‌های اولیه راه‌اندازی شوند. می‌توانید بدون استفادهٔ دوبارهٔ دعوت‌نامه با خیال راحت دوباره تلاش کنید.',
   'Your notes will show up here.': 'یادداشت‌های شما اینجا نمایش داده می‌شوند.',
@@ -1106,8 +1106,8 @@ const Map<String, String> faMessages = {
   '{0} reply': '{0} پاسخ',
   '{0} selected': '{0} انتخاب‌شده',
   '{0} started a huddle': '{0} یک گفتگوی صوتی شروع کرد',
-  '{0} to confirm it’s you before sending your Buzz identity to another device.':
-      'پیش از ارسال هویت Buzz به دستگاه دیگر، با {0} تأیید کنید که خودتان هستید.',
+  '{0} to confirm it’s you before sending your Corevia Talk identity to another device.':
+      'پیش از ارسال هویت Corevia Talk به دستگاه دیگر، با {0} تأیید کنید که خودتان هستید.',
   '{0} unarchived this channel': '{0} این کانال را از بایگانی درآورد',
   '{0} update': '{0} به‌روزرسانی',
   '{0} updates': '{0} به‌روزرسانی',

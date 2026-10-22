@@ -29,7 +29,7 @@ class _MeEmptyState extends StatelessWidget {
               color: context.controlSurface,
               shape: BoxShape.circle,
             ),
-            child: const Icon(BuzzIcons.messageSquare, size: 40),
+            child: const Icon(CoreviaTalkIcons.messageSquare, size: 40),
           ),
           const SizedBox(height: Grid.gutter),
           Text(

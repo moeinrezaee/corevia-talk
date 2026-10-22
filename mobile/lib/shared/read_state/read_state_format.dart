@@ -14,7 +14,7 @@ const threadContextPrefix = 'thread:';
 String msgContextKey(String messageId) => '$msgContextPrefix$messageId';
 String threadContextKey(String rootId) => '$threadContextPrefix$rootId';
 
-/// Catch-up marks, written by the web and desktop app (`buzz-app`) when the
+/// Catch-up marks, written by the web and desktop app (`corevia-talk-app`) when the
 /// reader reaches the bottom of a channel or thread. `activity:<channel>`
 /// reads ordinary top-level messages up to its time; `thread-activity:<root>`
 /// reads that thread's replies. Neither reads mentions, broadcasts or DMs
@@ -31,7 +31,7 @@ bool readByChannelCatchUp({
 }) => !isDm && !isReply && !highPriority;
 
 /// The plaintext budget for one published read-state slot. The web app
-/// (`buzz-app`) uses the same limit, well under NIP-44's 64 KiB maximum.
+/// (`corevia-talk-app`) uses the same limit, well under NIP-44's 64 KiB maximum.
 const readStatePlaintextBytes = 40 * 1024;
 
 /// The most `msg:` and `thread:` marks this device saves. The desktop app
@@ -160,7 +160,7 @@ Set<String> overrideGroupFrontierKeys(Map<String, int> contexts) => {
 bool republishesMergedContext(String contextId) =>
     !contextId.startsWith(msgContextPrefix) && !isOverrideContext(contextId);
 
-/// Keep order for a slot that is over budget, following `buzz-app`'s
+/// Keep order for a slot that is over budget, following `corevia-talk-app`'s
 /// retention: channel marks first, then thread marks, then catch-up marks,
 /// then message marks.
 int _retentionScope(String key) {
@@ -175,11 +175,11 @@ int _retentionScope(String key) {
 /// The share of the budget that broad marks may fill before recent use
 /// decides. The rest always goes to the most recently written marks, so a
 /// new read is never left out because old channel or thread marks fill the
-/// budget. `buzz-app` uses the same share.
+/// budget. `corevia-talk-app` uses the same share.
 const _scopedShare = 0.75;
 
 /// The marks from [contexts] that fit one read-state slot for [clientId]
-/// within [maxBytes] of plaintext, following `buzz-app`'s retention.
+/// within [maxBytes] of plaintext, following `corevia-talk-app`'s retention.
 ///
 /// Up to three quarters of the budget goes to broad marks first: channel
 /// marks, then thread marks, then catch-up marks, then message marks. The

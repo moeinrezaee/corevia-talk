@@ -96,7 +96,7 @@ fn read_url(
     let origin = origin::AdminOrigin::parse(origin)?;
     if let Some(host) = q.community_host.take() {
         q.community_host = Some(
-            buzz_core_pkg::tenant::validate_community_host(host.trim())
+            corevia_talk_core_pkg::tenant::validate_community_host(host.trim())
                 .map_err(|e| format!("invalid community host: {e}"))?,
         );
     }
@@ -209,7 +209,7 @@ pub fn admin_connected_community_host(
     state: tauri::State<'_, crate::app_state::AppState>,
 ) -> Result<String, String> {
     let base = crate::relay::relay_api_base_url_with_override(&state);
-    let host = buzz_core_pkg::tenant::relay_url_authority(&base);
+    let host = corevia_talk_core_pkg::tenant::relay_url_authority(&base);
     if host.is_empty() {
         return Err("admin_community_host_unresolved".to_string());
     }

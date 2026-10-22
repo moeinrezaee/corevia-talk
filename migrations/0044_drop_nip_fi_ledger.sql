@@ -1,6 +1,6 @@
 -- Remove the Phase-A NIP-FI relay-side authority ledger (migrations 0041 and
--- 0042). Will+Tyler resolved 2026-09-01: OSS Buzz is stateless for identity
--- ("Buzz speaks Nostr, nothing else"). The merged NIP-FI spec v2 (PR #7214,
+-- 0042). Will+Tyler resolved 2026-09-01: OSS Corevia Talk is stateless for identity
+-- ("Corevia Talk speaks Nostr, nothing else"). The merged NIP-FI spec v2 (PR #7214,
 -- squash d4420eb47) requires the nostr_pubkey claim + NIP-42 proof
 -- unconditionally; the durable ledger tables are dead code.
 --

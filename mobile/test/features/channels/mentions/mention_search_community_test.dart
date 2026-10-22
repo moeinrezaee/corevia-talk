@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channel_management_provider.dart';
-import 'package:buzz/features/channels/channels_provider.dart';
-import 'package:buzz/features/channels/mentions/mention_candidates_provider.dart';
-import 'package:buzz/shared/mentions/agent_identity_provider.dart';
-import 'package:buzz/shared/relay/relay.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channel_management_provider.dart';
+import 'package:corevia_talk/features/channels/channels_provider.dart';
+import 'package:corevia_talk/features/channels/mentions/mention_candidates_provider.dart';
+import 'package:corevia_talk/shared/mentions/agent_identity_provider.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
 
 // The directory search must belong to one community. Two communities can
 // share a signing key and the session notifier, so only the relay config

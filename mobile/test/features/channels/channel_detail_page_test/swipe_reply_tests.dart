@@ -189,7 +189,7 @@ void swipeReplyTests() {
       await gesture.moveBy(const Offset(25, 0));
       await gesture.moveBy(const Offset(90, 0));
       await tester.pump();
-      final icon = find.byIcon(BuzzIcons.messageSquareReply);
+      final icon = find.byIcon(CoreviaTalkIcons.messageSquareReply);
       expect(
         tester
             .widget<Opacity>(

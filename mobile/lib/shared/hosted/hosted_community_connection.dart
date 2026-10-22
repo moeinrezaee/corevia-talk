@@ -23,7 +23,7 @@ class SavedCommunityIdentityConflict implements Exception {
 /// Reuses existing records and their ids before the normal admission/persistence
 /// boundary. A different existing key is never replaced.
 Future<void> connectHostedCommunity({
-  required BuzzDeepLink link,
+  required CoreviaTalkDeepLink link,
   required String subject,
   required String pubkey,
   required bool Function() isCurrent,

@@ -43,7 +43,7 @@ class ChannelDetailPage extends ConsumerWidget {
         lookup.isLoading) {
       return Scaffold(
         appBar: AppBar(title: Text(channel.name)),
-        body: const Center(child: BuzzLoadingIndicator()),
+        body: const Center(child: CoreviaTalkLoadingIndicator()),
       );
     }
     return _ResolvedChannelDetailPage(

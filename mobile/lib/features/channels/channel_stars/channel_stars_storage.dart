@@ -7,10 +7,10 @@ import '../../../shared/theme/community_theme_preference.dart';
 /// Channel ids belong to one community, so the cache is keyed by relay as
 /// well as identity. One identity can be paired with several communities.
 String channelStarsKey(String pubkey, String relayUrl) =>
-    'buzz.channel-stars.v1:$pubkey:${Uri.encodeComponent(normalizeCommunityRelayUrl(relayUrl))}';
+    'corevia-talk.channel-stars.v1:$pubkey:${Uri.encodeComponent(normalizeCommunityRelayUrl(relayUrl))}';
 
 /// The earlier key, shared by every community of the identity.
-String legacyChannelStarsKey(String pubkey) => 'buzz.channel-stars.v1:$pubkey';
+String legacyChannelStarsKey(String pubkey) => 'corevia-talk.channel-stars.v1:$pubkey';
 
 class ChannelStarEntry {
   final bool starred;

@@ -1,9 +1,9 @@
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/widgets/app_list.dart';
-import 'package:buzz/shared/widgets/app_list_card.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/widgets/app_list.dart';
+import 'package:corevia_talk/shared/widgets/app_list_card.dart';
 
 Widget _host(Widget child) => MaterialApp(
   theme: AppTheme.light(),
@@ -57,13 +57,13 @@ void main() {
           const AppListRow(
             icon: Icons.palette,
             title: 'Theme',
-            value: 'Buzz',
-            trailing: Icon(BuzzIcons.chevronRight, key: Key('chevron')),
+            value: 'Corevia Talk',
+            trailing: Icon(CoreviaTalkIcons.chevronRight, key: Key('chevron')),
           ),
         ),
       );
 
-      final value = tester.getRect(find.text('Buzz'));
+      final value = tester.getRect(find.text('Corevia Talk'));
       final chevron = tester.getRect(find.byKey(const Key('chevron')));
       // Only the row's own inter-widget gap sits between them — no flex slack.
       expect(chevron.left - value.right, closeTo(Grid.xxs, 0.5));

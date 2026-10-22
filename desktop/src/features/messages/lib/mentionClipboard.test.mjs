@@ -5,7 +5,7 @@ import { truncateInlineChipLabel } from "@/shared/ui/mentionChip";
 
 import {
   buildMentionClipboardHtml,
-  getBuzzCopyKind,
+  getCoreviaTalkCopyKind,
   matchChipTextToLabel,
   parseMentionClipboardRecords,
   selectBindableMentionIdentities,
@@ -29,7 +29,7 @@ test("wraps a multi-word mention with its identity", () => {
 
   assert.equal(
     html,
-    '<span data-buzz-copy="markdown">' +
+    '<span data-corevia-talk-copy="markdown">' +
       `<span data-mention="" data-mention-pubkey="${JOHN}" ` +
       'data-mention-kind="human" data-mention-label="John Smith">' +
       "@John Smith</span> fixed the bug</span>",
@@ -136,24 +136,24 @@ test("rich copies declare their own flavor", () => {
     kind: "rich",
   });
 
-  assert.match(html, /data-buzz-copy="rich"/);
+  assert.match(html, /data-corevia-talk-copy="rich"/);
 });
 
-// ── getBuzzCopyKind ───────────────────────────────────────────────────
+// ── getCoreviaTalkCopyKind ───────────────────────────────────────────────────
 
-test("reads the copy marker, and only Buzz's", () => {
+test("reads the copy marker, and only Corevia Talk's", () => {
   assert.equal(
-    getBuzzCopyKind('<span data-buzz-copy="markdown">hi</span>'),
+    getCoreviaTalkCopyKind('<span data-corevia-talk-copy="markdown">hi</span>'),
     "markdown",
   );
-  assert.equal(getBuzzCopyKind('<div data-buzz-copy="rich">hi</div>'), "rich");
-  assert.equal(getBuzzCopyKind("<p>hi</p>"), null);
-  assert.equal(getBuzzCopyKind('<span data-buzz-copy="other">hi</span>'), null);
+  assert.equal(getCoreviaTalkCopyKind('<div data-corevia-talk-copy="rich">hi</div>'), "rich");
+  assert.equal(getCoreviaTalkCopyKind("<p>hi</p>"), null);
+  assert.equal(getCoreviaTalkCopyKind('<span data-corevia-talk-copy="other">hi</span>'), null);
 });
 
 // ── parseMentionClipboardRecords ──────────────────────────────────────
 
-test("recovers records from a Buzz copy", () => {
+test("recovers records from a Corevia Talk copy", () => {
   const records = parseMentionClipboardRecords(
     buildMentionClipboardHtml({
       text: "@John Smith and @Fizz",

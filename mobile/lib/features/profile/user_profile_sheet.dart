@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hooks_riverpod/misc.dart' show ProviderListenable;
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/animated_avatar.dart';
 import '../../shared/identity_names/identity_names.dart';
@@ -14,7 +14,7 @@ import '../../shared/relay/relay.dart';
 import '../../shared/theme/theme.dart';
 import '../../shared/utils/string_utils.dart';
 import '../../shared/widgets/avatar_image.dart';
-import '../../shared/widgets/buzz_action_tile.dart';
+import '../../shared/widgets/corevia_talk_action_tile.dart';
 import '../../shared/widgets/modal_presentation.dart';
 import '../../shared/widgets/progressive_animated_avatar.dart';
 import '../channels/channel.dart';
@@ -37,7 +37,7 @@ void showUserProfileSheet(
   ProviderListenable<IdentityNames>? names,
   WidgetBuilder? contextualActions,
 }) {
-  showBuzzModalBottomSheet<Channel>(
+  showCoreviaTalkModalBottomSheet<Channel>(
     context: context,
     isScrollControlled: true,
     showDragHandle: false,
@@ -271,10 +271,10 @@ class UserProfileSheet extends HookConsumerWidget {
                       children: [
                         if (pk != currentPubkey) ...[
                           Expanded(
-                            child: BuzzActionTile(
+                            child: CoreviaTalkActionTile(
                               icon: isOpeningDirectMessage.value
                                   ? null
-                                  : BuzzIcons.messageSquare,
+                                  : CoreviaTalkIcons.messageSquare,
                               label: isOpeningDirectMessage.value
                                   ? tl('Opening…')
                                   : tl('Message'),
@@ -288,10 +288,10 @@ class UserProfileSheet extends HookConsumerWidget {
                           const SizedBox(width: Grid.twelve),
                         ],
                         Expanded(
-                          child: BuzzActionTile(
+                          child: CoreviaTalkActionTile(
                             icon: copied.value
-                                ? BuzzIcons.check
-                                : BuzzIcons.key,
+                                ? CoreviaTalkIcons.check
+                                : CoreviaTalkIcons.key,
                             label: copied.value
                                 ? tl('Copied')
                                 : tl('Copy public key'),
@@ -341,7 +341,7 @@ void _showProfileCopyToast(BuildContext context) {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(BuzzIcons.check, size: 18, color: colors.onInverseSurface),
+              Icon(CoreviaTalkIcons.check, size: 18, color: colors.onInverseSurface),
               const SizedBox(width: Grid.xxs),
               Text(tl('Public key copied'), style: textStyle),
             ],

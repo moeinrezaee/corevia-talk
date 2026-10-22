@@ -299,7 +299,7 @@ final profileProvider = AsyncNotifierProvider<ProfileNotifier, UserProfile?>(
 /// [appLifecycleProvider] to send "away" when backgrounded.
 class PresenceNotifier extends AsyncNotifier<String> {
   static const _heartbeatInterval = Duration(seconds: 60);
-  static const _preferenceKeyPrefix = 'buzz_presence_preference_';
+  static const _preferenceKeyPrefix = 'corevia_talk_presence_preference_';
 
   Timer? _heartbeatTimer;
   String? _preferencePubkey;

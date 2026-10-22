@@ -1,17 +1,17 @@
-# Buzz Mobile
+# Corevia Talk Mobile
 
-Flutter mobile client for Buzz.
+Flutter mobile client for Corevia Talk.
 
 See [VISION_MOBILE.md](../VISION_MOBILE.md) for intended behavior and
 architecture.
 
 ## Optional Builderlab login
 
-`BUZZ_AUTH_DOMAINS` is a comma-separated build-time environment setting, passed
+`COREVIA_TALK_AUTH_DOMAINS` is a comma-separated build-time environment setting, passed
 with Flutter's `--dart-define` (shell environment variables alone are not read):
 
 ```bash
-flutter run --dart-define=BUZZ_AUTH_DOMAINS=communities.buzz.xyz,communities.public.builderlabstaging.xyz
+flutter run --dart-define=COREVIA_TALK_AUTH_DOMAINS=communities.buzz.xyz,communities.public.builderlabstaging.xyz
 ```
 
 Unset or empty means **Builderlab features are disabled**: no account login,
@@ -21,18 +21,18 @@ Saved account keys and sessions are retained for a later enabled build.
 
 A nonempty list enables Builderlab features and requires account setup only for
 matching domains. Those features need their backend endpoints. Normal relay key
-authentication remains in place. `BUZZ_BUILDERLAB_URL` selects the backend; setting
+authentication remains in place. `COREVIA_TALK_BUILDERLAB_URL` selects the backend; setting
 it alone does not enable Builderlab features.
 
 Entries match the domain itself and its subdomains, case-insensitively. Use DNS
 names, not URLs or wildcards. The list does not add trusted account servers:
 configured domains outside the supported Builderlab realm cannot use hosted
-setup. `BUZZ_BUILDERLAB_URL` still selects the trusted account environment.
+setup. `COREVIA_TALK_BUILDERLAB_URL` still selects the trusted account environment.
 
 ## Hosted relay authentication
 
-`--dart-define=BUZZ_HOSTED_RELAY_AUTH=true` enables Builderlab relay assertions
-and reconnect sign-in **only for `BUZZ_AUTH_DOMAINS` matches**. It defaults off: configure backend assertion issuance
+`--dart-define=COREVIA_TALK_HOSTED_RELAY_AUTH=true` enables Builderlab relay assertions
+and reconnect sign-in **only for `COREVIA_TALK_AUTH_DOMAINS` matches**. It defaults off: configure backend assertion issuance
 before enabling mobile authentication, and enable relay enforcement last.
 
 ## Setup
@@ -41,7 +41,7 @@ Use the Flutter SDK pinned by the repository. Activate Hermit from the repo
 root before resolving packages or running any Flutter command:
 
 ```bash
-cd /path/to/buzz
+cd /path/to/corevia-talk
 . ./bin/activate-hermit
 ./bin/just mobile-install
 ```
@@ -74,10 +74,10 @@ use a build machine with a matching default Xcode when validating either
 Xcode 26 or Xcode 27.
 
 The native cryptography dependency is pinned upstream C source in
-`ios/BuzzPushKit/Sources/CSecp256k1`; it requires no Swift build-plugin approval.
+`ios/CoreviaTalkPushKit/Sources/CSecp256k1`; it requires no Swift build-plugin approval.
 GitHub's mobile CI currently uses the Xcode default of its `macos-latest`
 runner. The internal release toolchain is configured separately in
-[buzz-releases](https://github.com/squareup/buzz-releases).
+[corevia-talk-releases](https://github.com/squareup/buzz-releases).
 
 ## Run
 
@@ -86,16 +86,16 @@ runner. The internal release toolchain is configured separately in
 just mobile-dev
 
 # Direct (uses the app's configured community; apply worktree overrides first):
-cd mobile && flutter run --dart-define=BUZZ_PUSH_GATEWAY_URL=https://push.example
+cd mobile && flutter run --dart-define=COREVIA_TALK_PUSH_GATEWAY_URL=https://push.example
 ```
 
 ### Worktree-aware debug identity
 
 Debug builds produced from a git worktree get a unique app identifier keyed
 to the **worktree directory name**
-(`xyz.block.buzz.dev.mobile.<slug>` on iOS,
-`xyz.block.buzz.mobile.<slug>` on Android) plus a display-only branch label
-in the app name (`Buzz (my-branch)`, or a short SHA when the worktree is
+(`xyz.block.coreviatalk.dev.mobile.<slug>` on iOS,
+`xyz.block.coreviatalk.mobile.<slug>` on Android) plus a display-only branch label
+in the app name (`Corevia Talk (my-branch)`, or a short SHA when the worktree is
 detached). Because the identifier follows the directory rather than the
 branch, one worktree keeps exactly one installed app — and its login state —
 across branch switches, and builds from multiple worktrees install side by
@@ -117,39 +117,39 @@ over the generated worktree values by creating the gitignored
 `mobile/android/AppOverrides.properties`:
 
 ```properties
-appName=Buzz Pairing
+appName=Corevia Talk Pairing
 applicationIdSuffix=.device_pairing_e2e1
 ```
 
 These values are consumed by the debug build type only. The standard
 `just mobile-build-android` command can still be used; regenerating
 `worktree.properties` does not overwrite `AppOverrides.properties`. Release
-and profile builds keep the production `Buzz` name and application ID.
+and profile builds keep the production `Corevia Talk` name and application ID.
 
 For direct Xcode / Android Studio / `flutter run` development, run
 `./scripts/mobile-worktree-overrides.sh` from the repo root once per branch
 switch to refresh the display label (the install identity never changes);
 the persisted files are then picked up by any subsequent build. In the main
 checkout the script is a no-op that removes stale override files, restoring
-the plain `Buzz` identity. To enable push in direct Xcode builds and Runner tests, supply a
-`BUZZ_PUSH_GATEWAY_URL` build setting in the gitignored
+the plain `Corevia Talk` identity. To enable push in direct Xcode builds and Runner tests, supply a
+`COREVIA_TALK_PUSH_GATEWAY_URL` build setting in the gitignored
 `mobile/ios/Flutter/AppOverrides.xcconfig`; the build phase validates and
 passes it through as a Flutter Dart define. Since `//` begins an xcconfig
-comment, spell the origin as `BUZZ_PUSH_GATEWAY_URL = https:/$()/push.example`.
+comment, spell the origin as `COREVIA_TALK_PUSH_GATEWAY_URL = https:/$()/push.example`.
 
-For an Android debug build that must remain installed alongside other Buzz
+For an Android debug build that must remain installed alongside other Corevia Talk
 worktree builds, set an explicit launcher name and package suffix when invoking
 the generator or a recipe that invokes it:
 
 ```bash
-BUZZ_PUSH_GATEWAY_URL="https://push.example" \
-BUZZ_ANDROID_DEBUG_APP_NAME="Buzz Huddles" \
-BUZZ_ANDROID_DEBUG_ID_SUFFIX=".huddles_829c" \
+COREVIA_TALK_PUSH_GATEWAY_URL="https://push.example" \
+COREVIA_TALK_ANDROID_DEBUG_APP_NAME="Corevia Talk Huddles" \
+COREVIA_TALK_ANDROID_DEBUG_ID_SUFFIX=".huddles_829c" \
 ./bin/just mobile-build-android
 ```
 
 This example produces the debug-only package
-`xyz.block.buzz.mobile.huddles_829c` with the launcher label `Buzz Huddles`.
+`xyz.block.coreviatalk.mobile.huddles_829c` with the launcher label `Corevia Talk Huddles`.
 The suffix must start with a dot followed by a lowercase letter and may contain
 only lowercase letters, digits, and underscores. Release and profile builds
 ignore these overrides and retain the production package and name.
@@ -163,8 +163,8 @@ installs are never touched.
 
 Every iOS artifact builds and embeds the Notification Service Extension and
 native push bridge. Runtime activation is fail-closed and scoped to the current
-relay. After authenticated connectivity and a fully valid NIP-11 `buzz-push-v1` push
-descriptor, Buzz independently requests display permission and registers with
+relay. After authenticated connectivity and a fully valid NIP-11 `corevia-talk-push-v1` push
+descriptor, Corevia Talk independently requests display permission and registers with
 APNs. Display denial or request failure does not gate the device token, gateway
 enrollment, or lease publication, so a later user opt-in can display pushes
 without rebuilding transport authority. An absent, malformed, or unreachable
@@ -174,8 +174,8 @@ Mobile builds without a gateway origin succeed with push unavailable. To enable
 push, supply the gateway origin explicitly:
 
 ```bash
-flutter build ios --dart-define=BUZZ_PUSH_GATEWAY_URL=https://push.example
-flutter build apk --dart-define=BUZZ_PUSH_GATEWAY_URL=https://push.example
+flutter build ios --dart-define=COREVIA_TALK_PUSH_GATEWAY_URL=https://push.example
+flutter build apk --dart-define=COREVIA_TALK_PUSH_GATEWAY_URL=https://push.example
 ```
 
 The iOS and Android build gates validate any supplied define, rejecting empty or
@@ -190,7 +190,7 @@ expire under their original gateway's lease policy. Current-gateway response
 loss is still retried from the exact journaled request.
 
 Relay rollout remains an explicit deployment opt-in. Only deployments with
-`BUZZ_PUSH_ENABLED=true` advertise the descriptor and process push. See
+`COREVIA_TALK_PUSH_ENABLED=true` advertise the descriptor and process push. See
 `docs/push-gateway-deployment.md` for the canonical gateway profile contract,
 manual physical-device proof, measurements, and rollback procedure.
 
@@ -198,18 +198,18 @@ For local physical-device development, override the identity and sandbox
 environments in the gitignored `mobile/ios/Flutter/AppOverrides.xcconfig`:
 
 ```xcconfig
-BUNDLE_IDENTIFIER = com.example.buzz.mobile
-BUZZ_DEVELOPMENT_TEAM = YOUR_TEAM_ID
-BUZZ_IOS_PUSH_ENVIRONMENT = development
-BUZZ_APP_ATTEST_ENVIRONMENT = development
-BUZZ_PUSH_GATEWAY_URL = https:/$()/push.example
+BUNDLE_IDENTIFIER = com.example.coreviatalk.mobile
+COREVIA_TALK_DEVELOPMENT_TEAM = YOUR_TEAM_ID
+COREVIA_TALK_IOS_PUSH_ENVIRONMENT = development
+COREVIA_TALK_APP_ATTEST_ENVIRONMENT = development
+COREVIA_TALK_PUSH_GATEWAY_URL = https:/$()/push.example
 ```
 
 Use your personal bundle ID and team above. Provision both the parent and its
 `.NotificationService` extension. Configure an isolated gateway with the matching
 App Attest application ID, APNs topic and sandbox certificate. Development
 attestation requires the explicit `personal-dev-app-attest` gateway build feature
-and `BUZZ_PUSH_APP_ATTEST_ENVIRONMENT=development`; ordinary gateway builds accept
+and `COREVIA_TALK_PUSH_APP_ATTEST_ENVIRONMENT=development`; ordinary gateway builds accept
 production attestation only. See `docs/push-gateway-deployment.md`.
 Validate distributed builds separately using a signed release candidate and
 its matching gateway configuration.
@@ -235,7 +235,7 @@ short sender pubkey, community subtitle, and no image.
 ```bash
 dart format --output=none --set-exit-if-changed .
 flutter analyze
-flutter test --dart-define=BUZZ_PUSH_GATEWAY_URL=https://push.example
+flutter test --dart-define=COREVIA_TALK_PUSH_GATEWAY_URL=https://push.example
 ```
 
 Or from the repo root: `just mobile-check` and `just mobile-test`.
@@ -249,18 +249,18 @@ many small logic tests. See
 Android release builds fail unless all upload-key inputs are supplied through the
 environment:
 
-- `BUZZ_ANDROID_UPLOAD_KEYSTORE_PATH`: path to a CI-vended keystore file
-- `BUZZ_ANDROID_UPLOAD_KEYSTORE_PASSWORD`
-- `BUZZ_ANDROID_UPLOAD_KEY_ALIAS`
-- `BUZZ_ANDROID_UPLOAD_KEY_PASSWORD`
+- `COREVIA_TALK_ANDROID_UPLOAD_KEYSTORE_PATH`: path to a CI-vended keystore file
+- `COREVIA_TALK_ANDROID_UPLOAD_KEYSTORE_PASSWORD`
+- `COREVIA_TALK_ANDROID_UPLOAD_KEY_ALIAS`
+- `COREVIA_TALK_ANDROID_UPLOAD_KEY_PASSWORD`
 
 The keystore path must be absolute, and the keystore must remain outside the
 repository. Development and debug builds do not require these variables.
 
 Release pipelines that sign through the central APK Signer service instead of
-a local upload keystore must set `BUZZ_ANDROID_RELEASE_SIGNING=external`. That
+a local upload keystore must set `COREVIA_TALK_ANDROID_RELEASE_SIGNING=external`. That
 mode produces an unsigned release bundle and refuses to run if any
-`BUZZ_ANDROID_UPLOAD_*` value is also set.
+`COREVIA_TALK_ANDROID_UPLOAD_*` value is also set.
 
 ## Architecture
 

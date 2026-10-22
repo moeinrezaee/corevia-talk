@@ -4,7 +4,7 @@ import { AgentCardDialogs } from "./AgentCardViewerDialog";
 import { AgentDialog } from "./AgentDialog";
 import { tl } from "@/shared/i18n/tl";
 
-/** Global review surfaces opened by owned agents through the Buzz harness. */
+/** Global review surfaces opened by owned agents through the Corevia Talk harness. */
 export function AgentManagementDialogs() {
   const management = useAgentManagement();
 

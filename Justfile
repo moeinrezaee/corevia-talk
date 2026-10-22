@@ -1,4 +1,4 @@
-# Buzz — development task runner
+# Corevia Talk — development task runner
 
 set dotenv-load := true
 
@@ -65,8 +65,8 @@ hooks:
     git config --local core.hooksPath "$HOOKS_DIR"
     lefthook install --force
 
-# Wipe development state and recreate a clean environment. Installed Buzz is preserved.
-[confirm("This will DELETE all development data and preserve installed Buzz. Continue? (y/N)")]
+# Wipe development state and recreate a clean environment. Installed Corevia Talk is preserved.
+[confirm("This will DELETE all development data and preserve installed Corevia Talk. Continue? (y/N)")]
 reset:
     ./scripts/dev-reset.sh --yes
 
@@ -171,12 +171,12 @@ _ensure-sidecar-stubs:
     set -euo pipefail
     TARGET=$(rustc -vV | sed -n 's|host: ||p')
     mkdir -p desktop/src-tauri/binaries
-    SIDECARS=(buzz-acp buzz-agent buzz-dev-mcp git-credential-nostr buzz)
+    SIDECARS=(corevia-talk-acp corevia-talk-agent corevia-talk-dev-mcp git-credential-nostr corevia-talk)
     if [[ "$TARGET" != *windows* ]]; then
-        SIDECARS+=(buzz-backend-kubernetes)
+        SIDECARS+=(corevia-talk-backend-kubernetes)
     fi
     # Create missing stubs only: tauri-build reruns build.rs (and recompiles
-    # buzz-desktop) whenever an externalBin's mtime changes, so touching
+    # corevia-talk-desktop) whenever an externalBin's mtime changes, so touching
     # existing files would invalidate every cached desktop test build.
     for bin in "${SIDECARS[@]}"; do
         stub="desktop/src-tauri/binaries/${bin}-${TARGET}"
@@ -187,8 +187,8 @@ _ensure-sidecar-stubs:
 _ensure-services:
     #!/usr/bin/env bash
     set -euo pipefail
-    pg=$(docker inspect --format '{{"{{"}}.State.Health.Status{{"}}"}}' buzz-postgres 2>/dev/null || echo "not_found")
-    redis=$(docker inspect --format '{{"{{"}}.State.Health.Status{{"}}"}}' buzz-redis 2>/dev/null || echo "not_found")
+    pg=$(docker inspect --format '{{"{{"}}.State.Health.Status{{"}}"}}' corevia-talk-postgres 2>/dev/null || echo "not_found")
+    redis=$(docker inspect --format '{{"{{"}}.State.Health.Status{{"}}"}}' corevia-talk-redis 2>/dev/null || echo "not_found")
     if [[ "$pg" == "healthy" && "$redis" == "healthy" ]]; then
         echo "Services already healthy"
         exit 0
@@ -197,8 +197,8 @@ _ensure-services:
     docker compose up -d || true
     echo -n "Waiting for services"
     for i in $(seq 1 40); do
-        pg=$(docker inspect --format '{{"{{"}}.State.Health.Status{{"}}"}}' buzz-postgres 2>/dev/null || echo "not_found")
-        redis=$(docker inspect --format '{{"{{"}}.State.Health.Status{{"}}"}}' buzz-redis 2>/dev/null || echo "not_found")
+        pg=$(docker inspect --format '{{"{{"}}.State.Health.Status{{"}}"}}' corevia-talk-postgres 2>/dev/null || echo "not_found")
+        redis=$(docker inspect --format '{{"{{"}}.State.Health.Status{{"}}"}}' corevia-talk-redis 2>/dev/null || echo "not_found")
         if [[ "$pg" == "healthy" && "$redis" == "healthy" ]]; then
             echo " ready"
             exit 0
@@ -211,7 +211,7 @@ _ensure-services:
 
 # Apply database migrations and seed the local dev community if the dev database is running
 _ensure-migrations: _ensure-services
-    cargo run -p buzz-admin -- migrate
+    cargo run -p corevia-talk-admin -- migrate
     ./scripts/seed-local-community.sh
 
 # Run clippy on the desktop Tauri Rust crate
@@ -239,13 +239,13 @@ desktop-tauri-test-mesh: _ensure-sidecar-stubs
 # This is intentionally excluded from shared CI: scheduler contention makes a
 # wall-clock assertion flaky, and the release profile is the shipped shape.
 desktop-terminal-performance-test:
-    cargo test --manifest-path desktop/src-tauri/crates/buzz-terminal/Cargo.toml --release --test latency g3_renderer_acquire_stays_within_frame_budget -- --ignored --exact --nocapture
+    cargo test --manifest-path desktop/src-tauri/crates/corevia-talk-terminal/Cargo.toml --release --test latency g3_renderer_acquire_stays_within_frame_budget -- --ignored --exact --nocapture
 
 # Verify compiled-flag behavior in each compile state.
 # The clean (OSS) state's full suite already runs in desktop-tauri-test, so
 # only its flag assertions run here. The internal state sets both release
 # capabilities together, as internal release packaging does, and reruns the
-# buzz_lib suite. An auto-connect-only state asserts the two capabilities stay
+# corevia_talk_lib suite. An auto-connect-only state asserts the two capabilities stay
 # independent (a swapped build.rs variable fails it). The demo state sets only
 # the demo slug, asserts neither capability leaks on, and reruns the suite.
 # Every invocation uses --lib so each state compiles a single test harness;
@@ -256,8 +256,8 @@ desktop-tauri-test-compiled-flags: _ensure-sidecar-stubs
     #!/usr/bin/env bash
     set -euo pipefail
     cd desktop/src-tauri
-    unset BUZZ_BUILD_AUTO_CONNECT_DEFAULT_RELAY BUZZ_BUILD_AGENT_ACCESS_OWNER_ONLY BUZZ_BUILD_DEMO_SLUG
-    unset BUZZ_TEST_EXPECTED_AUTO_CONNECT_DEFAULT_RELAY BUZZ_TEST_EXPECTED_AGENT_ACCESS_OWNER_ONLY BUZZ_TEST_EXPECTED_DEMO_SLUG
+    unset COREVIA_TALK_BUILD_AUTO_CONNECT_DEFAULT_RELAY COREVIA_TALK_BUILD_AGENT_ACCESS_OWNER_ONLY COREVIA_TALK_BUILD_DEMO_SLUG
+    unset COREVIA_TALK_TEST_EXPECTED_AUTO_CONNECT_DEFAULT_RELAY COREVIA_TALK_TEST_EXPECTED_AGENT_ACCESS_OWNER_ONLY COREVIA_TALK_TEST_EXPECTED_DEMO_SLUG
     # Run ignored assertions by name; libtest passes a filter that matches
     # nothing, so require exactly one passing test per filter.
     run_ignored() {
@@ -271,34 +271,34 @@ desktop-tauri-test-compiled-flags: _ensure-sidecar-stubs
     flag_tests=(compiled_flag_matches_expected compiled_policy_matches_expected)
     echo "=== Clean build (no flag) → expect false ==="
     (
-      export BUZZ_TEST_EXPECTED_AUTO_CONNECT_DEFAULT_RELAY=false
-      export BUZZ_TEST_EXPECTED_AGENT_ACCESS_OWNER_ONLY=false
+      export COREVIA_TALK_TEST_EXPECTED_AUTO_CONNECT_DEFAULT_RELAY=false
+      export COREVIA_TALK_TEST_EXPECTED_AGENT_ACCESS_OWNER_ONLY=false
       run_ignored "${flag_tests[@]}"
     )
     echo "=== Internal build (flags set) → expect true ==="
     (
-      export BUZZ_BUILD_AUTO_CONNECT_DEFAULT_RELAY=1
-      export BUZZ_BUILD_AGENT_ACCESS_OWNER_ONLY=1
-      export BUZZ_TEST_EXPECTED_AUTO_CONNECT_DEFAULT_RELAY=true
-      export BUZZ_TEST_EXPECTED_AGENT_ACCESS_OWNER_ONLY=true
+      export COREVIA_TALK_BUILD_AUTO_CONNECT_DEFAULT_RELAY=1
+      export COREVIA_TALK_BUILD_AGENT_ACCESS_OWNER_ONLY=1
+      export COREVIA_TALK_TEST_EXPECTED_AUTO_CONNECT_DEFAULT_RELAY=true
+      export COREVIA_TALK_TEST_EXPECTED_AGENT_ACCESS_OWNER_ONLY=true
       run_ignored "${flag_tests[@]}"
       cargo test --lib
     )
     echo "=== Auto-connect only → capabilities stay independent ==="
     (
-      export BUZZ_BUILD_AUTO_CONNECT_DEFAULT_RELAY=1
-      export BUZZ_TEST_EXPECTED_AUTO_CONNECT_DEFAULT_RELAY=true
-      export BUZZ_TEST_EXPECTED_AGENT_ACCESS_OWNER_ONLY=false
+      export COREVIA_TALK_BUILD_AUTO_CONNECT_DEFAULT_RELAY=1
+      export COREVIA_TALK_TEST_EXPECTED_AUTO_CONNECT_DEFAULT_RELAY=true
+      export COREVIA_TALK_TEST_EXPECTED_AGENT_ACCESS_OWNER_ONLY=false
       run_ignored "${flag_tests[@]}"
     )
     echo "=== Maximum accepted demo name reaches Rust build validation ==="
     DEMO_CONFIG="$(node ../scripts/demo-build-config.mjs "$(printf 'x%.0s' {1..31})" /dev/null 1234567812345678)"
     DEMO_SLUG="$(node -e 'console.log(JSON.parse(process.argv[1]).slug)' "$DEMO_CONFIG")"
     (
-      export BUZZ_BUILD_DEMO_SLUG="$DEMO_SLUG"
-      export BUZZ_TEST_EXPECTED_DEMO_SLUG="$DEMO_SLUG"
-      export BUZZ_TEST_EXPECTED_AUTO_CONNECT_DEFAULT_RELAY=false
-      export BUZZ_TEST_EXPECTED_AGENT_ACCESS_OWNER_ONLY=false
+      export COREVIA_TALK_BUILD_DEMO_SLUG="$DEMO_SLUG"
+      export COREVIA_TALK_TEST_EXPECTED_DEMO_SLUG="$DEMO_SLUG"
+      export COREVIA_TALK_TEST_EXPECTED_AUTO_CONNECT_DEFAULT_RELAY=false
+      export COREVIA_TALK_TEST_EXPECTED_AGENT_ACCESS_OWNER_ONLY=false
       run_ignored compiled_demo_slug_matches_expected "${flag_tests[@]}"
       cargo test --lib
     )
@@ -316,14 +316,14 @@ desktop-release-build target="aarch64-apple-darwin":
     set -euo pipefail
     TARGET={{target}}
     mkdir -p desktop/src-tauri/binaries
-    touch "desktop/src-tauri/binaries/buzz-acp-$TARGET"
-    touch "desktop/src-tauri/binaries/buzz-agent-$TARGET"
+    touch "desktop/src-tauri/binaries/corevia-talk-acp-$TARGET"
+    touch "desktop/src-tauri/binaries/corevia-talk-agent-$TARGET"
     if [[ "$TARGET" != *windows* ]]; then
-        touch "desktop/src-tauri/binaries/buzz-backend-kubernetes-$TARGET"
+        touch "desktop/src-tauri/binaries/corevia-talk-backend-kubernetes-$TARGET"
     fi
-    touch "desktop/src-tauri/binaries/buzz-dev-mcp-$TARGET"
+    touch "desktop/src-tauri/binaries/corevia-talk-dev-mcp-$TARGET"
     touch "desktop/src-tauri/binaries/git-credential-nostr-$TARGET"
-    touch "desktop/src-tauri/binaries/buzz-$TARGET"
+    touch "desktop/src-tauri/binaries/corevia-talk-$TARGET"
     pnpm install
     cd {{desktop_dir}} && pnpm tauri build --features mesh-llm --target {{target}}
 
@@ -333,7 +333,7 @@ desktop-demo-build demo_name target="aarch64-apple-darwin":
     set -euo pipefail
     TARGET={{target}}
     [[ "$(uname -s)" == "Darwin" && "$TARGET" == *-apple-darwin ]] || { echo "Demo DMGs require a macOS Apple target" >&2; exit 2; }
-    CONFIG_PATH="$(mktemp "${TMPDIR:-/tmp}/buzz-demo-config.XXXXXX")"
+    CONFIG_PATH="$(mktemp "${TMPDIR:-/tmp}/corevia-talk-demo-config.XXXXXX")"
     trap 'rm -f "$CONFIG_PATH"' EXIT
     DEMO_BUILD_ID="$(node -e 'console.log(require("node:crypto").randomBytes(8).toString("hex"))')"
     DEMO_CONFIG="$(node desktop/scripts/demo-build-config.mjs {{quote(demo_name)}} "$CONFIG_PATH" "$DEMO_BUILD_ID")"
@@ -343,12 +343,12 @@ desktop-demo-build demo_name target="aarch64-apple-darwin":
     DMG_FILE_STEM="$(read_config dmgFileStem)"
     DEMO_SLUG="$(read_config slug)"
     cargo build --release --target "$TARGET" \
-      -p buzz-acp -p buzz-agent -p buzz-backend-kubernetes -p buzz-dev-mcp \
-      -p git-credential-nostr -p buzz-cli
+      -p corevia-talk-acp -p corevia-talk-agent -p corevia-talk-backend-kubernetes -p corevia-talk-dev-mcp \
+      -p git-credential-nostr -p corevia-talk-cli
     ./scripts/bundle-sidecars.sh "$TARGET"
     pnpm install
     cd {{desktop_dir}}
-    BUZZ_BUILD_DEMO_SLUG="$DEMO_SLUG" pnpm tauri build --features mesh-llm --target "$TARGET" --bundles app --config "$CONFIG_PATH"
+    COREVIA_TALK_BUILD_DEMO_SLUG="$DEMO_SLUG" pnpm tauri build --features mesh-llm --target "$TARGET" --bundles app --config "$CONFIG_PATH"
     cd ..
     VERSION="$(node -p "require('./desktop/package.json').version")"
     DMG_ARCH="${TARGET%%-*}"; [[ "$DMG_ARCH" == "x86_64" ]] && DMG_ARCH=x64
@@ -398,85 +398,85 @@ test-unit:
     set -euo pipefail
     ./scripts/test-ensure-local-relay-key.sh
     # Shared Huddle transport, codec, and loopback authentication regressions.
-    cargo test -p buzz-audio-client
+    cargo test -p corevia-talk-audio-client
     if command -v cargo-nextest &>/dev/null; then
-        cargo nextest run -p buzz-core -p buzz-auth --lib
+        cargo nextest run -p corevia-talk-core -p corevia-talk-auth --lib
         # Mesh JWKS proxy-bypass regression: infra-free loopback I/O with
         # child-process environment isolation. Its integration-test binary
         # is not selected by --lib above. Keep the Cargo fallback in step.
-        cargo nextest run -p buzz-auth --test mesh_jwks_proxy
-        cargo nextest run -p buzz-audit --lib
+        cargo nextest run -p corevia-talk-auth --test mesh_jwks_proxy
+        cargo nextest run -p corevia-talk-audit --lib
         # Cross-pod disconnect payload tests (NIP-FI and community archive
         # fence); all infra-free.
-        cargo nextest run -p buzz-pubsub --lib -E 'test(/^conn_control::tests::/)'
-        # buzz-auth NIP-FI verifier doctests. The sealed-authority
+        cargo nextest run -p corevia-talk-pubsub --lib -E 'test(/^conn_control::tests::/)'
+        # corevia-talk-auth NIP-FI verifier doctests. The sealed-authority
         # `compile_fail` doctests prove the default-feature public API alone
         # cannot forge the issuer→JWKS authority; nextest does not run
         # doctests, hence this separate step. The verifier's regression suite
         # lives in the in-crate `#[cfg(test)] mod tests`, so `--lib` above
         # already runs it.
-        cargo test -p buzz-auth --doc
-        cargo nextest run -p buzz-voice --lib
-        cargo nextest run -p buzz-cli
-        # buzz-sdk builder/validation unit tests: pure event-builder and input
+        cargo test -p corevia-talk-auth --doc
+        cargo nextest run -p corevia-talk-voice --lib
+        cargo nextest run -p corevia-talk-cli
+        # corevia-talk-sdk builder/validation unit tests: pure event-builder and input
         # validation (e.g. the canvas writer-discipline/skew guard and the
         # canvas_write_survived predicate), no infra. `--lib` runs all unit
         # tests without the rustdoc dependency-resolution flake the full-package
         # invocation hits. Enumerated explicitly because nothing in CI runs
         # `cargo test --workspace` — membership buys clippy/check, not tests.
-        cargo nextest run -p buzz-sdk --lib
-        # buzz-acp owns the relay-to-agent trust boundary. Run its tests here so
+        cargo nextest run -p corevia-talk-sdk --lib
+        # corevia-talk-acp owns the relay-to-agent trust boundary. Run its tests here so
         # forged relay events cannot regain a path into agent routing unnoticed.
-        cargo nextest run -p buzz-acp
+        cargo nextest run -p corevia-talk-acp
         # Exercise the real MCP server for modern and legacy clients.
-        cargo nextest run -p buzz-dev-mcp
-        # buzz-db migrator/lint tests: pure SQL-parsing unit tests (no infra).
+        cargo nextest run -p corevia-talk-dev-mcp
+        # corevia-talk-db migrator/lint tests: pure SQL-parsing unit tests (no infra).
         # They guard the embedded-migrator invariant (the complete checked-in
         # additive migration set; legacy cutover/backfill remains an operator
         # script, not startup state) and the tenant-scoping lints. The
-        # Postgres-backed buzz-db tests are
+        # Postgres-backed corevia-talk-db tests are
         # #[ignore]d, so --lib runs only the infra-free set. Without this gate a
         # stray file in migrations/ or a broken lint ships green.
-        cargo nextest run -p buzz-db --lib
-        # buzz-db source-policy tests: infra-free scans of the crate sources
+        cargo nextest run -p corevia-talk-db --lib
+        # corevia-talk-db source-policy tests: infra-free scans of the crate sources
         # that enforce the event-write admission chokepoint, metric/provenance
         # contracts, and their fixtures. They live in an integration-test
         # binary, so `--lib` above does not run them.
-        cargo nextest run -p buzz-db --test observability_source
-        # buzz-db `AdmittedTx` doctests. The `compile_fail` cases prove code
+        cargo nextest run -p corevia-talk-db --test observability_source
+        # corevia-talk-db `AdmittedTx` doctests. The `compile_fail` cases prove code
         # outside the crate can neither construct an admitted transaction nor
         # pass a raw `sqlx::Transaction` to an event-write helper; nextest
         # does not run doctests, hence this separate step.
-        cargo test -p buzz-db --doc
+        cargo test -p corevia-talk-db --doc
         # Storage accounting crosses three crates whose focused regression
         # suites are otherwise absent from the infra-free unit lane.
-        cargo nextest run -p buzz-media --lib \
+        cargo nextest run -p corevia-talk-media --lib \
             -E 'test(=bucket_index::tests::bucket_snapshot_json_round_trip_preserves_community_keys)'
-        # buzz-admin: storage-snapshot worker, the community archive command
+        # corevia-talk-admin: storage-snapshot worker, the community archive command
         # parser, validation, and propagation-evidence tests, and the partition
         # audit outcome contract, and the NIP-FI binding command's policy loading and backfill report.
-        cargo nextest run -p buzz-admin \
+        cargo nextest run -p corevia-talk-admin \
             -E 'test(storage_snapshot) + test(/^communities::tests::/) + test(/^tests::communities_/) + test(=tests::partition_audit_outcomes_keep_their_json_names_and_exit_codes) + test(/^nip_fi::tests::/)'
-        # Multi-tenant conformance gate (buzz-conformance): the independent
+        # Multi-tenant conformance gate (corevia-talk-conformance): the independent
         # replay checker + golden fixtures. No infra — pure in-process trace
         # replay — so it belongs in the unit job. Run all targets (lib + the
         # tests/replay_fixtures.rs integration test), not just --lib.
-        cargo nextest run -p buzz-conformance
+        cargo nextest run -p corevia-talk-conformance
         # Gateway unit and black-box HTTP tests are infra-free. Postgres-backed
         # contract/race tests run in the dedicated CI job below.
-        cargo nextest run -p buzz-push-gateway
-        cargo nextest run -p buzz-push-gateway --features personal-dev-app-attest
+        cargo nextest run -p corevia-talk-push-gateway
+        cargo nextest run -p corevia-talk-push-gateway --features personal-dev-app-attest
         # Kubernetes backend provider: the decision layers (state machine, GC
         # planner, env precedence, naming, wire) are pure functions with a fake
         # substrate, so they belong in the unit job. Enumerated explicitly
         # because nothing in CI runs `cargo test --workspace` — workspace
         # membership alone buys clippy/check, not a single executed test.
-        cargo nextest run -p buzz-backend-kubernetes
+        cargo nextest run -p corevia-talk-backend-kubernetes
         # Feature-flag crate coverage: run once with LaunchDarkly enabled.
         # This includes all default tests plus the cfg(feature="launchdarkly")
         # tests, avoiding duplicate default-only execution in the unit lane.
-        cargo nextest run -p buzz-feature-flags --features launchdarkly
-        # buzz-agent: two infra-free concerns run together by executing the
+        cargo nextest run -p corevia-talk-feature-flags --features launchdarkly
+        # corevia-talk-agent: two infra-free concerns run together by executing the
         # whole crate (lib + integration tests), because nothing in CI runs
         # `cargo test --workspace`, so without this stanza neither the crate's
         # library tests nor its integration tests execute remotely.
@@ -490,17 +490,17 @@ test-unit:
         #     integration tests): lock single-flight, cooldown, cross-process
         #     crash recovery — infra-free via a stub OIDC provider and an
         #     injected browser opener, no network or Postgres.
-        cargo nextest run -p buzz-agent
-        # Admin API auth-boundary tests (api::admin in buzz-relay): the NIP-98
+        cargo nextest run -p corevia-talk-agent
+        # Admin API auth-boundary tests (api::admin in corevia-talk-relay): the NIP-98
         # duplicate-tag rejections, the Host/Origin replay-ordering causal pair,
         # the admin.localhost origin/advertisement/canonical-URL pins, and the
         # host-oracle/credential-first checks. These are the regression guard for
         # the /api/admin/v1 moderation auth surface. Enumerated explicitly because
         # nothing in CI runs `cargo test --workspace`, `just test-unit` did not
-        # enumerate `buzz-relay --lib`, and Backend Integration selects only the
+        # enumerate `corevia-talk-relay --lib`, and Backend Integration selects only the
         # #[ignore]d Postgres suites — so these non-ignored tests ran in no lane
         # and a red one could ship green (exactly how a broken admin test slipped
-        # past every gate once). Scoped to api::admin, not the whole buzz-relay
+        # past every gate once). Scoped to api::admin, not the whole corevia-talk-relay
         # --lib, because api::media has non-ignored tests that require Postgres.
         # DB-backed api::admin tests are #[ignore]d and run in the PostgreSQL
         # lane; the non-ignored ones reject before touching the database. Any
@@ -527,7 +527,7 @@ test-unit:
         # the profile search request bounds (api::profiles), and the Git
         # transport off_mode_precedence_tests. All are infra-free
         # and finish in well under a second with no DATABASE_URL, so none wait
-        # out the sqlx acquire timeout. `--bin buzz-relay` adds main.rs's
+        # out the sqlx acquire timeout. `--bin corevia-talk-relay` adds main.rs's
         # `tests::` module (JWKS refresh cadence) and `composition_tests::`
         # (JWKS source + refresh-loop composition), which `--lib` cannot reach
         # because they live in the binary target; the nested
@@ -536,7 +536,7 @@ test-unit:
         # env- and log-capture tests in telemetry and config. All three modules
         # are infra-free; config parses env into a struct and never connects.
         # `^config::` is anchored so it does not also select nip_fi_config.
-        cargo nextest run -p buzz-relay --lib --bin buzz-relay \
+        cargo nextest run -p corevia-talk-relay --lib --bin corevia-talk-relay \
             -E 'test(/^api::admin::/) + test(/^push_runtime::/) + test(/^operator_listener::tests::/) + test(/^handlers::channel_authz::/) + test(/^handlers::moderation_authz::/) + test(/^handlers::side_effects::tests::/) + test(/^handlers::system_channels::tests::/) + test(/^nip11::tests::/) + test(/^storage_sweep::tests::/) + test(/^nip_fi_core::tests::/) + test(/^nip_fi_http::tests::/) + test(/^nip_fi_config::tests::/) + test(/^nip_fi_resolver::tests::/) + test(/^readiness::tests::/) + test(/^router::tests::/) + test(/^api::parse_query_tests::/) + test(/^api::profiles::/) + test(/^api::git::transport::off_mode_precedence_tests::/) + test(/^audio::join::tests::/) + test(/^audio::handler::tests::/) + test(/^nip_fi_gate::tests::/) + test(/^nip_fi_session::tests::/) + test(/^nip_fi_shadow::tests::/) + test(/^nip_fi_shadow_session::tests::/) + test(/^startup_steps::tests::/) + test(/^telemetry::tests::/) + test(/^config::tests::/) + test(=state::tests::neither_a_confirmed_inactive_community_nor_a_failed_lookup_admits_the_socket) + test(=state::tests::periodic_revalidation_disconnects_inside_the_fenced_callback) + test(=state::tests::bare_community_disconnect_fails_closed_when_the_fence_is_unavailable) + test(=connection::tests::send_loop_sends_policy_close_when_community_is_archived) + test(=state::tests::community_disconnect_then_nip_fi_keeps_community_deleted_reason) + test(=state::tests::disconnect_community_wins_reason_losing_nip_fi_does_not_enqueue_frame) + test(=handlers::req::tests::timed_out_historical_read_deregisters_before_closed) + test(=handlers::req::tests::superseded_timeout_leaves_replacement_intact) + test(=handlers::req::tests::search_claim_retires_live_and_yields_to_replacement) + test(=handlers::req::tests::concurrent_claims_and_stale_teardowns_keep_the_last_owner) + test(=handlers::req::tests::timeout_closed_is_emitted_before_a_replacement_can_claim) + test(=handlers::req::tests::revoke_then_replacement_keeps_replacement_whole) + test(=handlers::req::tests::claims_after_connection_cleanup_are_refused) + test(=handlers::req::tests::dropped_terminal_frame_cancels_connection) + test(=handlers::req::tests::revoke_dropped_terminal_frame_cancels_connection) + test(=handlers::req::tests::count_fallback_covers_filters_that_can_match_private_deletions) + test(=handlers::req::tests::group_state_t_and_creator_tags_reach_sql_only_for_group_state_kinds) + test(=api::bridge::postgres_tests::bridge_search_mode_extension_accepts_prefix_snake_or_camel_case) + test(=api::bridge::postgres_tests::bridge_search_sort_extension_selects_newest_only_when_named) + (kind(bin) & (test(/^tests::/) + test(/^composition_tests::/) + test(/^env_filter_tests::/)) - test(/^tests::postgres_tests::/))'
         # Note on audio::join::tests scope: the full suite is infra-free (no DB,
         # no Redis). The infra-free audio/FI regression witnesses — bootstrap
@@ -556,7 +556,7 @@ test-unit:
         # acquire timeout) stay out. NIP-FI tests that need Postgres live in
         # postgres_tests and
         # run in the PostgreSQL lane. Keep scripts/run-tests.sh in step.
-        cargo nextest run -p buzz-relay --lib -E '
+        cargo nextest run -p corevia-talk-relay --lib -E '
                 test(/^nip_fi_upgrade::/)
                 + test(/^metrics::contract_tests::/)
                 + test(/^metrics::partition_alert_tests::/)
@@ -615,15 +615,15 @@ test-unit:
                 + test(=state::tests::manager_disconnect_sets_reason_enqueues_frame_then_cancels)
                 + test(/^api::nip_fi::/)'
         # boot_lifecycle spawns the real relay binary and asserts its startup
-        # lifecycle, including that buzz_startup_phase_* reaches /metrics. Its
+        # lifecycle, including that corevia_talk_startup_phase_* reaches /metrics. Its
         # non-ignored tests need no Postgres or Redis; the Postgres cases are
         # #[ignore]d and stay in the PostgreSQL lane. Keep
         # scripts/run-tests.sh in step.
-        cargo nextest run -p buzz-relay --test boot_lifecycle
+        cargo nextest run -p corevia-talk-relay --test boot_lifecycle
         # ACP author-gate and queue tests protect the trust boundary between
         # relay events and agent prompts. They are infra-free; ignored lifecycle
         # tests remain excluded and run in their dedicated integration lanes.
-        cargo nextest run -p buzz-acp --lib
+        cargo nextest run -p corevia-talk-acp --lib
     else
         ./scripts/run-tests.sh unit
     fi
@@ -634,14 +634,14 @@ test-integration:
 
 # Regenerate the model-capability normative corpus from the production Rust
 # resolver. The corpus is a golden snapshot, never hand-edited: this runs the
-# `#[ignore]`d writer test in buzz-agent, which serializes `resolve()` over the
+# `#[ignore]`d writer test in corevia-talk-agent, which serializes `resolve()` over the
 # inputs-only question table to scripts/normative-corpus.json. Run this after
 # any model-capabilities.json edit, then commit the regenerated file. The
 # `corpus_matches_generated_snapshot` gate fails CI if the committed file drifts.
 regen-model-corpus:
-    cargo test -p buzz-agent --lib model_capabilities::tests::regen_corpus_file -- --ignored --exact
+    cargo test -p corevia-talk-agent --lib model_capabilities::tests::regen_corpus_file -- --ignored --exact
 
-# Buzz shared compute e2e: current desktop discovery/admission logic and
+# Corevia Talk shared compute e2e: current desktop discovery/admission logic and
 # Playwright UI coverage.
 mesh-e2e:
     cargo test --manifest-path {{desktop_dir}}/src-tauri/Cargo.toml --features mesh-llm mesh_llm --lib
@@ -650,42 +650,42 @@ mesh-e2e:
 # Reset only development state, seed deterministic local channels, and launch
 # the mesh-enabled desktop with the repository's public Tyler test identity.
 # This is for local verification only; never point this identity at staging/prod.
-[confirm("This will reset development data, preserve installed Buzz, then launch a seeded mesh dev app. Continue? (y/N)")]
+[confirm("This will reset development data, preserve installed Corevia Talk, then launch a seeded mesh dev app. Continue? (y/N)")]
 mesh-dev-fresh:
     #!/usr/bin/env bash
     set -euo pipefail
     ./scripts/dev-reset.sh --yes
     ./scripts/setup-desktop-test-data.sh
-    export BUZZ_PRIVATE_KEY="3dbaebadb5dfd777ff25149ee230d907a15a9e1294b40b830661e65bb42f6c03"
-    export BUZZ_REQUIRE_RELAY_MEMBERSHIP=true
-    export BUZZ_ALLOW_NIP_OA_AUTH=true
+    export COREVIA_TALK_PRIVATE_KEY="3dbaebadb5dfd777ff25149ee230d907a15a9e1294b40b830661e65bb42f6c03"
+    export COREVIA_TALK_REQUIRE_RELAY_MEMBERSHIP=true
+    export COREVIA_TALK_ALLOW_NIP_OA_AUTH=true
     export RELAY_OWNER_PUBKEY="e5ebc6cdb579be112e336cc319b5989b4bb6af11786ea90dbe52b5f08d741b34"
-    export BUZZ_RELAY_PRIVATE_KEY="0000000000000000000000000000000000000000000000000000000000000001"
-    export BUZZ_RECONCILE_CHANNELS=true
-    export BUZZ_RESET_WEBVIEW_STATE=1
+    export COREVIA_TALK_RELAY_PRIVATE_KEY="0000000000000000000000000000000000000000000000000000000000000001"
+    export COREVIA_TALK_RECONCILE_CHANNELS=true
+    export COREVIA_TALK_RESET_WEBVIEW_STATE=1
     exec just mesh=1 dev
 
 # Real serve->client->inference on this machine (not CI).
 mesh-e2e-hardware:
     #!/usr/bin/env bash
     set -euo pipefail
-    cargo run -p buzz-mesh-smoke --example mesh_serve_client_smoke
+    cargo run -p corevia-talk-mesh-smoke --example mesh_serve_client_smoke
 
 # Three isolated node processes: trusted member joins and infers; stranger is rejected.
-# Uses temp homes and explicit mesh owner keystores. Never reads the Buzz Keychain.
+# Uses temp homes and explicit mesh owner keystores. Never reads the Corevia Talk Keychain.
 mesh-e2e-admission:
     #!/usr/bin/env bash
     set -euo pipefail
-    cargo run -p buzz-mesh-smoke --example mesh_admission_smoke
+    cargo run -p corevia-talk-mesh-smoke --example mesh_admission_smoke
 
 # Full hardware confidence suite: routing, owner admission, and real agent inference.
 mesh-e2e-confidence:
     #!/usr/bin/env bash
     set -euo pipefail
-    cargo build --release -p buzz-agent -p buzz-dev-mcp
-    cargo run -p buzz-mesh-smoke --example mesh_serve_client_smoke
-    cargo run -p buzz-mesh-smoke --example mesh_admission_smoke
-    cargo run -p buzz-mesh-smoke --example mesh_agent_e2e
+    cargo build --release -p corevia-talk-agent -p corevia-talk-dev-mcp
+    cargo run -p corevia-talk-mesh-smoke --example mesh_serve_client_smoke
+    cargo run -p corevia-talk-mesh-smoke --example mesh_admission_smoke
+    cargo run -p corevia-talk-mesh-smoke --example mesh_agent_e2e
 
 # Take desktop screenshots using the mock bridge
 desktop-screenshot *ARGS:
@@ -710,7 +710,7 @@ relay: bootstrap _ensure-migrations
     set -o allexport
     source .env
     set +o allexport
-    cargo run -p buzz-relay
+    cargo run -p corevia-talk-relay
 
 # Post one root + N replies (and a few reactions) to the local dev relay, for eyeballing long threads
 seed-long-thread replies="187":
@@ -726,7 +726,7 @@ relay-web: bootstrap _ensure-migrations
     set +o allexport
     [[ -d node_modules ]] || pnpm install
     pnpm -C web build
-    BUZZ_WEB_DIR=./web/dist cargo run -p buzz-relay
+    COREVIA_TALK_WEB_DIR=./web/dist cargo run -p corevia-talk-relay
 
 # Build and run the private admin dashboard
 admin: bootstrap _ensure-migrations
@@ -738,27 +738,27 @@ admin: bootstrap _ensure-migrations
     set +o allexport
     [[ -d node_modules ]] || pnpm install
     pnpm -C admin-web build
-    export BUZZ_ADMIN_HOST="${BUZZ_ADMIN_HOST:-admin.localhost:3000}"
-    export BUZZ_ADMIN_WEB_DIR="${BUZZ_ADMIN_WEB_DIR:-{{justfile_directory()}}/admin-web/dist}"
+    export COREVIA_TALK_ADMIN_HOST="${COREVIA_TALK_ADMIN_HOST:-admin.localhost:3000}"
+    export COREVIA_TALK_ADMIN_WEB_DIR="${COREVIA_TALK_ADMIN_WEB_DIR:-{{justfile_directory()}}/admin-web/dist}"
     # Default to disabled auth locally: a NIP-07 signer extension can't be
     # assumed in dev. Disabled mode serves every moderation read (reports,
     # feedback, restrictions, community directory, member profiles, any stored
     # message by ID) to anyone who can reach the relay port and refuses writes
     # and staffing, so it binds the relay to 127.0.0.1 (port from .env)
     # unless the mode is exactly nip98: a padded or misspelled value stays
-    # local. Override per run with BUZZ_ADMIN_AUTH=nip98 (plus
+    # local. Override per run with COREVIA_TALK_ADMIN_AUTH=nip98 (plus
     # RELAY_OPERATOR_PUBKEYS or RELAY_OWNER_PUBKEY) to exercise the
-    # authenticated path; that keeps BUZZ_BIND_ADDR as configured.
-    export BUZZ_ADMIN_AUTH="${BUZZ_ADMIN_AUTH:-disabled}"
-    if [[ "$BUZZ_ADMIN_AUTH" != nip98 ]]; then
-        bind_addr="${BUZZ_BIND_ADDR:-0.0.0.0:3000}"
+    # authenticated path; that keeps COREVIA_TALK_BIND_ADDR as configured.
+    export COREVIA_TALK_ADMIN_AUTH="${COREVIA_TALK_ADMIN_AUTH:-disabled}"
+    if [[ "$COREVIA_TALK_ADMIN_AUTH" != nip98 ]]; then
+        bind_addr="${COREVIA_TALK_BIND_ADDR:-0.0.0.0:3000}"
         relay_port="${bind_addr##*:}"; [[ -n "$relay_port" ]] || relay_port=3000
-        export BUZZ_BIND_ADDR="127.0.0.1:${relay_port}"
+        export COREVIA_TALK_BIND_ADDR="127.0.0.1:${relay_port}"
     fi
-    echo "Admin dashboard: http://${BUZZ_ADMIN_HOST}/reports"
-    echo "Auth mode: ${BUZZ_ADMIN_AUTH} (set BUZZ_ADMIN_AUTH=nip98 to require a signed operator)"
-    echo "Relay bind: ${BUZZ_BIND_ADDR:-0.0.0.0:3000}"
-    cargo run -p buzz-relay
+    echo "Admin dashboard: http://${COREVIA_TALK_ADMIN_HOST}/reports"
+    echo "Auth mode: ${COREVIA_TALK_ADMIN_AUTH} (set COREVIA_TALK_ADMIN_AUTH=nip98 to require a signed operator)"
+    echo "Relay bind: ${COREVIA_TALK_BIND_ADDR:-0.0.0.0:3000}"
+    cargo run -p corevia-talk-relay
 
 # Seed deterministic reports and product feedback for local admin dashboard review
 admin-seed: _ensure-migrations
@@ -766,9 +766,9 @@ admin-seed: _ensure-migrations
 
 # Run focused relay and browser checks for the admin dashboard
 admin-check: fmt-check
-    cargo check -p buzz-relay --all-targets
-    cargo test -p buzz-relay api::admin
-    cargo test -p buzz-relay router::tests
+    cargo check -p corevia-talk-relay --all-targets
+    cargo test -p corevia-talk-relay api::admin
+    cargo test -p corevia-talk-relay router::tests
     pnpm -C admin-web check
     pnpm -C admin-web test:e2e
 
@@ -779,7 +779,7 @@ relay-release: bootstrap _ensure-migrations
     set -o allexport
     source .env
     set +o allexport
-    cargo run -p buzz-relay --release
+    cargo run -p corevia-talk-relay --release
 
 
 # Run the desktop Tauri app in dev mode with a local relay (ports and identity derived from worktree)
@@ -790,28 +790,28 @@ dev *ARGS: bootstrap _ensure-sidecar-stubs _ensure-migrations
     set -o allexport
     source .env
     set +o allexport
-    bind_addr="${BUZZ_BIND_ADDR:-0.0.0.0:3000}"
+    bind_addr="${COREVIA_TALK_BIND_ADDR:-0.0.0.0:3000}"
     relay_port="${bind_addr##*:}"; [[ -n "$relay_port" ]] || relay_port=3000
-    health_port="${BUZZ_HEALTH_PORT:-8080}"
-    metrics_port="${BUZZ_METRICS_PORT:-9102}"
+    health_port="${COREVIA_TALK_HEALTH_PORT:-8080}"
+    metrics_port="${COREVIA_TALK_METRICS_PORT:-9102}"
     if command -v lsof >/dev/null 2>&1; then
         for spec in "relay:$relay_port" "health:$health_port" "metrics:$metrics_port"; do
             name="${spec%%:*}"; port="${spec##*:}"
             if lsof -nP -iTCP:"$port" -sTCP:LISTEN >/dev/null 2>&1; then
                 echo "Error: $name port $port is already in use; refusing to launch desktop against a stale relay." >&2
                 lsof -nP -iTCP:"$port" -sTCP:LISTEN >&2 || true
-                echo "Stop the process above (often a stale buzz-relay) and rerun: just dev" >&2
+                echo "Stop the process above (often a stale corevia-talk-relay) and rerun: just dev" >&2
                 exit 1
             fi
         done
     fi
-    cargo build -p buzz-acp -p buzz-agent -p buzz-backend-kubernetes -p buzz-dev-mcp -p buzz-cli -p git-credential-nostr -p buzz-relay
+    cargo build -p corevia-talk-acp -p corevia-talk-agent -p corevia-talk-backend-kubernetes -p corevia-talk-dev-mcp -p corevia-talk-cli -p git-credential-nostr -p corevia-talk-relay
     # Docker Desktop's forwarded MinIO port can stall under the deployment
     # probe's 32 concurrent writers. Keep the gate enabled in local dev, using
     # the bounded profile already used by the relay test launcher.
-    export BUZZ_GIT_PROBE_WRITERS="${BUZZ_GIT_PROBE_WRITERS:-8}"
-    export BUZZ_GIT_PROBE_ROUNDS="${BUZZ_GIT_PROBE_ROUNDS:-2}"
-    ./target/debug/buzz-relay &
+    export COREVIA_TALK_GIT_PROBE_WRITERS="${COREVIA_TALK_GIT_PROBE_WRITERS:-8}"
+    export COREVIA_TALK_GIT_PROBE_ROUNDS="${COREVIA_TALK_GIT_PROBE_ROUNDS:-2}"
+    ./target/debug/corevia-talk-relay &
     RELAY_PID=$!
     cleanup() {
         [[ -n "${INSTANCE_ID:-}" ]] && ../scripts/cleanup-instance-agents.sh "$INSTANCE_ID" || true
@@ -821,7 +821,7 @@ dev *ARGS: bootstrap _ensure-sidecar-stubs _ensure-migrations
     relay_ready=false
     for _ in $(seq 1 120); do
         if ! kill -0 "$RELAY_PID" 2>/dev/null; then
-            echo "Error: buzz-relay exited during startup; refusing to launch desktop." >&2
+            echo "Error: corevia-talk-relay exited during startup; refusing to launch desktop." >&2
             wait "$RELAY_PID" || true
             exit 1
         fi
@@ -832,16 +832,16 @@ dev *ARGS: bootstrap _ensure-sidecar-stubs _ensure-migrations
         sleep 0.5
     done
     if [[ "$relay_ready" != true ]]; then
-        echo "Error: buzz-relay did not become healthy within 60 seconds; refusing to launch desktop." >&2
+        echo "Error: corevia-talk-relay did not become healthy within 60 seconds; refusing to launch desktop." >&2
         exit 1
     fi
     cd {{desktop_dir}}
     [[ -d node_modules ]] || pnpm install
     source ../scripts/instance-env.sh
-    INSTANCE_ID=$(node -e "console.log(JSON.parse(process.env.BUZZ_TAURI_CONFIG).identifier)")
-    echo "Starting on Vite port ${BUZZ_VITE_PORT}, relay ${BUZZ_RELAY_URL}"
+    INSTANCE_ID=$(node -e "console.log(JSON.parse(process.env.COREVIA_TALK_TAURI_CONFIG).identifier)")
+    echo "Starting on Vite port ${COREVIA_TALK_VITE_PORT}, relay ${COREVIA_TALK_RELAY_URL}"
     FEATURES=(); [[ -n "{{mesh}}" ]] && FEATURES=(--features mesh-llm)
-    pnpm exec tauri dev ${FEATURES[@]+"${FEATURES[@]}"} --config "$BUZZ_TAURI_CONFIG" {{ARGS}}
+    pnpm exec tauri dev ${FEATURES[@]+"${FEATURES[@]}"} --config "$COREVIA_TALK_TAURI_CONFIG" {{ARGS}}
 
 # Run only the desktop app. No relay, database, Docker, migrations, or .env are needed.
 # The app opens normally and asks for a community before making a relay connection.
@@ -849,32 +849,32 @@ desktop-standalone *ARGS: _ensure-sidecar-stubs
     #!/usr/bin/env bash
     set -euo pipefail
     export PATH="{{justfile_directory()}}/bin:$PATH"
-    cargo build -p buzz-acp -p buzz-agent -p buzz-backend-kubernetes -p buzz-dev-mcp -p buzz-cli -p git-credential-nostr
+    cargo build -p corevia-talk-acp -p corevia-talk-agent -p corevia-talk-backend-kubernetes -p corevia-talk-dev-mcp -p corevia-talk-cli -p git-credential-nostr
     TARGET=$(rustc -vV | sed -n 's|host: ||p')
     TARGET_DIR=$(cargo metadata --format-version 1 --no-deps | node -p "JSON.parse(require('fs').readFileSync(0, 'utf8')).target_directory")
-    for bin in buzz-acp buzz-agent buzz-backend-kubernetes buzz-dev-mcp git-credential-nostr buzz; do
+    for bin in corevia-talk-acp corevia-talk-agent corevia-talk-backend-kubernetes corevia-talk-dev-mcp git-credential-nostr corevia-talk; do
         cp "${TARGET_DIR}/debug/${bin}" "desktop/src-tauri/binaries/${bin}-${TARGET}"
         chmod +x "desktop/src-tauri/binaries/${bin}-${TARGET}"
     done
     cd {{desktop_dir}}
     [[ -d node_modules ]] || pnpm install
-    unset BUZZ_PRIVATE_KEY BUZZ_SHARE_IDENTITY
+    unset COREVIA_TALK_PRIVATE_KEY COREVIA_TALK_SHARE_IDENTITY
     if [[ -n "{{fresh}}" ]]; then
-        export BUZZ_RESET_WEBVIEW_STATE=1
+        export COREVIA_TALK_RESET_WEBVIEW_STATE=1
     fi
     source ../scripts/instance-env.sh
-    INSTANCE_ID=$(node -e "console.log(JSON.parse(process.env.BUZZ_TAURI_CONFIG).identifier)")
-    export BUZZ_DEV_KEYRING_SERVICE="buzz-desktop-dev.${BUZZ_INSTANCE_SLUG:-main}"
+    INSTANCE_ID=$(node -e "console.log(JSON.parse(process.env.COREVIA_TALK_TAURI_CONFIG).identifier)")
+    export COREVIA_TALK_DEV_KEYRING_SERVICE="corevia-talk-desktop-dev.${COREVIA_TALK_INSTANCE_SLUG:-main}"
     if [[ -n "{{fresh}}" ]]; then
-        ../scripts/reset-desktop-standalone-state.sh "$INSTANCE_ID" "$BUZZ_DEV_KEYRING_SERVICE"
+        ../scripts/reset-desktop-standalone-state.sh "$INSTANCE_ID" "$COREVIA_TALK_DEV_KEYRING_SERVICE"
     fi
     trap '../scripts/cleanup-instance-agents.sh "$INSTANCE_ID" || true' EXIT
-    echo "Starting standalone desktop on Vite port ${BUZZ_VITE_PORT}; no relay services were started"
+    echo "Starting standalone desktop on Vite port ${COREVIA_TALK_VITE_PORT}; no relay services were started"
     FEATURES=()
     if [[ -n "{{mesh}}" ]]; then
         FEATURES=(--features mesh-llm)
     fi
-    pnpm exec tauri dev ${FEATURES[@]+"${FEATURES[@]}"} --config "$BUZZ_TAURI_CONFIG" {{ARGS}}
+    pnpm exec tauri dev ${FEATURES[@]+"${FEATURES[@]}"} --config "$COREVIA_TALK_TAURI_CONFIG" {{ARGS}}
 
 # Run the desktop app against the internal staging relay (installs deps + builds agent tools automatically)
 staging *ARGS: bootstrap _ensure-sidecar-stubs
@@ -882,34 +882,34 @@ staging *ARGS: bootstrap _ensure-sidecar-stubs
     set -euo pipefail
     export PATH="{{justfile_directory()}}/bin:$PATH"
     pnpm install  # unconditional: staging must always start with a clean dep tree
-    cargo build --release -p buzz-acp -p buzz-agent -p buzz-backend-kubernetes -p buzz-dev-mcp -p buzz-cli -p git-credential-nostr
+    cargo build --release -p corevia-talk-acp -p corevia-talk-agent -p corevia-talk-backend-kubernetes -p corevia-talk-dev-mcp -p corevia-talk-cli -p git-credential-nostr
     FEATURES=()
     if [[ -n "{{mesh}}" ]]; then
         FEATURES=(--features mesh-llm)
     fi
     # Replace 0-byte sidecar stubs with real binaries so tauri dev picks them up.
-    # buzz: the CLI sidecar. buzz-backend-kubernetes: provider discovery scans the
-    # exe dir for executable buzz-backend-* files, so the non-executable stub that
+    # corevia-talk: the CLI sidecar. corevia-talk-backend-kubernetes: provider discovery scans the
+    # exe dir for executable corevia-talk-backend-* files, so the non-executable stub that
     # tauri dev copies next to the exe would hide the provider from "Run on".
     TARGET=$(rustc -vV | sed -n 's|host: ||p')
     TARGET_DIR=$(cargo metadata --format-version 1 --no-deps | node -p "JSON.parse(require('fs').readFileSync(0, 'utf8')).target_directory")
-    STAGING_SIDECARS=(buzz)
+    STAGING_SIDECARS=(corevia-talk)
     if [[ "$TARGET" != *windows* ]]; then
-        STAGING_SIDECARS+=(buzz-backend-kubernetes)
+        STAGING_SIDECARS+=(corevia-talk-backend-kubernetes)
     fi
     for bin in "${STAGING_SIDECARS[@]}"; do
         cp "${TARGET_DIR}/release/${bin}" "desktop/src-tauri/binaries/${bin}-${TARGET}"
         chmod +x "desktop/src-tauri/binaries/${bin}-${TARGET}"
     done
     cd {{desktop_dir}}
-    export BUZZ_RELAY_URL="wss://buzz.test.blockstaging.build"
+    export COREVIA_TALK_RELAY_URL="wss://corevia-talk.test.blockstaging.build"
     source ../scripts/instance-env.sh
     # Ctrl+C kills the Tauri app before its in-process sweep finishes, leaking
     # agent workers. Reap this instance's agents on exit as a backstop.
-    INSTANCE_ID=$(node -e "console.log(JSON.parse(process.env.BUZZ_TAURI_CONFIG).identifier)")
+    INSTANCE_ID=$(node -e "console.log(JSON.parse(process.env.COREVIA_TALK_TAURI_CONFIG).identifier)")
     trap '../scripts/cleanup-instance-agents.sh "$INSTANCE_ID" || true' EXIT
-    echo "Starting staging on Vite port ${BUZZ_VITE_PORT}, relay ${BUZZ_RELAY_URL}"
-    pnpm exec tauri dev ${FEATURES[@]+"${FEATURES[@]}"} --config "$BUZZ_TAURI_CONFIG" {{ARGS}}
+    echo "Starting staging on Vite port ${COREVIA_TALK_VITE_PORT}, relay ${COREVIA_TALK_RELAY_URL}"
+    pnpm exec tauri dev ${FEATURES[@]+"${FEATURES[@]}"} --config "$COREVIA_TALK_TAURI_CONFIG" {{ARGS}}
 
 # Run the desktop app against the production relay (installs deps + builds agent tools automatically)
 production *ARGS: bootstrap _ensure-sidecar-stubs
@@ -917,34 +917,34 @@ production *ARGS: bootstrap _ensure-sidecar-stubs
     set -euo pipefail
     export PATH="{{justfile_directory()}}/bin:$PATH"
     pnpm install  # unconditional: production must always start with a clean dep tree
-    cargo build --release -p buzz-acp -p buzz-agent -p buzz-backend-kubernetes -p buzz-dev-mcp -p buzz-cli -p git-credential-nostr
+    cargo build --release -p corevia-talk-acp -p corevia-talk-agent -p corevia-talk-backend-kubernetes -p corevia-talk-dev-mcp -p corevia-talk-cli -p git-credential-nostr
     FEATURES=()
     if [[ -n "{{mesh}}" ]]; then
         FEATURES=(--features mesh-llm)
     fi
     # Replace 0-byte sidecar stubs with real binaries so tauri dev picks them up.
-    # buzz: the CLI sidecar. buzz-backend-kubernetes: provider discovery scans the
-    # exe dir for executable buzz-backend-* files, so the non-executable stub that
+    # corevia-talk: the CLI sidecar. corevia-talk-backend-kubernetes: provider discovery scans the
+    # exe dir for executable corevia-talk-backend-* files, so the non-executable stub that
     # tauri dev copies next to the exe would hide the provider from "Run on".
     TARGET=$(rustc -vV | sed -n 's|host: ||p')
     TARGET_DIR=$(cargo metadata --format-version 1 --no-deps | node -p "JSON.parse(require('fs').readFileSync(0, 'utf8')).target_directory")
-    PRODUCTION_SIDECARS=(buzz)
+    PRODUCTION_SIDECARS=(corevia-talk)
     if [[ "$TARGET" != *windows* ]]; then
-        PRODUCTION_SIDECARS+=(buzz-backend-kubernetes)
+        PRODUCTION_SIDECARS+=(corevia-talk-backend-kubernetes)
     fi
     for bin in "${PRODUCTION_SIDECARS[@]}"; do
         cp "${TARGET_DIR}/release/${bin}" "desktop/src-tauri/binaries/${bin}-${TARGET}"
         chmod +x "desktop/src-tauri/binaries/${bin}-${TARGET}"
     done
     cd {{desktop_dir}}
-    export BUZZ_RELAY_URL="wss://buzz.block.builderlab.xyz"
+    export COREVIA_TALK_RELAY_URL="wss://corevia-talk.block.builderlab.xyz"
     source ../scripts/instance-env.sh
     # Ctrl+C kills the Tauri app before its in-process sweep finishes, leaking
     # agent workers. Reap this instance's agents on exit as a backstop.
-    INSTANCE_ID=$(node -e "console.log(JSON.parse(process.env.BUZZ_TAURI_CONFIG).identifier)")
+    INSTANCE_ID=$(node -e "console.log(JSON.parse(process.env.COREVIA_TALK_TAURI_CONFIG).identifier)")
     trap '../scripts/cleanup-instance-agents.sh "$INSTANCE_ID" || true' EXIT
-    echo "Starting production on Vite port ${BUZZ_VITE_PORT}, relay ${BUZZ_RELAY_URL}"
-    pnpm exec tauri dev ${FEATURES[@]+"${FEATURES[@]}"} --config "$BUZZ_TAURI_CONFIG" {{ARGS}}
+    echo "Starting production on Vite port ${COREVIA_TALK_VITE_PORT}, relay ${COREVIA_TALK_RELAY_URL}"
+    pnpm exec tauri dev ${FEATURES[@]+"${FEATURES[@]}"} --config "$COREVIA_TALK_TAURI_CONFIG" {{ARGS}}
 
 # Run the desktop frontend dev server (port derived from worktree)
 desktop-dev:
@@ -953,8 +953,8 @@ desktop-dev:
     cd {{desktop_dir}}
     [[ -d node_modules ]] || pnpm install
     source ../scripts/instance-env.sh
-    echo "Starting frontend dev server on Vite port ${BUZZ_VITE_PORT}, relay ${BUZZ_RELAY_URL}"
-    pnpm exec vite --port "${BUZZ_VITE_PORT}" --strictPort
+    echo "Starting frontend dev server on Vite port ${COREVIA_TALK_VITE_PORT}, relay ${COREVIA_TALK_RELAY_URL}"
+    pnpm exec vite --port "${COREVIA_TALK_VITE_PORT}" --strictPort
 
 # ─── Web ─────────────────────────────────────────────────────────────────────
 
@@ -964,9 +964,9 @@ web:
     set -euo pipefail
     [[ -d node_modules ]] || pnpm install
     source scripts/instance-env.sh
-    export VITE_PORT=$((BUZZ_VITE_PORT + 100))
-    export VITE_RELAY_URL="${BUZZ_RELAY_URL}"
-    echo "Starting web dev server on port ${VITE_PORT}, relay ${BUZZ_RELAY_URL}"
+    export VITE_PORT=$((COREVIA_TALK_VITE_PORT + 100))
+    export VITE_RELAY_URL="${COREVIA_TALK_RELAY_URL}"
+    echo "Starting web dev server on port ${VITE_PORT}, relay ${COREVIA_TALK_RELAY_URL}"
     cd {{web_dir}}
     pnpm exec vite --port "${VITE_PORT}" --strictPort
 
@@ -1013,7 +1013,7 @@ mobile-check:
 # Run mobile tests
 mobile-test:
     /bin/bash ./scripts/test-mobile-gateway-recipes.sh
-    unset GIT_DIR GIT_WORK_TREE; cd {{mobile_dir}} && flutter test --dart-define=BUZZ_PUSH_GATEWAY_URL=https://push.example
+    unset GIT_DIR GIT_WORK_TREE; cd {{mobile_dir}} && flutter test --dart-define=COREVIA_TALK_PUSH_GATEWAY_URL=https://push.example
     unset GIT_DIR GIT_WORK_TREE; cd {{mobile_dir}} && flutter test test/shared/push/push_unconfigured_build_test.dart
 
 # Regenerate the emoji dataset asset from desktop's emoji-mart install.
@@ -1027,8 +1027,8 @@ mobile-build-android:
     set -euo pipefail
     ./scripts/mobile-worktree-overrides.sh
     set -- build apk --debug --no-pub
-    if [[ -n "${BUZZ_PUSH_GATEWAY_URL:-}" ]]; then
-        set -- "$@" --dart-define="BUZZ_PUSH_GATEWAY_URL=${BUZZ_PUSH_GATEWAY_URL}"
+    if [[ -n "${COREVIA_TALK_PUSH_GATEWAY_URL:-}" ]]; then
+        set -- "$@" --dart-define="COREVIA_TALK_PUSH_GATEWAY_URL=${COREVIA_TALK_PUSH_GATEWAY_URL}"
     fi
     unset GIT_DIR GIT_WORK_TREE
     cd {{mobile_dir}}
@@ -1047,20 +1047,20 @@ mobile-dev:
     open -a "$simulator_app"
     sleep 3
     ./scripts/mobile-worktree-overrides.sh
-    gateway_url="${BUZZ_PUSH_GATEWAY_URL:-}"
+    gateway_url="${COREVIA_TALK_PUSH_GATEWAY_URL:-}"
     overrides_file="{{mobile_dir}}/ios/Flutter/AppOverrides.xcconfig"
     if [[ -z "$gateway_url" && -f "$overrides_file" ]]; then
-        gateway_url="$(sed -nE 's/^[[:space:]]*BUZZ_PUSH_GATEWAY_URL[[:space:]]*=[[:space:]]*(.*[^[:space:]])[[:space:]]*$/\1/p' "$overrides_file" | tail -n 1 | sed 's/\$()//g')"
+        gateway_url="$(sed -nE 's/^[[:space:]]*COREVIA_TALK_PUSH_GATEWAY_URL[[:space:]]*=[[:space:]]*(.*[^[:space:]])[[:space:]]*$/\1/p' "$overrides_file" | tail -n 1 | sed 's/\$()//g')"
     fi
     set -- run
     if [[ -n "$gateway_url" ]]; then
-        set -- "$@" --dart-define="BUZZ_PUSH_GATEWAY_URL=${gateway_url}"
+        set -- "$@" --dart-define="COREVIA_TALK_PUSH_GATEWAY_URL=${gateway_url}"
     fi
     cd {{mobile_dir}}
     unset GIT_DIR GIT_WORK_TREE
     flutter "$@"
 
-# Uninstall stale worktree-suffixed Buzz debug installs (production apps kept)
+# Uninstall stale worktree-suffixed Corevia Talk debug installs (production apps kept)
 mobile-clean:
     ./scripts/mobile-worktree-clean.sh
 
@@ -1088,7 +1088,7 @@ get-current-version:
 
 # Read the current relay version from its crate manifest
 get-current-relay-version:
-    @grep -m1 '^version = ' crates/buzz-relay/Cargo.toml | sed -E 's/version = "(.*)"/\1/'
+    @grep -m1 '^version = ' crates/corevia-talk-relay/Cargo.toml | sed -E 's/version = "(.*)"/\1/'
 
 # Compute next minor version (e.g., 0.3.0 → 0.4.0)
 get-next-minor-version:
@@ -1128,18 +1128,18 @@ bump-desktop-version version:
     "
     # Regenerate lockfiles
     pnpm install --lockfile-only
-    cargo update -p buzz-desktop --manifest-path desktop/src-tauri/Cargo.toml
+    cargo update -p corevia-talk-desktop --manifest-path desktop/src-tauri/Cargo.toml
     echo "Bumped desktop manifests to {{ version }} and regenerated lockfiles"
 
 # Bump the relay crate version and regenerate the lockfile
 bump-relay-version version:
     #!/usr/bin/env bash
     set -euo pipefail
-    # buzz-relay carries its own `version =` (not version.workspace), so the
+    # corevia-talk-relay carries its own `version =` (not version.workspace), so the
     # replace targets the package version line only.
-    perl -i -pe 's/^version = ".*"/version = "{{ version }}"/' crates/buzz-relay/Cargo.toml
-    cargo update -p buzz-relay
-    echo "Bumped buzz-relay to {{ version }} and regenerated Cargo.lock"
+    perl -i -pe 's/^version = ".*"/version = "{{ version }}"/' crates/corevia-talk-relay/Cargo.toml
+    cargo update -p corevia-talk-relay
+    echo "Bumped corevia-talk-relay to {{ version }} and regenerated Cargo.lock"
 
 # Open or update the desktop release PR from an immutable origin/main snapshot
 release-desktop *ARGS:
@@ -1185,18 +1185,18 @@ _release-pr lane version:
             TAG_PREFIX="v"
             CHANGELOG="CHANGELOG.md"
             ADD_FILES=(desktop/package.json desktop/src-tauri/tauri.conf.json desktop/src-tauri/Cargo.toml desktop/src-tauri/Cargo.lock pnpm-lock.yaml CHANGELOG.md)
-            LOG_PATHS=(desktop/ crates/buzz-core/ crates/buzz-persona/ crates/buzz-sdk/ crates/buzz-agent/)
-            ARTIFACT="Buzz Desktop" ;;
+            LOG_PATHS=(desktop/ crates/corevia-talk-core/ crates/corevia-talk-persona/ crates/corevia-talk-sdk/ crates/corevia-talk-agent/)
+            ARTIFACT="Corevia Talk Desktop" ;;
         relay)
             BRANCH_PREFIX="relay-release"
             TAG_FETCH='relay-v*'
             TAG_MATCH='relay-v[0-9]*'
             TAG_EXCLUDE='relay-v*-*'
             TAG_PREFIX="relay-v"
-            CHANGELOG="crates/buzz-relay/CHANGELOG.md"
-            ADD_FILES=(crates/buzz-relay/Cargo.toml Cargo.lock crates/buzz-relay/CHANGELOG.md)
-            LOG_PATHS=(crates/buzz-relay/ crates/buzz-core/ crates/buzz-db/ crates/buzz-auth/ crates/buzz-pubsub/ crates/buzz-search/ crates/buzz-audit/ crates/buzz-media/ crates/buzz-sdk/ crates/buzz-workflow/ crates/buzz-conformance/ migrations/)
-            ARTIFACT="Buzz Relay" ;;
+            CHANGELOG="crates/corevia-talk-relay/CHANGELOG.md"
+            ADD_FILES=(crates/corevia-talk-relay/Cargo.toml Cargo.lock crates/corevia-talk-relay/CHANGELOG.md)
+            LOG_PATHS=(crates/corevia-talk-relay/ crates/corevia-talk-core/ crates/corevia-talk-db/ crates/corevia-talk-auth/ crates/corevia-talk-pubsub/ crates/corevia-talk-search/ crates/corevia-talk-audit/ crates/corevia-talk-media/ crates/corevia-talk-sdk/ crates/corevia-talk-workflow/ crates/corevia-talk-conformance/ migrations/)
+            ARTIFACT="Corevia Talk Relay" ;;
         *)
             echo "Error: unknown release lane '{{ lane }}'"
             exit 1 ;;
@@ -1318,38 +1318,38 @@ _release-pr lane version:
 
 # ─── Agent Harness ────────────────────────────────────────────────────────────
 
-# Run a goose agent connected to a Buzz relay (foreground)
-goose relay="ws://localhost:3000" agents="1" heartbeat="0" prompt="" key="$BUZZ_PRIVATE_KEY":
+# Run a goose agent connected to a Corevia Talk relay (foreground)
+goose relay="ws://localhost:3000" agents="1" heartbeat="0" prompt="" key="$COREVIA_TALK_PRIVATE_KEY":
     #!/usr/bin/env bash
     set -euo pipefail
     export PATH="{{justfile_directory()}}/bin:$PATH"
     source ./scripts/_goose-env.sh "{{relay}}" "{{key}}" "{{agents}}" "{{heartbeat}}" "{{prompt}}"
-    exec env "${env_args[@]}" ./target/release/buzz-acp
+    exec env "${env_args[@]}" ./target/release/corevia-talk-acp
 
 # Run a goose agent in the background (screen session named 'goose-agent-N')
-goose-bg relay="ws://localhost:3000" agents="1" heartbeat="0" prompt="" key="$BUZZ_PRIVATE_KEY":
+goose-bg relay="ws://localhost:3000" agents="1" heartbeat="0" prompt="" key="$COREVIA_TALK_PRIVATE_KEY":
     #!/usr/bin/env bash
     set -euo pipefail
     export PATH="{{justfile_directory()}}/bin:$PATH"
     source ./scripts/_goose-env.sh "{{relay}}" "{{key}}" "{{agents}}" "{{heartbeat}}" "{{prompt}}"
-    screen -dmS goose-agent-{{agents}} bash -c "$(printf '%q ' env "${env_args[@]}") ./target/release/buzz-acp"
+    screen -dmS goose-agent-{{agents}} bash -c "$(printf '%q ' env "${env_args[@]}") ./target/release/corevia-talk-acp"
     echo "Agent running in screen session 'goose-agent-{{agents}}'. Attach with: screen -r goose-agent-{{agents}}"
 
 # ─── Benchmarking ─────────────────────────────────────────────────────────────
 
-# Run the Buzz orchestra benchmark — TB defaults to leaderboard-eligible k=5; Buzz task layers default to regression k=1 and workflow k=3. Stands up its own Docker stack; --gui opens a live spectator desktop app; other flags pass to benchmark.py (--dataset/--path, --layer, --include-task, --attempts, --manifest, --dry-run, ...)
+# Run the Corevia Talk orchestra benchmark — TB defaults to leaderboard-eligible k=5; Corevia Talk task layers default to regression k=1 and workflow k=3. Stands up its own Docker stack; --gui opens a live spectator desktop app; other flags pass to benchmark.py (--dataset/--path, --layer, --include-task, --attempts, --manifest, --dry-run, ...)
 benchmark *ARGS:
     #!/usr/bin/env bash
     set -euo pipefail
     export PATH="{{justfile_directory()}}/bin:$PATH"
-    uv run --project benchmarks/harbor-buzz-orchestra/testbed \
-        benchmarks/harbor-buzz-orchestra/scripts/benchmark.py {{ARGS}}
+    uv run --project benchmarks/harbor-corevia-talk-orchestra/testbed \
+        benchmarks/harbor-corevia-talk-orchestra/scripts/benchmark.py {{ARGS}}
 
 # Run the benchmark adapter + testbed gate exactly as CI does (pytest + ruff, pinned ruff from pyproject)
 benchmark-check:
     #!/usr/bin/env bash
     set -euo pipefail
-    cd "{{justfile_directory()}}/benchmarks/harbor-buzz-orchestra"
+    cd "{{justfile_directory()}}/benchmarks/harbor-corevia-talk-orchestra"
     # CI installs the dev extra with pip, so pyproject — not uv.lock — decides
     # which ruff lints. Read the pin from there so this recipe cannot drift
     # from the workflow (a floating specifier once meant CI failed on RUF100
@@ -1358,18 +1358,18 @@ benchmark-check:
     for project in . testbed; do
         (
             cd "$project"
-            echo "── harbor-buzz-orchestra/$project (ruff $ruff_pin)"
+            echo "── harbor-corevia-talk-orchestra/$project (ruff $ruff_pin)"
             uv run --frozen pytest -q
             uvx "ruff@$ruff_pin" check .
             uvx "ruff@$ruff_pin" format --check .
         )
     done
-    # The task verifiers live in the sibling benchmarks/buzz-dataset, so they
+    # The task verifiers live in the sibling benchmarks/corevia-talk-dataset, so they
     # need the harness config passed explicitly to stay linted.
-    echo "── buzz-dataset (ruff $ruff_pin)"
-    uvx "ruff@$ruff_pin" check --config pyproject.toml ../buzz-dataset
-    uvx "ruff@$ruff_pin" format --check --config pyproject.toml ../buzz-dataset
+    echo "── corevia-talk-dataset (ruff $ruff_pin)"
+    uvx "ruff@$ruff_pin" check --config pyproject.toml ../corevia-talk-dataset
+    uvx "ruff@$ruff_pin" format --check --config pyproject.toml ../corevia-talk-dataset
 
 # Stop the benchmark Docker stack (state and channels are kept)
 benchmark-down:
-    docker compose --project-name buzz-benchmark down
+    docker compose --project-name corevia-talk-benchmark down

@@ -23,7 +23,7 @@ void carouselPreviewTests() {
       ) async {
         if (call.method == 'create') {
           final id = (call.arguments as Map)['id'];
-          final channel = MethodChannel('buzz/ios_media_carousel/$id');
+          final channel = MethodChannel('corevia-talk/ios_media_carousel/$id');
           channels.add(channel);
           messenger.setMockMethodCallHandler(channel, (_) async => null);
         }
@@ -116,7 +116,7 @@ void carouselPreviewTests() {
     ) async {
       if (call.method == 'create') {
         final id = (call.arguments as Map)['id'];
-        final channel = MethodChannel('buzz/ios_media_carousel/$id');
+        final channel = MethodChannel('corevia-talk/ios_media_carousel/$id');
         channels.add(channel);
         messenger.setMockMethodCallHandler(channel, (call) async {
           if (call.method == 'configure') {

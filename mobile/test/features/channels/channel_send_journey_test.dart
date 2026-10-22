@@ -1,8 +1,8 @@
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channel_detail_page.dart';
-import 'package:buzz/shared/relay/relay.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channel_detail_page.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -66,7 +66,7 @@ void main() {
       }
       await tester.enterText(find.byType(TextField), text);
       await tester.pump();
-      await tester.tap(find.byIcon(BuzzIcons.arrowUp));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.arrowUp));
       await tester.pump();
     }
 

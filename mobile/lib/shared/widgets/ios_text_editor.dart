@@ -6,7 +6,7 @@ import '../theme/theme.dart';
 class IosTextEditor {
   IosTextEditor._();
 
-  static const _channel = MethodChannel('buzz/profile_text_editor');
+  static const _channel = MethodChannel('corevia-talk/profile_text_editor');
 
   /// Presents the native editor and returns its submitted value, or null when
   /// the user cancels.

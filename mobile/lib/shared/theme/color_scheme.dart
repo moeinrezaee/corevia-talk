@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'accent_colors.dart';
 
-// Buzz desktop design-system tokens: neutral surfaces/text and Radix status roles.
-// Source: buzz-app/src/shared/design-system/styles/tokens.css.
+// Corevia Talk desktop design-system tokens: neutral surfaces/text and Radix status roles.
+// Source: corevia-talk-app/src/shared/design-system/styles/tokens.css.
 const lightColorScheme = ColorScheme(
   brightness: Brightness.light,
   primary: Color(0xFF262626),

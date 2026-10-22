@@ -9,13 +9,13 @@
       ["name", "Desktop Solo"],
       ["visibility", "private"],
       ["channel_type", "stream"],
-      ["t", "buzz.solo"]
+      ["t", "corevia-talk.solo"]
     ]
   },
   "creator": "1111111111111111111111111111111111111111111111111111111111111111",
   "identity_tags": [
     ["t", "stream"],
-    ["t", "buzz.solo"],
+    ["t", "corevia-talk.solo"],
     ["P", "1111111111111111111111111111111111111111111111111111111111111111"]
   ]
 }

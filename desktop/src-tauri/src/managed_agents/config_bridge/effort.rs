@@ -18,12 +18,12 @@
 //!
 //! The **tier-reading** native key is the runtime's real `thinking_env_var`
 //! (`None` for Claude/Codex — those have no native key, so the column is the
-//! sole authority and a user-supplied `BUZZ_ACP_EFFORT_LEVEL` is transport, not
+//! sole authority and a user-supplied `COREVIA_TALK_ACP_EFFORT_LEVEL` is transport, not
 //! a tier). The **emission** key ([`EffortLaunch::key`]) is
-//! `thinking_env_var.unwrap_or(BUZZ_ACP_EFFORT_LEVEL)`: Goose emits
-//! `GOOSE_THINKING_EFFORT`, buzz-agent emits `BUZZ_AGENT_THINKING_EFFORT`,
+//! `thinking_env_var.unwrap_or(COREVIA_TALK_ACP_EFFORT_LEVEL)`: Goose emits
+//! `GOOSE_THINKING_EFFORT`, corevia-talk-agent emits `COREVIA_TALK_AGENT_THINKING_EFFORT`,
 //! Claude/Codex/keyless-ACP and any unknown/custom runtime emit the retained
-//! ACP-startup sentinel `BUZZ_ACP_EFFORT_LEVEL`.
+//! ACP-startup sentinel `COREVIA_TALK_ACP_EFFORT_LEVEL`.
 //!
 //! [`EffortLaunch::suppress`] lists every known native/legacy effort key plus
 //! the sentinel; every consumer strips them all first, then emits at most the
@@ -42,7 +42,7 @@ use crate::managed_agents::types::{AgentDefinition, ManagedAgentRecord};
 /// (the harness reads it into `PoolStartup.startup_effort`). It is *transport*,
 /// never a value-authority tier: a user-supplied entry is suppressed and
 /// overwritten by the projected effective value.
-pub(crate) const ACP_STARTUP_EFFORT_KEY: &str = "BUZZ_ACP_EFFORT_LEVEL";
+pub(crate) const ACP_STARTUP_EFFORT_KEY: &str = "COREVIA_TALK_ACP_EFFORT_LEVEL";
 
 /// The resolved launch effort for one runtime: the single fact every spawn
 /// path (local, remote, snapshot) consumes.
@@ -79,8 +79,8 @@ impl EffortLaunch {
     /// When `preserve_passthrough` is set and no tier resolved a value, a value
     /// already present under `key` (in any case) is carried forward and
     /// re-emitted canonically. Multiple case spellings can survive the
-    /// case-sensitive layer merge (e.g. a lower-tier `BUZZ_ACP_EFFORT_LEVEL`
-    /// plus a higher-tier `buzz_acp_effort_level`); the carry selects the LAST
+    /// case-sensitive layer merge (e.g. a lower-tier `COREVIA_TALK_ACP_EFFORT_LEVEL`
+    /// plus a higher-tier `corevia_talk_acp_effort_level`); the carry selects the LAST
     /// case-insensitive match in `BTreeMap` iteration order, which is exactly
     /// the value Rust's Windows `Command` writer produces — it sets each spelling
     /// in iteration order into a case-folded env map, so the last set wins. This
@@ -159,7 +159,7 @@ pub(crate) fn apply_launch_effort(
 ///
 /// Lookup (per tier, independent of other tiers):
 ///   1. Native key — normalized; invalid → skip as absent.
-///   2. Legacy key (`BUZZ_AGENT_THINKING_EFFORT`) — only when the native key
+///   2. Legacy key (`COREVIA_TALK_AGENT_THINKING_EFFORT`) — only when the native key
 ///      differs from it AND `allow_legacy_alias` is set AND the value
 ///      normalizes. Invalid legacy is skipped so the next tier can supply one.
 pub(crate) fn effort_tier_alias(
@@ -189,13 +189,13 @@ pub(crate) fn effort_tier_alias(
 ///
 /// - `contract` present (Goose): canonicalize through the alias table; invalid
 ///   → `None` (skip as absent).
-/// - `contract` absent but `accepted` present (buzz-agent): validation-only —
+/// - `contract` absent but `accepted` present (corevia-talk-agent): validation-only —
 ///   accept a value case-insensitively iff the destination parser would
 ///   (`parse_thinking_effort`), emit it lowercased; a foreign canonical (e.g.
 ///   Goose `off`) is rejected so it is never emitted as
-///   `BUZZ_AGENT_THINKING_EFFORT=off`, which crashes the child at config init.
+///   `COREVIA_TALK_AGENT_THINKING_EFFORT=off`, which crashes the child at config init.
 /// - both absent (Claude/Codex, unknown/custom): raw passthrough — the value
-///   rides `BUZZ_ACP_EFFORT_LEVEL` to an adapter that accepts any string.
+///   rides `COREVIA_TALK_ACP_EFFORT_LEVEL` to an adapter that accepts any string.
 pub(crate) fn normalize_effort(
     contract: Option<&EffortNormalization>,
     accepted: Option<&[&str]>,
@@ -263,7 +263,7 @@ pub(crate) fn strip_effort_keys_from_command(cmd: &mut std::process::Command) {
 /// [`std::process::Command`].
 ///
 /// This is the production command-boundary seam: call after
-/// `build_buzz_agent_provider_defaults` (which writes raw baked env) and
+/// `build_corevia_talk_agent_provider_defaults` (which writes raw baked env) and
 /// before the `descriptor.env` loop (which overlays the projected key).
 /// Extracting both steps into one call lets tests exercise the full
 /// baked-write → strip → emit sequence and inspect the child's effective
@@ -351,8 +351,8 @@ pub(crate) fn effort_launch_projection(
     // on a custom Goose wrapper must reach the child untouched — EXCEPT our own
     // ACP-startup sentinel, which we always reconcile to a single canonical
     // spelling (external review, Carl P2): the projection emits the sentinel, so
-    // a user-set case variant (e.g. `buzz_acp_effort_level`) is never intentional
-    // config, and leaving one to shadow the emitted `BUZZ_ACP_EFFORT_LEVEL` on
+    // a user-set case variant (e.g. `corevia_talk_acp_effort_level`) is never intentional
+    // config, and leaving one to shadow the emitted `COREVIA_TALK_ACP_EFFORT_LEVEL` on
     // Windows (where `Command` case-folds env names) would hand the child a
     // different value than the snapshot reads. Stripping the sentinel here and
     // re-emitting canonically guarantees at most ONE sentinel spelling downstream,
@@ -369,7 +369,7 @@ pub(crate) fn effort_launch_projection(
     // the projection's own emission or a foreign key, both handled by `value`.
     let preserve_passthrough = runtime.is_none();
 
-    // Value gate: Goose canonicalizes through its alias contract; buzz-agent
+    // Value gate: Goose canonicalizes through its alias contract; corevia-talk-agent
     // validates against its accepted set (invalid → skip, so a foreign
     // canonical like Goose `off` is never emitted where the destination parser
     // rejects it); Claude/Codex and unknown/custom pass raw over the sentinel.
@@ -480,7 +480,7 @@ fn resolve_effective_effort(
 /// Combined spawn seam: baked-env write + effort strip + emit.
 ///
 /// Called by `apply_effort_to_spawn_command` in `runtime.rs` (production path)
-/// and by `effort_cmd_tests` (test seam). Deleting `build_buzz_agent_provider_defaults`
+/// and by `effort_cmd_tests` (test seam). Deleting `build_corevia_talk_agent_provider_defaults`
 /// or `apply_effort_launch_to_command` inside turns the production-sequence tests RED.
 /// Deleting the outer `apply_effort_to_spawn_command` call from `spawn_agent_child`
 /// is a compile error — `spawn_with_effort_proof` consumes the returned `EffortApplied`
@@ -494,7 +494,7 @@ pub(crate) fn apply_spawn_effort_env(
     global_env: &BTreeMap<String, String>,
     baked_env: &BTreeMap<String, String>,
 ) {
-    crate::managed_agents::agent_env::build_buzz_agent_provider_defaults(cmd);
+    crate::managed_agents::agent_env::build_corevia_talk_agent_provider_defaults(cmd);
     let launch = effort_launch_projection(
         record, runtime, personas, persona_id, global_env, None, baked_env,
     );

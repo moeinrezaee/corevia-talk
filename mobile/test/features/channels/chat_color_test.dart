@@ -1,6 +1,6 @@
-import 'package:buzz/features/channels/local_send_bubble_surface.dart';
-import 'package:buzz/features/channels/message_content.dart';
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/features/channels/local_send_bubble_surface.dart';
+import 'package:corevia_talk/features/channels/message_content.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:flutter_test/flutter_test.dart';

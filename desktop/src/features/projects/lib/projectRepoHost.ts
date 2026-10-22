@@ -1,7 +1,7 @@
 import { effectiveCloneUrls } from "./projectCloneUrl";
 
 export type ProjectRepoHost =
-  | { kind: "buzz" }
+  | { kind: "corevia-talk" }
   | { kind: "external"; host: string }
   | { kind: "unresolved" };
 
@@ -19,10 +19,10 @@ export function projectRepoHost(
   try {
     const clone = new URL(cloneUrl);
     const relay = new URL(relayOrigin);
-    const isBuzzPath = /^\/git\/[0-9a-f]{64}\/[^/]+\/?$/i.test(clone.pathname);
+    const isCoreviaTalkPath = /^\/git\/[0-9a-f]{64}\/[^/]+\/?$/i.test(clone.pathname);
 
-    if (clone.origin === relay.origin && isBuzzPath) {
-      return { kind: "buzz" };
+    if (clone.origin === relay.origin && isCoreviaTalkPath) {
+      return { kind: "corevia-talk" };
     }
 
     return { kind: "external", host: clone.host };
@@ -55,7 +55,7 @@ export function projectRepoHostForRepository(
 /**
  * Human-readable location of a repository's git data — "github.com/block/buzz"
  * for external repos (host + path, `.git` stripped), or "owner/repo" for
- * Buzz-hosted ones (the relay host and full owner pubkey carry no signal;
+ * CoreviaTalk-hosted ones (the relay host and full owner pubkey carry no signal;
  * `ownerLabel` should be the resolved profile name, falling back to a
  * shortened pubkey). Returns `null` when no clone URL can be resolved.
  */
@@ -73,7 +73,7 @@ export function repositoryDisplayPath(
   )[0];
   if (!cloneUrl) return null;
 
-  if (projectRepoHost(cloneUrl, relayOrigin).kind === "buzz") {
+  if (projectRepoHost(cloneUrl, relayOrigin).kind === "corevia-talk") {
     const owner = ownerLabel?.trim() || `${repository.owner.slice(0, 8)}…`;
     return `${owner}/${repository.dtag}`;
   }

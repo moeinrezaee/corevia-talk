@@ -399,7 +399,7 @@ export function CustomHarnessForm({
           <p className="text-sm font-medium text-foreground">
             {tl("Env vars")}
             <span className={PERSONA_LABEL_OPTIONAL_CLASS}>
-              {tl("(override at spawn time; Buzz-managed vars always win)")}
+              {tl("(override at spawn time; CoreviaTalk-managed vars always win)")}
             </span>
           </p>
           <EnvEditor

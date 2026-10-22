@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/relay/relay_closed_policy.dart';
 import '../../shared/theme/theme.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../shared/widgets/frosted_app_bar.dart';
 import '../../shared/widgets/load_error_view.dart';
 import '../../shared/widgets/bee_refresh_indicator.dart';
@@ -76,7 +76,7 @@ class ForumPostsView extends HookConsumerWidget {
                     onPressed: () => isComposing.value = true,
                     tooltip: tl('New post'),
                     shape: const CircleBorder(),
-                    child: const Icon(BuzzIcons.plus),
+                    child: const Icon(CoreviaTalkIcons.plus),
                   )
                 : null,
             body: postsAsync.when(
@@ -85,7 +85,7 @@ class ForumPostsView extends HookConsumerWidget {
               loading: () => Padding(
                 padding: EdgeInsets.only(top: frostedAppBarHeight(context)),
                 child: Center(
-                  child: BuzzLoadingIndicator(
+                  child: CoreviaTalkLoadingIndicator(
                     size: 44,
                     semanticLabel: tl('Loading posts'),
                   ),
@@ -149,7 +149,7 @@ class ForumPostsView extends HookConsumerWidget {
               padding: const EdgeInsetsDirectional.only(end: Grid.xxs),
               child: IconButton(
                 onPressed: () => isComposing.value = false,
-                icon: const Icon(BuzzIcons.x, size: 18),
+                icon: const Icon(CoreviaTalkIcons.x, size: 18),
                 tooltip: tl('Dismiss'),
                 visualDensity: VisualDensity.compact,
               ),
@@ -208,7 +208,7 @@ class _EmptyState extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              BuzzIcons.messageSquareText,
+              CoreviaTalkIcons.messageSquareText,
               size: Grid.xl,
               color: context.colors.onSurfaceVariant,
             ),

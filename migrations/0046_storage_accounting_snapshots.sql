@@ -1,5 +1,5 @@
 -- Last complete media-storage accounting result produced by the isolated
--- buzz-admin worker. The worker replaces this singleton row only after the
+-- corevia-talk-admin worker. The worker replaces this singleton row only after the
 -- full S3 listing and fold succeed, so relay readers never observe a partial
 -- snapshot.
 CREATE TABLE storage_accounting_snapshots (

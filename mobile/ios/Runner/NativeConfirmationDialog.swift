@@ -10,7 +10,7 @@ final class NativeConfirmationDialogCoordinator: NSObject {
   private var isFinishing = false
 
   init(messenger: FlutterBinaryMessenger, parentViewController: UIViewController?) {
-    channel = FlutterMethodChannel(name: "buzz/confirmation_dialog", binaryMessenger: messenger)
+    channel = FlutterMethodChannel(name: "corevia-talk/confirmation_dialog", binaryMessenger: messenger)
     parent = parentViewController
     super.init()
     channel.setMethodCallHandler { [weak self] call, result in

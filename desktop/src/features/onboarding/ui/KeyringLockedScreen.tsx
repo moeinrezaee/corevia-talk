@@ -35,7 +35,7 @@ export function KeyringLockedScreen() {
 
   return (
     <div
-      className="buzz-onboarding-neutral-theme buzz-startup-shell flex items-center justify-center bg-background px-4 py-8 text-foreground"
+      className="corevia-talk-onboarding-neutral-theme corevia-talk-startup-shell flex items-center justify-center bg-background px-4 py-8 text-foreground"
       data-system-color-scheme={systemColorScheme}
       data-testid="keyring-locked"
     >
@@ -46,7 +46,7 @@ export function KeyringLockedScreen() {
         </h1>
         <p className="mt-3 text-sm leading-6 text-muted-foreground">
           {tl(
-            "Your identity is safe in the OS keyring, but it's unreachable this session. Unlock your keyring or sign into your desktop session, then relaunch Buzz.",
+            "Your identity is safe in the OS keyring, but it's unreachable this session. Unlock your keyring or sign into your desktop session, then relaunch Corevia Talk.",
           )}
         </p>
 
@@ -66,7 +66,7 @@ export function KeyringLockedScreen() {
               }}
               type="button"
             >
-              {tl("Relaunch Buzz")}
+              {tl("Relaunch Corevia Talk")}
             </Button>
             <Button
               className="h-10 w-full"

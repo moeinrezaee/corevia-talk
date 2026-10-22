@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:buzz/features/channels/composer_send_origin.dart';
+import 'package:corevia_talk/features/channels/composer_send_origin.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math' as math;
@@ -14,30 +14,30 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart' as http_testing;
 import 'package:image_picker/image_picker.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'package:nostr/nostr.dart' as nostr;
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channel_management_provider.dart';
-import 'package:buzz/features/channels/compose_bar.dart';
-import 'package:buzz/features/channels/mentions/mention_candidates_provider.dart';
-import 'package:buzz/features/channels/send_message_provider.dart';
-import 'package:buzz/features/channels/channels_provider.dart';
-import 'package:buzz/features/channels/photo_library.dart';
-import 'package:buzz/features/channels/voice_note_play_pause_icon.dart';
-import 'package:buzz/features/channels/voice_note_recording.dart';
-import 'package:buzz/features/channels/voice_note_waveform.dart';
-import 'package:buzz/shared/custom_emoji/custom_emoji.dart';
-import 'package:buzz/shared/custom_emoji/custom_emoji_provider.dart';
-import 'package:buzz/shared/mentions/agent_identity_provider.dart';
-import 'package:buzz/shared/relay/relay.dart';
-import 'package:buzz/shared/profile/user_cache_provider.dart';
-import 'package:buzz/shared/profile/user_profile.dart';
-import 'package:buzz/shared/i18n/app_language.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/utils/string_utils.dart';
-import 'package:buzz/shared/widgets/anchored_popover_menu.dart';
-import 'package:buzz/shared/widgets/avatar_image.dart';
-import 'package:buzz/shared/widgets/mobile_tab_footer_backdrop.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channel_management_provider.dart';
+import 'package:corevia_talk/features/channels/compose_bar.dart';
+import 'package:corevia_talk/features/channels/mentions/mention_candidates_provider.dart';
+import 'package:corevia_talk/features/channels/send_message_provider.dart';
+import 'package:corevia_talk/features/channels/channels_provider.dart';
+import 'package:corevia_talk/features/channels/photo_library.dart';
+import 'package:corevia_talk/features/channels/voice_note_play_pause_icon.dart';
+import 'package:corevia_talk/features/channels/voice_note_recording.dart';
+import 'package:corevia_talk/features/channels/voice_note_waveform.dart';
+import 'package:corevia_talk/shared/custom_emoji/custom_emoji.dart';
+import 'package:corevia_talk/shared/custom_emoji/custom_emoji_provider.dart';
+import 'package:corevia_talk/shared/mentions/agent_identity_provider.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/profile/user_cache_provider.dart';
+import 'package:corevia_talk/shared/profile/user_profile.dart';
+import 'package:corevia_talk/shared/i18n/app_language.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/utils/string_utils.dart';
+import 'package:corevia_talk/shared/widgets/anchored_popover_menu.dart';
+import 'package:corevia_talk/shared/widgets/avatar_image.dart';
+import 'package:corevia_talk/shared/widgets/mobile_tab_footer_backdrop.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'compose_bar_test/exact_mention_tests.dart';
@@ -145,9 +145,9 @@ List<int> _testPngChunk(String type, List<int> payload) {
   ];
 }
 
-const _mediaUploadPlatformChannel = MethodChannel('buzz/media_upload');
+const _mediaUploadPlatformChannel = MethodChannel('corevia-talk/media_upload');
 const _nativeAttachmentPopoverChannel = MethodChannel(
-  'buzz/native_attachment_popover',
+  'corevia-talk/native_attachment_popover',
 );
 
 void _setMockMediaUploadPlatformHandler(
@@ -717,7 +717,7 @@ void main() {
 
       expect(find.byType(TextField), findsNothing);
       expect(find.byTooltip('Add attachment').hitTestable(), findsOneWidget);
-      expect(find.byIcon(BuzzIcons.arrowUp).hitTestable(), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.arrowUp).hitTestable(), findsOneWidget);
       expect(find.byKey(const ValueKey('composer-footer-gradient')), findsOne);
       final composerBackdrop = find.descendant(
         of: find.byKey(const ValueKey('composer-footer-gradient')),
@@ -772,10 +772,10 @@ void main() {
         BorderRadius.circular(Radii.dialog),
       );
       expect(find.byType(TextField), findsOneWidget);
-      expect(find.byIcon(BuzzIcons.atSign), findsOneWidget);
-      expect(find.byIcon(BuzzIcons.hash), findsOneWidget);
-      expect(find.byIcon(BuzzIcons.smilePlus), findsOneWidget);
-      expect(find.byIcon(BuzzIcons.aLargeSmall), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.atSign), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.hash), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.smilePlus), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.aLargeSmall), findsOneWidget);
     });
 
     testWidgets('aligns typed text by UI mode and orders runs by script', (
@@ -1201,7 +1201,7 @@ void main() {
 
       final sendButton = find
           .ancestor(
-            of: find.byIcon(BuzzIcons.arrowUp),
+            of: find.byIcon(CoreviaTalkIcons.arrowUp),
             matching: find.byType(IconButton),
           )
           .hitTestable();
@@ -1228,7 +1228,7 @@ void main() {
       await _expandComposer(tester);
       await tester.enterText(find.byType(TextField), 'hello');
       await tester.pumpAndSettle();
-      await tester.tap(find.byIcon(BuzzIcons.arrowUp));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.arrowUp));
       for (var i = 0; i < 20; i++) {
         await tester.pump(const Duration(milliseconds: 20));
         if (tester
@@ -1265,7 +1265,7 @@ void main() {
       await _expandComposer(tester);
       await tester.enterText(find.byType(TextField), 'retry me');
       await tester.pumpAndSettle();
-      await tester.tap(find.byIcon(BuzzIcons.arrowUp));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.arrowUp));
       for (var i = 0; i < 20; i++) {
         await tester.pump(const Duration(milliseconds: 20));
         if (tester
@@ -1304,7 +1304,7 @@ void main() {
       await _expandComposer(tester);
       await tester.enterText(find.byType(TextField), 'first draft');
       await tester.pumpAndSettle();
-      await tester.tap(find.byIcon(BuzzIcons.arrowUp));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.arrowUp));
       for (var i = 0; i < 20; i++) {
         await tester.pump(const Duration(milliseconds: 20));
         if (tester
@@ -1534,9 +1534,9 @@ void main() {
         offset: 6,
       );
 
-      await tester.tap(find.byIcon(BuzzIcons.smilePlus));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.smilePlus));
       await tester.pumpAndSettle();
-      await tester.tap(find.byIcon(BuzzIcons.sparkles));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.sparkles));
       await tester.pump();
       await tester.tap(find.byTooltip(':meow:'));
       await tester.pumpAndSettle();
@@ -1667,14 +1667,14 @@ void main() {
       await _expandComposer(tester);
       hapticCalls.clear();
 
-      await tester.tap(find.byIcon(BuzzIcons.atSign));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.atSign));
       tester.widget<TextField>(find.byType(TextField)).controller!.clear();
       await tester.pump();
-      await tester.tap(find.byIcon(BuzzIcons.hash));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.hash));
       await tester.pump();
-      await tester.tap(find.byIcon(BuzzIcons.aLargeSmall));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.aLargeSmall));
       await tester.pumpAndSettle();
-      await tester.tap(find.byIcon(BuzzIcons.bold));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.bold));
       await tester.pump();
       await tester.tap(find.byTooltip('Close formatting'));
       await tester.pumpAndSettle();
@@ -1706,7 +1706,7 @@ void main() {
         ),
       );
       await _expandComposer(tester);
-      await tester.tap(find.byIcon(BuzzIcons.hash));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.hash));
       await tester.pumpAndSettle();
 
       final surface = find.byKey(const ValueKey('channel-suggestions-popover'));
@@ -1772,7 +1772,7 @@ void main() {
       );
 
       await _expandComposer(tester);
-      await tester.tap(find.byIcon(BuzzIcons.atSign));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.atSign));
       await tester.pump();
 
       expect(pendingMembers.isCompleted, isFalse);
@@ -2708,7 +2708,7 @@ void main() {
       expect(find.byTooltip('Remove attachment'), findsOneWidget);
 
       await _expandComposer(tester);
-      await tester.tap(find.byIcon(BuzzIcons.arrowUp));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.arrowUp));
       await tester.pump();
       await tester.pumpAndSettle();
 
@@ -2779,7 +2779,7 @@ void main() {
       expect(find.byTooltip('Remove attachment'), findsNWidgets(2));
 
       await _expandComposer(tester);
-      await tester.tap(find.byIcon(BuzzIcons.arrowUp));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.arrowUp));
       await tester.pumpAndSettle();
 
       expect(
@@ -3266,7 +3266,7 @@ void main() {
       await tester.tap(
         find
             .ancestor(
-              of: find.byIcon(BuzzIcons.arrowUp),
+              of: find.byIcon(CoreviaTalkIcons.arrowUp),
               matching: find.byType(IconButton),
             )
             .hitTestable(),
@@ -3341,7 +3341,7 @@ void main() {
         );
 
         await _expandComposer(tester);
-        await tester.tap(find.byIcon(BuzzIcons.arrowUp));
+        await tester.tap(find.byIcon(CoreviaTalkIcons.arrowUp));
         await tester.pump();
 
         expect(
@@ -3474,7 +3474,7 @@ void main() {
       await tester.tap(find.text('Helper Bot'));
       await tester.pumpAndSettle();
       await tester.enterText(find.byType(TextField), 'hello @Helper Bot');
-      await tester.tap(find.byIcon(BuzzIcons.arrowUp));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.arrowUp));
       await _inviteOutside(tester);
       await tester.pumpAndSettle();
 
@@ -3607,7 +3607,7 @@ void main() {
         await tester.tap(find.text('Helper Bot'));
         await tester.pumpAndSettle();
         await tester.enterText(find.byType(TextField), 'hello @Helper Bot');
-        await tester.tap(find.byIcon(BuzzIcons.arrowUp));
+        await tester.tap(find.byIcon(CoreviaTalkIcons.arrowUp));
         await _inviteOutside(tester);
         await tester.pump();
 
@@ -3724,11 +3724,11 @@ void main() {
       final id = 'cd' * 32;
       const channelId = '580ca78b-9dae-46f3-8854-bd671853ba32';
       final urls = [
-        'buzz://message?channel=$channelId&id=$id',
-        'buzz://channel/$channelId',
-        'buzz://repo?owner=$owner&d=buzz',
-        'buzz://pr?id=$id&owner=$owner&d=buzz',
-        'buzz://issue?id=$id&owner=$owner&d=buzz',
+        'corevia-talk://message?channel=$channelId&id=$id',
+        'corevia-talk://channel/$channelId',
+        'corevia-talk://repo?owner=$owner&d=corevia-talk',
+        'corevia-talk://pr?id=$id&owner=$owner&d=corevia-talk',
+        'corevia-talk://issue?id=$id&owner=$owner&d=corevia-talk',
       ];
       await tester.pumpWidget(
         _buildComposeBar(
@@ -3759,27 +3759,27 @@ void main() {
           (widget) =>
               widget.key is ValueKey<String> &&
               (widget.key! as ValueKey<String>).value.startsWith(
-                'composer-buzz-link-chip:',
+                'composer-corevia-talk-link-chip:',
               ),
         ),
         findsNWidgets(5),
       );
       expect(
         find.byKey(
-          const ValueKey('composer-buzz-link-chip:engineering · cdcdcdcd'),
+          const ValueKey('composer-corevia-talk-link-chip:engineering · cdcdcdcd'),
         ),
         findsOneWidget,
       );
       expect(
-        find.byKey(const ValueKey('composer-buzz-link-chip:engineering')),
+        find.byKey(const ValueKey('composer-corevia-talk-link-chip:engineering')),
         findsOneWidget,
       );
       expect(
-        find.byKey(const ValueKey('composer-buzz-link-chip:buzz')),
+        find.byKey(const ValueKey('composer-corevia-talk-link-chip:corevia-talk')),
         findsOneWidget,
       );
       expect(
-        find.byKey(const ValueKey('composer-buzz-link-chip:buzz · cdcdcdcd')),
+        find.byKey(const ValueKey('composer-corevia-talk-link-chip:corevia-talk · cdcdcdcd')),
         findsNWidgets(2),
       );
       expect(
@@ -3792,7 +3792,7 @@ void main() {
       tester,
     ) async {
       final owner = 'ab' * 32;
-      final url = 'buzz://repo?owner=$owner&d=my_repo';
+      final url = 'corevia-talk://repo?owner=$owner&d=my_repo';
       final source = '**$url**';
       await tester.pumpWidget(
         _buildComposeBar(
@@ -3806,11 +3806,11 @@ void main() {
       await tester.pump();
 
       expect(
-        find.byKey(const ValueKey('composer-buzz-link-chip:my_repo')),
+        find.byKey(const ValueKey('composer-corevia-talk-link-chip:my_repo')),
         findsOneWidget,
       );
       expect(
-        find.byKey(const ValueKey('composer-buzz-link-chip:my')),
+        find.byKey(const ValueKey('composer-corevia-talk-link-chip:my')),
         findsNothing,
       );
       expect(
@@ -3835,10 +3835,10 @@ void main() {
       );
 
       await _expandComposer(tester);
-      await tester.tap(find.byIcon(BuzzIcons.aLargeSmall));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.aLargeSmall));
       await tester.pumpAndSettle();
 
-      final boldFinder = find.byIcon(BuzzIcons.bold);
+      final boldFinder = find.byIcon(CoreviaTalkIcons.bold);
       final boldIcon = tester.widget<Icon>(boldFinder);
       final colors = tester.element(boldFinder).colors;
       expect(boldIcon.color, colors.primary);
@@ -3922,7 +3922,7 @@ void main() {
         findsOneWidget,
       );
 
-      await tester.tap(find.byIcon(BuzzIcons.arrowUp));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.arrowUp));
       await tester.pumpAndSettle();
 
       expect(uploadedBytes, _pngBytes);
@@ -4353,7 +4353,7 @@ void main() {
       await tester.pumpAndSettle();
       await _expandComposer(tester);
       await tester.enterText(find.byType(TextField), 'Keep this draft');
-      await tester.tap(find.byIcon(BuzzIcons.arrowUp));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.arrowUp));
       await tester.pumpAndSettle();
 
       expect(find.textContaining('upload failed'), findsOneWidget);
@@ -4398,7 +4398,7 @@ void main() {
         await _openSystemPhotoPicker(tester);
         await tester.pumpAndSettle();
         await _expandComposer(tester);
-        await tester.tap(find.byIcon(BuzzIcons.arrowUp));
+        await tester.tap(find.byIcon(CoreviaTalkIcons.arrowUp));
         await tester.pumpAndSettle();
 
         expect(
@@ -4507,13 +4507,13 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('Helper Bot'));
       await tester.pumpAndSettle();
-      expect(find.byIcon(BuzzIcons.bot), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.bot), findsOneWidget);
       expect(
         find.byKey(const ValueKey('composer-agent-mention-chip')),
         findsOneWidget,
       );
       await tester.enterText(find.byType(TextField), 'hello @Helper Bot');
-      await tester.tap(find.byIcon(BuzzIcons.arrowUp));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.arrowUp));
       await _inviteOutside(tester);
       await tester.pumpAndSettle();
 
@@ -4582,7 +4582,7 @@ void main() {
       await tester.tap(find.text('Helper Bot'));
       await tester.pumpAndSettle();
       await tester.enterText(find.byType(TextField), 'hello @Helper Bot');
-      await tester.tap(find.byIcon(BuzzIcons.arrowUp));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.arrowUp));
       await _inviteOutside(tester);
       await tester.pump();
 
@@ -4692,7 +4692,7 @@ void main() {
         await tester.tap(find.text('Mary Jane'));
         await tester.pumpAndSettle();
         await tester.enterText(find.byType(TextField), 'hello @Mary Jane');
-        await tester.tap(find.byIcon(BuzzIcons.arrowUp));
+        await tester.tap(find.byIcon(CoreviaTalkIcons.arrowUp));
         await tester.pumpAndSettle();
       }
 
@@ -4962,7 +4962,7 @@ void main() {
       await tester.tap(find.text('Helper Bot'));
       await tester.pumpAndSettle();
       await tester.enterText(find.byType(TextField), 'hello @Helper Bot');
-      await tester.tap(find.byIcon(BuzzIcons.arrowUp));
+      await tester.tap(find.byIcon(CoreviaTalkIcons.arrowUp));
       await tester.pump();
 
       expect(didSend, isFalse);
@@ -5038,7 +5038,7 @@ void main() {
         await tester.tap(find.text('Helper Bot'));
         await tester.pumpAndSettle();
         await tester.enterText(find.byType(TextField), 'hello @Helper Bot');
-        await tester.tap(find.byIcon(BuzzIcons.arrowUp));
+        await tester.tap(find.byIcon(CoreviaTalkIcons.arrowUp));
         await _inviteOutside(tester);
         await tester.pumpAndSettle();
 
@@ -5127,11 +5127,11 @@ void main() {
       await tester.tap(find.text('Video'));
       await tester.pumpAndSettle();
 
-      expect(find.byIcon(BuzzIcons.video), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.video), findsOneWidget);
 
       final sendButton = find
           .ancestor(
-            of: find.byIcon(BuzzIcons.arrowUp),
+            of: find.byIcon(CoreviaTalkIcons.arrowUp),
             matching: find.byType(IconButton),
           )
           .hitTestable();
@@ -5202,7 +5202,7 @@ void main() {
       );
       expect(find.byKey(const ValueKey('voice-note-waveform')), findsOneWidget);
       expect(find.byType(TextField), findsNothing);
-      expect(find.byIcon(BuzzIcons.arrowUp), findsNothing);
+      expect(find.byIcon(CoreviaTalkIcons.arrowUp), findsNothing);
       expect(find.byTooltip('Add attachment'), findsNothing);
 
       final recordingWidth = tester
@@ -5350,7 +5350,7 @@ void main() {
       );
       final sendButton = find
           .ancestor(
-            of: find.byIcon(BuzzIcons.arrowUp),
+            of: find.byIcon(CoreviaTalkIcons.arrowUp),
             matching: find.byType(IconButton),
           )
           .hitTestable();
@@ -5664,7 +5664,7 @@ void main() {
         await tester.pumpAndSettle();
         final sendButton = find
             .ancestor(
-              of: find.byIcon(BuzzIcons.arrowUp),
+              of: find.byIcon(CoreviaTalkIcons.arrowUp),
               matching: find.byType(IconButton),
             )
             .hitTestable();
@@ -6098,7 +6098,7 @@ Future<void> _selectAndSendAgentMention(WidgetTester tester) async {
   await tester.tap(find.text('Helper Bot'));
   await tester.pumpAndSettle();
   await tester.enterText(find.byType(TextField), 'hello @Helper Bot');
-  await tester.tap(find.byIcon(BuzzIcons.arrowUp));
+  await tester.tap(find.byIcon(CoreviaTalkIcons.arrowUp));
   await tester.pumpAndSettle();
 }
 

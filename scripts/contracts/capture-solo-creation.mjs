@@ -1,5 +1,5 @@
 // Capture the current desktop's production create call, without a relay write.
-// Usage: node --experimental-transform-types scripts/contracts/capture-solo-creation.mjs /path/to/buzz-app
+// Usage: node --experimental-transform-types scripts/contracts/capture-solo-creation.mjs /path/to/corevia-talk-app
 import { registerHooks } from "node:module";
 import { pathToFileURL } from "node:url";
 import { resolve } from "node:path";
@@ -44,7 +44,7 @@ createChannelWrites(
 ).create("11111111-1111-4111-8111-111111111111", "Desktop Solo");
 assert.equal(creation.kind, 9007);
 assert.ok(
-  creation.tags.some(([key, value]) => key === "t" && value === "buzz.solo"),
+  creation.tags.some(([key, value]) => key === "t" && value === "corevia-talk.solo"),
 );
 console.log(
   JSON.stringify(
@@ -57,7 +57,7 @@ console.log(
       creator: "11".repeat(32),
       identity_tags: [
         ["t", "stream"],
-        ["t", "buzz.solo"],
+        ["t", "corevia-talk.solo"],
         ["P", "11".repeat(32)],
       ],
     },

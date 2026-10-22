@@ -1,14 +1,14 @@
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channel_management_provider.dart';
-import 'package:buzz/features/channels/channels_provider.dart';
-import 'package:buzz/features/channels/message_content.dart';
-import 'package:buzz/features/profile/profile_provider.dart';
-import 'package:buzz/features/search/recent_searches_provider.dart';
-import 'package:buzz/features/search/search_page.dart';
-import 'package:buzz/features/search/search_provider.dart';
-import 'package:buzz/shared/mentions/agent_identity_provider.dart';
-import 'package:buzz/shared/profile/user_cache_provider.dart';
-import 'package:buzz/shared/profile/user_profile.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channel_management_provider.dart';
+import 'package:corevia_talk/features/channels/channels_provider.dart';
+import 'package:corevia_talk/features/channels/message_content.dart';
+import 'package:corevia_talk/features/profile/profile_provider.dart';
+import 'package:corevia_talk/features/search/recent_searches_provider.dart';
+import 'package:corevia_talk/features/search/search_page.dart';
+import 'package:corevia_talk/features/search/search_provider.dart';
+import 'package:corevia_talk/shared/mentions/agent_identity_provider.dart';
+import 'package:corevia_talk/shared/profile/user_cache_provider.dart';
+import 'package:corevia_talk/shared/profile/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

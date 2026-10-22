@@ -59,7 +59,7 @@ enum HostedFlowProblem {
 /// Implementations must check [isCurrent] immediately before durable mutations.
 typedef HostedCommunityAdmission =
     Future<void> Function(
-      BuzzDeepLink target,
+      CoreviaTalkDeepLink target,
       String subject,
       String pubkey,
       bool Function() isCurrent,
@@ -91,7 +91,7 @@ class HostedFlow extends ChangeNotifier {
   HostedFlowStage stage = HostedFlowStage.idle;
   HostedFlowProblem? problem;
   List<DeviceIdentityChoice> identityChoices = const [];
-  BuzzDeepLink? _target;
+  CoreviaTalkDeepLink? _target;
   bool accountOnly = false;
   String? _pairedPubkey;
   SensitiveActionPolicy? pairedSensitiveActionPolicy;
@@ -356,14 +356,14 @@ class HostedFlow extends ChangeNotifier {
         : null;
   }
 
-  Map<String, String> _intent(BuzzDeepLink target) => {
+  Map<String, String> _intent(CoreviaTalkDeepLink target) => {
     ..._encode(target),
     'paired_pubkey': ?_pairedPubkey,
     if (pairedSensitiveActionPolicy == SensitiveActionPolicy.enabled)
       'paired_protection': 'enabled',
   };
 
-  Future<void> start(BuzzDeepLink target, {bool resumePairing = false}) {
+  Future<void> start(CoreviaTalkDeepLink target, {bool resumePairing = false}) {
     if (!resumePairing) {
       _pairedPubkey = null;
       pairedSensitiveActionPolicy = null;
@@ -460,18 +460,18 @@ class HostedFlow extends ChangeNotifier {
         if (resolved.state == HostedIdentityState.needsBinding &&
             resolved.pubkey != null) {
           final response = await account.post(
-            '/v1/buzz/nostr-identities/challenge',
+            '/v1/corevia-talk/nostr-identities/challenge',
             {'origin': HostedEnvironment.origin.toString()},
           );
           if (_disposed || generation != _generation) return;
           final fields = <String, String>{
-            'audience': 'buzz:nostr-identity',
+            'audience': 'corevia-talk:nostr-identity',
             'action': 'bind_nostr_identity',
-            'protocol': 'buzz-nostr-identity',
+            'protocol': 'corevia-talk-nostr-identity',
             'version': '1',
             'return': 'browser_fragment_v1',
             'callback_url': HostedEnvironment.origin
-                .resolve('/buzz')
+                .resolve('/corevia-talk')
                 .toString(),
           };
           for (final key in [
@@ -486,7 +486,7 @@ class HostedFlow extends ChangeNotifier {
             fields[key] = value;
           }
           final request = parseNostrBindDeepLink(
-            Uri(scheme: 'buzz', host: 'nostr-bind', queryParameters: fields),
+            Uri(scheme: 'corevia-talk', host: 'nostr-bind', queryParameters: fields),
           );
           if (response['error'] != null || request == null) {
             throw AccountFailure.invalidResponse;
@@ -673,7 +673,7 @@ class HostedFlow extends ChangeNotifier {
     if (current()) _set(HostedFlowStage.complete);
   }
 
-  bool _acceptTarget(BuzzDeepLink target) {
+  bool _acceptTarget(CoreviaTalkDeepLink target) {
     final relay = target.relayUrl;
     if (relay != null && !HostedEnvironment.supportsRelay(Uri.parse(relay))) {
       _set(HostedFlowStage.blocked, HostedFlowProblem.unsupportedEnvironment);
@@ -691,7 +691,7 @@ class HostedFlow extends ChangeNotifier {
     if (account.account?.subject != subject) {
       throw AccountFailure.differentAccount;
     }
-    final response = await account.post('/v1/buzz/nostr-identities/verify', {
+    final response = await account.post('/v1/corevia-talk/nostr-identities/verify', {
       'challenge_id': challengeId,
       'nonce': nonce,
       'signed_payload': signedPayload,
@@ -800,7 +800,7 @@ class HostedFlow extends ChangeNotifier {
     }
   }
 
-  static Map<String, String> _encode(BuzzDeepLink target) {
+  static Map<String, String> _encode(CoreviaTalkDeepLink target) {
     if (target is HostedCreateCommunity) {
       return {'type': 'create', 'name': target.name};
     }
@@ -817,7 +817,7 @@ class HostedFlow extends ChangeNotifier {
     };
   }
 
-  static BuzzDeepLink? _decode(Map<String, String> intent) {
+  static CoreviaTalkDeepLink? _decode(Map<String, String> intent) {
     if (intent['type'] == 'create') {
       final name = intent['name'];
       return name != null && HostedCreateCommunity.validName(name)
@@ -834,8 +834,8 @@ class HostedFlow extends ChangeNotifier {
       'invite' => 'join',
       _ => '',
     };
-    return parseBuzzDeepLink(
-      Uri(scheme: 'buzz', host: host, queryParameters: fields),
+    return parseCoreviaTalkDeepLink(
+      Uri(scheme: 'corevia-talk', host: host, queryParameters: fields),
     );
   }
 

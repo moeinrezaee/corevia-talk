@@ -1,14 +1,14 @@
-import 'buzz_theme.dart';
+import 'corevia_talk_theme.dart';
 import 'theme_catalog.dart';
 
 /// Light → dark theme counterparts, ported from the desktop app's `THEME_PAIRS`
 /// (`desktop/src/shared/theme/theme-loader.ts`) so both clients offer the same
 /// System-mode pairings.
 ///
-/// Buzz leads the map the way it leads desktop's, so the first-party pair sorts
+/// Corevia Talk leads the map the way it leads desktop's, so the first-party pair sorts
 /// ahead of the borrowed syntax themes wherever insertion order is preserved.
 const themePairs = <String, String>{
-  'buzz': 'buzz-dark',
+  'corevia-talk': 'corevia-talk-dark',
   'catppuccin-latte': 'catppuccin-mocha',
   'everforest-light': 'everforest-dark',
   'github-light': 'github-dark',
@@ -60,7 +60,7 @@ class ThemeGroups {
 
 ThemeGroups? _groups;
 
-/// [themeCatalog] grouped for the appearance picker. Buzz is always first;
+/// [themeCatalog] grouped for the appearance picker. Corevia Talk is always first;
 /// borrowed themes follow in display-name order. Computed once — the catalog
 /// is a compile-time constant.
 ThemeGroups themeGroups() {
@@ -81,9 +81,9 @@ ThemeGroups themeGroups() {
   }
 
   int byPickerOrder(ThemeColors a, ThemeColors b) {
-    final aIsBuzz = isBuzzTheme(a.name);
-    final bIsBuzz = isBuzzTheme(b.name);
-    if (aIsBuzz != bIsBuzz) return aIsBuzz ? -1 : 1;
+    final aIsCoreviaTalk = isCoreviaTalkTheme(a.name);
+    final bIsCoreviaTalk = isCoreviaTalkTheme(b.name);
+    if (aIsCoreviaTalk != bIsCoreviaTalk) return aIsCoreviaTalk ? -1 : 1;
     return a.displayName.compareTo(b.displayName);
   }
 

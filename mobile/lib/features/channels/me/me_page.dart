@@ -22,10 +22,10 @@ import '../../../shared/relay/relay.dart';
 import '../../../shared/me/me_recovery.dart';
 import '../../../shared/me/me_assistants.dart';
 import '../../../shared/theme/theme.dart';
-import '../../../shared/theme/buzz_icons.dart';
+import '../../../shared/theme/corevia_talk_icons.dart';
 import '../../../shared/widgets/frosted_app_bar.dart';
 import '../../../shared/widgets/frosted_scaffold.dart';
-import '../../../shared/widgets/buzz_loading_indicator.dart';
+import '../../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../../shared/widgets/modal_presentation.dart';
 import '../channel.dart';
 import '../channel_detail_page.dart';
@@ -138,13 +138,13 @@ class MePage extends HookConsumerWidget {
           IosNavigationAction(
             label: 'New project',
             symbol: 'folder.badge.plus',
-            icon: BuzzIcons.folderPlus,
+            icon: CoreviaTalkIcons.folderPlus,
             onPressed: newProject,
           ),
           if (newChatAction == null)
             IosNavigationAction(
               label: 'New chat',
-              icon: BuzzIcons.edit,
+              icon: CoreviaTalkIcons.edit,
               onPressed: newChat,
             ),
         ],
@@ -165,13 +165,13 @@ class MePage extends HookConsumerWidget {
                   children: [
                     IconButton(
                       tooltip: 'New project',
-                      icon: const Icon(BuzzIcons.folderPlus, size: 20),
+                      icon: const Icon(CoreviaTalkIcons.folderPlus, size: 20),
                       onPressed: newProject,
                     ),
                     if (newChatAction == null)
                       IconButton(
                         tooltip: 'New chat',
-                        icon: const Icon(BuzzIcons.edit, size: 20),
+                        icon: const Icon(CoreviaTalkIcons.edit, size: 20),
                         onPressed: newChat,
                       ),
                   ],
@@ -184,11 +184,11 @@ class MePage extends HookConsumerWidget {
         bottom: const SizedBox.expand(),
       ),
       body: groups.when(
-        loading: () => const Center(child: BuzzLoadingIndicator()),
+        loading: () => const Center(child: CoreviaTalkLoadingIndicator()),
         error: (_, _) =>
             _MeRetry(onRetry: () => ref.invalidate(meGroupsProvider)),
         data: (organization) => channels.when(
-          loading: () => const Center(child: BuzzLoadingIndicator()),
+          loading: () => const Center(child: CoreviaTalkLoadingIndicator()),
           error: (_, _) =>
               _MeRetry(onRetry: () => ref.invalidate(channelsProvider)),
           data: (all) {
@@ -273,7 +273,7 @@ class MePage extends HookConsumerWidget {
                         for (final group in organization.groups)
                           MeSection(
                             key: ValueKey(group['id']),
-                            icon: BuzzIcons.folder,
+                            icon: CoreviaTalkIcons.folder,
                             label: group['name'] as String,
                             hasUnread: visible.any(
                               (c) =>
@@ -302,7 +302,7 @@ class MePage extends HookConsumerWidget {
                             organization.groups.isNotEmpty)
                           MeSection(
                             key: const ValueKey('me-ungrouped-chats'),
-                            icon: BuzzIcons.messageCircle,
+                            icon: CoreviaTalkIcons.messageCircle,
                             label: 'Chats',
                             hasUnread: visible.any(
                               (c) =>

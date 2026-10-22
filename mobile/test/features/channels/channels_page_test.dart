@@ -1,7 +1,7 @@
-import 'package:buzz/features/home/home_page.dart';
-import 'package:buzz/shared/widgets/app_route_observer.dart';
-import 'package:buzz/features/pairing/pairing_provider.dart';
-import 'package:buzz/shared/community/paired_community_landing.dart';
+import 'package:corevia_talk/features/home/home_page.dart';
+import 'package:corevia_talk/shared/widgets/app_route_observer.dart';
+import 'package:corevia_talk/features/pairing/pairing_provider.dart';
+import 'package:corevia_talk/shared/community/paired_community_landing.dart';
 
 import 'dart:async';
 
@@ -14,9 +14,9 @@ import 'dart:math';
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:buzz/shared/widgets/buzz_sheet_header.dart';
+import 'package:corevia_talk/shared/widgets/corevia_talk_sheet_header.dart';
 import 'package:flutter/rendering.dart';
-import 'package:buzz/shared/community/community_membership_provider.dart';
+import 'package:corevia_talk/shared/community/community_membership_provider.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -24,37 +24,37 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hooks_riverpod/misc.dart';
-import 'package:buzz/features/channels/channel_stars/channel_stars_provider.dart';
-import 'package:buzz/features/channels/channel_mutes/channel_mutes_provider.dart';
-import 'package:buzz/features/channels/channel_sort/channel_sort_provider.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channel_management_provider.dart';
-import 'package:buzz/features/channels/channel_sections/channel_sections_provider.dart';
-import 'package:buzz/features/channels/channel_sections/channel_sections_storage.dart';
-import 'package:buzz/features/channels/channels_page.dart';
-import 'package:buzz/features/channels/channels_provider.dart';
-import 'package:buzz/shared/read_state/read_state_provider.dart';
-import 'package:buzz/features/channels/unread_badge/observed_unread_event.dart';
-import 'package:buzz/features/profile/profile_avatar.dart';
-import 'package:buzz/features/pairing/pairing_page.dart';
-import 'package:buzz/features/pairing/pairing_qr_scanner.dart';
-import 'package:buzz/features/profile/profile_provider.dart';
-import 'package:buzz/features/profile/presence_cache_provider.dart';
-import 'package:buzz/shared/profile/user_profile.dart';
-import 'package:buzz/shared/profile/user_cache_provider.dart';
-import 'package:buzz/shared/utils/string_utils.dart';
-import 'package:buzz/shared/auth/auth.dart';
-import 'package:buzz/shared/community/community_icon_provider.dart';
-import 'package:buzz/shared/relay/relay.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/widgets/avatar_image.dart';
-import 'package:buzz/shared/emoji/emoji_avatar.dart';
-import 'package:buzz/shared/widgets/buzz_loading_indicator.dart';
-import 'package:buzz/shared/widgets/frosted_app_bar.dart';
-import 'package:buzz/shared/widgets/ios_navigation_bar.dart';
-import 'package:buzz/shared/widgets/masked_avatar_badge.dart';
-import 'package:buzz/shared/widgets/skeleton.dart';
+import 'package:corevia_talk/features/channels/channel_stars/channel_stars_provider.dart';
+import 'package:corevia_talk/features/channels/channel_mutes/channel_mutes_provider.dart';
+import 'package:corevia_talk/features/channels/channel_sort/channel_sort_provider.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channel_management_provider.dart';
+import 'package:corevia_talk/features/channels/channel_sections/channel_sections_provider.dart';
+import 'package:corevia_talk/features/channels/channel_sections/channel_sections_storage.dart';
+import 'package:corevia_talk/features/channels/channels_page.dart';
+import 'package:corevia_talk/features/channels/channels_provider.dart';
+import 'package:corevia_talk/shared/read_state/read_state_provider.dart';
+import 'package:corevia_talk/features/channels/unread_badge/observed_unread_event.dart';
+import 'package:corevia_talk/features/profile/profile_avatar.dart';
+import 'package:corevia_talk/features/pairing/pairing_page.dart';
+import 'package:corevia_talk/features/pairing/pairing_qr_scanner.dart';
+import 'package:corevia_talk/features/profile/profile_provider.dart';
+import 'package:corevia_talk/features/profile/presence_cache_provider.dart';
+import 'package:corevia_talk/shared/profile/user_profile.dart';
+import 'package:corevia_talk/shared/profile/user_cache_provider.dart';
+import 'package:corevia_talk/shared/utils/string_utils.dart';
+import 'package:corevia_talk/shared/auth/auth.dart';
+import 'package:corevia_talk/shared/community/community_icon_provider.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/widgets/avatar_image.dart';
+import 'package:corevia_talk/shared/emoji/emoji_avatar.dart';
+import 'package:corevia_talk/shared/widgets/corevia_talk_loading_indicator.dart';
+import 'package:corevia_talk/shared/widgets/frosted_app_bar.dart';
+import 'package:corevia_talk/shared/widgets/ios_navigation_bar.dart';
+import 'package:corevia_talk/shared/widgets/masked_avatar_badge.dart';
+import 'package:corevia_talk/shared/widgets/skeleton.dart';
 
 import '../../helpers/thread_ids.dart';
 
@@ -68,7 +68,7 @@ void main() {
     if (Platform.environment.containsKey('COMMUNITY_SCREENSHOTS')) {
       for (final font in {
         'Inter': 'assets/fonts/InterVariable.ttf',
-        'BuzzTabler': 'assets/fonts/TablerIcons.ttf',
+        'CoreviaTalkTabler': 'assets/fonts/TablerIcons.ttf',
       }.entries) {
         await (FontLoader(
           font.key,
@@ -334,7 +334,7 @@ void main() {
     await tester.pumpAndSettle();
     final ellipsis = find.descendant(
       of: find.byTooltip('Channels options'),
-      matching: find.byIcon(BuzzIcons.ellipsisVertical),
+      matching: find.byIcon(CoreviaTalkIcons.ellipsisVertical),
     );
     expect(
       tester.getCenter(ellipsis).dx,
@@ -378,8 +378,8 @@ void main() {
     final privateIcon = find.byKey(
       const ValueKey('channel-icon-private-stream'),
     );
-    expect(tester.widget<Icon>(publicIcon).icon, BuzzIcons.hash);
-    expect(tester.widget<Icon>(privateIcon).icon, BuzzIcons.lock);
+    expect(tester.widget<Icon>(publicIcon).icon, CoreviaTalkIcons.hash);
+    expect(tester.widget<Icon>(privateIcon).icon, CoreviaTalkIcons.lock);
     expect(tester.getTopLeft(publicIcon).dx, tester.getTopLeft(privateIcon).dx);
     expect(find.text('private-solo'), findsNothing);
   });
@@ -437,8 +437,8 @@ void main() {
     expect(find.text('Community'), findsNothing);
     expect(find.byTooltip('Create or start conversation'), findsOneWidget);
     expect(find.byTooltip('Channels options'), findsOneWidget);
-    expect(find.byIcon(BuzzIcons.ellipsisVertical), findsWidgets);
-    expect(find.byIcon(BuzzIcons.arrowUpDown), findsNothing);
+    expect(find.byIcon(CoreviaTalkIcons.ellipsisVertical), findsWidgets);
+    expect(find.byIcon(CoreviaTalkIcons.arrowUpDown), findsNothing);
     expect(find.byTooltip('DMs options'), findsOneWidget);
 
     // DM identity display: the unnamed counterpart tile renders its
@@ -466,7 +466,7 @@ void main() {
           .getTopRight(
             find.descendant(
               of: find.byTooltip('Channels options'),
-              matching: find.byIcon(BuzzIcons.ellipsisVertical),
+              matching: find.byIcon(CoreviaTalkIcons.ellipsisVertical),
             ),
           )
           .dx,
@@ -737,7 +737,7 @@ void main() {
     );
   });
 
-  testWidgets('keeps the Buzz background fixed behind the channels list', (
+  testWidgets('keeps the Corevia Talk background fixed behind the channels list', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -1124,7 +1124,7 @@ void main() {
         .first;
     final chevron = find.descendant(
       of: sectionRow,
-      matching: find.byIcon(BuzzIcons.chevronDown),
+      matching: find.byIcon(CoreviaTalkIcons.chevronDown),
     );
     expect(
       tester.getTopLeft(chevron).dx -
@@ -1142,7 +1142,7 @@ void main() {
           .getTopRight(
             find.descendant(
               of: find.byKey(const Key('section-menu-section-1')),
-              matching: find.byIcon(BuzzIcons.ellipsisVertical),
+              matching: find.byIcon(CoreviaTalkIcons.ellipsisVertical),
             ),
           )
           .dx,
@@ -1168,10 +1168,10 @@ void main() {
       );
     }
     for (final icon in [
-      BuzzIcons.pencil,
-      BuzzIcons.arrowUp,
-      BuzzIcons.arrowDown,
-      BuzzIcons.trash2,
+      CoreviaTalkIcons.pencil,
+      CoreviaTalkIcons.arrowUp,
+      CoreviaTalkIcons.arrowDown,
+      CoreviaTalkIcons.trash2,
     ]) {
       expect(
         find.descendant(of: popover, matching: find.byIcon(icon)),
@@ -1207,7 +1207,7 @@ void main() {
     final error = Theme.of(tester.element(popover)).colorScheme.error;
     final deleteText = tester.widget<Text>(find.text('Delete section'));
     final deleteIcon = tester.widget<Icon>(
-      find.descendant(of: popover, matching: find.byIcon(BuzzIcons.trash2)),
+      find.descendant(of: popover, matching: find.byIcon(CoreviaTalkIcons.trash2)),
     );
     expect(deleteText.style?.color, error);
     expect(deleteIcon.color, error);
@@ -1522,7 +1522,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(find.byType(BuzzSheetHeader), findsNothing);
+      expect(find.byType(CoreviaTalkSheetHeader), findsNothing);
       expect(find.text('Community settings'), findsOneWidget);
       expect(find.text('Invite'), findsOneWidget);
       expect(find.text('Appearance'), findsOneWidget);
@@ -1638,7 +1638,7 @@ void main() {
         (tester) async {
           debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
           addTearDown(() => debugDefaultTargetPlatformOverride = null);
-          const channel = MethodChannel('buzz/confirmation_dialog');
+          const channel = MethodChannel('corevia-talk/confirmation_dialog');
           final answer = Completer<bool>();
           final calls = <MethodCall>[];
           tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
@@ -1835,12 +1835,12 @@ void main() {
     expect(
       find.descendant(
         of: options,
-        matching: find.byIcon(BuzzIcons.ellipsisVertical),
+        matching: find.byIcon(CoreviaTalkIcons.ellipsisVertical),
       ),
       findsNothing,
     );
     expect(find.text('Edit'), findsOneWidget);
-    expect(find.byIcon(BuzzIcons.trash2), findsNothing);
+    expect(find.byIcon(CoreviaTalkIcons.trash2), findsNothing);
     expect(
       tester.getSize(find.byKey(const Key('community-switcher-avatar-alpha'))),
       const Size.square(88),
@@ -1879,14 +1879,14 @@ void main() {
     expect(
       find.descendant(
         of: activeSelection,
-        matching: find.byIcon(BuzzIcons.check),
+        matching: find.byIcon(CoreviaTalkIcons.check),
       ),
       findsOneWidget,
     );
     expect(
       find.descendant(
         of: inactiveSelection,
-        matching: find.byIcon(BuzzIcons.check),
+        matching: find.byIcon(CoreviaTalkIcons.check),
       ),
       findsNothing,
     );
@@ -1901,7 +1901,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Done'), findsOneWidget);
-    expect(find.byIcon(BuzzIcons.trash2), findsNWidgets(2));
+    expect(find.byIcon(CoreviaTalkIcons.trash2), findsNWidgets(2));
     expect(activeSelection, findsNothing);
     expect(inactiveSelection, findsNothing);
 
@@ -2069,7 +2069,7 @@ void main() {
           .transform
           .storage[0];
       expect(opacity(), 0);
-      expect(find.byIcon(BuzzIcons.check), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.check), findsOneWidget);
       await tester.tap(find.text('Edit'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 100));
@@ -2085,14 +2085,14 @@ void main() {
       await tester.pumpAndSettle();
       expect(tester.getCenter(badge), center);
       expect(opacity(), 0);
-      expect(find.byIcon(BuzzIcons.check), findsOneWidget);
-      expect(find.byIcon(BuzzIcons.trash2), findsNothing);
+      expect(find.byIcon(CoreviaTalkIcons.check), findsOneWidget);
+      expect(find.byIcon(CoreviaTalkIcons.trash2), findsNothing);
       await tester.tap(find.text('Edit'));
       await tester.pumpAndSettle();
       expect(tester.getCenter(badge), center);
       expect(opacity(), 1);
       expect(scale(), 1);
-      expect(find.byIcon(BuzzIcons.trash2), findsNWidgets(2));
+      expect(find.byIcon(CoreviaTalkIcons.trash2), findsNWidgets(2));
       expect(tester.takeException(), isNull);
     },
   );
@@ -2138,7 +2138,7 @@ void main() {
     await tester.tap(find.text('Edit'));
     await tester.pump();
 
-    expect(find.byIcon(BuzzIcons.trash2), findsOneWidget);
+    expect(find.byIcon(CoreviaTalkIcons.trash2), findsOneWidget);
     expect(
       tester.getSize(find.byKey(const Key('community-switcher-badge-alpha'))),
       const Size.square(36),
@@ -2410,7 +2410,7 @@ void main() {
           await tester.pump();
           expect(notifier.switchedIds, ['bravo']);
           final loader = find.byKey(const Key('community-switch-loading'));
-          final loadingIndicator = tester.widget<BuzzLoadingIndicator>(loader);
+          final loadingIndicator = tester.widget<CoreviaTalkLoadingIndicator>(loader);
           final loaderContext = tester.element(loader);
           expect(loadingIndicator.size, 18);
           expect(
@@ -2462,7 +2462,7 @@ void main() {
             expect(
               find.descendant(
                 of: find.byKey(Key('community-switcher-selection-$id')),
-                matching: find.byIcon(BuzzIcons.check),
+                matching: find.byIcon(CoreviaTalkIcons.check),
               ),
               id == 'alpha' ? findsOneWidget : findsNothing,
             );
@@ -3195,12 +3195,12 @@ void main() {
     await tester.tap(find.byKey(const Key('browse-channels-button')));
     await tester.pumpAndSettle();
 
-    expect(find.byType(BuzzLoadingIndicator), findsOneWidget);
+    expect(find.byType(CoreviaTalkLoadingIndicator), findsOneWidget);
 
     notifier.supersedeLoadingDirectory();
     await tester.pumpAndSettle();
 
-    expect(find.byType(BuzzLoadingIndicator), findsNothing);
+    expect(find.byType(CoreviaTalkLoadingIndicator), findsNothing);
     expect(find.text('Couldn’t load open channels.'), findsOneWidget);
     expect(find.byKey(const Key('browse-channels-retry')), findsOneWidget);
 
@@ -3484,7 +3484,7 @@ void main() {
       16,
     );
     expect(
-      find.descendant(of: aliceChip, matching: find.byIcon(BuzzIcons.x)),
+      find.descendant(of: aliceChip, matching: find.byIcon(CoreviaTalkIcons.x)),
       findsNothing,
     );
     expect(find.bySemanticsLabel('Remove Alice'), findsOneWidget);
@@ -3821,7 +3821,7 @@ void main() {
     );
     final options = find.descendant(
       of: find.byTooltip('Channels options'),
-      matching: find.byIcon(BuzzIcons.ellipsisVertical),
+      matching: find.byIcon(CoreviaTalkIcons.ellipsisVertical),
     );
     expect(tester.widget<Icon>(options).color, const Color(0xFFC7C7C7));
     expect(

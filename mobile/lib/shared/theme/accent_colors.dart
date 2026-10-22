@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../i18n/app_language.dart';
 
-/// Accent colors matching the desktop Buzz app.
+/// Accent colors matching the desktop Corevia Talk app.
 class AccentColor {
   final String name;
   final Color light;

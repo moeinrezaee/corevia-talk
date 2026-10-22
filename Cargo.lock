@@ -927,15 +927,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5d20789868f4b01b2f2caec9f5c4e0213b41e3e5702a50157d699ae31ced2fcb"
 
 [[package]]
-name = "buzz-acp"
+name = "corevia-talk-acp"
 version = "0.1.0"
 dependencies = [
  "anyhow",
  "axum",
  "base64 0.22.1",
- "buzz-core",
- "buzz-persona",
- "buzz-sdk",
+ "corevia-talk-core",
+ "corevia-talk-persona",
+ "corevia-talk-sdk",
  "chrono",
  "clap",
  "evalexpr",
@@ -965,19 +965,19 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-admin"
+name = "corevia-talk-admin"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "buzz-audit",
- "buzz-auth",
- "buzz-core",
- "buzz-db",
- "buzz-deletion",
- "buzz-media",
- "buzz-pubsub",
- "buzz-search",
- "buzz-workflow",
+ "corevia-talk-audit",
+ "corevia-talk-auth",
+ "corevia-talk-core",
+ "corevia-talk-db",
+ "corevia-talk-deletion",
+ "corevia-talk-media",
+ "corevia-talk-pubsub",
+ "corevia-talk-search",
+ "corevia-talk-workflow",
  "clap",
  "deadpool-redis",
  "hex",
@@ -993,7 +993,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-agent"
+name = "corevia-talk-agent"
 version = "0.1.0"
 dependencies = [
  "arc-swap",
@@ -1023,7 +1023,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-audio-client"
+name = "corevia-talk-audio-client"
 version = "0.1.0"
 dependencies = [
  "futures-util",
@@ -1035,12 +1035,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-audit"
+name = "corevia-talk-audit"
 version = "0.1.0"
 dependencies = [
- "buzz-core",
- "buzz-datastore-tracing",
- "buzz-db",
+ "corevia-talk-core",
+ "corevia-talk-datastore-tracing",
+ "corevia-talk-db",
  "chrono",
  "hex",
  "metrics",
@@ -1055,11 +1055,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-auth"
+name = "corevia-talk-auth"
 version = "0.1.0"
 dependencies = [
  "base64 0.22.1",
- "buzz-core",
+ "corevia-talk-core",
  "chrono",
  "dashmap",
  "futures-util",
@@ -1079,7 +1079,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-backend-kubernetes"
+name = "corevia-talk-backend-kubernetes"
 version = "0.1.0"
 dependencies = [
  "chrono",
@@ -1099,15 +1099,15 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-cli"
+name = "corevia-talk-cli"
 version = "0.1.0"
 dependencies = [
  "axum",
  "base64 0.22.1",
- "buzz-core",
- "buzz-persona",
- "buzz-sdk",
- "buzz-ws-client",
+ "corevia-talk-core",
+ "corevia-talk-persona",
+ "corevia-talk-sdk",
+ "corevia-talk-ws-client",
  "bytes",
  "chrono",
  "clap",
@@ -1130,7 +1130,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-conformance"
+name = "corevia-talk-conformance"
 version = "0.1.0"
 dependencies = [
  "proptest",
@@ -1141,7 +1141,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-core"
+name = "corevia-talk-core"
 version = "0.1.0"
 dependencies = [
  "base64 0.22.1",
@@ -1162,7 +1162,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-datastore-tracing"
+name = "corevia-talk-datastore-tracing"
 version = "0.1.0"
 dependencies = [
  "metrics",
@@ -1179,11 +1179,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-db"
+name = "corevia-talk-db"
 version = "0.1.0"
 dependencies = [
- "buzz-core",
- "buzz-datastore-tracing",
+ "corevia-talk-core",
+ "corevia-talk-datastore-tracing",
  "chrono",
  "futures-util",
  "hex",
@@ -1203,13 +1203,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-deletion"
+name = "corevia-talk-deletion"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "buzz-core",
- "buzz-db",
- "buzz-media",
+ "corevia-talk-core",
+ "corevia-talk-db",
+ "corevia-talk-media",
  "chrono",
  "clap",
  "deadpool-redis",
@@ -1226,12 +1226,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-dev-mcp"
+name = "corevia-talk-dev-mcp"
 version = "0.1.0"
 dependencies = [
  "base64 0.22.1",
- "buzz-cli",
- "buzz-core",
+ "corevia-talk-cli",
+ "corevia-talk-core",
  "ignore",
  "image",
  "nix 0.31.3",
@@ -1252,10 +1252,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-feature-flags"
+name = "corevia-talk-feature-flags"
 version = "0.1.0"
 dependencies = [
- "buzz-core",
+ "corevia-talk-core",
  "http",
  "launchdarkly-server-sdk",
  "serde_json",
@@ -1265,12 +1265,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-media"
+name = "corevia-talk-media"
 version = "0.1.0"
 dependencies = [
  "axum",
  "blurhash",
- "buzz-core",
+ "corevia-talk-core",
  "bytes",
  "chrono",
  "futures-core",
@@ -1296,11 +1296,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-mesh-smoke"
+name = "corevia-talk-mesh-smoke"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "buzz-test-client",
+ "corevia-talk-test-client",
  "ed25519-dalek",
  "hex",
  "mesh-llm-host-runtime",
@@ -1314,10 +1314,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-pair-relay"
+name = "corevia-talk-pair-relay"
 version = "0.1.0"
 dependencies = [
- "buzz-core",
+ "corevia-talk-core",
  "futures-util",
  "http-body-util",
  "hyper",
@@ -1334,10 +1334,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-pairing-cli"
+name = "corevia-talk-pairing-cli"
 version = "0.1.0"
 dependencies = [
- "buzz-core",
+ "corevia-talk-core",
  "clap",
  "futures-util",
  "hex",
@@ -1352,7 +1352,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-persona"
+name = "corevia-talk-persona"
 version = "0.1.0"
 dependencies = [
  "serde",
@@ -1363,11 +1363,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-pubsub"
+name = "corevia-talk-pubsub"
 version = "0.1.0"
 dependencies = [
- "buzz-auth",
- "buzz-core",
+ "corevia-talk-auth",
+ "corevia-talk-core",
  "chrono",
  "deadpool-redis",
  "futures-util",
@@ -1382,7 +1382,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-push-gateway"
+name = "corevia-talk-push-gateway"
 version = "0.1.0"
 dependencies = [
  "aes-gcm",
@@ -1421,7 +1421,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-relay"
+name = "corevia-talk-relay"
 version = "0.2.1"
 dependencies = [
  "anyhow",
@@ -1430,19 +1430,19 @@ dependencies = [
  "async-trait",
  "axum",
  "base64 0.22.1",
- "buzz-audit",
- "buzz-auth",
- "buzz-conformance",
- "buzz-core",
- "buzz-datastore-tracing",
- "buzz-db",
- "buzz-deletion",
- "buzz-media",
- "buzz-pubsub",
- "buzz-relay-mesh",
- "buzz-sdk",
- "buzz-search",
- "buzz-workflow",
+ "corevia-talk-audit",
+ "corevia-talk-auth",
+ "corevia-talk-conformance",
+ "corevia-talk-core",
+ "corevia-talk-datastore-tracing",
+ "corevia-talk-db",
+ "corevia-talk-deletion",
+ "corevia-talk-media",
+ "corevia-talk-pubsub",
+ "corevia-talk-relay-mesh",
+ "corevia-talk-sdk",
+ "corevia-talk-search",
+ "corevia-talk-workflow",
  "bytes",
  "chrono",
  "dashmap",
@@ -1496,7 +1496,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-relay-mesh"
+name = "corevia-talk-relay-mesh"
 version = "0.1.0"
 dependencies = [
  "bytes",
@@ -1519,10 +1519,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-sdk"
+name = "corevia-talk-sdk"
 version = "0.1.0"
 dependencies = [
- "buzz-core",
+ "corevia-talk-core",
  "nostr 0.44.7",
  "serde",
  "serde_json",
@@ -1531,12 +1531,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-search"
+name = "corevia-talk-search"
 version = "0.1.0"
 dependencies = [
- "buzz-core",
- "buzz-datastore-tracing",
- "buzz-db",
+ "corevia-talk-core",
+ "corevia-talk-datastore-tracing",
+ "corevia-talk-db",
  "metrics",
  "sqlx",
  "thiserror 2.0.18",
@@ -1546,15 +1546,15 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-test-client"
+name = "corevia-talk-test-client"
 version = "0.1.0"
 dependencies = [
  "anyhow",
  "base64 0.22.1",
- "buzz-core",
- "buzz-media",
- "buzz-sdk",
- "buzz-ws-client",
+ "corevia-talk-core",
+ "corevia-talk-media",
+ "corevia-talk-sdk",
+ "corevia-talk-ws-client",
  "chrono",
  "futures-util",
  "hex",
@@ -1577,7 +1577,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-voice"
+name = "corevia-talk-voice"
 version = "0.1.0"
 dependencies = [
  "atomic-write-file",
@@ -1596,12 +1596,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-workflow"
+name = "corevia-talk-workflow"
 version = "0.1.0"
 dependencies = [
- "buzz-core",
- "buzz-db",
- "buzz-deletion",
+ "corevia-talk-core",
+ "corevia-talk-db",
+ "corevia-talk-deletion",
  "chrono",
  "cron",
  "dashmap",
@@ -1620,7 +1620,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "buzz-ws-client"
+name = "corevia-talk-ws-client"
 version = "0.1.0"
 dependencies = [
  "futures-util",
@@ -2142,7 +2142,7 @@ name = "countdown-bot"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "buzz-sdk",
+ "corevia-talk-sdk",
  "futures-util",
  "nostr 0.44.7",
  "serde_json",
@@ -9844,9 +9844,9 @@ dependencies = [
 name = "sprig"
 version = "0.1.0"
 dependencies = [
- "buzz-acp",
- "buzz-agent",
- "buzz-dev-mcp",
+ "corevia-talk-acp",
+ "corevia-talk-agent",
+ "corevia-talk-dev-mcp",
 ]
 
 [[package]]

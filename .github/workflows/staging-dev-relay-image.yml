@@ -169,8 +169,8 @@ jobs:
         with:
           images: ${{ env.IMAGE_NAME }}
           labels: |
-            org.opencontainers.image.title=Buzz staging dev relay
-            org.opencontainers.image.description=Pre-merge Buzz relay runtime image for bb-block staging only
+            org.opencontainers.image.title=Corevia Talk staging dev relay
+            org.opencontainers.image.description=Pre-merge Corevia Talk relay runtime image for bb-block staging only
             org.opencontainers.image.licenses=Apache-2.0
             org.opencontainers.image.revision=${{ needs.resolve.outputs.target_sha }}
 
@@ -268,7 +268,7 @@ jobs:
             echo
             echo "Set bb-block staging BPCI values to:"
             echo '```yaml'
-            echo "buzz:"
+            echo "corevia-talk:"
             echo "  image:"
             echo "    repository: ${ECR_REPOSITORY}"
             echo "    tag: ${IMAGE_TAG}"

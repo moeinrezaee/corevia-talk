@@ -55,7 +55,7 @@ class _AnimatedReviewNav extends StatelessWidget {
     children: [
       Expanded(
         child: AvatarEditorOptionButton(
-          icon: BuzzIcons.userRound,
+          icon: CoreviaTalkIcons.userRound,
           iosIcon: IosGlassNavigationIcon.person,
           label: tl('You'),
           selected: selected == _AnimatedReviewSection.person,
@@ -65,7 +65,7 @@ class _AnimatedReviewNav extends StatelessWidget {
       const SizedBox(width: Grid.half),
       Expanded(
         child: AvatarEditorOptionButton(
-          icon: BuzzIcons.palette,
+          icon: CoreviaTalkIcons.palette,
           iosIcon: IosGlassNavigationIcon.palette,
           label: tl('Background'),
           selected: selected == _AnimatedReviewSection.color,
@@ -75,7 +75,7 @@ class _AnimatedReviewNav extends StatelessWidget {
       const SizedBox(width: Grid.half),
       Expanded(
         child: AvatarEditorOptionButton(
-          icon: BuzzIcons.galleryThumbnails,
+          icon: CoreviaTalkIcons.galleryThumbnails,
           iosIcon: IosGlassNavigationIcon.frame,
           label: tl('Frame'),
           selected: selected == _AnimatedReviewSection.poster,
@@ -87,7 +87,7 @@ class _AnimatedReviewNav extends StatelessWidget {
       const SizedBox(width: Grid.half),
       Expanded(
         child: AvatarEditorOptionButton(
-          icon: BuzzIcons.camera,
+          icon: CoreviaTalkIcons.camera,
           iosIcon: IosGlassNavigationIcon.camera,
           label: tl('Retake'),
           selected: false,
@@ -144,7 +144,7 @@ class _AnimatedFramingControl extends HookWidget {
                   onOutlineChanged(!outline);
                 },
                 icon: Icon(
-                  outline ? BuzzIcons.circle : BuzzIcons.circleDashed,
+                  outline ? CoreviaTalkIcons.circle : CoreviaTalkIcons.circleDashed,
                   size: 24,
                 ),
                 constraints: const BoxConstraints.tightFor(

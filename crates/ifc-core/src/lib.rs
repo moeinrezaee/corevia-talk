@@ -1,6 +1,6 @@
 //! Generic information-flow control over reader-set confidentiality labels.
 //!
-//! This crate knows nothing about Buzz, Nostr, etc., and should stay that way.
+//! This crate knows nothing about Corevia Talk, Nostr, etc., and should stay that way.
 //!
 //! ```
 //! use std::collections::BTreeSet;

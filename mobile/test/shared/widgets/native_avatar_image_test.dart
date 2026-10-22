@@ -1,8 +1,8 @@
 import 'dart:ui' as ui;
 import 'dart:convert';
 
-import 'package:buzz/shared/emoji/emoji_avatar.dart';
-import 'package:buzz/shared/widgets/avatar_image.dart';
+import 'package:corevia_talk/shared/emoji/emoji_avatar.dart';
+import 'package:corevia_talk/shared/widgets/avatar_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -25,7 +25,7 @@ class _ChannelHeaderActions extends StatelessWidget {
             if (onSearch != null)
               IconButton(
                 tooltip: 'Search',
-                icon: const Icon(BuzzIcons.search300),
+                icon: const Icon(CoreviaTalkIcons.search300),
                 onPressed: onSearch,
               ),
             if (onInbox != null)
@@ -40,7 +40,7 @@ class _ChannelHeaderActions extends StatelessWidget {
                   icon: Badge(
                     key: const ValueKey('inbox-header-badge'),
                     isLabelVisible: hasUnreadInbox,
-                    child: const Icon(BuzzIcons.inbox300),
+                    child: const Icon(CoreviaTalkIcons.inbox300),
                   ),
                 ),
               ),

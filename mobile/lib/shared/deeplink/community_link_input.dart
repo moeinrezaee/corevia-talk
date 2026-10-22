@@ -22,7 +22,7 @@ Uri? parseCommunityLinkInput(String input) {
       return null;
     }
     final link = Uri(
-      scheme: 'buzz',
+      scheme: 'corevia-talk',
       host: 'add-community',
       queryParameters: {
         'relay': uri.replace(scheme: 'wss', path: '').toString(),

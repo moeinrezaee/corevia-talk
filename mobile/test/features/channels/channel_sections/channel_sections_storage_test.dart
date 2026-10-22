@@ -1,4 +1,4 @@
-import 'package:buzz/features/channels/channel_sections/channel_sections_storage.dart';
+import 'package:corevia_talk/features/channels/channel_sections/channel_sections_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

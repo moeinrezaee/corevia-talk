@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:buzz/shared/i18n/app_language.dart';
-import 'package:buzz/shared/reminders/reminder_time_presets.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/widgets/buzz_search_field.dart';
-import 'package:buzz/shared/widgets/message_author_meta.dart';
+import 'package:corevia_talk/shared/i18n/app_language.dart';
+import 'package:corevia_talk/shared/reminders/reminder_time_presets.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/widgets/corevia_talk_search_field.dart';
+import 'package:corevia_talk/shared/widgets/message_author_meta.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -97,7 +97,7 @@ void main() {
         await tester.pumpWidget(
           _app(
             language,
-            BuzzSearchField(
+            CoreviaTalkSearchField(
               controller: TextEditingController(),
               focusNode: FocusNode(),
               hintText: 'Search',

@@ -1,7 +1,7 @@
 /**
  * Settings card for the desktop admin console.
  *
- * Lets an operator enter the admin console URL (the value of `BUZZ_ADMIN_HOST`
+ * Lets an operator enter the admin console URL (the value of `COREVIA_TALK_ADMIN_HOST`
  * on their relay), then probes it to determine auth mode and whether the
  * current app identity is on the allowlist.
  *
@@ -147,7 +147,7 @@ function ProbeStatusBadge({ uiState }: { uiState: ProbeUiState }) {
       <span className="flex items-center gap-1.5 text-xs text-amber-600 dark:text-amber-400">
         <Info className="h-3.5 w-3.5" />
         Auth is disabled on this relay. The admin console is read-only; taking
-        action requires BUZZ_ADMIN_AUTH=nip98.
+        action requires COREVIA_TALK_ADMIN_AUTH=nip98.
       </span>
     );
   }
@@ -156,7 +156,7 @@ function ProbeStatusBadge({ uiState }: { uiState: ProbeUiState }) {
       <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
         <AlertCircle className="h-3.5 w-3.5" />
         {tl("No admin API found at this origin. Check the URL matches")}{" "}
-        <code className="font-mono">BUZZ_ADMIN_HOST</code>.
+        <code className="font-mono">COREVIA_TALK_ADMIN_HOST</code>.
       </span>
     );
   }

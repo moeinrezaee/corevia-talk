@@ -1,6 +1,6 @@
-import 'package:buzz/features/channels/message_skeleton_body.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/widgets/skeleton.dart';
+import 'package:corevia_talk/features/channels/message_skeleton_body.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/widgets/skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

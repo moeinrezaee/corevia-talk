@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:buzz/features/pairing/pairing_page/onboarding_wordmark.dart';
+import 'package:corevia_talk/features/pairing/pairing_page/onboarding_wordmark.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -37,7 +37,7 @@ void main() {
       }
 
       await show();
-      final texture = find.byKey(const Key('pairing-buzz-animated-texture'));
+      final texture = find.byKey(const Key('pairing-corevia-talk-animated-texture'));
       for (
         var attempt = 0;
         attempt < 100 && texture.evaluate().isEmpty;
@@ -53,7 +53,7 @@ void main() {
         findsOneWidget,
         reason: 'Exercise the real compiled shader',
       );
-      expect(find.bySemanticsLabel('Buzz'), findsOneWidget);
+      expect(find.bySemanticsLabel('Corevia Talk'), findsOneWidget);
 
       Future<Uint8List> pixels() async {
         return (await tester.runAsync(() async {

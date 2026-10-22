@@ -53,7 +53,7 @@ class _OnboardingWordmarkState extends State<OnboardingWordmark>
       final program = await ui.FragmentProgram.fromAsset(
         'shaders/onboarding_wordmark.frag',
       );
-      final bytes = await rootBundle.load('assets/images/buzz-wordmark.png');
+      final bytes = await rootBundle.load('assets/images/corevia-talk-wordmark.png');
       final codec = await ui.instantiateImageCodec(
         bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes),
       );
@@ -106,13 +106,13 @@ class _OnboardingWordmarkState extends State<OnboardingWordmark>
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: tl('Buzz'),
+      label: tl('Corevia Talk'),
       image: true,
       child: ExcludeSemantics(
         child: RepaintBoundary(
           child: _shader != null && _motionEnabled
               ? CustomPaint(
-                  key: const Key('pairing-buzz-animated-texture'),
+                  key: const Key('pairing-corevia-talk-animated-texture'),
                   painter: _WordmarkPainter(
                     _shader!,
                     _animation,
@@ -120,7 +120,7 @@ class _OnboardingWordmarkState extends State<OnboardingWordmark>
                   ),
                 )
               : Image.asset(
-                  'assets/images/buzz-wordmark.png',
+                  'assets/images/corevia-talk-wordmark.png',
                   fit: BoxFit.contain,
                   color: widget.color,
                   colorBlendMode: BlendMode.srcIn,

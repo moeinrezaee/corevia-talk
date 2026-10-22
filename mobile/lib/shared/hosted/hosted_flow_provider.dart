@@ -127,7 +127,7 @@ HostedFlow createHostedFlow(
 Future<void> offerHostedProfile(
   Ref ref,
   HostedFlow flow,
-  BuzzDeepLink link,
+  CoreviaTalkDeepLink link,
   String pubkey,
   bool Function() isCurrent,
 ) async {

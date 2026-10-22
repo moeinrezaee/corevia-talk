@@ -1,21 +1,21 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:buzz/app.dart';
-import 'package:buzz/features/age_gate/age_restriction_page.dart';
-import 'package:buzz/features/age_gate/age_signal_push_bootstrap.dart';
-import 'package:buzz/features/age_gate/age_signal_provider.dart';
-import 'package:buzz/features/channels/unread_badge/unread_badge_provider.dart';
-import 'package:buzz/features/home/home_page.dart';
-import 'package:buzz/features/pairing/pairing_provider.dart';
-import 'package:buzz/shared/auth/auth.dart';
-import 'package:buzz/shared/huddle/huddle.dart';
+import 'package:corevia_talk/app.dart';
+import 'package:corevia_talk/features/age_gate/age_restriction_page.dart';
+import 'package:corevia_talk/features/age_gate/age_signal_push_bootstrap.dart';
+import 'package:corevia_talk/features/age_gate/age_signal_provider.dart';
+import 'package:corevia_talk/features/channels/unread_badge/unread_badge_provider.dart';
+import 'package:corevia_talk/features/home/home_page.dart';
+import 'package:corevia_talk/features/pairing/pairing_provider.dart';
+import 'package:corevia_talk/shared/auth/auth.dart';
+import 'package:corevia_talk/shared/huddle/huddle.dart';
 import 'package:nostr/nostr.dart' as nostr;
 import '../../shared/community/community_storage_test.dart'
     show FakeSecureStorage;
-import 'package:buzz/shared/push/push_bootstrap.dart';
-import 'package:buzz/shared/relay/relay.dart';
-import 'package:buzz/shared/theme/theme_provider.dart';
+import 'package:corevia_talk/shared/push/push_bootstrap.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -325,7 +325,7 @@ void main() {
       );
       await tester.pump();
       expect(find.byType(HomePage), findsOneWidget);
-      expect(find.byType(BuzzPushBootstrap), findsOneWidget);
+      expect(find.byType(CoreviaTalkPushBootstrap), findsOneWidget);
       expect(relaySession.builds, 1);
       expect(requests, 1);
 
@@ -352,7 +352,7 @@ void main() {
       );
       expect(find.byType(HomePage), restricted ? findsNothing : findsOneWidget);
       expect(
-        find.byType(BuzzPushBootstrap),
+        find.byType(CoreviaTalkPushBootstrap),
         restricted ? findsNothing : findsOneWidget,
       );
       await tester.pumpWidget(const SizedBox.shrink());

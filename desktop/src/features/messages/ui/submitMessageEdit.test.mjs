@@ -423,7 +423,7 @@ for (const replacement of [
     const overlaid = applyEditTagOverlay(tags, [
       ...(saved.refs ?? []),
       ...saved.notifying.map((key) => ["p", key]),
-      ["buzz:mention-snapshot"],
+      ["corevia-talk:mention-snapshot"],
     ]);
     assert.deepEqual(
       getSendToChannelSemantics(

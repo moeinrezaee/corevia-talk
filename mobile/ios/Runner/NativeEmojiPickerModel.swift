@@ -378,8 +378,8 @@ enum NativeEmojiSearch {
 /// keys below, so the tracker sees the section offsets and the viewport bounds
 /// consistently in a single update. Section ids come from the emoji dataset and
 /// never collide with these dotted reserved keys.
-let nativeEmojiViewportBottomKey = "buzz.emoji.viewportBottom"
-let nativeEmojiContentBottomKey = "buzz.emoji.contentBottom"
+let nativeEmojiViewportBottomKey = "corevia-talk.emoji.viewportBottom"
+let nativeEmojiContentBottomKey = "corevia-talk.emoji.contentBottom"
 
 struct NativeEmojiSectionOffsetsKey: PreferenceKey {
   static let defaultValue: [String: CGFloat] = [:]

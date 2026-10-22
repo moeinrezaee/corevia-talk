@@ -1,6 +1,6 @@
-# Buzz Mobile
+# Corevia Talk Mobile
 
-Buzz Mobile is a complete, offline-first Buzz client for iOS and Android. It can be used in concert with desktop Buzz, or as one's first and only Buzz client.
+Corevia Talk Mobile is a complete, offline-first Corevia Talk client for iOS and Android. It can be used in concert with desktop Corevia Talk, or as one's first and only Corevia Talk client.
 
 This document describes its intended behavior and architecture. For that purpose, this document takes priority over any other document or code. Not all of the documented intents are realized in the implementation yet.
 
@@ -62,6 +62,6 @@ The following are preferred architectural approaches in service of the experienc
 
 ### Notifications
 
-- Message notifications show the Buzz icon, sender avatar, channel name, and message snippet, subject to privacy choices.
+- Message notifications show the Corevia Talk icon, sender avatar, channel name, and message snippet, subject to privacy choices.
 - Notifications respect shared preferences and mute state and avoid alerts for activity already known to be read.
 - Opening a notification reaches the relevant community and conversation, including from a cold start. Inaccessible content has a clear explanation.

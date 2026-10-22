@@ -146,7 +146,7 @@ function OnboardingRelayConnectionErrorCard({
   }
 
   return createPortal(
-    <div className="buzz-onboarding-neutral-theme fixed bottom-4 start-4 z-50 w-[calc(100vw-2rem)] text-start sm:bottom-6 sm:start-6 sm:w-[22rem]">
+    <div className="corevia-talk-onboarding-neutral-theme fixed bottom-4 start-4 z-50 w-[calc(100vw-2rem)] text-start sm:bottom-6 sm:start-6 sm:w-[22rem]">
       <SidebarRelayConnectionCompactCard
         actionTestId="onboarding-reconnect-relay"
         dismissClassName="pointer-events-auto [&>span]:opacity-100"
@@ -236,7 +236,7 @@ export function ProfileStep({
         </h1>
         <p className="mt-5 text-sm leading-6 text-muted-foreground">
           {tl(
-            "Pick the name people and agents will see in Buzz. You can change it anytime.",
+            "Pick the name people and agents will see in Corevia Talk. You can change it anytime.",
           )}
         </p>
       </div>
@@ -283,7 +283,7 @@ export function ProfileStep({
                 <span className="relative inline-flex select-none items-center gap-0 text-4xl font-semibold text-muted-foreground/35 sm:text-5xl">
                   <span
                     aria-hidden="true"
-                    className="buzz-onboarding-name-placeholder-caret h-[0.9em] w-0.5 rounded-full bg-primary"
+                    className="corevia-talk-onboarding-name-placeholder-caret h-[0.9em] w-0.5 rounded-full bg-primary"
                   />
                   {tl("Enter your name")}
                 </span>

@@ -25,7 +25,7 @@ export function OrgSidebar({ repos }: { repos: Repo[] }) {
 
   return (
     <div className="space-y-6">
-      {/* Open in Buzz */}
+      {/* Open in Corevia Talk */}
       <ConnectButton className="w-full" />
 
       {/* People section */}

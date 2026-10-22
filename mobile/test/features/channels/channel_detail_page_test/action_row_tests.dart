@@ -123,8 +123,8 @@ void actionRowTests() {
         expect(
           find.byIcon(
             scenario.payload['type'] == 'member_removed'
-                ? BuzzIcons.userMinus
-                : BuzzIcons.pencil,
+                ? CoreviaTalkIcons.userMinus
+                : CoreviaTalkIcons.pencil,
           ),
           findsNothing,
         );

@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:buzz/features/profile/profile_provider.dart';
-import 'package:buzz/shared/hosted/hosted_flow_provider.dart';
-import 'package:buzz/shared/auth/auth.dart';
-import 'package:buzz/shared/deeplink/deep_link.dart';
-import 'package:buzz/shared/hosted/builderlab_account.dart';
-import 'package:buzz/shared/hosted/hosted_flow.dart';
-import 'package:buzz/shared/profile/user_profile.dart';
+import 'package:corevia_talk/features/profile/profile_provider.dart';
+import 'package:corevia_talk/shared/hosted/hosted_flow_provider.dart';
+import 'package:corevia_talk/shared/auth/auth.dart';
+import 'package:corevia_talk/shared/deeplink/deep_link.dart';
+import 'package:corevia_talk/shared/hosted/builderlab_account.dart';
+import 'package:corevia_talk/shared/hosted/hosted_flow.dart';
+import 'package:corevia_talk/shared/profile/user_profile.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,7 +17,7 @@ final _offerProvider = Provider(
   (ref) =>
       (
         HostedFlow flow,
-        BuzzDeepLink link,
+        CoreviaTalkDeepLink link,
         String pubkey,
         bool Function() current,
       ) => offerHostedProfile(ref, flow, link, pubkey, current),

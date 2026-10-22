@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# run-tests.sh — Run Buzz test suite
+# run-tests.sh — Run Corevia Talk test suite
 # =============================================================================
 # Usage:
 #   ./scripts/run-tests.sh              # run all tests (default)
@@ -40,12 +40,12 @@ if [[ -f ".env" ]]; then
   set +o allexport
 else
   # Use defaults matching docker-compose.yml
-  export DATABASE_URL="postgres://buzz:buzz_dev@localhost:5432/buzz" # sadscan:disable np.postgres.1
+  export DATABASE_URL="postgres://corevia_talk:corevia_talk_dev@localhost:5432/corevia_talk" # sadscan:disable np.postgres.1
   export PGHOST=localhost
   export PGPORT=5432
-  export PGUSER=buzz
-  export PGPASSWORD=buzz_dev
-  export PGDATABASE=buzz
+  export PGUSER=corevia_talk
+  export PGPASSWORD=corevia_talk_dev
+  export PGDATABASE=corevia_talk
   export REDIS_URL="redis://localhost:6379"
 fi
 
@@ -78,183 +78,183 @@ ensure_infra() {
 run_unit_tests() {
   section "Unit Tests (no infra required)"
 
-  run_test_step "buzz-core tests" \
-    cargo test -p buzz-core --lib -- --nocapture
+  run_test_step "corevia-talk-core tests" \
+    cargo test -p corevia-talk-core --lib -- --nocapture
 
-  run_test_step "buzz-audit tests" \
-    cargo test -p buzz-audit --lib -- --nocapture
+  run_test_step "corevia-talk-audit tests" \
+    cargo test -p corevia-talk-audit --lib -- --nocapture
 
-  run_test_step "buzz-auth unit tests" \
-    cargo test -p buzz-auth --lib -- --nocapture
+  run_test_step "corevia-talk-auth unit tests" \
+    cargo test -p corevia-talk-auth --lib -- --nocapture
 
   # Mesh JWKS proxy-bypass regression: infra-free loopback I/O with
   # child-process environment isolation. --lib does not select its binary.
   # Keep this fallback in step with `just test-unit`.
-  run_test_step "buzz-auth mesh JWKS proxy regression" \
-    cargo test -p buzz-auth --test mesh_jwks_proxy -- --nocapture
+  run_test_step "corevia-talk-auth mesh JWKS proxy regression" \
+    cargo test -p corevia-talk-auth --test mesh_jwks_proxy -- --nocapture
 
   # Cross-pod disconnect payload tests (NIP-FI and community archive fence;
   # infra-free). Mirrors `just test-unit`.
-  run_test_step "buzz-pubsub conn_control tests" \
-    cargo test -p buzz-pubsub --lib conn_control::tests:: -- --nocapture
+  run_test_step "corevia-talk-pubsub conn_control tests" \
+    cargo test -p corevia-talk-pubsub --lib conn_control::tests:: -- --nocapture
 
-  run_test_step "buzz-voice tests" \
-    cargo test -p buzz-voice --lib -- --nocapture
+  run_test_step "corevia-talk-voice tests" \
+    cargo test -p corevia-talk-voice --lib -- --nocapture
 
-  run_test_step "buzz-cli tests" \
-    cargo test -p buzz-cli -- --nocapture
+  run_test_step "corevia-talk-cli tests" \
+    cargo test -p corevia-talk-cli -- --nocapture
 
-  # buzz-sdk builder/validation unit tests: pure event-builder and input
+  # corevia-talk-sdk builder/validation unit tests: pure event-builder and input
   # validation, no infra. Mirrors the nextest path in `just test-unit` — the
   # two lists must stay in step. `--lib` matches the nextest invocation and
   # avoids the full-package rustdoc dependency-resolution flake.
-  run_test_step "buzz-sdk unit tests" \
-    cargo test -p buzz-sdk --lib -- --nocapture
+  run_test_step "corevia-talk-sdk unit tests" \
+    cargo test -p corevia-talk-sdk --lib -- --nocapture
 
   # Keep the relay-to-agent trust-boundary regressions in the fallback path
   # when cargo-nextest is unavailable.
-  run_test_step "buzz-acp tests" \
-    cargo test -p buzz-acp -- --nocapture
+  run_test_step "corevia-talk-acp tests" \
+    cargo test -p corevia-talk-acp -- --nocapture
 
   # Keep MCP lifecycle coverage in step with the nextest path.
-  run_test_step "buzz-dev-mcp tests" \
-    cargo test -p buzz-dev-mcp -- --nocapture
+  run_test_step "corevia-talk-dev-mcp tests" \
+    cargo test -p corevia-talk-dev-mcp -- --nocapture
 
 
-  # buzz-db migrator/lint unit tests (no infra): guard the embedded-migrator
+  # corevia-talk-db migrator/lint unit tests (no infra): guard the embedded-migrator
   # invariant (exactly the consolidated 0001; cutover/backfill stays an operator
   # script, not startup state) and the tenant-scoping lints. The Postgres-backed
-  # buzz-db tests are #[ignore]d; nothing here (or in integration mode below,
-  # which runs `cargo test -p buzz-db` without --ignored) runs them — they need a
+  # corevia-talk-db tests are #[ignore]d; nothing here (or in integration mode below,
+  # which runs `cargo test -p corevia-talk-db` without --ignored) runs them — they need a
   # separate isolated-DB gate, so --lib keeps this step infra-free.
-  run_test_step "buzz-db unit tests" \
-    cargo test -p buzz-db --lib -- --nocapture
-  run_test_step "buzz-db source-policy tests" \
-    cargo test -p buzz-db --test observability_source -- --nocapture
+  run_test_step "corevia-talk-db unit tests" \
+    cargo test -p corevia-talk-db --lib -- --nocapture
+  run_test_step "corevia-talk-db source-policy tests" \
+    cargo test -p corevia-talk-db --test observability_source -- --nocapture
 
-  run_test_step "buzz-media storage snapshot serialization test" \
-    cargo test -p buzz-media --lib bucket_index::tests::bucket_snapshot_json_round_trip_preserves_community_keys -- --exact --nocapture
+  run_test_step "corevia-talk-media storage snapshot serialization test" \
+    cargo test -p corevia-talk-media --lib bucket_index::tests::bucket_snapshot_json_round_trip_preserves_community_keys -- --exact --nocapture
 
-  run_test_step "buzz-admin storage snapshot tests" \
-    cargo test -p buzz-admin storage_snapshot -- --nocapture
+  run_test_step "corevia-talk-admin storage snapshot tests" \
+    cargo test -p corevia-talk-admin storage_snapshot -- --nocapture
 
-  run_test_step "buzz-admin community archive command tests" \
-    cargo test -p buzz-admin communities -- --nocapture
+  run_test_step "corevia-talk-admin community archive command tests" \
+    cargo test -p corevia-talk-admin communities -- --nocapture
 
-  run_test_step "buzz-admin partition audit outcome contract test" \
-    cargo test -p buzz-admin tests::partition_audit_outcomes_keep_their_json_names_and_exit_codes -- --exact --nocapture
+  run_test_step "corevia-talk-admin partition audit outcome contract test" \
+    cargo test -p corevia-talk-admin tests::partition_audit_outcomes_keep_their_json_names_and_exit_codes -- --exact --nocapture
 
-  run_test_step "buzz-admin NIP-FI binding command tests" \
-    cargo test -p buzz-admin nip_fi::tests -- --nocapture
+  run_test_step "corevia-talk-admin NIP-FI binding command tests" \
+    cargo test -p corevia-talk-admin nip_fi::tests -- --nocapture
 
   # Multi-tenant conformance gate: independent replay checker + golden
-  # fixtures (buzz-conformance). Pure in-process trace replay, no infra.
-  run_test_step "buzz-conformance tests" \
-    cargo test -p buzz-conformance -- --nocapture
+  # fixtures (corevia-talk-conformance). Pure in-process trace replay, no infra.
+  run_test_step "corevia-talk-conformance tests" \
+    cargo test -p corevia-talk-conformance -- --nocapture
 
-  run_test_step "buzz-push-gateway tests" \
-    cargo test -p buzz-push-gateway -- --nocapture
-  run_test_step "buzz-push-gateway personal development tests" \
-    cargo test -p buzz-push-gateway --features personal-dev-app-attest -- --nocapture
+  run_test_step "corevia-talk-push-gateway tests" \
+    cargo test -p corevia-talk-push-gateway -- --nocapture
+  run_test_step "corevia-talk-push-gateway personal development tests" \
+    cargo test -p corevia-talk-push-gateway --features personal-dev-app-attest -- --nocapture
 
   # Kubernetes backend provider: pure decision layers driven by a fake
   # substrate, no cluster. Mirrors the nextest path in `just test-unit` —
   # the two lists must stay in step or the fallback silently covers less.
-  run_test_step "buzz-backend-kubernetes tests" \
-    cargo test -p buzz-backend-kubernetes -- --nocapture
+  run_test_step "corevia-talk-backend-kubernetes tests" \
+    cargo test -p corevia-talk-backend-kubernetes -- --nocapture
 
   # Keep fallback parity with `just test-unit`: one LaunchDarkly-feature run
-  # exercises both default and feature-gated buzz-feature-flags tests.
-  run_test_step "buzz-feature-flags tests (launchdarkly)" \
-    cargo test -p buzz-feature-flags --features launchdarkly -- --nocapture
+  # exercises both default and feature-gated corevia-talk-feature-flags tests.
+  run_test_step "corevia-talk-feature-flags tests (launchdarkly)" \
+    cargo test -p corevia-talk-feature-flags --features launchdarkly -- --nocapture
 
-  # buzz-agent model-capabilities corpus: the Rust half of the cross-language
+  # corevia-talk-agent model-capabilities corpus: the Rust half of the cross-language
   # drift guard. model_capabilities.rs embeds scripts/model-capabilities.json +
   # scripts/normative-corpus.json via include_str! and replays the full locked
   # corpus as pure in-process tests (no infra). Mirrors the nextest path in
   # `just test-unit` — the two lists must stay in step.
-  run_test_step "buzz-agent unit tests" \
-    cargo test -p buzz-agent --lib -- --nocapture
+  run_test_step "corevia-talk-agent unit tests" \
+    cargo test -p corevia-talk-agent --lib -- --nocapture
 
   # ACP author-gate and queue tests are pure unit tests. Keep this fallback in
   # step with `just test-unit`; ignored lifecycle tests run elsewhere.
-  run_test_step "buzz-acp unit tests" \
-    cargo test -p buzz-acp --lib -- --nocapture
+  run_test_step "corevia-talk-acp unit tests" \
+    cargo test -p corevia-talk-acp --lib -- --nocapture
 
   # Mirror the relay filters from `just test-unit`: the three handler modules,
   # storage-snapshot helpers, readiness and router unit suites, and the single
   # scoped admission regression in state::tests, plus the REQ lifecycle tests.
-  run_test_step "buzz-relay push runtime tests" \
-    cargo test -p buzz-relay --lib push_runtime:: -- --nocapture
+  run_test_step "corevia-talk-relay push runtime tests" \
+    cargo test -p corevia-talk-relay --lib push_runtime:: -- --nocapture
 
-  run_test_step "buzz-relay operator listener tests" \
-    cargo test -p buzz-relay --lib operator_listener::tests:: -- --nocapture
+  run_test_step "corevia-talk-relay operator listener tests" \
+    cargo test -p corevia-talk-relay --lib operator_listener::tests:: -- --nocapture
 
-  run_test_step "buzz-relay channel authorization tests" \
-    cargo test -p buzz-relay --lib handlers::channel_authz:: -- --nocapture
+  run_test_step "corevia-talk-relay channel authorization tests" \
+    cargo test -p corevia-talk-relay --lib handlers::channel_authz:: -- --nocapture
 
-  run_test_step "buzz-relay moderation authorization tests" \
-    cargo test -p buzz-relay --lib handlers::moderation_authz:: -- --nocapture
+  run_test_step "corevia-talk-relay moderation authorization tests" \
+    cargo test -p corevia-talk-relay --lib handlers::moderation_authz:: -- --nocapture
 
-  run_test_step "buzz-relay side-effects helper tests" \
-    cargo test -p buzz-relay --lib handlers::side_effects::tests:: -- --nocapture
+  run_test_step "corevia-talk-relay side-effects helper tests" \
+    cargo test -p corevia-talk-relay --lib handlers::side_effects::tests:: -- --nocapture
 
-  run_test_step "buzz-relay system channel scope tests" \
-    cargo test -p buzz-relay --lib handlers::system_channels::tests:: -- --nocapture
+  run_test_step "corevia-talk-relay system channel scope tests" \
+    cargo test -p corevia-talk-relay --lib handlers::system_channels::tests:: -- --nocapture
 
-  run_test_step "buzz-relay NIP-11 document tests" \
-    cargo test -p buzz-relay --lib nip11::tests:: -- --nocapture
+  run_test_step "corevia-talk-relay NIP-11 document tests" \
+    cargo test -p corevia-talk-relay --lib nip11::tests:: -- --nocapture
 
-  run_test_step "buzz-relay storage snapshot tests" \
-    cargo test -p buzz-relay --lib storage_sweep::tests:: -- --nocapture
+  run_test_step "corevia-talk-relay storage snapshot tests" \
+    cargo test -p corevia-talk-relay --lib storage_sweep::tests:: -- --nocapture
 
   # Mirror the four audio/FI suites from `just test-unit`'s nextest expression.
   # These are infra-free (no DB, no Redis); the `#[ignore]`-gated DB witnesses
   # are excluded by cargo test's default filter. Keep in step with the Justfile
   # `test-unit` relay expression.
-  run_test_step "buzz-relay audio join tests" \
-    cargo test -p buzz-relay --lib audio::join::tests:: -- --nocapture
+  run_test_step "corevia-talk-relay audio join tests" \
+    cargo test -p corevia-talk-relay --lib audio::join::tests:: -- --nocapture
 
-  run_test_step "buzz-relay audio handler tests" \
-    cargo test -p buzz-relay --lib audio::handler::tests:: -- --nocapture
+  run_test_step "corevia-talk-relay audio handler tests" \
+    cargo test -p corevia-talk-relay --lib audio::handler::tests:: -- --nocapture
 
-  run_test_step "buzz-relay NIP-FI gate tests" \
-    cargo test -p buzz-relay --lib nip_fi_gate::tests:: -- --nocapture
+  run_test_step "corevia-talk-relay NIP-FI gate tests" \
+    cargo test -p corevia-talk-relay --lib nip_fi_gate::tests:: -- --nocapture
 
-  run_test_step "buzz-relay NIP-FI session tests" \
-    cargo test -p buzz-relay --lib nip_fi_session::tests:: -- --nocapture
+  run_test_step "corevia-talk-relay NIP-FI session tests" \
+    cargo test -p corevia-talk-relay --lib nip_fi_session::tests:: -- --nocapture
 
-  run_test_step "buzz-relay NIP-FI shadow recorder tests" \
-    cargo test -p buzz-relay --lib nip_fi_shadow::tests:: -- --nocapture
+  run_test_step "corevia-talk-relay NIP-FI shadow recorder tests" \
+    cargo test -p corevia-talk-relay --lib nip_fi_shadow::tests:: -- --nocapture
 
-  run_test_step "buzz-relay NIP-FI shadow session tests" \
-    cargo test -p buzz-relay --lib nip_fi_shadow_session::tests:: -- --nocapture
+  run_test_step "corevia-talk-relay NIP-FI shadow session tests" \
+    cargo test -p corevia-talk-relay --lib nip_fi_shadow_session::tests:: -- --nocapture
 
-  run_test_step "buzz-relay startup step tests" \
-    cargo test -p buzz-relay --lib startup_steps::tests:: -- --nocapture
+  run_test_step "corevia-talk-relay startup step tests" \
+    cargo test -p corevia-talk-relay --lib startup_steps::tests:: -- --nocapture
 
   # telemetry and config tests mutate process env. libtest runs one process
   # with many threads (nextest, used by `just test-unit`, isolates each test),
   # so run them single-threaded here. `--skip` keeps the substring filter
   # `config::tests::` from also selecting nip_fi_config, which runs above.
-  run_test_step "buzz-relay telemetry tests" \
-    cargo test -p buzz-relay --lib telemetry::tests:: -- --test-threads=1 --nocapture
+  run_test_step "corevia-talk-relay telemetry tests" \
+    cargo test -p corevia-talk-relay --lib telemetry::tests:: -- --test-threads=1 --nocapture
 
-  run_test_step "buzz-relay config tests" \
-    cargo test -p buzz-relay --lib config::tests:: -- --skip nip_fi_config:: --test-threads=1 --nocapture
+  run_test_step "corevia-talk-relay config tests" \
+    cargo test -p corevia-talk-relay --lib config::tests:: -- --skip nip_fi_config:: --test-threads=1 --nocapture
 
   # Mirror the NIP-FI (S3) stanza from `just test-unit`: module filters, then
   # each exact name. Keep this list in step with that stanza's `test(=...)`s.
-  run_test_step "buzz-relay NIP-FI config tests" \
-    cargo test -p buzz-relay --lib nip_fi_config:: -- --nocapture
+  run_test_step "corevia-talk-relay NIP-FI config tests" \
+    cargo test -p corevia-talk-relay --lib nip_fi_config:: -- --nocapture
 
-  run_test_step "buzz-relay NIP-FI resolver tests" \
-    cargo test -p buzz-relay --lib nip_fi_resolver:: -- --nocapture
+  run_test_step "corevia-talk-relay NIP-FI resolver tests" \
+    cargo test -p corevia-talk-relay --lib nip_fi_resolver:: -- --nocapture
 
   # Infra-free REQ subscription-lifecycle tests, by exact name: the rest of
   # handlers::req needs a database.
-  run_test_step "buzz-relay REQ subscription lifecycle tests" \
-    cargo test -p buzz-relay --lib -- --exact --nocapture \
+  run_test_step "corevia-talk-relay REQ subscription lifecycle tests" \
+    cargo test -p corevia-talk-relay --lib -- --exact --nocapture \
       handlers::req::tests::timed_out_historical_read_deregisters_before_closed \
       handlers::req::tests::superseded_timeout_leaves_replacement_intact \
       handlers::req::tests::search_claim_retires_live_and_yields_to_replacement \
@@ -269,61 +269,61 @@ run_unit_tests() {
 
   # Infra-free bridge search extension parser tests, by exact name: the rest of
   # api::bridge::postgres_tests needs a database.
-  run_test_step "buzz-relay bridge search extension tests" \
-    cargo test -p buzz-relay --lib -- --exact --nocapture \
+  run_test_step "corevia-talk-relay bridge search extension tests" \
+    cargo test -p corevia-talk-relay --lib -- --exact --nocapture \
       api::bridge::postgres_tests::bridge_search_mode_extension_accepts_prefix_snake_or_camel_case \
       api::bridge::postgres_tests::bridge_search_sort_extension_selects_newest_only_when_named
 
-  run_test_step "buzz-relay readiness tests" \
-    cargo test -p buzz-relay --lib readiness::tests:: -- --nocapture
+  run_test_step "corevia-talk-relay readiness tests" \
+    cargo test -p corevia-talk-relay --lib readiness::tests:: -- --nocapture
 
-  run_test_step "buzz-relay admission regression test" \
-    cargo test -p buzz-relay --lib state::tests::neither_a_confirmed_inactive_community_nor_a_failed_lookup_admits_the_socket -- --nocapture
+  run_test_step "corevia-talk-relay admission regression test" \
+    cargo test -p corevia-talk-relay --lib state::tests::neither_a_confirmed_inactive_community_nor_a_failed_lookup_admits_the_socket -- --nocapture
 
-  run_test_step "buzz-relay archive revalidation fence test" \
-    cargo test -p buzz-relay --lib state::tests::periodic_revalidation_disconnects_inside_the_fenced_callback -- --exact --nocapture
+  run_test_step "corevia-talk-relay archive revalidation fence test" \
+    cargo test -p corevia-talk-relay --lib state::tests::periodic_revalidation_disconnects_inside_the_fenced_callback -- --exact --nocapture
 
-  run_test_step "buzz-relay bare disconnect fail-closed test" \
-    cargo test -p buzz-relay --lib state::tests::bare_community_disconnect_fails_closed_when_the_fence_is_unavailable -- --exact --nocapture
+  run_test_step "corevia-talk-relay bare disconnect fail-closed test" \
+    cargo test -p corevia-talk-relay --lib state::tests::bare_community_disconnect_fails_closed_when_the_fence_is_unavailable -- --exact --nocapture
 
-  run_test_step "buzz-relay archived close-reason test" \
-    cargo test -p buzz-relay --lib connection::tests::send_loop_sends_policy_close_when_community_is_archived -- --exact --nocapture
+  run_test_step "corevia-talk-relay archived close-reason test" \
+    cargo test -p corevia-talk-relay --lib connection::tests::send_loop_sends_policy_close_when_community_is_archived -- --exact --nocapture
 
-  run_test_step "buzz-relay community close first-writer tests" \
-    cargo test -p buzz-relay --lib state::tests::community_disconnect_then_nip_fi_keeps_community_deleted_reason -- --exact --nocapture
+  run_test_step "corevia-talk-relay community close first-writer tests" \
+    cargo test -p corevia-talk-relay --lib state::tests::community_disconnect_then_nip_fi_keeps_community_deleted_reason -- --exact --nocapture
 
-  run_test_step "buzz-relay community close suppresses losing denial frame test" \
-    cargo test -p buzz-relay --lib state::tests::disconnect_community_wins_reason_losing_nip_fi_does_not_enqueue_frame -- --exact --nocapture
+  run_test_step "corevia-talk-relay community close suppresses losing denial frame test" \
+    cargo test -p corevia-talk-relay --lib state::tests::disconnect_community_wins_reason_losing_nip_fi_does_not_enqueue_frame -- --exact --nocapture
 
-  run_test_step "buzz-relay router tests" \
-    cargo test -p buzz-relay --lib router::tests:: -- --nocapture
+  run_test_step "corevia-talk-relay router tests" \
+    cargo test -p corevia-talk-relay --lib router::tests:: -- --nocapture
 
-  run_test_step "buzz-relay NIP-FI shared core tests" \
-    cargo test -p buzz-relay --lib nip_fi_core::tests:: -- --nocapture
+  run_test_step "corevia-talk-relay NIP-FI shared core tests" \
+    cargo test -p corevia-talk-relay --lib nip_fi_core::tests:: -- --nocapture
 
-  run_test_step "buzz-relay NIP-FI HTTP ingress tests" \
-    cargo test -p buzz-relay --lib nip_fi_http::tests:: -- --nocapture
+  run_test_step "corevia-talk-relay NIP-FI HTTP ingress tests" \
+    cargo test -p corevia-talk-relay --lib nip_fi_http::tests:: -- --nocapture
 
-  run_test_step "buzz-relay API query parsing tests" \
-    cargo test -p buzz-relay --lib api::parse_query_tests:: -- --nocapture
+  run_test_step "corevia-talk-relay API query parsing tests" \
+    cargo test -p corevia-talk-relay --lib api::parse_query_tests:: -- --nocapture
 
-  run_test_step "buzz-relay profile search request tests" \
-    cargo test -p buzz-relay --lib api::profiles:: -- --nocapture
+  run_test_step "corevia-talk-relay profile search request tests" \
+    cargo test -p corevia-talk-relay --lib api::profiles:: -- --nocapture
 
-  run_test_step "buzz-relay Git transport Off-mode precedence tests" \
-    cargo test -p buzz-relay --lib api::git::transport::off_mode_precedence_tests:: -- --nocapture
+  run_test_step "corevia-talk-relay Git transport Off-mode precedence tests" \
+    cargo test -p corevia-talk-relay --lib api::git::transport::off_mode_precedence_tests:: -- --nocapture
 
-  run_test_step "buzz-relay NIP-FI upgrade tests" \
-    cargo test -p buzz-relay --lib nip_fi_upgrade:: -- --nocapture
+  run_test_step "corevia-talk-relay NIP-FI upgrade tests" \
+    cargo test -p corevia-talk-relay --lib nip_fi_upgrade:: -- --nocapture
 
-  run_test_step "buzz-relay NIP-FI admin API tests" \
-    cargo test -p buzz-relay --lib api::nip_fi:: -- --nocapture
+  run_test_step "corevia-talk-relay NIP-FI admin API tests" \
+    cargo test -p corevia-talk-relay --lib api::nip_fi:: -- --nocapture
 
-  run_test_step "buzz-relay auth metrics contract tests" \
-    cargo test -p buzz-relay --lib metrics::contract_tests:: -- --nocapture
+  run_test_step "corevia-talk-relay auth metrics contract tests" \
+    cargo test -p corevia-talk-relay --lib metrics::contract_tests:: -- --nocapture
 
-  run_test_step "buzz-relay partition alert series tests" \
-    cargo test -p buzz-relay --lib metrics::partition_alert_tests:: -- --nocapture
+  run_test_step "corevia-talk-relay partition alert series tests" \
+    cargo test -p corevia-talk-relay --lib metrics::partition_alert_tests:: -- --nocapture
 
   local nip_fi_exact_tests=(
     audio::room::tests::roster_revisions_are_ordered_and_snapshot_is_authoritative
@@ -382,15 +382,15 @@ run_unit_tests() {
   )
   local name
   for name in "${nip_fi_exact_tests[@]}"; do
-    run_test_step "buzz-relay ${name}" \
-      cargo test -p buzz-relay --lib "$name" -- --exact --nocapture
+    run_test_step "corevia-talk-relay ${name}" \
+      cargo test -p corevia-talk-relay --lib "$name" -- --exact --nocapture
   done
 
-  run_test_step "buzz-relay binary tests" \
-    cargo test -p buzz-relay --bin buzz-relay -- --nocapture
+  run_test_step "corevia-talk-relay binary tests" \
+    cargo test -p corevia-talk-relay --bin corevia-talk-relay -- --nocapture
 
-  run_test_step "buzz-relay boot lifecycle tests" \
-    cargo test -p buzz-relay --test boot_lifecycle -- --nocapture
+  run_test_step "corevia-talk-relay boot lifecycle tests" \
+    cargo test -p corevia-talk-relay --test boot_lifecycle -- --nocapture
 }
 
 # ---- DB / integration tests (infra required) --------------------------------
@@ -400,14 +400,14 @@ run_integration_tests() {
 
   ensure_infra
 
-  run_test_step "buzz-db tests" \
-    cargo test -p buzz-db -- --nocapture
+  run_test_step "corevia-talk-db tests" \
+    cargo test -p corevia-talk-db -- --nocapture
 
-  if find crates/buzz-auth/tests -maxdepth 1 -name '*.rs' -print -quit 2>/dev/null | grep -q .; then
-    run_test_step "buzz-auth integration tests" \
-      cargo test -p buzz-auth --test '*' -- --nocapture
+  if find crates/corevia-talk-auth/tests -maxdepth 1 -name '*.rs' -print -quit 2>/dev/null | grep -q .; then
+    run_test_step "corevia-talk-auth integration tests" \
+      cargo test -p corevia-talk-auth --test '*' -- --nocapture
   else
-    run_test_step "buzz-auth (no integration tests found)" true
+    run_test_step "corevia-talk-auth (no integration tests found)" true
   fi
 
   run_test_step "workspace integration tests" \

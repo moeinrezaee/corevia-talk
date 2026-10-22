@@ -1,20 +1,20 @@
-import 'package:buzz/shared/hosted/hosted_environment.dart';
-import 'package:buzz/features/pairing/pairing_provider.dart';
-import 'package:buzz/shared/deeplink/pending_deep_link_provider.dart';
+import 'package:corevia_talk/shared/hosted/hosted_environment.dart';
+import 'package:corevia_talk/features/pairing/pairing_provider.dart';
+import 'package:corevia_talk/shared/deeplink/pending_deep_link_provider.dart';
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:buzz/features/onboarding/hosted_profile_setup.dart';
-import 'package:buzz/onboarding_app_entry.dart';
-import 'package:buzz/shared/auth/auth.dart';
-import 'package:buzz/shared/hosted/builderlab_account.dart';
-import 'package:buzz/shared/hosted/account_identity_store.dart';
+import 'package:corevia_talk/features/onboarding/hosted_profile_setup.dart';
+import 'package:corevia_talk/onboarding_app_entry.dart';
+import 'package:corevia_talk/shared/auth/auth.dart';
+import 'package:corevia_talk/shared/hosted/builderlab_account.dart';
+import 'package:corevia_talk/shared/hosted/account_identity_store.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:buzz/shared/hosted/hosted_relay_auth.dart';
-import 'package:buzz/shared/relay/relay_session.dart';
-import 'package:buzz/shared/relay/relay_provider.dart';
-import 'package:buzz/shared/relay/media_image.dart';
-import 'package:buzz/shared/utils/string_utils.dart';
+import 'package:corevia_talk/shared/hosted/hosted_relay_auth.dart';
+import 'package:corevia_talk/shared/relay/relay_session.dart';
+import 'package:corevia_talk/shared/relay/relay_provider.dart';
+import 'package:corevia_talk/shared/relay/media_image.dart';
+import 'package:corevia_talk/shared/utils/string_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -566,7 +566,7 @@ void main() {
       f.identityStorage.failEnumeration = false;
       expect(
         (await const FlutterSecureStorage().readAll()).keys.where(
-          (key) => key.startsWith('buzz_pending_self_hosted_'),
+          (key) => key.startsWith('corevia_talk_pending_self_hosted_'),
         ),
         isEmpty,
       );
@@ -577,7 +577,7 @@ void main() {
           .read(pendingDeepLinkProvider.notifier)
           .open(
             Uri(
-              scheme: 'buzz',
+              scheme: 'corevia-talk',
               host: 'join',
               queryParameters: {
                 'relay': saved.relayUrl,
@@ -735,7 +735,7 @@ void main() {
       expect(saved.relayUrl, 'wss://new-home.communities.buzz.xyz');
       expect(saved.nsec, f.keys.nsec);
       expect(await f.storage.loadActiveId(), saved.id);
-      expect(f.sent('/v1/buzz/communities'), hasLength(2));
+      expect(f.sent('/v1/corevia-talk/communities'), hasLength(2));
       expect(f.owned, hasLength(1));
       expect(f.sent('/status'), isEmpty);
       expect(f.browserStarts, 0);

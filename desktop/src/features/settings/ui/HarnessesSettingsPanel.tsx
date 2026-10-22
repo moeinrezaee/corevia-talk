@@ -65,7 +65,7 @@ function GitBashCard({
             className="mt-3 space-y-1 text-sm text-muted-foreground/70"
             data-settings-subcopy
           >
-            <p>{tl("Required for buzz-agent shell tools on Windows.")}</p>
+            <p>{tl("Required for corevia-talk-agent shell tools on Windows.")}</p>
             <p>{prerequisite.installHint}</p>
           </div>
         ) : null}
@@ -115,7 +115,7 @@ export function HarnessesSettingsPanel() {
   return (
     <SettingsOptionGroup
       data-testid="settings-harnesses"
-      description={tl("Choose which agent tools Buzz can use on this device.")}
+      description={tl("Choose which agent tools Corevia Talk can use on this device.")}
       headerAction={
         <Button
           disabled={isRefreshing}

@@ -9,12 +9,12 @@ import '../theme/community_theme_preference.dart';
 import 'read_state_format.dart';
 import 'read_state_time.dart';
 
-const _contextsKeyPrefix = 'buzz.channel-read-state.v2';
-const _publishableKeyPrefix = 'buzz.channel-read-state.publishable.v1';
+const _contextsKeyPrefix = 'corevia-talk.channel-read-state.v2';
+const _publishableKeyPrefix = 'corevia-talk.channel-read-state.publishable.v1';
 const _sourceCreatedAtKeyPrefix =
-    'buzz.channel-read-state.source-created-at.v1';
-const _clientIdKeyPrefix = 'buzz.nip-rs.client-id';
-const _slotIdKeyPrefix = 'buzz.nip-rs.slot-id';
+    'corevia-talk.channel-read-state.source-created-at.v1';
+const _clientIdKeyPrefix = 'corevia-talk.nip-rs.client-id';
+const _slotIdKeyPrefix = 'corevia-talk.nip-rs.slot-id';
 const _uuid = Uuid();
 
 /// Read marks belong to one community, so every key is scoped by relay as

@@ -1,24 +1,24 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:buzz/features/settings/settings_page.dart';
-import 'package:buzz/shared/auth/auth_provider.dart';
-import 'package:buzz/shared/community/community.dart';
-import 'package:buzz/shared/community/community_provider.dart';
-import 'package:buzz/shared/community/community_storage.dart';
-import 'package:buzz/shared/push/dev_push_lease.dart';
-import 'package:buzz/shared/push/push_bootstrap.dart';
-import 'package:buzz/shared/push/push_lease_revocation_outbox.dart';
-import 'package:buzz/shared/crypto/nip44.dart';
-import 'package:buzz/shared/relay/nostr_models.dart';
-import 'package:buzz/shared/relay/signed_event_relay.dart';
-import 'package:buzz/shared/push/push_bridge.dart';
-import 'package:buzz/shared/push/push_relay_capability_provider.dart';
-import 'package:buzz/shared/push/push_subscription.dart';
-import 'package:buzz/shared/relay/app_lifecycle_provider.dart';
-import 'package:buzz/shared/relay/relay_provider.dart';
-import 'package:buzz/shared/relay/relay_session.dart';
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/features/settings/settings_page.dart';
+import 'package:corevia_talk/shared/auth/auth_provider.dart';
+import 'package:corevia_talk/shared/community/community.dart';
+import 'package:corevia_talk/shared/community/community_provider.dart';
+import 'package:corevia_talk/shared/community/community_storage.dart';
+import 'package:corevia_talk/shared/push/dev_push_lease.dart';
+import 'package:corevia_talk/shared/push/push_bootstrap.dart';
+import 'package:corevia_talk/shared/push/push_lease_revocation_outbox.dart';
+import 'package:corevia_talk/shared/crypto/nip44.dart';
+import 'package:corevia_talk/shared/relay/nostr_models.dart';
+import 'package:corevia_talk/shared/relay/signed_event_relay.dart';
+import 'package:corevia_talk/shared/push/push_bridge.dart';
+import 'package:corevia_talk/shared/push/push_relay_capability_provider.dart';
+import 'package:corevia_talk/shared/push/push_subscription.dart';
+import 'package:corevia_talk/shared/relay/app_lifecycle_provider.dart';
+import 'package:corevia_talk/shared/relay/relay_provider.dart';
+import 'package:corevia_talk/shared/relay/relay_session.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -59,8 +59,8 @@ void main() {
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
       addTearDown(() => debugDefaultTargetPlatformOverride = null);
       PackageInfo.setMockInitialValues(
-        appName: 'Buzz',
-        packageName: 'buzz',
+        appName: 'Corevia Talk',
+        packageName: 'corevia-talk',
         version: '1.0.0',
         buildNumber: '1',
         buildSignature: '',
@@ -70,8 +70,8 @@ void main() {
       final secure = FakeSecureStorage();
       final storage = CommunityStorage(secure: secure);
       final subscriptions = [
-        BuzzPushSubscription(
-          filter: BuzzPushFilter(kinds: const [9], pTags: ['a' * 64]),
+        CoreviaTalkPushSubscription(
+          filter: CoreviaTalkPushFilter(kinds: const [9], pTags: ['a' * 64]),
           notificationClass: 'default',
         ),
       ];
@@ -89,7 +89,7 @@ void main() {
         'generation': 1,
         'expiresAt': DateTime.now().millisecondsSinceEpoch ~/ 1000 + 3600,
       };
-      const nativePush = MethodChannel('buzz/push');
+      const nativePush = MethodChannel('corevia-talk/push');
       final messenger =
           TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
       messenger.setMockMethodCallHandler(
@@ -113,14 +113,14 @@ void main() {
             ),
             pushNotificationsEnabled: true,
             pushLeaseInstallationId: 'd' * 32,
-            pushSubscriptionState: BuzzPushLeaseSubscriptionState.desired(
+            pushSubscriptionState: CoreviaTalkPushLeaseSubscriptionState.desired(
               desired: subscriptions,
             ).withAccepted(subscriptions: subscriptions, generation: 7),
           );
       if (outcome == 'unset preference') {
         final saved = community.toJson()..remove('pushNotificationsEnabledV2');
         saved['pushNotificationsEnabled'] = false;
-        secure['buzz_communities'] = jsonEncode([saved]);
+        secure['corevia_talk_communities'] = jsonEncode([saved]);
       } else {
         await storage.save(community);
       }
@@ -149,7 +149,7 @@ void main() {
               tombstones.add(generation);
               if (outcome == 'failed') throw StateError('relay unavailable');
               if (outcome == 'pending') await cleanup.future;
-              await publishBuzzPushLeaseTombstone(
+              await publishCoreviaTalkPushLeaseTombstone(
                 descriptor: _descriptor,
                 installationId: community.pushLeaseInstallationId!,
                 generation: generation!,
@@ -161,21 +161,21 @@ void main() {
                 ).submit,
               );
             }),
-            buzzPushLeaseRevocationStorageProvider.overrideWithValue(
-              BuzzPushLeaseRevocationStorage(secure: FakeSecureStorage()),
+            coreviaTalkPushLeaseRevocationStorageProvider.overrideWithValue(
+              CoreviaTalkPushLeaseRevocationStorage(secure: FakeSecureStorage()),
             ),
             relaySessionProvider.overrideWith(() => session),
             myPubkeyProvider.overrideWithValue(nostr.Keys('1' * 64).public),
-            buzzPushDescriptorFetcherProvider.overrideWithValue((_) async {
+            coreviaTalkPushDescriptorFetcherProvider.overrideWithValue((_) async {
               discoveries++;
               return _descriptor;
             }),
             appLifecycleProvider.overrideWith(_Lifecycle.new),
-            buzzPushAuthorizationStatusReaderProvider.overrideWithValue(
-              () async => BuzzPushAuthorizationStatus.denied,
+            coreviaTalkPushAuthorizationStatusReaderProvider.overrideWithValue(
+              () async => CoreviaTalkPushAuthorizationStatus.denied,
             ),
           ],
-          child: BuzzPushBootstrap(
+          child: CoreviaTalkPushBootstrap(
             child: MaterialApp(
               theme: AppTheme.light(),
               home: ValueListenableBuilder(
@@ -336,7 +336,7 @@ class _Connected extends RelaySessionNotifier {
     NostrEvent event, {
     Duration timeout = const Duration(seconds: 8),
   }) async {
-    expect(event.kind, buzzPushLeaseKind);
+    expect(event.kind, coreviaTalkPushLeaseKind);
     final plaintext = nip44Decrypt(
       getConversationKey('2' * 64, event.pubkey),
       event.content,
@@ -351,7 +351,7 @@ class _Connected extends RelaySessionNotifier {
   SessionState build() => const SessionState(status: SessionStatus.connected);
 }
 
-final _descriptor = BuzzPushLeaseDescriptor(
+final _descriptor = CoreviaTalkPushLeaseDescriptor(
   origin: 'wss://relay.example',
   executorKeyId: 'relay-v1',
   executorPubkey: nostr.Keys('2' * 64).public,

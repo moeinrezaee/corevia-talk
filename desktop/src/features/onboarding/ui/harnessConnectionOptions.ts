@@ -11,7 +11,7 @@ const SUBSCRIPTION_RUNTIME_IDS = new Set([
 ]);
 
 const API_RUNTIME_IDS = new Set([
-  "buzz-agent",
+  "corevia-talk-agent",
   "goose",
   "omp",
   "grok",
@@ -58,7 +58,7 @@ export function orderRuntimesForConnectionMethod(
 ) {
   const priority = (runtime: AcpRuntimeCatalogEntry) => {
     if (method !== "api") return 0;
-    if (runtime.id === "buzz-agent") return 0;
+    if (runtime.id === "corevia-talk-agent") return 0;
     if (runtime.id === "goose") return 1;
     return 2;
   };

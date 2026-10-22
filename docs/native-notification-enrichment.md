@@ -1,6 +1,6 @@
 # Sender information in iOS notifications
 
-Buzz must show a sender's name and avatar even when the main app has never
+Corevia Talk must show a sender's name and avatar even when the main app has never
 loaded that sender's profile. The notification service extension fetches and
 caches the information it needs. The main app supplies signed-in accounts,
 relay configuration and credentials in the shared Keychain. It does not export
@@ -24,9 +24,9 @@ When a sender changes their avatar, the previous image remains usable until
 the replacement arrives. When a verified profile removes the avatar, the old
 image is no longer shown. A late response must not restore a removed avatar.
 
-The extension supports the same avatar sources as the app: Buzz uploads,
+The extension supports the same avatar sources as the app: Corevia Talk uploads,
 external HTTP(S) images and supported inline images. It uses existing server
-thumbnails for eligible Buzz uploads. A separate resized-image cache is not
+thumbnails for eligible Corevia Talk uploads. A separate resized-image cache is not
 required. Animated avatars use the sender-selected still image. Inline SVGs
 are rendered natively. Image decoding has size limits; SVG decoding also limits
 nesting and repeated references. Embedded fonts, external SVG resources and

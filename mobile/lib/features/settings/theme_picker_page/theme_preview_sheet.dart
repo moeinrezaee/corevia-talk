@@ -20,7 +20,7 @@ class _ThemePreviewExperience extends HookConsumerWidget {
       ThemeMode.system => platformBrightness,
     };
     final selectedEntry = findTheme(
-      brightness == Brightness.dark ? buzzDarkThemeName : buzzThemeName,
+      brightness == Brightness.dark ? coreviaTalkDarkThemeName : coreviaTalkThemeName,
     )!;
     final selectedBaseScheme = brightness == Brightness.dark
         ? darkColorScheme
@@ -39,8 +39,8 @@ class _ThemePreviewExperience extends HookConsumerWidget {
           .setPreference(
             CommunityThemePreference(
               theme: draftMode.value == ThemeMode.dark
-                  ? buzzDarkThemeName
-                  : buzzThemeName,
+                  ? coreviaTalkDarkThemeName
+                  : coreviaTalkThemeName,
               accent: chatColorChoices[draftAccent.value].wireValue,
               followSystem: draftMode.value == ThemeMode.system,
             ),
@@ -310,7 +310,7 @@ class _ThemePreviewCloseButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(Radii.dialog),
           ),
         ),
-        icon: const Icon(BuzzIcons.x, size: 24),
+        icon: const Icon(CoreviaTalkIcons.x, size: 24),
       ),
     );
   }
@@ -431,9 +431,9 @@ class _AppearanceCycleAction extends StatelessWidget {
   final VoidCallback onTap;
 
   IconData get _icon => switch (mode) {
-    ThemeMode.light => BuzzIcons.sun,
-    ThemeMode.dark => BuzzIcons.moon,
-    ThemeMode.system => BuzzIcons.sunMoon,
+    ThemeMode.light => CoreviaTalkIcons.sun,
+    ThemeMode.dark => CoreviaTalkIcons.moon,
+    ThemeMode.system => CoreviaTalkIcons.sunMoon,
   };
 
   IosGlassNavigationIcon get _iosIcon => switch (mode) {

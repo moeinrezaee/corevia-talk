@@ -21,7 +21,7 @@ function configureQueryFocusManager() {
   });
 }
 
-export function createBuzzQueryClient() {
+export function createCoreviaTalkQueryClient() {
   configureQueryFocusManager();
   return new QueryClient({
     defaultOptions: {

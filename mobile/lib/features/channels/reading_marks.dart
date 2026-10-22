@@ -11,10 +11,10 @@ import 'timeline_message.dart';
 import 'unread_badge/is_high_priority_event.dart';
 
 /// How long a row must stay fully visible before it counts as read. This is
-/// the same dwell the web and desktop app (`buzz-app`) uses.
+/// the same dwell the web and desktop app (`corevia-talk-app`) uses.
 const readingDwell = Duration(milliseconds: 300);
 
-/// The read marks to write after a reading dwell, following `buzz-app`'s
+/// The read marks to write after a reading dwell, following `corevia-talk-app`'s
 /// rules (its `docs/unread.md`):
 ///
 /// - When the newest message is at the bottom, a channel writes
@@ -24,7 +24,7 @@ const readingDwell = Duration(milliseconds: 300);
 /// - Each fully visible message gets its own `msg:` mark unless its own mark,
 ///   the channel mark, or (for an ordinary top-level message) `activity:`
 ///   already reads it. A thread mark never counts here: a reply finds its
-///   thread only while the root is loaded, so `buzz-app` keeps reply marks.
+///   thread only while the root is loaded, so `corevia-talk-app` keeps reply marks.
 /// - Automatic reading never writes the channel mark. Only an explicit
 ///   Mark read does that.
 ///

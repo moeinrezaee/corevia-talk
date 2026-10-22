@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/features/channels/local_message_send_animation_provider.dart';
-import 'package:buzz/features/channels/local_message_send_transition.dart';
-import 'package:buzz/features/channels/local_send_row.dart';
+import 'package:corevia_talk/features/channels/local_message_send_animation_provider.dart';
+import 'package:corevia_talk/features/channels/local_message_send_transition.dart';
+import 'package:corevia_talk/features/channels/local_send_row.dart';
 
 Widget _testable({bool animate = true, bool reduceMotion = false}) =>
     ProviderScope(

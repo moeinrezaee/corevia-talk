@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channels_provider.dart';
-import 'package:buzz/features/channels/me/me_page.dart';
-import 'package:buzz/features/channels/me/me_unread_provider.dart';
-import 'package:buzz/features/channels/unread_badge/observed_unread_event.dart';
-import 'package:buzz/features/home/home_page.dart';
-import 'package:buzz/shared/me/me_assistants.dart';
-import 'package:buzz/shared/me/me_groups.dart';
-import 'package:buzz/shared/me/me_sync.dart';
-import 'package:buzz/shared/read_state/read_state_provider.dart';
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channels_provider.dart';
+import 'package:corevia_talk/features/channels/me/me_page.dart';
+import 'package:corevia_talk/features/channels/me/me_unread_provider.dart';
+import 'package:corevia_talk/features/channels/unread_badge/observed_unread_event.dart';
+import 'package:corevia_talk/features/home/home_page.dart';
+import 'package:corevia_talk/shared/me/me_assistants.dart';
+import 'package:corevia_talk/shared/me/me_groups.dart';
+import 'package:corevia_talk/shared/me/me_sync.dart';
+import 'package:corevia_talk/shared/read_state/read_state_provider.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 
 Channel chat(String id, {bool member = true, bool archived = false}) => Channel(
   id: id,

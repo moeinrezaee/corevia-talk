@@ -3,7 +3,7 @@
 DO $$
 BEGIN
     IF EXISTS (SELECT 1 FROM push_leases WHERE active) THEN
-        RAISE EXCEPTION 'buzz-push-v1 requires no active legacy push leases. Retire legacy leases before upgrading.';
+        RAISE EXCEPTION 'corevia-talk-push-v1 requires no active legacy push leases. Retire legacy leases before upgrading.';
     END IF;
 END
 $$;
@@ -19,7 +19,7 @@ CREATE UNIQUE INDEX push_leases_endpoint_unique
 DO $$
 BEGIN
     IF EXISTS (SELECT 1 FROM push_gateway_installations) THEN
-        RAISE EXCEPTION 'buzz-push-v1 requires an empty gateway authority store. Stop old gateway replicas and provision a fresh dedicated database before upgrading.';
+        RAISE EXCEPTION 'corevia-talk-push-v1 requires an empty gateway authority store. Stop old gateway replicas and provision a fresh dedicated database before upgrading.';
     END IF;
 END
 $$;

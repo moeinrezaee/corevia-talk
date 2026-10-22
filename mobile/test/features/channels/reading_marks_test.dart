@@ -1,6 +1,6 @@
-import 'package:buzz/features/channels/reading_marks.dart';
-import 'package:buzz/features/channels/timeline_message.dart';
-import 'package:buzz/shared/read_state/read_state_provider.dart';
+import 'package:corevia_talk/features/channels/reading_marks.dart';
+import 'package:corevia_talk/features/channels/timeline_message.dart';
+import 'package:corevia_talk/shared/read_state/read_state_provider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -270,7 +270,7 @@ void main() {
           threadRootId: 'root',
         ),
         // Thread catch-up reads a reply only while its root is loaded, so
-        // each visible reply keeps its own mark, as in `buzz-app`.
+        // each visible reply keeps its own mark, as in `corevia-talk-app`.
         {'thread-activity:root': 200, 'msg:r1': 100, 'msg:r2': 200},
       );
     });

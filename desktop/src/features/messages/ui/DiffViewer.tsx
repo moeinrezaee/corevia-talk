@@ -77,7 +77,7 @@ export function DiffViewer({
   }
 
   return (
-    <div className={cn("buzz-diff-theme", className)}>
+    <div className={cn("corevia-talk-diff-theme", className)}>
       {searchPreview ? (
         <pre
           className="mb-3 whitespace-pre-wrap rounded-lg bg-muted/35 p-2 font-mono text-xs text-muted-foreground"
@@ -139,14 +139,14 @@ export function DiffViewer({
               {file.hunks.length > 0 ? (
                 <Diff
                   className={cn(
-                    "buzz-diff-table",
+                    "corevia-talk-diff-table",
                     viewType === "split" ? "min-w-[780px]" : "w-full",
                   )}
-                  codeClassName="buzz-diff-code"
+                  codeClassName="corevia-talk-diff-code"
                   diffType={diffType}
-                  gutterClassName="buzz-diff-gutter"
+                  gutterClassName="corevia-talk-diff-gutter"
                   hunks={file.hunks}
-                  lineClassName="buzz-diff-line"
+                  lineClassName="corevia-talk-diff-line"
                   viewType={viewType}
                 >
                   {(hunks) =>

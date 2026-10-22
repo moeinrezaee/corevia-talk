@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/theme/theme.dart';
 import '../../shared/widgets/app_list_card_item.dart';
 import '../../shared/widgets/avatar_image.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../shared/identity_names/identity_names_provider.dart';
 import '../../shared/profile/user_cache_provider.dart';
 import '../../shared/relay/relay.dart';
@@ -47,7 +47,7 @@ Future<bool?> showAddChannelMembersSheet({
     }
   }
   final mediaQuery = MediaQuery.of(context);
-  return showBuzzModalBottomSheet<bool>(
+  return showCoreviaTalkModalBottomSheet<bool>(
     context: context,
     title: tl('Add members'),
     isScrollControlled: true,
@@ -284,7 +284,7 @@ class AddChannelMembersSheet extends HookConsumerWidget {
                 onChanged: (value) => query.value = value,
                 decoration: InputDecoration(
                   hintText: tl('Search for people or agents'),
-                  prefixIcon: Icon(BuzzIcons.search),
+                  prefixIcon: Icon(CoreviaTalkIcons.search),
                 ),
               ),
               if (selectedUsers.value.isNotEmpty) ...[
@@ -364,8 +364,8 @@ class AddChannelMembersSheet extends HookConsumerWidget {
                                   ),
                                   trailing: Icon(
                                     selected
-                                        ? BuzzIcons.circleCheck
-                                        : BuzzIcons.plus,
+                                        ? CoreviaTalkIcons.circleCheck
+                                        : CoreviaTalkIcons.plus,
                                     color: selected
                                         ? context.colors.primary
                                         : context.colors.onSurfaceVariant,
@@ -377,7 +377,7 @@ class AddChannelMembersSheet extends HookConsumerWidget {
                           },
                         ),
                   loading: () => Center(
-                    child: BuzzLoadingIndicator(
+                    child: CoreviaTalkLoadingIndicator(
                       size: 44,
                       semanticLabel: tl('Loading people and agents'),
                     ),

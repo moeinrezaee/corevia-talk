@@ -4,7 +4,7 @@ import UIKit
 import UserNotifications
 import XCTest
 
-@testable import Buzz
+@testable import Corevia Talk
 
 class RunnerTests: XCTestCase {
 
@@ -154,7 +154,7 @@ class RunnerTests: XCTestCase {
     defer { window.isHidden = true }
     let messenger = NavigationTestMessenger()
     let factory = IosNavigationBarFactory(messenger: messenger, parent: parent)
-    var arguments: [String: Any] = ["title": "buzz-onboarding", "subtitle": "27 members",
+    var arguments: [String: Any] = ["title": "corevia-talk-onboarding", "subtitle": "27 members",
       "back": true, "titleEnabled": true,
       "actions": [["id": "huddle", "label": "Huddle", "symbol": "headphones", "enabled": true]]]
     let bar = factory.create(withFrame: CGRect(x: 0, y: 0, width: 393, height: 160),

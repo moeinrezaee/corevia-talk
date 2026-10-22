@@ -10,7 +10,7 @@ concurrency:
 
 env:
   CARGO_TERM_COLOR: always
-  BUZZ_TEST_POSTGRES_PASSWORD: buzz_dev
+  COREVIA_TALK_TEST_POSTGRES_PASSWORD: corevia_talk_dev
   PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/ms-playwright
 
 jobs:

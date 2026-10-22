@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -68,7 +68,7 @@ void main() {
     CommunityThemePreference parse(String accent) =>
         CommunityThemePreference.fromJson({
           'version': 1,
-          'theme': 'buzz-dark',
+          'theme': 'corevia-talk-dark',
           'accent': accent,
           'followSystem': false,
         });

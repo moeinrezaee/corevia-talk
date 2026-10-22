@@ -52,7 +52,7 @@ fi
 
 grep -q 'verify-release-ref\.sh' "$repo_root/.github/workflows/release.yml"
 grep -q 'verify-release-ref\.sh' "$repo_root/.github/workflows/docker.yml"
-# Kargo's buzz-image and buzz-push-gateway-image warehouses select Lexical over
+# Kargo's corevia-talk-image and corevia-talk-push-gateway-image warehouses select Lexical over
 # ^main-[0-9]{14}-[0-9a-f]{7}$; a drifted format stops Freight discovery
 # silently, so pin all three image legs (relay, relay-debug, push gateway).
 sortable_main_tag="            type=raw,value=main-{{commit_date 'YYYYMMDDHHmmss'}}-{{sha}},enable=\${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}"
@@ -67,8 +67,8 @@ grep -q 'test-release-ref-contract\.sh' "$repo_root/.github/workflows/ci.yml"
 "$repo_root/scripts/test-desktop-release-cache-workflow.sh"
 auto_tag="$repo_root/.github/workflows/auto-tag-on-release-pr-merge.yml"
 grep -q 'actions/create-github-app-token@' "$auto_tag"
-grep -q 'client-id:.*vars\.BUZZ_RELEASE_TAGGER_CLIENT_ID' "$auto_tag"
-grep -q 'private-key:.*secrets\.BUZZ_RELEASE_TAGGER_PRIVATE_KEY' "$auto_tag"
+grep -q 'client-id:.*vars\.COREVIA_TALK_RELEASE_TAGGER_CLIENT_ID' "$auto_tag"
+grep -q 'private-key:.*secrets\.COREVIA_TALK_RELEASE_TAGGER_PRIVATE_KEY' "$auto_tag"
 grep -q 'permission-contents: write' "$auto_tag"
 grep -q 'GH_TOKEN:.*steps\.release-tagger\.outputs\.token' "$auto_tag"
 grep -Fq 'git/refs' "$auto_tag"

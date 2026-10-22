@@ -8,22 +8,22 @@ services:
       relay:
         condition: service_healthy
     environment:
-      BUZZ_DOMAIN: ${BUZZ_DOMAIN:?set BUZZ_DOMAIN}
+      COREVIA_TALK_DOMAIN: ${COREVIA_TALK_DOMAIN:?set COREVIA_TALK_DOMAIN}
     ports:
       - "${CADDY_HTTP_PORT:-80}:80"
       - "${CADDY_HTTPS_PORT:-443}:443"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - buzz-caddy-data:/data
-      - buzz-caddy-config:/config
+      - corevia-talk-caddy-data:/data
+      - corevia-talk-caddy-config:/config
     restart: unless-stopped
     networks:
-      - buzz-net
+      - corevia-talk-net
 
 volumes:
-  buzz-caddy-data:
+  corevia-talk-caddy-data:
     labels:
-      com.buzz.volume: caddy-data
-  buzz-caddy-config:
+      com.coreviatalk.volume: caddy-data
+  corevia-talk-caddy-config:
     labels:
-      com.buzz.volume: caddy-config
+      com.coreviatalk.volume: caddy-config

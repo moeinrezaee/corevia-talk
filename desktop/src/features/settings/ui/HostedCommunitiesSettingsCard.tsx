@@ -95,7 +95,7 @@ export function HostedCommunitiesSettingsCard() {
       identityResponse.error &&
       identityResponse.error.code !== "unauthorized" &&
       // `missing_mapping` (setup_needed) just means this account hasn't linked a
-      // Buzz identity yet — that's the connect-card empty state, not an error to
+      // Corevia Talk identity yet — that's the connect-card empty state, not an error to
       // surface at the top of the page.
       !identityResponse.error.setup_needed
     ) {
@@ -103,7 +103,7 @@ export function HostedCommunitiesSettingsCard() {
         errorMessage(
           identityResponse.error,
           identityResponse.correlation_id,
-          "Could not load the connected Buzz identity.",
+          "Could not load the connected Corevia Talk identity.",
         ),
       );
     }
@@ -179,7 +179,7 @@ export function HostedCommunitiesSettingsCard() {
     });
 
   const connectIdentity = () =>
-    run("Connecting Buzz identity…", async () => {
+    run("Connecting Corevia Talk identity…", async () => {
       const response = await invoke<IdentityResponse>(
         "bind_builderlab_nostr_identity",
       );
@@ -188,7 +188,7 @@ export function HostedCommunitiesSettingsCard() {
           errorMessage(
             response.error,
             response.correlation_id,
-            "Could not connect the Buzz identity.",
+            "Could not connect the Corevia Talk identity.",
           ),
         );
       }
@@ -206,7 +206,7 @@ export function HostedCommunitiesSettingsCard() {
           errorMessage(
             response.error,
             response.correlation_id,
-            "Could not unpair the Buzz identity.",
+            "Could not unpair the Corevia Talk identity.",
           ),
         );
       }
@@ -262,7 +262,7 @@ export function HostedCommunitiesSettingsCard() {
           errorMessage(
             released.error,
             released.correlation_id,
-            "Could not release the previously connected Buzz identity.",
+            "Could not release the previously connected Corevia Talk identity.",
           ),
         );
       }
@@ -275,11 +275,11 @@ export function HostedCommunitiesSettingsCard() {
         await loadAccount();
         throw new Error(
           bound.error.code === "pubkey_already_bound"
-            ? "This device's Buzz identity is already reserved by another Builderlab account, so it can't be connected here. Sign in with that account, or transfer the identity there first."
+            ? "This device's Corevia Talk identity is already reserved by another Builderlab account, so it can't be connected here. Sign in with that account, or transfer the identity there first."
             : errorMessage(
                 bound.error,
                 bound.correlation_id,
-                "Could not connect this device's Buzz identity.",
+                "Could not connect this device's Corevia Talk identity.",
               ),
         );
       }
@@ -406,7 +406,7 @@ export function HostedCommunitiesSettingsCard() {
           errorMessage(
             availabilityResponse.error,
             availabilityResponse.correlation_id,
-            "That Buzz address is already taken.",
+            "That Corevia Talk address is already taken.",
           ),
         );
       }
@@ -451,7 +451,7 @@ export function HostedCommunitiesSettingsCard() {
       <SettingsSectionHeader
         title={tl("Hosted communities")}
         description={tl(
-          "Buzz works with any relay. This page is only for relay hosting provided by Block — sign in with a Builderlab account to create and manage Block-hosted communities. Builderlab sign-in is used on this page alone.",
+          "Corevia Talk works with any relay. This page is only for relay hosting provided by Block — sign in with a Builderlab account to create and manage Block-hosted communities. Builderlab sign-in is used on this page alone.",
         )}
       />
 
@@ -477,7 +477,7 @@ export function HostedCommunitiesSettingsCard() {
             data-settings-subcopy
           >
             {tl(
-              "Authentication opens in your browser and returns securely to Buzz. You can use every other part of the app without signing in.",
+              "Authentication opens in your browser and returns securely to Corevia Talk. You can use every other part of the app without signing in.",
             )}
           </p>
           <Button
@@ -517,14 +517,14 @@ export function HostedCommunitiesSettingsCard() {
           {!identity ? (
             <div className="rounded-xl border border-amber-500/40 bg-amber-500/5 p-5">
               <h3 className="font-medium">
-                {tl("Link this account to your Buzz identity")}
+                {tl("Link this account to your Corevia Talk identity")}
               </h3>
               <p
                 className="mt-2 text-sm text-muted-foreground/70"
                 data-settings-subcopy
               >
                 {tl(
-                  "This Builderlab account isn't linked to a Buzz identity yet. Connect this device's key to create and own communities under it — Buzz signs a one-time challenge locally, so your private key never leaves Desktop.",
+                  "This Builderlab account isn't linked to a Corevia Talk identity yet. Connect this device's key to create and own communities under it — Corevia Talk signs a one-time challenge locally, so your private key never leaves Desktop.",
                 )}
               </p>
               <Button
@@ -535,7 +535,7 @@ export function HostedCommunitiesSettingsCard() {
                 {action ? (
                   <LoaderCircle className="h-4 w-4 animate-spin" />
                 ) : null}
-                {action ?? tl("Connect Buzz identity")}
+                {action ?? tl("Connect Corevia Talk identity")}
               </Button>
             </div>
           ) : identityMismatch ? (
@@ -545,7 +545,7 @@ export function HostedCommunitiesSettingsCard() {
                 <div>
                   <h3 className="font-medium">
                     {tl(
-                      "This account is connected to a different Buzz identity",
+                      "This account is connected to a different Corevia Talk identity",
                     )}
                   </h3>
                   <p
@@ -553,7 +553,7 @@ export function HostedCommunitiesSettingsCard() {
                     data-settings-subcopy
                   >
                     {tl(
-                      "Your Builderlab account owns communities under another Buzz key, so connecting them here would join a relay this device isn't a member of. Creating and connecting are paused until the identities match.",
+                      "Your Builderlab account owns communities under another Corevia Talk key, so connecting them here would join a relay this device isn't a member of. Creating and connecting are paused until the identities match.",
                     )}
                   </p>
                   <dl className="mt-3 space-y-1 text-xs">
@@ -591,7 +591,7 @@ export function HostedCommunitiesSettingsCard() {
             <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border/70 p-4">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <CheckCircle2 className="h-4 w-4 text-emerald-500" />{" "}
-                {tl("Buzz identity connected")}
+                {tl("Corevia Talk identity connected")}
                 {boundNpub ? (
                   <span className="font-mono text-xs">{boundNpub}</span>
                 ) : null}
@@ -775,11 +775,11 @@ function UnpairIdentityButton({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {tl("Unpair this Buzz identity?")}
+            {tl("Unpair this Corevia Talk identity?")}
           </AlertDialogTitle>
           <AlertDialogDescription>
             {tl(
-              "Your Builderlab account will no longer be connected to this Buzz key. You can reconnect any key later, but community actions stay unavailable until you do.",
+              "Your Builderlab account will no longer be connected to this Corevia Talk key. You can reconnect any key later, but community actions stay unavailable until you do.",
             )}
           </AlertDialogDescription>
         </AlertDialogHeader>
@@ -979,7 +979,7 @@ function TransferOwnershipDialog({
           <DialogDescription>
             {tl("Transfer")} {communityName}{" "}
             {tl(
-              "to another person. You become a regular member. The recipient needs a connected Buzz identity first, and this can't be undone.",
+              "to another person. You become a regular member. The recipient needs a connected Corevia Talk identity first, and this can't be undone.",
             )}
           </DialogDescription>
         </DialogHeader>

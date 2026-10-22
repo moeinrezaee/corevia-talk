@@ -52,10 +52,10 @@ function ErrorBanner({ message }: { message: string | null }) {
 }
 
 const NEUTRAL_EMOJI_PICKER_THEME_VARS = {
-  "--buzz-emoji-picker-rgb-background":
-    "var(--buzz-onboarding-emoji-picker-background)",
-  "--buzz-emoji-picker-rgb-color": "var(--buzz-onboarding-emoji-picker-color)",
-  "--buzz-emoji-picker-rgb-input": "var(--buzz-onboarding-emoji-picker-input)",
+  "--corevia-talk-emoji-picker-rgb-background":
+    "var(--corevia-talk-onboarding-emoji-picker-background)",
+  "--corevia-talk-emoji-picker-rgb-color": "var(--corevia-talk-onboarding-emoji-picker-color)",
+  "--corevia-talk-emoji-picker-rgb-input": "var(--corevia-talk-onboarding-emoji-picker-input)",
 } as React.CSSProperties;
 
 const AVATAR_ACTIONS_MOTION_TRANSITION = {
@@ -92,8 +92,8 @@ function AvatarPreview({
         >
           <span
             className={cn(
-              "buzz-avatar-emoji-glyph flex h-full w-full items-center justify-center text-[6rem] leading-[6.25rem]",
-              avatarSquishKey > 0 && "buzz-avatar-squish",
+              "corevia-talk-avatar-emoji-glyph flex h-full w-full items-center justify-center text-[6rem] leading-[6.25rem]",
+              avatarSquishKey > 0 && "corevia-talk-avatar-squish",
             )}
             data-testid="onboarding-avatar-preview-emoji"
             key={avatarSquishKey}

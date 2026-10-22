@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:buzz/shared/widgets/ios_media_carousel.dart';
-import 'package:buzz/shared/relay/media_auth.dart';
-import 'package:buzz/shared/relay/media_image.dart';
+import 'package:corevia_talk/shared/widgets/ios_media_carousel.dart';
+import 'package:corevia_talk/shared/relay/media_auth.dart';
+import 'package:corevia_talk/shared/relay/media_image.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
 import 'package:flutter/foundation.dart';

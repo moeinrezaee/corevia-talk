@@ -66,7 +66,7 @@ class DeviceIdentitySource {
         result[pubkey] = (nsec: nsec, label: names.join(', '));
       }
 
-      for (final key in ['buzz_communities', 'buzz_workspaces']) {
+      for (final key in ['corevia_talk_communities', 'corevia_talk_workspaces']) {
         final raw = await _storage.read(key: key);
         if (raw == null) continue;
         final records = jsonDecode(raw) as List;
@@ -82,8 +82,8 @@ class DeviceIdentitySource {
         }
       }
       add(
-        await _storage.read(key: 'buzz_nsec'),
-        await _storage.read(key: 'buzz_pubkey'),
+        await _storage.read(key: 'corevia_talk_nsec'),
+        await _storage.read(key: 'corevia_talk_pubkey'),
         'Previous device identity',
       );
       return result;

@@ -66,10 +66,10 @@ const ENTERING_CURTAIN_FADE_MS = 500;
 const ENTERING_CURTAIN_MAX_WAIT_MS = 8_000;
 
 const NEUTRAL_EMOJI_PICKER_THEME_VARS = {
-  "--buzz-emoji-picker-rgb-background":
-    "var(--buzz-onboarding-emoji-picker-background)",
-  "--buzz-emoji-picker-rgb-color": "var(--buzz-onboarding-emoji-picker-color)",
-  "--buzz-emoji-picker-rgb-input": "var(--buzz-onboarding-emoji-picker-input)",
+  "--corevia-talk-emoji-picker-rgb-background":
+    "var(--corevia-talk-onboarding-emoji-picker-background)",
+  "--corevia-talk-emoji-picker-rgb-color": "var(--corevia-talk-onboarding-emoji-picker-color)",
+  "--corevia-talk-emoji-picker-rgb-input": "var(--corevia-talk-onboarding-emoji-picker-input)",
 } as React.CSSProperties;
 
 function AvatarCircle({
@@ -121,7 +121,7 @@ function AvatarCircle({
       ) : (
         <span
           className={cn(
-            "flex items-center justify-center rounded-full text-[var(--buzz-onboarding-backup-ink)] transition-colors",
+            "flex items-center justify-center rounded-full text-[var(--corevia-talk-onboarding-backup-ink)] transition-colors",
             cardLayout
               ? "size-28 border border-[#e2e2e2] bg-[#f9f9f9] group-hover:bg-[#f3f3f3] min-[44rem]:size-36"
               : "size-36 bg-white/30 group-hover:bg-white/40",
@@ -635,8 +635,8 @@ export function CommunityOnboardingFlow({
                   open={isAvatarEditorOpen}
                 >
                   <DialogContent
-                    className="buzz-onboarding-neutral-theme w-[min(calc(100vw-2rem),920px)] max-w-[920px] gap-0 overflow-hidden rounded-[18px] bg-[rgb(var(--buzz-onboarding-avatar-dialog-bg))] px-8 pb-6 pt-10 text-sm text-foreground shadow-[0_28px_90px_rgb(var(--buzz-onboarding-avatar-dialog-shadow)_/_0.28),0_8px_28px_rgb(var(--buzz-onboarding-avatar-dialog-shadow)_/_0.18)] transition-[height] duration-[250ms] ease-out"
-                    closeButtonClassName="end-6 top-6 h-10 w-10 rounded-full bg-[rgb(var(--buzz-onboarding-avatar-action-bg))] text-[rgb(var(--buzz-onboarding-avatar-action-fg))] hover:bg-[rgb(var(--buzz-onboarding-avatar-action-bg)/0.9)] hover:text-[rgb(var(--buzz-onboarding-avatar-action-fg))]"
+                    className="corevia-talk-onboarding-neutral-theme w-[min(calc(100vw-2rem),920px)] max-w-[920px] gap-0 overflow-hidden rounded-[18px] bg-[rgb(var(--corevia-talk-onboarding-avatar-dialog-bg))] px-8 pb-6 pt-10 text-sm text-foreground shadow-[0_28px_90px_rgb(var(--corevia-talk-onboarding-avatar-dialog-shadow)_/_0.28),0_8px_28px_rgb(var(--corevia-talk-onboarding-avatar-dialog-shadow)_/_0.18)] transition-[height] duration-[250ms] ease-out"
+                    closeButtonClassName="end-6 top-6 h-10 w-10 rounded-full bg-[rgb(var(--corevia-talk-onboarding-avatar-action-bg))] text-[rgb(var(--corevia-talk-onboarding-avatar-action-fg))] hover:bg-[rgb(var(--corevia-talk-onboarding-avatar-action-bg)/0.9)] hover:text-[rgb(var(--corevia-talk-onboarding-avatar-action-fg))]"
                     data-system-color-scheme="light"
                     data-testid="community-avatar-editor-key-frame"
                     onCloseAutoFocus={(event) => {
@@ -699,7 +699,7 @@ export function CommunityOnboardingFlow({
                                     <span
                                       className={cn(
                                         avatarSquishKey > 0 &&
-                                          "buzz-avatar-squish",
+                                          "corevia-talk-avatar-squish",
                                       )}
                                       data-testid="community-avatar-live-preview-emoji"
                                       key={avatarSquishKey}
@@ -760,7 +760,7 @@ export function CommunityOnboardingFlow({
                 </h1>
                 <p className="mx-auto mt-3 max-w-[400px] text-sm leading-6 text-foreground/80">
                   {tl(
-                    "Buzz lets you bring multiple agents into the same workspace. Your team will help you get started using Buzz.",
+                    "Corevia Talk lets you bring multiple agents into the same workspace. Your team will help you get started using Corevia Talk.",
                   )}
                 </p>
                 <div className="flex w-full flex-1 items-center justify-center py-6">
@@ -817,7 +817,7 @@ export function CommunityOnboardingFlow({
                     {isPending || transaction.stage === "entering" ? (
                       <LoadingDots label={tl("Preparing Welcome")} />
                     ) : (
-                      tl("Take me to Buzz")
+                      tl("Take me to Corevia Talk")
                     )}
                   </Button>
                   {starterChannelFailureCount >= 2 ? (

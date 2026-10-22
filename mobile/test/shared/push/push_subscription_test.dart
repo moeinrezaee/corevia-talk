@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:buzz/shared/push/push_subscription.dart';
+import 'package:corevia_talk/shared/push/push_subscription.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -11,19 +11,19 @@ void main() {
   test(
     'desired subscription state round-trips with an accepted-state seam',
     () {
-      final subscriptions = buildDesiredBuzzPushSubscriptions(
+      final subscriptions = buildDesiredCoreviaTalkPushSubscriptions(
         myPubkey: me,
         channelIds: [channelB, channelA],
       );
-      final state = BuzzPushLeaseSubscriptionState.desired(
+      final state = CoreviaTalkPushLeaseSubscriptionState.desired(
         desired: subscriptions,
       );
 
-      final decoded = BuzzPushLeaseSubscriptionState.fromJson(
+      final decoded = CoreviaTalkPushLeaseSubscriptionState.fromJson(
         jsonDecode(jsonEncode(state.toJson())) as Map<String, dynamic>,
       );
 
-      expect(decoded.authority, BuzzPushLeaseSubscriptionAuthority.desired);
+      expect(decoded.authority, CoreviaTalkPushLeaseSubscriptionAuthority.desired);
       expect(decoded.accepted, isNull);
       expect(decoded.toJson(), state.toJson());
       expect(decoded.authoritative, hasLength(2));
@@ -32,10 +32,10 @@ void main() {
   );
 
   test('accepted authority requires observed accepted subscriptions', () {
-    final subscription = buildDesiredBuzzPushSubscriptions(myPubkey: me).single;
+    final subscription = buildDesiredCoreviaTalkPushSubscriptions(myPubkey: me).single;
 
     expect(
-      () => BuzzPushLeaseSubscriptionState.fromJson({
+      () => CoreviaTalkPushLeaseSubscriptionState.fromJson({
         'authority': 'accepted',
         'desired': [subscription.toJson()],
       }),
@@ -44,26 +44,26 @@ void main() {
   });
 
   test('persists accepted and reserved relay lease generations', () {
-    final subscription = buildDesiredBuzzPushSubscriptions(myPubkey: me).single;
+    final subscription = buildDesiredCoreviaTalkPushSubscriptions(myPubkey: me).single;
     final state =
-        BuzzPushLeaseSubscriptionState.desired(desired: [subscription])
+        CoreviaTalkPushLeaseSubscriptionState.desired(desired: [subscription])
             .withAccepted(subscriptions: [subscription], generation: 9)
             .withReservedGeneration(10);
 
-    final decoded = BuzzPushLeaseSubscriptionState.fromJson(state.toJson());
+    final decoded = CoreviaTalkPushLeaseSubscriptionState.fromJson(state.toJson());
     expect(decoded.acceptedGeneration, 9);
     expect(decoded.generationCursor, 10);
     expect(decoded.toJson(), state.toJson());
   });
 
   test('a retry reserves beyond a committed but unrecorded generation', () {
-    final subscription = buildDesiredBuzzPushSubscriptions(myPubkey: me).single;
-    final accepted = BuzzPushLeaseSubscriptionState.desired(
+    final subscription = buildDesiredCoreviaTalkPushSubscriptions(myPubkey: me).single;
+    final accepted = CoreviaTalkPushLeaseSubscriptionState.desired(
       desired: [subscription],
     ).withAccepted(subscriptions: [subscription], generation: 4);
     final committed = accepted.withReservedGeneration(5);
 
-    final recovered = BuzzPushLeaseSubscriptionState.fromJson(
+    final recovered = CoreviaTalkPushLeaseSubscriptionState.fromJson(
       committed.toJson(),
     ).withReservedGeneration(6);
 
@@ -72,24 +72,24 @@ void main() {
   });
 
   test('builds aligned self and unmuted channel subscriptions', () {
-    final subscriptions = buildDesiredBuzzPushSubscriptions(
+    final subscriptions = buildDesiredCoreviaTalkPushSubscriptions(
       myPubkey: me.toUpperCase(),
       channelIds: [channelB, channelA],
       mutedChannelIds: [channelB, '123e4567-e89b-42d3-a456-426614174099'],
     );
 
     expect(subscriptions, hasLength(2));
-    expect(subscriptions.first.filter.kinds, buzzPushSelfDirectedKinds);
+    expect(subscriptions.first.filter.kinds, coreviaTalkPushSelfDirectedKinds);
     expect(subscriptions.first.filter.kinds, isNot(contains(7)));
     expect(subscriptions.first.filter.pTags, [me]);
-    expect(subscriptions.last.filter.kinds, buzzPushChannelKinds);
+    expect(subscriptions.last.filter.kinds, coreviaTalkPushChannelKinds);
     expect(subscriptions.last.filter.hTags, [channelA]);
     expect(subscriptions.first.ignore, hasLength(2));
-    expect(subscriptions.first.ignore.first.kinds, buzzPushRenderableKinds);
+    expect(subscriptions.first.ignore.first.kinds, coreviaTalkPushRenderableKinds);
     expect(subscriptions.first.ignore.last.hTags, [channelB]);
     expect(
       subscriptions.first.suppress?.pTagsMax,
-      buzzPushHellthreadParticipantLimit,
+      coreviaTalkPushHellthreadParticipantLimit,
     );
   });
 
@@ -99,7 +99,7 @@ void main() {
         '00000000-0000-4000-8000-${i.toString().padLeft(12, '0')}',
     ]..shuffle();
 
-    final subscriptions = buildDesiredBuzzPushSubscriptions(
+    final subscriptions = buildDesiredCoreviaTalkPushSubscriptions(
       myPubkey: me,
       channelIds: channels,
     );
@@ -114,12 +114,12 @@ void main() {
   });
 
   test('rejects malformed and unsupported subscription fields', () {
-    final valid = buildDesiredBuzzPushSubscriptions(
+    final valid = buildDesiredCoreviaTalkPushSubscriptions(
       myPubkey: me,
     ).single.toJson();
 
     expect(
-      () => buildDesiredBuzzPushSubscriptions(
+      () => buildDesiredCoreviaTalkPushSubscriptions(
         myPubkey: me,
         channelIds: const ['not-a-channel'],
       ),
@@ -127,11 +127,11 @@ void main() {
     );
 
     expect(
-      () => BuzzPushSubscription.fromJson({...valid, 'unexpected': true}),
+      () => CoreviaTalkPushSubscription.fromJson({...valid, 'unexpected': true}),
       throwsFormatException,
     );
     expect(
-      () => BuzzPushSubscription.fromJson({
+      () => CoreviaTalkPushSubscription.fromJson({
         'filter': {
           'kinds': [7],
           '#p': [me],
@@ -141,7 +141,7 @@ void main() {
       throwsFormatException,
     );
     expect(
-      () => BuzzPushSubscription.fromJson({
+      () => CoreviaTalkPushSubscription.fromJson({
         'filter': {
           'kinds': [9],
           '#p': ['not-a-pubkey'],

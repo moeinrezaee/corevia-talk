@@ -6,11 +6,11 @@ import '../relay/relay_provider.dart';
 import '../relay/relay_session.dart';
 import 'dev_push_lease.dart';
 
-typedef BuzzPushDescriptorFetcher =
-    Future<BuzzPushLeaseDescriptor> Function(String relayBaseUrl);
+typedef CoreviaTalkPushDescriptorFetcher =
+    Future<CoreviaTalkPushLeaseDescriptor> Function(String relayBaseUrl);
 
-final buzzPushDescriptorFetcherProvider = Provider<BuzzPushDescriptorFetcher>(
-  (ref) => fetchBuzzPushLeaseDescriptor,
+final coreviaTalkPushDescriptorFetcherProvider = Provider<CoreviaTalkPushDescriptorFetcher>(
+  (ref) => fetchCoreviaTalkPushLeaseDescriptor,
 );
 
 /// The fully validated push capability advertised by the current relay.
@@ -20,7 +20,7 @@ final buzzPushDescriptorFetcherProvider = Provider<BuzzPushDescriptorFetcher>(
 /// descriptor is represented as no capability, so no notification permission,
 /// APNs registration, gateway enrollment, or relay lease can begin.
 final currentRelayPushDescriptorProvider =
-    FutureProvider.autoDispose<BuzzPushLeaseDescriptor?>((ref) async {
+    FutureProvider.autoDispose<CoreviaTalkPushLeaseDescriptor?>((ref) async {
       if (!Env.pushGatewayConfigured) return null;
       final sessionStatus = ref.watch(
         relaySessionProvider.select((session) => session.status),
@@ -42,15 +42,15 @@ final currentRelayPushDescriptorProvider =
         return null;
       }
 
-      return discoverBuzzPushRelayCapability(
+      return discoverCoreviaTalkPushRelayCapability(
         config.baseUrl,
-        fetchDescriptor: ref.read(buzzPushDescriptorFetcherProvider),
+        fetchDescriptor: ref.read(coreviaTalkPushDescriptorFetcherProvider),
       );
     });
 
-Future<BuzzPushLeaseDescriptor?> discoverBuzzPushRelayCapability(
+Future<CoreviaTalkPushLeaseDescriptor?> discoverCoreviaTalkPushRelayCapability(
   String relayBaseUrl, {
-  required BuzzPushDescriptorFetcher fetchDescriptor,
+  required CoreviaTalkPushDescriptorFetcher fetchDescriptor,
 }) async {
   try {
     return await fetchDescriptor(relayBaseUrl);
@@ -61,8 +61,8 @@ Future<BuzzPushLeaseDescriptor?> discoverBuzzPushRelayCapability(
   }
 }
 
-Future<void> startBuzzPushRegistrationIfCapable(
-  BuzzPushLeaseDescriptor? descriptor, {
+Future<void> startCoreviaTalkPushRegistrationIfCapable(
+  CoreviaTalkPushLeaseDescriptor? descriptor, {
   required Future<void> Function() startRegistration,
 }) async {
   if (descriptor == null) return;

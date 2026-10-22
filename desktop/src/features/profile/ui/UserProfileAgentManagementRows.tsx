@@ -287,7 +287,7 @@ function AgentDeleteConfirmDialog({
           <li>
             {isProviderAgent
               ? tl(
-                  "Unless the agent is known to be Offline, Buzz first requests shutdown through a channel when available. A failed request cancels deletion. The remote process may still be running even after a successful request.",
+                  "Unless the agent is known to be Offline, Corevia Talk first requests shutdown through a channel when available. A failed request cancels deletion. The remote process may still be running even after a successful request.",
                 )
               : tl("Stops any local agent process before deleting the record")}
           </li>

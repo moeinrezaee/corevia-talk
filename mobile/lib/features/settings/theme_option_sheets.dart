@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/theme/theme.dart';
 import '../../shared/widgets/modal_presentation.dart';
@@ -12,9 +12,9 @@ import '../../shared/i18n/app_language.dart';
 /// Not const: the labels follow the active language.
 List<({ThemeMode mode, String label, IconData icon})>
 get appearanceModeOptions => [
-  (mode: ThemeMode.light, label: tl('Light'), icon: BuzzIcons.sun),
-  (mode: ThemeMode.dark, label: tl('Dark'), icon: BuzzIcons.moon),
-  (mode: ThemeMode.system, label: tl('System'), icon: BuzzIcons.sunMoon),
+  (mode: ThemeMode.light, label: tl('Light'), icon: CoreviaTalkIcons.sun),
+  (mode: ThemeMode.dark, label: tl('Dark'), icon: CoreviaTalkIcons.moon),
+  (mode: ThemeMode.system, label: tl('System'), icon: CoreviaTalkIcons.sunMoon),
 ];
 
 String appearanceModeLabel(ThemeMode mode) =>
@@ -24,7 +24,7 @@ Future<void> showAppearanceModePickerSheet({
   required BuildContext context,
   required ThemeMode selectedMode,
   required ValueChanged<ThemeMode> onSelected,
-}) => showBuzzModalBottomSheet<void>(
+}) => showCoreviaTalkModalBottomSheet<void>(
   context: context,
   title: tl('Appearance'),
   showDragHandle: true,
@@ -37,7 +37,7 @@ Future<void> showAccentColorPickerSheet({
   required ColorScheme colorScheme,
   required int selectedIndex,
   required ValueChanged<int> onSelected,
-}) => showBuzzModalBottomSheet<void>(
+}) => showCoreviaTalkModalBottomSheet<void>(
   context: context,
   title: 'Chat color',
   showDragHandle: true,

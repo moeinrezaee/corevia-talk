@@ -42,9 +42,9 @@ test("normal first launch uses the already-persisted identity", async ({
     () =>
       (
         window as Window & {
-          __BUZZ_E2E_COMMAND_PAYLOADS__?: Array<{ command: string }>;
+          __COREVIA_TALK_E2E_COMMAND_PAYLOADS__?: Array<{ command: string }>;
         }
-      ).__BUZZ_E2E_COMMAND_PAYLOADS__ ?? [],
+      ).__COREVIA_TALK_E2E_COMMAND_PAYLOADS__ ?? [],
   );
   expect(commands.some((entry) => entry.command === "get_identity")).toBe(true);
   expect(
@@ -114,7 +114,7 @@ test("lost boot offers phone recovery with a single-use QR", async ({
   await expect(page.getByTestId("identity-recovery-qr")).toBeVisible();
   await expect(
     page.getByText(
-      "Scan this code with a device where you’re currently signed in to Buzz.",
+      "Scan this code with a device where you’re currently signed in to Corevia Talk.",
     ),
   ).toBeVisible();
   await expect(
@@ -135,12 +135,12 @@ test("lost boot offers phone recovery with a single-use QR", async ({
   const copiedPayload = await page.evaluate(() => {
     const log = (
       window as Window & {
-        __BUZZ_E2E_COMMAND_LOG__?: Array<{
+        __COREVIA_TALK_E2E_COMMAND_LOG__?: Array<{
           command: string;
           payload: Record<string, unknown> | null;
         }>;
       }
-    ).__BUZZ_E2E_COMMAND_LOG__;
+    ).__COREVIA_TALK_E2E_COMMAND_LOG__;
     return log?.findLast(({ command }) => command === "copy_text_to_clipboard")
       ?.payload;
   });
@@ -150,9 +150,9 @@ test("lost boot offers phone recovery with a single-use QR", async ({
     () =>
       (
         window as Window & {
-          __BUZZ_E2E_COMMAND_PAYLOADS__?: Array<{ command: string }>;
+          __COREVIA_TALK_E2E_COMMAND_PAYLOADS__?: Array<{ command: string }>;
         }
-      ).__BUZZ_E2E_COMMAND_PAYLOADS__ ?? [],
+      ).__COREVIA_TALK_E2E_COMMAND_PAYLOADS__ ?? [],
   );
   expect(
     commands.some(
@@ -184,9 +184,9 @@ test("phone recovery uses the desktop pairing card semantics", async ({
   await expect(qrContainer).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
   await expect(qrCode).toHaveAttribute("data-qr-matrix-size", "57");
   await expect(qrCode.locator("[data-qr-finder-pattern]")).toHaveCount(3);
-  await expect(qrCode.locator(".buzz-qr-cell-reveal").first()).toHaveCSS(
+  await expect(qrCode.locator(".corevia-talk-qr-cell-reveal").first()).toHaveCSS(
     "animation-name",
-    "buzz-qr-cell-reveal",
+    "corevia-talk-qr-cell-reveal",
   );
   await waitForAnimations(page);
   const [stageBox, cardBox, qrBox, copyBox] = await Promise.all([
@@ -224,7 +224,7 @@ test("phone recovery uses the desktop pairing card semantics", async ({
   ).toBeVisible();
   await expect(
     card.getByText(
-      "This gives this desktop permanent access to your Buzz identity. Only continue if you trust it.",
+      "This gives this desktop permanent access to your Corevia Talk identity. Only continue if you trust it.",
     ),
   ).toBeVisible();
   await expect(card.getByText(/On your phone, open Settings/)).toHaveCount(0);
@@ -276,7 +276,7 @@ test("canceling recovery uses the standard pairing cancellation state", async ({
     .poll(() =>
       page.evaluate(
         () =>
-          (window.__BUZZ_E2E_COMMAND_LOG__ ?? []).filter(
+          (window.__COREVIA_TALK_E2E_COMMAND_LOG__ ?? []).filter(
             ({ command }) => command === "cancel_pairing",
           ).length,
       ),
@@ -354,7 +354,7 @@ test("desktop refreshes recovery codes before the relay expires them", async ({
   const recoveryStarts = () =>
     page.evaluate(
       () =>
-        (window.__BUZZ_E2E_COMMAND_LOG__ ?? []).filter(
+        (window.__COREVIA_TALK_E2E_COMMAND_LOG__ ?? []).filter(
           ({ command }) => command === "start_identity_recovery_pairing",
         ).length,
     );
@@ -409,9 +409,9 @@ test("start-new-identity from lost mode persists the ephemeral key after confirm
         () =>
           (
             window as Window & {
-              __BUZZ_E2E_COMMAND_PAYLOADS__?: Array<{ command: string }>;
+              __COREVIA_TALK_E2E_COMMAND_PAYLOADS__?: Array<{ command: string }>;
             }
-          ).__BUZZ_E2E_COMMAND_PAYLOADS__?.some(
+          ).__COREVIA_TALK_E2E_COMMAND_PAYLOADS__?.some(
             (e) => e.command === "persist_current_identity",
           ) ?? false,
       ),
@@ -503,9 +503,9 @@ test("locked screen relaunch button records the process-restart invoke", async (
         () =>
           (
             window as Window & {
-              __BUZZ_E2E_COMMAND_PAYLOADS__?: Array<{ command: string }>;
+              __COREVIA_TALK_E2E_COMMAND_PAYLOADS__?: Array<{ command: string }>;
             }
-          ).__BUZZ_E2E_COMMAND_PAYLOADS__?.some(
+          ).__COREVIA_TALK_E2E_COMMAND_PAYLOADS__?.some(
             (e) => e.command === "plugin:process|restart",
           ) ?? false,
       ),

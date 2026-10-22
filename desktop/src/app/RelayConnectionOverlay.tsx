@@ -62,7 +62,7 @@ export function RelayConnectionOverlay({
             "pointer-events-none fixed z-50 w-[284px]",
             hasCommunityRail ? "start-[68px]" : "start-3",
             isHuddleDrawerOpen
-              ? "bottom-[calc(var(--buzz-huddle-drawer-height,0px)+12px)]"
+              ? "bottom-[calc(var(--corevia-talk-huddle-drawer-height,0px)+12px)]"
               : "bottom-3",
           )}
           exit={{ opacity: 0, y: 20 }}
@@ -88,7 +88,7 @@ export function RelayConnectionOverlay({
             "pointer-events-none fixed z-50 w-[284px]",
             hasCommunityRail ? "start-[68px]" : "start-3",
             isHuddleDrawerOpen
-              ? "bottom-[calc(var(--buzz-huddle-drawer-height,0px)+12px)]"
+              ? "bottom-[calc(var(--corevia-talk-huddle-drawer-height,0px)+12px)]"
               : "bottom-3",
           )}
           exit={{ opacity: 0, y: 20 }}

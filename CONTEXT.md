@@ -1,6 +1,6 @@
-# Buzz domain language
+# Corevia Talk domain language
 
-Shared terminology for Buzz product behavior. This glossary currently covers mobile [push suppression](#push-suppression); it is not a complete model of Buzz.
+Shared terminology for Corevia Talk product behavior. This glossary currently covers mobile [push suppression](#push-suppression); it is not a complete model of Corevia Talk.
 
 ## Notifications
 
@@ -16,13 +16,13 @@ _Avoid_: Read receipt, mark as read, mute
 
 ### Desktop activity
 
-User interaction with the computer running Buzz, including interaction with another application. It is the interaction itself, not a state that lasts afterward, and does not imply that a particular Buzz message was displayed or read.
+User interaction with the computer running Corevia Talk, including interaction with another application. It is the interaction itself, not a state that lasts afterward, and does not imply that a particular Corevia Talk message was displayed or read.
 
 _Avoid_: Message visibility, read activity
 
 ### In-app activity
 
-User interaction inside Buzz. Recent in-app activity remains evidence of [desktop activity](#desktop-activity) after Buzz loses focus; current window focus is a separate condition.
+User interaction inside Corevia Talk. Recent in-app activity remains evidence of [desktop activity](#desktop-activity) after Corevia Talk loses focus; current window focus is a separate condition.
 
 ### Desktop inactivity
 

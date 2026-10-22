@@ -41,8 +41,8 @@ import { deriveMeshShareToggle } from "../shareToggleState";
 import { deriveServingIndicator } from "../servingUsage";
 import { tl, tlt } from "@/shared/i18n/tl";
 
-const MODEL_DRAFT_STORAGE_KEY = "buzz.mesh-compute.share.model.v1";
-const MAX_VRAM_DRAFT_STORAGE_KEY = "buzz.mesh-compute.share.max-vram-gb.v1";
+const MODEL_DRAFT_STORAGE_KEY = "corevia-talk.mesh-compute.share.model.v1";
+const MAX_VRAM_DRAFT_STORAGE_KEY = "corevia-talk.mesh-compute.share.max-vram-gb.v1";
 
 // Keep the Share compute controls visually and behaviorally aligned with the
 // agent configuration fields. This is intentionally the same shell used by
@@ -590,7 +590,7 @@ function MeshModelPicker({
                 : "",
             ])
           : tl("Choose a model or enter a model reference or local file.")}{" "}
-        {tl("Buzz downloads remote models when sharing starts.")}
+        {tl("Corevia Talk downloads remote models when sharing starts.")}
       </p>
     </div>
   );
@@ -649,7 +649,7 @@ function StatusLine({
     return (
       <p className="text-sm text-muted-foreground">
         {tl(
-          "This machine is currently using another member's shared compute. Turn on sharing to switch to the selected local model; Buzz may briefly restart.",
+          "This machine is currently using another member's shared compute. Turn on sharing to switch to the selected local model; Corevia Talk may briefly restart.",
         )}
       </p>
     );

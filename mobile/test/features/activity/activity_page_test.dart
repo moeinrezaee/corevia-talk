@@ -1,32 +1,32 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:buzz/features/activity/activity_page.dart';
-import 'package:buzz/features/activity/activity_provider.dart';
-import 'package:buzz/features/activity/compose_drafts_provider.dart';
-import 'package:buzz/features/activity/feed_item.dart';
-import 'package:buzz/features/activity/inbox_item.dart';
-import 'package:buzz/features/activity/reminders_provider.dart';
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channel_detail_page.dart';
-import 'package:buzz/features/channels/channel_management_provider.dart';
-import 'package:buzz/features/channels/message_content.dart';
-import 'package:buzz/features/channels/channels_provider.dart';
-import 'package:buzz/shared/identity_names/identity_names.dart';
-import 'package:buzz/shared/mentions/agent_identity_provider.dart';
-import 'package:buzz/shared/read_state/read_state_provider.dart';
-import 'package:buzz/shared/profile/user_cache_provider.dart';
-import 'package:buzz/shared/profile/user_profile.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/widgets/anchored_popover_menu.dart';
-import 'package:buzz/shared/widgets/frosted_app_bar.dart';
-import 'package:buzz/shared/widgets/avatar_image.dart';
+import 'package:corevia_talk/features/activity/activity_page.dart';
+import 'package:corevia_talk/features/activity/activity_provider.dart';
+import 'package:corevia_talk/features/activity/compose_drafts_provider.dart';
+import 'package:corevia_talk/features/activity/feed_item.dart';
+import 'package:corevia_talk/features/activity/inbox_item.dart';
+import 'package:corevia_talk/features/activity/reminders_provider.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channel_detail_page.dart';
+import 'package:corevia_talk/features/channels/channel_management_provider.dart';
+import 'package:corevia_talk/features/channels/message_content.dart';
+import 'package:corevia_talk/features/channels/channels_provider.dart';
+import 'package:corevia_talk/shared/identity_names/identity_names.dart';
+import 'package:corevia_talk/shared/mentions/agent_identity_provider.dart';
+import 'package:corevia_talk/shared/read_state/read_state_provider.dart';
+import 'package:corevia_talk/shared/profile/user_cache_provider.dart';
+import 'package:corevia_talk/shared/profile/user_profile.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/widgets/anchored_popover_menu.dart';
+import 'package:corevia_talk/shared/widgets/frosted_app_bar.dart';
+import 'package:corevia_talk/shared/widgets/avatar_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hooks_riverpod/misc.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../helpers/thread_ids.dart';
@@ -971,7 +971,7 @@ void main() {
     final action = find.byKey(const ValueKey('inbox-swipe-read-m1'));
     expect(action, findsOneWidget);
     expect(
-      find.descendant(of: action, matching: find.byIcon(BuzzIcons.mail)),
+      find.descendant(of: action, matching: find.byIcon(CoreviaTalkIcons.mail)),
       findsOneWidget,
     );
     expect(find.text('Mark unread'), findsNothing);

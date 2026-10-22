@@ -5,7 +5,7 @@ import { Button } from "@/shared/ui/button";
 import { tl } from "@/shared/i18n/tl";
 
 export function ConnectButton({ className }: { className?: string }) {
-  const deepLink = `buzz://connect?relay=${encodeURIComponent(relayWsUrl())}`;
+  const deepLink = `corevia-talk://connect?relay=${encodeURIComponent(relayWsUrl())}`;
 
   return (
     <Button
@@ -14,7 +14,7 @@ export function ConnectButton({ className }: { className?: string }) {
     >
       <a href={deepLink}>
         <ExternalLink className="h-4 w-4" />
-        {tl("Open in Buzz")}
+        {tl("Open in Corevia Talk")}
       </a>
     </Button>
   );

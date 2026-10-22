@@ -9,7 +9,7 @@ const FORUM_THREAD_ID = "mock-forum-release-thread";
 const FORUM_DEEPLINK_REPLY_ID = "mock-forum-release-deeplink";
 
 // Mock-mode current-user pubkey (DEFAULT_MOCK_IDENTITY). Custom channel
-// sections persist under buzz-channel-sections.v1:<pubkey>, so shot 6 seeds two
+// sections persist under corevia-talk-channel-sections.v1:<pubkey>, so shot 6 seeds two
 // sections for this key before the app boots.
 const MOCK_PUBKEY = "deadbeef".repeat(8);
 const SECTION_TOP = { id: "sec-top", name: "Priority", order: 0 };
@@ -19,7 +19,7 @@ async function seedChannelSections(page: Page) {
   await page.addInitScript(
     ({ pubkey, sections }) => {
       window.localStorage.setItem(
-        `buzz-channel-sections.v1:${pubkey}`,
+        `corevia-talk-channel-sections.v1:${pubkey}`,
         JSON.stringify({ version: 1, sections, assignments: {} }),
       );
     },
@@ -626,7 +626,7 @@ test("thread-heavy history mounts every loaded row", async ({ page }) => {
   await installMockBridge(page);
   await page.goto("/");
   await page.waitForFunction(
-    () => typeof window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__ === "function",
+    () => typeof window.__COREVIA_TALK_E2E_EMIT_MOCK_MESSAGE__ === "function",
   );
 
   // Seed summaries on 120 loaded roots. Every loaded row should be realized
@@ -634,7 +634,7 @@ test("thread-heavy history mounts every loaded row", async ({ page }) => {
   // pre-measurement state.
   await page.evaluate(() => {
     for (let index = 480; index < 600; index += 1) {
-      window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
+      window.__COREVIA_TALK_E2E_EMIT_MOCK_MESSAGE__?.({
         channelName: "deep-history",
         content: `summary-only reply ${index}`,
         parentEventId: `mock-deep-history-${index}`,
@@ -650,7 +650,7 @@ test("thread-heavy history mounts every loaded row", async ({ page }) => {
   // independent of the relay page's summary cap.
   await page.evaluate(() => {
     for (let index = 480; index < 600; index += 1) {
-      window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
+      window.__COREVIA_TALK_E2E_EMIT_MOCK_MESSAGE__?.({
         channelName: "deep-history",
         content: `live summary-only reply ${index}`,
         parentEventId: `mock-deep-history-${index}`,
@@ -678,7 +678,7 @@ test("channel switches settle the last row above the composer", async ({
   await installMockBridge(page);
   await page.goto("/");
   await page.waitForFunction(
-    () => typeof window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__ === "function",
+    () => typeof window.__COREVIA_TALK_E2E_EMIT_MOCK_MESSAGE__ === "function",
   );
 
   await page.evaluate(() => {
@@ -687,7 +687,7 @@ test("channel switches settle the last row above the composer", async ({
       ["engineering", "switch-engineering"],
     ] as const) {
       for (let index = 0; index < 60; index += 1) {
-        window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
+        window.__COREVIA_TALK_E2E_EMIT_MOCK_MESSAGE__?.({
           channelName,
           content: `${prefix}-${index}`,
           createdAt: 1_700_000_000 + index,
@@ -728,11 +728,11 @@ test("offscreen rich-row resize preserves the viewport-center anchor", async ({
   await installMockBridge(page);
   await page.goto("/");
   await page.waitForFunction(
-    () => typeof window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__ === "function",
+    () => typeof window.__COREVIA_TALK_E2E_EMIT_MOCK_MESSAGE__ === "function",
   );
   await page.evaluate(() => {
     for (let index = 0; index < 240; index += 1) {
-      window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
+      window.__COREVIA_TALK_E2E_EMIT_MOCK_MESSAGE__?.({
         channelName: "general",
         content: [
           `rich resize row ${index}`,
@@ -813,12 +813,12 @@ test("live tail arrivals keep a bottom-pinned virtual timeline settled", async (
   await installMockBridge(page);
   await page.goto("/");
   await page.waitForFunction(
-    () => typeof window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__ === "function",
+    () => typeof window.__COREVIA_TALK_E2E_EMIT_MOCK_MESSAGE__ === "function",
   );
 
   await page.evaluate(() => {
     for (let index = 0; index < 60; index += 1) {
-      window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
+      window.__COREVIA_TALK_E2E_EMIT_MOCK_MESSAGE__?.({
         channelName: "general",
         content: `live-follow seed ${index}\nsecond line ${index}`,
         createdAt: 1_700_000_000 + index,
@@ -838,7 +838,7 @@ test("live tail arrivals keep a bottom-pinned virtual timeline settled", async (
     .toBeLessThanOrEqual(1);
 
   await page.evaluate(() => {
-    window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
+    window.__COREVIA_TALK_E2E_EMIT_MOCK_MESSAGE__?.({
       channelName: "general",
       content:
         "remote live-follow sentinel\nline two\nline three\nline four\nline five",
@@ -863,7 +863,7 @@ test("live tail arrivals stay buffered while reading and release on jump", async
   await installMockBridge(page);
   await page.goto("/");
   await page.waitForFunction(
-    () => typeof window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__ === "function",
+    () => typeof window.__COREVIA_TALK_E2E_EMIT_MOCK_MESSAGE__ === "function",
   );
   await page.getByTestId("channel-deep-history").click();
 
@@ -910,7 +910,7 @@ test("live tail arrivals stay buffered while reading and release on jump", async
   });
 
   await page.evaluate(() => {
-    window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
+    window.__COREVIA_TALK_E2E_EMIT_MOCK_MESSAGE__?.({
       channelName: "deep-history",
       content: "buffered live tail sentinel",
       createdAt: 1_900_000_000,
@@ -933,11 +933,11 @@ test("a single scroll back to the bottom releases the live tail", async ({
   await installMockBridge(page);
   await page.goto("/");
   await page.waitForFunction(
-    () => typeof window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__ === "function",
+    () => typeof window.__COREVIA_TALK_E2E_EMIT_MOCK_MESSAGE__ === "function",
   );
   await page.evaluate(() => {
     for (let index = 0; index < 20; index += 1) {
-      window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
+      window.__COREVIA_TALK_E2E_EMIT_MOCK_MESSAGE__?.({
         channelName: "general",
         content: `single-return seed ${index}\nsecond line ${index}`,
         createdAt: 1_700_000_000 + index,
@@ -966,7 +966,7 @@ test("a single scroll back to the bottom releases the live tail", async ({
   await expect(page.getByTestId("message-scroll-to-latest")).toHaveCount(0);
 
   await page.evaluate(() => {
-    window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
+    window.__COREVIA_TALK_E2E_EMIT_MOCK_MESSAGE__?.({
       channelName: "general",
       content: "single-return live sentinel",
       createdAt: 1_800_000_000,

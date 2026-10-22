@@ -7,7 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'flapping_bee.dart';
 import '../i18n/app_language.dart';
 
-/// The Buzz mark with wings that flutter twice when the user taps it.
+/// The Corevia Talk mark with wings that flutter twice when the user taps it.
 ///
 /// The geometry and wing tuck match the desktop loading bee. When reduced
 /// motion is enabled, the mark stays static.
@@ -38,7 +38,7 @@ class TappableFlappingBee extends HookConsumerWidget {
 
     return Semantics(
       button: true,
-      label: tl('Buzz bee'),
+      label: tl('Corevia Talk bee'),
       hint: tl('Tap to make its wings flutter'),
       onTap: flutterWings,
       child: GestureDetector(

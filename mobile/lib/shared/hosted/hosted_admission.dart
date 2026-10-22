@@ -36,7 +36,7 @@ class HostedAdmission {
   final Future<void> Function(Community)? _probe;
 
   Future<Community> prepare(
-    BuzzDeepLink link,
+    CoreviaTalkDeepLink link,
     String subject,
     String pubkey, {
     bool Function()? isCurrent,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../theme/theme.dart';
 import '../widgets/sheet_action_section.dart';
@@ -39,7 +39,7 @@ void showRemindMeLaterSheet({
     }
   }
 
-  showBuzzModalBottomSheet<void>(
+  showCoreviaTalkModalBottomSheet<void>(
     context: context,
     title: tl('Remind me about this message'),
     showDragHandle: true,
@@ -62,7 +62,7 @@ void showRemindMeLaterSheet({
                   children: [
                     for (final preset in reminderTimePresets)
                       ListTile(
-                        leading: const Icon(BuzzIcons.clock),
+                        leading: const Icon(CoreviaTalkIcons.clock),
                         title: Text(preset.label),
                         onTap: () {
                           Navigator.of(sheetContext).pop();
@@ -74,7 +74,7 @@ void showRemindMeLaterSheet({
                 SheetActionSection(
                   children: [
                     ListTile(
-                      leading: const Icon(BuzzIcons.calendarClock),
+                      leading: const Icon(CoreviaTalkIcons.calendarClock),
                       title: Text(tl('Pick a date & time')),
                       onTap: () async {
                         final navigator = Navigator.of(sheetContext);
@@ -101,7 +101,7 @@ void showRemindMeLaterSheet({
 /// timestamp in seconds, or null when cancelled or not in the future.
 Future<int?> _pickCustomDateTime(BuildContext context) async {
   final now = DateTime.now();
-  final date = await showBuzzDialog<DateTime>(
+  final date = await showCoreviaTalkDialog<DateTime>(
     context: context,
     builder: (_) => DatePickerDialog(
       initialDate: now,
@@ -111,7 +111,7 @@ Future<int?> _pickCustomDateTime(BuildContext context) async {
   );
   if (date == null || !context.mounted) return null;
 
-  final time = await showBuzzDialog<TimeOfDay>(
+  final time = await showCoreviaTalkDialog<TimeOfDay>(
     context: context,
     builder: (_) =>
         const TimePickerDialog(initialTime: TimeOfDay(hour: 9, minute: 0)),

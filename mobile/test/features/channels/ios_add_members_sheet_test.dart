@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 
-import 'package:buzz/features/channels/add_members_sheet.dart';
-import 'package:buzz/features/channels/channel_management_provider.dart';
-import 'package:buzz/shared/profile/user_cache_provider.dart';
-import 'package:buzz/shared/profile/user_profile.dart';
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/features/channels/add_members_sheet.dart';
+import 'package:corevia_talk/features/channels/channel_management_provider.dart';
+import 'package:corevia_talk/shared/profile/user_cache_provider.dart';
+import 'package:corevia_talk/shared/profile/user_profile.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,7 +17,7 @@ final _bob = 'b' * 64;
 final _existing = 'e' * 64;
 final _avatar =
     'data:image/svg+xml,${Uri.encodeComponent('<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72"><rect width="72" height="72" fill="#0000ff"/></svg>')}';
-const _bridge = MethodChannel('buzz/add_members_sheet');
+const _bridge = MethodChannel('corevia-talk/add_members_sheet');
 
 class _Cache extends UserCacheNotifier {
   @override

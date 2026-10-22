@@ -1,2 +1,2 @@
 //! Shared Huddle wire implementation.
-pub use buzz_audio_client::wire::*;
+pub use corevia_talk_audio_client::wire::*;

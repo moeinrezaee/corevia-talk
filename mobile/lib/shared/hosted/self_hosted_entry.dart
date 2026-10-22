@@ -144,7 +144,7 @@ class SelfHostedEntry {
   }
 
   static String _pendingKey(String relay) =>
-      'buzz_pending_self_hosted_${base64Url.encode(utf8.encode(relay))}';
+      'corevia_talk_pending_self_hosted_${base64Url.encode(utf8.encode(relay))}';
 
   /// Retire this exact pending key only after its community is durably saved.
   Future<void> complete(Community community) => _queue.run(() async {

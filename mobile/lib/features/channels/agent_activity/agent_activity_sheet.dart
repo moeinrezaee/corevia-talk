@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../../shared/theme/theme.dart';
-import '../../../shared/widgets/buzz_loading_indicator.dart';
+import '../../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../../shared/profile/user_cache_provider.dart';
 import '../channel_identity_names_provider.dart';
 import 'observer_models.dart';
@@ -85,7 +85,7 @@ class AgentActivitySheet extends HookConsumerWidget {
                   Row(
                     children: [
                       Icon(
-                        BuzzIcons.bot,
+                        CoreviaTalkIcons.bot,
                         size: 18,
                         color: context.colors.onSurface,
                       ),
@@ -158,7 +158,7 @@ class _EmptyState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(BuzzIcons.circleX, size: 24, color: context.colors.error),
+            Icon(CoreviaTalkIcons.circleX, size: 24, color: context.colors.error),
             const SizedBox(height: Grid.xxs),
             Text(
               tlt('Error: {0}', [errorMessage ?? tl('Unknown error')]),
@@ -188,7 +188,7 @@ class _EmptyState extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          BuzzLoadingIndicator(
+          CoreviaTalkLoadingIndicator(
             size: 28,
             color: context.colors.onSurfaceVariant,
             semanticLabel: tl('Waiting for agent activity'),

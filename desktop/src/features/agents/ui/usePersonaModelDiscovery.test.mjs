@@ -377,8 +377,8 @@ test("discoveredRow_nonblankDiscoveredName_winsOverRegistry", () => {
   ]);
 });
 
-// ── Real buzz-agent discovery shape: name echoes the id ─────────────────────
-// buzz-agent's Databricks discovery emits {id, name: id} on every path (the
+// ── Real corevia-talk-agent discovery shape: name echoes the id ─────────────────────
+// corevia-talk-agent's Databricks discovery emits {id, name: id} on every path (the
 // API has no display-name field). The echoed name must not short-circuit the
 // registry tier, so a known id still shows its curated label.
 

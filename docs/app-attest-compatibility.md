@@ -1,7 +1,7 @@
 # App Attest compatibility boundary
 
 The push gateway verifies enrollment and assertions through a private
-[Buzz-owned module](../crates/buzz-push-gateway/src/app_attest.rs). Extended authenticators must
+[CoreviaTalk-owned module](../crates/corevia-talk-push-gateway/src/app_attest.rs). Extended authenticators must
 remain compatible without weakening the checks that bind a request to an app,
 key, challenge, and increasing counter.
 
@@ -85,7 +85,7 @@ Adapted portions originate in [appattest 0.1.1](https://crates.io/crates/appatte
 [upstream commit d1ffda7](https://github.com/PrismaPhonic/appattest/commit/d1ffda733f6e7f267aab79ae42b8ec7f60ceada1).
 The package SHA-256 is `5d0a66767aaf7d483c556386fb68ca2fba9347684d8bb17a4bd8b755851870f7`.
 Both upstream MIT notices are retained in the module's
-[LICENSE](../crates/buzz-push-gateway/src/app_attest/LICENSE).
+[LICENSE](../crates/corevia-talk-push-gateway/src/app_attest/LICENSE).
 The gateway owns its verification policy and tracks Apple protocol and underlying
 cryptographic-library updates directly. There is no remaining appattest dependency.
 

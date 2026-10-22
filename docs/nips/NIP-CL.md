@@ -235,7 +235,7 @@ A client that knows every current type sends one filter:
 {"kinds": [44100, 44101], "#p": ["<me>"], "#t": ["stream", "forum", "dm", "workflow", "system"]}
 ```
 
-When Buzz adds a type, a client adds its value to `#t` when it supports that
+When Corevia Talk adds a type, a client adds its value to `#t` when it supports that
 type.
 
 The `#p` rule for 44100/44101 still applies: it must be the reader's own

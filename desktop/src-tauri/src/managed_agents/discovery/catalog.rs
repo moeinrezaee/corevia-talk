@@ -5,9 +5,9 @@
 //! in the parent.
 
 use super::runtime_metadata::{
-    KnownAcpRuntime, BUZZ_AGENT_EFFORT_VALUES, GOOSE_EFFORT_NORMALIZATION,
+    KnownAcpRuntime, COREVIA_TALK_AGENT_EFFORT_VALUES, GOOSE_EFFORT_NORMALIZATION,
 };
-use super::{BUZZ_AGENT_AVATAR_URL, CLAUDE_CODE_AVATAR_URL, CODEX_AVATAR_URL, GOOSE_AVATAR_URL};
+use super::{COREVIA_TALK_AGENT_AVATAR_URL, CLAUDE_CODE_AVATAR_URL, CODEX_AVATAR_URL, GOOSE_AVATAR_URL};
 
 pub(crate) const KNOWN_ACP_RUNTIMES: &[KnownAcpRuntime] = &[
     KnownAcpRuntime {
@@ -26,7 +26,7 @@ pub(crate) const KNOWN_ACP_RUNTIMES: &[KnownAcpRuntime] = &[
         adapter_install_commands: &[],
         cli_install_instructions_url: "https://goose-docs.ai/docs/getting-started/installation/",
         adapter_install_instructions_url: "",
-        cli_install_hint: "Buzz talks to Goose through the Goose CLI.",
+        cli_install_hint: "Corevia Talk talks to Goose through the Goose CLI.",
         adapter_install_hint: "",
         skill_dir: Some(".goose/skills"),
         supports_acp_model_switching: false,
@@ -61,8 +61,8 @@ pub(crate) const KNOWN_ACP_RUNTIMES: &[KnownAcpRuntime] = &[
         adapter_install_commands: &["npm install -g @agentclientprotocol/claude-agent-acp"],
         cli_install_instructions_url: "https://code.claude.com/docs/en/getting-started",
         adapter_install_instructions_url: "https://github.com/agentclientprotocol/claude-agent-acp",
-        cli_install_hint: "Buzz talks to Claude Code through the Claude Code CLI.",
-        adapter_install_hint: "Buzz talks to the Claude Code CLI through an ACP adapter. Install it with: npm install -g @agentclientprotocol/claude-agent-acp.",
+        cli_install_hint: "Corevia Talk talks to Claude Code through the Claude Code CLI.",
+        adapter_install_hint: "Corevia Talk talks to the Claude Code CLI through an ACP adapter. Install it with: npm install -g @agentclientprotocol/claude-agent-acp.",
         skill_dir: Some(".claude/skills"),
         supports_acp_model_switching: false,
         model_env_var: None,
@@ -73,8 +73,8 @@ pub(crate) const KNOWN_ACP_RUNTIMES: &[KnownAcpRuntime] = &[
         config_file_format: Some("json"),
         supports_acp_native_config: false,
         thinking_env_var: None,
-        effort_normalization: None, // claude: canonical routes through BUZZ_ACP_EFFORT_LEVEL (ACP startup)
-        effort_accepted_values: None, // claude: adapter accepts any value over BUZZ_ACP_EFFORT_LEVEL
+        effort_normalization: None, // claude: canonical routes through COREVIA_TALK_ACP_EFFORT_LEVEL (ACP startup)
+        effort_accepted_values: None, // claude: adapter accepts any value over COREVIA_TALK_ACP_EFFORT_LEVEL
         max_tokens_env_var: None,
         context_limit_env_var: None,
         max_rounds_env_var: None,
@@ -88,7 +88,7 @@ pub(crate) const KNOWN_ACP_RUNTIMES: &[KnownAcpRuntime] = &[
         commands: &["codex-acp"],
         aliases: &[],
         avatar_url: CODEX_AVATAR_URL,
-        mcp_command: Some("buzz-dev-mcp"),
+        mcp_command: Some("corevia-talk-dev-mcp"),
         mcp_hooks: false,
         underlying_cli: Some("codex"),
         cli_install_commands: &["curl -fsSL https://chatgpt.com/codex/install.sh | sh"],
@@ -96,8 +96,8 @@ pub(crate) const KNOWN_ACP_RUNTIMES: &[KnownAcpRuntime] = &[
         adapter_install_commands: &["npm install -g @agentclientprotocol/codex-acp"],
         cli_install_instructions_url: "https://developers.openai.com/codex/cli/",
         adapter_install_instructions_url: "https://github.com/agentclientprotocol/codex-acp",
-        cli_install_hint: "Buzz talks to Codex through the Codex CLI.",
-        adapter_install_hint: "Buzz talks to the Codex CLI through an ACP adapter. Install it with: npm install -g @agentclientprotocol/codex-acp.",
+        cli_install_hint: "Corevia Talk talks to Codex through the Codex CLI.",
+        adapter_install_hint: "Corevia Talk talks to the Codex CLI through an ACP adapter. Install it with: npm install -g @agentclientprotocol/codex-acp.",
         skill_dir: Some(".codex/skills"),
         supports_acp_model_switching: false,
         model_env_var: None,
@@ -108,8 +108,8 @@ pub(crate) const KNOWN_ACP_RUNTIMES: &[KnownAcpRuntime] = &[
         config_file_format: Some("toml"),
         supports_acp_native_config: false,
         thinking_env_var: None,
-        effort_normalization: None, // codex: canonical routes through BUZZ_ACP_EFFORT_LEVEL (ACP startup)
-        effort_accepted_values: None, // codex: adapter accepts any value over BUZZ_ACP_EFFORT_LEVEL
+        effort_normalization: None, // codex: canonical routes through COREVIA_TALK_ACP_EFFORT_LEVEL (ACP startup)
+        effort_accepted_values: None, // codex: adapter accepts any value over COREVIA_TALK_ACP_EFFORT_LEVEL
         max_tokens_env_var: None,
         context_limit_env_var: None,
         max_rounds_env_var: None,
@@ -119,12 +119,12 @@ pub(crate) const KNOWN_ACP_RUNTIMES: &[KnownAcpRuntime] = &[
         auth_probe_args: Some(&["codex", "login", "status"]),
     },
     KnownAcpRuntime {
-        id: "buzz-agent",
-        label: "Buzz Agent",
-        commands: &["buzz-agent"],
+        id: "corevia-talk-agent",
+        label: "Corevia Talk Agent",
+        commands: &["corevia-talk-agent"],
         aliases: &[],
-        avatar_url: BUZZ_AGENT_AVATAR_URL,
-        mcp_command: Some("buzz-dev-mcp"),
+        avatar_url: COREVIA_TALK_AGENT_AVATAR_URL,
+        mcp_command: Some("corevia-talk-dev-mcp"),
         mcp_hooks: true,
         underlying_cli: None,
         cli_install_commands: &[],
@@ -132,23 +132,23 @@ pub(crate) const KNOWN_ACP_RUNTIMES: &[KnownAcpRuntime] = &[
         adapter_install_commands: &[],
         cli_install_instructions_url: "https://github.com/block/buzz",
         adapter_install_instructions_url: "https://github.com/block/buzz",
-        cli_install_hint: "Ships with the Buzz desktop app.",
+        cli_install_hint: "Ships with the Corevia Talk desktop app.",
         adapter_install_hint: "",
         skill_dir: None,
         supports_acp_model_switching: true,
-        model_env_var: Some("BUZZ_AGENT_MODEL"),
-        provider_env_var: Some("BUZZ_AGENT_PROVIDER"),
+        model_env_var: Some("COREVIA_TALK_AGENT_MODEL"),
+        provider_env_var: Some("COREVIA_TALK_AGENT_PROVIDER"),
         provider_locked: false,
         default_env: &[],
         config_file_path: None,
         config_file_format: None,
         supports_acp_native_config: false,
-        thinking_env_var: Some("BUZZ_AGENT_THINKING_EFFORT"),
-        effort_normalization: None, // buzz-agent: per-model catalog; see getProviderEffortConfig() in TS
-        effort_accepted_values: Some(BUZZ_AGENT_EFFORT_VALUES), // buzz-agent: parse_thinking_effort's accepted set
-        max_tokens_env_var: Some("BUZZ_AGENT_MAX_OUTPUT_TOKENS"),
-        context_limit_env_var: Some("BUZZ_AGENT_MAX_CONTEXT_TOKENS"),
-        max_rounds_env_var: Some("BUZZ_AGENT_MAX_ROUNDS"),
+        thinking_env_var: Some("COREVIA_TALK_AGENT_THINKING_EFFORT"),
+        effort_normalization: None, // corevia-talk-agent: per-model catalog; see getProviderEffortConfig() in TS
+        effort_accepted_values: Some(COREVIA_TALK_AGENT_EFFORT_VALUES), // corevia-talk-agent: parse_thinking_effort's accepted set
+        max_tokens_env_var: Some("COREVIA_TALK_AGENT_MAX_OUTPUT_TOKENS"),
+        context_limit_env_var: Some("COREVIA_TALK_AGENT_MAX_CONTEXT_TOKENS"),
+        max_rounds_env_var: Some("COREVIA_TALK_AGENT_MAX_ROUNDS"),
         required_normalized_fields: &["model", "provider"],
         login_hint: None,
         auth_probe_args: None,

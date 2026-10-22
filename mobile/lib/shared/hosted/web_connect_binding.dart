@@ -88,6 +88,6 @@ class WebConnectBindingService {
     if (boundPubkey.toLowerCase() != signed.pubkey.toLowerCase()) {
       throw const FormatException('Verified identity does not match');
     }
-    return HostedEnvironment.origin.resolve('/buzz');
+    return HostedEnvironment.origin.resolve('/corevia-talk');
   }
 }

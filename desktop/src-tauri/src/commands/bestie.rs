@@ -17,7 +17,7 @@ use crate::{
 };
 
 fn canonical_relay(relay_url: &str) -> Result<String, String> {
-    buzz_core_pkg::relay::normalize_relay_url(relay_url).map_err(|error| error.to_string())
+    corevia_talk_core_pkg::relay::normalize_relay_url(relay_url).map_err(|error| error.to_string())
 }
 
 fn assert_expected_scope(

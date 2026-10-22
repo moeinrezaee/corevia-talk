@@ -13,9 +13,9 @@ import '../relay/app_lifecycle_provider.dart';
 import 'push_snapshot.dart';
 import '../i18n/app_language.dart';
 
-const _channel = MethodChannel('buzz/push');
+const _channel = MethodChannel('corevia-talk/push');
 
-enum BuzzPushAuthorizationStatus {
+enum CoreviaTalkPushAuthorizationStatus {
   notDetermined,
   denied,
   authorized,
@@ -23,67 +23,67 @@ enum BuzzPushAuthorizationStatus {
   ephemeral,
 }
 
-typedef BuzzPushAuthorizationStatusReader =
-    Future<BuzzPushAuthorizationStatus> Function();
-typedef BuzzPushNotificationSettingsOpener = Future<bool> Function();
+typedef CoreviaTalkPushAuthorizationStatusReader =
+    Future<CoreviaTalkPushAuthorizationStatus> Function();
+typedef CoreviaTalkPushNotificationSettingsOpener = Future<bool> Function();
 
-final buzzPushAuthorizationStatusReaderProvider =
-    Provider<BuzzPushAuthorizationStatusReader>((ref) {
-      return readBuzzPushAuthorizationStatus;
+final coreviaTalkPushAuthorizationStatusReaderProvider =
+    Provider<CoreviaTalkPushAuthorizationStatusReader>((ref) {
+      return readCoreviaTalkPushAuthorizationStatus;
     });
 
-final buzzPushNotificationSettingsOpenerProvider =
-    Provider<BuzzPushNotificationSettingsOpener>((ref) {
-      return openBuzzPushNotificationSettings;
+final coreviaTalkPushNotificationSettingsOpenerProvider =
+    Provider<CoreviaTalkPushNotificationSettingsOpener>((ref) {
+      return openCoreviaTalkPushNotificationSettings;
     });
 
-final buzzPushAuthorizationStatusProvider =
+final coreviaTalkPushAuthorizationStatusProvider =
     AsyncNotifierProvider<
-      BuzzPushAuthorizationStatusNotifier,
-      BuzzPushAuthorizationStatus
-    >(BuzzPushAuthorizationStatusNotifier.new);
+      CoreviaTalkPushAuthorizationStatusNotifier,
+      CoreviaTalkPushAuthorizationStatus
+    >(CoreviaTalkPushAuthorizationStatusNotifier.new);
 
-class BuzzPushAuthorizationStatusNotifier
-    extends AsyncNotifier<BuzzPushAuthorizationStatus> {
+class CoreviaTalkPushAuthorizationStatusNotifier
+    extends AsyncNotifier<CoreviaTalkPushAuthorizationStatus> {
   @override
-  Future<BuzzPushAuthorizationStatus> build() async {
+  Future<CoreviaTalkPushAuthorizationStatus> build() async {
     ref.listen(appLifecycleProvider, (previous, next) {
       if (previous != AppLifecycleState.resumed &&
           next == AppLifecycleState.resumed) {
         unawaited(refresh());
       }
     });
-    return ref.read(buzzPushAuthorizationStatusReaderProvider)();
+    return ref.read(coreviaTalkPushAuthorizationStatusReaderProvider)();
   }
 
   Future<void> refresh() async {
-    state = const AsyncLoading<BuzzPushAuthorizationStatus>();
+    state = const AsyncLoading<CoreviaTalkPushAuthorizationStatus>();
     state = await AsyncValue.guard(
-      ref.read(buzzPushAuthorizationStatusReaderProvider),
+      ref.read(coreviaTalkPushAuthorizationStatusReaderProvider),
     );
   }
 }
 
-Future<BuzzPushAuthorizationStatus> readBuzzPushAuthorizationStatus() async {
+Future<CoreviaTalkPushAuthorizationStatus> readCoreviaTalkPushAuthorizationStatus() async {
   if (defaultTargetPlatform != TargetPlatform.iOS) {
-    return BuzzPushAuthorizationStatus.authorized;
+    return CoreviaTalkPushAuthorizationStatus.authorized;
   }
   final raw = await _channel.invokeMethod<String>(
     'notificationAuthorizationStatus',
   );
   return switch (raw) {
-    'notDetermined' => BuzzPushAuthorizationStatus.notDetermined,
-    'denied' => BuzzPushAuthorizationStatus.denied,
-    'authorized' => BuzzPushAuthorizationStatus.authorized,
-    'provisional' => BuzzPushAuthorizationStatus.provisional,
-    'ephemeral' => BuzzPushAuthorizationStatus.ephemeral,
+    'notDetermined' => CoreviaTalkPushAuthorizationStatus.notDetermined,
+    'denied' => CoreviaTalkPushAuthorizationStatus.denied,
+    'authorized' => CoreviaTalkPushAuthorizationStatus.authorized,
+    'provisional' => CoreviaTalkPushAuthorizationStatus.provisional,
+    'ephemeral' => CoreviaTalkPushAuthorizationStatus.ephemeral,
     _ => throw FormatException(
       'Native push bridge returned unknown authorization status: $raw',
     ),
   };
 }
 
-Future<bool> openBuzzPushNotificationSettings() async {
+Future<bool> openCoreviaTalkPushNotificationSettings() async {
   if (defaultTargetPlatform != TargetPlatform.iOS) return false;
   return await _channel.invokeMethod<bool>('openNotificationSettings') ?? false;
 }
@@ -93,7 +93,7 @@ Future<bool> openBuzzPushNotificationSettings() async {
 final apnsDeviceToken = ValueNotifier<String?>(null);
 final apnsRegistrationError = ValueNotifier<String?>(null);
 
-final pushEndpointGrants = ValueNotifier<List<BuzzPushEndpointGrant>>([]);
+final pushEndpointGrants = ValueNotifier<List<CoreviaTalkPushEndpointGrant>>([]);
 final pushEndpointGrantError = ValueNotifier<String?>(null);
 
 /// The most recent notification response waiting for app navigation.
@@ -128,7 +128,7 @@ MessageDeepLink? _pushNotificationLink(Object? arguments) {
 
 /// Pulls a notification response that arrived before the Flutter method
 /// handler was installed.
-Future<void> syncPendingBuzzPushNotificationResponse() async {
+Future<void> syncPendingCoreviaTalkPushNotificationResponse() async {
   if (defaultTargetPlatform != TargetPlatform.iOS) return;
   try {
     final arguments = await _channel.invokeMapMethod<dynamic, dynamic>(
@@ -144,7 +144,7 @@ Future<void> syncPendingBuzzPushNotificationResponse() async {
 /// Starts the independent iOS notification-authorization and APNs-registration
 /// requests. Display authorization is intentionally not returned or persisted:
 /// APNs registration and enrollment remain valid while display is denied.
-Future<void> startBuzzPushRegistration() async {
+Future<void> startCoreviaTalkPushRegistration() async {
   if (!Env.pushGatewayConfigured ||
       defaultTargetPlatform != TargetPlatform.iOS) {
     return;
@@ -156,7 +156,7 @@ Future<void> startBuzzPushRegistration() async {
   }
 }
 
-class BuzzPushEndpointGrant {
+class CoreviaTalkPushEndpointGrant {
   final String relayOrigin;
   final String relayPubkey;
   final String installationId;
@@ -166,7 +166,7 @@ class BuzzPushEndpointGrant {
   final int generation;
   final int expiresAt;
 
-  const BuzzPushEndpointGrant({
+  const CoreviaTalkPushEndpointGrant({
     required this.relayOrigin,
     required this.relayPubkey,
     required this.installationId,
@@ -177,9 +177,9 @@ class BuzzPushEndpointGrant {
     required this.expiresAt,
   });
 
-  factory BuzzPushEndpointGrant.fromMap(Map<dynamic, dynamic> map) {
+  factory CoreviaTalkPushEndpointGrant.fromMap(Map<dynamic, dynamic> map) {
     final generation = map['generation'] as int;
-    return BuzzPushEndpointGrant(
+    return CoreviaTalkPushEndpointGrant(
       relayOrigin: map['relayOrigin'] as String,
       relayPubkey: map['relayPubkey'] as String,
       installationId: map['installationId'] as String,
@@ -192,7 +192,7 @@ class BuzzPushEndpointGrant {
   }
 }
 
-Future<List<BuzzPushEndpointGrant>> readBuzzPushEndpointGrants() async {
+Future<List<CoreviaTalkPushEndpointGrant>> readCoreviaTalkPushEndpointGrants() async {
   if (!Env.pushGatewayConfigured ||
       defaultTargetPlatform != TargetPlatform.iOS) {
     return const [];
@@ -203,7 +203,7 @@ Future<List<BuzzPushEndpointGrant>> readBuzzPushEndpointGrants() async {
     });
     final grants = [
       for (final value in raw ?? const [])
-        BuzzPushEndpointGrant.fromMap(value as Map<dynamic, dynamic>),
+        CoreviaTalkPushEndpointGrant.fromMap(value as Map<dynamic, dynamic>),
     ];
     pushEndpointGrants.value = grants;
     pushEndpointGrantError.value = null;
@@ -218,7 +218,7 @@ Future<List<BuzzPushEndpointGrant>> readBuzzPushEndpointGrants() async {
 ///
 /// The rewrite propagates NIP-11 `self` rotations even when the opaque grant
 /// and accepted relay lease remain reusable and their generations do not move.
-Future<BuzzPushEndpointGrant> enrollBuzzPush(
+Future<CoreviaTalkPushEndpointGrant> enrollCoreviaTalkPush(
   String relayUrl,
   String gatewayUrl, {
   List<Community>? communitiesForSnapshotRefresh,
@@ -230,11 +230,11 @@ Future<BuzzPushEndpointGrant> enrollBuzzPush(
   if (raw == null) {
     throw StateError('Native push enrollment returned no grant.');
   }
-  final grant = BuzzPushEndpointGrant.fromMap(raw);
-  await readBuzzPushEndpointGrants();
+  final grant = CoreviaTalkPushEndpointGrant.fromMap(raw);
+  await readCoreviaTalkPushEndpointGrants();
   if (communitiesForSnapshotRefresh != null) {
     try {
-      await registerBuzzPushCommunitySnapshot(communitiesForSnapshotRefresh);
+      await registerCoreviaTalkPushCommunitySnapshot(communitiesForSnapshotRefresh);
       pushCommunitySnapshotError.value = null;
     } catch (error, stackTrace) {
       reportPushCommunitySnapshotError(error, stackTrace);
@@ -261,33 +261,33 @@ void reportPushLeaseCleanupError(Object error, StackTrace stackTrace) {
   debugPrintStack(stackTrace: stackTrace);
 }
 
-Future<void> registerBuzzPushCommunitySnapshot(List<Community> communities) =>
-    _registerBuzzPushCommunitySnapshot(communities, strict: false);
+Future<void> registerCoreviaTalkPushCommunitySnapshot(List<Community> communities) =>
+    _registerCoreviaTalkPushCommunitySnapshot(communities, strict: false);
 
 /// Writes the age-gate snapshot through a native path that must acknowledge
 /// both the app-group store and signing-key update.
-Future<void> registerBuzzPushCommunitySnapshotStrict(
+Future<void> registerCoreviaTalkPushCommunitySnapshotStrict(
   List<Community> communities, {
   required bool settleFence,
-}) => _registerBuzzPushCommunitySnapshot(
+}) => _registerCoreviaTalkPushCommunitySnapshot(
   communities,
   strict: true,
   settleFence: settleFence,
 );
 
 /// Restores notification presentation without reading community storage.
-Future<void> restoreAgeRestrictedBuzzNotifications() async {
+Future<void> restoreAgeRestrictedCoreviaTalkNotifications() async {
   if (defaultTargetPlatform != TargetPlatform.iOS) return;
   await _channel.invokeMethod<void>('restoreAgeRestrictedNotifications');
 }
 
 /// Removes notifications rendered before a confirmed age restriction.
-Future<void> purgeAgeRestrictedBuzzNotifications() async {
+Future<void> purgeAgeRestrictedCoreviaTalkNotifications() async {
   if (defaultTargetPlatform != TargetPlatform.iOS) return;
   await _channel.invokeMethod<void>('purgeAgeRestrictedNotifications');
 }
 
-Future<void> _registerBuzzPushCommunitySnapshot(
+Future<void> _registerCoreviaTalkPushCommunitySnapshot(
   List<Community> communities, {
   required bool strict,
   bool settleFence = false,
@@ -297,7 +297,7 @@ Future<void> _registerBuzzPushCommunitySnapshot(
     final snapshots = [
       for (final community in communities)
         if (community.pushNotificationsEnabled)
-          BuzzPushCommunitySnapshot(
+          CoreviaTalkPushCommunitySnapshot(
             id: community.id,
             name: community.name,
             relayUrl: community.relayUrl,
@@ -336,7 +336,7 @@ Future<void> _registerBuzzPushCommunitySnapshot(
   }
 }
 
-void installBuzzPushMethodHandler() {
+void installCoreviaTalkPushMethodHandler() {
   _channel.setMethodCallHandler((call) async {
     switch (call.method) {
       case 'apnsTokenChanged':
@@ -363,7 +363,7 @@ void installBuzzPushMethodHandler() {
         pendingPushNotificationLink.value = link;
         return 'handled';
       default:
-        throw MissingPluginException('Unknown buzz/push method ${call.method}');
+        throw MissingPluginException('Unknown corevia-talk/push method ${call.method}');
     }
   });
 }

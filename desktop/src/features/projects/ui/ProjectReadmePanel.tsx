@@ -12,7 +12,7 @@ import { projectExternalRefUrl } from "@/features/projects/lib/projectExternalUr
 import type { ProjectRepoUnavailableReason } from "@/features/projects/lib/projectRepoAvailability";
 import { formatLastChangedAt } from "@/features/projects/lib/projectsViewHelpers";
 import { Button } from "@/shared/ui/button";
-import { BuzzLoadingState } from "@/shared/ui/BuzzLoadingState";
+import { CoreviaTalkLoadingState } from "@/shared/ui/CoreviaTalkLoadingState";
 import { Markdown, SyntaxHighlightedCode } from "@/shared/ui/markdown";
 import { baseName, languageForPath } from "./ProjectRepositoryPanel";
 import {
@@ -106,7 +106,7 @@ export function ReadmePanel({
   sourceControls,
   unavailableReason,
 }: {
-  /** `buzz-channel` binding of the repository, for access-restricted copy. */
+  /** `corevia-talk-channel` binding of the repository, for access-restricted copy. */
   accessChannelId?: string | null;
   file: ProjectRepoFile | null;
   fileContentSource?: RepositoryFileContentSource;
@@ -174,7 +174,7 @@ export function ReadmePanel({
     return (
       <section className="overflow-hidden">
         {header}
-        <BuzzLoadingState label={tl("Loading repository")} />
+        <CoreviaTalkLoadingState label={tl("Loading repository")} />
       </section>
     );
   }
@@ -212,7 +212,7 @@ export function ReadmePanel({
           </h3>
           <p className="mt-1 max-w-lg text-sm text-muted-foreground">
             {tl(
-              "Clone this repository locally to explore its files, commits, and contributors in Buzz.",
+              "Clone this repository locally to explore its files, commits, and contributors in Corevia Talk.",
             )}
           </p>
           {externalOpenUrl ? (
@@ -260,7 +260,7 @@ export function ReadmePanel({
     return (
       <section className="overflow-hidden">
         {header}
-        <BuzzLoadingState label={tl("Loading README")} />
+        <CoreviaTalkLoadingState label={tl("Loading README")} />
       </section>
     );
   }

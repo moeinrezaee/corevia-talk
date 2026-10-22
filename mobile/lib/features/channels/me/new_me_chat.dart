@@ -55,7 +55,7 @@ class _NewMeChat extends HookConsumerWidget {
           AppListRowRaw(
             key: const ValueKey('new-session-assistant'),
             leading: chosen == null
-                ? const Icon(BuzzIcons.plus)
+                ? const Icon(CoreviaTalkIcons.plus)
                 : AvatarImage(
                     imageUrl: profile?.avatarUrl,
                     radius: 20,
@@ -69,13 +69,13 @@ class _NewMeChat extends HookConsumerWidget {
                     ),
                   ),
             title: Text(chosen?.displayName ?? 'Choose an agent'),
-            trailing: const Icon(BuzzIcons.chevronRight, size: 20),
+            trailing: const Icon(CoreviaTalkIcons.chevronRight, size: 20),
             onTap: busy.value || frozenName.value != null
                 ? null
                 : () async {
                     FocusScope.of(context).unfocus();
                     if (!context.mounted) return;
-                    final picked = await showBuzzModalBottomSheet<String>(
+                    final picked = await showCoreviaTalkModalBottomSheet<String>(
                       context: context,
                       title: 'Agent',
                       isScrollControlled: true,

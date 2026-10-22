@@ -4,17 +4,17 @@ import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
-import 'package:buzz/features/settings/settings_page.dart';
-import 'package:buzz/shared/community/community_membership_provider.dart';
-import 'package:buzz/shared/community/community.dart';
-import 'package:buzz/shared/community/community_provider.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/push/push_bridge.dart';
-import 'package:buzz/shared/push/dev_push_lease.dart';
-import 'package:buzz/shared/push/push_relay_capability_provider.dart';
-import 'package:buzz/shared/relay/app_lifecycle_provider.dart';
-import 'package:buzz/shared/widgets/app_list.dart';
-import 'package:buzz/shared/widgets/app_list_card.dart';
+import 'package:corevia_talk/features/settings/settings_page.dart';
+import 'package:corevia_talk/shared/community/community_membership_provider.dart';
+import 'package:corevia_talk/shared/community/community.dart';
+import 'package:corevia_talk/shared/community/community_provider.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/push/push_bridge.dart';
+import 'package:corevia_talk/shared/push/dev_push_lease.dart';
+import 'package:corevia_talk/shared/push/push_relay_capability_provider.dart';
+import 'package:corevia_talk/shared/relay/app_lifecycle_provider.dart';
+import 'package:corevia_talk/shared/widgets/app_list.dart';
+import 'package:corevia_talk/shared/widgets/app_list_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -25,8 +25,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   setUp(() {
     PackageInfo.setMockInitialValues(
-      appName: 'Buzz',
-      packageName: 'xyz.block.buzz',
+      appName: 'Corevia Talk',
+      packageName: 'xyz.block.coreviatalk',
       version: '0.16.0',
       buildNumber: '432',
       buildSignature: '',
@@ -42,8 +42,8 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
       PackageInfo.setMockInitialValues(
-        appName: 'Buzz',
-        packageName: 'xyz.block.buzz',
+        appName: 'Corevia Talk',
+        packageName: 'xyz.block.coreviatalk',
         version: '0.16.0',
         buildNumber: buildNumber,
         buildSignature: '',
@@ -101,7 +101,7 @@ void main() {
       addTearDown(() => debugDefaultTargetPlatformOverride = null);
       SharedPreferences.setMockInitialValues({});
       final prefs = await SharedPreferences.getInstance();
-      final capability = Completer<BuzzPushLeaseDescriptor?>();
+      final capability = Completer<CoreviaTalkPushLeaseDescriptor?>();
       var permissionReads = 0;
       await tester.pumpWidget(
         ProviderScope(
@@ -116,10 +116,10 @@ void main() {
             currentRelayPushDescriptorProvider.overrideWith(
               (ref) => capability.future,
             ),
-            buzzPushAuthorizationStatusReaderProvider.overrideWithValue(
+            coreviaTalkPushAuthorizationStatusReaderProvider.overrideWithValue(
               () async {
                 permissionReads += 1;
-                return BuzzPushAuthorizationStatus.authorized;
+                return CoreviaTalkPushAuthorizationStatus.authorized;
               },
             ),
           ],
@@ -162,7 +162,7 @@ void main() {
       relayUrl: 'wss://relay.example',
     ).copyWith(pushNotificationsEnabled: true);
 
-    final capability = Future<BuzzPushLeaseDescriptor?>.value(_pushDescriptor);
+    final capability = Future<CoreviaTalkPushLeaseDescriptor?>.value(_pushDescriptor);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -171,8 +171,8 @@ void main() {
           activeCommunityProvider.overrideWith((ref) async => community),
           currentRelayPushDescriptorProvider.overrideWith((ref) => capability),
           appLifecycleProvider.overrideWith(_SettingsLifecycleNotifier.new),
-          buzzPushAuthorizationStatusReaderProvider.overrideWithValue(
-            () async => BuzzPushAuthorizationStatus.authorized,
+          coreviaTalkPushAuthorizationStatusReaderProvider.overrideWithValue(
+            () async => CoreviaTalkPushAuthorizationStatus.authorized,
           ),
         ],
         child: MaterialApp(
@@ -202,7 +202,7 @@ void main() {
           await tester.runAsync(() async {
             for (final font in {
               'Inter': 'assets/fonts/InterVariable.ttf',
-              'BuzzTabler': 'assets/fonts/TablerIcons.ttf',
+              'CoreviaTalkTabler': 'assets/fonts/TablerIcons.ttf',
             }.entries) {
               await (FontLoader(
                 font.key,
@@ -351,7 +351,7 @@ void main() {
     await tester.pumpAndSettle();
 
     final nativeBar = tester.widget<UiKitView>(find.byType(UiKitView));
-    expect(nativeBar.viewType, 'buzz/ios_navigation_bar');
+    expect(nativeBar.viewType, 'corevia-talk/ios_navigation_bar');
     final params = nativeBar.creationParams! as Map<String, Object?>;
     expect(params['title'], 'Settings');
     expect(params['largeTitle'], isFalse);
@@ -495,7 +495,7 @@ class _SettingsLifecycleNotifier extends AppLifecycleNotifier {
   AppLifecycleState build() => AppLifecycleState.resumed;
 }
 
-const _pushDescriptor = BuzzPushLeaseDescriptor(
+const _pushDescriptor = CoreviaTalkPushLeaseDescriptor(
   origin: 'wss://relay.example',
   executorKeyId: 'key',
   executorPubkey: 'pubkey',

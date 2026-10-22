@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 
 import '../../shared/theme/theme.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../shared/widgets/modal_presentation.dart';
 import '../pairing/pairing_page.dart';
 import 'invite_join_provider.dart';
 import '../../shared/i18n/app_language.dart';
 
 Future<bool?> showInviteJoinSheet(BuildContext context) {
-  return showBuzzModalBottomSheet<bool>(
+  return showCoreviaTalkModalBottomSheet<bool>(
     context: context,
     isScrollControlled: true,
     // The route remains a normal modal while idle, but its contents install a
@@ -76,12 +76,12 @@ class InviteJoinSheet extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Icon(BuzzIcons.userPlus, size: 40, color: context.colors.primary),
+            Icon(CoreviaTalkIcons.userPlus, size: 40, color: context.colors.primary),
             const SizedBox(height: Grid.sm),
             Text(
               isStarterSetupRecovery
                   ? 'Finish setting up'
-                  : tl('Join this Buzz community?'),
+                  : tl('Join this Corevia Talk community?'),
               style: context.textTheme.titleLarge,
             ),
             const SizedBox(height: Grid.xxs),
@@ -171,14 +171,14 @@ class InviteJoinSheet extends ConsumerWidget {
                         ? SizedBox(
                             width: 16,
                             height: 16,
-                            child: BuzzLoadingIndicator(
+                            child: CoreviaTalkLoadingIndicator(
                               size: 16,
                               semanticLabel: isStarterSetupRecovery
                                   ? tl('Finishing setup')
                                   : tl('Joining community'),
                             ),
                           )
-                        : const Icon(BuzzIcons.check),
+                        : const Icon(CoreviaTalkIcons.check),
                     label: Text(primaryLabel),
                   ),
                 ),
@@ -217,7 +217,7 @@ class _InviteJoinSuccess extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Icon(
-              BuzzIcons.circleCheck,
+              CoreviaTalkIcons.circleCheck,
               size: 40,
               color: context.colors.primary,
             ),
@@ -245,7 +245,7 @@ class _InviteJoinSuccess extends StatelessWidget {
                   ),
                 );
               },
-              icon: const Icon(BuzzIcons.scanLine),
+              icon: const Icon(CoreviaTalkIcons.scanLine),
               label: Text(tl('Back it up now')),
             ),
             const SizedBox(height: Grid.xs),

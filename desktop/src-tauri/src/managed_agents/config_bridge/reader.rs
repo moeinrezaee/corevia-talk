@@ -32,7 +32,7 @@ pub(crate) fn read_config_surface(
             "goose" => super::goose::read_config_file().map(|c| (c, true)),
             "claude" => super::claude::read_config_file(claude_config_dir).map(|c| (c, true)),
             "codex" => super::codex::read_config_file().map(|c| (c, true)),
-            "buzz-agent" => super::buzz_agent::read_config_file().map(|c| (c, true)),
+            "corevia-talk-agent" => super::corevia_talk_agent::read_config_file().map(|c| (c, true)),
             _ => None,
         })
         .unwrap_or_else(|| (RuntimeFileConfig::default(), false));
@@ -139,7 +139,7 @@ pub(crate) fn read_config_surface(
         thinking_env_var,
         max_tokens_env_var,
         context_limit_env_var,
-        Some("BUZZ_ACP_SYSTEM_PROMPT"),
+        Some("COREVIA_TALK_ACP_SYSTEM_PROMPT"),
     ]
     .into_iter()
     .flatten()
@@ -188,7 +188,7 @@ pub(crate) fn read_config_surface(
             key: k.clone(),
             label: k.clone(),
             value: Some(v.clone()),
-            origin: ConfigOrigin::BuzzExplicit,
+            origin: ConfigOrigin::CoreviaTalkExplicit,
             schema_type: ConfigFieldType::String,
             write_via: ConfigWriteMechanism::RespawnWithEnvVar { env_key: k.clone() },
         });
@@ -349,11 +349,11 @@ fn build_model_field(
     // The file entry is always last; everything before it is a "configured" candidate
     // that gates whether ACP participates as a fallback (see any_configured below).
     let configured: &[(Option<&str>, ConfigOrigin)] = &[
-        (rec_env, ConfigOrigin::BuzzExplicit),
+        (rec_env, ConfigOrigin::CoreviaTalkExplicit),
         (pers_env, ConfigOrigin::PersonaDefault),
         (glob_env, ConfigOrigin::GlobalDefault),
         (def_env, ConfigOrigin::HarnessDefault),
-        (struct_record, ConfigOrigin::BuzzExplicit),
+        (struct_record, ConfigOrigin::CoreviaTalkExplicit),
         (struct_persona, ConfigOrigin::PersonaDefault),
         (struct_global, ConfigOrigin::GlobalDefault),
         (file_model.as_deref(), ConfigOrigin::ConfigFile),
@@ -501,11 +501,11 @@ fn build_provider_field(
     let struct_record = record.provider.as_deref();
 
     let tiers_list: &[(Option<&str>, ConfigOrigin)] = &[
-        (rec_env, ConfigOrigin::BuzzExplicit),
+        (rec_env, ConfigOrigin::CoreviaTalkExplicit),
         (pers_env, ConfigOrigin::PersonaDefault),
         (glob_env, ConfigOrigin::GlobalDefault),
         (def_env, ConfigOrigin::HarnessDefault),
-        (struct_record, ConfigOrigin::BuzzExplicit),
+        (struct_record, ConfigOrigin::CoreviaTalkExplicit),
         (
             tiers.persona_provider.as_deref(),
             ConfigOrigin::PersonaDefault,
@@ -597,7 +597,7 @@ fn build_thinking_field(
     // For contract runtimes an invalid value (e.g. Goose `minimal`) normalizes
     // to `None` and is skipped as absent so a lower tier can win; aliases
     // (`none`→`off`, `xhigh`→`max`, case-fold) canonicalize. Contract-less
-    // runtimes (buzz-agent, Claude/Codex column) pass raw.
+    // runtimes (corevia-talk-agent, Claude/Codex column) pass raw.
     let norm = |raw: &str| -> Option<String> {
         super::effort::normalize_effort(effort_norm, effort_accepted, raw)
     };
@@ -624,7 +624,7 @@ fn build_thinking_field(
 
     // Live ACP value: normalized through the runtime CONTRACT only, never the
     // persisted `effort_accepted` vocabulary. The ACP running value comes from
-    // the session's own config-option namespace (e.g. buzz-agent reports
+    // the session's own config-option namespace (e.g. corevia-talk-agent reports
     // `default` for its live thinking-level option) — it is a descriptive
     // "currently running" fact, never emitted to a spawn, so the
     // destination-vocabulary gate that guards the writable tiers must not skip
@@ -657,9 +657,9 @@ fn build_thinking_field(
     };
 
     let tiers_list: &[(Option<&str>, ConfigOrigin)] = &[
-        (rec_native.as_deref(), ConfigOrigin::BuzzExplicit),
-        (column.as_deref(), ConfigOrigin::BuzzExplicit),
-        (rec_legacy.as_deref(), ConfigOrigin::BuzzExplicit),
+        (rec_native.as_deref(), ConfigOrigin::CoreviaTalkExplicit),
+        (column.as_deref(), ConfigOrigin::CoreviaTalkExplicit),
+        (rec_legacy.as_deref(), ConfigOrigin::CoreviaTalkExplicit),
         (acp_for_list, ConfigOrigin::AcpConfigOption),
         (pers.as_deref(), ConfigOrigin::PersonaDefault),
         (glob.as_deref(), ConfigOrigin::GlobalDefault),
@@ -709,7 +709,7 @@ fn build_numeric_env_field(
         .unwrap_or([None, None, None, None]);
 
     let tiers_list: &[(Option<&str>, ConfigOrigin)] = &[
-        (rec_env, ConfigOrigin::BuzzExplicit),
+        (rec_env, ConfigOrigin::CoreviaTalkExplicit),
         (pers_env, ConfigOrigin::PersonaDefault),
         (glob_env, ConfigOrigin::GlobalDefault),
         (def_env, ConfigOrigin::HarnessDefault),
@@ -744,14 +744,14 @@ fn build_numeric_env_field(
 /// Env tiers sit above structured per spawn contract: `descriptor.env` is
 /// written last (after the structured prompt), so env wins on collision.
 /// `GlobalAgentConfig` has no structured system_prompt, so the global tier
-/// is env-only. `BUZZ_ACP_SYSTEM_PROMPT` is not reserved and is therefore
+/// is env-only. `COREVIA_TALK_ACP_SYSTEM_PROMPT` is not reserved and is therefore
 /// a real global env tier.
 fn build_system_prompt_field(
     record: &ManagedAgentRecord,
     file_prompt: &Option<String>,
     tiers: &InheritedConfigTiers,
 ) -> Option<NormalizedField> {
-    const PROMPT_ENV_KEY: &str = "BUZZ_ACP_SYSTEM_PROMPT";
+    const PROMPT_ENV_KEY: &str = "COREVIA_TALK_ACP_SYSTEM_PROMPT";
 
     let [rec_env, pers_env, glob_env, def_env] = env_candidates(
         PROMPT_ENV_KEY,
@@ -765,11 +765,11 @@ fn build_system_prompt_field(
     let struct_record = record.system_prompt.as_deref();
 
     let tiers_list: &[(Option<&str>, ConfigOrigin)] = &[
-        (rec_env, ConfigOrigin::BuzzExplicit),       // record env
+        (rec_env, ConfigOrigin::CoreviaTalkExplicit),       // record env
         (pers_env, ConfigOrigin::PersonaDefault),    // persona env
         (glob_env, ConfigOrigin::GlobalDefault),     // global env
         (def_env, ConfigOrigin::HarnessDefault),     // definition env
-        (struct_record, ConfigOrigin::BuzzExplicit), // struct record
+        (struct_record, ConfigOrigin::CoreviaTalkExplicit), // struct record
         (
             tiers.persona_prompt.as_deref(),
             ConfigOrigin::PersonaDefault,

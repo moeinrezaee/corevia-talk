@@ -2,7 +2,7 @@
 export const FA_PART_5: Record<string, string> = {
   "The channel history didn't load. Check your connection and try again.":
     "تاریخچهٔ کانال بارگذاری نشد. اتصال خود را بررسی کنید و دوباره تلاش کنید.",
-  "The complete Buzz community platform.": "پلتفرم کامل انجمن Buzz.",
+  "The complete Corevia Talk community platform.": "پلتفرم کامل انجمن Corevia Talk.",
   "The download window will open when it’s ready.":
     "پنجرهٔ دانلود وقتی آماده شد باز می‌شود.",
   "The enforcement action already taken is not reversed — reopening does not un-ban, un-timeout, or restore a deleted message.":
@@ -15,8 +15,8 @@ export const FA_PART_5: Record<string, string> = {
     "شناسهٔ گفتگوی خصوصی عمداً حذف شده است.",
   "The project agent will build it out from this channel.":
     "ایجنت پروژه آن را از این کانال می‌سازد.",
-  "The project announcement exists, but its git repository was not found on the Buzz relay.":
-    "اعلان پروژه وجود دارد اما مخزن git آن روی رلهٔ Buzz پیدا نشد.",
+  "The project announcement exists, but its git repository was not found on the Corevia Talk relay.":
+    "اعلان پروژه وجود دارد اما مخزن git آن روی رلهٔ Corevia Talk پیدا نشد.",
   "The relay did not return a feed response.": "رله پاسخ فید برنگرداند.",
   "The relay request failed.": "درخواست رله ناموفق بود.",
   "The relay returned an error. Try again.":
@@ -46,16 +46,16 @@ export const FA_PART_5: Record<string, string> = {
   "Thinking / Effort": "تفکر / تلاش",
   "Thinking effort": "میزان تلاش تفکر",
   This: "این",
-  "This Builderlab account isn't linked to a Buzz identity yet. Connect this device's key to create and own communities under it — Buzz signs a one-time challenge locally, so your private key never leaves Desktop.":
-    "این حساب Builderlab هنوز به هویت Buzz وصل نشده است. کلید این دستگاه را وصل کنید تا زیر آن انجمن بسازید و مالک شوید — Buzz یک چالش یک‌بارمصرف را به‌صورت محلی امضا می‌کند، پس کلید خصوصی شما هرگز دسکتاپ را ترک نمی‌کند.",
-  "This Builderlab account uses a different Buzz identity. Switch it to this device, or sign in with another account.":
-    "این حساب Builderlab از هویت Buzz دیگری استفاده می‌کند. آن را به این دستگاه تغییر دهید یا با حساب دیگری وارد شوید.",
-  "This account is connected to a different Buzz identity":
-    "این حساب به هویت Buzz دیگری وصل است",
-  "This account is connected to another Buzz identity. Reconnect this device, or sign out to use a different email.":
-    "این حساب به هویت Buzz دیگری وصل است. این دستگاه را دوباره وصل کنید یا برای استفاده از ایمیل دیگر خارج شوید.",
-  "This account uses a different Buzz identity":
-    "این حساب از هویت Buzz دیگری استفاده می‌کند",
+  "This Builderlab account isn't linked to a Corevia Talk identity yet. Connect this device's key to create and own communities under it — Corevia Talk signs a one-time challenge locally, so your private key never leaves Desktop.":
+    "این حساب Builderlab هنوز به هویت Corevia Talk وصل نشده است. کلید این دستگاه را وصل کنید تا زیر آن انجمن بسازید و مالک شوید — Corevia Talk یک چالش یک‌بارمصرف را به‌صورت محلی امضا می‌کند، پس کلید خصوصی شما هرگز دسکتاپ را ترک نمی‌کند.",
+  "This Builderlab account uses a different Corevia Talk identity. Switch it to this device, or sign in with another account.":
+    "این حساب Builderlab از هویت Corevia Talk دیگری استفاده می‌کند. آن را به این دستگاه تغییر دهید یا با حساب دیگری وارد شوید.",
+  "This account is connected to a different Corevia Talk identity":
+    "این حساب به هویت Corevia Talk دیگری وصل است",
+  "This account is connected to another Corevia Talk identity. Reconnect this device, or sign out to use a different email.":
+    "این حساب به هویت Corevia Talk دیگری وصل است. این دستگاه را دوباره وصل کنید یا برای استفاده از ایمیل دیگر خارج شوید.",
+  "This account uses a different Corevia Talk identity":
+    "این حساب از هویت Corevia Talk دیگری استفاده می‌کند",
   "This address becomes connectable again. Connections that closed during archival will not reconnect automatically.":
     "این نشانی دوباره قابل اتصال می‌شود. اتصال‌هایی که هنگام بایگانی بسته شدند خودکار وصل نمی‌شوند.",
   "This agent is in the community catalog. Your changes will be published when you save.":
@@ -80,19 +80,19 @@ export const FA_PART_5: Record<string, string> = {
   "This channel is read-only.": "این کانال فقط‌خواندنی است.",
   "This computer": "این رایانه",
   "This conversation could not be loaded.": "بارگذاری این گفتگو ممکن نشد.",
-  "This creates a password-protected file with your private key. Remember, Buzz can’t recover your key if you lose it.":
-    "این یک فایل محافظت‌شده با گذرواژه از کلید خصوصی شما می‌سازد. به یاد داشته باشید، اگر کلید را گم کنید Buzz نمی‌تواند آن را بازیابی کند.",
+  "This creates a password-protected file with your private key. Remember, Corevia Talk can’t recover your key if you lose it.":
+    "این یک فایل محافظت‌شده با گذرواژه از کلید خصوصی شما می‌سازد. به یاد داشته باشید، اگر کلید را گم کنید Corevia Talk نمی‌تواند آن را بازیابی کند.",
   "This device": "این دستگاه",
   "This device:": "این دستگاه:",
-  "This exact text is appended to your message before it is signed and sent. Quoted values are untrusted workspace metadata — Buzz does not verify or rewrite them.":
-    "این متن دقیقاً پیش از امضا و ارسال به پیام شما افزوده می‌شود. مقادیر نقل‌شده فراداده‌های نامعتبر فضای کار هستند — Buzz آن‌ها را راستی‌آزمایی یا بازنویسی نمی‌کند.",
+  "This exact text is appended to your message before it is signed and sent. Quoted values are untrusted workspace metadata — Corevia Talk does not verify or rewrite them.":
+    "این متن دقیقاً پیش از امضا و ارسال به پیام شما افزوده می‌شود. مقادیر نقل‌شده فراداده‌های نامعتبر فضای کار هستند — Corevia Talk آن‌ها را راستی‌آزمایی یا بازنویسی نمی‌کند.",
   "This forum is archived.": "این انجمن گفتگو بایگانی شده است.",
-  "This gives this desktop permanent access to your Buzz identity. Only continue if you trust it.":
-    "این کار به این دسکتاپ دسترسی دائمی به هویت Buzz شما می‌دهد. فقط در صورتی ادامه دهید که به آن اعتماد دارید.",
+  "This gives this desktop permanent access to your Corevia Talk identity. Only continue if you trust it.":
+    "این کار به این دسکتاپ دسترسی دائمی به هویت Corevia Talk شما می‌دهد. فقط در صورتی ادامه دهید که به آن اعتماد دارید.",
   "This huddle card is missing session details.":
     "جزئیات نشست در این کارت گفتگوی صوتی موجود نیست.",
-  "This identity belongs to you, not Buzz, and can move with you to another device or compatible Nostr app. Because only you control the private key, Buzz can’t reset or recover it. Keep a backup somewhere safe, and never share it.":
-    "این هویت متعلق به شماست، نه Buzz، و می‌تواند همراه شما به دستگاه یا برنامهٔ Nostr سازگار دیگری منتقل شود. چون فقط شما کلید خصوصی را کنترل می‌کنید، Buzz نمی‌تواند آن را بازنشانی یا بازیابی کند. یک پشتیبان در جای امنی نگه دارید و هرگز به اشتراک نگذارید.",
+  "This identity belongs to you, not Corevia Talk, and can move with you to another device or compatible Nostr app. Because only you control the private key, Corevia Talk can’t reset or recover it. Keep a backup somewhere safe, and never share it.":
+    "این هویت متعلق به شماست، نه Corevia Talk، و می‌تواند همراه شما به دستگاه یا برنامهٔ Nostr سازگار دیگری منتقل شود. چون فقط شما کلید خصوصی را کنترل می‌کنید، Corevia Talk نمی‌تواند آن را بازنشانی یا بازیابی کند. یک پشتیبان در جای امنی نگه دارید و هرگز به اشتراک نگذارید.",
   "This imported voice and its local audio file will be removed.":
     "این صدای واردشده و فایل صوتی محلی آن حذف خواهد شد.",
   "This is the beginning of the": "این ابتدای",
@@ -104,10 +104,10 @@ export const FA_PART_5: Record<string, string> = {
     "این چیزی است که برای افزودن این ایموجی به پیام‌ها و واکنش‌ها تایپ می‌کنید.",
   "This is your public identity — it's safe to share. Send it to the relay admin so they can invite you.":
     "این هویت عمومی شماست — اشتراک‌گذاری آن امن است. آن را برای مدیر رله بفرستید تا شما را دعوت کند.",
-  "This key will be how you log into Buzz. You can use it across Buzz communities and other platforms.":
-    "این کلید راه ورود شما به Buzz خواهد بود. می‌توانید آن را در انجمن‌های Buzz و پلتفرم‌های دیگر استفاده کنید.",
-  "This machine is currently using another member's shared compute. Turn on sharing to switch to the selected local model; Buzz may briefly restart.":
-    "این دستگاه اکنون از توان محاسباتی اشتراکی عضو دیگری استفاده می‌کند. اشتراک‌گذاری را روشن کنید تا به مدل محلی انتخاب‌شده بروید؛ Buzz ممکن است لحظه‌ای دوباره راه‌اندازی شود.",
+  "This key will be how you log into Corevia Talk. You can use it across Corevia Talk communities and other platforms.":
+    "این کلید راه ورود شما به Corevia Talk خواهد بود. می‌توانید آن را در انجمن‌های Corevia Talk و پلتفرم‌های دیگر استفاده کنید.",
+  "This machine is currently using another member's shared compute. Turn on sharing to switch to the selected local model; Corevia Talk may briefly restart.":
+    "این دستگاه اکنون از توان محاسباتی اشتراکی عضو دیگری استفاده می‌کند. اشتراک‌گذاری را روشن کنید تا به مدل محلی انتخاب‌شده بروید؛ Corevia Talk ممکن است لحظه‌ای دوباره راه‌اندازی شود.",
   "This message has been edited": "این پیام ویرایش شده است",
   "This only affects": "این فقط تأثیر می‌گذارد روی",
   "This person is already a community member.": "این فرد از قبل عضو انجمن است.",
@@ -140,8 +140,8 @@ export const FA_PART_5: Record<string, string> = {
   "This week:": "این هفته:",
   "This will clear the active timeout for":
     "این محدودیت زمانی فعال را برای این برمی‌دارد:",
-  "This will delete your identity key, all agent settings, and cached data from this device, then relaunch Buzz into first-run setup. This cannot be undone.":
-    "این کار کلید هویت، همهٔ تنظیمات ایجنت و داده‌های کش‌شده را از این دستگاه حذف می‌کند، سپس Buzz را در راه‌اندازی اولیه دوباره باز می‌کند. این کار قابل بازگشت نیست.",
+  "This will delete your identity key, all agent settings, and cached data from this device, then relaunch Corevia Talk into first-run setup. This cannot be undone.":
+    "این کار کلید هویت، همهٔ تنظیمات ایجنت و داده‌های کش‌شده را از این دستگاه حذف می‌کند، سپس Corevia Talk را در راه‌اندازی اولیه دوباره باز می‌کند. این کار قابل بازگشت نیست.",
   "This will immediately revoke their access to the relay.":
     "این کار بلافاصله دسترسی آن‌ها به رله را لغو می‌کند.",
   "This will permanently delete this": "این برای همیشه حذف می‌کند این را:",
@@ -217,8 +217,8 @@ export const FA_PART_5: Record<string, string> = {
   "Turn outline off": "خاموش کردن طرح کلی",
   "Turn outline on": "روشن کردن طرح کلی",
   Type: "نوع",
-  "Type the six-digit code shown here into the Buzz mobile app.":
-    "کد شش‌رقمی نمایش‌داده‌شده اینجا را در برنامهٔ موبایل Buzz وارد کنید.",
+  "Type the six-digit code shown here into the Corevia Talk mobile app.":
+    "کد شش‌رقمی نمایش‌داده‌شده اینجا را در برنامهٔ موبایل Corevia Talk وارد کنید.",
   URL: "نشانی",
   "URL must start with https://": "نشانی باید با https:// شروع شود",
   "UTC · Paste all 5 fields, or use wildcards, lists, ranges, and steps.":
@@ -240,8 +240,8 @@ export const FA_PART_5: Record<string, string> = {
   Uninitialized: "راه‌اندازی‌نشده",
   "Unix timestamp": "برچسب زمانی یونیکس",
   "Unknown agents": "ایجنت‌های ناشناس",
-  "Unless the agent is known to be Offline, Buzz first requests shutdown through a channel when available. A failed request cancels deletion. The remote process may still be running even after a successful request.":
-    "مگر اینکه ایجنت آفلاین بودنش مشخص باشد، Buzz ابتدا در صورت امکان از طریق یک کانال درخواست خاموشی می‌دهد. درخواست ناموفق حذف را لغو می‌کند. حتی پس از درخواست موفق، ممکن است فرایند راه‌دور هنوز در حال اجرا باشد.",
+  "Unless the agent is known to be Offline, Corevia Talk first requests shutdown through a channel when available. A failed request cancels deletion. The remote process may still be running even after a successful request.":
+    "مگر اینکه ایجنت آفلاین بودنش مشخص باشد، Corevia Talk ابتدا در صورت امکان از طریق یک کانال درخواست خاموشی می‌دهد. درخواست ناموفق حذف را لغو می‌کند. حتی پس از درخواست موفق، ممکن است فرایند راه‌دور هنوز در حال اجرا باشد.",
   Unlike: "برداشتن پسند",
   Unlink: "قطع پیوند",
   Unlisted: "فهرست‌نشده",
@@ -251,7 +251,7 @@ export const FA_PART_5: Record<string, string> = {
   "Unmute agent speech": "رفع بی‌صدایی گفتار ایجنت",
   "Unmute channel": "رفع بی‌صدایی کانال",
   "Unpair identity": "قطع جفت‌سازی هویت",
-  "Unpair this Buzz identity?": "جفت‌سازی این هویت Buzz قطع شود؟",
+  "Unpair this Corevia Talk identity?": "جفت‌سازی این هویت Corevia Talk قطع شود؟",
   Unreachable: "غیرقابل‌دسترس",
   "Unsaved changes made to agent defaults will be lost.":
     "تغییرات ذخیره‌نشدهٔ پیش‌فرض‌های ایجنت از دست خواهند رفت.",
@@ -268,8 +268,8 @@ export const FA_PART_5: Record<string, string> = {
   "Update downloaded. Click to apply.":
     "به‌روزرسانی دانلود شد. برای اعمال کلیک کنید.",
   "Update failed:": "به‌روزرسانی ناموفق بود:",
-  "Update how your name, avatar, and bio appear across Buzz.":
-    "نحوهٔ نمایش نام، آواتار و بیوگرافی شما در Buzz را به‌روز کنید.",
+  "Update how your name, avatar, and bio appear across Corevia Talk.":
+    "نحوهٔ نمایش نام، آواتار و بیوگرافی شما در Corevia Talk را به‌روز کنید.",
   "Update now": "الان به‌روزرسانی کن",
   "Update onboarding copy": "به‌روزرسانی متن آغازین",
   "Update review": "به‌روزرسانی بازبینی",
@@ -460,10 +460,10 @@ export const FA_PART_5: Record<string, string> = {
   "You can always modify this and other settings in Appearance.":
     "همیشه می‌توانید این و تنظیمات دیگر را در «ظاهر» تغییر دهید.",
   "You can always use this agent.": "همیشه می‌توانید از این ایجنت استفاده کنید.",
-  "You can close this window while Buzz finishes the backup in the background.":
-    "می‌توانید این پنجره را ببندید تا Buzz پشتیبان‌گیری را در پس‌زمینه تمام کند.",
-  "You can close this window while Buzz finishes.":
-    "می‌توانید این پنجره را ببندید تا Buzz کار را تمام کند.",
+  "You can close this window while Corevia Talk finishes the backup in the background.":
+    "می‌توانید این پنجره را ببندید تا Corevia Talk پشتیبان‌گیری را در پس‌زمینه تمام کند.",
+  "You can close this window while Corevia Talk finishes.":
+    "می‌توانید این پنجره را ببندید تا Corevia Talk کار را تمام کند.",
   "You can delete it to reclaim disk space.":
     "می‌توانید آن را حذف کنید تا فضای دیسک آزاد شود.",
   "You can unarchive them at any time to restore them":
@@ -472,8 +472,8 @@ export const FA_PART_5: Record<string, string> = {
     "هنوز هیچ ایموجی‌ای اضافه نکرده‌اید. یکی در بالا اضافه کنید.",
   "You need access to the repository’s channel before you can clone it.":
     "پیش از کلون کردن مخزن، به کانال آن نیاز به دسترسی دارید.",
-  "You were no longer a member, so Buzz removed the community from this device.":
-    "دیگر عضو نبودید، پس Buzz انجمن را از این دستگاه حذف کرد.",
+  "You were no longer a member, so Corevia Talk removed the community from this device.":
+    "دیگر عضو نبودید، پس Corevia Talk انجمن را از این دستگاه حذف کرد.",
   "You're all set": "همه‌چیز آماده است",
   "You're on the latest version.": "شما آخرین نسخه را دارید.",
   "You're timed out by community moderators — {0} left.":
@@ -482,10 +482,10 @@ export const FA_PART_5: Record<string, string> = {
     "ناظران انجمن شما را محدود کرده‌اند.",
   "You've reached the limit of": "به سقف رسیده‌اید:",
   "Your Builderlab account": "حساب Builderlab شما",
-  "Your Builderlab account owns communities under another Buzz key, so connecting them here would join a relay this device isn't a member of. Creating and connecting are paused until the identities match.":
-    "حساب Builderlab شما مالک انجمن‌هایی زیر کلید Buzz دیگری است، پس وصل کردن آن‌ها اینجا به رله‌ای می‌پیوندد که این دستگاه عضو آن نیست. ساخت و اتصال تا یکسان شدن هویت‌ها متوقف است.",
-  "Your Builderlab account will no longer be connected to this Buzz key. You can reconnect any key later, but community actions stay unavailable until you do.":
-    "حساب Builderlab شما دیگر به این کلید Buzz وصل نخواهد بود. بعداً می‌توانید هر کلیدی را دوباره وصل کنید، اما تا آن زمان اقدامات انجمن در دسترس نیست.",
+  "Your Builderlab account owns communities under another Corevia Talk key, so connecting them here would join a relay this device isn't a member of. Creating and connecting are paused until the identities match.":
+    "حساب Builderlab شما مالک انجمن‌هایی زیر کلید Corevia Talk دیگری است، پس وصل کردن آن‌ها اینجا به رله‌ای می‌پیوندد که این دستگاه عضو آن نیست. ساخت و اتصال تا یکسان شدن هویت‌ها متوقف است.",
+  "Your Builderlab account will no longer be connected to this Corevia Talk key. You can reconnect any key later, but community actions stay unavailable until you do.":
+    "حساب Builderlab شما دیگر به این کلید Corevia Talk وصل نخواهد بود. بعداً می‌توانید هر کلیدی را دوباره وصل کنید، اما تا آن زمان اقدامات انجمن در دسترس نیست.",
   "Your agent requested a new channel in":
     "ایجنت شما یک کانال جدید درخواست کرد در",
   "Your agents": "ایجنت‌های شما",
@@ -500,12 +500,12 @@ export const FA_PART_5: Record<string, string> = {
     "به‌جای آن آواتار پیش‌فرض شما نمایش داده می‌شود.",
   "Your file and password can restore your identity.":
     "فایل و گذرواژهٔ شما می‌تواند هویتتان را بازیابی کند.",
-  "Your identity is no longer in the system keyring. Re-import your nsec to restore it — Buzz will restart to finish recovery. Or go back to start a new identity with a fresh key.":
-    "هویت شما دیگر در حلقهٔ کلید سیستم نیست. nsec خود را دوباره وارد کنید تا بازیابی شود — Buzz برای تکمیل بازیابی دوباره راه‌اندازی می‌شود. یا برگردید و با یک کلید تازه هویت جدیدی شروع کنید.",
-  "Your identity is safe in the OS keyring, but it's unreachable this session. Unlock your keyring or sign into your desktop session, then relaunch Buzz.":
-    "هویت شما در حلقهٔ کلید سیستم‌عامل امن است اما در این نشست در دسترس نیست. حلقهٔ کلید را باز کنید یا وارد نشست دسکتاپ شوید، سپس Buzz را دوباره باز کنید.",
-  "Your identity key works like a password for your Buzz account. Keep a copy somewhere safe. You can create a backup file and lock it with a password you can remember.":
-    "کلید هویت شما مانند گذرواژهٔ حساب Buzz شما کار می‌کند. یک نسخه از آن را جای امنی نگه دارید. می‌توانید یک فایل پشتیبان بسازید و با گذرواژه‌ای که به یاد می‌ماند قفلش کنید.",
+  "Your identity is no longer in the system keyring. Re-import your nsec to restore it — Corevia Talk will restart to finish recovery. Or go back to start a new identity with a fresh key.":
+    "هویت شما دیگر در حلقهٔ کلید سیستم نیست. nsec خود را دوباره وارد کنید تا بازیابی شود — Corevia Talk برای تکمیل بازیابی دوباره راه‌اندازی می‌شود. یا برگردید و با یک کلید تازه هویت جدیدی شروع کنید.",
+  "Your identity is safe in the OS keyring, but it's unreachable this session. Unlock your keyring or sign into your desktop session, then relaunch Corevia Talk.":
+    "هویت شما در حلقهٔ کلید سیستم‌عامل امن است اما در این نشست در دسترس نیست. حلقهٔ کلید را باز کنید یا وارد نشست دسکتاپ شوید، سپس Corevia Talk را دوباره باز کنید.",
+  "Your identity key works like a password for your Corevia Talk account. Keep a copy somewhere safe. You can create a backup file and lock it with a password you can remember.":
+    "کلید هویت شما مانند گذرواژهٔ حساب Corevia Talk شما کار می‌کند. یک نسخه از آن را جای امنی نگه دارید. می‌توانید یک فایل پشتیبان بسازید و با گذرواژه‌ای که به یاد می‌ماند قفلش کنید.",
   "Your keypair and NIP-05 handle are fixed for this device.":
     "جفت‌کلید و شناسهٔ NIP-05 شما برای این دستگاه ثابت است.",
   "Your mobile app is now connected to this relay.":
@@ -562,7 +562,7 @@ export const FA_PART_5: Record<string, string> = {
   bot: "ربات",
   browse: "مرور",
   "built-in": "داخلی",
-  "buzz-agent model tuning": "تنظیم مدل buzz-agent",
+  "corevia-talk-agent model tuning": "تنظیم مدل corevia-talk-agent",
   "by public key": "با کلید عمومی",
   canvas: "بوم",
   "changed files": "فایل‌های تغییرکرده",
@@ -619,8 +619,8 @@ export const FA_PART_5: Record<string, string> = {
   into: "به",
   "is already": "از قبل",
   "is invalid:": "نامعتبر است:",
-  "is ready. Connect this device’s Buzz identity to finish setup. Your private key stays on this device.":
-    "آماده است. هویت Buzz این دستگاه را وصل کنید تا راه‌اندازی تمام شود. کلید خصوصی شما روی همین دستگاه می‌ماند.",
+  "is ready. Connect this device’s Corevia Talk identity to finish setup. Your private key stays on this device.":
+    "آماده است. هویت Corevia Talk این دستگاه را وصل کنید تا راه‌اندازی تمام شود. کلید خصوصی شما روی همین دستگاه می‌ماند.",
   "is set under Advanced → Environment variables.":
     "در پیشرفته ← متغیرهای محیطی تنظیم شده است.",
   "is working…": "در حال کار است…",
@@ -712,8 +712,8 @@ export const FA_PART_5: Record<string, string> = {
   timeout: "محدودیت زمانی",
   "to a channel so desktop chat can `@mention` it. Running agents pick up new channels automatically via membership notifications.":
     "به یک کانال تا چت دسکتاپ بتواند آن را `@mention` کند. ایجنت‌های در حال اجرا کانال‌های جدید را خودکار از طریق اعلان‌های عضویت می‌گیرند.",
-  "to another person. You become a regular member. The recipient needs a connected Buzz identity first, and this can't be undone.":
-    "به شخص دیگر. شما یک عضو معمولی می‌شوید. گیرنده ابتدا باید هویت Buzz متصل داشته باشد و این کار قابل بازگشت نیست.",
+  "to another person. You become a regular member. The recipient needs a connected Corevia Talk identity first, and this can't be undone.":
+    "به شخص دیگر. شما یک عضو معمولی می‌شوید. گیرنده ابتدا باید هویت Corevia Talk متصل داشته باشد و این کار قابل بازگشت نیست.",
   "to confirm": "برای تأیید",
   "to match your default login.": "تا با ورود پیش‌فرض شما مطابقت کند.",
   "to the selected channel.": "به کانال انتخاب‌شده.",

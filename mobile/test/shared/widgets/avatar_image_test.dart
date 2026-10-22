@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:buzz/shared/widgets/avatar_image.dart';
-import 'package:buzz/shared/emoji/native_emoji_glyph.dart';
+import 'package:corevia_talk/shared/widgets/avatar_image.dart';
+import 'package:corevia_talk/shared/emoji/native_emoji_glyph.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -33,7 +33,7 @@ void main() {
   ) async {
     const poster = 'https://relay.example/poster.png';
     final animated =
-        '$poster#buzz-anim=${Uri.encodeComponent('https://relay.example/animation.png')}';
+        '$poster#corevia-talk-anim=${Uri.encodeComponent('https://relay.example/animation.png')}';
     const preset =
         'https://dwwgwmfqqjotj.cloudfront.net/avatars/20260925T154625166Z/poster/pollies/pollies-10.png';
     for (final url in [poster, animated, preset]) {
@@ -107,7 +107,7 @@ void main() {
     const posterUrl = 'https://relay.example/media/poster.png';
     const animationUrl = 'https://relay.example/media/animation.png';
     final animatedUrl =
-        '$posterUrl#buzz-anim=${Uri.encodeComponent(animationUrl)}';
+        '$posterUrl#corevia-talk-anim=${Uri.encodeComponent(animationUrl)}';
 
     await tester.pumpWidget(subject(animatedUrl, backgroundColor: Colors.red));
 

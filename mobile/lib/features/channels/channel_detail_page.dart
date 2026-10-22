@@ -15,7 +15,7 @@ import 'package:flutter/rendering.dart' show ScrollCacheExtent, ScrollDirection;
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../shared/emoji/emoji_burst.dart';
@@ -32,7 +32,7 @@ import 'mentions/mention_candidates.dart';
 import '../../shared/relay/relay.dart';
 import '../../shared/theme/theme.dart';
 import '../../shared/widgets/avatar_image.dart';
-import '../../shared/widgets/buzz_loading_indicator.dart';
+import '../../shared/widgets/corevia_talk_loading_indicator.dart';
 import '../../shared/widgets/bouncing_dots_indicator.dart';
 import '../../shared/widgets/concentric_sheet_surface.dart';
 import '../../shared/widgets/frosted_app_bar.dart';

@@ -40,7 +40,7 @@ import { tl, tlt } from "@/shared/i18n/tl";
 
 const EMPTY_TARGET_MESSAGE_EVENTS: RelayEvent[] = [];
 const PROJECT_HOME_SUMMARY_WIDTH_KEY =
-  "buzz.desktop.project-home-summary-width";
+  "corevia-talk.desktop.project-home-summary-width";
 
 const ChannelScreenView = React.lazy(async () => {
   const module = await import("@/features/channels/ui/ChannelScreen");

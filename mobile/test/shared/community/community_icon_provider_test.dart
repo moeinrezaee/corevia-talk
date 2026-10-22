@@ -4,10 +4,10 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:buzz/shared/community/community_icon_cache.dart';
-import 'package:buzz/shared/emoji/emoji_avatar.dart';
-import 'package:buzz/shared/community/community_icon_provider.dart';
-import 'package:buzz/shared/theme/theme_provider.dart';
+import 'package:corevia_talk/shared/community/community_icon_cache.dart';
+import 'package:corevia_talk/shared/emoji/emoji_avatar.dart';
+import 'package:corevia_talk/shared/community/community_icon_provider.dart';
+import 'package:corevia_talk/shared/theme/theme_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -47,7 +47,7 @@ void main() {
     });
     expect(await container.read(communityIconProvider(relay).future), artwork);
     expect(container.read(communityIconCacheProvider)[key], artwork);
-    expect(prefs.getString('buzz.community-icons.v3'), contains('image/svg'));
+    expect(prefs.getString('corevia-talk.community-icons.v3'), contains('image/svg'));
   });
 
   test(
@@ -166,7 +166,7 @@ void main() {
   });
 
   test('ignores corrupt persistence and bounds cache entries', () async {
-    await prefs.setString('buzz.community-icons.v3', '{bad json');
+    await prefs.setString('corevia-talk.community-icons.v3', '{bad json');
     final container = containerFor((_) async => http.Response('{}', 200));
     expect(container.read(communityIconCacheProvider), isEmpty);
     final cache = container.read(communityIconCacheProvider.notifier);
@@ -291,7 +291,7 @@ void main() {
       });
       expect(await container.read(communityIconProvider(relay).future), isNull);
       expect(container.read(communityIconCacheProvider), isEmpty);
-      expect(prefs.getString('buzz.community-icons.v3'), isNull);
+      expect(prefs.getString('corevia-talk.community-icons.v3'), isNull);
       final restarted = containerFor(
         (_) async => http.Response('offline', 503),
       );
@@ -306,7 +306,7 @@ void main() {
         'test/fixtures/community_icons/compressed-16000.png',
       ).readAsBytes();
       await prefs.setString(
-        'buzz.community-icons.v1',
+        'corevia-talk.community-icons.v1',
         jsonEncode({
           key: Uri.dataFromBytes(bytes, mimeType: 'image/png').toString(),
         }),
@@ -350,11 +350,11 @@ void main() {
       });
       expect(await container.read(communityIconProvider(relay).future), isNull);
       expect(container.read(communityIconCacheProvider), isEmpty);
-      expect(prefs.getString('buzz.community-icons.v3'), isNull);
+      expect(prefs.getString('corevia-talk.community-icons.v3'), isNull);
 
       // Even an entry persisted by the previous version must not render.
       await prefs.setString(
-        'buzz.community-icons.v2',
+        'corevia-talk.community-icons.v2',
         jsonEncode({key: wrapped}),
       );
       final restarted = containerFor(

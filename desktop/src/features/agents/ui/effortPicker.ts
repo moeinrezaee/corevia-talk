@@ -92,7 +92,7 @@ export function effortPickerState({
 export function ownEffortLevel(
   field: NormalizedField | null | undefined,
 ): string | null {
-  return field?.origin === "buzzExplicit" ? field.value : null;
+  return field?.origin === "coreviaTalkExplicit" ? field.value : null;
 }
 
 /**

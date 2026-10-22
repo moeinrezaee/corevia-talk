@@ -1,11 +1,11 @@
-import 'package:buzz/shared/widgets/buzz_agent_icon.dart';
-import 'package:buzz/features/channels/message_content.dart';
-import 'package:buzz/features/channels/media_viewer_page.dart';
-import 'package:buzz/shared/custom_emoji/custom_emoji.dart';
-import 'package:buzz/shared/custom_emoji/custom_emoji_provider.dart';
-import 'package:buzz/shared/custom_emoji/custom_emoji_render.dart';
-import 'package:buzz/shared/emoji/emoji_only.dart';
-import 'package:buzz/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/widgets/corevia_talk_agent_icon.dart';
+import 'package:corevia_talk/features/channels/message_content.dart';
+import 'package:corevia_talk/features/channels/media_viewer_page.dart';
+import 'package:corevia_talk/shared/custom_emoji/custom_emoji.dart';
+import 'package:corevia_talk/shared/custom_emoji/custom_emoji_provider.dart';
+import 'package:corevia_talk/shared/custom_emoji/custom_emoji_render.dart';
+import 'package:corevia_talk/shared/emoji/emoji_only.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gpt_markdown/gpt_markdown.dart';
@@ -84,7 +84,7 @@ void main() {
     tester,
   ) async {
     const id = '580ca78b-9dae-46f3-8854-bd671853ba32';
-    final fixture = _Fixture()..content = '[Open channel](buzz://channel/$id)';
+    final fixture = _Fixture()..content = '[Open channel](corevia-talk://channel/$id)';
     addTearDown(fixture.revision.dispose);
     await tester.pumpWidget(fixture.build());
     final before = _components(tester);
@@ -197,7 +197,7 @@ void main() {
       fixture.agents.add('alice-key');
       await fixture.refresh(tester);
       expect(_components(tester), isNot(same(before)));
-      expect(find.byType(BuzzAgentIcon), findsOneWidget);
+      expect(find.byType(CoreviaTalkAgentIcon), findsOneWidget);
       before = _components(tester);
       fixture.mentionHandler = false;
       fixture.tappedId = null;
@@ -210,7 +210,7 @@ void main() {
       await fixture.refresh(tester);
       await tester.tap(find.text('ALICE'));
       expect(fixture.tappedId, 'second-key');
-      expect(find.byType(BuzzAgentIcon), findsNothing);
+      expect(find.byType(CoreviaTalkAgentIcon), findsNothing);
     },
   );
 

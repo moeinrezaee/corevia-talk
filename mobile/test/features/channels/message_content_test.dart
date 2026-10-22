@@ -1,17 +1,17 @@
-import 'package:buzz/shared/widgets/buzz_agent_icon.dart';
-import 'package:buzz/features/channels/local_send_bubble_surface.dart';
+import 'package:corevia_talk/shared/widgets/corevia_talk_agent_icon.dart';
+import 'package:corevia_talk/features/channels/local_send_bubble_surface.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/testing.dart';
-import 'package:buzz/shared/widgets/media_loading_placeholder.dart';
-import 'package:buzz/shared/widgets/skeleton.dart';
+import 'package:corevia_talk/shared/widgets/media_loading_placeholder.dart';
+import 'package:corevia_talk/shared/widgets/skeleton.dart';
 import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart' show RenderRepaintBoundary;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:buzz/shared/widgets/page_indicator.dart';
+import 'package:corevia_talk/shared/widgets/page_indicator.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -20,21 +20,21 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hooks_riverpod/misc.dart';
 import 'package:http/http.dart' as http;
 import 'package:just_audio/just_audio.dart' as audio;
-import 'package:buzz/shared/theme/buzz_icons.dart';
+import 'package:corevia_talk/shared/theme/corevia_talk_icons.dart';
 import 'package:nostr/nostr.dart' as nostr;
-import 'package:buzz/features/channels/channel.dart';
-import 'package:buzz/features/channels/channels_provider.dart';
-import 'package:buzz/features/channels/message_content.dart';
-import 'package:buzz/features/channels/media_viewer_page.dart';
-import 'package:buzz/features/channels/voice_note_attachment.dart';
-import 'package:buzz/features/channels/voice_note_waveform.dart';
-import 'package:buzz/features/channels/voice_note_recording.dart';
-import 'package:buzz/shared/deeplink/deep_link.dart';
-import 'package:buzz/shared/deeplink/pending_deep_link_provider.dart';
-import 'package:buzz/shared/emoji/emoji_only.dart';
-import 'package:buzz/shared/relay/relay.dart';
-import 'package:buzz/shared/theme/theme.dart';
-import 'package:buzz/shared/widgets/buzz_loading_indicator.dart';
+import 'package:corevia_talk/features/channels/channel.dart';
+import 'package:corevia_talk/features/channels/channels_provider.dart';
+import 'package:corevia_talk/features/channels/message_content.dart';
+import 'package:corevia_talk/features/channels/media_viewer_page.dart';
+import 'package:corevia_talk/features/channels/voice_note_attachment.dart';
+import 'package:corevia_talk/features/channels/voice_note_waveform.dart';
+import 'package:corevia_talk/features/channels/voice_note_recording.dart';
+import 'package:corevia_talk/shared/deeplink/deep_link.dart';
+import 'package:corevia_talk/shared/deeplink/pending_deep_link_provider.dart';
+import 'package:corevia_talk/shared/emoji/emoji_only.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
+import 'package:corevia_talk/shared/theme/theme.dart';
+import 'package:corevia_talk/shared/widgets/corevia_talk_loading_indicator.dart';
 
 part 'message_content_bubble_cases.dart';
 part 'message_carousel_preview_cases.dart';
@@ -756,20 +756,20 @@ void main() {
       testWidgets('renders markdown link', (tester) async {
         await tester.pumpWidget(
           _testable(
-            const MessageContent(content: 'Check [Buzz](https://example.com)'),
+            const MessageContent(content: 'Check [Corevia Talk](https://example.com)'),
           ),
         );
 
         final allText = _allRichText(tester);
-        expect(allText, contains('Buzz'));
+        expect(allText, contains('Corevia Talk'));
         // Should not show raw markdown syntax.
-        expect(allText, isNot(contains('[Buzz]')));
+        expect(allText, isNot(contains('[Corevia Talk]')));
         expect(allText, isNot(contains('(https://example.com)')));
       });
 
-      testWidgets('renders and routes a buzz message link', (tester) async {
+      testWidgets('renders and routes a corevia-talk message link', (tester) async {
         const url =
-            'buzz://message?channel=580ca78b-9dae-46f3-8854-bd671853ba32&id=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb&thread=dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd';
+            'corevia-talk://message?channel=580ca78b-9dae-46f3-8854-bd671853ba32&id=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb&thread=dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd';
 
         await tester.pumpWidget(
           _testable(const MessageContent(content: '[Open message]($url)')),
@@ -794,16 +794,16 @@ void main() {
         );
       });
 
-      testWidgets('renders and routes bare Buzz message links', (tester) async {
+      testWidgets('renders and routes bare Corevia Talk message links', (tester) async {
         const url =
-            'buzz://message?channel=580ca78b-9dae-46f3-8854-bd671853ba32&id=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+            'corevia-talk://message?channel=580ca78b-9dae-46f3-8854-bd671853ba32&id=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
 
         await tester.pumpWidget(
           _testable(const MessageContent(content: 'See $url now')),
         );
 
-        expect(find.byKey(ValueKey('buzz-link-chip:$url')), findsOneWidget);
-        await tester.tap(find.byKey(ValueKey('buzz-link-chip:$url')));
+        expect(find.byKey(ValueKey('corevia-talk-link-chip:$url')), findsOneWidget);
+        await tester.tap(find.byKey(ValueKey('corevia-talk-link-chip:$url')));
         await tester.pump();
 
         final container = ProviderScope.containerOf(
@@ -819,19 +819,19 @@ void main() {
         );
       });
 
-      testWidgets('keeps Markdown delimiters outside bare Buzz links', (
+      testWidgets('keeps Markdown delimiters outside bare Corevia Talk links', (
         tester,
       ) async {
         const url =
-            'buzz://message?channel=580ca78b-9dae-46f3-8854-bd671853ba32&id=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+            'corevia-talk://message?channel=580ca78b-9dae-46f3-8854-bd671853ba32&id=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
 
         await tester.pumpWidget(
           _testable(const MessageContent(content: '**$url**. and _${url}_')),
         );
 
-        expect(find.byKey(ValueKey('buzz-link-chip:$url')), findsNWidgets(2));
+        expect(find.byKey(ValueKey('corevia-talk-link-chip:$url')), findsNWidgets(2));
 
-        await tester.tap(find.byKey(ValueKey('buzz-link-chip:$url')).first);
+        await tester.tap(find.byKey(ValueKey('corevia-talk-link-chip:$url')).first);
         await tester.pump();
         final container = ProviderScope.containerOf(
           tester.element(find.byType(MessageContent)),
@@ -850,7 +850,7 @@ void main() {
         tester,
       ) async {
         const url =
-            'buzz://message?channel=580ca78b-9dae-46f3-8854-bd671853ba32&id=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+            'corevia-talk://message?channel=580ca78b-9dae-46f3-8854-bd671853ba32&id=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
 
         await tester.pumpWidget(
           _testable(
@@ -862,12 +862,12 @@ void main() {
           ),
         );
 
-        expect(find.byKey(ValueKey('buzz-link-chip:$url')), findsNWidgets(4));
+        expect(find.byKey(ValueKey('corevia-talk-link-chip:$url')), findsNWidgets(4));
         final container = ProviderScope.containerOf(
           tester.element(find.byType(MessageContent)),
         );
         for (final link
-            in find.byKey(ValueKey('buzz-link-chip:$url')).evaluate()) {
+            in find.byKey(ValueKey('corevia-talk-link-chip:$url')).evaluate()) {
           await tester.tap(find.byWidget(link.widget));
           await tester.pump();
           expect(
@@ -882,13 +882,13 @@ void main() {
         }
       });
 
-      testWidgets('excludes sentence punctuation from bare Buzz links', (
+      testWidgets('excludes sentence punctuation from bare Corevia Talk links', (
         tester,
       ) async {
         const messageUrl =
-            'buzz://message?channel=580ca78b-9dae-46f3-8854-bd671853ba32&id=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+            'corevia-talk://message?channel=580ca78b-9dae-46f3-8854-bd671853ba32&id=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
         const joinUrl =
-            'buzz://join?relay=wss%3A%2F%2Frelay.example.com&code=invite-1';
+            'corevia-talk://join?relay=wss%3A%2F%2Frelay.example.com&code=invite-1';
 
         await tester.pumpWidget(
           _testable(
@@ -897,13 +897,13 @@ void main() {
         );
 
         expect(
-          find.byKey(ValueKey('buzz-link-chip:$messageUrl')),
+          find.byKey(ValueKey('corevia-talk-link-chip:$messageUrl')),
           findsOneWidget,
         );
         expect(find.text(joinUrl), findsOneWidget);
         expect(_allRichText(tester), contains('See \u{FFFC}. Then \u{FFFC}!'));
 
-        await tester.tap(find.byKey(ValueKey('buzz-link-chip:$messageUrl')));
+        await tester.tap(find.byKey(ValueKey('corevia-talk-link-chip:$messageUrl')));
         await tester.pump();
         final container = ProviderScope.containerOf(
           tester.element(find.byType(MessageContent)),
@@ -929,18 +929,18 @@ void main() {
         );
       });
 
-      testWidgets('renders and routes autolinked Buzz thread links', (
+      testWidgets('renders and routes autolinked Corevia Talk thread links', (
         tester,
       ) async {
         const url =
-            'buzz://message?channel=580ca78b-9dae-46f3-8854-bd671853ba32&id=cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc&thread=dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd';
+            'corevia-talk://message?channel=580ca78b-9dae-46f3-8854-bd671853ba32&id=cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc&thread=dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd';
 
         await tester.pumpWidget(
           _testable(const MessageContent(content: '<$url>')),
         );
 
-        expect(find.byKey(ValueKey('buzz-link-chip:$url')), findsOneWidget);
-        await tester.tap(find.byKey(ValueKey('buzz-link-chip:$url')));
+        expect(find.byKey(ValueKey('corevia-talk-link-chip:$url')), findsOneWidget);
+        await tester.tap(find.byKey(ValueKey('corevia-talk-link-chip:$url')));
         await tester.pump();
 
         final container = ProviderScope.containerOf(
@@ -958,9 +958,9 @@ void main() {
         );
       });
 
-      testWidgets('renders and routes bare Buzz join links', (tester) async {
+      testWidgets('renders and routes bare Corevia Talk join links', (tester) async {
         const url =
-            'buzz://join?relay=wss%3A%2F%2Frelay.example.com&code=invite-1';
+            'corevia-talk://join?relay=wss%3A%2F%2Frelay.example.com&code=invite-1';
 
         await tester.pumpWidget(
           _testable(const MessageContent(content: 'Join with $url')),
@@ -982,15 +982,15 @@ void main() {
         );
       });
 
-      testWidgets('renders and routes bare Buzz channel links', (tester) async {
-        const url = 'buzz://channel/580ca78b-9dae-46f3-8854-bd671853ba32';
+      testWidgets('renders and routes bare Corevia Talk channel links', (tester) async {
+        const url = 'corevia-talk://channel/580ca78b-9dae-46f3-8854-bd671853ba32';
 
         await tester.pumpWidget(
           _testable(const MessageContent(content: 'See $url now')),
         );
 
-        expect(find.byKey(ValueKey('buzz-link-chip:$url')), findsOneWidget);
-        await tester.tap(find.byKey(ValueKey('buzz-link-chip:$url')));
+        expect(find.byKey(ValueKey('corevia-talk-link-chip:$url')), findsOneWidget);
+        await tester.tap(find.byKey(ValueKey('corevia-talk-link-chip:$url')));
         await tester.pump();
 
         final container = ProviderScope.containerOf(
@@ -1004,10 +1004,10 @@ void main() {
         );
       });
 
-      testWidgets('renders and routes labeled Buzz channel links', (
+      testWidgets('renders and routes labeled Corevia Talk channel links', (
         tester,
       ) async {
-        const url = 'buzz://channel/580ca78b-9dae-46f3-8854-bd671853ba32';
+        const url = 'corevia-talk://channel/580ca78b-9dae-46f3-8854-bd671853ba32';
 
         await tester.pumpWidget(
           _testable(const MessageContent(content: '[Open channel]($url)')),
@@ -1027,11 +1027,11 @@ void main() {
         );
       });
 
-      testWidgets('routes rendered Buzz channel links through callback', (
+      testWidgets('routes rendered Corevia Talk channel links through callback', (
         tester,
       ) async {
         const channelId = '580ca78b-9dae-46f3-8854-bd671853ba32';
-        const url = 'buzz://channel/$channelId';
+        const url = 'corevia-talk://channel/$channelId';
         String? tappedChannelId;
 
         await tester.pumpWidget(
@@ -1053,16 +1053,16 @@ void main() {
         expect(container.read(pendingDeepLinkProvider), isNull);
       });
 
-      testWidgets('renders and routes autolinked Buzz channel links', (
+      testWidgets('renders and routes autolinked Corevia Talk channel links', (
         tester,
       ) async {
-        const url = 'buzz://channel/580ca78b-9dae-46f3-8854-bd671853ba32';
+        const url = 'corevia-talk://channel/580ca78b-9dae-46f3-8854-bd671853ba32';
 
         await tester.pumpWidget(
           _testable(const MessageContent(content: '<$url>')),
         );
 
-        await tester.tap(find.byKey(ValueKey('buzz-link-chip:$url')));
+        await tester.tap(find.byKey(ValueKey('corevia-talk-link-chip:$url')));
         await tester.pump();
 
         final container = ProviderScope.containerOf(
@@ -1076,11 +1076,11 @@ void main() {
         );
       });
 
-      testWidgets('leaves malformed Buzz channel forms as plain text', (
+      testWidgets('leaves malformed Corevia Talk channel forms as plain text', (
         tester,
       ) async {
         const url =
-            'buzz://channel?channel=580ca78b-9dae-46f3-8854-bd671853ba32';
+            'corevia-talk://channel?channel=580ca78b-9dae-46f3-8854-bd671853ba32';
 
         await tester.pumpWidget(
           _testable(const MessageContent(content: 'See $url now')),
@@ -1222,7 +1222,7 @@ void main() {
         expect(tester.getSize(preview), before);
       });
 
-      testWidgets('uses the shared Buzz loader while a voice note loads', (
+      testWidgets('uses the shared Corevia Talk loader while a voice note loads', (
         tester,
       ) async {
         const url = 'https://example.com/media/loading-voice-note.mp4';
@@ -1264,11 +1264,11 @@ void main() {
           isNull,
         );
         expect(find.text('0:03'), findsOneWidget);
-        expect(find.byType(BuzzLoadingIndicator), findsOneWidget);
-        final spinner = find.byType(BuzzLoadingIndicator);
+        expect(find.byType(CoreviaTalkLoadingIndicator), findsOneWidget);
+        final spinner = find.byType(CoreviaTalkLoadingIndicator);
         expect(tester.getSize(spinner), const Size.square(18));
         expect(
-          tester.widget<BuzzLoadingIndicator>(spinner).color,
+          tester.widget<CoreviaTalkLoadingIndicator>(spinner).color,
           tester.element(spinner).colors.onSecondaryContainer,
         );
 
@@ -2077,7 +2077,7 @@ Photos
         await tester.pumpAndSettle();
         final views = tester.widgetList<UiKitView>(find.byType(UiKitView));
         final pagination = views.singleWhere(
-          (view) => view.viewType == 'buzz/theme_pagination_glass',
+          (view) => view.viewType == 'corevia-talk/theme_pagination_glass',
         );
         final params = pagination.creationParams! as Map<String, Object>;
         expect(params['accessibilityLabel'], 'Image');
@@ -2086,7 +2086,7 @@ Photos
         expect(params['count'], 2);
         expect(params['selected'], 0);
         final buttons = views.where(
-          (view) => view.viewType == 'buzz/navigation_glass',
+          (view) => view.viewType == 'corevia-talk/navigation_glass',
         );
         expect(
           buttons.map(
@@ -2452,7 +2452,7 @@ Photos
           ),
           findsOneWidget,
         );
-        expect(find.byIcon(BuzzIcons.play), findsOneWidget);
+        expect(find.byIcon(CoreviaTalkIcons.play), findsOneWidget);
       });
 
       testWidgets('derives a first frame for a posterless video event', (
@@ -2701,17 +2701,17 @@ Photos
       });
     });
 
-    group('Buzz permalink chips', () {
-      testWidgets('keeps authored Buzz labels as ordinary links', (
+    group('Corevia Talk permalink chips', () {
+      testWidgets('keeps authored Corevia Talk labels as ordinary links', (
         tester,
       ) async {
         final owner = 'ab' * 32;
         final id = 'cd' * 32;
         const channelId = '580ca78b-9dae-46f3-8854-bd671853ba32';
         final links = {
-          'Open message': 'buzz://message?channel=$channelId&id=$id',
-          'Open channel': 'buzz://channel/$channelId',
-          'Release candidate': 'buzz://pr?id=$id&owner=$owner&d=buzz',
+          'Open message': 'corevia-talk://message?channel=$channelId&id=$id',
+          'Open channel': 'corevia-talk://channel/$channelId',
+          'Release candidate': 'corevia-talk://pr?id=$id&owner=$owner&d=corevia-talk',
         };
 
         await tester.pumpWidget(
@@ -2727,21 +2727,21 @@ Photos
 
         for (final entry in links.entries) {
           expect(
-            find.byKey(ValueKey('buzz-link-chip:${entry.value}')),
+            find.byKey(ValueKey('corevia-talk-link-chip:${entry.value}')),
             findsNothing,
           );
           expect(find.text(entry.key), findsOneWidget);
         }
       });
 
-      testWidgets('preserves formatting in authored Buzz labels', (
+      testWidgets('preserves formatting in authored Corevia Talk labels', (
         tester,
       ) async {
         const channelId = '580ca78b-9dae-46f3-8854-bd671853ba32';
         await tester.pumpWidget(
           _testable(
             const MessageContent(
-              content: '[**design discussion**](buzz://channel/$channelId)',
+              content: '[**design discussion**](corevia-talk://channel/$channelId)',
             ),
           ),
         );
@@ -2757,11 +2757,11 @@ Photos
           final id = 'cd' * 32;
           const channelId = '580ca78b-9dae-46f3-8854-bd671853ba32';
           final urls = [
-            'buzz://message?channel=$channelId&id=$id',
-            'buzz://channel/$channelId',
-            'buzz://repo?owner=$owner&d=buzz',
-            'buzz://pr?id=$id&owner=$owner&d=buzz',
-            'buzz://issue?id=$id&owner=$owner&d=buzz',
+            'corevia-talk://message?channel=$channelId&id=$id',
+            'corevia-talk://channel/$channelId',
+            'corevia-talk://repo?owner=$owner&d=corevia-talk',
+            'corevia-talk://pr?id=$id&owner=$owner&d=corevia-talk',
+            'corevia-talk://issue?id=$id&owner=$owner&d=corevia-talk',
           ];
           await tester.pumpWidget(
             _testable(
@@ -2774,17 +2774,17 @@ Photos
           await tester.pump();
 
           for (final url in urls) {
-            expect(find.byKey(ValueKey('buzz-link-chip:$url')), findsOneWidget);
+            expect(find.byKey(ValueKey('corevia-talk-link-chip:$url')), findsOneWidget);
           }
           expect(find.text('engineering · cdcdcdcd'), findsOneWidget);
           expect(find.text('engineering'), findsOneWidget);
-          expect(find.text('buzz'), findsOneWidget);
-          expect(find.text('buzz · cdcdcdcd'), findsNWidgets(2));
-          expect(find.byIcon(BuzzIcons.messageSquare), findsOneWidget);
-          expect(find.byIcon(BuzzIcons.hash), findsOneWidget);
-          expect(find.byIcon(BuzzIcons.folderGit2), findsOneWidget);
-          expect(find.byIcon(BuzzIcons.gitPullRequest), findsOneWidget);
-          expect(find.byIcon(BuzzIcons.circleDot), findsOneWidget);
+          expect(find.text('corevia-talk'), findsOneWidget);
+          expect(find.text('corevia-talk · cdcdcdcd'), findsNWidgets(2));
+          expect(find.byIcon(CoreviaTalkIcons.messageSquare), findsOneWidget);
+          expect(find.byIcon(CoreviaTalkIcons.hash), findsOneWidget);
+          expect(find.byIcon(CoreviaTalkIcons.folderGit2), findsOneWidget);
+          expect(find.byIcon(CoreviaTalkIcons.gitPullRequest), findsOneWidget);
+          expect(find.byIcon(CoreviaTalkIcons.circleDot), findsOneWidget);
           expect(
             find.bySemanticsLabel(
               'Open message cdcdcdcd in channel engineering',
@@ -2792,11 +2792,11 @@ Photos
             findsOneWidget,
           );
           expect(
-            find.bySemanticsLabel('Pull request cdcdcdcd in repository buzz'),
+            find.bySemanticsLabel('Pull request cdcdcdcd in repository corevia-talk'),
             findsOneWidget,
           );
           for (final url in urls.skip(2)) {
-            final chipKey = ValueKey('buzz-link-chip:$url');
+            final chipKey = ValueKey('corevia-talk-link-chip:$url');
             final ignoredChip = find.ancestor(
               of: find.byKey(chipKey),
               matching: find.byWidgetPredicate(
@@ -2818,8 +2818,8 @@ Photos
       ) async {
         final id = 'cd' * 32;
         const channelId = '580ca78b-9dae-46f3-8854-bd671853ba32';
-        final messageUrl = 'buzz://message?channel=$channelId&id=$id';
-        const channelUrl = 'buzz://channel/$channelId';
+        final messageUrl = 'corevia-talk://message?channel=$channelId&id=$id';
+        const channelUrl = 'corevia-talk://channel/$channelId';
 
         await tester.pumpWidget(
           _testable(MessageContent(content: '$messageUrl $channelUrl')),
@@ -2862,7 +2862,7 @@ Photos
           ),
         );
 
-        expect(find.byType(BuzzAgentIcon), findsOneWidget);
+        expect(find.byType(CoreviaTalkAgentIcon), findsOneWidget);
         expect(find.text('@'), findsNothing);
         expect(find.text('Helper Bot'), findsOneWidget);
       });
@@ -2880,7 +2880,7 @@ Photos
           ),
         );
 
-        expect(find.byType(BuzzAgentIcon), findsOneWidget);
+        expect(find.byType(CoreviaTalkAgentIcon), findsOneWidget);
         expect(find.text('Helper Bot'), findsOneWidget);
         expect(_allRichText(tester), isNot(contains('Bot Bot')));
       });
@@ -2993,7 +2993,7 @@ Photos
           ),
         );
 
-        expect(find.byIcon(BuzzIcons.hash), findsOneWidget);
+        expect(find.byIcon(CoreviaTalkIcons.hash), findsOneWidget);
         expect(find.text('general'), findsOneWidget);
         expect(find.text('#general'), findsNothing);
       });
@@ -3063,7 +3063,7 @@ Photos
           ),
         );
 
-        expect(find.byIcon(BuzzIcons.hash), findsOneWidget);
+        expect(find.byIcon(CoreviaTalkIcons.hash), findsOneWidget);
         expect(find.text('unknown'), findsOneWidget);
         expect(find.text('#unknown'), findsNothing);
       });
@@ -3109,7 +3109,7 @@ Photos
         );
 
         expect(_findRich('#2959'), findsOneWidget);
-        expect(find.byIcon(BuzzIcons.hash), findsNothing);
+        expect(find.byIcon(CoreviaTalkIcons.hash), findsNothing);
         expect(_hasNestedPlaceholder(tester), isFalse);
       });
 
@@ -3161,7 +3161,7 @@ Photos
 
         // Excluding the link-label scope must not disable the components
         // everywhere else: the bare tokens keep their pills.
-        expect(find.byIcon(BuzzIcons.hash), findsOneWidget);
+        expect(find.byIcon(CoreviaTalkIcons.hash), findsOneWidget);
         expect(find.text('@'), findsOneWidget);
         expect(find.text('Alice'), findsOneWidget);
         expect(_findRich('#2959'), findsOneWidget);

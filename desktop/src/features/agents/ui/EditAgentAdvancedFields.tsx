@@ -12,13 +12,13 @@ import {
 import type { AcpCommandCandidate } from "@/shared/api/acpCommands";
 import type { AcpRuntimeCatalogEntry, AgentPersona } from "@/shared/api/types";
 import {
-  BuzzAgentModelTuningFields,
+  CoreviaTalkAgentModelTuningFields,
   NumericTuningFields,
-} from "./buzzAgentModelTuningFields";
+} from "./coreviaTalkAgentModelTuningFields";
 import {
-  isBuzzAgentRuntime,
-  BUZZ_AGENT_THINKING_EFFORT,
-} from "./buzzAgentConfig";
+  isCoreviaTalkAgentRuntime,
+  COREVIA_TALK_AGENT_THINKING_EFFORT,
+} from "./coreviaTalkAgentConfig";
 import {
   EDIT_AGENT_PARALLELISM_HELP,
   parallelismCapHint,
@@ -75,16 +75,16 @@ export function EditAgentAdvancedFields({
   inheritedEnvVars: Record<string, string>;
   inheritHarness: boolean;
   linkedPersona: AgentPersona | null;
-  /** Active LLM model — forwarded to BuzzAgentModelTuningFields for effort filtering. */
+  /** Active LLM model — forwarded to CoreviaTalkAgentModelTuningFields for effort filtering. */
   model?: string;
   /**
    * The actual/prospective runtime id used to decide whether to show the
-   * buzz-agent effort-tuning field. Uses `prospectiveRuntimeId` from
+   * corevia-talk-agent effort-tuning field. Uses `prospectiveRuntimeId` from
    * EditAgentDialog — the resolved runtime, not the "inherit"/"custom" sentinel.
    */
   modelTuningRuntimeId: string;
   parallelism: string;
-  /** Active LLM provider id — forwarded to BuzzAgentModelTuningFields for effort filtering. */
+  /** Active LLM provider id — forwarded to CoreviaTalkAgentModelTuningFields for effort filtering. */
   provider?: string;
   requiredEnvKeys: readonly string[];
   /**
@@ -130,12 +130,12 @@ export function EditAgentAdvancedFields({
   );
 
   // Build the effective hidden-key list: caller's secrets + effort key (when
-  // rendered by BuzzAgentModelTuningFields) + numeric keys via structuredEnvKeys.
+  // rendered by CoreviaTalkAgentModelTuningFields) + numeric keys via structuredEnvKeys.
   const effectiveHiddenKeys = React.useMemo(
     () => [
       ...hiddenEnvKeys,
-      ...(isBuzzAgentRuntime(modelTuningRuntimeId)
-        ? [BUZZ_AGENT_THINKING_EFFORT]
+      ...(isCoreviaTalkAgentRuntime(modelTuningRuntimeId)
+        ? [COREVIA_TALK_AGENT_THINKING_EFFORT]
         : []),
       ...structuredEnvKeys(numericDescriptors),
     ],
@@ -376,9 +376,9 @@ export function EditAgentAdvancedFields({
         />
       ) : null}
 
-      {/* Effort-tuning knob — only shown for buzz-agent. */}
-      {isBuzzAgentRuntime(modelTuningRuntimeId) ? (
-        <BuzzAgentModelTuningFields
+      {/* Effort-tuning knob — only shown for corevia-talk-agent. */}
+      {isCoreviaTalkAgentRuntime(modelTuningRuntimeId) ? (
+        <CoreviaTalkAgentModelTuningFields
           disabled={disabled}
           envVars={envVars}
           inheritedEnvVars={inheritedEnvVars}

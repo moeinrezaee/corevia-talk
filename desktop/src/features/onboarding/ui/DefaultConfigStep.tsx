@@ -46,7 +46,7 @@ type DefaultConfigStepProps = {
 
 function formatHarnessLabel(runtime: AcpRuntimeCatalogEntry | undefined) {
   if (!runtime) return "Select a harness";
-  return runtime.id === "buzz-agent" ? "Buzz" : runtime.label;
+  return runtime.id === "corevia-talk-agent" ? "Corevia Talk" : runtime.label;
 }
 
 function AgentDefaultsSection({
@@ -217,7 +217,7 @@ function AgentDefaultsSection({
     onPersistenceStateChange({
       // configIsValid comes from AgentConfigFields' onValidityChange and
       // covers model + provider credentials — a harness selection alone is
-      // not a working default (e.g. buzz-agent with no provider configured).
+      // not a working default (e.g. corevia-talk-agent with no provider configured).
       canComplete: selectedRuntimeId.length > 0 && configIsValid,
       commit: commitPersistence,
     });
@@ -404,7 +404,7 @@ export function DefaultConfigStep({
         >
           {actions.useDifferentHarness
             ? tl(
-                "Choose your provider and enter an API key to connect to the Buzz harness.",
+                "Choose your provider and enter an API key to connect to the Corevia Talk harness.",
               )
             : tl(
                 "Select the model and effort level your agents will use by default.",

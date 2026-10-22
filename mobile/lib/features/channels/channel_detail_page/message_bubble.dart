@@ -461,8 +461,8 @@ class _UserAvatar extends StatelessWidget {
 }
 
 IconData channelIcon(Channel channel) {
-  if (channel.isDm) return BuzzIcons.messagesSquare;
-  if (channel.isPrivate) return BuzzIcons.lock;
-  if (channel.isForum) return BuzzIcons.messageSquareText;
-  return BuzzIcons.hash;
+  if (channel.isDm) return CoreviaTalkIcons.messagesSquare;
+  if (channel.isPrivate) return CoreviaTalkIcons.lock;
+  if (channel.isForum) return CoreviaTalkIcons.messageSquareText;
+  return CoreviaTalkIcons.hash;
 }

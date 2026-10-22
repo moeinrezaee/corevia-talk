@@ -9,7 +9,7 @@
 -- ASCII-lowercased, trailing dot stripped, default port omitted. The UNIQUE is
 -- on `lower(host)` belt-and-suspenders so `Relay.Example` and `relay.example`
 -- can never become two tenants even if a writer forgets to normalize.
--- `resolve_host()` (buzz-core) applies the identical normalization before
+-- `resolve_host()` (corevia-talk-core) applies the identical normalization before
 -- lookup, so resolution and storage agree by construction.
 
 CREATE TABLE communities (

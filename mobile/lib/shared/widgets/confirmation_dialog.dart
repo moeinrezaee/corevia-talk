@@ -16,7 +16,7 @@ Future<bool> showDestructiveConfirmation({
 }) async {
   if (!kIsWeb && defaultTargetPlatform == TargetPlatform.iOS) {
     return await const MethodChannel(
-          'buzz/confirmation_dialog',
+          'corevia-talk/confirmation_dialog',
         ).invokeMethod<bool>('present', {
           'title': title,
           'message': message,
@@ -26,7 +26,7 @@ Future<bool> showDestructiveConfirmation({
         }) ==
         true;
   }
-  return await showBuzzDialog<bool>(
+  return await showCoreviaTalkDialog<bool>(
         context: context,
         builder: (dialogContext) => AlertDialog.adaptive(
           title: Text(title),

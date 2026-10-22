@@ -149,7 +149,7 @@ export default defineConfig({
         "**/inbox-refactor-screenshots.spec.ts",
         "**/inbox-title-overlap.spec.ts",
         "**/message-author-overlap.spec.ts",
-        "**/buzz-theme-screenshots.spec.ts",
+        "**/corevia-talk-theme-screenshots.spec.ts",
         "**/appearance-previews.spec.ts",
         "**/channel-sort.spec.ts",
         "**/identity-lost.spec.ts",

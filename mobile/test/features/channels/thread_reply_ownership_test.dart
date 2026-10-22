@@ -1,5 +1,5 @@
-import 'package:buzz/features/channels/thread_reply_ownership.dart';
-import 'package:buzz/shared/relay/relay.dart';
+import 'package:corevia_talk/features/channels/thread_reply_ownership.dart';
+import 'package:corevia_talk/shared/relay/relay.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/thread_ids.dart';

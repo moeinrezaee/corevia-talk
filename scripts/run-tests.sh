@@ -147,6 +147,9 @@ run_unit_tests() {
   run_test_step "corevia-talk-admin NIP-FI binding command tests" \
     cargo test -p corevia-talk-admin nip_fi::tests -- --nocapture
 
+  run_test_step "corevia-talk-admin user-deletion intake command tests" \
+    cargo test -p corevia-talk-admin user_deletions::tests -- --nocapture
+
   # Multi-tenant conformance gate: independent replay checker + golden
   # fixtures (corevia-talk-conformance). Pure in-process trace replay, no infra.
   run_test_step "corevia-talk-conformance tests" \

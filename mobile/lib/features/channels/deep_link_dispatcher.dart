@@ -1,0 +1,274 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../shared/deeplink/deep_link.dart';
+import '../../shared/deeplink/pending_deep_link_provider.dart';
+import '../invites/invite_join_provider.dart';
+import '../invites/invite_join_sheet.dart';
+import 'channel.dart';
+import 'channel_detail_page.dart';
+import 'channels_provider.dart';
+
+/// Routes pending `corevia-talk://message` deep links into the channel view.
+///
+/// Wraps the authenticated home subtree. Whenever a parsed link is parked in
+/// [pendingDeepLinkProvider] and the channel list is available, this pushes
+/// the target [ChannelDetailPage] on the enclosing [Navigator]. Links are
+/// held (not dropped) while channels are still loading, so cold-start links
+/// dispatch as soon as the first channel fetch completes.
+typedef DeepLinkDestinationBuilder =
+    Widget Function(Channel channel, CoreviaTalkDeepLink link);
+
+class DeepLinkDispatcher extends ConsumerStatefulWidget {
+  final Widget child;
+  final DeepLinkDestinationBuilder? destinationBuilder;
+  final bool dispatchMessageLinks;
+
+  /// App composition handles account onboarding without feature imports here.
+  /// Return true only after the destination has retained the link durably.
+  final Future<bool> Function(BuildContext, CoreviaTalkDeepLink)? onboardingHandler;
+
+  const DeepLinkDispatcher({
+    super.key,
+    required this.child,
+    this.destinationBuilder,
+    this.dispatchMessageLinks = true,
+    this.onboardingHandler,
+  });
+
+  @override
+  ConsumerState<DeepLinkDispatcher> createState() => _DeepLinkDispatcherState();
+}
+
+class _DeepLinkDispatcherState extends ConsumerState<DeepLinkDispatcher> {
+  bool _preparingInvite = false;
+  bool _handlingOnboarding = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      _maybeDispatch(ref.read(pendingDeepLinkProvider));
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Re-evaluate dispatch when either a new link arrives or channels load.
+    ref.listen<CoreviaTalkDeepLink?>(pendingDeepLinkProvider, (_, link) {
+      _maybeDispatch(link);
+    });
+    if (widget.dispatchMessageLinks) {
+      ref.listen<AsyncValue<List<Channel>>>(channelsProvider, (_, _) {
+        _maybeDispatch(ref.read(pendingDeepLinkProvider));
+      });
+    }
+
+    return widget.child;
+  }
+
+  void _maybeDispatch(CoreviaTalkDeepLink? link) {
+    if (link == null || _preparingInvite || _handlingOnboarding) return;
+    if (widget.onboardingHandler != null &&
+        (link is InviteDeepLink ||
+            link is NostrBindDeepLink ||
+            link is AddCommunityDeepLink)) {
+      unawaited(_dispatchOnboarding(link));
+      return;
+    }
+    if (link is InviteDeepLink) {
+      _maybeDispatchInvite(link);
+      return;
+    }
+    if ((link is! MessageDeepLink && link is! ChannelDeepLink) ||
+        !widget.dispatchMessageLinks) {
+      return;
+    }
+    if (link is MessageDeepLink) {
+      unawaited(_dispatchNotificationLink(link));
+      return;
+    }
+
+    _dispatchNavigableLink(link);
+  }
+
+  Future<void> _dispatchOnboarding(CoreviaTalkDeepLink link) async {
+    _handlingOnboarding = true;
+    var consumed = false;
+    try {
+      final handled = await widget.onboardingHandler!(context, link);
+      if (!mounted) return;
+      if (handled) {
+        if (ref.read(pendingDeepLinkProvider) == link) {
+          ref.read(pendingDeepLinkProvider.notifier).consume();
+          consumed = true;
+        }
+      } else if (link is InviteDeepLink) {
+        _maybeDispatchInvite(link);
+      } else if (ref.read(pendingDeepLinkProvider) == link) {
+        // No fallback owns this link. It must not block later entry attempts.
+        ref.read(pendingDeepLinkProvider.notifier).consume();
+        consumed = true;
+      }
+    } catch (_) {
+      if (mounted) {
+        if (ref.read(pendingDeepLinkProvider) == link) {
+          ref.read(pendingDeepLinkProvider.notifier).consume();
+          consumed = true;
+        }
+        ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Could not open setup. Re-open the link to try again.',
+            ),
+          ),
+        );
+      }
+    } finally {
+      _handlingOnboarding = false;
+      if (mounted && (consumed || ref.read(pendingDeepLinkProvider) != link)) {
+        _maybeDispatch(ref.read(pendingDeepLinkProvider));
+      }
+    }
+  }
+
+  Future<void> _dispatchNotificationLink(MessageDeepLink link) async {
+    final preparation = await ref
+        .read(pendingDeepLinkProvider.notifier)
+        .prepareCommunity(link);
+    if (!mounted || ref.read(pendingDeepLinkProvider) != link) return;
+    switch (preparation) {
+      case DeepLinkCommunityPreparation.ready:
+        _dispatchNavigableLink(link);
+      case DeepLinkCommunityPreparation.switched:
+        // The community-scoped app subtree remounts and consumes the parked
+        // target after its channels load.
+        return;
+      case DeepLinkCommunityPreparation.unavailable:
+        ref.read(pendingDeepLinkProvider.notifier).consume();
+        ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+          const SnackBar(
+            content: Text('Notification community is no longer available'),
+          ),
+        );
+      case DeepLinkCommunityPreparation.failed:
+        ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+          const SnackBar(
+            content: Text('Could not open the notification community'),
+          ),
+        );
+    }
+  }
+
+  void _dispatchNavigableLink(CoreviaTalkDeepLink link) {
+    final channelId = switch (link) {
+      MessageDeepLink(:final channelId) => channelId,
+      ChannelDeepLink(:final channelId) => channelId,
+      _ => throw StateError('unsupported navigable deep link: $link'),
+    };
+    final channels = ref.read(channelsProvider).asData?.value;
+    // Channels not loaded yet — keep the link parked; the channelsProvider
+    // listener re-attempts once data arrives.
+    if (channels == null) return;
+
+    final channel = channels
+        .where((c) => c.id == channelId)
+        .cast<Channel?>()
+        .firstOrNull;
+    if (channel == null) {
+      ref.read(pendingDeepLinkProvider.notifier).consume();
+      debugPrint(
+        'deep-link: channel $channelId not found in workspace; dropping link',
+      );
+      ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+        const SnackBar(content: Text('Channel not found in this workspace')),
+      );
+      return;
+    }
+    if (!context.mounted) return;
+
+    _pushChannel(channel, link);
+    ref.read(pendingDeepLinkProvider.notifier).consume();
+  }
+
+  void _pushChannel(Channel channel, CoreviaTalkDeepLink link) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) =>
+            widget.destinationBuilder?.call(channel, link) ??
+            ChannelDetailPage(
+              channel: channel,
+              initialMessageId: link is MessageDeepLink ? link.messageId : null,
+              initialThreadRootId: link is MessageDeepLink
+                  ? link.threadRootId
+                  : null,
+            ),
+      ),
+    );
+  }
+
+  void _maybeDispatchInvite(InviteDeepLink link) {
+    if (_preparingInvite) return;
+    _preparingInvite = true;
+    final navigatorContext = context;
+    final messenger = ScaffoldMessenger.maybeOf(context);
+    Future.microtask(() async {
+      var consumed = false;
+      try {
+        await ref.read(inviteJoinProvider.notifier).prepare(link);
+        ref.read(pendingDeepLinkProvider.notifier).consume();
+        consumed = true;
+        if (!navigatorContext.mounted) return;
+        final inviteState = ref.read(inviteJoinProvider);
+        final status = inviteState.status;
+        if (status == InviteJoinStatus.confirming ||
+            inviteState.isStarterSetupRecovery) {
+          final sheet = showInviteJoinSheet(navigatorContext);
+          if (status == InviteJoinStatus.claiming &&
+              inviteState.isStarterSetupRecovery) {
+            unawaited(
+              ref.read(inviteJoinProvider.notifier).startStarterSetupRecovery(),
+            );
+          }
+          final shouldFocusStarter = await sheet;
+          final focusChannelId = ref.read(inviteJoinProvider).focusChannelId;
+          if (shouldFocusStarter == true &&
+              focusChannelId != null &&
+              ref.read(pendingDeepLinkProvider) == null &&
+              navigatorContext.mounted) {
+            final channels = ref.read(channelsProvider).asData?.value;
+            final channel = channels
+                ?.where((candidate) => candidate.id == focusChannelId)
+                .firstOrNull;
+            if (channel != null) {
+              _pushChannel(channel, ChannelDeepLink(channelId: focusChannelId));
+            }
+          }
+        } else if (status == InviteJoinStatus.switchedExisting) {
+          messenger?.showSnackBar(
+            const SnackBar(content: Text('Switched to this community')),
+          );
+        }
+      } catch (error) {
+        debugPrint('deep-link: failed to prepare invite: $error');
+        if (navigatorContext.mounted) {
+          messenger?.showSnackBar(
+            const SnackBar(
+              content: Text(
+                'Could not open this invite. Re-open the invite link to try again.',
+              ),
+            ),
+          );
+        }
+      } finally {
+        _preparingInvite = false;
+        if (mounted && consumed) {
+          _maybeDispatch(ref.read(pendingDeepLinkProvider));
+        }
+      }
+    });
+  }
+}

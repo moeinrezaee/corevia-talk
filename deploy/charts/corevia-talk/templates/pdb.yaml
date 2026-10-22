@@ -1,0 +1,18 @@
+{{- include "corevia-talk.validate" . -}}
+{{- if and .Values.podDisruptionBudget.enabled (gt (include "corevia-talk.minimumReplicas" . | int) 1) -}}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "corevia-talk.fullname" . }}
+  labels:
+    {{- include "corevia-talk.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "corevia-talk.relaySelectorLabels" . | nindent 6 }}
+  {{- if .Values.podDisruptionBudget.minAvailable }}
+  minAvailable: {{ .Values.podDisruptionBudget.minAvailable }}
+  {{- else if .Values.podDisruptionBudget.maxUnavailable }}
+  maxUnavailable: {{ .Values.podDisruptionBudget.maxUnavailable }}
+  {{- end }}
+{{- end }}

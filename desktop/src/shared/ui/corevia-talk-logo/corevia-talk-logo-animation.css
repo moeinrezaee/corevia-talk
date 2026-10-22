@@ -1,0 +1,88 @@
+.corevia-talk-logo {
+  display: grid;
+  place-items: center;
+  inline-size: fit-content;
+}
+
+.corevia-talk-logo--screen {
+  min-block-size: 100vh;
+  inline-size: 100%;
+  overflow: hidden;
+}
+
+.corevia-talk-logo--background {
+  background-color: #d7d72e;
+  background-image: radial-gradient(
+    circle,
+    rgba(35, 30, 30, 0.16) 1.2px,
+    transparent 1.3px
+  );
+  background-position: 0 0;
+  background-size: 37px 37px;
+}
+
+.corevia-talk-logo__mark {
+  display: block;
+  inline-size: min(466px, calc(100vw - 32px));
+  block-size: auto;
+  overflow: visible;
+}
+
+.corevia-talk-logo--compact {
+  inline-size: 1.5rem;
+}
+
+.corevia-talk-logo--compact .corevia-talk-logo__mark {
+  inline-size: 100%;
+  block-size: auto;
+  max-inline-size: 100%;
+}
+
+.corevia-talk-logo__ink {
+  fill: currentColor;
+}
+
+@keyframes corevia-talk-logo-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.corevia-talk-logo--pulse .corevia-talk-logo__mark {
+  animation: corevia-talk-logo-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes corevia-talk-logo-scale-pulse {
+  0%,
+  100% {
+    transform: scale(0.94);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+.corevia-talk-logo--scale-pulse .corevia-talk-logo__mark {
+  animation: corevia-talk-logo-scale-pulse 1.8s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .corevia-talk-logo animate {
+    display: none;
+  }
+
+  .corevia-talk-logo--pulse .corevia-talk-logo__mark {
+    animation: none;
+    opacity: 0.8;
+  }
+
+  .corevia-talk-logo--scale-pulse .corevia-talk-logo__mark {
+    animation: none;
+    transform: none;
+  }
+}

@@ -1,0 +1,21 @@
+[package]
+name = "corevia-talk-search"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Postgres full-text search for Corevia Talk, scoped by community"
+
+[dependencies]
+corevia-talk-core   = { workspace = true }
+corevia-talk-datastore-tracing = { workspace = true }
+sqlx        = { workspace = true }
+uuid        = { workspace = true }
+thiserror   = { workspace = true }
+tracing     = { workspace = true }
+metrics     = { workspace = true }
+
+[dev-dependencies]
+corevia-talk-db     = { workspace = true }
+tokio       = { workspace = true }

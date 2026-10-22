@@ -1,0 +1,38 @@
+# syntax=docker/dockerfile:1.7
+ARG RUST_VERSION=1.95
+ARG DEBIAN_VERSION=bookworm
+
+FROM rust:${RUST_VERSION}-${DEBIAN_VERSION} AS chef
+RUN cargo install cargo-chef --locked --version 0.1.71
+WORKDIR /build
+
+FROM chef AS planner
+COPY . .
+RUN cargo chef prepare --recipe-path recipe.json
+
+FROM chef AS builder
+ARG COREVIA_TALK_PUSH_CARGO_FEATURES=""
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends build-essential cmake pkg-config libssl-dev ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+COPY --from=planner /build/recipe.json recipe.json
+RUN cargo chef cook --release --recipe-path recipe.json --features "$COREVIA_TALK_PUSH_CARGO_FEATURES"
+COPY . .
+RUN cargo build --release --locked -p corevia-talk-push-gateway --bin corevia-talk-push-gateway --features "$COREVIA_TALK_PUSH_CARGO_FEATURES" \
+    && strip target/release/corevia-talk-push-gateway
+
+FROM debian:${DEBIAN_VERSION}-slim AS runtime
+LABEL org.opencontainers.image.title="Corevia Talk Push Gateway" \
+      org.opencontainers.image.description="Capability-gated APNs last hop for Corevia Talk" \
+      org.opencontainers.image.source="https://github.com/block/buzz" \
+      org.opencontainers.image.licenses="Apache-2.0"
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates \
+    && rm -rf /var/lib/apt/lists/* \
+    && groupadd --system --gid 1000 corevia-talk \
+    && useradd --system --uid 1000 --gid 1000 --home-dir /var/lib/corevia-talk --create-home --shell /usr/sbin/nologin corevia-talk
+COPY --from=builder /build/target/release/corevia-talk-push-gateway /usr/local/bin/corevia-talk-push-gateway
+EXPOSE 8080 8081
+USER corevia-talk:corevia-talk
+WORKDIR /var/lib/corevia-talk
+ENTRYPOINT ["/usr/local/bin/corevia-talk-push-gateway"]
